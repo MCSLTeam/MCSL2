@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="MCSL2_Icon">
+    <file>MCSL2_Icon.png</file>
+  </qresource>
+</RCC>

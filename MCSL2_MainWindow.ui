@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MCSL2_MainWindow</class>
+ <widget class="QMainWindow" name="MCSL2_MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>944</width>
+    <height>618</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="CentralWidget">
+   <widget class="QWidget" name="OptionsWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>211</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="Close_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>31</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Minimize_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>20</y>
+       <width>31</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Home_Page_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>140</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>主页</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Config_Page_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>配置服务器</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MCSL2_Label">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>60</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>MCSL 2</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Author_Label">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>90</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>by LxHTT</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MCSL2_Icon_Label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Download_Page_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>下载</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Server_Console_Page_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>320</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>服务器控制台</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Tools_Page_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>380</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>更多工具</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="About_Page_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>440</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>关于</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QStackedWidget" name="FunctionsStackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>0</y>
+      <width>731</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="HomePage">
+     <widget class="QPushButton" name="Config_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>420</y>
+        <width>111</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	border: 2px solid rgb(223, 223, 223);
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	border: 2px solid rgb(230, 230, 230);
+	background-color: rgb(223, 223, 223);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>配置</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Choose_Server_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>420</y>
+        <width>111</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	border: 2px solid rgb(223, 223, 223);
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	border: 2px solid rgb(230, 230, 230);
+	background-color: rgb(223, 223, 223);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>选择</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Home_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>71</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>主页</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Start_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>490</y>
+        <width>231</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 107, 212);
+	border-radius: 10px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>启动服务器</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Selected_Server_Label">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>560</y>
+        <width>221</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>未选择服务器！</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Notice_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>321</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   正在获取公告...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="HomeTip1_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>300</y>
+        <width>321</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   如何搭建一个Java版 Minecraft服务器？
+   1.准备好Java、核心、电脑
+   （提示：可使用本程序下载）
+   2.配置参数（本程序“配置服务器”页）
+   3. 开启服务器。
+   将服务器IP告诉玩家。</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="ConfigPage">
+     <widget class="QLabel" name="Config_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>71</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>配置</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="ConfigTip1_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>251</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   一个服务器最基础的三个部件：
+   1.存放的文件夹路径
+   2.服务器核心
+   3.Java路径</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="ConfigTip2_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>280</y>
+        <width>251</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   MCSL 2将会在程序目录生成
+   以服务器名称命名的文件夹以
+   存储服务器文件。</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="DownloadPage"/>
+    <widget class="QWidget" name="ConsolePage"/>
+    <widget class="QWidget" name="ToolsPage"/>
+    <widget class="QWidget" name="AboutPage"/>
+   </widget>
+   <widget class="Line" name="Line">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>-30</y>
+      <width>61</width>
+      <height>681</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="MCSL2_Icon.qrc"/>
+ </resources>
+ <connections/>
+</ui>
