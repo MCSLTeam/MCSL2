@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 import MCSL2_Icon
+from MCSL2_Dialog import *
 
 class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
@@ -1181,6 +1182,9 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
         self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
 
+        #Functions binding
+        self.Start_PushButton.clicked.connect(self.StartMinecraftServer)
+
     # Close the application
     def Quit(self):
         app.quit()
@@ -1210,8 +1214,17 @@ class Ui_MCSL2_MainWindow(object):
 
     def ToChooseServerPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(6)
-    # Functions in Home Page
 
+    # Functions in Home Page
+    def StartMinecraftServer(self):
+        MCSL2Dialog().exec()
+
+
+# Dialog
+class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
+    def __init__(self):
+        super(MCSL2Dialog, self).__init__()
+        self.setupUi(self)
 
 # Start App
 
