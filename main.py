@@ -7,7 +7,9 @@ import MCSL2_Icon
 
 
 class Ui_MCSL2_MainWindow(object):
+
     def setupUi(self, MCSL2_MainWindow):
+        self.windows = MCSL2_MainWindow
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
         MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
         MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar.
@@ -1059,9 +1061,9 @@ class Ui_MCSL2_MainWindow(object):
     # Close Application
     def Close(self):
         app.quit()
-
+    # Minimized Application
     def Minimize(self):
-
+        self.windows.showMinimized()
 
 # Start App
 
