@@ -1,17 +1,28 @@
 import sys
+import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QMouseEvent
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog
 import MCSL2_Icon
+import main
 from MCSL2_Dialog import *
 
-class Ui_MCSL2_MainWindow(object):
+class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MCSL2_MainWindow):
         self.MCSLWindow = MCSL2_MainWindow
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
         MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
-        MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar.
+        self._startPos = None
+        self._endPos = None
+        self._tracking = False
+        MCSL2_MainWindow.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        MCSL2_MainWindow.setAttribute(Qt.WA_TranslucentBackground, True)
+        effect = QGraphicsDropShadowEffect(self)
+        effect.setBlurRadius(12)
+        effect.setOffset(0, 0)
+        effect.setColor(Qt.gray)
+        self.setGraphicsEffect(effect)
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
@@ -1081,6 +1092,22 @@ class Ui_MCSL2_MainWindow(object):
         self.FunctionsStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
+    def mouseMoveEvent(self, e: QMouseEvent):  # 重写移动事件
+        if self._tracking:
+            self._endPos = e.pos() - self._startPos
+            self.move(self.pos() + self._endPos)
+
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._startPos = QPoint(e.x(), e.y())
+            self._tracking = True
+
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._tracking = False
+            self._startPos = None
+            self._endPos = None
+
     def retranslateUi(self, MCSL2_MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MainWindow"))
@@ -1184,6 +1211,7 @@ class Ui_MCSL2_MainWindow(object):
 
         #Functions binding
         self.Start_PushButton.clicked.connect(self.StartMinecraftServer)
+        self.Manual_Select_Java_PushButton.clicked.connect(self.ManualSelectJava)
 
     # Close the application
     def Quit(self):
@@ -1219,49 +1247,21 @@ class Ui_MCSL2_MainWindow(object):
     def StartMinecraftServer(self):
         MCSL2Dialog().exec()
 
+    # Functions in Config Page
+    def ManualSelectJava(self):
+        JavaPath = QFileDialog.getOpenFileName(self, '选择java.exe程序', os.getcwd(), "java.exe")
+        self.Select_Java_ComboBox.addItem(JavaPath[0])
 
-# Dialog
+
+# Customize dialogs
 class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
     def __init__(self):
         super(MCSL2Dialog, self).__init__()
         self.setupUi(self)
 
 # Start App
-
-# The function of window dragging [by ubby]
-class Inherited_MainWindow(QtWidgets.QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self._startPos = None
-        self._endPos = None
-        self._tracking = False
-        # Add shadow effect
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
-        effect = QGraphicsDropShadowEffect(self)
-        effect.setBlurRadius(12)
-        effect.setOffset(0, 0)
-        effect.setColor(Qt.gray)
-        self.setGraphicsEffect(effect)
-
-    def mouseMoveEvent(self, e: QMouseEvent):  # 重写移动事件
-        if self._tracking:
-            self._endPos = e.pos() - self._startPos
-            self.move(self.pos() + self._endPos)
-
-    def mousePressEvent(self, e: QMouseEvent):
-        if e.button() == Qt.LeftButton:
-            self._startPos = QPoint(e.x(), e.y())
-            self._tracking = True
-
-    def mouseReleaseEvent(self, e: QMouseEvent):
-        if e.button() == Qt.LeftButton:
-            self._tracking = False
-            self._startPos = None
-            self._endPos = None
-
-
 app = QtWidgets.QApplication(sys.argv)
-MainWindow = Inherited_MainWindow()
+MainWindow = Ui_MCSL2_MainWindow()
 ui = Ui_MCSL2_MainWindow()
 ui.setupUi(MainWindow)
 MainWindow.setWindowTitle("MCSL 2 ver2.0.0")
