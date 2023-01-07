@@ -21,11 +21,31 @@ class Ui_MCSL2_MainWindow(object):
         self.OptionsWidget.setGeometry(QtCore.QRect(0, 0, 211, 581))
         self.OptionsWidget.setObjectName("OptionsWidget")
         self.Close_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Close_PushButton.setGeometry(QtCore.QRect(20, 20, 31, 23))
+        self.Close_PushButton.setGeometry(QtCore.QRect(20, 10, 31, 23))
+        self.Close_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(232, 17, 35);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(170, 0, 0);\n"
+"    border-radius: 11px;\n"
+"}")
         self.Close_PushButton.setText("")
         self.Close_PushButton.setObjectName("Close_PushButton")
         self.Minimize_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Minimize_PushButton.setGeometry(QtCore.QRect(60, 20, 31, 23))
+        self.Minimize_PushButton.setGeometry(QtCore.QRect(60, 10, 31, 23))
+        self.Minimize_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(225, 225, 0);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(161, 161, 0);\n"
+"    border-radius: 11px;\n"
+"}")
         self.Minimize_PushButton.setText("")
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
@@ -941,6 +961,18 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Description_Label.setObjectName("Description_Label")
         self.FunctionsStackedWidget.addWidget(self.AboutPage)
+        self.Background = QtWidgets.QLabel(self.CentralWidget)
+        self.Background.setGeometry(QtCore.QRect(0, 0, 941, 581))
+        self.Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Background.setText("")
+        self.Background.setObjectName("Background")
+        self.Background.raise_()
+        self.OptionsWidget.raise_()
+        self.FunctionsStackedWidget.raise_()
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)

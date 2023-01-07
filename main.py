@@ -2,15 +2,15 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QMouseEvent
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect
+import MCSL2_Icon
 
 
 class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
         MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
-
         MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar.
-
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
@@ -18,10 +18,30 @@ class Ui_MCSL2_MainWindow(object):
         self.OptionsWidget.setObjectName("OptionsWidget")
         self.Close_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Close_PushButton.setGeometry(QtCore.QRect(20, 20, 31, 23))
+        self.Close_PushButton.setStyleSheet("QPushButton\n"
+                                            "{\n"
+                                            "    background-color: rgb(232, 17, 35);\n"
+                                            "    border-radius: 11px;\n"
+                                            "}\n"
+                                            "QPushButton:pressed\n"
+                                            "{\n"
+                                            "    background-color: rgb(170, 0, 0);\n"
+                                            "    border-radius: 11px;\n"
+                                            "}")
         self.Close_PushButton.setText("")
         self.Close_PushButton.setObjectName("Close_PushButton")
         self.Minimize_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Minimize_PushButton.setGeometry(QtCore.QRect(60, 20, 31, 23))
+        self.Minimize_PushButton.setStyleSheet("QPushButton\n"
+                                               "{\n"
+                                               "    background-color: rgb(225, 225, 0);\n"
+                                               "    border-radius: 11px;\n"
+                                               "}\n"
+                                               "QPushButton:pressed\n"
+                                               "{\n"
+                                               "    background-color: rgb(161, 161, 0);\n"
+                                               "    border-radius: 11px;\n"
+                                               "}")
         self.Minimize_PushButton.setText("")
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
@@ -937,6 +957,18 @@ class Ui_MCSL2_MainWindow(object):
                                              "}")
         self.Description_Label.setObjectName("Description_Label")
         self.FunctionsStackedWidget.addWidget(self.AboutPage)
+        self.Background = QtWidgets.QLabel(self.CentralWidget)
+        self.Background.setGeometry(QtCore.QRect(0, 0, 941, 581))
+        self.Background.setStyleSheet("QLabel\n"
+                                      "{\n"
+                                      "    background-color: rgb(255, 255, 255);\n"
+                                      "    border-radius: 10px\n"
+                                      "}")
+        self.Background.setText("")
+        self.Background.setObjectName("Background")
+        self.Background.raise_()
+        self.OptionsWidget.raise_()
+        self.FunctionsStackedWidget.raise_()
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
@@ -1021,13 +1053,31 @@ class Ui_MCSL2_MainWindow(object):
                                                                       "    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
                                                                       "\n"
                                                                       "    作者邮箱: lxhtz.dl@qq.com "))
+        self.Close_PushButton.clicked.connect(self.Close)
+        self.Minimize_PushButton.clicked.connect(self.Minimize)
+
+    # Close Application
+    def Close(self):
+        app.quit()
+
+    def Minimize(self):
+
+
 # Start App
-class mainwindow(QtWidgets.QMainWindow):
+
+# The function of window dragging [by ubby]
+class Inherited_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self._startPos = None
         self._endPos = None
         self._tracking = False
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        effect = QGraphicsDropShadowEffect(self)
+        effect.setBlurRadius(12)
+        effect.setOffset(0, 0)
+        effect.setColor(Qt.gray)
+        self.setGraphicsEffect(effect)
 
     def mouseMoveEvent(self, e: QMouseEvent):  # 重写移动事件
         if self._tracking:
@@ -1045,10 +1095,9 @@ class mainwindow(QtWidgets.QMainWindow):
             self._startPos = None
             self._endPos = None
 
+
 app = QtWidgets.QApplication(sys.argv)
-
-MainWindow = mainwindow()
-
+MainWindow = Inherited_MainWindow()
 ui = Ui_MCSL2_MainWindow()
 ui.setupUi(MainWindow)
 MainWindow.setWindowTitle("MCSL 2 ver2.0.0")

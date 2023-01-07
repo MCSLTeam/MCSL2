@@ -27,10 +27,22 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>20</y>
+       <y>10</y>
        <width>31</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+	background-color: rgb(232, 17, 35);
+	border-radius: 11px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(170, 0, 0);
+	border-radius: 11px;
+}</string>
      </property>
      <property name="text">
       <string/>
@@ -40,10 +52,22 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>20</y>
+       <y>10</y>
        <width>31</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+	background-color: rgb(225, 225, 0);
+	border-radius: 11px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(161, 161, 0);
+	border-radius: 11px;
+}</string>
      </property>
      <property name="text">
       <string/>
@@ -1903,6 +1927,29 @@ QPushButton:pressed
      </widget>
     </widget>
    </widget>
+   <widget class="QLabel" name="Background">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>941</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel
+{
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>Background</zorder>
+   <zorder>OptionsWidget</zorder>
+   <zorder>FunctionsStackedWidget</zorder>
   </widget>
  </widget>
  <resources>
