@@ -348,7 +348,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
@@ -1925,6 +1925,200 @@ QPushButton:pressed
     作者邮箱: lxhtz.dl@qq.com </string>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="ChooseServerPage">
+     <widget class="QLabel" name="Choose_Server_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>选择服务器</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="Choose_Server_ComboBox">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>320</y>
+        <width>411</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    border-radius: 3px;
+    padding: 1px 2px 1px 2px;
+    min-width: 9em;
+	border: 2px solid rgb(223, 223, 223);
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left-color: rgb(223, 223, 223);
+    border-left-style: solid;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+QComboBox::down-arrow {
+    image: url(./resources/QComboBox.png);
+}
+QComboBox QAbstractItemView::item {
+    height: 25px;
+}
+QComboBox QAbstractItemView{
+    font-size: 18px;
+}</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>  请选择</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="Choose_Server_Label2">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>320</y>
+        <width>141</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>请选择服务器：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Choose_Server_Background">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>280</y>
+        <width>651</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Choose_Server_Tip1">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>651</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。
+
+   MCSL 2将会读取目录下的文件夹名称以确定一个服务器。</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Completed_Choose_Server_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>410</y>
+        <width>121</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 107, 212);
+	border-radius: 8px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>选好了</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <zorder>Choose_Server_Background</zorder>
+     <zorder>Choose_Server_Label</zorder>
+     <zorder>Choose_Server_ComboBox</zorder>
+     <zorder>Choose_Server_Label2</zorder>
+     <zorder>Choose_Server_Tip1</zorder>
+     <zorder>Completed_Choose_Server_PushButton</zorder>
     </widget>
    </widget>
    <widget class="QLabel" name="Background">

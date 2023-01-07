@@ -961,6 +961,111 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Description_Label.setObjectName("Description_Label")
         self.FunctionsStackedWidget.addWidget(self.AboutPage)
+        self.ChooseServerPage = QtWidgets.QWidget()
+        self.ChooseServerPage.setObjectName("ChooseServerPage")
+        self.Choose_Server_Label = QtWidgets.QLabel(self.ChooseServerPage)
+        self.Choose_Server_Label.setGeometry(QtCore.QRect(30, 80, 171, 51))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Choose_Server_Label.setFont(font)
+        self.Choose_Server_Label.setObjectName("Choose_Server_Label")
+        self.Choose_Server_ComboBox = QtWidgets.QComboBox(self.ChooseServerPage)
+        self.Choose_Server_ComboBox.setGeometry(QtCore.QRect(220, 320, 411, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.Choose_Server_ComboBox.setFont(font)
+        self.Choose_Server_ComboBox.setStyleSheet("QComboBox {\n"
+"    border-radius: 3px;\n"
+"    padding: 1px 2px 1px 2px;\n"
+"    min-width: 9em;\n"
+"    border: 2px solid rgb(223, 223, 223);\n"
+"}\n"
+"QComboBox::drop-down {\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: top right;\n"
+"    width: 20px;\n"
+"    border-left-color: rgb(223, 223, 223);\n"
+"    border-left-style: solid;\n"
+"    border-top-right-radius: 4px;\n"
+"    border-bottom-right-radius: 4px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"    image: url(./resources/QComboBox.png);\n"
+"}\n"
+"QComboBox QAbstractItemView::item {\n"
+"    height: 25px;\n"
+"}\n"
+"QComboBox QAbstractItemView{\n"
+"    font-size: 18px;\n"
+"}")
+        self.Choose_Server_ComboBox.setObjectName("Choose_Server_ComboBox")
+        self.Choose_Server_ComboBox.addItem("")
+        self.Choose_Server_Label2 = QtWidgets.QLabel(self.ChooseServerPage)
+        self.Choose_Server_Label2.setGeometry(QtCore.QRect(60, 320, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Choose_Server_Label2.setFont(font)
+        self.Choose_Server_Label2.setObjectName("Choose_Server_Label2")
+        self.Choose_Server_Background = QtWidgets.QLabel(self.ChooseServerPage)
+        self.Choose_Server_Background.setGeometry(QtCore.QRect(30, 280, 651, 111))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Choose_Server_Background.setFont(font)
+        self.Choose_Server_Background.setAutoFillBackground(False)
+        self.Choose_Server_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Choose_Server_Background.setText("")
+        self.Choose_Server_Background.setObjectName("Choose_Server_Background")
+        self.Choose_Server_Tip1 = QtWidgets.QLabel(self.ChooseServerPage)
+        self.Choose_Server_Tip1.setGeometry(QtCore.QRect(30, 140, 651, 111))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Choose_Server_Tip1.setFont(font)
+        self.Choose_Server_Tip1.setAutoFillBackground(False)
+        self.Choose_Server_Tip1.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Choose_Server_Tip1.setObjectName("Choose_Server_Tip1")
+        self.Completed_Choose_Server_PushButton = QtWidgets.QPushButton(self.ChooseServerPage)
+        self.Completed_Choose_Server_PushButton.setGeometry(QtCore.QRect(560, 410, 121, 51))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Completed_Choose_Server_PushButton.setFont(font)
+        self.Completed_Choose_Server_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Completed_Choose_Server_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 107, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.Completed_Choose_Server_PushButton.setFlat(False)
+        self.Completed_Choose_Server_PushButton.setObjectName("Completed_Choose_Server_PushButton")
+        self.Choose_Server_Background.raise_()
+        self.Choose_Server_Label.raise_()
+        self.Choose_Server_ComboBox.raise_()
+        self.Choose_Server_Label2.raise_()
+        self.Choose_Server_Tip1.raise_()
+        self.Completed_Choose_Server_PushButton.raise_()
+        self.FunctionsStackedWidget.addWidget(self.ChooseServerPage)
         self.Background = QtWidgets.QLabel(self.CentralWidget)
         self.Background.setGeometry(QtCore.QRect(0, 0, 941, 581))
         self.Background.setStyleSheet("QLabel\n"
@@ -976,7 +1081,7 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(0)
+        self.FunctionsStackedWidget.setCurrentIndex(6)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1057,4 +1162,11 @@ class Ui_MCSL2_MainWindow(object):
 "    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
 "\n"
 "    作者邮箱: lxhtz.dl@qq.com "))
+        self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
+        self.Choose_Server_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
+        self.Choose_Server_Label2.setText(_translate("MCSL2_MainWindow", "请选择服务器："))
+        self.Choose_Server_Tip1.setText(_translate("MCSL2_MainWindow", "   MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
+"\n"
+"   MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
+        self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
 import MCSL2_Icon_rc
