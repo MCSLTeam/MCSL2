@@ -7,8 +7,8 @@ from PyQt5.QtGui import QCursor
 class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
-        MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
-        MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar.
+        MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable
+        MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
