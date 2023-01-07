@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>944</width>
-    <height>610</height>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -315,7 +315,7 @@ QPushButton:pressed
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>0</y>
+      <y>-20</y>
       <width>731</width>
       <height>601</height>
      </rect>
@@ -324,7 +324,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
