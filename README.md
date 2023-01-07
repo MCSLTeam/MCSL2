@@ -11,9 +11,9 @@ ___
 
 这是对[MCSL](https://github.com/LxHTT/MCSL)的Remake。
 
-本使用C#开发，但由于知识有限，无奈继续使用Python。
+本来使用C#开发，但由于知识有限，无奈继续使用Python。
 
-MCSL 2 包含了启动、配置、下载、服务器管理诸多功能。
+MCSL 2 重构UI，使用更加清晰的代码逻辑开发，除了启动、配置、下载以外，添加了诸多拓展工具。
 
 遇到Bug，请积极反馈。 [》》反馈地址点我《《](https://www.wjx.top/vm/mBwRt23.aspx)
 
