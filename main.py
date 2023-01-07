@@ -1,14 +1,16 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QCursor
+from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtGui import QMouseEvent
 
 
 class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
-        MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable
-        MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar
+        MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
+
+        MCSL2_MainWindow.setWindowFlag(Qt.FramelessWindowHint)  # Hide the title bar.
+
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
@@ -1019,14 +1021,34 @@ class Ui_MCSL2_MainWindow(object):
                                                                       "    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
                                                                       "\n"
                                                                       "    作者邮箱: lxhtz.dl@qq.com "))
-
-    # The function of window dragging
-
-
 # Start App
-ver = 2.0
+class mainwindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self._startPos = None
+        self._endPos = None
+        self._tracking = False
+
+    def mouseMoveEvent(self, e: QMouseEvent):  # 重写移动事件
+        if self._tracking:
+            self._endPos = e.pos() - self._startPos
+            self.move(self.pos() + self._endPos)
+
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._startPos = QPoint(e.x(), e.y())
+            self._tracking = True
+
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._tracking = False
+            self._startPos = None
+            self._endPos = None
+
 app = QtWidgets.QApplication(sys.argv)
-MainWindow = QtWidgets.QMainWindow()
+
+MainWindow = mainwindow()
+
 ui = Ui_MCSL2_MainWindow()
 ui.setupUi(MainWindow)
 MainWindow.setWindowTitle("MCSL 2 ver2.0.0")
