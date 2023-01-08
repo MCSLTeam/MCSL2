@@ -1,5 +1,5 @@
 {
-  "spigot_1_8_8": {
+  "bungeecord": {
     "name": "BungeeCord",
     "url": "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar",
     "format": "jar"
