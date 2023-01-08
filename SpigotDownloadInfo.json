@@ -1,0 +1,62 @@
+{
+  "spigot_1_8_8": {
+    "name": "Spigot-1.8.8",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVMtS1pFZjFRa05DcjZhSzYzN01KWmdCQ2xCVXRvUmVoSktfanRSQVA3TlIzQT9lPVlzejB5bw.jar",
+    "format": "jar"
+  },
+  "spigot_1_9_4": {
+    "name": "Spigot-1.9.4",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVk5azFtdC1HUTVQa2NhU0FGeUcyem9CbG5jVE05S3RSb3ZYZGNfeHZYN3RuUT9lPVYzZ0c3OA.jar",
+    "format": "jar"
+  },
+  "spigot_1_10_2": {
+    "name": "Spigot-1.10.2",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVQ0YUtLQVYzYzlIaTkyelp0ZEtlUklCZ1cxaUx2S3FjX0V2ZktxTjI3Z3QyZz9lPVNNMWVibQ.jar",
+    "format": "jar"
+  },
+  "spigot_1_11_2": {
+    "name": "Spigot-1.11.2",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWFIdmF6SFRKNlZDbU04bmVTd3A4ZG9CUnlwZzloWXVHa2Y0TUcxMVZKdlp3Zz9lPXdkUGZDUA.jar",
+    "format": "jar"
+  },
+  "spigot_1_12_2": {
+    "name": "Spigot-1.12.2",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVdqQWJYZV8ycXRNbXBHTDR2Smg4S3NCQnFrblF4THdrUkVWYnlCSGxmWU4tdz9lPUFJNlVPRA.jar",
+    "format": "jar"
+  },
+  "spigot_1_13_2": {
+    "name": "Spigot-1.13.2",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVRQU05qRm1BUWhCaktTbHlpTUVrV01CLS16UTZQUlUySGZ1bFFnMHIwUWJoZz9lPUpiSGNVVQ.jar",
+    "format": "jar"
+  },
+  "spigot_1_14_4": {
+    "name": "Spigot-1.14.4",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVNaWnhCNWhTNXhCaG8yOUplaURVY0VCRHdiM1J4UVpsRjdDa09MdUItVzFpUT9lPVcxSUpmQg.jar",
+    "format": "jar"
+  },
+  "spigot_1_15_2": {
+    "name": "Spigot-1.15.2",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWE3S3pneV8yTXRKdjFiTWI2SkYtRzBCamRhekFFN0dfTjlnbFVnRzEtd0NZZz9lPVpjdnNmVg.jar",
+    "format": "jar"
+  },
+  "spigot_1_16_5": {
+    "name": "Spigot-1.16.5",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVR3bmw5Ynl0Z2xLaVFKNlFIYlYySllCTWktMXZwcUY2SFVDelIxSjhMR0JYQT9lPTNRYWhNTg.jar",
+    "format": "jar"
+  },
+  "spigot_1_17_1": {
+    "name": "Spigot-1.17.1",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVNsc2FZLW9hVzFIdEtFMXRxLUJNN3NCTUZfTXZFZlB5Z0NnM09LeGdfREpBdz9lPUhwdXVQQQ.jar",
+    "format": "jar"
+  },
+  "spigot_1_18_2": {
+    "name": "Spigot-1.18.2",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVVDZS10eGJfZmxOcHc3ZW1weXJOZjRCOHJQR2lmc0YyNHVIU3oxT3FEaWNfUT9lPTM3Q3U0Tg.jar",
+    "format": "jar"
+  },
+  "spigot_1_19_3": {
+    "name": "Spigot-1.19.3",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVM4VXJjNy1faWRLaXU4TlZBVXBubzhCSXljUVZDRU5jM3FrTkJxN25PWDI3QT9lPUplZ0xhag.jar",
+    "format": "jar"
+  }
+}
