@@ -5,7 +5,6 @@ from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog
 import MCSL2_Icon
-import main
 from MCSL2_Dialog import *
 
 class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
@@ -1209,9 +1208,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
         self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
 
+
         #Functions binding
         self.Start_PushButton.clicked.connect(self.StartMinecraftServer)
         self.Manual_Select_Java_PushButton.clicked.connect(self.ManualSelectJava)
+        self.Download_Java_PushButton.clicked.connect(self.DownloadJava)
 
     # Close the application
     def Quit(self):
@@ -1252,6 +1253,14 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         JavaPath = QFileDialog.getOpenFileName(self, '选择java.exe程序', os.getcwd(), "java.exe")
         self.Select_Java_ComboBox.addItem(JavaPath[0])
 
+    def DownloadJava(self):
+        self.FunctionsStackedWidget.setCurrentIndex(2)
+        self.Download_Type_ComboBox.setCurrentIndex(1)
+
+
+    def RefreshDownloadJavaList(self):
+        pass
+
 
 # Customize dialogs
 class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
@@ -1259,7 +1268,7 @@ class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
         super(MCSL2Dialog, self).__init__()
         self.setupUi(self)
 
-# Start App
+# Start app
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = Ui_MCSL2_MainWindow()
 ui = Ui_MCSL2_MainWindow()

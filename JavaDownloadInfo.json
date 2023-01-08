@@ -1,0 +1,82 @@
+{
+  "java_8_x64_inst": {
+    "name": "Java 8 64位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVhpVDRMOU5UTkJKb3o5Q0EySXhXdFlCemJ4T1hHdVhKS3N3TmpsaGs4WUNGQT9lPWNNOERjaA.msi",
+    "format": "msi"
+  },
+  "java_8_x86_inst": {
+    "name": "Java 8 32位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVJRSzVQZ09nWWhCckxmLXV6b1htNXNCWDg0SmFYeFBkcDdmazRDX1c3TGcyZz9lPXo1WDlCVw.msi",
+    "format": "msi"
+  },
+  "java_8_x64_green": {
+    "name": "Java 8 64位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVc0TXIwY2xjS1JQdHVna3ZGNEZ0d2NCVjZ5bGFySkJyOUhXMDlFaXg2d3VRdz9lPWdpYURWaA.zip",
+    "format": "zip"
+  },
+  "java_8_x86_green": {
+    "name": "Java 8 32位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVloVm9aTURhS0pOamI4MllSS2Jfdm9CYktBbGFMMk1ITDlQNG95WTBINnVwdz9lPXFBMWdyMA.zip",
+    "format": "zip"
+  },
+  "java_16_x64_inst": {
+    "name": "Java 16 64位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWRsdEctRGZ3UHRFaDNsUkhpbHdocVlCcjlFN3NYTnNMU1pWZHNfbTNuQ0hndz9lPUUzOVNiNA.msi",
+    "format": "msi"
+  },
+  "java_16_x86_inst": {
+    "name": "Java 16 32位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVN0b3E4SGlMRVJPb2E1SGZSZVJ2eVVCYmNHay1OQTlFaGs4SGdQWnBFdnhkZz9lPWoxYlF4Ng.msi",
+    "format": "msi"
+  },
+  "java_16_x64_green": {
+    "name": "Java 16 64位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWF4SGROc1pCaGRIbHJCUVpxR2wyTndCOTRDckFZaDBGRXF0cW9veHBmNk9sdz9lPUpLSUV0Rw.zip",
+    "format": "zip"
+  },
+  "java_16_x86_green": {
+    "name": "Java 16 32位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVhIQm9mZGRIelZJbFl3NnBzaDRxUE1CMGowS3FIQ2RnX2gyZnZSdmV1bzRQZz9lPTRjMTQ4WQ.zip",
+    "format": "zip"
+  },
+  "java_17_x64_inst": {
+    "name": "Java 17 64位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWJfZlUzSjBNd05HcWFIcndqSVBYcDRCQ2ZJbXRBZlNwcjR0NXZ5MXlIUGdCdz9lPXh3cktxVQ.msi",
+    "format": "msi"
+  },
+  "java_17_x86_inst": {
+    "name": "Java 17 32位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWZPUjMzOEV4RzlNcGhMTTB4V3VwUnNCQ2tmV0pIZzJqZjlaT2JYSGw3a2xLUT9lPTBEcWFhRg.msi",
+    "format": "msi"
+  },
+  "java_17_x64_green": {
+    "name": "Java 17 64位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVpxMmxxZlp4M1pQbDN1MnNMVzBuX2tCakhYY1ZYa3dneGpLY3hwM21VM3M1Zz9lPTBOamdwYQ.zip",
+    "format": "zip"
+  },
+  "java_17_x86_green": {
+    "name": "Java 17 32位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVpZRFBiT3pMamhBdXJUYVpQa2t4YmtCSzVLTklEa3gtRjg0WFVJZmR6T2MyZz9lPVlObXB2Rw.zip",
+    "format": "zip"
+  },
+  "java_18_x64_inst": {
+    "name": "Java 18 64位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWFPNGE4c1Yzd05Fc1hGUmJudThRY0VCbnZDZ21FRE1hUkZXaGFWRXRhTk5hdz9lPTBSd2ZOOQ.msi",
+    "format": "msi"
+  },
+  "java_18_x86_inst": {
+    "name": "Java 18 32位 安装版",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVlOeV9nOWR0SEpLaUJ0bmJ3ekFRa0FCZ0g1d3Z2MEUyeDI5cFBoekF2dWdsdz9lPVJMRkZkeA.msi",
+    "format": "msi"
+  },
+  "java_18_x64_green": {
+    "name": "Java 18 64位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVFxd0hVQXgzOWhFaGx0c3dFRFotQ1VCb0daelhtVFhLcGc2aWJHUEMybXJwdz9lPVE5MUVxbA.zip",
+    "format": "zip"
+  },
+  "java_18_x86_green": {
+    "name": "Java 18 32位 压缩包",
+    "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWYwOFo3OEN3LXhCdDIyTGljaGc5NXdCQjBmaU1SbmtmdmJMc2h3SDZIZ0dDZz9lPTVRZWREbA.zip",
+    "format": "zip"
+  }
+}
