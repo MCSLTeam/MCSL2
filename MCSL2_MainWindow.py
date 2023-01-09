@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
-        MCSL2_MainWindow.resize(944, 583)
+        MCSL2_MainWindow.resize(938, 583)
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
@@ -49,7 +49,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Minimize_PushButton.setText("")
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Home_Page_PushButton.setGeometry(QtCore.QRect(20, 140, 161, 41))
+        self.Home_Page_PushButton.setGeometry(QtCore.QRect(10, 140, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -57,17 +57,17 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Home_Page_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));\n"
 "    border-radius: 7px;\n"
 "}")
         self.Home_Page_PushButton.setObjectName("Home_Page_PushButton")
         self.Config_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Config_Page_PushButton.setGeometry(QtCore.QRect(20, 200, 161, 41))
+        self.Config_Page_PushButton.setGeometry(QtCore.QRect(10, 200, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -75,12 +75,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Config_Page_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));\n"
 "    border-radius: 7px;\n"
 "}")
         self.Config_Page_PushButton.setObjectName("Config_Page_PushButton")
@@ -105,7 +105,7 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSL2_Title_Icon_Label.setScaledContents(True)
         self.MCSL2_Title_Icon_Label.setObjectName("MCSL2_Title_Icon_Label")
         self.Download_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Download_Page_PushButton.setGeometry(QtCore.QRect(20, 260, 161, 41))
+        self.Download_Page_PushButton.setGeometry(QtCore.QRect(10, 260, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -113,17 +113,17 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Download_Page_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));\n"
 "    border-radius: 7px;\n"
 "}")
         self.Download_Page_PushButton.setObjectName("Download_Page_PushButton")
         self.Server_Console_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Server_Console_Page_PushButton.setGeometry(QtCore.QRect(20, 320, 161, 41))
+        self.Server_Console_Page_PushButton.setGeometry(QtCore.QRect(10, 320, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -131,17 +131,17 @@ class Ui_MCSL2_MainWindow(object):
         self.Server_Console_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Server_Console_Page_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));\n"
 "    border-radius: 7px;\n"
 "}")
         self.Server_Console_Page_PushButton.setObjectName("Server_Console_Page_PushButton")
         self.Tools_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.Tools_Page_PushButton.setGeometry(QtCore.QRect(20, 380, 161, 41))
+        self.Tools_Page_PushButton.setGeometry(QtCore.QRect(10, 380, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -149,17 +149,17 @@ class Ui_MCSL2_MainWindow(object):
         self.Tools_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Tools_Page_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));\n"
 "    border-radius: 7px;\n"
 "}")
         self.Tools_Page_PushButton.setObjectName("Tools_Page_PushButton")
         self.About_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
-        self.About_Page_PushButton.setGeometry(QtCore.QRect(20, 440, 161, 41))
+        self.About_Page_PushButton.setGeometry(QtCore.QRect(10, 440, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -167,12 +167,12 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.About_Page_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: rgb(230, 230, 230);\n"
 "    border-radius: 7px;\n"
 "}")
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
@@ -191,14 +191,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Config_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    border: 2px solid rgb(230, 230, 230);\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: rgb(230, 230, 230);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Config_PushButton.setObjectName("Config_PushButton")
@@ -211,14 +209,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Choose_Server_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    border: 2px solid rgb(230, 230, 230);\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: rgb(230, 230, 230);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Choose_Server_PushButton.setObjectName("Choose_Server_PushButton")
@@ -268,7 +264,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Notice_Label.setAutoFillBackground(False)
         self.Notice_Label.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Notice_Label.setObjectName("Notice_Label")
@@ -281,7 +277,7 @@ class Ui_MCSL2_MainWindow(object):
         self.HomeTip1_Label.setAutoFillBackground(False)
         self.HomeTip1_Label.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.HomeTip1_Label.setObjectName("HomeTip1_Label")
@@ -306,7 +302,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip1_Label.setAutoFillBackground(False)
         self.ConfigTip1_Label.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.ConfigTip1_Label.setObjectName("ConfigTip1_Label")
@@ -319,7 +315,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip2_Label.setAutoFillBackground(False)
         self.ConfigTip2_Label.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.ConfigTip2_Label.setObjectName("ConfigTip2_Label")
@@ -371,7 +367,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Java_Background.setAutoFillBackground(False)
         self.Set_Java_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Set_Java_Background.setText("")
@@ -448,7 +444,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Memory_Background.setAutoFillBackground(False)
         self.Set_Memory_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Set_Memory_Background.setText("")
@@ -469,6 +465,9 @@ class Ui_MCSL2_MainWindow(object):
         self.MinMemory_LineEdit.setStyleSheet("QLineEdit\n"
 "{\n"
 "    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
 "}\n"
 "")
         self.MinMemory_LineEdit.setObjectName("MinMemory_LineEdit")
@@ -488,6 +487,9 @@ class Ui_MCSL2_MainWindow(object):
         self.MaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
 "{\n"
 "    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
 "}\n"
 "")
         self.MaxMemory_LineEdit.setObjectName("MaxMemory_LineEdit")
@@ -507,7 +509,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Core_Background.setAutoFillBackground(False)
         self.Set_Core_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Set_Core_Background.setText("")
@@ -556,7 +558,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Others_Background.setAutoFillBackground(False)
         self.Others_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Others_Background.setText("")
@@ -577,6 +579,9 @@ class Ui_MCSL2_MainWindow(object):
         self.Server_Name_LineEdit.setStyleSheet("QLineEdit\n"
 "{\n"
 "    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
 "}\n"
 "")
         self.Server_Name_LineEdit.setObjectName("Server_Name_LineEdit")
@@ -681,7 +686,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Type_Background.setAutoFillBackground(False)
         self.Download_Type_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Download_Type_Background.setText("")
@@ -741,7 +746,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Versions_Background.setAutoFillBackground(False)
         self.Download_Versions_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Download_Versions_Background.setText("")
@@ -755,7 +760,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Progress_Background.setAutoFillBackground(False)
         self.Download_Progress_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Download_Progress_Background.setText("")
@@ -797,6 +802,9 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Save_Path_LineEdit.setStyleSheet("QLineEdit\n"
 "{\n"
 "    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
 "}\n"
 "")
         self.Download_Save_Path_LineEdit.setObjectName("Download_Save_Path_LineEdit")
@@ -854,7 +862,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Console_Background.setAutoFillBackground(False)
         self.Console_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Console_Background.setText("")
@@ -870,7 +878,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Command_Background.setAutoFillBackground(False)
         self.Command_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Command_Background.setObjectName("Command_Background")
@@ -940,7 +948,7 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Background.setAutoFillBackground(False)
         self.About_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.About_Background.setText("")
@@ -987,7 +995,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Description_Label.setAutoFillBackground(False)
         self.Description_Label.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Description_Label.setObjectName("Description_Label")
@@ -1000,12 +1008,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Check_Update_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Check_Update_PushButton.setStyleSheet("QPushButton\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(223, 223, 223);\n"
+"    background-color: rgb(230, 230, 230);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Check_Update_PushButton.setObjectName("Check_Update_PushButton")
@@ -1136,14 +1144,14 @@ class Ui_MCSL2_MainWindow(object):
     def retranslateUi(self, MCSL2_MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MainWindow"))
-        self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "主页"))
-        self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "配置服务器"))
+        self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "主页  "))
+        self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "配置服务器  "))
         self.MCSL2_Title_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
         self.MCSL2_Title_Author_Label.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
-        self.Download_Page_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
-        self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "更多工具"))
-        self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "关于"))
+        self.Download_Page_PushButton.setText(_translate("MCSL2_MainWindow", "下载  "))
+        self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "服务器控制台  "))
+        self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "更多工具  "))
+        self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "关于  "))
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
         self.Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))

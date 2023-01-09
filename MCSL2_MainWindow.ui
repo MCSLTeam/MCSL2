@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>944</width>
+    <width>938</width>
     <height>583</height>
    </rect>
   </property>
@@ -76,9 +76,9 @@ QPushButton:pressed
     <widget class="QPushButton" name="Home_Page_PushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>140</y>
-       <width>161</width>
+       <width>211</width>
        <height>41</height>
       </rect>
      </property>
@@ -94,25 +94,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>主页</string>
+      <string>主页  </string>
      </property>
     </widget>
     <widget class="QPushButton" name="Config_Page_PushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>200</y>
-       <width>161</width>
+       <width>211</width>
        <height>41</height>
       </rect>
      </property>
@@ -128,17 +128,17 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>配置服务器</string>
+      <string>配置服务器  </string>
      </property>
     </widget>
     <widget class="QLabel" name="MCSL2_Title_Label">
@@ -201,9 +201,9 @@ QPushButton:pressed
     <widget class="QPushButton" name="Download_Page_PushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>260</y>
-       <width>161</width>
+       <width>211</width>
        <height>41</height>
       </rect>
      </property>
@@ -219,25 +219,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>下载</string>
+      <string>下载  </string>
      </property>
     </widget>
     <widget class="QPushButton" name="Server_Console_Page_PushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>320</y>
-       <width>161</width>
+       <width>211</width>
        <height>41</height>
       </rect>
      </property>
@@ -253,25 +253,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>服务器控制台</string>
+      <string>服务器控制台  </string>
      </property>
     </widget>
     <widget class="QPushButton" name="Tools_Page_PushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>380</y>
-       <width>161</width>
+       <width>211</width>
        <height>41</height>
       </rect>
      </property>
@@ -287,25 +287,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop:0 rgb(247, 247, 247),stop:1 rgb(255, 255, 255));
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>更多工具</string>
+      <string>更多工具  </string>
      </property>
     </widget>
     <widget class="QPushButton" name="About_Page_PushButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>440</y>
-       <width>161</width>
+       <width>211</width>
        <height>41</height>
       </rect>
      </property>
@@ -321,17 +321,17 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: rgb(230, 230, 230);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>关于</string>
+      <string>关于  </string>
      </property>
     </widget>
    </widget>
@@ -372,14 +372,12 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
-	border: 2px solid rgb(223, 223, 223);
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	border: 2px solid rgb(230, 230, 230);
-	background-color: rgb(223, 223, 223);
+	background-color: rgb(230, 230, 230);
 	border-radius: 7px;
 }</string>
       </property>
@@ -408,14 +406,12 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
-	border: 2px solid rgb(223, 223, 223);
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	border: 2px solid rgb(230, 230, 230);
-	background-color: rgb(223, 223, 223);
+	background-color: rgb(230, 230, 230);
 	border-radius: 7px;
 }</string>
       </property>
@@ -523,7 +519,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -552,7 +548,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -609,7 +605,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -641,7 +637,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -738,7 +734,7 @@ QComboBox QAbstractItemView{
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -884,7 +880,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -930,6 +926,9 @@ QPushButton:pressed
        <string notr="true">QLineEdit
 {
 	border-radius: 3px;
+	border: 2px;
+	border-color: rgb(223, 223, 223);
+    border-style: solid;
 }
 </string>
       </property>
@@ -972,6 +971,9 @@ QPushButton:pressed
        <string notr="true">QLineEdit
 {
 	border-radius: 3px;
+	border: 2px;
+	border-color: rgb(223, 223, 223);
+    border-style: solid;
 }
 </string>
       </property>
@@ -1016,7 +1018,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1123,7 +1125,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1169,6 +1171,9 @@ QPushButton:pressed
        <string notr="true">QLineEdit
 {
 	border-radius: 3px;
+	border: 2px;
+	border-color: rgb(223, 223, 223);
+    border-style: solid;
 }
 </string>
       </property>
@@ -1346,7 +1351,7 @@ QComboBox QAbstractItemView{
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1460,7 +1465,7 @@ QComboBox QAbstractItemView{
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1489,7 +1494,7 @@ QComboBox QAbstractItemView{
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1574,6 +1579,9 @@ QPushButton:pressed
        <string notr="true">QLineEdit
 {
 	border-radius: 3px;
+	border: 2px;
+	border-color: rgb(223, 223, 223);
+    border-style: solid;
 }
 </string>
       </property>
@@ -1673,7 +1681,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1704,7 +1712,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1841,7 +1849,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -1966,7 +1974,7 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
       </property>
@@ -2007,12 +2015,12 @@ QPushButton:pressed
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+	background-color: rgb(230, 230, 230);
 	border-radius: 7px;
 }</string>
       </property>
