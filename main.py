@@ -1,11 +1,9 @@
 import json
 import sys
 import os
-import requests
-import shutil
 import wget
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QPoint, pyqtSignal, QThread
+from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog
 import MCSL2_Icon
@@ -1283,6 +1281,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Check_Update_PushButton.clicked.connect(self.CheckUpdate)
         self.Download_PushButton.clicked.connect(self.StartDownload)
         self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
+        self.Manually_Choose_Download_Save_Path_PushButton.clicked.connect(self.SetDownloadSavePath)
 
     # Close the application
     def Quit(self):
@@ -1314,12 +1313,10 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
     def ToChooseServerPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(6)
 
-    # Functions in Home Page
     def StartMinecraftServer(self):
         Tip = "cnm  没写完"
         CallMCSL2Dialog(Tip)
 
-    # Functions in Config Page
     def ManualSelectJava(self):
         JavaPath = QFileDialog.getOpenFileName(self, '选择java.exe程序', os.getcwd(), "java.exe")
         self.Select_Java_ComboBox.addItem(JavaPath[0])
@@ -1328,7 +1325,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.FunctionsStackedWidget.setCurrentIndex(2)
         self.Download_Type_ComboBox.setCurrentIndex(1)
 
-    # Functions in Download Page
+    # The function of refreshing download type.
     def RefreshDownloadType(self):
         FileNames.clear()
         DownloadUrls.clear()
@@ -1369,13 +1366,39 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             wget.download(RefreshDownloadBCUrl, 'BungeeCordDownloadInfo.json')
             DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
         for i in range(len(FileNames)):
-            self.Download_Versions_ComboBox.addItem("  "+FileNames[i])
+            self.Download_Versions_ComboBox.addItem("  " + FileNames[i])
+
+    # The function of setting downloader save path
+    def SetDownloadSavePath(self):
+        global SaveFolder
+        SaveFolder = QtWidgets.QFileDialog.getExistingDirectory(self, "选择保存下载文件的路径", "./")
+        self.Download_Save_Path_LineEdit.setText("  " + SaveFolder)
 
     # The function of downloading
     def StartDownload(self):
-        pass
+        DownloadIndex = self.Download_Versions_ComboBox.currentIndex()
+        FileName = FileNames[DownloadIndex]
+        DownloadUrl = DownloadUrls[DownloadIndex]
+        print(DownloadUrl)
+        FileFormat = FileFormats[DownloadIndex]
+        SaveFileDirectory = str(SaveFolder + "/" + FileName + "." + FileFormat).replace("/", "\\")
+        print(SaveFileDirectory)
+        Downloader = DownloadKit(goal_path=SaveFileDirectory, roads=24, file_exists='rename')
+        StartDownloading = Downloader.add(DownloadUrl)
+        Tip = "文件名: " + FileName + FileFormat + "\n保存目录: " + SaveFolder
+        CallMCSL2Dialog(Tip)
+        Downloader.wait(StartDownloading)
+        if StartDownloading.result == 'success':
+            Tip = "下载完毕."
+            CallMCSL2Dialog(Tip)
+        elif not StartDownloading.result:
+            Tip = "下载失败 ,请检查网络连接,或联系开发者."
+            CallMCSL2Dialog(Tip)
+        else:
+            pass
 
-    # Check updates
+
+    # The function of checking update
     def CheckUpdate(self):
         if os.path.isfile("versionInfo"):
             os.remove("versionInfo")
@@ -1400,7 +1423,7 @@ class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
         self.setupUi(self)
 
 
-# The function of decoding downloader jsons
+# The function of decoding downloaded jsons
 def DecodeDownloadJsons(DJson):
     with open(file=DJson, mode='r', encoding="utf-8") as OpenDownloadList:
         DownloadList = str(OpenDownloadList.read())
@@ -1412,6 +1435,7 @@ def DecodeDownloadJsons(DJson):
         DownloadUrls.insert(0, DownloadUrl)
         FileFormat = i["format"]
         FileFormats.insert(0, FileFormat)
+
 
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip):
