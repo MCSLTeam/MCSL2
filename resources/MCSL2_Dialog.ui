@@ -16,28 +16,33 @@
   <widget class="QPushButton" name="Dialog_PushButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>130</y>
-     <width>111</width>
-     <height>41</height>
+     <x>120</x>
+     <y>140</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Microsoft YaHei UI</family>
-     <pointsize>12</pointsize>
+     <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(0, 120, 212);
 	border-radius: 7px;
+	color: rgb(255, 255, 255);
 }
 QPushButton:pressed
 {
-	background-color: rgb(223, 223, 223);
+    background-color: rgb(0, 107, 212);
 	border-radius: 7px;
+    color: rgb(255, 255, 255);
 }</string>
    </property>
    <property name="text">
@@ -56,10 +61,14 @@ QPushButton:pressed
    <property name="font">
     <font>
      <family>Microsoft YaHei UI</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

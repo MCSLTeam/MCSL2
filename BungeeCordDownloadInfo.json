@@ -1,7 +1,10 @@
 {
-  "bungeecord": {
-    "name": "BungeeCord",
-    "url": "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar",
-    "format": "jar"
-  }
+  "BungeeCordDownloadList":
+  [
+    {
+      "name": "BungeeCord",
+      "url": "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar",
+      "format": "jar"
+    }
+  ]
 }

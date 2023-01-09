@@ -17,28 +17,33 @@ class Ui_MCSL2_Dialog(object):
         MCSL2_Dialog.setObjectName("MCSL2_Dialog")
         MCSL2_Dialog.resize(340, 196)
         self.Dialog_PushButton = QtWidgets.QPushButton(MCSL2_Dialog)
-        self.Dialog_PushButton.setGeometry(QtCore.QRect(110, 130, 111, 41))
+        self.Dialog_PushButton.setGeometry(QtCore.QRect(120, 140, 91, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.Dialog_PushButton.setFont(font)
+        self.Dialog_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Dialog_PushButton.setStyleSheet("QPushButton\n"
                                              "{\n"
-                                             "    background-color: rgb(230, 230, 230);\n"
+                                             "    background-color: rgb(0, 120, 212);\n"
                                              "    border-radius: 7px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
                                              "}\n"
                                              "QPushButton:pressed\n"
                                              "{\n"
-                                             "    background-color: rgb(223, 223, 223);\n"
+                                             "    background-color: rgb(0, 107, 212);\n"
                                              "    border-radius: 7px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
                                              "}")
         self.Dialog_PushButton.setObjectName("Dialog_PushButton")
         self.Dialog_label = QtWidgets.QLabel(MCSL2_Dialog)
         self.Dialog_label.setGeometry(QtCore.QRect(30, 20, 281, 101))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
         self.Dialog_label.setFont(font)
         self.Dialog_label.setText("")
+        self.Dialog_label.setAlignment(QtCore.Qt.AlignCenter)
         self.Dialog_label.setObjectName("Dialog_label")
         self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.retranslateUi(MCSL2_Dialog)
@@ -48,5 +53,6 @@ class Ui_MCSL2_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         MCSL2_Dialog.setWindowTitle(_translate("MCSL2_Dialog", "提示"))
         self.Dialog_PushButton.setText(_translate("MCSL2_Dialog", "知道了"))
-
+        Tip = open(r'Tip', 'r').read()
+        self.Dialog_label.setText(_translate("MCSL2_Dialog", Tip))
         self.Dialog_PushButton.clicked.connect(self.close)

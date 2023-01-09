@@ -27,7 +27,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>10</y>
+       <y>20</y>
        <width>31</width>
        <height>23</height>
       </rect>
@@ -52,7 +52,7 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>10</y>
+       <y>20</y>
        <width>31</width>
        <height>23</height>
       </rect>
@@ -348,7 +348,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
@@ -1473,32 +1473,13 @@ QComboBox QAbstractItemView{
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="Download_Progress_Label">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>440</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>下载进度：</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="Download_Progress_Background">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>400</y>
         <width>651</width>
-        <height>111</height>
+        <height>91</height>
        </rect>
       </property>
       <property name="font">
@@ -1521,41 +1502,124 @@ QComboBox QAbstractItemView{
        <string/>
       </property>
      </widget>
-     <widget class="QProgressBar" name="Download_ProgressBar">
+     <widget class="QPushButton" name="Download_PushButton">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>440</y>
-        <width>461</width>
+        <x>540</x>
+        <y>420</y>
+        <width>111</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 107, 212);
+	border-radius: 10px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>下载</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Download_Save_Path_Label">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>430</y>
+        <width>101</width>
         <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Microsoft YaHei UI</family>
-        <pointsize>11</pointsize>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>保存路径:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="Download_Save_Path_LineEdit">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>430</y>
+        <width>251</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>9</pointsize>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">QProgressBar {
-	border: 2px solid rgb(223, 223, 223);
+       <string notr="true">QLineEdit
+{
 	border-radius: 3px;
-	background-color: rgb(255, 255, 255);
 }
- 
-QProgressBar::chunk {
-	background-color: rgb(25, 231, 162);
-	width: 20px;
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Manually_Choose_Download_Save_Path_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>430</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 6px;
+	color: rgb(255, 255, 255);
 }
- 
-QProgressBar {
-	border: 2px solid rgb(223, 223, 223);
-	border-radius: 3px;
-	text-align: center;
+QPushButton:pressed
+{
+    background-color: rgb(0, 107, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
 }</string>
       </property>
-      <property name="value">
-       <number>20</number>
+      <property name="text">
+       <string>选择..</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
      <zorder>Download_Progress_Background</zorder>
@@ -1566,8 +1630,10 @@ QProgressBar {
      <zorder>Download_Type_Label</zorder>
      <zorder>Download_Versions_ComboBox</zorder>
      <zorder>Download_Versions_Label</zorder>
-     <zorder>Download_Progress_Label</zorder>
-     <zorder>Download_ProgressBar</zorder>
+     <zorder>Download_PushButton</zorder>
+     <zorder>Download_Save_Path_Label</zorder>
+     <zorder>Download_Save_Path_LineEdit</zorder>
+     <zorder>Manually_Choose_Download_Save_Path_PushButton</zorder>
     </widget>
     <widget class="QWidget" name="ConsolePage">
      <widget class="QLabel" name="Console_Label">
@@ -1923,6 +1989,40 @@ QPushButton:pressed
     遇到Bug，请积极反馈，以帮助改进MCSL 2。 
 
     作者邮箱: lxhtz.dl@qq.com </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Check_Update_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>390</y>
+        <width>261</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(223, 223, 223);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>检查更新</string>
       </property>
      </widget>
     </widget>
