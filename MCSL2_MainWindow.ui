@@ -1319,6 +1319,11 @@ QComboBox QAbstractItemView{
         <string>  [ 服务端 ] Paper</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>  [ 服务端 ] BungeeCord</string>
+       </property>
+      </item>
      </widget>
      <widget class="QLabel" name="Download_Type_Background">
       <property name="geometry">

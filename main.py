@@ -1,15 +1,21 @@
+import json
 import sys
 import os
+import requests
+import shutil
+import wget
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt, QPoint, pyqtSignal, QThread
 from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog
 import MCSL2_Icon
+from DownloadKit import DownloadKit
 from MCSL2_Dialog import *
+
 
 class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MCSL2_MainWindow):
-        self.MCSLWindow = MCSL2_MainWindow
+        self.MCSL2_Window = MCSL2_MainWindow
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
         MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
         self._startPos = None
@@ -678,6 +684,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Download_Type_ComboBox.addItem("")
         self.Download_Type_ComboBox.addItem("")
         self.Download_Type_ComboBox.addItem("")
+        self.Download_Type_ComboBox.addItem("")
         self.Download_Type_Background = QtWidgets.QLabel(self.DownloadPage)
         self.Download_Type_Background.setGeometry(QtCore.QRect(30, 140, 651, 111))
         font = QtGui.QFont()
@@ -755,14 +762,14 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Download_Versions_Background.setText("")
         self.Download_Versions_Background.setObjectName("Download_Versions_Background")
         self.Download_Progress_Label = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Progress_Label.setGeometry(QtCore.QRect(60, 440, 91, 31))
+        self.Download_Progress_Label.setGeometry(QtCore.QRect(60, 470, 91, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
+        font.setPointSize(13)
         self.Download_Progress_Label.setFont(font)
         self.Download_Progress_Label.setObjectName("Download_Progress_Label")
         self.Download_Progress_Background = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Progress_Background.setGeometry(QtCore.QRect(30, 400, 651, 111))
+        self.Download_Progress_Background.setGeometry(QtCore.QRect(30, 400, 651, 91))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -775,30 +782,68 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                         "}")
         self.Download_Progress_Background.setText("")
         self.Download_Progress_Background.setObjectName("Download_Progress_Background")
-        self.Download_ProgressBar = QtWidgets.QProgressBar(self.DownloadPage)
-        self.Download_ProgressBar.setGeometry(QtCore.QRect(170, 440, 461, 31))
+        self.Download_PushButton = QtWidgets.QPushButton(self.DownloadPage)
+        self.Download_PushButton.setGeometry(QtCore.QRect(540, 420, 111, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
-        self.Download_ProgressBar.setFont(font)
-        self.Download_ProgressBar.setStyleSheet("QProgressBar {\n"
-                                                "    border: 2px solid rgb(223, 223, 223);\n"
-                                                "    border-radius: 3px;\n"
-                                                "    background-color: rgb(255, 255, 255);\n"
-                                                "}\n"
-                                                " \n"
-                                                "QProgressBar::chunk {\n"
-                                                "    background-color: rgb(25, 231, 162);\n"
-                                                "    width: 20px;\n"
-                                                "}\n"
-                                                " \n"
-                                                "QProgressBar {\n"
-                                                "    border: 2px solid rgb(223, 223, 223);\n"
-                                                "    border-radius: 3px;\n"
-                                                "    text-align: center;\n"
-                                                "}")
-        self.Download_ProgressBar.setProperty("value", 20)
-        self.Download_ProgressBar.setObjectName("Download_ProgressBar")
+        font.setPointSize(14)
+        self.Download_PushButton.setFont(font)
+        self.Download_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Download_PushButton.setStyleSheet("QPushButton\n"
+                                               "{\n"
+                                               "    background-color: rgb(0, 120, 212);\n"
+                                               "    border-radius: 10px;\n"
+                                               "    color: rgb(255, 255, 255);\n"
+                                               "}\n"
+                                               "QPushButton:pressed\n"
+                                               "{\n"
+                                               "    background-color: rgb(0, 107, 212);\n"
+                                               "    border-radius: 10px;\n"
+                                               "    color: rgb(255, 255, 255);\n"
+                                               "}")
+        self.Download_PushButton.setFlat(False)
+        self.Download_PushButton.setObjectName("Download_PushButton")
+        self.Download_Save_Path_Label = QtWidgets.QLabel(self.DownloadPage)
+        self.Download_Save_Path_Label.setGeometry(QtCore.QRect(60, 430, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(13)
+        self.Download_Save_Path_Label.setFont(font)
+        self.Download_Save_Path_Label.setObjectName("Download_Save_Path_Label")
+        self.Download_Save_Path_LineEdit = QtWidgets.QLineEdit(self.DownloadPage)
+        self.Download_Save_Path_LineEdit.setGeometry(QtCore.QRect(160, 430, 251, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.Download_Save_Path_LineEdit.setFont(font)
+        self.Download_Save_Path_LineEdit.setStyleSheet("QLineEdit\n"
+                                                       "{\n"
+                                                       "    border-radius: 3px;\n"
+                                                       "}\n"
+                                                       "")
+        self.Download_Save_Path_LineEdit.setObjectName("Download_Save_Path_LineEdit")
+        self.Manually_Choose_Download_Save_Path_PushButton = QtWidgets.QPushButton(self.DownloadPage)
+        self.Manually_Choose_Download_Save_Path_PushButton.setGeometry(QtCore.QRect(430, 430, 81, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Manually_Choose_Download_Save_Path_PushButton.setFont(font)
+        self.Manually_Choose_Download_Save_Path_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Manually_Choose_Download_Save_Path_PushButton.setStyleSheet("QPushButton\n"
+                                                                         "{\n"
+                                                                         "    background-color: rgb(0, 120, 212);\n"
+                                                                         "    border-radius: 6px;\n"
+                                                                         "    color: rgb(255, 255, 255);\n"
+                                                                         "}\n"
+                                                                         "QPushButton:pressed\n"
+                                                                         "{\n"
+                                                                         "    background-color: rgb(0, 107, 212);\n"
+                                                                         "    border-radius: 6px;\n"
+                                                                         "    color: rgb(255, 255, 255);\n"
+                                                                         "}")
+        self.Manually_Choose_Download_Save_Path_PushButton.setFlat(False)
+        self.Manually_Choose_Download_Save_Path_PushButton.setObjectName(
+            "Manually_Choose_Download_Save_Path_PushButton")
         self.Download_Progress_Background.raise_()
         self.Download_Versions_Background.raise_()
         self.Download_Type_Background.raise_()
@@ -808,7 +853,10 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Download_Versions_ComboBox.raise_()
         self.Download_Versions_Label.raise_()
         self.Download_Progress_Label.raise_()
-        self.Download_ProgressBar.raise_()
+        self.Download_PushButton.raise_()
+        self.Download_Save_Path_Label.raise_()
+        self.Download_Save_Path_LineEdit.raise_()
+        self.Manually_Choose_Download_Save_Path_PushButton.raise_()
         self.FunctionsStackedWidget.addWidget(self.DownloadPage)
         self.ConsolePage = QtWidgets.QWidget()
         self.ConsolePage.setObjectName("ConsolePage")
@@ -967,6 +1015,24 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                              "    border-radius: 10px\n"
                                              "}")
         self.Description_Label.setObjectName("Description_Label")
+        self.Check_Update_PushButton = QtWidgets.QPushButton(self.AboutPage)
+        self.Check_Update_PushButton.setGeometry(QtCore.QRect(30, 390, 261, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(13)
+        self.Check_Update_PushButton.setFont(font)
+        self.Check_Update_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Check_Update_PushButton.setStyleSheet("QPushButton\n"
+                                                   "{\n"
+                                                   "    background-color: rgb(230, 230, 230);\n"
+                                                   "    border-radius: 7px;\n"
+                                                   "}\n"
+                                                   "QPushButton:pressed\n"
+                                                   "{\n"
+                                                   "    background-color: rgb(223, 223, 223);\n"
+                                                   "    border-radius: 7px;\n"
+                                                   "}")
+        self.Check_Update_PushButton.setObjectName("Check_Update_PushButton")
         self.FunctionsStackedWidget.addWidget(self.AboutPage)
         self.ChooseServerPage = QtWidgets.QWidget()
         self.ChooseServerPage.setObjectName("ChooseServerPage")
@@ -1157,12 +1223,15 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Download_Type_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "  [ 运行环境 ] Java"))
         self.Download_Type_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "  [ 服务端 ] Spigot"))
         self.Download_Type_ComboBox.setItemText(3, _translate("MCSL2_MainWindow", "  [ 服务端 ] Paper"))
+        self.Download_Type_ComboBox.setItemText(4, _translate("MCSL2_MainWindow", "  [ 服务端 ] BungeeCord"))
         self.Download_Type_Label.setText(_translate("MCSL2_MainWindow", "下载类型："))
         self.Download_Versions_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
         self.Download_Versions_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "  （JRE）Java 8 64位"))
         self.Download_Versions_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "  （JRE）Java 8 32位"))
         self.Download_Versions_Label.setText(_translate("MCSL2_MainWindow", "下载版本："))
-        self.Download_Progress_Label.setText(_translate("MCSL2_MainWindow", "下载进度："))
+        self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
+        self.Download_Save_Path_Label.setText(_translate("MCSL2_MainWindow", "保存路径:"))
+        self.Manually_Choose_Download_Save_Path_PushButton.setText(_translate("MCSL2_MainWindow", "选择.."))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))
@@ -1185,6 +1254,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                                       "    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
                                                                       "\n"
                                                                       "    作者邮箱: lxhtz.dl@qq.com "))
+        self.Check_Update_PushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
         self.Choose_Server_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
         self.Choose_Server_Label2.setText(_translate("MCSL2_MainWindow", "请选择服务器："))
@@ -1208,58 +1278,137 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
         self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
 
-
-        #Functions binding
+        # Functions binding
         self.Start_PushButton.clicked.connect(self.StartMinecraftServer)
         self.Manual_Select_Java_PushButton.clicked.connect(self.ManualSelectJava)
-        self.Download_Java_PushButton.clicked.connect(self.DownloadJava)
+        self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
+        self.Check_Update_PushButton.clicked.connect(self.CheckUpdate)
+        self.Download_PushButton.clicked.connect(self.StartDownload)
+        self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
 
     # Close the application
     def Quit(self):
+        print("[INFO] Exit.")
         app.quit()
 
     # Minimize the application [by ubby]
     def Minimize(self):
-        self.MCSLWindow.showMinimized()
+        print("[INFO] Window is minimized.")
+        self.MCSL2_Window.showMinimized()
 
     # Pages navigation functions
     def ToHomePage(self):
+        print("[INFO] Switched to Home page.")
         self.FunctionsStackedWidget.setCurrentIndex(0)
 
     def ToConfigPage(self):
+        print("[INFO] Switched to config page.")
         self.FunctionsStackedWidget.setCurrentIndex(1)
 
     def ToDownloadPage(self):
+        print("[INFO] Switched to download page.")
         self.FunctionsStackedWidget.setCurrentIndex(2)
 
     def ToConsolePage(self):
+        print("[INFO] Switched to console page.")
         self.FunctionsStackedWidget.setCurrentIndex(3)
 
     def ToToolsPage(self):
+        print("[INFO] Switched to tools page.")
         self.FunctionsStackedWidget.setCurrentIndex(4)
 
     def ToAboutPage(self):
+        print("[INFO] Switched to about page.")
         self.FunctionsStackedWidget.setCurrentIndex(5)
 
     def ToChooseServerPage(self):
+        print("[INFO] Switched to choose server page.")
         self.FunctionsStackedWidget.setCurrentIndex(6)
 
     # Functions in Home Page
     def StartMinecraftServer(self):
-        MCSL2Dialog().exec()
+        print("[INFO] Starting Minecraft Server...")
+        Tip = "cnm  没写完"
+        CallMCSL2Dialog(Tip)
 
     # Functions in Config Page
     def ManualSelectJava(self):
+        print("[INFO] Importing java.exe manually...")
         JavaPath = QFileDialog.getOpenFileName(self, '选择java.exe程序', os.getcwd(), "java.exe")
         self.Select_Java_ComboBox.addItem(JavaPath[0])
 
-    def DownloadJava(self):
+    def ToDownloadJava(self):
+        print("[INFO] Switched to download page.")
         self.FunctionsStackedWidget.setCurrentIndex(2)
         self.Download_Type_ComboBox.setCurrentIndex(1)
 
+    # Functions in Download Page
+    def RefreshDownloadType(self):
+        print("[INFO] Refreshing download type...")
+        """
+        self.Download_Type_ComboBox.currentIndex()
+        0 - Failed.
+        1 - Java.
+        2 - Spigot.
+        3 - Paper.
+        4. - BungeeCord.(Hidden)
+        """
+        if self.Download_Type_ComboBox.currentIndex() == 0:
+            print("[INFO] Have chosen nothing.")
+            pass
+        elif self.Download_Type_ComboBox.currentIndex() == 1:  # Java
+            print("[INFO] Have chosen Java.")
+            if os.path.isfile("JavaDownloadInfo.json"):
+                os.remove("JavaDownloadInfo.json")
+            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/JavaDownloadInfo.json'
+            wget.download(RefreshDownloadJavaUrl, 'JavaDownloadInfo.json')
 
-    def RefreshDownloadJavaList(self):
+        elif self.Download_Type_ComboBox.currentIndex() == 2:  # Spigot
+            print("[INFO] Have chosen Spigot.")
+            if os.path.isfile("SpigotDownloadInfo.json"):
+                os.remove("SpigotDownloadInfo.json")
+            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/SpigotDownloadInfo.json'
+            wget.download(RefreshDownloadJavaUrl, 'SpigotDownloadInfo.json')
+            print("[INFO] Refresh completed.")
+            DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
+        elif self.Download_Type_ComboBox.currentIndex() == 3:  # Paper
+            print("[INFO] Have chosen Paper.")
+            if os.path.isfile("PaperDownloadInfo.json"):
+                os.remove("PaperDownloadInfo.json")
+            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/PaperDownloadInfo.json'
+            wget.download(RefreshDownloadJavaUrl, 'PaperDownloadInfo.json')
+            print("[INFO] Refresh completed.")
+            DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
+        elif self.Download_Type_ComboBox.currentIndex() == 4:  # BungeeCord
+            print("[INFO] Have chosen BungeeCord.")
+            if os.path.isfile("BungeeCordDownloadInfo.json"):
+                os.remove("BungeeCordDownloadInfo.json")
+            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/BungeeCordDownloadInfo.json'
+            wget.download(RefreshDownloadJavaUrl, 'BungeeCordDownloadInfo.json')
+            print("[INFO] Refresh completed.")
+            DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
+
+    # The function of downloading
+    def StartDownload(self):
         pass
+
+    # Check updates
+    def CheckUpdate(self):
+        print("[INFO] Starting checking update..")
+        if os.path.isfile("versionInfo"):
+            os.remove("versionInfo")
+        CheckUpdateUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/versionInfo'
+        wget.download(CheckUpdateUrl, 'versionInfo')
+        LatestVersion = open(r'versionInfo', 'r').read()
+        if float(LatestVersion) > Version:
+            Tip = "检测到新版本:v" + str(LatestVersion)
+            CallMCSL2Dialog(Tip)
+        elif float(LatestVersion) == Version:
+            Tip = "已是最新版本:v" + str(LatestVersion)
+            CallMCSL2Dialog(Tip)
+        elif float(LatestVersion) < Version:
+            Tip = "开发者是不是(\n\n内部版本号: v" + str(Version) + "\n\n发布版本号: v" + str(LatestVersion)
+            CallMCSL2Dialog(Tip)
 
 
 # Customize dialogs
@@ -1268,7 +1417,42 @@ class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
         super(MCSL2Dialog, self).__init__()
         self.setupUi(self)
 
+
+# The function of decoding downloader jsons
+def DecodeDownloadJsons(DJson):
+    print("[INFO] Decoding download json...")
+    print("[INFO] Json file is at", DJson)
+    with open(file=DJson, mode='r', encoding="utf-8") as OpenDownloadList:
+        DownloadList = str(OpenDownloadList.read())
+        print("Read ok")
+    PyString_1 = json.loads(DownloadList)
+    print(PyString_1)
+    print("loads ok")
+    PyString_2 = PyString_1['MCSLDownloadList']
+    print("[CODE] Json is here.\n")
+    print("[INFO] Decode completed.\n")
+    print("[INFO] Starting to set FileName, Download Url and File Extension...")
+    for i in PyString_2:
+        FileName = i["name"]
+        DownloadUrl = i["url"]
+        FileExtension = i["format"]
+        print("FileName:", FileName)
+
+
+
+# The function of calling MCSL2 Dialog
+def CallMCSL2Dialog(Tip):
+    print("[INFO] Calling MCSL2 Dialog...")
+    SaveTip = open(r'Tip', 'w+')
+    SaveTip.write(Tip)
+    SaveTip.close()
+    MCSL2Dialog().exec()
+    os.remove(r'Tip')
+    print("[INFO] MCSL2 Dialog has been closed.")
+
+
 # Start app
+Version = 2.0
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = Ui_MCSL2_MainWindow()
 ui = Ui_MCSL2_MainWindow()
