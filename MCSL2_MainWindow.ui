@@ -348,7 +348,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
@@ -1417,16 +1417,6 @@ QComboBox QAbstractItemView{
       <item>
        <property name="text">
         <string>  请选择</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>  （JRE）Java 8 64位</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>  （JRE）Java 8 32位</string>
        </property>
       </item>
      </widget>

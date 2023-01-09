@@ -725,8 +725,6 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Download_Versions_ComboBox.setObjectName("Download_Versions_ComboBox")
         self.Download_Versions_ComboBox.addItem("")
-        self.Download_Versions_ComboBox.addItem("")
-        self.Download_Versions_ComboBox.addItem("")
         self.Download_Versions_Label = QtWidgets.QLabel(self.DownloadPage)
         self.Download_Versions_Label.setGeometry(QtCore.QRect(60, 310, 91, 31))
         font = QtGui.QFont()
@@ -1132,7 +1130,7 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(2)
+        self.FunctionsStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1188,8 +1186,6 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Type_ComboBox.setItemText(4, _translate("MCSL2_MainWindow", "  [ 服务端 ] BungeeCord"))
         self.Download_Type_Label.setText(_translate("MCSL2_MainWindow", "下载类型："))
         self.Download_Versions_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Download_Versions_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "  （JRE）Java 8 64位"))
-        self.Download_Versions_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "  （JRE）Java 8 32位"))
         self.Download_Versions_Label.setText(_translate("MCSL2_MainWindow", "下载版本："))
         self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Save_Path_Label.setText(_translate("MCSL2_MainWindow", "保存路径:"))

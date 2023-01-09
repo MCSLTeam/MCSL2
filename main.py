@@ -738,8 +738,6 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                       "}")
         self.Download_Versions_ComboBox.setObjectName("Download_Versions_ComboBox")
         self.Download_Versions_ComboBox.addItem("")
-        self.Download_Versions_ComboBox.addItem("")
-        self.Download_Versions_ComboBox.addItem("")
         self.Download_Versions_Label = QtWidgets.QLabel(self.DownloadPage)
         self.Download_Versions_Label.setGeometry(QtCore.QRect(60, 310, 91, 31))
         font = QtGui.QFont()
@@ -1288,63 +1286,53 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     # Close the application
     def Quit(self):
-        print("[INFO] Exit.")
         app.quit()
 
     # Minimize the application [by ubby]
     def Minimize(self):
-        print("[INFO] Window is minimized.")
         self.MCSL2_Window.showMinimized()
 
     # Pages navigation functions
     def ToHomePage(self):
-        print("[INFO] Switched to Home page.")
         self.FunctionsStackedWidget.setCurrentIndex(0)
 
     def ToConfigPage(self):
-        print("[INFO] Switched to config page.")
         self.FunctionsStackedWidget.setCurrentIndex(1)
 
     def ToDownloadPage(self):
-        print("[INFO] Switched to download page.")
         self.FunctionsStackedWidget.setCurrentIndex(2)
 
     def ToConsolePage(self):
-        print("[INFO] Switched to console page.")
         self.FunctionsStackedWidget.setCurrentIndex(3)
 
     def ToToolsPage(self):
-        print("[INFO] Switched to tools page.")
         self.FunctionsStackedWidget.setCurrentIndex(4)
 
     def ToAboutPage(self):
-        print("[INFO] Switched to about page.")
         self.FunctionsStackedWidget.setCurrentIndex(5)
 
     def ToChooseServerPage(self):
-        print("[INFO] Switched to choose server page.")
         self.FunctionsStackedWidget.setCurrentIndex(6)
 
     # Functions in Home Page
     def StartMinecraftServer(self):
-        print("[INFO] Starting Minecraft Server...")
         Tip = "cnm  没写完"
         CallMCSL2Dialog(Tip)
 
     # Functions in Config Page
     def ManualSelectJava(self):
-        print("[INFO] Importing java.exe manually...")
         JavaPath = QFileDialog.getOpenFileName(self, '选择java.exe程序', os.getcwd(), "java.exe")
         self.Select_Java_ComboBox.addItem(JavaPath[0])
 
     def ToDownloadJava(self):
-        print("[INFO] Switched to download page.")
         self.FunctionsStackedWidget.setCurrentIndex(2)
         self.Download_Type_ComboBox.setCurrentIndex(1)
 
     # Functions in Download Page
     def RefreshDownloadType(self):
-        print("[INFO] Refreshing download type...")
+        FileNames.clear()
+        DownloadUrls.clear()
+        FileFormats.clear()
         """
         self.Download_Type_ComboBox.currentIndex()
         0 - Failed.
@@ -1354,38 +1342,30 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         4. - BungeeCord.(Hidden)
         """
         if self.Download_Type_ComboBox.currentIndex() == 0:
-            print("[INFO] Have chosen nothing.")
             pass
         elif self.Download_Type_ComboBox.currentIndex() == 1:  # Java
-            print("[INFO] Have chosen Java.")
             if os.path.isfile("JavaDownloadInfo.json"):
                 os.remove("JavaDownloadInfo.json")
             RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/JavaDownloadInfo.json'
             wget.download(RefreshDownloadJavaUrl, 'JavaDownloadInfo.json')
-
+            DecodeDownloadJsons(DJson="JavaDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 2:  # Spigot
-            print("[INFO] Have chosen Spigot.")
             if os.path.isfile("SpigotDownloadInfo.json"):
                 os.remove("SpigotDownloadInfo.json")
-            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/SpigotDownloadInfo.json'
-            wget.download(RefreshDownloadJavaUrl, 'SpigotDownloadInfo.json')
-            print("[INFO] Refresh completed.")
-            DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
+            RefreshDownloadSpigotUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/SpigotDownloadInfo.json'
+            wget.download(RefreshDownloadSpigotUrl, 'SpigotDownloadInfo.json')
+            DecodeDownloadJsons(DJson="SpigotDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 3:  # Paper
-            print("[INFO] Have chosen Paper.")
             if os.path.isfile("PaperDownloadInfo.json"):
                 os.remove("PaperDownloadInfo.json")
-            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/PaperDownloadInfo.json'
-            wget.download(RefreshDownloadJavaUrl, 'PaperDownloadInfo.json')
-            print("[INFO] Refresh completed.")
-            DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
+            RefreshDownloadPaperUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/PaperDownloadInfo.json'
+            wget.download(RefreshDownloadPaperUrl, 'PaperDownloadInfo.json')
+            DecodeDownloadJsons(DJson="PaperDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 4:  # BungeeCord
-            print("[INFO] Have chosen BungeeCord.")
             if os.path.isfile("BungeeCordDownloadInfo.json"):
                 os.remove("BungeeCordDownloadInfo.json")
-            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/BungeeCordDownloadInfo.json'
-            wget.download(RefreshDownloadJavaUrl, 'BungeeCordDownloadInfo.json')
-            print("[INFO] Refresh completed.")
+            RefreshDownloadBCUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/BungeeCordDownloadInfo.json'
+            wget.download(RefreshDownloadBCUrl, 'BungeeCordDownloadInfo.json')
             DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
 
     # The function of downloading
@@ -1394,7 +1374,6 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     # Check updates
     def CheckUpdate(self):
-        print("[INFO] Starting checking update..")
         if os.path.isfile("versionInfo"):
             os.remove("versionInfo")
         CheckUpdateUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/versionInfo'
@@ -1420,38 +1399,35 @@ class MCSL2Dialog(QtWidgets.QDialog, Ui_MCSL2_Dialog):
 
 # The function of decoding downloader jsons
 def DecodeDownloadJsons(DJson):
-    print("[INFO] Decoding download json...")
-    print("[INFO] Json file is at", DJson)
     with open(file=DJson, mode='r', encoding="utf-8") as OpenDownloadList:
         DownloadList = str(OpenDownloadList.read())
-        print("Read ok")
-    PyString_1 = json.loads(DownloadList)
-    print(PyString_1)
-    print("loads ok")
-    PyString_2 = PyString_1['MCSLDownloadList']
-    print("[CODE] Json is here.\n")
-    print("[INFO] Decode completed.\n")
-    print("[INFO] Starting to set FileName, Download Url and File Extension...")
-    for i in PyString_2:
+    PyDownloadList = json.loads(DownloadList)['MCSLDownloadList']
+    for i in PyDownloadList:
+        print(i)
         FileName = i["name"]
+        FileNames.insert(0, FileName)
+        print(FileNames)
         DownloadUrl = i["url"]
-        FileExtension = i["format"]
-        print("FileName:", FileName)
-
+        DownloadUrls.insert(0, DownloadUrl)
+        print(DownloadUrls)
+        FileFormat = i["format"]
+        FileFormats.insert(0, FileFormat)
+        print(FileFormats)
 
 
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip):
-    print("[INFO] Calling MCSL2 Dialog...")
     SaveTip = open(r'Tip', 'w+')
     SaveTip.write(Tip)
     SaveTip.close()
     MCSL2Dialog().exec()
     os.remove(r'Tip')
-    print("[INFO] MCSL2 Dialog has been closed.")
 
 
 # Start app
+FileNames = []
+DownloadUrls = []
+FileFormats = []
 Version = 2.0
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = Ui_MCSL2_MainWindow()
