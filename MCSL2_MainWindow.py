@@ -50,7 +50,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(161, 182, 0);\n"
+"    background-color: rgb(183, 161, 0);\n"
 "    border-radius: 11px;\n"
 "}\n"
 "QPushButton:pressed\n"
@@ -61,6 +61,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Minimize_PushButton.setText("")
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
+        self.Home_Page_PushButton.setEnabled(True)
         self.Home_Page_PushButton.setGeometry(QtCore.QRect(20, 140, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -82,8 +83,12 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgb(225, 225, 225);\n"
 "    border-radius: 7px;\n"
 "}")
+        self.Home_Page_PushButton.setCheckable(False)
+        self.Home_Page_PushButton.setChecked(False)
+        self.Home_Page_PushButton.setAutoExclusive(False)
         self.Home_Page_PushButton.setObjectName("Home_Page_PushButton")
         self.Config_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
+        self.Config_Page_PushButton.setEnabled(True)
         self.Config_Page_PushButton.setGeometry(QtCore.QRect(20, 210, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -105,6 +110,9 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgb(225, 225, 225);\n"
 "    border-radius: 7px;\n"
 "}")
+        self.Config_Page_PushButton.setCheckable(False)
+        self.Config_Page_PushButton.setChecked(False)
+        self.Config_Page_PushButton.setAutoExclusive(False)
         self.Config_Page_PushButton.setObjectName("Config_Page_PushButton")
         self.MCSL2_Title_Label = QtWidgets.QLabel(self.OptionsWidget)
         self.MCSL2_Title_Label.setGeometry(QtCore.QRect(100, 60, 111, 31))
@@ -127,6 +135,7 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSL2_Title_Icon_Label.setScaledContents(True)
         self.MCSL2_Title_Icon_Label.setObjectName("MCSL2_Title_Icon_Label")
         self.Download_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
+        self.Download_Page_PushButton.setEnabled(True)
         self.Download_Page_PushButton.setGeometry(QtCore.QRect(20, 280, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -148,8 +157,12 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgb(225, 225, 225);\n"
 "    border-radius: 7px;\n"
 "}")
+        self.Download_Page_PushButton.setCheckable(False)
+        self.Download_Page_PushButton.setChecked(False)
+        self.Download_Page_PushButton.setAutoExclusive(False)
         self.Download_Page_PushButton.setObjectName("Download_Page_PushButton")
         self.Server_Console_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
+        self.Server_Console_Page_PushButton.setEnabled(True)
         self.Server_Console_Page_PushButton.setGeometry(QtCore.QRect(20, 350, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -171,8 +184,12 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgb(225, 225, 225);\n"
 "    border-radius: 7px;\n"
 "}")
+        self.Server_Console_Page_PushButton.setCheckable(False)
+        self.Server_Console_Page_PushButton.setChecked(False)
+        self.Server_Console_Page_PushButton.setAutoExclusive(False)
         self.Server_Console_Page_PushButton.setObjectName("Server_Console_Page_PushButton")
         self.Tools_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
+        self.Tools_Page_PushButton.setEnabled(True)
         self.Tools_Page_PushButton.setGeometry(QtCore.QRect(20, 420, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -194,8 +211,12 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgb(225, 225, 225);\n"
 "    border-radius: 7px;\n"
 "}")
+        self.Tools_Page_PushButton.setCheckable(False)
+        self.Tools_Page_PushButton.setChecked(False)
+        self.Tools_Page_PushButton.setAutoExclusive(False)
         self.Tools_Page_PushButton.setObjectName("Tools_Page_PushButton")
         self.About_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
+        self.About_Page_PushButton.setEnabled(True)
         self.About_Page_PushButton.setGeometry(QtCore.QRect(20, 490, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -217,6 +238,9 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgb(225, 225, 225);\n"
 "    border-radius: 7px;\n"
 "}")
+        self.About_Page_PushButton.setCheckable(False)
+        self.About_Page_PushButton.setChecked(False)
+        self.About_Page_PushButton.setAutoExclusive(False)
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
         self.FunctionsStackedWidget = QtWidgets.QStackedWidget(self.CentralWidget)
         self.FunctionsStackedWidget.setGeometry(QtCore.QRect(210, -20, 731, 601))
@@ -605,7 +629,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip3_Label.setFont(font)
         self.ConfigTip3_Label.setObjectName("ConfigTip3_Label")
         self.Manual_Import_Core_PushButton = QtWidgets.QPushButton(self.ConfigPage)
-        self.Manual_Import_Core_PushButton.setGeometry(QtCore.QRect(450, 380, 201, 31))
+        self.Manual_Import_Core_PushButton.setGeometry(QtCore.QRect(450, 380, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -694,6 +718,33 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Completed_Save_PushButton.setFlat(False)
         self.Completed_Save_PushButton.setObjectName("Completed_Save_PushButton")
+        self.Download_Core_PushButton = QtWidgets.QPushButton(self.ConfigPage)
+        self.Download_Core_PushButton.setGeometry(QtCore.QRect(560, 380, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Download_Core_PushButton.setFont(font)
+        self.Download_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Download_Core_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.Download_Core_PushButton.setFlat(False)
+        self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
         self.Set_Java_Background.raise_()
         self.Config_Label.raise_()
         self.ConfigTip1_Label.raise_()
@@ -717,6 +768,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Server_Name_Label.raise_()
         self.Server_Name_LineEdit.raise_()
         self.Completed_Save_PushButton.raise_()
+        self.Download_Core_PushButton.raise_()
         self.FunctionsStackedWidget.addWidget(self.ConfigPage)
         self.DownloadPage = QtWidgets.QWidget()
         self.DownloadPage.setObjectName("DownloadPage")
@@ -1188,7 +1240,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_Background.setAutoFillBackground(False)
         self.Choose_Server_Background.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Choose_Server_Background.setText("")
@@ -1202,7 +1254,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_Tip1.setAutoFillBackground(False)
         self.Choose_Server_Tip1.setStyleSheet("QLabel\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
         self.Choose_Server_Tip1.setObjectName("Choose_Server_Tip1")
@@ -1259,7 +1311,7 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(0)
+        self.FunctionsStackedWidget.setCurrentIndex(6)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1307,6 +1359,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
+        self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Type_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
         self.Download_Type_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "  [ 运行环境 ] Java"))
