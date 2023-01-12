@@ -1443,7 +1443,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     # The function of refreshing download type.
     def RefreshDownloadType(self):
-        FileNames.clear()
+        ComboBoxNames.clear()
         DownloadUrls.clear()
         FileFormats.clear()
         self.Download_Versions_ComboBox.clear()
@@ -1481,26 +1481,26 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             RefreshDownloadBCUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/BungeeCordDownloadInfo.json'
             wget.download(RefreshDownloadBCUrl, 'BungeeCordDownloadInfo.json')
             DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
-        for i in range(len(FileNames)):
-            self.Download_Versions_ComboBox.addItem("  " + FileNames[i])
+        print(ComboBoxNames)
+        for i in range(len(ComboBoxNames)):
+            self.Download_Versions_ComboBox.addItem("  " + ComboBoxNames[i])
 
     # The function of setting downloader save path
     def SetDownloadSavePath(self):
         global SaveFolder
         SaveFolder = QtWidgets.QFileDialog.getExistingDirectory(self, "选择保存下载文件的路径", "./").replace("/", "\\")
-        print(SaveFolder)
         self.Download_Save_Path_LineEdit.setText("  " + SaveFolder)
 
     # The function of downloading
     def StartDownload(self):
         DownloadIndex = self.Download_Versions_ComboBox.currentIndex()
-        FileName = FileNames[DownloadIndex]
+        ComboBoxName = ComboBoxNames[DownloadIndex]
         DownloadUrl = DownloadUrls[DownloadIndex]
         print(DownloadUrl)
         FileFormat = FileFormats[DownloadIndex]
-        SaveFileDirectory = str(SaveFolder) + "\\" + FileName + "." + FileFormat
-        print(SaveFileDirectory)
-        Downloader = DownloadKit(goal_path=SaveFileDirectory, roads=128, file_exists='rename')
+        FileName = FileNames[DownloadIndex]
+        Downloader = DownloadKit(goal_path=SaveFolder, roads=32, file_exists='skip')
+        Downloader.block_size = '10M'
         StartDownloading = Downloader.add(DownloadUrl)
         Tip = "文件名: " + FileName + FileFormat + "\n保存目录: " + SaveFolder
         CallMCSL2Dialog(Tip)
@@ -1509,7 +1509,10 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             Tip = "下载完毕."
             CallMCSL2Dialog(Tip)
         elif not StartDownloading.result:
-            Tip = "下载失败 ,请检查网络连接,或联系开发者."
+            Tip = "下载失败, 请检查网络连接, 或联系开发者."
+            CallMCSL2Dialog(Tip)
+        elif StartDownloading.result == "skip":
+            Tip = "还没开始下载就失败了欸..检查一下是否有同名文件存在吧!"
             CallMCSL2Dialog(Tip)
         else:
             pass
@@ -1546,12 +1549,14 @@ def DecodeDownloadJsons(DJson):
         DownloadList = str(OpenDownloadList.read())
     PyDownloadList = json.loads(DownloadList)['MCSLDownloadList']
     for i in PyDownloadList:
-        FileName = i["name"]
-        FileNames.insert(0, FileName)
+        ComboBoxName = i["name"]
+        ComboBoxNames.insert(0, ComboBoxName)
         DownloadUrl = i["url"]
         DownloadUrls.insert(0, DownloadUrl)
         FileFormat = i["format"]
         FileFormats.insert(0, FileFormat)
+        FileName = i["filename"]
+        FileNames.insert(0, FileName)
 
 
 # The function of calling MCSL2 Dialog
@@ -1564,9 +1569,10 @@ def CallMCSL2Dialog(Tip):
 
 
 # Start app
-FileNames = []
+ComboBoxNames = []
 DownloadUrls = []
 FileFormats = []
+FileNames = []
 Version = 2.0
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = Ui_MCSL2_MainWindow()

@@ -3,8 +3,9 @@
   [
     {
       "name": "BungeeCord",
-      "url": "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar",
-      "format": "jar"
+      "url": "https://ghdl.feizhuqwq.cf/https://github.com/LxHTT/MCSL_BungeeCordDownload/releases/download/2.0/BungeeCord.jar",
+      "format": "jar",
+      "filename": "BungeeCord"
     }
   ]
 }
