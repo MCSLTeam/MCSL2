@@ -1481,7 +1481,6 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             RefreshDownloadBCUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/BungeeCordDownloadInfo.json'
             wget.download(RefreshDownloadBCUrl, 'BungeeCordDownloadInfo.json')
             DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
-        print(ComboBoxNames)
         for i in range(len(ComboBoxNames)):
             self.Download_Versions_ComboBox.addItem("  " + ComboBoxNames[i])
 
@@ -1496,7 +1495,6 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         DownloadIndex = self.Download_Versions_ComboBox.currentIndex()
         ComboBoxName = ComboBoxNames[DownloadIndex]
         DownloadUrl = DownloadUrls[DownloadIndex]
-        print(DownloadUrl)
         FileFormat = FileFormats[DownloadIndex]
         FileName = FileNames[DownloadIndex]
         Downloader = DownloadKit(goal_path=SaveFolder, roads=32, file_exists='skip')
