@@ -1403,7 +1403,6 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def Quit(self):
         app.quit()
-        print("Exited normally.")
 
     def Minimize(self):
         self.MCSL2_Window.showMinimized()
@@ -1500,7 +1499,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         Downloader = DownloadKit(goal_path=SaveFolder, roads=32, file_exists='skip')
         Downloader.block_size = '10M'
         StartDownloading = Downloader.add(DownloadUrl)
-        Tip = "文件名: " + FileName + FileFormat + "\n保存目录: " + SaveFolder
+        Tip = "文件名: " + FileName + "." + FileFormat + "\n保存目录: " + SaveFolder
         CallMCSL2Dialog(Tip)
         Downloader.wait(StartDownloading)
         if StartDownloading.result == 'success':
