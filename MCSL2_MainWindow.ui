@@ -466,7 +466,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
@@ -632,68 +632,81 @@ QPushButton:pressed
        <string>未选择服务器！</string>
       </property>
      </widget>
-     <widget class="QLabel" name="Notice_Label">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>140</y>
-        <width>321</width>
-        <height>141</height>
+        <width>304</width>
+        <height>281</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="Notice_Label">
+         <property name="font">
+          <font>
+           <family>Microsoft YaHei UI</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel
 {
 	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
-      </property>
-      <property name="text">
-       <string>   正在获取公告...</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="HomeTip1_Label">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>300</y>
-        <width>321</width>
-        <height>181</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
+         </property>
+         <property name="text">
+          <string>   正在获取公告...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="HomeTip1_Label">
+         <property name="font">
+          <font>
+           <family>Microsoft YaHei UI</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel
 {
 	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
-      </property>
-      <property name="text">
-       <string>   如何搭建一个Java版 Minecraft服务器？
+         </property>
+         <property name="text">
+          <string>   如何搭建一个Java版 Minecraft服务器？
    1.准备好Java、核心、电脑
    （提示：可使用本程序下载）
    2.配置参数（本程序“配置服务器”页）
    3. 开启服务器。
    将服务器IP告诉玩家。</string>
-      </property>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="ConfigPage">
