@@ -1584,6 +1584,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             CanCreate = 0
             Tip = "你只设置好了Java\n\n（恼"
 
+        # 3
         elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 0 and JavaStatus == 0 and CoreStatus == 0:
             CanCreate = 0
             Tip = "你只设置好了内存\n\n（恼"
@@ -1596,7 +1597,6 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         elif MinMemStatus == 1 and MaxMemStatus == 0 and NameStatus == 0 and JavaStatus == 0 and CoreStatus == 1:
             CanCreate = 0
             Tip = "Java、服务器名称和最大内存还没设置好呢\n\n（恼"
-
         elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 0 and CoreStatus == 0:
             CanCreate = 0
             Tip = "服务器核心、Java和最小内存还没设置好呢\n\n（恼"
@@ -1606,18 +1606,17 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 0 and JavaStatus == 0 and CoreStatus == 1:
             CanCreate = 0
             Tip = "Java、服务器名称和最小内存还没设置好呢\n\n（恼"
-
         elif MinMemStatus == 0 and MaxMemStatus == 0 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 0:
             CanCreate = 0
             Tip = "服务器核心和内存还没设置好呢\n\n（恼"
         elif MinMemStatus == 0 and MaxMemStatus == 0 and NameStatus == 1 and JavaStatus == 0 and CoreStatus == 1:
             CanCreate = 0
             Tip = "服务器核心和Java还没设置好呢\n\n（恼"
-
         elif MinMemStatus == 0 and MaxMemStatus == 0 and NameStatus == 0 and JavaStatus == 1 and CoreStatus == 1:
             CanCreate = 0
             Tip = "服务器名称和内存还没设置好呢\n\n（恼"
 
+        # 2
         elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 0 and CoreStatus == 0:
             CanCreate = 0
             Tip = "只剩Java和服务器核心没设置好力\n\n（喜"
@@ -1627,22 +1626,47 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 0 and JavaStatus == 0 and CoreStatus == 1:
             CanCreate = 0
             Tip = "只剩服务器名称和Java没设置好力\n\n（喜"
-
         elif MinMemStatus == 1 and MaxMemStatus == 0 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 0:
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif MinMemStatus == 1 and MaxMemStatus == 0 and NameStatus == 1 and JavaStatus == 0 and CoreStatus == 1:
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
-
         elif MinMemStatus == 1 and MaxMemStatus == 0 and NameStatus == 0 and JavaStatus == 1 and CoreStatus == 1:
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
-        elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 1:
+        elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 0:
+            CanCreate = 0
+            Tip = "只剩服务器核心和最小内存没设置好力\n\n（喜"
+        elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 0 and CoreStatus == 1:
+            CanCreate = 0
+            Tip = "只剩Java和最小内存没设置好力\n\n（喜"
+        elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 0 and JavaStatus == 1 and CoreStatus == 1:
+            CanCreate = 0
+            Tip = "只剩服务器名称和最小内存没设置好力\n\n（喜"
+        elif MinMemStatus == 0 and MaxMemStatus == 0 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 1:
+            CanCreate = 0
+            Tip = "只剩内存没设置好力\n\n（喜"
+
+        # 1
+        elif MinMemStatus == 0 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 1:
             CanCreate = 0
             Tip = "只剩最小内存没设置好力\n\n（喜"
+        elif MinMemStatus == 1 and MaxMemStatus == 0 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 1:
+            CanCreate = 0
+            Tip = "只剩最大内存没设置好力\n\n（喜"
+        elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 0 and JavaStatus == 1 and CoreStatus == 1:
+            CanCreate = 0
+            Tip = "只剩服务器名称没设置好力\n\n（喜"
+        elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 0 and CoreStatus == 1:
+            CanCreate = 0
+            Tip = "只剩Java没设置好力\n\n（喜"
+        elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 0:
+            CanCreate = 0
+            Tip = "只剩服务器核心没设置好力\n\n（喜"
 
-        elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 1:
+        # 0
+        elif MinMemStatus == 1 and MaxMemStatus == 1 and NameStatus == 1 and JavaStatus == 1 and CoreStatus == 1:
             CanCreate = 1
             Tip = "关闭此窗口后，\n\n服务器将会开始部署。"
 
