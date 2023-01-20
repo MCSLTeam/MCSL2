@@ -1,13 +1,12 @@
 import json
 import shutil
+import string
 import sys
 import os
 import wget
-import time
-from queue import Queue
-from threading import Thread
+import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt, QPoint, pyqtSignal, QThread
 from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog, QGraphicsBlurEffect
 import MCSL2_Icon
@@ -1486,10 +1485,9 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         JavaPathSysList = QFileDialog.getOpenFileName(self, '选择java.exe程序', os.getcwd(), "java.exe")
         if JavaPathSysList[0] != "":
             self.Select_Java_ComboBox.clear()
-            JavaPaths.insert(0, JavaPathSysList[0])
+            JavaPaths.append(JavaPathSysList[0])
             for i in range(len(JavaPaths)):
                 self.Select_Java_ComboBox.addItem(JavaPaths[i])
-            print(JavaPaths)
         else:
             Tip = "看来你没有选择任何的Java呢！"
             CallMCSL2Dialog(Tip)
@@ -1509,13 +1507,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         0 -> Illegal
         1 -> OK
         """
-        print("1:", CorePath)
         # The server core detector
         if CorePath != "":
             CoreStatus = 1
         else:
             CoreStatus = 0
-        print(CoreStatus)
         # The Java path parser
         if self.Select_Java_ComboBox.currentText() != "  请选择":
             if len(JavaPaths) != 0:
@@ -1528,7 +1524,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
         # The min memory parser
         if self.MinMemory_LineEdit.text() != "":
-            if int(self.MinMemory_LineEdit.text()) %1 == 0 and int(self.MinMemory_LineEdit.text()) != 0:
+            if int(self.MinMemory_LineEdit.text()) % 1 == 0 and int(self.MinMemory_LineEdit.text()) != 0:
                 MinMemory = int(self.MinMemory_LineEdit.text())
                 MinMemStatus = 1
             else:
@@ -1681,7 +1677,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             ServerFolderPath = ".\\" + ServerName
             os.mkdir(ServerFolderPath)
             shutil.copy(CorePath, ServerFolderPath)
-            ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory, 'max_memory': MaxMemory}
+            ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
+                                'max_memory': MaxMemory}
             ServerConfigJson = json.dumps(ServerConfigDict, ensure_ascii=False)
             print(ServerConfigJson)
             ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
@@ -1691,12 +1688,22 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
             Tip = "服务器部署完毕！"
             CallMCSL2Dialog(Tip)
         else:
-            Tip = "服务器部署失败，\n\n不是你的问题，\n\n去找开发者反馈吧！"
+            Tip = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
             CallMCSL2Dialog(Tip)
 
     def AutoDetectJava(self):
+        global SearchStatus, DiskSymbols
         Tip = "cnm  自动检测没改完"
         CallMCSL2Dialog(Tip)
+        for c in string.ascii_uppercase:
+            DiskSymbol = c + ":"
+            if os.path.isdir(DiskSymbol):
+                DiskSymbol = c + ":\\"
+                DiskSymbols.append(DiskSymbol)
+        self.thread = fileSearchThread("java.exe")
+        self.thread.start()
+        self.Select_Java_ComboBox.clear()
+        self.Select_Java_ComboBox.addItem("  查找中...")
 
     def ToDownloadJava(self):
         self.FunctionsStackedWidget.setCurrentIndex(2)
@@ -1811,7 +1818,6 @@ def DecodeDownloadJsons(DJson):
     with open(file=DJson, mode='r', encoding="utf-8") as OpenDownloadList:
         DownloadList = str(OpenDownloadList.read())
     PyDownloadList = json.loads(DownloadList)['MCSLDownloadList']
-    print(PyDownloadList)
     for i in PyDownloadList:
         ComboBoxName = i["name"]
         ComboBoxNames.insert(0, ComboBoxName)
@@ -1823,6 +1829,7 @@ def DecodeDownloadJsons(DJson):
         FileNames.insert(0, FileName)
 
 
+
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip):
     SaveTip = open(r'Tip', 'w+')
@@ -1832,12 +1839,42 @@ def CallMCSL2Dialog(Tip):
     os.remove(r'Tip')
 
 
+class fileSearchThread(QThread):
+    sinOut = pyqtSignal(str)
+
+    def __init__(self, key):
+        super().__init__()
+        self.key = key
+
+    def run(self):
+        threads = []
+        for each in DiskSymbols:
+            t = threading.Thread(target=self.search, args=(self.key, each,))
+            threads.append(t)
+            t.start()
+        for i in range(len(threads)):
+            threads[i].join()
+
+    def search(self, keyword, path):
+        for DirPath, DirNames, SearchFileNames in os.walk(path):
+            for SearchFileName in SearchFileNames:
+                if SearchFileName.__contains__(keyword):
+                    SearchTMP_1 = os.path.join(DirPath, SearchFileName)
+                    JavaPaths.append(SearchTMP_1)
+                    self.sinOut.emit(os.path.join(DirPath, SearchFileName))
+            for folder in DirNames:
+                if folder.__contains__(keyword):
+                    SearchTMP_2 = os.path.join(DirPath, folder)
+                    JavaPaths.append(SearchTMP_2)
+                    self.sinOut.emit(os.path.join(DirPath, folder))
+
 # Start app
 JavaPaths = []
 ComboBoxNames = []
 DownloadUrls = []
 FileFormats = []
 FileNames = []
+DiskSymbols = []
 CorePath = ""
 Version = 2.0
 QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
@@ -1847,6 +1884,6 @@ MainWindow = Ui_MCSL2_MainWindow()
 ui = Ui_MCSL2_MainWindow()
 ui.setupUi(MainWindow)
 CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。")
-MainWindow.setWindowTitle("MCSL 2 ver2.0.0")
+MainWindow.setWindowTitle("MCSL 2")
 MainWindow.show()
 sys.exit(app.exec_())
