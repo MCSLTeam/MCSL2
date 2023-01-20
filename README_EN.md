@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/Back.png"/>
+<img src="https://raw.iqiq.io/LxHTT/MCSL2/master/Back.png"/>
 </p>
 
 # MCSL2 | A simple and multifunctional Minecraft server launcher
