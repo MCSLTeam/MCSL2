@@ -3,6 +3,9 @@ import shutil
 import sys
 import os
 import wget
+import time
+from queue import Queue
+from threading import Thread
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QMouseEvent
@@ -1773,6 +1776,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         else:
             pass
 
+    # The function of getting Minecraft server console's output
+    # def GetMCConsoleOutput(self):
+    #     subprocess.run(['cmd', '/c', 'dir'], stdout=subprocess.PIPE)
+    #     output = result.stdout.decode('utf-8')
+
     # The function of checking update
     def CheckUpdate(self):
         if os.path.isfile("versionInfo"):
@@ -1832,8 +1840,8 @@ FileFormats = []
 FileNames = []
 CorePath = ""
 Version = 2.0
-QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-QtWidgets.QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
+QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+QtWidgets.QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = Ui_MCSL2_MainWindow()
 ui = Ui_MCSL2_MainWindow()
