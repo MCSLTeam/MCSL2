@@ -2147,25 +2147,25 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         elif self.Download_Type_ComboBox.currentIndex() == 1:  # Java
             if os.path.isfile("JavaDownloadInfo.json"):
                 os.remove("JavaDownloadInfo.json")
-            RefreshDownloadJavaUrl = 'http://ys-i.ysepan.com/622878261/713409008/RgxwuSs554473467N3L25/JavaDownloadInfo.json'
+            RefreshDownloadJavaUrl = 'http://ys-k.ysepan.com/622878242/713409081/h47363486H4O6LTjstxj8d/JavaDownloadInfo.json'
             wget.download(RefreshDownloadJavaUrl, 'JavaDownloadInfo.json')
             DecodeDownloadJsons(DJson="JavaDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 2:  # Spigot
             if os.path.isfile("SpigotDownloadInfo.json"):
                 os.remove("SpigotDownloadInfo.json")  # 如果存在先删除防止下载错误
-            RefreshDownloadSpigotUrl = 'http://ys-i.ysepan.com/622878261/713409010/RgxwuSs554473467N3Vf3/SpigotDownloadInfo.json'
+            RefreshDownloadSpigotUrl = 'http://ys-k.ysepan.com/622878242/713409083/h47363486H4O6NTjstxjf5/SpigotDownloadInfo.json'
             wget.download(RefreshDownloadSpigotUrl, 'SpigotDownloadInfo.json')
             DecodeDownloadJsons(DJson="SpigotDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 3:  # Paper
             if os.path.isfile("PaperDownloadInfo.json"):
                 os.remove("PaperDownloadInfo.json")
-            RefreshDownloadPaperUrl = 'http://ys-i.ysepan.com/622878261/713409009/RgxwuSs554473467N3M4a/PaperDownloadInfo.json'
+            RefreshDownloadPaperUrl = 'http://ys-k.ysepan.com/622878242/713409082/h47363486H4O6MTjstxj49/PaperDownloadInfo.json'
             wget.download(RefreshDownloadPaperUrl, 'PaperDownloadInfo.json')
             DecodeDownloadJsons(DJson="PaperDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 4:  # BungeeCord
             if os.path.isfile("BungeeCordDownloadInfo.json"):
                 os.remove("BungeeCordDownloadInfo.json")
-            RefreshDownloadBCUrl = 'http://ys-i.ysepan.com/622878248/713409013/r554473467KM64TjstxV74/BungeeCordDownloadInfo.json'
+            RefreshDownloadBCUrl = 'http://ys-k.ysepan.com/622878242/713409080/h47363486H4O6KTjstxj16/BungeeCordDownloadInfo.json'
             wget.download(RefreshDownloadBCUrl, 'BungeeCordDownloadInfo.json')
             DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
         for i in range(len(ComboBoxNames)):
