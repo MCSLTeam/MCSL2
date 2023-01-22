@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>943</width>
-    <height>584</height>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -98,7 +98,7 @@ QPushButton:pressed
        <x>20</x>
        <y>140</y>
        <width>171</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -118,12 +118,12 @@ QPushButton:pressed
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
+	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
@@ -147,9 +147,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>210</y>
+       <y>200</y>
        <width>171</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -169,12 +169,12 @@ QPushButton:pressed
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
+	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
@@ -255,9 +255,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>280</y>
+       <y>260</y>
        <width>171</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -277,12 +277,12 @@ QPushButton:pressed
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
+	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
@@ -306,9 +306,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>350</y>
+       <y>320</y>
        <width>171</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -328,12 +328,12 @@ QPushButton:pressed
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
+	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
@@ -357,9 +357,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>420</y>
+       <y>380</y>
        <width>171</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -379,12 +379,12 @@ QPushButton:pressed
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
+	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
@@ -408,9 +408,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>490</y>
+       <y>440</y>
        <width>171</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -430,12 +430,12 @@ QPushButton:pressed
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
+	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
@@ -452,6 +452,183 @@ QPushButton:pressed
       <bool>false</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="Blue1">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>140</y>
+       <width>21</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Blue2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>21</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Blue3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>21</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Blue4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>320</y>
+       <width>21</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Blue5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>380</y>
+       <width>21</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Blue6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>440</y>
+       <width>21</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QStackedWidget" name="FunctionsStackedWidget">
     <property name="geometry">
@@ -466,7 +643,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
@@ -632,81 +809,68 @@ QPushButton:pressed
        <string>未选择服务器！</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QLabel" name="HomeTip1_Label">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>140</y>
-        <width>304</width>
-        <height>281</height>
+        <y>290</y>
+        <width>321</width>
+        <height>171</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="Notice_Label">
-         <property name="font">
-          <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
 {
 	background-color: rgb(247, 247, 247);
 	border-radius: 10px
 }</string>
-         </property>
-         <property name="text">
-          <string>   正在获取公告...</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="HomeTip1_Label">
-         <property name="font">
-          <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-         </property>
-         <property name="text">
-          <string>   如何搭建一个Java版 Minecraft服务器？
+      </property>
+      <property name="text">
+       <string>   如何搭建一个Java版 Minecraft服务器？
    1.准备好Java、核心、电脑
    （提示：可使用本程序下载）
    2.配置参数（本程序“配置服务器”页）
    3. 开启服务器。
    将服务器IP告诉玩家。</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Notice_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>321</width>
+        <height>137</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   正在获取公告...</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="ConfigPage">
@@ -845,18 +1009,55 @@ QComboBox::drop-down {
     border-bottom-right-radius: 4px;
 }
 QComboBox::down-arrow {
-    image: url(./resources/QComboBox.png);
+    border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
-QComboBox QAbstractItemView::item {
-    height: 25px;
+QComboBox QAbstractItemView
+{
+	background:rgba(255,255,255,1);
+    border:1px solid rgba(228,228,228,1);
+    border-radius:0px 0px 5px 5px;
+	font-size:14px;
+    outline: 0px;
 }
-QComboBox QAbstractItemView{
-    font-size: 18px;
+QComboBox QAbstractItemView::item
+{
+	height: 36px;
+	font-size:25px;
+	color:#666666;
+	padding-left:9px;
+	background-color:#FFFFFF;
+	min-height: 40px;
+	min-width: 60px;
+}
+QComboBox QAbstractItemView::item:hover
+{
+	background-color:#409CE1;
+	color:#ffffff;
+}
+QComboBox QAbstractItemView::item:selected
+{
+	background-color:#409CE1;
+	color:#ffffff;
 }</string>
       </property>
       <item>
        <property name="text">
         <string>  请选择</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>123</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>123213</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2132132</string>
        </property>
       </item>
      </widget>
@@ -1518,13 +1719,35 @@ QComboBox::drop-down {
     border-bottom-right-radius: 4px;
 }
 QComboBox::down-arrow {
-    image: url(./resources/QComboBox.png);
+    border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
-QComboBox QAbstractItemView::item {
-    height: 25px;
+QComboBox QAbstractItemView
+{
+	background:rgba(255,255,255,1);
+    border:1px solid rgba(228,228,228,1);
+    border-radius:0px 0px 5px 5px;
+	font-size:14px;
+    outline: 0px;
 }
-QComboBox QAbstractItemView{
-    font-size: 18px;
+QComboBox QAbstractItemView::item
+{
+	height: 36px;
+	font-size:25px;
+	color:#666666;
+	padding-left:9px;
+	background-color:#FFFFFF;
+	min-height: 40px;
+	min-width: 60px;
+}
+QComboBox QAbstractItemView::item:hover
+{
+	background-color:#409CE1;
+	color:#ffffff;
+}
+QComboBox QAbstractItemView::item:selected
+{
+	background-color:#409CE1;
+	color:#ffffff;
 }</string>
       </property>
       <item>
@@ -1633,13 +1856,35 @@ QComboBox::drop-down {
     border-bottom-right-radius: 4px;
 }
 QComboBox::down-arrow {
-    image: url(./resources/QComboBox.png);
+    border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
-QComboBox QAbstractItemView::item {
-    height: 25px;
+QComboBox QAbstractItemView
+{
+	background:rgba(255,255,255,1);
+    border:1px solid rgba(228,228,228,1);
+    border-radius:0px 0px 5px 5px;
+	font-size:14px;
+    outline: 0px;
 }
-QComboBox QAbstractItemView{
-    font-size: 18px;
+QComboBox QAbstractItemView::item
+{
+	height: 36px;
+	font-size:25px;
+	color:#666666;
+	padding-left:9px;
+	background-color:#FFFFFF;
+	min-height: 40px;
+	min-width: 60px;
+}
+QComboBox QAbstractItemView::item:hover
+{
+	background-color:#409CE1;
+	color:#ffffff;
+}
+QComboBox QAbstractItemView::item:selected
+{
+	background-color:#409CE1;
+	color:#ffffff;
 }</string>
       </property>
       <item>
@@ -2329,13 +2574,35 @@ QComboBox::drop-down {
     border-bottom-right-radius: 4px;
 }
 QComboBox::down-arrow {
-    image: url(./resources/QComboBox.png);
+    border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
-QComboBox QAbstractItemView::item {
-    height: 25px;
+QComboBox QAbstractItemView
+{
+	background:rgba(255,255,255,1);
+    border:1px solid rgba(228,228,228,1);
+    border-radius:0px 0px 5px 5px;
+	font-size:14px;
+    outline: 0px;
 }
-QComboBox QAbstractItemView{
-    font-size: 18px;
+QComboBox QAbstractItemView::item
+{
+	height: 36px;
+	font-size:25px;
+	color:#666666;
+	padding-left:9px;
+	background-color:#FFFFFF;
+	min-height: 40px;
+	min-width: 60px;
+}
+QComboBox QAbstractItemView::item:hover
+{
+	background-color:#409CE1;
+	color:#ffffff;
+}
+QComboBox QAbstractItemView::item:selected
+{
+	background-color:#409CE1;
+	color:#ffffff;
 }</string>
       </property>
       <item>
@@ -2468,6 +2735,216 @@ QPushButton:pressed
      <zorder>Choose_Server_Label2</zorder>
      <zorder>Choose_Server_Tip1</zorder>
      <zorder>Completed_Choose_Server_PushButton</zorder>
+    </widget>
+    <widget class="QWidget" name="ChooseJavaPage">
+     <widget class="QLabel" name="Choose_Java_Background">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>280</y>
+        <width>651</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Choose_Java_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>选择Java</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Choose_Java_Label2">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>320</y>
+        <width>141</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>请选择Java：</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Completed_Choose_Java_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>410</y>
+        <width>121</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 107, 212);
+	border-radius: 8px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>选好了</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Choose_Java_Tip1">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>651</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string>   emm...看来自动查找搜索到的Java部分路径过长，导致在配置服务器页面的下拉框里
+
+   无法完全显示捏...所以在这里选择吧！</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="Choose_Java_ComboBox">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>320</y>
+        <width>411</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    border-radius: 3px;
+    padding: 1px 2px 1px 2px;
+    min-width: 9em;
+	border: 2px solid rgb(223, 223, 223);
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left-color: rgb(223, 223, 223);
+    border-left-style: solid;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+QComboBox::down-arrow {
+    border-image: url(:/MCSL2_Icon/QComboBox.png);
+}
+QComboBox QAbstractItemView
+{
+	background:rgba(255,255,255,1);
+    border:1px solid rgba(228,228,228,1);
+    border-radius:0px 0px 5px 5px;
+	font-size:14px;
+    outline: 0px;
+}
+QComboBox QAbstractItemView::item
+{
+	height: 36px;
+	font-size:25px;
+	color:#666666;
+	padding-left:9px;
+	background-color:#FFFFFF;
+	min-height: 40px;
+	min-width: 60px;
+}
+QComboBox QAbstractItemView::item:hover
+{
+	background-color:#409CE1;
+	color:#ffffff;
+}
+QComboBox QAbstractItemView::item:selected
+{
+	background-color:#409CE1;
+	color:#ffffff;
+}</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>  请选择</string>
+       </property>
+      </item>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="Background">

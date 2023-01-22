@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
-        MCSL2_MainWindow.resize(943, 584)
+        MCSL2_MainWindow.resize(943, 582)
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
@@ -62,7 +62,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Home_Page_PushButton.setEnabled(True)
-        self.Home_Page_PushButton.setGeometry(QtCore.QRect(20, 140, 171, 51))
+        self.Home_Page_PushButton.setGeometry(QtCore.QRect(20, 140, 171, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -75,12 +75,12 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(243, 243, 243);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(225, 225, 225);\n"
+"    background-color: rgb(233, 233, 233);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Home_Page_PushButton.setCheckable(False)
@@ -89,7 +89,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Page_PushButton.setObjectName("Home_Page_PushButton")
         self.Config_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Config_Page_PushButton.setEnabled(True)
-        self.Config_Page_PushButton.setGeometry(QtCore.QRect(20, 210, 171, 51))
+        self.Config_Page_PushButton.setGeometry(QtCore.QRect(20, 200, 171, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -102,12 +102,12 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(243, 243, 243);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(225, 225, 225);\n"
+"    background-color: rgb(233, 233, 233);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Config_Page_PushButton.setCheckable(False)
@@ -136,7 +136,7 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSL2_Title_Icon_Label.setObjectName("MCSL2_Title_Icon_Label")
         self.Download_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Download_Page_PushButton.setEnabled(True)
-        self.Download_Page_PushButton.setGeometry(QtCore.QRect(20, 280, 171, 51))
+        self.Download_Page_PushButton.setGeometry(QtCore.QRect(20, 260, 171, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -149,12 +149,12 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(243, 243, 243);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(225, 225, 225);\n"
+"    background-color: rgb(233, 233, 233);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Download_Page_PushButton.setCheckable(False)
@@ -163,7 +163,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Page_PushButton.setObjectName("Download_Page_PushButton")
         self.Server_Console_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Server_Console_Page_PushButton.setEnabled(True)
-        self.Server_Console_Page_PushButton.setGeometry(QtCore.QRect(20, 350, 171, 51))
+        self.Server_Console_Page_PushButton.setGeometry(QtCore.QRect(20, 320, 171, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -176,12 +176,12 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(243, 243, 243);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(225, 225, 225);\n"
+"    background-color: rgb(233, 233, 233);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Server_Console_Page_PushButton.setCheckable(False)
@@ -190,7 +190,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Server_Console_Page_PushButton.setObjectName("Server_Console_Page_PushButton")
         self.Tools_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.Tools_Page_PushButton.setEnabled(True)
-        self.Tools_Page_PushButton.setGeometry(QtCore.QRect(20, 420, 171, 51))
+        self.Tools_Page_PushButton.setGeometry(QtCore.QRect(20, 380, 171, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -203,12 +203,12 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(243, 243, 243);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(225, 225, 225);\n"
+"    background-color: rgb(233, 233, 233);\n"
 "    border-radius: 7px;\n"
 "}")
         self.Tools_Page_PushButton.setCheckable(False)
@@ -217,7 +217,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Tools_Page_PushButton.setObjectName("Tools_Page_PushButton")
         self.About_Page_PushButton = QtWidgets.QPushButton(self.OptionsWidget)
         self.About_Page_PushButton.setEnabled(True)
-        self.About_Page_PushButton.setGeometry(QtCore.QRect(20, 490, 171, 51))
+        self.About_Page_PushButton.setGeometry(QtCore.QRect(20, 440, 171, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(13)
@@ -230,18 +230,103 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color: rgb(230, 230, 230);\n"
+"    background-color: rgb(243, 243, 243);\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
-"    background-color: rgb(225, 225, 225);\n"
+"    background-color: rgb(233, 233, 233);\n"
 "    border-radius: 7px;\n"
 "}")
         self.About_Page_PushButton.setCheckable(False)
         self.About_Page_PushButton.setChecked(False)
         self.About_Page_PushButton.setAutoExclusive(False)
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
+        self.Blue1 = QtWidgets.QLabel(self.OptionsWidget)
+        self.Blue1.setEnabled(True)
+        self.Blue1.setGeometry(QtCore.QRect(20, 140, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue1.setFont(font)
+        self.Blue1.setAutoFillBackground(False)
+        self.Blue1.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Blue1.setText("")
+        self.Blue1.setObjectName("Blue1")
+        self.Blue2 = QtWidgets.QLabel(self.OptionsWidget)
+        self.Blue2.setGeometry(QtCore.QRect(20, 200, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue2.setFont(font)
+        self.Blue2.setAutoFillBackground(False)
+        self.Blue2.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Blue2.setText("")
+        self.Blue2.setObjectName("Blue2")
+        self.Blue3 = QtWidgets.QLabel(self.OptionsWidget)
+        self.Blue3.setGeometry(QtCore.QRect(20, 260, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue3.setFont(font)
+        self.Blue3.setAutoFillBackground(False)
+        self.Blue3.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Blue3.setText("")
+        self.Blue3.setObjectName("Blue3")
+        self.Blue4 = QtWidgets.QLabel(self.OptionsWidget)
+        self.Blue4.setGeometry(QtCore.QRect(20, 320, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue4.setFont(font)
+        self.Blue4.setAutoFillBackground(False)
+        self.Blue4.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Blue4.setText("")
+        self.Blue4.setObjectName("Blue4")
+        self.Blue5 = QtWidgets.QLabel(self.OptionsWidget)
+        self.Blue5.setGeometry(QtCore.QRect(20, 380, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue5.setFont(font)
+        self.Blue5.setAutoFillBackground(False)
+        self.Blue5.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Blue5.setText("")
+        self.Blue5.setObjectName("Blue5")
+        self.Blue6 = QtWidgets.QLabel(self.OptionsWidget)
+        self.Blue6.setGeometry(QtCore.QRect(20, 440, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue6.setFont(font)
+        self.Blue6.setAutoFillBackground(False)
+        self.Blue6.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Blue6.setText("")
+        self.Blue6.setObjectName("Blue6")
         self.FunctionsStackedWidget = QtWidgets.QStackedWidget(self.CentralWidget)
         self.FunctionsStackedWidget.setGeometry(QtCore.QRect(210, -20, 731, 601))
         self.FunctionsStackedWidget.setAutoFillBackground(False)
@@ -337,21 +422,8 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.Selected_Server_Label.setFont(font)
         self.Selected_Server_Label.setObjectName("Selected_Server_Label")
-        self.Notice_Label = QtWidgets.QLabel(self.HomePage)
-        self.Notice_Label.setGeometry(QtCore.QRect(30, 140, 321, 141))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Notice_Label.setFont(font)
-        self.Notice_Label.setAutoFillBackground(False)
-        self.Notice_Label.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Notice_Label.setObjectName("Notice_Label")
         self.HomeTip1_Label = QtWidgets.QLabel(self.HomePage)
-        self.HomeTip1_Label.setGeometry(QtCore.QRect(30, 300, 321, 181))
+        self.HomeTip1_Label.setGeometry(QtCore.QRect(30, 290, 321, 171))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -363,6 +435,19 @@ class Ui_MCSL2_MainWindow(object):
 "    border-radius: 10px\n"
 "}")
         self.HomeTip1_Label.setObjectName("HomeTip1_Label")
+        self.Notice_Label = QtWidgets.QLabel(self.HomePage)
+        self.Notice_Label.setGeometry(QtCore.QRect(30, 140, 321, 137))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Notice_Label.setFont(font)
+        self.Notice_Label.setAutoFillBackground(False)
+        self.Notice_Label.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Notice_Label.setObjectName("Notice_Label")
         self.FunctionsStackedWidget.addWidget(self.HomePage)
         self.ConfigPage = QtWidgets.QWidget()
         self.ConfigPage.setObjectName("ConfigPage")
@@ -430,15 +515,40 @@ class Ui_MCSL2_MainWindow(object):
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
 "QComboBox::down-arrow {\n"
-"    image: url(./resources/QComboBox.png);\n"
+"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
-"QComboBox QAbstractItemView::item {\n"
-"    height: 25px;\n"
+"QComboBox QAbstractItemView\n"
+"{\n"
+"    background:rgba(255,255,255,1);\n"
+"    border:1px solid rgba(228,228,228,1);\n"
+"    border-radius:0px 0px 5px 5px;\n"
+"    font-size:14px;\n"
+"    outline: 0px;\n"
 "}\n"
-"QComboBox QAbstractItemView{\n"
-"    font-size: 18px;\n"
+"QComboBox QAbstractItemView::item\n"
+"{\n"
+"    height: 36px;\n"
+"    font-size:25px;\n"
+"    color:#666666;\n"
+"    padding-left:9px;\n"
+"    background-color:#FFFFFF;\n"
+"    min-height: 40px;\n"
+"    min-width: 60px;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
 "}")
         self.Select_Java_ComboBox.setObjectName("Select_Java_ComboBox")
+        self.Select_Java_ComboBox.addItem("")
+        self.Select_Java_ComboBox.addItem("")
+        self.Select_Java_ComboBox.addItem("")
         self.Select_Java_ComboBox.addItem("")
         self.Set_Java_Background = QtWidgets.QLabel(self.ConfigPage)
         self.Set_Java_Background.setGeometry(QtCore.QRect(330, 140, 351, 121))
@@ -803,13 +913,35 @@ class Ui_MCSL2_MainWindow(object):
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
 "QComboBox::down-arrow {\n"
-"    image: url(./resources/QComboBox.png);\n"
+"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
-"QComboBox QAbstractItemView::item {\n"
-"    height: 25px;\n"
+"QComboBox QAbstractItemView\n"
+"{\n"
+"    background:rgba(255,255,255,1);\n"
+"    border:1px solid rgba(228,228,228,1);\n"
+"    border-radius:0px 0px 5px 5px;\n"
+"    font-size:14px;\n"
+"    outline: 0px;\n"
 "}\n"
-"QComboBox QAbstractItemView{\n"
-"    font-size: 18px;\n"
+"QComboBox QAbstractItemView::item\n"
+"{\n"
+"    height: 36px;\n"
+"    font-size:25px;\n"
+"    color:#666666;\n"
+"    padding-left:9px;\n"
+"    background-color:#FFFFFF;\n"
+"    min-height: 40px;\n"
+"    min-width: 60px;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
 "}")
         self.Download_Type_ComboBox.setObjectName("Download_Type_ComboBox")
         self.Download_Type_ComboBox.addItem("")
@@ -860,13 +992,35 @@ class Ui_MCSL2_MainWindow(object):
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
 "QComboBox::down-arrow {\n"
-"    image: url(./resources/QComboBox.png);\n"
+"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
-"QComboBox QAbstractItemView::item {\n"
-"    height: 25px;\n"
+"QComboBox QAbstractItemView\n"
+"{\n"
+"    background:rgba(255,255,255,1);\n"
+"    border:1px solid rgba(228,228,228,1);\n"
+"    border-radius:0px 0px 5px 5px;\n"
+"    font-size:14px;\n"
+"    outline: 0px;\n"
 "}\n"
-"QComboBox QAbstractItemView{\n"
-"    font-size: 18px;\n"
+"QComboBox QAbstractItemView::item\n"
+"{\n"
+"    height: 36px;\n"
+"    font-size:25px;\n"
+"    color:#666666;\n"
+"    padding-left:9px;\n"
+"    background-color:#FFFFFF;\n"
+"    min-height: 40px;\n"
+"    min-width: 60px;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
 "}")
         self.Download_Versions_ComboBox.setObjectName("Download_Versions_ComboBox")
         self.Download_Versions_ComboBox.addItem("")
@@ -1214,13 +1368,35 @@ class Ui_MCSL2_MainWindow(object):
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
 "QComboBox::down-arrow {\n"
-"    image: url(./resources/QComboBox.png);\n"
+"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
-"QComboBox QAbstractItemView::item {\n"
-"    height: 25px;\n"
+"QComboBox QAbstractItemView\n"
+"{\n"
+"    background:rgba(255,255,255,1);\n"
+"    border:1px solid rgba(228,228,228,1);\n"
+"    border-radius:0px 0px 5px 5px;\n"
+"    font-size:14px;\n"
+"    outline: 0px;\n"
 "}\n"
-"QComboBox QAbstractItemView{\n"
-"    font-size: 18px;\n"
+"QComboBox QAbstractItemView::item\n"
+"{\n"
+"    height: 36px;\n"
+"    font-size:25px;\n"
+"    color:#666666;\n"
+"    padding-left:9px;\n"
+"    background-color:#FFFFFF;\n"
+"    min-height: 40px;\n"
+"    min-width: 60px;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
 "}")
         self.Choose_Server_ComboBox.setObjectName("Choose_Server_ComboBox")
         self.Choose_Server_ComboBox.addItem("")
@@ -1286,6 +1462,127 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_Tip1.raise_()
         self.Completed_Choose_Server_PushButton.raise_()
         self.FunctionsStackedWidget.addWidget(self.ChooseServerPage)
+        self.ChooseJavaPage = QtWidgets.QWidget()
+        self.ChooseJavaPage.setObjectName("ChooseJavaPage")
+        self.Choose_Java_Background = QtWidgets.QLabel(self.ChooseJavaPage)
+        self.Choose_Java_Background.setGeometry(QtCore.QRect(30, 280, 651, 111))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Choose_Java_Background.setFont(font)
+        self.Choose_Java_Background.setAutoFillBackground(False)
+        self.Choose_Java_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Choose_Java_Background.setText("")
+        self.Choose_Java_Background.setObjectName("Choose_Java_Background")
+        self.Choose_Java_Label = QtWidgets.QLabel(self.ChooseJavaPage)
+        self.Choose_Java_Label.setGeometry(QtCore.QRect(30, 80, 171, 51))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Choose_Java_Label.setFont(font)
+        self.Choose_Java_Label.setObjectName("Choose_Java_Label")
+        self.Choose_Java_Label2 = QtWidgets.QLabel(self.ChooseJavaPage)
+        self.Choose_Java_Label2.setGeometry(QtCore.QRect(60, 320, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Choose_Java_Label2.setFont(font)
+        self.Choose_Java_Label2.setObjectName("Choose_Java_Label2")
+        self.Completed_Choose_Java_PushButton = QtWidgets.QPushButton(self.ChooseJavaPage)
+        self.Completed_Choose_Java_PushButton.setGeometry(QtCore.QRect(560, 410, 121, 51))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Completed_Choose_Java_PushButton.setFont(font)
+        self.Completed_Choose_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Completed_Choose_Java_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 107, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.Completed_Choose_Java_PushButton.setFlat(False)
+        self.Completed_Choose_Java_PushButton.setObjectName("Completed_Choose_Java_PushButton")
+        self.Choose_Java_Tip1 = QtWidgets.QLabel(self.ChooseJavaPage)
+        self.Choose_Java_Tip1.setGeometry(QtCore.QRect(30, 140, 651, 111))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Choose_Java_Tip1.setFont(font)
+        self.Choose_Java_Tip1.setAutoFillBackground(False)
+        self.Choose_Java_Tip1.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Choose_Java_Tip1.setObjectName("Choose_Java_Tip1")
+        self.Choose_Java_ComboBox = QtWidgets.QComboBox(self.ChooseJavaPage)
+        self.Choose_Java_ComboBox.setGeometry(QtCore.QRect(220, 320, 411, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.Choose_Java_ComboBox.setFont(font)
+        self.Choose_Java_ComboBox.setStyleSheet("QComboBox {\n"
+"    border-radius: 3px;\n"
+"    padding: 1px 2px 1px 2px;\n"
+"    min-width: 9em;\n"
+"    border: 2px solid rgb(223, 223, 223);\n"
+"}\n"
+"QComboBox::drop-down {\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: top right;\n"
+"    width: 20px;\n"
+"    border-left-color: rgb(223, 223, 223);\n"
+"    border-left-style: solid;\n"
+"    border-top-right-radius: 4px;\n"
+"    border-bottom-right-radius: 4px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
+"}\n"
+"QComboBox QAbstractItemView\n"
+"{\n"
+"    background:rgba(255,255,255,1);\n"
+"    border:1px solid rgba(228,228,228,1);\n"
+"    border-radius:0px 0px 5px 5px;\n"
+"    font-size:14px;\n"
+"    outline: 0px;\n"
+"}\n"
+"QComboBox QAbstractItemView::item\n"
+"{\n"
+"    height: 36px;\n"
+"    font-size:25px;\n"
+"    color:#666666;\n"
+"    padding-left:9px;\n"
+"    background-color:#FFFFFF;\n"
+"    min-height: 40px;\n"
+"    min-width: 60px;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected\n"
+"{\n"
+"    background-color:#409CE1;\n"
+"    color:#ffffff;\n"
+"}")
+        self.Choose_Java_ComboBox.setObjectName("Choose_Java_ComboBox")
+        self.Choose_Java_ComboBox.addItem("")
+        self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
         self.Background = QtWidgets.QLabel(self.CentralWidget)
         self.Background.setGeometry(QtCore.QRect(0, 0, 211, 581))
         self.Background.setStyleSheet("QLabel\n"
@@ -1311,7 +1608,7 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(6)
+        self.FunctionsStackedWidget.setCurrentIndex(7)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1330,13 +1627,13 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
         self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
-        self.Notice_Label.setText(_translate("MCSL2_MainWindow", "   正在获取公告..."))
         self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "   如何搭建一个Java版 Minecraft服务器？\n"
 "   1.准备好Java、核心、电脑\n"
 "   （提示：可使用本程序下载）\n"
 "   2.配置参数（本程序“配置服务器”页）\n"
 "   3. 开启服务器。\n"
 "   将服务器IP告诉玩家。"))
+        self.Notice_Label.setText(_translate("MCSL2_MainWindow", "   正在获取公告..."))
         self.Config_Label.setText(_translate("MCSL2_MainWindow", "配置服务器"))
         self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "   一个服务器最基础的三个部件：\n"
 "   1.存放的文件夹路径\n"
@@ -1347,6 +1644,9 @@ class Ui_MCSL2_MainWindow(object):
 "   存储服务器文件。"))
         self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
         self.Select_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
+        self.Select_Java_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "123"))
+        self.Select_Java_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "123213"))
+        self.Select_Java_ComboBox.setItemText(3, _translate("MCSL2_MainWindow", "2132132"))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Manual_Select_Java_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
@@ -1402,4 +1702,11 @@ class Ui_MCSL2_MainWindow(object):
 "\n"
 "   MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
+        self.Choose_Java_Label2.setText(_translate("MCSL2_MainWindow", "请选择Java："))
+        self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Choose_Java_Tip1.setText(_translate("MCSL2_MainWindow", "   emm...看来自动查找搜索到的Java部分路径过长，导致在配置服务器页面的下拉框里\n"
+"\n"
+"   无法完全显示捏...所以在这里选择吧！"))
+        self.Choose_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
 import MCSL2_Icon_rc
