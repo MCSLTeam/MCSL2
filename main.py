@@ -10,7 +10,7 @@ import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QPoint, pyqtSignal, QThread
 from PyQt5.QtGui import QMouseEvent
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog, QListView
 import MCSL2_Icon
 from DownloadKit import DownloadKit
 from MCSL2_Dialog import *
@@ -244,7 +244,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Blue1 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue1.setEnabled(True)
         self.Blue1.setVisible(True)
-        self.Blue1.setGeometry(QtCore.QRect(20, 140, 21, 41))
+        self.Blue1.setGeometry(QtCore.QRect(20, 150, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -253,14 +253,14 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Blue1.setStyleSheet("QLabel\n"
                                  "{\n"
                                  "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 10px\n"
+                                 "    border-radius: 5px\n"
                                  "}")
         self.Blue1.setText("")
         self.Blue1.setObjectName("Blue1")
         self.Blue2 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue2.setEnabled(True)
         self.Blue2.setVisible(False)
-        self.Blue2.setGeometry(QtCore.QRect(20, 200, 21, 41))
+        self.Blue2.setGeometry(QtCore.QRect(20, 210, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -276,7 +276,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Blue3 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue3.setEnabled(True)
         self.Blue3.setVisible(False)
-        self.Blue3.setGeometry(QtCore.QRect(20, 260, 21, 41))
+        self.Blue3.setGeometry(QtCore.QRect(20, 270, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -292,7 +292,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Blue4 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue4.setEnabled(True)
         self.Blue4.setVisible(False)
-        self.Blue4.setGeometry(QtCore.QRect(20, 320, 21, 41))
+        self.Blue4.setGeometry(QtCore.QRect(20, 330, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -308,7 +308,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Blue5 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue5.setEnabled(True)
         self.Blue5.setVisible(False)
-        self.Blue5.setGeometry(QtCore.QRect(20, 380, 21, 41))
+        self.Blue5.setGeometry(QtCore.QRect(20, 390, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -324,7 +324,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Blue6 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue6.setEnabled(True)
         self.Blue6.setVisible(False)
-        self.Blue6.setGeometry(QtCore.QRect(20, 440, 21, 41))
+        self.Blue6.setGeometry(QtCore.QRect(20, 450, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -504,6 +504,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Java_Label.setFont(font)
         self.Java_Label.setObjectName("Java_Label")
         self.Select_Java_ComboBox = QtWidgets.QComboBox(self.ConfigPage)
+        self.Select_Java_ComboBox.setView(QListView())
         self.Select_Java_ComboBox.view().setTextElideMode(Qt.ElideNone)
         self.Select_Java_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.Select_Java_ComboBox.setGeometry(QtCore.QRect(400, 160, 261, 31))
@@ -517,7 +518,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                 "    min-width: 9em;\n"
                                                 "    border: 2px solid rgb(223, 223, 223);\n"
                                                 "}\n"
-                                                "QComboBox::drop-down {\n"
+                                                "QComboBox::drop-down\n"
+                                                "{\n"
                                                 "    subcontrol-origin: padding;\n"
                                                 "    subcontrol-position: top right;\n"
                                                 "    width: 20px;\n"
@@ -526,37 +528,36 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                 "    border-top-right-radius: 4px;\n"
                                                 "    border-bottom-right-radius: 4px;\n"
                                                 "}\n"
-                                                "QComboBox::down-arrow {\n"
+                                                "QComboBox::down-arrow\n"
+                                                "{\n"
                                                 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
                                                 "}\n"
                                                 "QComboBox QAbstractItemView\n"
                                                 "{\n"
-                                                "    background:rgba(255,255,255,1);\n"
-                                                "    border:1px solid rgba(228,228,228,1);\n"
-                                                "    border-radius:0px 0px 5px 5px;\n"
-                                                "    font-size:14px;\n"
+                                                "    border-radius: 10px;\n"
+                                                "    background: rgba(255,255,255,1);\n"
+                                                "    border: 1px solid rgba(228,228,228,1);\n"
+                                                "    border-radius: 0px 0px 5px 5px;\n"
+                                                "    font-size: 14px;\n"
                                                 "    outline: 0px;\n"
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item\n"
                                                 "{\n"
-                                                "    height: 36px;\n"
+                                                "    border-radius: 10px;\n"
                                                 "    font-size:25px;\n"
-                                                "    color:#666666;\n"
+                                                "    color:#666667;\n"
                                                 "    padding-left:9px;\n"
                                                 "    background-color:#FFFFFF;\n"
-                                                "    min-height: 40px;\n"
+                                                "    min-height: 33px;\n"
                                                 "    min-width: 60px;\n"
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item:hover\n"
                                                 "{\n"
-                                                "    background-color:#409CE1;\n"
-                                                "    color:#ffffff;\n"
+                                                "    border-radius: 10px;\n"
+                                                "    background-color: rgb(0, 120, 212);\n"
+                                                "    color:#FFFFFF;\n"
                                                 "}\n"
-                                                "QComboBox QAbstractItemView::item:selected\n"
-                                                "{\n"
-                                                "    background-color:#409CE1;\n"
-                                                "    color:#ffffff;\n"
-                                                "}")
+                                                "")
         self.Select_Java_ComboBox.setObjectName("Select_Java_ComboBox")
         self.Select_Java_ComboBox.addItem("")
         self.Set_Java_Background = QtWidgets.QLabel(self.ConfigPage)
@@ -901,6 +902,9 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Download_Label.setFont(font)
         self.Download_Label.setObjectName("Download_Label")
         self.Download_Type_ComboBox = QtWidgets.QComboBox(self.DownloadPage)
+        self.Download_Type_ComboBox.setView(QListView())
+        self.Download_Type_ComboBox.view().setTextElideMode(Qt.ElideNone)
+        self.Download_Type_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.Download_Type_ComboBox.setGeometry(QtCore.QRect(170, 180, 461, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -912,7 +916,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                   "    min-width: 9em;\n"
                                                   "    border: 2px solid rgb(223, 223, 223);\n"
                                                   "}\n"
-                                                  "QComboBox::drop-down {\n"
+                                                  "QComboBox::drop-down\n"
+                                                  "{\n"
                                                   "    subcontrol-origin: padding;\n"
                                                   "    subcontrol-position: top right;\n"
                                                   "    width: 20px;\n"
@@ -921,37 +926,36 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                   "    border-top-right-radius: 4px;\n"
                                                   "    border-bottom-right-radius: 4px;\n"
                                                   "}\n"
-                                                  "QComboBox::down-arrow {\n"
+                                                  "QComboBox::down-arrow\n"
+                                                  "{\n"
                                                   "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
                                                   "}\n"
                                                   "QComboBox QAbstractItemView\n"
                                                   "{\n"
-                                                  "    background:rgba(255,255,255,1);\n"
-                                                  "    border:1px solid rgba(228,228,228,1);\n"
-                                                  "    border-radius:0px 0px 5px 5px;\n"
-                                                  "    font-size:14px;\n"
+                                                  "    border-radius: 10px;\n"
+                                                  "    background: rgba(255,255,255,1);\n"
+                                                  "    border: 1px solid rgba(228,228,228,1);\n"
+                                                  "    border-radius: 0px 0px 5px 5px;\n"
+                                                  "    font-size: 14px;\n"
                                                   "    outline: 0px;\n"
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item\n"
                                                   "{\n"
-                                                  "    height: 36px;\n"
+                                                  "    border-radius: 10px;\n"
                                                   "    font-size:25px;\n"
-                                                  "    color:#666666;\n"
+                                                  "    color:#666667;\n"
                                                   "    padding-left:9px;\n"
                                                   "    background-color:#FFFFFF;\n"
-                                                  "    min-height: 40px;\n"
+                                                  "    min-height: 33px;\n"
                                                   "    min-width: 60px;\n"
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item:hover\n"
                                                   "{\n"
-                                                  "    background-color:#409CE1;\n"
-                                                  "    color:#ffffff;\n"
+                                                  "    border-radius: 10px;\n"
+                                                  "    background-color: rgb(0, 120, 212);\n"
+                                                  "    color:#FFFFFF;\n"
                                                   "}\n"
-                                                  "QComboBox QAbstractItemView::item:selected\n"
-                                                  "{\n"
-                                                  "    background-color:#409CE1;\n"
-                                                  "    color:#ffffff;\n"
-                                                  "}")
+                                                  "")
         self.Download_Type_ComboBox.setObjectName("Download_Type_ComboBox")
         self.Download_Type_ComboBox.addItem("")
         self.Download_Type_ComboBox.addItem("")
@@ -980,6 +984,9 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Download_Type_Label.setFont(font)
         self.Download_Type_Label.setObjectName("Download_Type_Label")
         self.Download_Versions_ComboBox = QtWidgets.QComboBox(self.DownloadPage)
+        self.Download_Versions_ComboBox.setView(QListView())
+        self.Download_Versions_ComboBox.view().setTextElideMode(Qt.ElideNone)
+        self.Download_Versions_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.Download_Versions_ComboBox.setGeometry(QtCore.QRect(170, 310, 461, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -991,7 +998,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                       "    min-width: 9em;\n"
                                                       "    border: 2px solid rgb(223, 223, 223);\n"
                                                       "}\n"
-                                                      "QComboBox::drop-down {\n"
+                                                      "QComboBox::drop-down\n"
+                                                      "{\n"
                                                       "    subcontrol-origin: padding;\n"
                                                       "    subcontrol-position: top right;\n"
                                                       "    width: 20px;\n"
@@ -1000,37 +1008,36 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                       "    border-top-right-radius: 4px;\n"
                                                       "    border-bottom-right-radius: 4px;\n"
                                                       "}\n"
-                                                      "QComboBox::down-arrow {\n"
+                                                      "QComboBox::down-arrow\n"
+                                                      "{\n"
                                                       "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
                                                       "}\n"
                                                       "QComboBox QAbstractItemView\n"
                                                       "{\n"
-                                                      "    background:rgba(255,255,255,1);\n"
-                                                      "    border:1px solid rgba(228,228,228,1);\n"
-                                                      "    border-radius:0px 0px 5px 5px;\n"
-                                                      "    font-size:14px;\n"
+                                                      "    border-radius: 10px;\n"
+                                                      "    background: rgba(255,255,255,1);\n"
+                                                      "    border: 1px solid rgba(228,228,228,1);\n"
+                                                      "    border-radius: 0px 0px 5px 5px;\n"
+                                                      "    font-size: 14px;\n"
                                                       "    outline: 0px;\n"
                                                       "}\n"
                                                       "QComboBox QAbstractItemView::item\n"
                                                       "{\n"
-                                                      "    height: 36px;\n"
+                                                      "    border-radius: 10px;\n"
                                                       "    font-size:25px;\n"
-                                                      "    color:#666666;\n"
+                                                      "    color:#666667;\n"
                                                       "    padding-left:9px;\n"
                                                       "    background-color:#FFFFFF;\n"
-                                                      "    min-height: 40px;\n"
+                                                      "    min-height: 33px;\n"
                                                       "    min-width: 60px;\n"
                                                       "}\n"
                                                       "QComboBox QAbstractItemView::item:hover\n"
                                                       "{\n"
-                                                      "    background-color:#409CE1;\n"
-                                                      "    color:#ffffff;\n"
+                                                      "    border-radius: 10px;\n"
+                                                      "    background-color: rgb(0, 120, 212);\n"
+                                                      "    color:#FFFFFF;\n"
                                                       "}\n"
-                                                      "QComboBox QAbstractItemView::item:selected\n"
-                                                      "{\n"
-                                                      "    background-color:#409CE1;\n"
-                                                      "    color:#ffffff;\n"
-                                                      "}")
+                                                      "")
         self.Download_Versions_ComboBox.setObjectName("Download_Versions_ComboBox")
         self.Download_Versions_ComboBox.addItem("")
         self.Download_Versions_Label = QtWidgets.QLabel(self.DownloadPage)
@@ -1357,6 +1364,9 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.Choose_Server_Label.setFont(font)
         self.Choose_Server_Label.setObjectName("Choose_Server_Label")
         self.Choose_Server_ComboBox = QtWidgets.QComboBox(self.ChooseServerPage)
+        self.Choose_Server_ComboBox.setView(QListView())
+        self.Choose_Server_ComboBox.view().setTextElideMode(Qt.ElideNone)
+        self.Choose_Server_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.Choose_Server_ComboBox.setGeometry(QtCore.QRect(220, 320, 411, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -1368,7 +1378,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                   "    min-width: 9em;\n"
                                                   "    border: 2px solid rgb(223, 223, 223);\n"
                                                   "}\n"
-                                                  "QComboBox::drop-down {\n"
+                                                  "QComboBox::drop-down\n"
+                                                  "{\n"
                                                   "    subcontrol-origin: padding;\n"
                                                   "    subcontrol-position: top right;\n"
                                                   "    width: 20px;\n"
@@ -1377,37 +1388,36 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                   "    border-top-right-radius: 4px;\n"
                                                   "    border-bottom-right-radius: 4px;\n"
                                                   "}\n"
-                                                  "QComboBox::down-arrow {\n"
+                                                  "QComboBox::down-arrow\n"
+                                                  "{\n"
                                                   "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
                                                   "}\n"
                                                   "QComboBox QAbstractItemView\n"
                                                   "{\n"
-                                                  "    background:rgba(255,255,255,1);\n"
-                                                  "    border:1px solid rgba(228,228,228,1);\n"
-                                                  "    border-radius:0px 0px 5px 5px;\n"
-                                                  "    font-size:14px;\n"
+                                                  "    border-radius: 10px;\n"
+                                                  "    background: rgba(255,255,255,1);\n"
+                                                  "    border: 1px solid rgba(228,228,228,1);\n"
+                                                  "    border-radius: 0px 0px 5px 5px;\n"
+                                                  "    font-size: 14px;\n"
                                                   "    outline: 0px;\n"
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item\n"
                                                   "{\n"
-                                                  "    height: 36px;\n"
+                                                  "    border-radius: 10px;\n"
                                                   "    font-size:25px;\n"
-                                                  "    color:#666666;\n"
+                                                  "    color:#666667;\n"
                                                   "    padding-left:9px;\n"
                                                   "    background-color:#FFFFFF;\n"
-                                                  "    min-height: 40px;\n"
+                                                  "    min-height: 33px;\n"
                                                   "    min-width: 60px;\n"
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item:hover\n"
                                                   "{\n"
-                                                  "    background-color:#409CE1;\n"
-                                                  "    color:#ffffff;\n"
+                                                  "    border-radius: 10px;\n"
+                                                  "    background-color: rgb(0, 120, 212);\n"
+                                                  "    color:#FFFFFF;\n"
                                                   "}\n"
-                                                  "QComboBox QAbstractItemView::item:selected\n"
-                                                  "{\n"
-                                                  "    background-color:#409CE1;\n"
-                                                  "    color:#ffffff;\n"
-                                                  "}")
+                                                  "")
         self.Choose_Server_ComboBox.setObjectName("Choose_Server_ComboBox")
         self.Choose_Server_ComboBox.addItem("")
         self.Choose_Server_Label2 = QtWidgets.QLabel(self.ChooseServerPage)
@@ -1539,6 +1549,9 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                             "}")
         self.Choose_Java_Tip1.setObjectName("Choose_Java_Tip1")
         self.Choose_Java_ComboBox = QtWidgets.QComboBox(self.ChooseJavaPage)
+        self.Choose_Java_ComboBox.setView(QListView())
+        self.Choose_Java_ComboBox.view().setTextElideMode(Qt.ElideNone)
+        self.Choose_Java_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.Choose_Java_ComboBox.setGeometry(QtCore.QRect(220, 320, 411, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -1550,7 +1563,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                 "    min-width: 9em;\n"
                                                 "    border: 2px solid rgb(223, 223, 223);\n"
                                                 "}\n"
-                                                "QComboBox::drop-down {\n"
+                                                "QComboBox::drop-down\n"
+                                                "{\n"
                                                 "    subcontrol-origin: padding;\n"
                                                 "    subcontrol-position: top right;\n"
                                                 "    width: 20px;\n"
@@ -1559,37 +1573,36 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
                                                 "    border-top-right-radius: 4px;\n"
                                                 "    border-bottom-right-radius: 4px;\n"
                                                 "}\n"
-                                                "QComboBox::down-arrow {\n"
+                                                "QComboBox::down-arrow\n"
+                                                "{\n"
                                                 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
                                                 "}\n"
                                                 "QComboBox QAbstractItemView\n"
                                                 "{\n"
-                                                "    background:rgba(255,255,255,1);\n"
-                                                "    border:1px solid rgba(228,228,228,1);\n"
-                                                "    border-radius:0px 0px 5px 5px;\n"
-                                                "    font-size:14px;\n"
+                                                "    border-radius: 10px;\n"
+                                                "    background: rgba(255,255,255,1);\n"
+                                                "    border: 1px solid rgba(228,228,228,1);\n"
+                                                "    border-radius: 0px 0px 5px 5px;\n"
+                                                "    font-size: 14px;\n"
                                                 "    outline: 0px;\n"
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item\n"
                                                 "{\n"
-                                                "    height: 36px;\n"
+                                                "    border-radius: 10px;\n"
                                                 "    font-size:25px;\n"
-                                                "    color:#666666;\n"
+                                                "    color:#666667;\n"
                                                 "    padding-left:9px;\n"
                                                 "    background-color:#FFFFFF;\n"
-                                                "    min-height: 40px;\n"
+                                                "    min-height: 33px;\n"
                                                 "    min-width: 60px;\n"
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item:hover\n"
                                                 "{\n"
-                                                "    background-color:#409CE1;\n"
-                                                "    color:#ffffff;\n"
+                                                "    border-radius: 10px;\n"
+                                                "    background-color: rgb(0, 120, 212);\n"
+                                                "    color:#FFFFFF;\n"
                                                 "}\n"
-                                                "QComboBox QAbstractItemView::item:selected\n"
-                                                "{\n"
-                                                "    background-color:#409CE1;\n"
-                                                "    color:#ffffff;\n"
-                                                "}")
+                                                "")
         self.Choose_Java_ComboBox.setObjectName("Choose_Java_ComboBox")
         self.Choose_Java_ComboBox.addItem("")
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
@@ -1769,6 +1782,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def ToHomePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(0)
+        self.Blue1.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
         self.Blue1.setVisible(True)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -1778,6 +1796,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def ToConfigPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
+        self.Blue2.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(True)
         self.Blue3.setVisible(False)
@@ -1787,6 +1810,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def ToDownloadPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(2)
+        self.Blue3.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(True)
@@ -1796,6 +1824,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def ToConsolePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(3)
+        self.Blue4.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -1805,6 +1838,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def ToToolsPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(4)
+        self.Blue5.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -1814,6 +1852,11 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
 
     def ToAboutPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(5)
+        self.Blue6.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -2104,25 +2147,25 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         elif self.Download_Type_ComboBox.currentIndex() == 1:  # Java
             if os.path.isfile("JavaDownloadInfo.json"):
                 os.remove("JavaDownloadInfo.json")
-            RefreshDownloadJavaUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/JavaDownloadInfo.json'
+            RefreshDownloadJavaUrl = 'http://ys-i.ysepan.com/622878261/713409008/RgxwuSs554473467N3L25/JavaDownloadInfo.json'
             wget.download(RefreshDownloadJavaUrl, 'JavaDownloadInfo.json')
             DecodeDownloadJsons(DJson="JavaDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 2:  # Spigot
             if os.path.isfile("SpigotDownloadInfo.json"):
                 os.remove("SpigotDownloadInfo.json")  # 如果存在先删除防止下载错误
-            RefreshDownloadSpigotUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/SpigotDownloadInfo.json'
+            RefreshDownloadSpigotUrl = 'http://ys-i.ysepan.com/622878261/713409010/RgxwuSs554473467N3Vf3/SpigotDownloadInfo.json'
             wget.download(RefreshDownloadSpigotUrl, 'SpigotDownloadInfo.json')
             DecodeDownloadJsons(DJson="SpigotDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 3:  # Paper
             if os.path.isfile("PaperDownloadInfo.json"):
                 os.remove("PaperDownloadInfo.json")
-            RefreshDownloadPaperUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/PaperDownloadInfo.json'
+            RefreshDownloadPaperUrl = 'http://ys-i.ysepan.com/622878261/713409009/RgxwuSs554473467N3M4a/PaperDownloadInfo.json'
             wget.download(RefreshDownloadPaperUrl, 'PaperDownloadInfo.json')
             DecodeDownloadJsons(DJson="PaperDownloadInfo.json")
         elif self.Download_Type_ComboBox.currentIndex() == 4:  # BungeeCord
             if os.path.isfile("BungeeCordDownloadInfo.json"):
                 os.remove("BungeeCordDownloadInfo.json")
-            RefreshDownloadBCUrl = 'https://raw.iqiq.io/LxHTT/MCSL2/master/BungeeCordDownloadInfo.json'
+            RefreshDownloadBCUrl = 'http://ys-i.ysepan.com/622878248/713409013/r554473467KM64TjstxV74/BungeeCordDownloadInfo.json'
             wget.download(RefreshDownloadBCUrl, 'BungeeCordDownloadInfo.json')
             DecodeDownloadJsons(DJson="BungeeCordDownloadInfo.json")
         for i in range(len(ComboBoxNames)):

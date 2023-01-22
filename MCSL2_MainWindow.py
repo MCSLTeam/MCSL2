@@ -244,7 +244,7 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
         self.Blue1 = QtWidgets.QLabel(self.OptionsWidget)
         self.Blue1.setEnabled(True)
-        self.Blue1.setGeometry(QtCore.QRect(20, 140, 21, 41))
+        self.Blue1.setGeometry(QtCore.QRect(20, 150, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -258,7 +258,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue1.setText("")
         self.Blue1.setObjectName("Blue1")
         self.Blue2 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue2.setGeometry(QtCore.QRect(20, 200, 21, 41))
+        self.Blue2.setGeometry(QtCore.QRect(20, 210, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -272,7 +272,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue2.setText("")
         self.Blue2.setObjectName("Blue2")
         self.Blue3 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue3.setGeometry(QtCore.QRect(20, 260, 21, 41))
+        self.Blue3.setGeometry(QtCore.QRect(20, 270, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -286,7 +286,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue3.setText("")
         self.Blue3.setObjectName("Blue3")
         self.Blue4 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue4.setGeometry(QtCore.QRect(20, 320, 21, 41))
+        self.Blue4.setGeometry(QtCore.QRect(20, 330, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -300,7 +300,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue4.setText("")
         self.Blue4.setObjectName("Blue4")
         self.Blue5 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue5.setGeometry(QtCore.QRect(20, 380, 21, 41))
+        self.Blue5.setGeometry(QtCore.QRect(20, 390, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -314,7 +314,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue5.setText("")
         self.Blue5.setObjectName("Blue5")
         self.Blue6 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue6.setGeometry(QtCore.QRect(20, 440, 21, 41))
+        self.Blue6.setGeometry(QtCore.QRect(20, 450, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -505,7 +505,8 @@ class Ui_MCSL2_MainWindow(object):
 "    min-width: 9em;\n"
 "    border: 2px solid rgb(223, 223, 223);\n"
 "}\n"
-"QComboBox::drop-down {\n"
+"QComboBox::drop-down\n"
+"{\n"
 "    subcontrol-origin: padding;\n"
 "    subcontrol-position: top right;\n"
 "    width: 20px;\n"
@@ -514,37 +515,36 @@ class Ui_MCSL2_MainWindow(object):
 "    border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
-"QComboBox::down-arrow {\n"
+"QComboBox::down-arrow\n"
+"{\n"
 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
 "QComboBox QAbstractItemView\n"
 "{\n"
-"    background:rgba(255,255,255,1);\n"
-"    border:1px solid rgba(228,228,228,1);\n"
-"    border-radius:0px 0px 5px 5px;\n"
-"    font-size:14px;\n"
+"    border-radius: 10px;\n"
+"    background: rgba(255,255,255,1);\n"
+"    border: 1px solid rgba(228,228,228,1);\n"
+"    border-radius: 0px 0px 5px 5px;\n"
+"    font-size: 14px;\n"
 "    outline: 0px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    height: 36px;\n"
+"    border-radius: 10px;\n"
 "    font-size:25px;\n"
-"    color:#666666;\n"
+"    color:#666667;\n"
 "    padding-left:9px;\n"
 "    background-color:#FFFFFF;\n"
-"    min-height: 40px;\n"
+"    min-height: 33px;\n"
 "    min-width: 60px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    color:#FFFFFF;\n"
 "}\n"
-"QComboBox QAbstractItemView::item:selected\n"
-"{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
-"}")
+"")
         self.Select_Java_ComboBox.setObjectName("Select_Java_ComboBox")
         self.Select_Java_ComboBox.addItem("")
         self.Select_Java_ComboBox.addItem("")
@@ -903,7 +903,8 @@ class Ui_MCSL2_MainWindow(object):
 "    min-width: 9em;\n"
 "    border: 2px solid rgb(223, 223, 223);\n"
 "}\n"
-"QComboBox::drop-down {\n"
+"QComboBox::drop-down\n"
+"{\n"
 "    subcontrol-origin: padding;\n"
 "    subcontrol-position: top right;\n"
 "    width: 20px;\n"
@@ -912,37 +913,36 @@ class Ui_MCSL2_MainWindow(object):
 "    border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
-"QComboBox::down-arrow {\n"
+"QComboBox::down-arrow\n"
+"{\n"
 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
 "QComboBox QAbstractItemView\n"
 "{\n"
-"    background:rgba(255,255,255,1);\n"
-"    border:1px solid rgba(228,228,228,1);\n"
-"    border-radius:0px 0px 5px 5px;\n"
-"    font-size:14px;\n"
+"    border-radius: 10px;\n"
+"    background: rgba(255,255,255,1);\n"
+"    border: 1px solid rgba(228,228,228,1);\n"
+"    border-radius: 0px 0px 5px 5px;\n"
+"    font-size: 14px;\n"
 "    outline: 0px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    height: 36px;\n"
+"    border-radius: 10px;\n"
 "    font-size:25px;\n"
-"    color:#666666;\n"
+"    color:#666667;\n"
 "    padding-left:9px;\n"
 "    background-color:#FFFFFF;\n"
-"    min-height: 40px;\n"
+"    min-height: 33px;\n"
 "    min-width: 60px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    color:#FFFFFF;\n"
 "}\n"
-"QComboBox QAbstractItemView::item:selected\n"
-"{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
-"}")
+"")
         self.Download_Type_ComboBox.setObjectName("Download_Type_ComboBox")
         self.Download_Type_ComboBox.addItem("")
         self.Download_Type_ComboBox.addItem("")
@@ -982,7 +982,8 @@ class Ui_MCSL2_MainWindow(object):
 "    min-width: 9em;\n"
 "    border: 2px solid rgb(223, 223, 223);\n"
 "}\n"
-"QComboBox::drop-down {\n"
+"QComboBox::drop-down\n"
+"{\n"
 "    subcontrol-origin: padding;\n"
 "    subcontrol-position: top right;\n"
 "    width: 20px;\n"
@@ -991,37 +992,36 @@ class Ui_MCSL2_MainWindow(object):
 "    border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
-"QComboBox::down-arrow {\n"
+"QComboBox::down-arrow\n"
+"{\n"
 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
 "QComboBox QAbstractItemView\n"
 "{\n"
-"    background:rgba(255,255,255,1);\n"
-"    border:1px solid rgba(228,228,228,1);\n"
-"    border-radius:0px 0px 5px 5px;\n"
-"    font-size:14px;\n"
+"    border-radius: 10px;\n"
+"    background: rgba(255,255,255,1);\n"
+"    border: 1px solid rgba(228,228,228,1);\n"
+"    border-radius: 0px 0px 5px 5px;\n"
+"    font-size: 14px;\n"
 "    outline: 0px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    height: 36px;\n"
+"    border-radius: 10px;\n"
 "    font-size:25px;\n"
-"    color:#666666;\n"
+"    color:#666667;\n"
 "    padding-left:9px;\n"
 "    background-color:#FFFFFF;\n"
-"    min-height: 40px;\n"
+"    min-height: 33px;\n"
 "    min-width: 60px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    color:#FFFFFF;\n"
 "}\n"
-"QComboBox QAbstractItemView::item:selected\n"
-"{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
-"}")
+"")
         self.Download_Versions_ComboBox.setObjectName("Download_Versions_ComboBox")
         self.Download_Versions_ComboBox.addItem("")
         self.Download_Versions_Label = QtWidgets.QLabel(self.DownloadPage)
@@ -1358,7 +1358,8 @@ class Ui_MCSL2_MainWindow(object):
 "    min-width: 9em;\n"
 "    border: 2px solid rgb(223, 223, 223);\n"
 "}\n"
-"QComboBox::drop-down {\n"
+"QComboBox::drop-down\n"
+"{\n"
 "    subcontrol-origin: padding;\n"
 "    subcontrol-position: top right;\n"
 "    width: 20px;\n"
@@ -1367,37 +1368,36 @@ class Ui_MCSL2_MainWindow(object):
 "    border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
-"QComboBox::down-arrow {\n"
+"QComboBox::down-arrow\n"
+"{\n"
 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
 "QComboBox QAbstractItemView\n"
 "{\n"
-"    background:rgba(255,255,255,1);\n"
-"    border:1px solid rgba(228,228,228,1);\n"
-"    border-radius:0px 0px 5px 5px;\n"
-"    font-size:14px;\n"
+"    border-radius: 10px;\n"
+"    background: rgba(255,255,255,1);\n"
+"    border: 1px solid rgba(228,228,228,1);\n"
+"    border-radius: 0px 0px 5px 5px;\n"
+"    font-size: 14px;\n"
 "    outline: 0px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    height: 36px;\n"
+"    border-radius: 10px;\n"
 "    font-size:25px;\n"
-"    color:#666666;\n"
+"    color:#666667;\n"
 "    padding-left:9px;\n"
 "    background-color:#FFFFFF;\n"
-"    min-height: 40px;\n"
+"    min-height: 33px;\n"
 "    min-width: 60px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    color:#FFFFFF;\n"
 "}\n"
-"QComboBox QAbstractItemView::item:selected\n"
-"{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
-"}")
+"")
         self.Choose_Server_ComboBox.setObjectName("Choose_Server_ComboBox")
         self.Choose_Server_ComboBox.addItem("")
         self.Choose_Server_Label2 = QtWidgets.QLabel(self.ChooseServerPage)
@@ -1540,7 +1540,8 @@ class Ui_MCSL2_MainWindow(object):
 "    min-width: 9em;\n"
 "    border: 2px solid rgb(223, 223, 223);\n"
 "}\n"
-"QComboBox::drop-down {\n"
+"QComboBox::drop-down\n"
+"{\n"
 "    subcontrol-origin: padding;\n"
 "    subcontrol-position: top right;\n"
 "    width: 20px;\n"
@@ -1549,37 +1550,36 @@ class Ui_MCSL2_MainWindow(object):
 "    border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
 "}\n"
-"QComboBox::down-arrow {\n"
+"QComboBox::down-arrow\n"
+"{\n"
 "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
 "}\n"
 "QComboBox QAbstractItemView\n"
 "{\n"
-"    background:rgba(255,255,255,1);\n"
-"    border:1px solid rgba(228,228,228,1);\n"
-"    border-radius:0px 0px 5px 5px;\n"
-"    font-size:14px;\n"
+"    border-radius: 10px;\n"
+"    background: rgba(255,255,255,1);\n"
+"    border: 1px solid rgba(228,228,228,1);\n"
+"    border-radius: 0px 0px 5px 5px;\n"
+"    font-size: 14px;\n"
 "    outline: 0px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    height: 36px;\n"
+"    border-radius: 10px;\n"
 "    font-size:25px;\n"
-"    color:#666666;\n"
+"    color:#666667;\n"
 "    padding-left:9px;\n"
 "    background-color:#FFFFFF;\n"
-"    min-height: 40px;\n"
+"    min-height: 33px;\n"
 "    min-width: 60px;\n"
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    color:#FFFFFF;\n"
 "}\n"
-"QComboBox QAbstractItemView::item:selected\n"
-"{\n"
-"    background-color:#409CE1;\n"
-"    color:#ffffff;\n"
-"}")
+"")
         self.Choose_Java_ComboBox.setObjectName("Choose_Java_ComboBox")
         self.Choose_Java_ComboBox.addItem("")
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
@@ -1608,7 +1608,7 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(7)
+        self.FunctionsStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):

@@ -459,9 +459,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>140</y>
-       <width>21</width>
-       <height>41</height>
+       <y>150</y>
+       <width>10</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
@@ -488,9 +488,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>200</y>
-       <width>21</width>
-       <height>41</height>
+       <y>210</y>
+       <width>10</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
@@ -517,9 +517,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>260</y>
-       <width>21</width>
-       <height>41</height>
+       <y>270</y>
+       <width>10</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
@@ -546,9 +546,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>320</y>
-       <width>21</width>
-       <height>41</height>
+       <y>330</y>
+       <width>10</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
@@ -575,9 +575,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>380</y>
-       <width>21</width>
-       <height>41</height>
+       <y>390</y>
+       <width>10</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
@@ -604,9 +604,9 @@ QPushButton:pressed
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>440</y>
-       <width>21</width>
-       <height>41</height>
+       <y>450</y>
+       <width>10</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
@@ -643,7 +643,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
@@ -999,7 +999,8 @@ QPushButton:pressed
     min-width: 9em;
 	border: 2px solid rgb(223, 223, 223);
 }
-QComboBox::drop-down {
+QComboBox::drop-down
+{
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 20px;
@@ -1008,37 +1009,36 @@ QComboBox::drop-down {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-QComboBox::down-arrow {
+QComboBox::down-arrow
+{
     border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
 QComboBox QAbstractItemView
 {
-	background:rgba(255,255,255,1);
-    border:1px solid rgba(228,228,228,1);
-    border-radius:0px 0px 5px 5px;
-	font-size:14px;
+	border-radius: 10px;
+	background: rgba(255,255,255,1);
+    border: 1px solid rgba(228,228,228,1);
+    border-radius: 0px 0px 5px 5px;
+	font-size: 14px;
     outline: 0px;
 }
 QComboBox QAbstractItemView::item
 {
-	height: 36px;
+	border-radius: 10px;
 	font-size:25px;
-	color:#666666;
+	color:#666667;
 	padding-left:9px;
 	background-color:#FFFFFF;
-	min-height: 40px;
+	min-height: 33px;
 	min-width: 60px;
 }
 QComboBox QAbstractItemView::item:hover
 {
-	background-color:#409CE1;
-	color:#ffffff;
+	border-radius: 10px;
+	background-color: rgb(0, 120, 212);
+	color:#FFFFFF;
 }
-QComboBox QAbstractItemView::item:selected
-{
-	background-color:#409CE1;
-	color:#ffffff;
-}</string>
+</string>
       </property>
       <item>
        <property name="text">
@@ -1709,7 +1709,8 @@ QPushButton:pressed
     min-width: 9em;
 	border: 2px solid rgb(223, 223, 223);
 }
-QComboBox::drop-down {
+QComboBox::drop-down
+{
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 20px;
@@ -1718,37 +1719,36 @@ QComboBox::drop-down {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-QComboBox::down-arrow {
+QComboBox::down-arrow
+{
     border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
 QComboBox QAbstractItemView
 {
-	background:rgba(255,255,255,1);
-    border:1px solid rgba(228,228,228,1);
-    border-radius:0px 0px 5px 5px;
-	font-size:14px;
+	border-radius: 10px;
+	background: rgba(255,255,255,1);
+    border: 1px solid rgba(228,228,228,1);
+    border-radius: 0px 0px 5px 5px;
+	font-size: 14px;
     outline: 0px;
 }
 QComboBox QAbstractItemView::item
 {
-	height: 36px;
+	border-radius: 10px;
 	font-size:25px;
-	color:#666666;
+	color:#666667;
 	padding-left:9px;
 	background-color:#FFFFFF;
-	min-height: 40px;
+	min-height: 33px;
 	min-width: 60px;
 }
 QComboBox QAbstractItemView::item:hover
 {
-	background-color:#409CE1;
-	color:#ffffff;
+	border-radius: 10px;
+	background-color: rgb(0, 120, 212);
+	color:#FFFFFF;
 }
-QComboBox QAbstractItemView::item:selected
-{
-	background-color:#409CE1;
-	color:#ffffff;
-}</string>
+</string>
       </property>
       <item>
        <property name="text">
@@ -1846,7 +1846,8 @@ QComboBox QAbstractItemView::item:selected
     min-width: 9em;
 	border: 2px solid rgb(223, 223, 223);
 }
-QComboBox::drop-down {
+QComboBox::drop-down
+{
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 20px;
@@ -1855,37 +1856,36 @@ QComboBox::drop-down {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-QComboBox::down-arrow {
+QComboBox::down-arrow
+{
     border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
 QComboBox QAbstractItemView
 {
-	background:rgba(255,255,255,1);
-    border:1px solid rgba(228,228,228,1);
-    border-radius:0px 0px 5px 5px;
-	font-size:14px;
+	border-radius: 10px;
+	background: rgba(255,255,255,1);
+    border: 1px solid rgba(228,228,228,1);
+    border-radius: 0px 0px 5px 5px;
+	font-size: 14px;
     outline: 0px;
 }
 QComboBox QAbstractItemView::item
 {
-	height: 36px;
+	border-radius: 10px;
 	font-size:25px;
-	color:#666666;
+	color:#666667;
 	padding-left:9px;
 	background-color:#FFFFFF;
-	min-height: 40px;
+	min-height: 33px;
 	min-width: 60px;
 }
 QComboBox QAbstractItemView::item:hover
 {
-	background-color:#409CE1;
-	color:#ffffff;
+	border-radius: 10px;
+	background-color: rgb(0, 120, 212);
+	color:#FFFFFF;
 }
-QComboBox QAbstractItemView::item:selected
-{
-	background-color:#409CE1;
-	color:#ffffff;
-}</string>
+</string>
       </property>
       <item>
        <property name="text">
@@ -2564,7 +2564,8 @@ QPushButton:pressed
     min-width: 9em;
 	border: 2px solid rgb(223, 223, 223);
 }
-QComboBox::drop-down {
+QComboBox::drop-down
+{
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 20px;
@@ -2573,37 +2574,36 @@ QComboBox::drop-down {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-QComboBox::down-arrow {
+QComboBox::down-arrow
+{
     border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
 QComboBox QAbstractItemView
 {
-	background:rgba(255,255,255,1);
-    border:1px solid rgba(228,228,228,1);
-    border-radius:0px 0px 5px 5px;
-	font-size:14px;
+	border-radius: 10px;
+	background: rgba(255,255,255,1);
+    border: 1px solid rgba(228,228,228,1);
+    border-radius: 0px 0px 5px 5px;
+	font-size: 14px;
     outline: 0px;
 }
 QComboBox QAbstractItemView::item
 {
-	height: 36px;
+	border-radius: 10px;
 	font-size:25px;
-	color:#666666;
+	color:#666667;
 	padding-left:9px;
 	background-color:#FFFFFF;
-	min-height: 40px;
+	min-height: 33px;
 	min-width: 60px;
 }
 QComboBox QAbstractItemView::item:hover
 {
-	background-color:#409CE1;
-	color:#ffffff;
+	border-radius: 10px;
+	background-color: rgb(0, 120, 212);
+	color:#FFFFFF;
 }
-QComboBox QAbstractItemView::item:selected
-{
-	background-color:#409CE1;
-	color:#ffffff;
-}</string>
+</string>
       </property>
       <item>
        <property name="text">
@@ -2898,7 +2898,8 @@ QPushButton:pressed
     min-width: 9em;
 	border: 2px solid rgb(223, 223, 223);
 }
-QComboBox::drop-down {
+QComboBox::drop-down
+{
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 20px;
@@ -2907,37 +2908,36 @@ QComboBox::drop-down {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-QComboBox::down-arrow {
+QComboBox::down-arrow
+{
     border-image: url(:/MCSL2_Icon/QComboBox.png);
 }
 QComboBox QAbstractItemView
 {
-	background:rgba(255,255,255,1);
-    border:1px solid rgba(228,228,228,1);
-    border-radius:0px 0px 5px 5px;
-	font-size:14px;
+	border-radius: 10px;
+	background: rgba(255,255,255,1);
+    border: 1px solid rgba(228,228,228,1);
+    border-radius: 0px 0px 5px 5px;
+	font-size: 14px;
     outline: 0px;
 }
 QComboBox QAbstractItemView::item
 {
-	height: 36px;
+	border-radius: 10px;
 	font-size:25px;
-	color:#666666;
+	color:#666667;
 	padding-left:9px;
 	background-color:#FFFFFF;
-	min-height: 40px;
+	min-height: 33px;
 	min-width: 60px;
 }
 QComboBox QAbstractItemView::item:hover
 {
-	background-color:#409CE1;
-	color:#ffffff;
+	border-radius: 10px;
+	background-color: rgb(0, 120, 212);
+	color:#FFFFFF;
 }
-QComboBox QAbstractItemView::item:selected
-{
-	background-color:#409CE1;
-	color:#ffffff;
-}</string>
+</string>
       </property>
       <item>
        <property name="text">
