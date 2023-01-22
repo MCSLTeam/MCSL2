@@ -10,7 +10,7 @@ import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QPoint, pyqtSignal, QThread
 from PyQt5.QtGui import QMouseEvent
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog, QGraphicsBlurEffect
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QFileDialog
 import MCSL2_Icon
 from DownloadKit import DownloadKit
 from MCSL2_Dialog import *
@@ -2053,6 +2053,8 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         global SearchStatus, DiskSymbols
         Tip = "cnm  自动检测没改完"
         CallMCSL2Dialog(Tip)
+        self.Select_Java_ComboBox.clear()
+        self.Select_Java_ComboBox.addItem("  查找中...")
         for c in string.ascii_uppercase:
             DiskSymbol = c + ":"
             if os.path.isdir(DiskSymbol):
@@ -2061,7 +2063,23 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
         self.thread = fileSearchThread("java.exe")
         self.thread.start()
         self.Select_Java_ComboBox.clear()
-        self.Select_Java_ComboBox.addItem("  查找中...")
+        print(1)
+        # if len(JavaPaths) != 0:
+        #     for i in range(len(JavaPaths)):
+        #         self.Select_Java_ComboBox.addItem(JavaPaths[i])
+        while True:
+            if SearchStatus == 1:
+                print(JavaPaths)
+                Tip = "cnm  好了"
+                CallMCSL2Dialog(Tip)
+                break
+            else:
+                time.sleep(1)
+                continue
+
+        if len(JavaPaths) != 0:
+            for i in range(len(JavaPaths)):
+                self.Select_Java_ComboBox.addItem(JavaPaths[i])
 
     def ToDownloadJava(self):
         self.FunctionsStackedWidget.setCurrentIndex(2)
@@ -2119,7 +2137,7 @@ class Ui_MCSL2_MainWindow(QtWidgets.QMainWindow):
     # The function of downloading
     def StartDownload(self):
         DownloadIndex = self.Download_Versions_ComboBox.currentIndex()
-        ComboBoxName = ComboBoxNames[DownloadIndex]
+        # ComboBoxName = ComboBoxNames[DownloadIndex]
         DownloadUrl = DownloadUrls[DownloadIndex]
         FileFormat = FileFormats[DownloadIndex]
         FileName = FileNames[DownloadIndex]
@@ -2187,7 +2205,6 @@ def DecodeDownloadJsons(DJson):
         FileNames.insert(0, FileName)
 
 
-
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip):
     SaveTip = open(r'Tip', 'w+')
@@ -2232,6 +2249,10 @@ class fileSearchThread(QThread):
                     JavaPaths.append(SearchTMP_2)
                     print(SearchTMP_2)
                     self.sinOut.emit(os.path.join(DirPath, folder))
+                    # raise ValueError("FUCK I'M SHITTED")
+        # status = open(r'stat','a+')
+        # status.write('1.')
+        # status.close()
 
 
 # Start app
