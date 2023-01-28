@@ -1,0 +1,101 @@
+{
+  "MCSLDownloadList":
+  [
+    {
+      "name": "Java-8-64位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java8_x64"
+    },
+    {
+      "name": "Java-8-32位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java8_x86"
+    },
+    {
+      "name": "Java-8-64位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java8_x64"
+    },
+    {
+      "name": "Java-8-32位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java8_x86"
+    },
+    {
+      "name": "Java-16-64位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java16_x64"
+    },
+    {
+      "name": "Java-16-32位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java16_x86"
+    },
+    {
+      "name": "Java-16-64位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java16_x64"
+    },
+    {
+      "name": "Java-16-32位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java16_x86"
+    },
+    {
+      "name": "Java-17-64位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java17_x64"
+    },
+    {
+      "name": "Java-17-32位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java17_x86"
+    },
+    {
+      "name": "Java-17-64位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java17_x64"
+    },
+    {
+      "name": "Java-17-32位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java17_x86"
+    },
+    {
+      "name": "Java-18-64位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java18_x64"
+    },
+    {
+      "name": "Java-18-32位-安装版",
+      "url": "",
+      "format": "msi",
+      "filename": "Java18_x86"
+    },
+    {
+      "name": "Java-18-64位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java18_x64"
+    },
+    {
+      "name": "Java-18-32位-压缩包",
+      "url": "",
+      "format": "zip",
+      "filename": "Java18_x86"
+    }
+  ]
+}

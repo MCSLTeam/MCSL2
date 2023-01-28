@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.iqiq.io/LxHTT/MCSL2/master/Back.png"/>
+<img src="https://www.helloimg.com/images/2023/01/28/oRgCMu.png"/>
 </p>
 
 # MCSL2   |   一个简洁全能的Minecraft开服器
@@ -25,7 +25,7 @@ ___
 
 MCSL 2官网：[https://mcsl.lxhtt.xyz](https://mcsl.lxhtt.xyz)
 
-(国内可能需要使用针对GitHub的网络加速工具，例如 WattToolkit.)
+(国内可能需要使用针对GitHub的网络加速工具，例如 Watt Toolkit.)
 
 MCSL 2重新设计了用户界面，用更简洁的代码逻辑开发。除了启动、配置和下载之外，MCSL 2还增加了许多扩展工具。
 
@@ -34,3 +34,7 @@ MCSL 2重新设计了用户界面，用更简洁的代码逻辑开发。除了�
 (使用GitHub Issues来报告，谢谢配合)
 
 我的邮箱：lxhtz.dl@qq.com 。只要你需要帮助，就可以联系我。
+___
+## 鸣谢
+
+来自 星姮十织 的 [Luoxis 云存储](https://www.df100.ltd)

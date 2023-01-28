@@ -1,0 +1,77 @@
+{
+  "MCSLDownloadList":
+  [
+    {
+      "name": "Spigot-1.8.8",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.8.8"
+    },
+    {
+      "name": "Spigot-1.9.4",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.9.4"
+    },
+    {
+      "name": "Spigot-1.10.2",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.10.2"
+    },
+    {
+      "name": "Spigot-1.11.2",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.11.2"
+    },
+    {
+      "name": "Spigot-1.12.2",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.12.2"
+    },
+    {
+      "name": "Spigot-1.13.2",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.13.2"
+    },
+    {
+      "name": "Spigot-1.14.4",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.14.4"
+    },
+    {
+      "name": "Spigot-1.15.2",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.15.2"
+    },
+    {
+      "name": "Spigot-1.16.5",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.16.5"
+    },
+    {
+      "name": "Spigot-1.17.1",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.17.1"
+    },
+    {
+      "name": "Spigot-1.18.2",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.18.2"
+    },
+    {
+      "name": "Spigot-1.19.3",
+      "url": "",
+      "format": "jar",
+      "filename": "spigot-1.19.3"
+    }
+  ]
+}

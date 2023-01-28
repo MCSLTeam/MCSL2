@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.iqiq.io/LxHTT/MCSL2/master/Back.png"/>
+<img src="https://www.helloimg.com/images/2023/01/28/oRgCMu.png"/>
 </p>
 
 # MCSL2 | A simple and multifunctional Minecraft server launcher
@@ -25,7 +25,7 @@ At first I prefer developing with C#, but it seems that I don't have enough know
 
 The official website of MCSL 2：[https://mcsl.lxhtt.xyz](https://mcsl.lxhtt.xyz)
 
-(In China, you may need to use a web acceleration tool for GitHub, such as WattToolkit.)
+(In China, you may need to use a web acceleration tool for GitHub, such as Watt Toolkit.)
 
 MCSL 2 has redesigned the user interface, develop with cleaner code logic. In addition to Launch, Configuration, and Download, many extension tools have been added to MCSL 2.
 
@@ -34,3 +34,7 @@ Please report the bugs of my program to make MCSL 2 better.
 (Use GitHub Issues to report PLZ)
 
 My Email is here:  lxhtz.dl@qq.com . You can contact me as long as you need help.
+___
+## Gratitude
+
+[Luoxis Cloud](https://www.df100.ltd) from 星姮十织

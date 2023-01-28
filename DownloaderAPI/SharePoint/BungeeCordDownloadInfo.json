@@ -1,0 +1,47 @@
+{
+  "MCSLDownloadList":
+  [
+    {
+      "name": "BungeeCord-MC1.4.7版[官方结束支持]",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVo3U3k5Y0RNSEZGajEtNXBwaGJFaHdCcl9uVFNjZE9BNmR1NExPeENWMnU0dz9lPXpDNzVFMw.jar",
+      "format": "jar",
+      "filename": "BungeeCord-MC1.4.7"
+    },
+    {
+      "name": "BungeeCord-MC1.5.0版[官方结束支持]",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWRSelFPLW5kX3hEbVFuTjVSRzBhc1FCaUloSU1kTUlwNDZOUDE3WUNHa1BhQT9lPWN6bHdnZA.jar",
+      "format": "jar",
+      "filename": "BungeeCord-MC1.5.0"
+    },
+    {
+      "name": "BungeeCord-MC1.5.2版[官方结束支持]",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWJqVkdGcXFvc0ZGcW1TZDAxM2FIX1lCaC1uaWlKM0c5MF81TGhMcjE5SlpPZz9lPWRVeDVBMg.jar",
+      "format": "jar",
+      "filename": "BungeeCord-MC1.5.2"
+    },
+    {
+      "name": "BungeeCord-MC1.6.2版[官方结束支持]",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVpWdThKRlZJbUpJdUpDNmdSRXF5d01Cd0RuNjlkU091UGJGYXJzb3VUdmtrQT9lPVR1eEJWcQ.jar",
+      "format": "jar",
+      "filename": "BungeeCord-MC1.6.2"
+    },
+    {
+      "name": "BungeeCord-MC1.6.4版[官方结束支持]",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRWN2VHBsNmNYZlJLdnVocTB3bVlCc3dCQnhtaVduUXF3RTNESEV4d09KeE1NQT9lPWV3YldsQg.jar",
+      "format": "jar",
+      "filename": "BungeeCord-MC1.6.4"
+    },
+    {
+      "name": "BungeeCord-MC1.7.10版[官方结束支持]",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVM4N1ZPSklxOWRCb25jbmZ2cC0xdUFCd3YtNEJtNHlBcXBjcllOVUNBU1NaZz9lPTJacDRmaw.jar",
+      "format": "jar",
+      "filename": "BungeeCord-MC1.7.10"
+    },
+    {
+      "name": "BungeeCord-最新版",
+      "url": "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9seGh0dC1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9seGh0dF9seGh0dF9vbm1pY3Jvc29mdF9jb20vRVpmZFJPRkxUQk5BcVJvNGdyTndGTjhCZTV4WkVBdUthMzJ1OWY3LUw1OWtTZz9lPXJSZUptQw.jar",
+      "format": "jar",
+      "filename": "BungeeCord-Latest"
+    }
+  ]
+}

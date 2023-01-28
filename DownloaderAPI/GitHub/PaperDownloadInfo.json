@@ -1,0 +1,77 @@
+{
+  "MCSLDownloadList":
+  [
+    {
+      "name": "Paper-1.8.8",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.8.8-445"
+    },
+    {
+      "name": "Paper-1.9.4",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.9.4-775"
+    },
+    {
+      "name": "Paper-1.10.2",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.10.2-918"
+    },
+    {
+      "name": "Paper-1.11.2",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.11.2-1106"
+    },
+    {
+      "name": "Paper-1.12.2",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.12.2-1620"
+    },
+    {
+      "name": "Paper-1.13.2",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.13.2-657"
+    },
+    {
+      "name": "Paper-1.14.4",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.14.4-245"
+    },
+    {
+      "name": "Paper-1.15.2",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.15.2-393"
+    },
+    {
+      "name": "Paper-1.16.5",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.16.5-794"
+    },
+    {
+      "name": "Paper-1.17.1",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.17.1-411"
+    },
+    {
+      "name": "Paper-1.18.2",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.18.2-387"
+    },
+    {
+      "name": "Paper-1.19.3",
+      "url": "",
+      "format": "jar",
+      "filename": "paper-1.19.3-367"
+    }
+  ]
+}
