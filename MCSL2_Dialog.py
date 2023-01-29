@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt, QCoreApplication, QMetaObject, QRect
 from PyQt5.QtGui import QFont, QCursor
 from PyQt5.QtWidgets import QPushButton, QLabel
-from PyQt5.QtCore.Qt import WindowCloseButtonHint
+from PyQt5.QtCore import Qt
 
 class Ui_MCSL2_Dialog(object):
     def setupUi(self, MCSL2_Dialog):
@@ -36,7 +36,7 @@ class Ui_MCSL2_Dialog(object):
         self.Dialog_label.setText("")
         self.Dialog_label.setAlignment(Qt.AlignCenter)
         self.Dialog_label.setObjectName("Dialog_label")
-        self.setWindowFlags(WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.retranslateUi(MCSL2_Dialog)
         QMetaObject.connectSlotsByName(MCSL2_Dialog)
 
