@@ -28,12 +28,15 @@ The official website of MCSL 2：[https://mcsl.lxhtt.xyz](https://mcsl.lxhtt.xyz
 (In China, you may need to use a web acceleration tool for GitHub, such as Watt Toolkit.)
 
 MCSL 2 has redesigned the user interface, develop with cleaner code logic. In addition to Launch, Configuration, and Download, many extension tools have been added to MCSL 2.
+You can preview the UI of MCSL 2 [here](https://github.com/LxHTT/MCSL2/blob/master/MCSL_PREVIEW_EN.md).
 
 Please report the bugs of my program to make MCSL 2 better.
 
 (Use GitHub Issues to report PLZ)
 
 My Email is here:  lxhtz.dl@qq.com . You can contact me as long as you need help.
+
+The software is released under the GPLv3 open source license.
 ___
 ## Gratitude
 
