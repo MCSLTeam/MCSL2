@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\MCSL2_MainWindow.ui'
+# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\resources\MCSL2_MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -530,7 +530,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    font-size:25px;\n"
 "    color:#666667;\n"
 "    padding-left:9px;\n"
@@ -540,7 +540,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    background-color: rgb(0, 120, 212);\n"
 "    color:#FFFFFF;\n"
 "}\n"
@@ -928,7 +928,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    font-size:25px;\n"
 "    color:#666667;\n"
 "    padding-left:9px;\n"
@@ -938,7 +938,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    background-color: rgb(0, 120, 212);\n"
 "    color:#FFFFFF;\n"
 "}\n"
@@ -1007,7 +1007,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    font-size:25px;\n"
 "    color:#666667;\n"
 "    padding-left:9px;\n"
@@ -1017,7 +1017,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    background-color: rgb(0, 120, 212);\n"
 "    color:#FFFFFF;\n"
 "}\n"
@@ -1135,6 +1135,63 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Manually_Choose_Download_Save_Path_PushButton.setFlat(False)
         self.Manually_Choose_Download_Save_Path_PushButton.setObjectName("Manually_Choose_Download_Save_Path_PushButton")
+        self.Download_Source_Background = QtWidgets.QLabel(self.DownloadPage)
+        self.Download_Source_Background.setGeometry(QtCore.QRect(250, 60, 431, 71))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Download_Source_Background.setFont(font)
+        self.Download_Source_Background.setAutoFillBackground(False)
+        self.Download_Source_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Download_Source_Background.setText("")
+        self.Download_Source_Background.setObjectName("Download_Source_Background")
+        self.Download_Source_Label = QtWidgets.QLabel(self.DownloadPage)
+        self.Download_Source_Label.setGeometry(QtCore.QRect(270, 80, 91, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Download_Source_Label.setFont(font)
+        self.Download_Source_Label.setObjectName("Download_Source_Label")
+        self.luoxisCloud_radioButton = QtWidgets.QRadioButton(self.DownloadPage)
+        self.luoxisCloud_radioButton.setGeometry(QtCore.QRect(560, 70, 101, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.luoxisCloud_radioButton.setFont(font)
+        self.luoxisCloud_radioButton.setObjectName("luoxisCloud_radioButton")
+        self.Gitee_radioButton = QtWidgets.QRadioButton(self.DownloadPage)
+        self.Gitee_radioButton.setGeometry(QtCore.QRect(460, 70, 101, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Gitee_radioButton.setFont(font)
+        self.Gitee_radioButton.setObjectName("Gitee_radioButton")
+        self.SharePoint_radioButton = QtWidgets.QRadioButton(self.DownloadPage)
+        self.SharePoint_radioButton.setGeometry(QtCore.QRect(350, 70, 101, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.SharePoint_radioButton.setFont(font)
+        self.SharePoint_radioButton.setChecked(True)
+        self.SharePoint_radioButton.setObjectName("SharePoint_radioButton")
+        self.GitHub_radioButton = QtWidgets.QRadioButton(self.DownloadPage)
+        self.GitHub_radioButton.setGeometry(QtCore.QRect(460, 100, 101, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.GitHub_radioButton.setFont(font)
+        self.GitHub_radioButton.setObjectName("GitHub_radioButton")
+        self.GHProxy_radioButton = QtWidgets.QRadioButton(self.DownloadPage)
+        self.GHProxy_radioButton.setGeometry(QtCore.QRect(350, 100, 101, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.GHProxy_radioButton.setFont(font)
+        self.GHProxy_radioButton.setObjectName("GHProxy_radioButton")
         self.Download_Progress_Background.raise_()
         self.Download_Versions_Background.raise_()
         self.Download_Type_Background.raise_()
@@ -1147,6 +1204,13 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Save_Path_Label.raise_()
         self.Download_Save_Path_LineEdit.raise_()
         self.Manually_Choose_Download_Save_Path_PushButton.raise_()
+        self.Download_Source_Background.raise_()
+        self.Download_Source_Label.raise_()
+        self.luoxisCloud_radioButton.raise_()
+        self.Gitee_radioButton.raise_()
+        self.SharePoint_radioButton.raise_()
+        self.GitHub_radioButton.raise_()
+        self.GHProxy_radioButton.raise_()
         self.FunctionsStackedWidget.addWidget(self.DownloadPage)
         self.ConsolePage = QtWidgets.QWidget()
         self.ConsolePage.setObjectName("ConsolePage")
@@ -1383,7 +1447,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    font-size:25px;\n"
 "    color:#666667;\n"
 "    padding-left:9px;\n"
@@ -1393,7 +1457,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    background-color: rgb(0, 120, 212);\n"
 "    color:#FFFFFF;\n"
 "}\n"
@@ -1565,7 +1629,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    font-size:25px;\n"
 "    color:#666667;\n"
 "    padding-left:9px;\n"
@@ -1575,7 +1639,7 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QComboBox QAbstractItemView::item:hover\n"
 "{\n"
-"    border-radius: 10px;\n"
+"    border-radius: 7px;\n"
 "    background-color: rgb(0, 120, 212);\n"
 "    color:#FFFFFF;\n"
 "}\n"
@@ -1608,7 +1672,7 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(0)
+        self.FunctionsStackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1672,6 +1736,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Save_Path_Label.setText(_translate("MCSL2_MainWindow", "保存路径:"))
         self.Manually_Choose_Download_Save_Path_PushButton.setText(_translate("MCSL2_MainWindow", "选择.."))
+        self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
+        self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
+        self.Gitee_radioButton.setText(_translate("MCSL2_MainWindow", "Gitee"))
+        self.SharePoint_radioButton.setText(_translate("MCSL2_MainWindow", "SharePoint"))
+        self.GitHub_radioButton.setText(_translate("MCSL2_MainWindow", "GitHub"))
+        self.GHProxy_radioButton.setText(_translate("MCSL2_MainWindow", "GHProxy"))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))

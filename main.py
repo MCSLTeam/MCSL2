@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QStackedWidget,
     QLabel,
-    QDialog
+    QDialog, QRadioButton
 )
 import MCSL2_Icon
 from MCSL2_Dialog import *
@@ -560,7 +560,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item\n"
                                                 "{\n"
-                                                "    border-radius: 10px;\n"
+                                                "    border-radius: 7px;\n"
                                                 "    font-size:25px;\n"
                                                 "    color:#666667;\n"
                                                 "    padding-left:9px;\n"
@@ -570,7 +570,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item:hover\n"
                                                 "{\n"
-                                                "    border-radius: 10px;\n"
+                                                "    border-radius: 7px;\n"
                                                 "    background-color: rgb(0, 120, 212);\n"
                                                 "    color:#FFFFFF;\n"
                                                 "}\n"
@@ -958,7 +958,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item\n"
                                                   "{\n"
-                                                  "    border-radius: 10px;\n"
+                                                  "    border-radius: 7px;\n"
                                                   "    font-size:25px;\n"
                                                   "    color:#666667;\n"
                                                   "    padding-left:9px;\n"
@@ -968,7 +968,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item:hover\n"
                                                   "{\n"
-                                                  "    border-radius: 10px;\n"
+                                                  "    border-radius: 7px;\n"
                                                   "    background-color: rgb(0, 120, 212);\n"
                                                   "    color:#FFFFFF;\n"
                                                   "}\n"
@@ -1040,7 +1040,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                       "}\n"
                                                       "QComboBox QAbstractItemView::item\n"
                                                       "{\n"
-                                                      "    border-radius: 10px;\n"
+                                                      "    border-radius: 6px;\n"
                                                       "    font-size:25px;\n"
                                                       "    color:#666667;\n"
                                                       "    padding-left:9px;\n"
@@ -1050,7 +1050,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                       "}\n"
                                                       "QComboBox QAbstractItemView::item:hover\n"
                                                       "{\n"
-                                                      "    border-radius: 10px;\n"
+                                                      "    border-radius: 6px;\n"
                                                       "    background-color: rgb(0, 120, 212);\n"
                                                       "    color:#FFFFFF;\n"
                                                       "}\n"
@@ -1169,6 +1169,64 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Manually_Choose_Download_Save_Path_PushButton.setFlat(False)
         self.Manually_Choose_Download_Save_Path_PushButton.setObjectName(
             "Manually_Choose_Download_Save_Path_PushButton")
+        self.Download_Source_Background = QLabel(self.DownloadPage)
+        self.Download_Source_Background.setGeometry(QRect(250, 60, 431, 71))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Download_Source_Background.setFont(font)
+        self.Download_Source_Background.setAutoFillBackground(False)
+        self.Download_Source_Background.setStyleSheet("QLabel\n"
+                                                      "{\n"
+                                                      "    background-color: rgb(247, 247, 247);\n"
+                                                      "    border-radius: 10px\n"
+                                                      "}")
+        self.Download_Source_Background.setText("")
+        self.Download_Source_Background.setObjectName("Download_Source_Background")
+
+        self.Download_Source_Label = QLabel(self.DownloadPage)
+        self.Download_Source_Label.setGeometry(QRect(270, 80, 91, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Download_Source_Label.setFont(font)
+        self.Download_Source_Label.setObjectName("Download_Source_Label")
+        self.luoxisCloud_radioButton = QRadioButton(self.DownloadPage)
+        self.luoxisCloud_radioButton.setGeometry(QRect(560, 70, 101, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.luoxisCloud_radioButton.setFont(font)
+        self.luoxisCloud_radioButton.setObjectName("luoxisCloud_radioButton")
+        self.Gitee_radioButton = QRadioButton(self.DownloadPage)
+        self.Gitee_radioButton.setGeometry(QRect(460, 70, 101, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Gitee_radioButton.setFont(font)
+        self.Gitee_radioButton.setObjectName("Gitee_radioButton")
+        self.SharePoint_radioButton = QRadioButton(self.DownloadPage)
+        self.SharePoint_radioButton.setGeometry(QRect(350, 70, 101, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.SharePoint_radioButton.setFont(font)
+        self.SharePoint_radioButton.setChecked(True)
+        self.SharePoint_radioButton.setObjectName("SharePoint_radioButton")
+        self.GitHub_radioButton = QRadioButton(self.DownloadPage)
+        self.GitHub_radioButton.setGeometry(QRect(460, 100, 101, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.GitHub_radioButton.setFont(font)
+        self.GitHub_radioButton.setObjectName("GitHub_radioButton")
+        self.GHProxy_radioButton = QRadioButton(self.DownloadPage)
+        self.GHProxy_radioButton.setGeometry(QRect(350, 100, 101, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.GHProxy_radioButton.setFont(font)
+        self.GHProxy_radioButton.setObjectName("GHProxy_radioButton")
         self.Download_Progress_Background.raise_()
         self.Download_Versions_Background.raise_()
         self.Download_Type_Background.raise_()
@@ -1420,7 +1478,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item\n"
                                                   "{\n"
-                                                  "    border-radius: 10px;\n"
+                                                  "    border-radius: 7px;\n"
                                                   "    font-size:25px;\n"
                                                   "    color:#666667;\n"
                                                   "    padding-left:9px;\n"
@@ -1430,7 +1488,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                   "}\n"
                                                   "QComboBox QAbstractItemView::item:hover\n"
                                                   "{\n"
-                                                  "    border-radius: 10px;\n"
+                                                  "    border-radius: 7px;\n"
                                                   "    background-color: rgb(0, 120, 212);\n"
                                                   "    color:#FFFFFF;\n"
                                                   "}\n"
@@ -1605,7 +1663,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item\n"
                                                 "{\n"
-                                                "    border-radius: 10px;\n"
+                                                "    border-radius: 6px;\n"
                                                 "    font-size:25px;\n"
                                                 "    color:#666667;\n"
                                                 "    padding-left:9px;\n"
@@ -1615,7 +1673,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item:hover\n"
                                                 "{\n"
-                                                "    border-radius: 10px;\n"
+                                                "    border-radius: 6px;\n"
                                                 "    background-color: rgb(0, 120, 212);\n"
                                                 "    color:#FFFFFF;\n"
                                                 "}\n"
@@ -1725,6 +1783,12 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Save_Path_Label.setText(_translate("MCSL2_MainWindow", "保存路径:"))
         self.Manually_Choose_Download_Save_Path_PushButton.setText(_translate("MCSL2_MainWindow", "选择.."))
+        self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
+        self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
+        self.Gitee_radioButton.setText(_translate("MCSL2_MainWindow", "Gitee"))
+        self.SharePoint_radioButton.setText(_translate("MCSL2_MainWindow", "SharePoint"))
+        self.GitHub_radioButton.setText(_translate("MCSL2_MainWindow", "GitHub"))
+        self.GHProxy_radioButton.setText(_translate("MCSL2_MainWindow", "GHProxy"))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))
@@ -1797,6 +1861,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
     def Minimize(self):
         self.MCSL2_Window.showMinimized()
 
+    # Pages Navigation
     def ToHomePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(0)
         self.Blue1.setStyleSheet("QLabel\n"
@@ -1883,6 +1948,27 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
     def ToChooseServerPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(6)
+
+    # Download Sources Changer
+    def ChoseSharePointDownloadSource(self):
+        global DownloadSource
+        DownloadSource = 0
+
+    def ChoseGiteeDownloadSource(self):
+        global DownloadSource
+        DownloadSource = 1
+
+    def ChoseLuoxisCloudSource(self):
+        global DownloadSource
+        DownloadSource = 2
+
+    def ChoseGHProxyDownloadSource(self):
+        global DownloadSource
+        DownloadSource = 3
+
+    def ChoseGitHubDownloadSource(self):
+        global DownloadSource
+        DownloadSource = 4
 
     def LaunchMinecraftServer(self):
         Tip = "cnm  没写完"
@@ -2146,6 +2232,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
     # The function of refreshing download type.
     def RefreshDownloadType(self):
+        global DownloadSource
         ComboBoxNames.clear()
         DownloadUrls.clear()
         FileFormats.clear()
@@ -2161,17 +2248,69 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         if self.Download_Type_ComboBox.currentIndex() == 0:
             pass
         elif self.Download_Type_ComboBox.currentIndex() == 1:  # Java
-            RefreshUrl = 'http://43.133.181.186:23818/MCSL-API/JavaDownloadInfo.json'
-            DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 0:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/JavaDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 1:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/Gitee/JavaDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 2:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/luoxisCloud/JavaDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 3:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GHProxy/JavaDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 4:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/JavaDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
         elif self.Download_Type_ComboBox.currentIndex() == 2:  # Spigot
-            RefreshUrl = 'http://43.133.181.186:23818/MCSL-API/SpigotDownloadInfo.json'
-            DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 0:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/SpigotDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 1:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/Gitee/SpigotDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 2:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/luoxisCloud/SpigotDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 3:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GHProxy/SpigotDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 4:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/SpigotDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
         elif self.Download_Type_ComboBox.currentIndex() == 3:  # Paper
-            RefreshUrl = 'http://43.133.181.186:23818/MCSL-API/PaperDownloadInfo.json'
-            DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 0:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/PaperDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 1:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/Gitee/PaperDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 2:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/luoxisCloud/PaperDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 3:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GHProxy/PaperDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 4:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/PaperDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
         elif self.Download_Type_ComboBox.currentIndex() == 4:  # BungeeCord
-            RefreshUrl = 'http://43.133.181.186:23818/MCSL-API/BungeeCordDownloadInfo.json'
-            DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 0:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/BungeeCordDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 1:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/Gitee/BungeeCordDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 2:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/luoxisCloud/BungeeCordDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 3:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GHProxy/BungeeCordDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
+            if DownloadSource == 4:
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/BungeeCordDownloadInfo.json'
+                DecodeDownloadJsons(RefreshUrl)
         for i in range(len(ComboBoxNames)):
             self.Download_Versions_ComboBox.addItem("  " + ComboBoxNames[i])
 
@@ -2308,6 +2447,7 @@ DiskSymbols = []
 SearchStatus = 0
 CorePath = ""
 SaveFolder = ""
+DownloadSource = 0
 Version = 2.0
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)

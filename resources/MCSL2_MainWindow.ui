@@ -242,7 +242,7 @@ QPushButton:pressed
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+      <pixmap resource="MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1024,7 +1024,7 @@ QComboBox QAbstractItemView
 }
 QComboBox QAbstractItemView::item
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	font-size:25px;
 	color:#666667;
 	padding-left:9px;
@@ -1034,7 +1034,7 @@ QComboBox QAbstractItemView::item
 }
 QComboBox QAbstractItemView::item:hover
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	background-color: rgb(0, 120, 212);
 	color:#FFFFFF;
 }
@@ -1734,7 +1734,7 @@ QComboBox QAbstractItemView
 }
 QComboBox QAbstractItemView::item
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	font-size:25px;
 	color:#666667;
 	padding-left:9px;
@@ -1744,7 +1744,7 @@ QComboBox QAbstractItemView::item
 }
 QComboBox QAbstractItemView::item:hover
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	background-color: rgb(0, 120, 212);
 	color:#FFFFFF;
 }
@@ -1871,7 +1871,7 @@ QComboBox QAbstractItemView
 }
 QComboBox QAbstractItemView::item
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	font-size:25px;
 	color:#666667;
 	padding-left:9px;
@@ -1881,7 +1881,7 @@ QComboBox QAbstractItemView::item
 }
 QComboBox QAbstractItemView::item:hover
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	background-color: rgb(0, 120, 212);
 	color:#FFFFFF;
 }
@@ -2105,6 +2105,152 @@ QPushButton:pressed
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="Download_Source_Background">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>60</y>
+        <width>431</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Download_Source_Label">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>80</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>下载源：</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="luoxisCloud_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>70</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>luoxis云</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="Gitee_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>70</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Gitee</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="SharePoint_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>70</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>SharePoint</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="GitHub_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>100</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>GitHub</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="GHProxy_radioButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>100</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>GHProxy</string>
+      </property>
+     </widget>
      <zorder>Download_Progress_Background</zorder>
      <zorder>Download_Versions_Background</zorder>
      <zorder>Download_Type_Background</zorder>
@@ -2117,6 +2263,13 @@ QPushButton:pressed
      <zorder>Download_Save_Path_Label</zorder>
      <zorder>Download_Save_Path_LineEdit</zorder>
      <zorder>Manually_Choose_Download_Save_Path_PushButton</zorder>
+     <zorder>Download_Source_Background</zorder>
+     <zorder>Download_Source_Label</zorder>
+     <zorder>luoxisCloud_radioButton</zorder>
+     <zorder>Gitee_radioButton</zorder>
+     <zorder>SharePoint_radioButton</zorder>
+     <zorder>GitHub_radioButton</zorder>
+     <zorder>GHProxy_radioButton</zorder>
     </widget>
     <widget class="QWidget" name="ConsolePage">
      <widget class="QLabel" name="Console_Label">
@@ -2356,7 +2509,7 @@ QPushButton:pressed
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="resources/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+       <pixmap resource="MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -2413,7 +2566,7 @@ QPushButton:pressed
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="resources/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Author.png</pixmap>
+       <pixmap resource="MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Author.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -2589,7 +2742,7 @@ QComboBox QAbstractItemView
 }
 QComboBox QAbstractItemView::item
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	font-size:25px;
 	color:#666667;
 	padding-left:9px;
@@ -2599,7 +2752,7 @@ QComboBox QAbstractItemView::item
 }
 QComboBox QAbstractItemView::item:hover
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	background-color: rgb(0, 120, 212);
 	color:#FFFFFF;
 }
@@ -2923,7 +3076,7 @@ QComboBox QAbstractItemView
 }
 QComboBox QAbstractItemView::item
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	font-size:25px;
 	color:#666667;
 	padding-left:9px;
@@ -2933,7 +3086,7 @@ QComboBox QAbstractItemView::item
 }
 QComboBox QAbstractItemView::item:hover
 {
-	border-radius: 10px;
+	border-radius: 7px;
 	background-color: rgb(0, 120, 212);
 	color:#FFFFFF;
 }
@@ -2994,7 +3147,8 @@ QComboBox QAbstractItemView::item:hover
   </widget>
  </widget>
  <resources>
-  <include location="resources/MCSL2_Icon.qrc"/>
+  <include location="MCSL2_Icon.qrc"/>
+  <include location="MCSL2_Icon.qrc"/>
  </resources>
  <connections/>
 </ui>
