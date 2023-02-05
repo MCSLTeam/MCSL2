@@ -2239,15 +2239,16 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Download_Versions_ComboBox.clear()
         """
         self.Download_Type_ComboBox.currentIndex()
-        0 - Failed.
+        0 - None.
         1 - Java.
         2 - Spigot.
         3 - Paper.
-        4. - BungeeCord.(Hidden)
+        4. - BungeeCord.
         """
         if self.Download_Type_ComboBox.currentIndex() == 0:
             pass
-        elif self.Download_Type_ComboBox.currentIndex() == 1:  # Java
+        # Java
+        elif self.Download_Type_ComboBox.currentIndex() == 1:
             if DownloadSource == 0:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
@@ -2263,7 +2264,8 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             if DownloadSource == 4:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
-        elif self.Download_Type_ComboBox.currentIndex() == 2:  # Spigot
+        # Spigot
+        elif self.Download_Type_ComboBox.currentIndex() == 2:
             if DownloadSource == 0:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
@@ -2279,7 +2281,8 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             if DownloadSource == 4:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
-        elif self.Download_Type_ComboBox.currentIndex() == 3:  # Paper
+        # Paper
+        elif self.Download_Type_ComboBox.currentIndex() == 3:
             if DownloadSource == 0:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
@@ -2295,7 +2298,8 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             if DownloadSource == 4:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
-        elif self.Download_Type_ComboBox.currentIndex() == 4:  # BungeeCord
+        # BungeeCord
+        elif self.Download_Type_ComboBox.currentIndex() == 4:
             if DownloadSource == 0:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/SharePoint/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
@@ -2311,6 +2315,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             if DownloadSource == 4:
                 RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/DownloaderAPI/GitHub/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
+        # Add to the Download_Versions_ComboBox
         for i in range(len(ComboBoxNames)):
             self.Download_Versions_ComboBox.addItem("  " + ComboBoxNames[i])
 
