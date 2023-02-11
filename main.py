@@ -2440,13 +2440,11 @@ class fileSearchThread(QThread):
                     SearchTMP_1 = path.join(DirPath, SearchFileName)
                     JavaPaths.append(SearchTMP_1)
                     self.sinOut.emit(path.join(DirPath, SearchFileName))
-                    # raise ValueError("FUCK I'M SHITTED")
             for folder in DirNames:
                 if folder.__contains__(keyword):
                     SearchTMP_2 = path.join(DirPath, folder)
                     JavaPaths.append(SearchTMP_2)
                     self.sinOut.emit(path.join(DirPath, folder))
-                    # raise ValueError("FUCK I'M SHITTED")
         # status = open(r'stat','a+')
         # status.write('1.')
         # status.close()
