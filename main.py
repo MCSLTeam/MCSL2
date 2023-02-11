@@ -2249,70 +2249,70 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         # Java
         elif self.Download_Type_ComboBox.currentIndex() == 1:
             if DownloadSource == 0:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/SharePoint/JavaDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/SharePoint/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 1:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/Gitee/JavaDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/Gitee/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 2:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/luoxisCloud/JavaDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/luoxisCloud/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 3:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GHProxy/JavaDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GHProxy/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 4:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GitHub/JavaDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GitHub/JavaDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
         # Spigot
         elif self.Download_Type_ComboBox.currentIndex() == 2:
             if DownloadSource == 0:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/SharePoint/SpigotDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/SharePoint/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 1:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/Gitee/SpigotDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/Gitee/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 2:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/luoxisCloud/SpigotDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/luoxisCloud/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 3:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GHProxy/SpigotDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GHProxy/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 4:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GitHub/SpigotDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GitHub/SpigotDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
         # Paper
         elif self.Download_Type_ComboBox.currentIndex() == 3:
             if DownloadSource == 0:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/SharePoint/PaperDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/SharePoint/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 1:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/Gitee/PaperDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/Gitee/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 2:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/luoxisCloud/PaperDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/luoxisCloud/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 3:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GHProxy/PaperDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GHProxy/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 4:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GitHub/PaperDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GitHub/PaperDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
         # BungeeCord
         elif self.Download_Type_ComboBox.currentIndex() == 4:
             if DownloadSource == 0:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/SharePoint/BungeeCordDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/SharePoint/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 1:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/Gitee/BungeeCordDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/Gitee/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 2:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/luoxisCloud/BungeeCordDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/luoxisCloud/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 3:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GHProxy/BungeeCordDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GHProxy/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
             if DownloadSource == 4:
-                RefreshUrl = 'https://whdlx.gitee.io/mcslapi/DownloaderAPI/GitHub/BungeeCordDownloadInfo.json'
+                RefreshUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/GitHub/BungeeCordDownloadInfo.json'
                 DecodeDownloadJsons(RefreshUrl)
         # Add to the Download_Versions_ComboBox
         for i in range(len(ComboBoxNames)):
