@@ -14,7 +14,7 @@ from PyQt5.QtCore import (
     QCoreApplication,
     QMetaObject
 )
-from PyQt5.QtGui import QMouseEvent, QFont, QPixmap, QCursor
+from PyQt5.QtGui import QMouseEvent, QFont, QPixmap, QCursor, QIcon
 from PyQt5.QtWidgets import (
     QWidget,
     QPushButton,
@@ -31,6 +31,7 @@ from PyQt5.QtWidgets import (
 )
 import MCSL2_Icon
 from MCSL2_Dialog import *
+from MCSL2_AskDialog import *
 import subprocess
 
 
@@ -1727,7 +1728,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
     def retranslateUi(self, MCSL2_MainWindow):
         _translate = QCoreApplication.translate
-        MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MainWindow"))
+        MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MCSL 2"))
         self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "配置服务器"))
         self.MCSL2_Title_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
@@ -1856,7 +1857,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Completed_Save_PushButton.clicked.connect(self.SaveAMinecraftServer)
 
     def Quit(self):
-        app.quit()
+        MCSLProcess.quit()
 
     def Minimize(self):
         self.MCSL2_Window.showMinimized()
@@ -1972,7 +1973,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
     def LaunchMinecraftServer(self):
         Tip = "cnm  没写完"
-        CallMCSL2Dialog(Tip)
+        CallMCSL2Dialog(Tip, 0)
         # Fix = '-Xms2048M -Xmx2048M -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -jar '
         # monitor = subprocess.Popen(LaunchCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         # while True:
@@ -1994,7 +1995,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                 self.Select_Java_ComboBox.addItem(JavaPaths[i])
         else:
             Tip = "看来你没有选择任何的Java呢！"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
 
     def ManuallyImportCore(self):
         global CorePath
@@ -2003,7 +2004,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             CorePath = CoreSysList[0]
         else:
             Tip = "看来你没有选择任何的服务器核心呢！"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
 
     def SaveAMinecraftServer(self):
         global CorePath
@@ -2177,9 +2178,9 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
         # Server processor
         if CanCreate == 0:
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
         elif CanCreate == 1:
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
             ServerFolderPath = ".\\" + ServerName
             mkdir(ServerFolderPath)
             copy(CorePath, ServerFolderPath)
@@ -2191,15 +2192,13 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             SaveConfig.write(ServerConfigJson)
             SaveConfig.close()
             Tip = "服务器部署完毕！"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
         else:
             Tip = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
 
     def AutoDetectJava(self):
         global SearchStatus, DiskSymbols
-        Tip = "cnm  自动检测没改完"
-        CallMCSL2Dialog(Tip)
         self.Select_Java_ComboBox.clear()
         self.Select_Java_ComboBox.addItem("  查找中...")
         for c in ascii_uppercase:
@@ -2215,8 +2214,8 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         #         self.Select_Java_ComboBox.addItem(JavaPaths[i])
         while True:
             if SearchStatus == 1:
-                Tip = "cnm  好了"
-                CallMCSL2Dialog(Tip)
+                Tip = "搜索完毕。"
+                CallMCSL2Dialog(Tip, 0)
                 break
             else:
                 sleep(1)
@@ -2334,17 +2333,17 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             FileFormat = FileFormats[DownloadIndex]
             FileName = FileNames[DownloadIndex]
 
-            Tip = "文件名: " + FileName + "." + FileFormat + "\n\n保存目录: " + SaveFolder + "\n\n关闭窗口即开始下载."
-            CallMCSL2Dialog(Tip)
+            Tip = "文件名: " + FileName + "." + FileFormat + "\n\n保存目录: " + SaveFolder + "\n\n是否开始下载？"
+            CallMCSL2Dialog(Tip, 1)
         elif self.Download_Type_ComboBox.currentIndex() == 0 and SaveFolder == "":
             Tip = "你什么都没做，我不动。"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
         elif self.Download_Type_ComboBox.currentIndex() == 0 and SaveFolder != "":
             Tip = "没选东西，下载不了"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
         elif self.Download_Type_ComboBox.currentIndex() != 0 and SaveFolder == "":
             Tip = "看来你并没有选择保存位置。"
-            CallMCSL2Dialog(Tip)
+            CallMCSL2Dialog(Tip, 0)
 
     # The function of getting Minecraft server console's output
     # def GetMCConsoleOutput(self):
@@ -2373,6 +2372,10 @@ class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
     def __init__(self):
         super(MCSL2Dialog, self).__init__()
         self.setupUi(self)
+class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
+    def __init__(self):
+        super(MCSL2AskDialog, self).__init__()
+        self.setupUi(self)
 
 
 # The function of decoding downloaded jsons
@@ -2395,12 +2398,19 @@ def MCSLDownloader(DownloadUrl, FileName, FileFormat, SaveFolder):
 
 
 # The function of calling MCSL2 Dialog
-def CallMCSL2Dialog(Tip):
+def CallMCSL2Dialog(Tip, isNeededTwoButtons):
     SaveTip = open(r'Tip', 'w+')
     SaveTip.write(Tip)
     SaveTip.close()
-    MCSL2Dialog().exec()
-    remove(r'Tip')
+    if isNeededTwoButtons == 0:
+        MCSL2Dialog().exec()
+        remove(r'Tip')
+    elif isNeededTwoButtons == 1:
+        MCSL2AskDialog().exec()
+        remove(r'Tip')
+    else:
+        pass
+
 
 
 class fileSearchThread(QThread):
@@ -2442,7 +2452,7 @@ class fileSearchThread(QThread):
         # status.close()
 
 
-# Start app
+# Start MCSL
 JavaPaths = []
 ComboBoxNames = []
 DownloadUrls = []
@@ -2456,11 +2466,20 @@ DownloadSource = 0
 Version = 2.0
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-app = QApplication(argv)
-MainWindow = Ui_MCSL2_MainWindow()
-ui = Ui_MCSL2_MainWindow()
-ui.setupUi(MainWindow)
+MCSLProcess = QApplication(argv)
+MCSLMainWindow = Ui_MCSL2_MainWindow()
+MCSLUI = Ui_MCSL2_MainWindow()
+MCSLUI.setupUi(MCSLMainWindow)
 # CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。")
-MainWindow.setWindowTitle("MCSL 2")
-MainWindow.show()
-exit(app.exec_())
+MCSLWindowIcon = QIcon()
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Normal, QIcon.Off)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Normal, QIcon.On)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Disabled, QIcon.Off)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Disabled, QIcon.On)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Active, QIcon.Off)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Active, QIcon.On)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Selected, QIcon.Off)
+MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Selected, QIcon.On)
+MCSLMainWindow.setWindowIcon(MCSLWindowIcon)
+MCSLMainWindow.show()
+exit(MCSLProcess.exec_())

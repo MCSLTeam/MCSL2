@@ -15,6 +15,16 @@ class Ui_MCSL2_MainWindow(object):
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
         MCSL2_MainWindow.resize(943, 582)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Disabled, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Active, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        MCSL2_MainWindow.setWindowIcon(icon)
         self.CentralWidget = QtWidgets.QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QtWidgets.QWidget(self.CentralWidget)
@@ -1672,12 +1682,12 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(2)
+        self.FunctionsStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MainWindow"))
+        MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MCSL 2"))
         self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "配置服务器"))
         self.MCSL2_Title_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))

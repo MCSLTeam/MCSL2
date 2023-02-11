@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MCSL2_Dialog</class>
- <widget class="QDialog" name="MCSL2_Dialog">
+ <class>MCSL2_AskDialog</class>
+ <widget class="QDialog" name="MCSL2_AskDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,10 +24,10 @@
     <selectedoff>:/MCSL2_Icon/MCSL2_Icon.png</selectedoff>
     <selectedon>:/MCSL2_Icon/MCSL2_Icon.png</selectedon>:/MCSL2_Icon/MCSL2_Icon.png</iconset>
   </property>
-  <widget class="QPushButton" name="Dialog_PushButton">
+  <widget class="QPushButton" name="Dialog_PushButton_Accept">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>90</x>
      <y>190</y>
      <width>91</width>
      <height>31</height>
@@ -63,7 +63,7 @@ QPushButton:pressed
 }</string>
    </property>
    <property name="text">
-    <string>知道了</string>
+    <string>确定</string>
    </property>
   </widget>
   <widget class="QLabel" name="Dialog_label">
@@ -114,9 +114,49 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
+  <widget class="QPushButton" name="Dialog_PushButton_Cancel">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>190</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+	background-color: rgb(255, 255, 255);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(240, 240, 240);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(229, 229, 229);
+	border-radius: 7px;
+}</string>
+   </property>
+   <property name="text">
+    <string>取消</string>
+   </property>
+  </widget>
   <zorder>Background</zorder>
-  <zorder>Dialog_PushButton</zorder>
+  <zorder>Dialog_PushButton_Accept</zorder>
   <zorder>Dialog_label</zorder>
+  <zorder>Dialog_PushButton_Cancel</zorder>
  </widget>
  <resources>
   <include location="MCSL2_Icon.qrc"/>

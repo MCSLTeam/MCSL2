@@ -11,7 +11,18 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MCSL 2</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="MCSL2_Icon.qrc">
+    <normaloff>:/MCSL2_Icon/MCSL2_Icon.png</normaloff>
+    <normalon>:/MCSL2_Icon/MCSL2_Icon.png</normalon>
+    <disabledoff>:/MCSL2_Icon/MCSL2_Icon.png</disabledoff>
+    <disabledon>:/MCSL2_Icon/MCSL2_Icon.png</disabledon>
+    <activeoff>:/MCSL2_Icon/MCSL2_Icon.png</activeoff>
+    <activeon>:/MCSL2_Icon/MCSL2_Icon.png</activeon>
+    <selectedoff>:/MCSL2_Icon/MCSL2_Icon.png</selectedoff>
+    <selectedon>:/MCSL2_Icon/MCSL2_Icon.png</selectedon>:/MCSL2_Icon/MCSL2_Icon.png</iconset>
   </property>
   <widget class="QWidget" name="CentralWidget">
    <widget class="QWidget" name="OptionsWidget" native="true">
@@ -643,7 +654,7 @@ QPushButton:pressed
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QPushButton" name="Config_PushButton">
