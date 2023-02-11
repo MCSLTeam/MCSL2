@@ -23,7 +23,9 @@ This is a remake of my old project [MCSL](https://github.com/LxHTT/MCSL).
 
 At first I prefer developing with C#, but it seems that I don't have enough knowledge of it.  ~~SO FOOL~~  So I turned to Python again.
 
-The official website of MCSL 2：[https://mcsl.lxhtt.xyz](https://mcsl.lxhtt.xyz)
+The official website of MCSL 2：[https://mcsl.netlify.app](https://mcsl.netlify.app)
+
+The official website of MCSL 2 API：[https://whdlx.gitee.io/mcslapi](https://whdlx.gitee.io/mcslapi)
 
 (In China, you may need to use a web acceleration tool for GitHub, such as Watt Toolkit.)
 

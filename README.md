@@ -23,7 +23,9 @@ ___
 
 本来使用C#开发，但由于知识有限，无奈继续使用Python。
 
-MCSL 2官网：[https://mcsl.lxhtt.xyz](https://mcsl.lxhtt.xyz)
+MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)
+
+MCSL 2 API官网：[https://whdlx.gitee.io/mcslapi](https://whdlx.gitee.io/mcslapi)
 
 (国内可能需要使用针对GitHub的网络加速工具，例如 Watt Toolkit.)
 
