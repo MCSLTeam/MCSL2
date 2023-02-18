@@ -2,7 +2,8 @@ from json import loads, dumps
 from requests import get
 from shutil import copy
 from sys import exit, argv
-from os import getcwd, path, mkdir, remove, walk
+from os import getcwd, mkdir, remove, walk
+from os import path as ospath
 from time import sleep
 from threading import Thread
 from string import ascii_uppercase
@@ -361,52 +362,6 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.FunctionsStackedWidget.setObjectName("FunctionsStackedWidget")
         self.HomePage = QWidget()
         self.HomePage.setObjectName("HomePage")
-        self.Config_PushButton = QPushButton(self.HomePage)
-        self.Config_PushButton.setGeometry(QRect(600, 420, 111, 51))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Config_PushButton.setFont(font)
-        self.Config_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Config_PushButton.setStyleSheet("QPushButton\n"
-                                             "{\n"
-                                             "    background-color: rgb(247, 247, 247);\n"
-                                             "    border-radius: 7px;\n"
-                                             "}\n"
-                                             "QPushButton:hover\n"
-                                             "{\n"
-                                             "    background-color: rgb(230, 230, 230);\n"
-                                             "    border-radius: 7px;\n"
-                                             "}\n"
-                                             "QPushButton:pressed\n"
-                                             "{\n"
-                                             "    background-color: rgb(225, 225, 225);\n"
-                                             "    border-radius: 7px;\n"
-                                             "}")
-        self.Config_PushButton.setObjectName("Config_PushButton")
-        self.Choose_Server_PushButton = QPushButton(self.HomePage)
-        self.Choose_Server_PushButton.setGeometry(QRect(480, 420, 111, 51))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Choose_Server_PushButton.setFont(font)
-        self.Choose_Server_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Choose_Server_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(247, 247, 247);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(230, 230, 230);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(225, 225, 225);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}")
-        self.Choose_Server_PushButton.setObjectName("Choose_Server_PushButton")
         self.Home_Label = QLabel(self.HomePage)
         self.Home_Label.setGeometry(QRect(30, 80, 71, 51))
         font = QFont()
@@ -416,8 +371,52 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         font.setWeight(75)
         self.Home_Label.setFont(font)
         self.Home_Label.setObjectName("Home_Label")
-        self.Start_PushButton = QPushButton(self.HomePage)
-        self.Start_PushButton.setGeometry(QRect(480, 490, 231, 61))
+        self.Notice_Widget = QWidget(self.HomePage)
+        self.Notice_Widget.setGeometry(QRect(30, 140, 321, 141))
+        self.Notice_Widget.setStyleSheet("QWidget\n"
+                                         "{\n"
+                                         "    background-color: rgb(247, 247, 247);\n"
+                                         "    border-radius: 10px\n"
+                                         "}")
+        self.Notice_Widget.setObjectName("Notice_Widget")
+        self.Notice_Label = QLabel(self.Notice_Widget)
+        self.Notice_Label.setGeometry(QRect(10, 20, 281, 101))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Notice_Label.setFont(font)
+        self.Notice_Label.setAutoFillBackground(False)
+        self.Notice_Label.setStyleSheet("")
+        self.Notice_Label.setObjectName("Notice_Label")
+        self.HomeTip1_Widget = QWidget(self.HomePage)
+        self.HomeTip1_Widget.setGeometry(QRect(30, 290, 321, 171))
+        self.HomeTip1_Widget.setStyleSheet("QWidget\n"
+                                           "{\n"
+                                           "    background-color: rgb(247, 247, 247);\n"
+                                           "    border-radius: 10px\n"
+                                           "}")
+        self.HomeTip1_Widget.setObjectName("HomeTip1_Widget")
+        self.HomeTip1_Label = QLabel(self.HomeTip1_Widget)
+        self.HomeTip1_Label.setGeometry(QRect(10, 20, 281, 131))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.HomeTip1_Label.setFont(font)
+        self.HomeTip1_Label.setAutoFillBackground(False)
+        self.HomeTip1_Label.setStyleSheet("")
+        self.HomeTip1_Label.setObjectName("HomeTip1_Label")
+        self.HomePageButtons_Widget = QWidget(self.HomePage)
+        self.HomePageButtons_Widget.setGeometry(QRect(470, 410, 251, 181))
+        self.HomePageButtons_Widget.setObjectName("HomePageButtons_Widget")
+        self.Selected_Server_Label = QLabel(self.HomePageButtons_Widget)
+        self.Selected_Server_Label.setGeometry(QRect(20, 150, 221, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.Selected_Server_Label.setFont(font)
+        self.Selected_Server_Label.setObjectName("Selected_Server_Label")
+        self.Start_PushButton = QPushButton(self.HomePageButtons_Widget)
+        self.Start_PushButton.setGeometry(QRect(10, 80, 231, 61))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(16)
@@ -443,39 +442,52 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                             "}")
         self.Start_PushButton.setFlat(False)
         self.Start_PushButton.setObjectName("Start_PushButton")
-        self.Selected_Server_Label = QLabel(self.HomePage)
-        self.Selected_Server_Label.setGeometry(QRect(490, 560, 221, 21))
+        self.Config_PushButton = QPushButton(self.HomePageButtons_Widget)
+        self.Config_PushButton.setGeometry(QRect(130, 10, 111, 51))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Selected_Server_Label.setFont(font)
-        self.Selected_Server_Label.setObjectName("Selected_Server_Label")
-        self.Notice_Label = QLabel(self.HomePage)
-        self.Notice_Label.setGeometry(QRect(30, 140, 321, 141))
+        font.setPointSize(14)
+        self.Config_PushButton.setFont(font)
+        self.Config_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Config_PushButton.setStyleSheet("QPushButton\n"
+                                             "{\n"
+                                             "    background-color: rgb(247, 247, 247);\n"
+                                             "    border-radius: 7px;\n"
+                                             "}\n"
+                                             "QPushButton:hover\n"
+                                             "{\n"
+                                             "    background-color: rgb(230, 230, 230);\n"
+                                             "    border-radius: 7px;\n"
+                                             "}\n"
+                                             "QPushButton:pressed\n"
+                                             "{\n"
+                                             "    background-color: rgb(225, 225, 225);\n"
+                                             "    border-radius: 7px;\n"
+                                             "}")
+        self.Config_PushButton.setObjectName("Config_PushButton")
+        self.Choose_Server_PushButton = QPushButton(self.HomePageButtons_Widget)
+        self.Choose_Server_PushButton.setGeometry(QRect(10, 10, 111, 51))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Notice_Label.setFont(font)
-        self.Notice_Label.setAutoFillBackground(False)
-        self.Notice_Label.setStyleSheet("QLabel\n"
-                                        "{\n"
-                                        "    background-color: rgb(247, 247, 247);\n"
-                                        "    border-radius: 10px\n"
-                                        "}")
-        self.Notice_Label.setObjectName("Notice_Label")
-        self.HomeTip1_Label = QLabel(self.HomePage)
-        self.HomeTip1_Label.setGeometry(QRect(30, 300, 321, 181))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.HomeTip1_Label.setFont(font)
-        self.HomeTip1_Label.setAutoFillBackground(False)
-        self.HomeTip1_Label.setStyleSheet("QLabel\n"
-                                          "{\n"
-                                          "    background-color: rgb(247, 247, 247);\n"
-                                          "    border-radius: 10px\n"
-                                          "}")
-        self.HomeTip1_Label.setObjectName("HomeTip1_Label")
+        font.setPointSize(14)
+        self.Choose_Server_PushButton.setFont(font)
+        self.Choose_Server_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Choose_Server_PushButton.setStyleSheet("QPushButton\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(247, 247, 247);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(230, 230, 230);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(225, 225, 225);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}")
+        self.Choose_Server_PushButton.setObjectName("Choose_Server_PushButton")
         self.FunctionsStackedWidget.addWidget(self.HomePage)
         self.ConfigPage = QWidget()
         self.ConfigPage.setObjectName("ConfigPage")
@@ -488,311 +500,6 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         font.setWeight(75)
         self.Config_Label.setFont(font)
         self.Config_Label.setObjectName("Config_Label")
-        self.ConfigTip1_Label = QLabel(self.ConfigPage)
-        self.ConfigTip1_Label.setGeometry(QRect(30, 140, 251, 121))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.ConfigTip1_Label.setFont(font)
-        self.ConfigTip1_Label.setAutoFillBackground(False)
-        self.ConfigTip1_Label.setStyleSheet("QLabel\n"
-                                            "{\n"
-                                            "    background-color: rgb(247, 247, 247);\n"
-                                            "    border-radius: 10px\n"
-                                            "}")
-        self.ConfigTip1_Label.setObjectName("ConfigTip1_Label")
-        self.ConfigTip2_Label = QLabel(self.ConfigPage)
-        self.ConfigTip2_Label.setGeometry(QRect(30, 280, 251, 101))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.ConfigTip2_Label.setFont(font)
-        self.ConfigTip2_Label.setAutoFillBackground(False)
-        self.ConfigTip2_Label.setStyleSheet("QLabel\n"
-                                            "{\n"
-                                            "    background-color: rgb(247, 247, 247);\n"
-                                            "    border-radius: 10px\n"
-                                            "}")
-        self.ConfigTip2_Label.setObjectName("ConfigTip2_Label")
-        self.Java_Label = QLabel(self.ConfigPage)
-        self.Java_Label.setGeometry(QRect(350, 160, 71, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Java_Label.setFont(font)
-        self.Java_Label.setObjectName("Java_Label")
-        self.Select_Java_ComboBox = QComboBox(self.ConfigPage)
-        self.Select_Java_ComboBox.setView(QListView())
-        self.Select_Java_ComboBox.view().setTextElideMode(Qt.ElideNone)
-        self.Select_Java_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.Select_Java_ComboBox.setGeometry(QRect(400, 160, 261, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Select_Java_ComboBox.setFont(font)
-        self.Select_Java_ComboBox.setStyleSheet("QComboBox {\n"
-                                                "    border-radius: 3px;\n"
-                                                "    padding: 1px 2px 1px 2px;\n"
-                                                "    min-width: 9em;\n"
-                                                "    border: 2px solid rgb(223, 223, 223);\n"
-                                                "}\n"
-                                                "QComboBox::drop-down\n"
-                                                "{\n"
-                                                "    subcontrol-origin: padding;\n"
-                                                "    subcontrol-position: top right;\n"
-                                                "    width: 20px;\n"
-                                                "    border-left-color: rgb(223, 223, 223);\n"
-                                                "    border-left-style: solid;\n"
-                                                "    border-top-right-radius: 4px;\n"
-                                                "    border-bottom-right-radius: 4px;\n"
-                                                "}\n"
-                                                "QComboBox::down-arrow\n"
-                                                "{\n"
-                                                "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-                                                "}\n"
-                                                "QComboBox QAbstractItemView\n"
-                                                "{\n"
-                                                "    border-radius: 10px;\n"
-                                                "    background: rgba(255,255,255,1);\n"
-                                                "    border: 1px solid rgba(228,228,228,1);\n"
-                                                "    border-radius: 0px 0px 5px 5px;\n"
-                                                "    font-size: 14px;\n"
-                                                "    outline: 0px;\n"
-                                                "}\n"
-                                                "QComboBox QAbstractItemView::item\n"
-                                                "{\n"
-                                                "    border-radius: 7px;\n"
-                                                "    font-size:25px;\n"
-                                                "    color:#666667;\n"
-                                                "    padding-left:9px;\n"
-                                                "    background-color:#FFFFFF;\n"
-                                                "    min-height: 33px;\n"
-                                                "    min-width: 60px;\n"
-                                                "}\n"
-                                                "QComboBox QAbstractItemView::item:hover\n"
-                                                "{\n"
-                                                "    border-radius: 7px;\n"
-                                                "    background-color: rgb(0, 120, 212);\n"
-                                                "    color:#FFFFFF;\n"
-                                                "}\n"
-                                                "")
-        self.Select_Java_ComboBox.setObjectName("Select_Java_ComboBox")
-        self.Select_Java_ComboBox.addItem("")
-        self.Set_Java_Background = QLabel(self.ConfigPage)
-        self.Set_Java_Background.setGeometry(QRect(330, 140, 351, 121))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Set_Java_Background.setFont(font)
-        self.Set_Java_Background.setAutoFillBackground(False)
-        self.Set_Java_Background.setStyleSheet("QLabel\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
-        self.Set_Java_Background.setText("")
-        self.Set_Java_Background.setObjectName("Set_Java_Background")
-        self.Auto_Find_Java_PushButton = QPushButton(self.ConfigPage)
-        self.Auto_Find_Java_PushButton.setGeometry(QRect(350, 210, 91, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Auto_Find_Java_PushButton.setFont(font)
-        self.Auto_Find_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Auto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 120, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}\n"
-                                                     "QPushButton:hover\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 110, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}\n"
-                                                     "QPushButton:pressed\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 100, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}")
-        self.Auto_Find_Java_PushButton.setFlat(False)
-        self.Auto_Find_Java_PushButton.setObjectName("Auto_Find_Java_PushButton")
-        self.Manual_Select_Java_PushButton = QPushButton(self.ConfigPage)
-        self.Manual_Select_Java_PushButton.setGeometry(QRect(460, 210, 91, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Manual_Select_Java_PushButton.setFont(font)
-        self.Manual_Select_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Manual_Select_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 120, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:hover\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 110, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:pressed\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 100, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}")
-        self.Manual_Select_Java_PushButton.setFlat(False)
-        self.Manual_Select_Java_PushButton.setObjectName("Manual_Select_Java_PushButton")
-        self.Download_Java_PushButton = QPushButton(self.ConfigPage)
-        self.Download_Java_PushButton.setGeometry(QRect(570, 210, 91, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Download_Java_PushButton.setFont(font)
-        self.Download_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Download_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 110, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 100, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}")
-        self.Download_Java_PushButton.setFlat(False)
-        self.Download_Java_PushButton.setObjectName("Download_Java_PushButton")
-        self.Set_Memory_Background = QLabel(self.ConfigPage)
-        self.Set_Memory_Background.setGeometry(QRect(330, 280, 351, 61))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Set_Memory_Background.setFont(font)
-        self.Set_Memory_Background.setAutoFillBackground(False)
-        self.Set_Memory_Background.setStyleSheet("QLabel\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(247, 247, 247);\n"
-                                                 "    border-radius: 10px\n"
-                                                 "}")
-        self.Set_Memory_Background.setText("")
-        self.Set_Memory_Background.setObjectName("Set_Memory_Background")
-        self.Memory_1_Label = QLabel(self.ConfigPage)
-        self.Memory_1_Label.setGeometry(QRect(350, 290, 71, 41))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Memory_1_Label.setFont(font)
-        self.Memory_1_Label.setObjectName("Memory_1_Label")
-        self.MinMemory_LineEdit = QLineEdit(self.ConfigPage)
-        self.MinMemory_LineEdit.setGeometry(QRect(400, 300, 91, 21))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.MinMemory_LineEdit.setFont(font)
-        self.MinMemory_LineEdit.setStyleSheet("QLineEdit\n"
-                                              "{\n"
-                                              "    border-radius: 3px;\n"
-                                              "    border: 2px;\n"
-                                              "    border-color: rgb(223, 223, 223);\n"
-                                              "    border-style: solid;\n"
-                                              "}\n"
-                                              "")
-        self.MinMemory_LineEdit.setObjectName("MinMemory_LineEdit")
-        self.Memory_2_Label = QLabel(self.ConfigPage)
-        self.Memory_2_Label.setGeometry(QRect(500, 290, 21, 41))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Memory_2_Label.setFont(font)
-        self.Memory_2_Label.setObjectName("Memory_2_Label")
-        self.MaxMemory_LineEdit = QLineEdit(self.ConfigPage)
-        self.MaxMemory_LineEdit.setGeometry(QRect(520, 300, 91, 21))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.MaxMemory_LineEdit.setFont(font)
-        self.MaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
-                                              "{\n"
-                                              "    border-radius: 3px;\n"
-                                              "    border: 2px;\n"
-                                              "    border-color: rgb(223, 223, 223);\n"
-                                              "    border-style: solid;\n"
-                                              "}\n"
-                                              "")
-        self.MaxMemory_LineEdit.setObjectName("MaxMemory_LineEdit")
-        self.Memory_Unit_Label = QLabel(self.ConfigPage)
-        self.Memory_Unit_Label.setGeometry(QRect(620, 290, 51, 41))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Memory_Unit_Label.setFont(font)
-        self.Memory_Unit_Label.setObjectName("Memory_Unit_Label")
-        self.Set_Core_Background = QLabel(self.ConfigPage)
-        self.Set_Core_Background.setGeometry(QRect(330, 360, 351, 121))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Set_Core_Background.setFont(font)
-        self.Set_Core_Background.setAutoFillBackground(False)
-        self.Set_Core_Background.setStyleSheet("QLabel\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
-        self.Set_Core_Background.setText("")
-        self.Set_Core_Background.setObjectName("Set_Core_Background")
-        self.Core_Label = QLabel(self.ConfigPage)
-        self.Core_Label.setGeometry(QRect(350, 380, 91, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Core_Label.setFont(font)
-        self.Core_Label.setObjectName("Core_Label")
-        self.ConfigTip3_Label = QLabel(self.ConfigPage)
-        self.ConfigTip3_Label.setGeometry(QRect(350, 420, 311, 41))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.ConfigTip3_Label.setFont(font)
-        self.ConfigTip3_Label.setObjectName("ConfigTip3_Label")
-        self.Manual_Import_Core_PushButton = QPushButton(self.ConfigPage)
-        self.Manual_Import_Core_PushButton.setGeometry(QRect(450, 380, 101, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Manual_Import_Core_PushButton.setFont(font)
-        self.Manual_Import_Core_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Manual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 120, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:hover\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 110, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:pressed\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 100, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}")
-        self.Manual_Import_Core_PushButton.setFlat(False)
-        self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
         self.Others_Background = QLabel(self.ConfigPage)
         self.Others_Background.setGeometry(QRect(30, 400, 251, 121))
         font = QFont()
@@ -856,8 +563,45 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                      "}")
         self.Completed_Save_PushButton.setFlat(False)
         self.Completed_Save_PushButton.setObjectName("Completed_Save_PushButton")
-        self.Download_Core_PushButton = QPushButton(self.ConfigPage)
-        self.Download_Core_PushButton.setGeometry(QRect(560, 380, 101, 31))
+        self.ConfigTip1_Widget = QWidget(self.ConfigPage)
+        self.ConfigTip1_Widget.setGeometry(QRect(30, 140, 251, 121))
+        self.ConfigTip1_Widget.setStyleSheet("QWidget\n"
+                                             "{\n"
+                                             "    background-color: rgb(247, 247, 247);\n"
+                                             "    border-radius: 10px\n"
+                                             "}")
+        self.ConfigTip1_Widget.setObjectName("ConfigTip1_Widget")
+        self.ConfigTip1_Label = QLabel(self.ConfigTip1_Widget)
+        self.ConfigTip1_Label.setGeometry(QRect(10, 20, 211, 81))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConfigTip1_Label.setFont(font)
+        self.ConfigTip1_Label.setAutoFillBackground(False)
+        self.ConfigTip1_Label.setStyleSheet("")
+        self.ConfigTip1_Label.setObjectName("ConfigTip1_Label")
+        self.ConfigTip2_Widget = QWidget(self.ConfigPage)
+        self.ConfigTip2_Widget.setGeometry(QRect(30, 280, 251, 101))
+        self.ConfigTip2_Widget.setStyleSheet("QWidget\n"
+                                             "{\n"
+                                             "    background-color: rgb(247, 247, 247);\n"
+                                             "    border-radius: 10px\n"
+                                             "}")
+        self.ConfigTip2_Widget.setObjectName("ConfigTip2_Widget")
+        self.ConfigTip2_Label = QLabel(self.ConfigTip2_Widget)
+        self.ConfigTip2_Label.setGeometry(QRect(10, 10, 211, 81))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConfigTip2_Label.setFont(font)
+        self.ConfigTip2_Label.setAutoFillBackground(False)
+        self.ConfigTip2_Label.setStyleSheet("")
+        self.ConfigTip2_Label.setObjectName("ConfigTip2_Label")
+        self.Configuration_Widget = QWidget(self.ConfigPage)
+        self.Configuration_Widget.setGeometry(QRect(310, 140, 351, 341))
+        self.Configuration_Widget.setObjectName("Configuration_Widget")
+        self.Download_Core_PushButton = QPushButton(self.Configuration_Widget)
+        self.Download_Core_PushButton.setGeometry(QRect(230, 240, 101, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -883,30 +627,303 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                     "}")
         self.Download_Core_PushButton.setFlat(False)
         self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
-        self.Set_Java_Background.raise_()
-        self.Config_Label.raise_()
-        self.ConfigTip1_Label.raise_()
-        self.ConfigTip2_Label.raise_()
-        self.Java_Label.raise_()
-        self.Select_Java_ComboBox.raise_()
-        self.Auto_Find_Java_PushButton.raise_()
-        self.Manual_Select_Java_PushButton.raise_()
-        self.Download_Java_PushButton.raise_()
+        self.Download_Java_PushButton = QPushButton(self.Configuration_Widget)
+        self.Download_Java_PushButton.setGeometry(QRect(240, 70, 91, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Download_Java_PushButton.setFont(font)
+        self.Download_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Download_Java_PushButton.setStyleSheet("QPushButton\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 120, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 110, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 100, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}")
+        self.Download_Java_PushButton.setFlat(False)
+        self.Download_Java_PushButton.setObjectName("Download_Java_PushButton")
+        self.Manual_Import_Core_PushButton = QPushButton(self.Configuration_Widget)
+        self.Manual_Import_Core_PushButton.setGeometry(QRect(120, 240, 101, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Manual_Import_Core_PushButton.setFont(font)
+        self.Manual_Import_Core_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Manual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 120, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}\n"
+                                                         "QPushButton:hover\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 110, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}\n"
+                                                         "QPushButton:pressed\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 100, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}")
+        self.Manual_Import_Core_PushButton.setFlat(False)
+        self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
+        self.Manual_Select_Java_PushButton = QPushButton(self.Configuration_Widget)
+        self.Manual_Select_Java_PushButton.setGeometry(QRect(130, 70, 91, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Manual_Select_Java_PushButton.setFont(font)
+        self.Manual_Select_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Manual_Select_Java_PushButton.setStyleSheet("QPushButton\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 120, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}\n"
+                                                         "QPushButton:hover\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 110, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}\n"
+                                                         "QPushButton:pressed\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 100, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}")
+        self.Manual_Select_Java_PushButton.setFlat(False)
+        self.Manual_Select_Java_PushButton.setObjectName("Manual_Select_Java_PushButton")
+        self.Select_Java_ComboBox = QComboBox(self.Configuration_Widget)
+        self.Select_Java_ComboBox.setGeometry(QRect(70, 20, 261, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.Select_Java_ComboBox.setFont(font)
+        self.Select_Java_ComboBox.setStyleSheet("QComboBox {\n"
+                                                "    border-radius: 3px;\n"
+                                                "    padding: 1px 2px 1px 2px;\n"
+                                                "    min-width: 9em;\n"
+                                                "    border: 2px solid rgb(223, 223, 223);\n"
+                                                "}\n"
+                                                "QComboBox::drop-down\n"
+                                                "{\n"
+                                                "    subcontrol-origin: padding;\n"
+                                                "    subcontrol-position: top right;\n"
+                                                "    width: 20px;\n"
+                                                "    border-left-color: rgb(223, 223, 223);\n"
+                                                "    border-left-style: solid;\n"
+                                                "    border-top-right-radius: 4px;\n"
+                                                "    border-bottom-right-radius: 4px;\n"
+                                                "}\n"
+                                                "QComboBox::down-arrow\n"
+                                                "{\n"
+                                                "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
+                                                "}\n"
+                                                "QComboBox QAbstractItemView\n"
+                                                "{\n"
+                                                "    border-radius: 10px;\n"
+                                                "    background: rgba(255,255,255,1);\n"
+                                                "    border: 1px solid rgba(228,228,228,1);\n"
+                                                "    border-radius: 0px 0px 5px 5px;\n"
+                                                "    font-size: 14px;\n"
+                                                "    outline: 0px;\n"
+                                                "}\n"
+                                                "QComboBox QAbstractItemView::item\n"
+                                                "{\n"
+                                                "    border-radius: 7px;\n"
+                                                "    font-size:25px;\n"
+                                                "    color:#666667;\n"
+                                                "    padding-left:9px;\n"
+                                                "    background-color:#FFFFFF;\n"
+                                                "    min-height: 33px;\n"
+                                                "    min-width: 60px;\n"
+                                                "}\n"
+                                                "QComboBox QAbstractItemView::item:hover\n"
+                                                "{\n"
+                                                "    border-radius: 7px;\n"
+                                                "    background-color: rgb(0, 120, 212);\n"
+                                                "    color:#FFFFFF;\n"
+                                                "}\n"
+                                                "")
+        self.Select_Java_ComboBox.setObjectName("Select_Java_ComboBox")
+        self.Select_Java_ComboBox.addItem("")
+        self.Select_Java_ComboBox.addItem("")
+        self.Select_Java_ComboBox.addItem("")
+        self.Select_Java_ComboBox.addItem("")
+        self.Set_Core_Background = QLabel(self.Configuration_Widget)
+        self.Set_Core_Background.setGeometry(QRect(0, 220, 351, 121))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Set_Core_Background.setFont(font)
+        self.Set_Core_Background.setAutoFillBackground(False)
+        self.Set_Core_Background.setStyleSheet("QLabel\n"
+                                               "{\n"
+                                               "    background-color: rgb(247, 247, 247);\n"
+                                               "    border-radius: 10px\n"
+                                               "}")
+        self.Set_Core_Background.setText("")
+        self.Set_Core_Background.setObjectName("Set_Core_Background")
+        self.Set_Java_Background = QLabel(self.Configuration_Widget)
+        self.Set_Java_Background.setGeometry(QRect(0, 0, 351, 121))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Set_Java_Background.setFont(font)
+        self.Set_Java_Background.setAutoFillBackground(False)
+        self.Set_Java_Background.setStyleSheet("QLabel\n"
+                                               "{\n"
+                                               "    background-color: rgb(247, 247, 247);\n"
+                                               "    border-radius: 10px\n"
+                                               "}")
+        self.Set_Java_Background.setText("")
+        self.Set_Java_Background.setObjectName("Set_Java_Background")
+        self.Memory_1_Label = QLabel(self.Configuration_Widget)
+        self.Memory_1_Label.setGeometry(QRect(20, 150, 71, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Memory_1_Label.setFont(font)
+        self.Memory_1_Label.setObjectName("Memory_1_Label")
+        self.MinMemory_LineEdit = QLineEdit(self.Configuration_Widget)
+        self.MinMemory_LineEdit.setGeometry(QRect(70, 160, 91, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.MinMemory_LineEdit.setFont(font)
+        self.MinMemory_LineEdit.setStyleSheet("QLineEdit\n"
+                                              "{\n"
+                                              "    border-radius: 3px;\n"
+                                              "    border: 2px;\n"
+                                              "    border-color: rgb(223, 223, 223);\n"
+                                              "    border-style: solid;\n"
+                                              "}\n"
+                                              "")
+        self.MinMemory_LineEdit.setObjectName("MinMemory_LineEdit")
+        self.Set_Memory_Background = QLabel(self.Configuration_Widget)
+        self.Set_Memory_Background.setGeometry(QRect(0, 140, 351, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Set_Memory_Background.setFont(font)
+        self.Set_Memory_Background.setAutoFillBackground(False)
+        self.Set_Memory_Background.setStyleSheet("QLabel\n"
+                                                 "{\n"
+                                                 "    background-color: rgb(247, 247, 247);\n"
+                                                 "    border-radius: 10px\n"
+                                                 "}")
+        self.Set_Memory_Background.setText("")
+        self.Set_Memory_Background.setObjectName("Set_Memory_Background")
+        self.ConfigTip3_Label = QLabel(self.Configuration_Widget)
+        self.ConfigTip3_Label.setGeometry(QRect(20, 280, 311, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConfigTip3_Label.setFont(font)
+        self.ConfigTip3_Label.setStyleSheet("")
+        self.ConfigTip3_Label.setObjectName("ConfigTip3_Label")
+        self.Java_Label = QLabel(self.Configuration_Widget)
+        self.Java_Label.setGeometry(QRect(20, 20, 71, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Java_Label.setFont(font)
+        self.Java_Label.setObjectName("Java_Label")
+        self.MaxMemory_LineEdit = QLineEdit(self.Configuration_Widget)
+        self.MaxMemory_LineEdit.setGeometry(QRect(190, 160, 91, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.MaxMemory_LineEdit.setFont(font)
+        self.MaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
+                                              "{\n"
+                                              "    border-radius: 3px;\n"
+                                              "    border: 2px;\n"
+                                              "    border-color: rgb(223, 223, 223);\n"
+                                              "    border-style: solid;\n"
+                                              "}\n"
+                                              "")
+        self.MaxMemory_LineEdit.setObjectName("MaxMemory_LineEdit")
+        self.Memory_2_Label = QLabel(self.Configuration_Widget)
+        self.Memory_2_Label.setGeometry(QRect(170, 150, 21, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.Memory_2_Label.setFont(font)
+        self.Memory_2_Label.setObjectName("Memory_2_Label")
+        self.Core_Label = QLabel(self.Configuration_Widget)
+        self.Core_Label.setGeometry(QRect(20, 240, 91, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Core_Label.setFont(font)
+        self.Core_Label.setObjectName("Core_Label")
+        self.Auto_Find_Java_PushButton = QPushButton(self.Configuration_Widget)
+        self.Auto_Find_Java_PushButton.setGeometry(QRect(20, 70, 91, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Auto_Find_Java_PushButton.setFont(font)
+        self.Auto_Find_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Auto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 120, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}\n"
+                                                     "QPushButton:hover\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 110, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}\n"
+                                                     "QPushButton:pressed\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 100, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}")
+        self.Auto_Find_Java_PushButton.setFlat(False)
+        self.Auto_Find_Java_PushButton.setObjectName("Auto_Find_Java_PushButton")
+        self.Memory_Unit_Label = QLabel(self.Configuration_Widget)
+        self.Memory_Unit_Label.setGeometry(QRect(290, 150, 51, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Memory_Unit_Label.setFont(font)
+        self.Memory_Unit_Label.setObjectName("Memory_Unit_Label")
+        self.Set_Core_Background.raise_()
         self.Set_Memory_Background.raise_()
+        self.Set_Java_Background.raise_()
+        self.Download_Core_PushButton.raise_()
+        self.Download_Java_PushButton.raise_()
+        self.Manual_Import_Core_PushButton.raise_()
+        self.Manual_Select_Java_PushButton.raise_()
+        self.Select_Java_ComboBox.raise_()
         self.Memory_1_Label.raise_()
         self.MinMemory_LineEdit.raise_()
-        self.Memory_2_Label.raise_()
-        self.MaxMemory_LineEdit.raise_()
-        self.Memory_Unit_Label.raise_()
-        self.Set_Core_Background.raise_()
-        self.Core_Label.raise_()
         self.ConfigTip3_Label.raise_()
-        self.Manual_Import_Core_PushButton.raise_()
-        self.Others_Background.raise_()
-        self.Server_Name_Label.raise_()
-        self.Server_Name_LineEdit.raise_()
-        self.Completed_Save_PushButton.raise_()
-        self.Download_Core_PushButton.raise_()
+        self.Java_Label.raise_()
+        self.MaxMemory_LineEdit.raise_()
+        self.Memory_2_Label.raise_()
+        self.Core_Label.raise_()
+        self.Auto_Find_Java_PushButton.raise_()
+        self.Memory_Unit_Label.raise_()
         self.FunctionsStackedWidget.addWidget(self.ConfigPage)
         self.DownloadPage = QWidget()
         self.DownloadPage.setObjectName("DownloadPage")
@@ -1440,9 +1457,6 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Choose_Server_Label.setFont(font)
         self.Choose_Server_Label.setObjectName("Choose_Server_Label")
         self.Choose_Server_ComboBox = QComboBox(self.ChooseServerPage)
-        self.Choose_Server_ComboBox.setView(QListView())
-        self.Choose_Server_ComboBox.view().setTextElideMode(Qt.ElideNone)
-        self.Choose_Server_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.Choose_Server_ComboBox.setGeometry(QRect(220, 320, 411, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -1517,19 +1531,6 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                     "}")
         self.Choose_Server_Background.setText("")
         self.Choose_Server_Background.setObjectName("Choose_Server_Background")
-        self.Choose_Server_Tip1 = QLabel(self.ChooseServerPage)
-        self.Choose_Server_Tip1.setGeometry(QRect(30, 140, 651, 111))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Server_Tip1.setFont(font)
-        self.Choose_Server_Tip1.setAutoFillBackground(False)
-        self.Choose_Server_Tip1.setStyleSheet("QLabel\n"
-                                              "{\n"
-                                              "    background-color: rgb(247, 247, 247);\n"
-                                              "    border-radius: 10px\n"
-                                              "}")
-        self.Choose_Server_Tip1.setObjectName("Choose_Server_Tip1")
         self.Completed_Choose_Server_PushButton = QPushButton(self.ChooseServerPage)
         self.Completed_Choose_Server_PushButton.setGeometry(QRect(560, 410, 121, 51))
         font = QFont()
@@ -1551,12 +1552,29 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                               "}")
         self.Completed_Choose_Server_PushButton.setFlat(False)
         self.Completed_Choose_Server_PushButton.setObjectName("Completed_Choose_Server_PushButton")
+        self.Choose_Server_Tip1_Widget = QWidget(self.ChooseServerPage)
+        self.Choose_Server_Tip1_Widget.setGeometry(QRect(30, 140, 651, 111))
+        self.Choose_Server_Tip1_Widget.setStyleSheet("QWidget\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(247, 247, 247);\n"
+                                                     "    border-radius: 10px\n"
+                                                     "}")
+        self.Choose_Server_Tip1_Widget.setObjectName("Choose_Server_Tip1_Widget")
+        self.Choose_Server_Tip1_Label = QLabel(self.Choose_Server_Tip1_Widget)
+        self.Choose_Server_Tip1_Label.setGeometry(QRect(10, 20, 611, 71))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Choose_Server_Tip1_Label.setFont(font)
+        self.Choose_Server_Tip1_Label.setAutoFillBackground(False)
+        self.Choose_Server_Tip1_Label.setStyleSheet("")
+        self.Choose_Server_Tip1_Label.setObjectName("Choose_Server_Tip1_Label")
         self.Choose_Server_Background.raise_()
         self.Choose_Server_Label.raise_()
         self.Choose_Server_ComboBox.raise_()
         self.Choose_Server_Label2.raise_()
-        self.Choose_Server_Tip1.raise_()
         self.Completed_Choose_Server_PushButton.raise_()
+        self.Choose_Server_Tip1_Widget.raise_()
         self.FunctionsStackedWidget.addWidget(self.ChooseServerPage)
         self.ChooseJavaPage = QWidget()
         self.ChooseJavaPage.setObjectName("ChooseJavaPage")
@@ -1611,24 +1629,8 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                             "}")
         self.Completed_Choose_Java_PushButton.setFlat(False)
         self.Completed_Choose_Java_PushButton.setObjectName("Completed_Choose_Java_PushButton")
-        self.Choose_Java_Tip1 = QLabel(self.ChooseJavaPage)
-        self.Choose_Java_Tip1.setGeometry(QRect(30, 140, 651, 111))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Java_Tip1.setFont(font)
-        self.Choose_Java_Tip1.setAutoFillBackground(False)
-        self.Choose_Java_Tip1.setStyleSheet("QLabel\n"
-                                            "{\n"
-                                            "    background-color: rgb(247, 247, 247);\n"
-                                            "    border-radius: 10px\n"
-                                            "}")
-        self.Choose_Java_Tip1.setObjectName("Choose_Java_Tip1")
         self.Choose_Java_ComboBox = QComboBox(self.ChooseJavaPage)
-        self.Choose_Java_ComboBox.setView(QListView())
-        self.Choose_Java_ComboBox.view().setTextElideMode(Qt.ElideNone)
-        self.Choose_Java_ComboBox.view().setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.Choose_Java_ComboBox.setGeometry(QRect(220, 320, 411, 31))
+        self.Choose_Java_ComboBox.setGeometry(QRect(180, 320, 471, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(9)
@@ -1664,7 +1666,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item\n"
                                                 "{\n"
-                                                "    border-radius: 6px;\n"
+                                                "    border-radius: 7px;\n"
                                                 "    font-size:25px;\n"
                                                 "    color:#666667;\n"
                                                 "    padding-left:9px;\n"
@@ -1674,13 +1676,30 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                                 "}\n"
                                                 "QComboBox QAbstractItemView::item:hover\n"
                                                 "{\n"
-                                                "    border-radius: 6px;\n"
+                                                "    border-radius: 7px;\n"
                                                 "    background-color: rgb(0, 120, 212);\n"
                                                 "    color:#FFFFFF;\n"
                                                 "}\n"
                                                 "")
         self.Choose_Java_ComboBox.setObjectName("Choose_Java_ComboBox")
         self.Choose_Java_ComboBox.addItem("")
+        self.Choose_Java_Tip1_Widget = QWidget(self.ChooseJavaPage)
+        self.Choose_Java_Tip1_Widget.setGeometry(QRect(30, 140, 651, 111))
+        self.Choose_Java_Tip1_Widget.setStyleSheet("QWidget\n"
+                                                   "{\n"
+                                                   "    background-color: rgb(247, 247, 247);\n"
+                                                   "    border-radius: 10px\n"
+                                                   "}")
+        self.Choose_Java_Tip1_Widget.setObjectName("Choose_Java_Tip1_Widget")
+        self.Choose_Java_Tip1 = QLabel(self.Choose_Java_Tip1_Widget)
+        self.Choose_Java_Tip1.setGeometry(QRect(10, 20, 611, 71))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Choose_Java_Tip1.setFont(font)
+        self.Choose_Java_Tip1.setAutoFillBackground(False)
+        self.Choose_Java_Tip1.setStyleSheet("")
+        self.Choose_Java_Tip1.setObjectName("Choose_Java_Tip1")
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
         self.Background = QLabel(self.CentralWidget)
         self.Background.setGeometry(QRect(0, 0, 211, 581))
@@ -1737,41 +1756,43 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "更多工具"))
         self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "关于"))
+        self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
+        self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
+        self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "如何搭建一个Java版Minecraft服务器？\n"
+                                                                   "1.准备好Java、核心、电脑\n"
+                                                                   "（提示：可使用本程序下载）\n"
+                                                                   "2.配置参数（本程序“配置服务器”页）\n"
+                                                                   "3. 开启服务器。将服务器IP告诉玩家。"))
+        self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
+        self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
         self.Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
-        self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
-        self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
-        self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
-        self.Notice_Label.setText(_translate("MCSL2_MainWindow", "   正在获取公告..."))
-        self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "   如何搭建一个Java版 Minecraft服务器？\n"
-                                                                   "   1.准备好Java、核心、电脑\n"
-                                                                   "   （提示：可使用本程序下载）\n"
-                                                                   "   2.配置参数（本程序“配置服务器”页）\n"
-                                                                   "   3. 开启服务器。\n"
-                                                                   "   将服务器IP告诉玩家。"))
         self.Config_Label.setText(_translate("MCSL2_MainWindow", "配置服务器"))
-        self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "   一个服务器最基础的三个部件：\n"
-                                                                     "   1.存放的文件夹路径\n"
-                                                                     "   2.服务器核心\n"
-                                                                     "   3.Java路径"))
-        self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "   MCSL 2将会在程序目录生成\n"
-                                                                     "   以服务器名称命名的文件夹以\n"
-                                                                     "   存储服务器文件。"))
-        self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
-        self.Select_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
-        self.Manual_Select_Java_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
-        self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
-        self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
-        self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
-        self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
-        self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
-        self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
-                                                                     "你也可以自己复制，并重命名为server.jar。"))
-        self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
+        self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
+                                                                     "1.存放的文件夹路径\n"
+                                                                     "2.服务器核心\n"
+                                                                     "3.Java路径"))
+        self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n"
+                                                                     "以服务器名称命名的文件夹\n"
+                                                                     "以存储服务器文件。"))
         self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
+        self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
+        self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
+        self.Manual_Select_Java_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
+        self.Select_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
+        self.Select_Java_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "123"))
+        self.Select_Java_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "123213"))
+        self.Select_Java_ComboBox.setItemText(3, _translate("MCSL2_MainWindow", "2132132"))
+        self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
+        self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
+                                                                     "你也可以自己复制，并重命名为server.jar。"))
+        self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
+        self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
+        self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
+        self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
+        self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Type_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
         self.Download_Type_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "  [ 运行环境 ] Java"))
@@ -1816,17 +1837,16 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
         self.Choose_Server_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
         self.Choose_Server_Label2.setText(_translate("MCSL2_MainWindow", "请选择服务器："))
-        self.Choose_Server_Tip1.setText(_translate("MCSL2_MainWindow", "   MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
-                                                                       "\n"
-                                                                       "   MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Choose_Server_Tip1_Label.setText(
+            _translate("MCSL2_MainWindow", "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
+                                           "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
         self.Choose_Java_Label2.setText(_translate("MCSL2_MainWindow", "请选择Java："))
         self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
-        self.Choose_Java_Tip1.setText(_translate("MCSL2_MainWindow", "   emm...看来自动查找搜索到的Java部分路径过长，导致在配置服务器页面的下拉框里\n"
-                                                                     "\n"
-                                                                     "   无法完全显示捏...所以在这里选择吧！"))
         self.Choose_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
+        self.Choose_Java_Tip1.setText(_translate("MCSL2_MainWindow", "emm...看来自动查找搜索到的Java部分路径过长，导致\n"
+                                                                     "在配置服务器页面的下拉框里无法完全显示捏...所以在这里选择吧！"))
 
         # Window event binding
         self.Close_PushButton.clicked.connect(self.Quit)
@@ -1843,6 +1863,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
         self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
         self.Download_Core_PushButton.clicked.connect(self.ToDownloadPage)
+        self.Completed_Choose_Java_PushButton.clicked.connect(self.AutoDetectJava_Longer)
 
         # Functions binding
         self.Start_PushButton.clicked.connect(self.LaunchMinecraftServer)
@@ -1949,6 +1970,14 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
     def ToChooseServerPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(6)
+
+    def ToChooseJavaPage(self):
+        global JavaPaths
+        self.FunctionsStackedWidget.setCurrentIndex(7)
+        self.Choose_Java_ComboBox.clear()
+        if len(JavaPaths) != 0:
+            for i in range(len(JavaPaths)):
+                self.Choose_Java_ComboBox.addItem(JavaPaths[i])
 
     # Download Sources Changer
     def ChoseSharePointDownloadSource(self):
@@ -2059,7 +2088,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                 else:
                     NameStatus = 0
             Path1 = ".\\" + TMPServerName
-            if not path.exists(TMPServerName):
+            if not ospath.exists(TMPServerName):
                 ServerName = TMPServerName
                 NameStatus = 1
             else:
@@ -2188,9 +2217,12 @@ class Ui_MCSL2_MainWindow(QMainWindow):
                                 'max_memory': MaxMemory}
             ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
             ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
-            SaveConfig = open(ConfigPath, 'w+')
-            SaveConfig.write(ServerConfigJson)
-            SaveConfig.close()
+            with open(ConfigPath, 'w+', encoding='utf-8') as SaveConfig:
+                SaveConfig.write(ServerConfigJson)
+                SaveConfig.close()
+            # SaveConfig = open(ConfigPath, 'w+')
+            # SaveConfig.write(ServerConfigJson)
+            # SaveConfig.close()
             Tip = "服务器部署完毕！"
             CallMCSL2Dialog(Tip, 0)
         else:
@@ -2203,7 +2235,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         self.Select_Java_ComboBox.addItem("  查找中...")
         for c in ascii_uppercase:
             DiskSymbol = c + ":"
-            if path.isdir(DiskSymbol):
+            if ospath.isdir(DiskSymbol):
                 DiskSymbol = c + ":\\"
                 DiskSymbols.append(DiskSymbol)
         self.thread = fileSearchThread("java.exe")
@@ -2216,6 +2248,12 @@ class Ui_MCSL2_MainWindow(QMainWindow):
             if SearchStatus == 1:
                 Tip = "搜索完毕。"
                 CallMCSL2Dialog(Tip, 0)
+                for i in range(len(JavaPaths)):
+                    if len(JavaPaths[i]) >= 25:
+                        self.ToChooseJavaPage()
+                        break
+                    else:
+                        pass
                 break
             else:
                 sleep(1)
@@ -2224,6 +2262,21 @@ class Ui_MCSL2_MainWindow(QMainWindow):
         if len(JavaPaths) != 0:
             for i in range(len(JavaPaths)):
                 self.Select_Java_ComboBox.addItem(JavaPaths[i])
+
+    def AutoDetectJava_Longer(self):
+        self.Select_Java_ComboBox.setCurrentIndex(self.Choose_Java_ComboBox.currentIndex())
+        self.FunctionsStackedWidget.setCurrentIndex(1)
+        self.Blue2.setStyleSheet("QLabel\n"
+                                 "{\n"
+                                 "    background-color: rgb(0, 120, 212);\n"
+                                 "    border-radius: 5px\n"
+                                 "}")
+        self.Blue1.setVisible(False)
+        self.Blue2.setVisible(True)
+        self.Blue3.setVisible(False)
+        self.Blue4.setVisible(False)
+        self.Blue5.setVisible(False)
+        self.Blue6.setVisible(False)
 
     def ToDownloadJava(self):
         self.FunctionsStackedWidget.setCurrentIndex(2)
@@ -2352,7 +2405,7 @@ class Ui_MCSL2_MainWindow(QMainWindow):
 
     # The function of checking update
     def CheckUpdate(self):
-        if path.isfile("versionInfo"):
+        if ospath.isfile("versionInfo"):
             remove("versionInfo")
         CheckUpdateUrl = 'http://ys-o.ysepan.com/622878235/713409087/Uhwstxl665248752IN7Ibd/versionInfo'
         LatestVersion = float(get(CheckUpdateUrl).text)
@@ -2372,6 +2425,8 @@ class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
     def __init__(self):
         super(MCSL2Dialog, self).__init__()
         self.setupUi(self)
+
+
 class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
     def __init__(self):
         super(MCSL2AskDialog, self).__init__()
@@ -2412,7 +2467,6 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons):
         pass
 
 
-
 class fileSearchThread(QThread):
     global JavaPaths
     sinOut = pyqtSignal(str)
@@ -2437,17 +2491,14 @@ class fileSearchThread(QThread):
         for DirPath, DirNames, SearchFileNames in walk(path):
             for SearchFileName in SearchFileNames:
                 if SearchFileName.__contains__(keyword):
-                    SearchTMP_1 = path.join(DirPath, SearchFileName)
+                    SearchTMP_1 = ospath.join(DirPath, SearchFileName)
                     JavaPaths.append(SearchTMP_1)
-                    self.sinOut.emit(path.join(DirPath, SearchFileName))
+                    self.sinOut.emit(ospath.join(DirPath, SearchFileName))
             for folder in DirNames:
                 if folder.__contains__(keyword):
-                    SearchTMP_2 = path.join(DirPath, folder)
+                    SearchTMP_2 = ospath.join(DirPath, folder)
                     JavaPaths.append(SearchTMP_2)
-                    self.sinOut.emit(path.join(DirPath, folder))
-        # status = open(r'stat','a+')
-        # status.write('1.')
-        # status.close()
+                    self.sinOut.emit(ospath.join(DirPath, folder))
 
 
 # Start MCSL
