@@ -140,6 +140,7 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSL2_Title_Author_Label.setObjectName("MCSL2_Title_Author_Label")
         self.MCSL2_Title_Icon_Label = QtWidgets.QLabel(self.OptionsWidget)
         self.MCSL2_Title_Icon_Label.setGeometry(QtCore.QRect(20, 50, 71, 71))
+        self.MCSL2_Title_Icon_Label.setStyleSheet("")
         self.MCSL2_Title_Icon_Label.setText("")
         self.MCSL2_Title_Icon_Label.setPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
         self.MCSL2_Title_Icon_Label.setScaledContents(True)
@@ -340,6 +341,7 @@ class Ui_MCSL2_MainWindow(object):
         self.FunctionsStackedWidget = QtWidgets.QStackedWidget(self.CentralWidget)
         self.FunctionsStackedWidget.setGeometry(QtCore.QRect(210, -20, 731, 601))
         self.FunctionsStackedWidget.setAutoFillBackground(False)
+        self.FunctionsStackedWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.FunctionsStackedWidget.setObjectName("FunctionsStackedWidget")
         self.HomePage = QtWidgets.QWidget()
         self.HomePage.setObjectName("HomePage")
@@ -917,250 +919,6 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Download_Label.setFont(font)
         self.Download_Label.setObjectName("Download_Label")
-        self.Download_Type_ComboBox = QtWidgets.QComboBox(self.DownloadPage)
-        self.Download_Type_ComboBox.setGeometry(QtCore.QRect(170, 180, 461, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Download_Type_ComboBox.setFont(font)
-        self.Download_Type_ComboBox.setStyleSheet("QComboBox {\n"
-"    border-radius: 3px;\n"
-"    padding: 1px 2px 1px 2px;\n"
-"    min-width: 9em;\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 20px;\n"
-"    border-left-color: rgb(223, 223, 223);\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 4px;\n"
-"    border-bottom-right-radius: 4px;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-"}\n"
-"QComboBox QAbstractItemView\n"
-"{\n"
-"    border-radius: 10px;\n"
-"    background: rgba(255,255,255,1);\n"
-"    border: 1px solid rgba(228,228,228,1);\n"
-"    border-radius: 0px 0px 5px 5px;\n"
-"    font-size: 14px;\n"
-"    outline: 0px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    font-size:25px;\n"
-"    color:#666667;\n"
-"    padding-left:9px;\n"
-"    background-color:#FFFFFF;\n"
-"    min-height: 33px;\n"
-"    min-width: 60px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item:hover\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    color:#FFFFFF;\n"
-"}\n"
-"")
-        self.Download_Type_ComboBox.setObjectName("Download_Type_ComboBox")
-        self.Download_Type_ComboBox.addItem("")
-        self.Download_Type_ComboBox.addItem("")
-        self.Download_Type_ComboBox.addItem("")
-        self.Download_Type_ComboBox.addItem("")
-        self.Download_Type_ComboBox.addItem("")
-        self.Download_Type_Background = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Type_Background.setGeometry(QtCore.QRect(30, 140, 651, 111))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Download_Type_Background.setFont(font)
-        self.Download_Type_Background.setAutoFillBackground(False)
-        self.Download_Type_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Download_Type_Background.setText("")
-        self.Download_Type_Background.setObjectName("Download_Type_Background")
-        self.Download_Type_Label = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Type_Label.setGeometry(QtCore.QRect(60, 180, 91, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Download_Type_Label.setFont(font)
-        self.Download_Type_Label.setObjectName("Download_Type_Label")
-        self.Download_Versions_ComboBox = QtWidgets.QComboBox(self.DownloadPage)
-        self.Download_Versions_ComboBox.setGeometry(QtCore.QRect(170, 310, 461, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Download_Versions_ComboBox.setFont(font)
-        self.Download_Versions_ComboBox.setStyleSheet("QComboBox {\n"
-"    border-radius: 3px;\n"
-"    padding: 1px 2px 1px 2px;\n"
-"    min-width: 9em;\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 20px;\n"
-"    border-left-color: rgb(223, 223, 223);\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 4px;\n"
-"    border-bottom-right-radius: 4px;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-"}\n"
-"QComboBox QAbstractItemView\n"
-"{\n"
-"    border-radius: 10px;\n"
-"    background: rgba(255,255,255,1);\n"
-"    border: 1px solid rgba(228,228,228,1);\n"
-"    border-radius: 0px 0px 5px 5px;\n"
-"    font-size: 14px;\n"
-"    outline: 0px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    font-size:25px;\n"
-"    color:#666667;\n"
-"    padding-left:9px;\n"
-"    background-color:#FFFFFF;\n"
-"    min-height: 33px;\n"
-"    min-width: 60px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item:hover\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    color:#FFFFFF;\n"
-"}\n"
-"")
-        self.Download_Versions_ComboBox.setObjectName("Download_Versions_ComboBox")
-        self.Download_Versions_ComboBox.addItem("")
-        self.Download_Versions_Label = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Versions_Label.setGeometry(QtCore.QRect(60, 310, 91, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Download_Versions_Label.setFont(font)
-        self.Download_Versions_Label.setObjectName("Download_Versions_Label")
-        self.Download_Versions_Background = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Versions_Background.setGeometry(QtCore.QRect(30, 270, 651, 111))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Download_Versions_Background.setFont(font)
-        self.Download_Versions_Background.setAutoFillBackground(False)
-        self.Download_Versions_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Download_Versions_Background.setText("")
-        self.Download_Versions_Background.setObjectName("Download_Versions_Background")
-        self.Download_Progress_Background = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Progress_Background.setGeometry(QtCore.QRect(30, 400, 651, 91))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Download_Progress_Background.setFont(font)
-        self.Download_Progress_Background.setAutoFillBackground(False)
-        self.Download_Progress_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Download_Progress_Background.setText("")
-        self.Download_Progress_Background.setObjectName("Download_Progress_Background")
-        self.Download_PushButton = QtWidgets.QPushButton(self.DownloadPage)
-        self.Download_PushButton.setGeometry(QtCore.QRect(560, 430, 91, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Download_PushButton.setFont(font)
-        self.Download_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Download_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
-        self.Download_PushButton.setFlat(False)
-        self.Download_PushButton.setObjectName("Download_PushButton")
-        self.Download_Save_Path_Label = QtWidgets.QLabel(self.DownloadPage)
-        self.Download_Save_Path_Label.setGeometry(QtCore.QRect(60, 430, 101, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(13)
-        self.Download_Save_Path_Label.setFont(font)
-        self.Download_Save_Path_Label.setObjectName("Download_Save_Path_Label")
-        self.Download_Save_Path_LineEdit = QtWidgets.QLineEdit(self.DownloadPage)
-        self.Download_Save_Path_LineEdit.setGeometry(QtCore.QRect(160, 430, 281, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Download_Save_Path_LineEdit.setFont(font)
-        self.Download_Save_Path_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
-        self.Download_Save_Path_LineEdit.setObjectName("Download_Save_Path_LineEdit")
-        self.Manually_Choose_Download_Save_Path_PushButton = QtWidgets.QPushButton(self.DownloadPage)
-        self.Manually_Choose_Download_Save_Path_PushButton.setGeometry(QtCore.QRect(450, 430, 91, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Manually_Choose_Download_Save_Path_PushButton.setFont(font)
-        self.Manually_Choose_Download_Save_Path_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Manually_Choose_Download_Save_Path_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
-        self.Manually_Choose_Download_Save_Path_PushButton.setFlat(False)
-        self.Manually_Choose_Download_Save_Path_PushButton.setObjectName("Manually_Choose_Download_Save_Path_PushButton")
         self.Download_Source_Background = QtWidgets.QLabel(self.DownloadPage)
         self.Download_Source_Background.setGeometry(QtCore.QRect(250, 60, 431, 71))
         font = QtGui.QFont()
@@ -1218,25 +976,235 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.GHProxy_radioButton.setFont(font)
         self.GHProxy_radioButton.setObjectName("GHProxy_radioButton")
-        self.Download_Progress_Background.raise_()
-        self.Download_Versions_Background.raise_()
-        self.Download_Type_Background.raise_()
-        self.Download_Label.raise_()
-        self.Download_Type_ComboBox.raise_()
-        self.Download_Type_Label.raise_()
-        self.Download_Versions_ComboBox.raise_()
-        self.Download_Versions_Label.raise_()
-        self.Download_PushButton.raise_()
-        self.Download_Save_Path_Label.raise_()
-        self.Download_Save_Path_LineEdit.raise_()
-        self.Manually_Choose_Download_Save_Path_PushButton.raise_()
-        self.Download_Source_Background.raise_()
-        self.Download_Source_Label.raise_()
-        self.luoxisCloud_radioButton.raise_()
-        self.Gitee_radioButton.raise_()
-        self.SharePoint_radioButton.raise_()
-        self.GitHub_radioButton.raise_()
-        self.GHProxy_radioButton.raise_()
+        self.DownloadSwitcher_TabWidget = QtWidgets.QTabWidget(self.DownloadPage)
+        self.DownloadSwitcher_TabWidget.setGeometry(QtCore.QRect(30, 150, 651, 411))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.DownloadSwitcher_TabWidget.setFont(font)
+        self.DownloadSwitcher_TabWidget.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.DownloadSwitcher_TabWidget.setStyleSheet("QTabWidget\n"
+"{\n"
+"    background-color:rgb(247, 247, 247);\n"
+"}\n"
+"QTabWidget::pane\n"
+"{\n"
+"    background-color: rgb(235, 235, 235);\n"
+"    border-top-right-radius: 8px;\n"
+"    border-bottom-right-radius: 8px;\n"
+"    border-bottom-left-radius: 8px;\n"
+"    border:none;\n"
+"}\n"
+"QTabBar::tab\n"
+"{\n"
+"    background-color:rgb(247, 247, 247);\n"
+"    border-top-left-radius: 7px;\n"
+"    border-top-right-radius: 7px;\n"
+"    min-width: 100px;\n"
+"    min-height: 20px;\n"
+"    padding: 8px;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected\n"
+"{\n"
+"    background-color: rgb(235, 235, 235);\n"
+"}")
+        self.DownloadSwitcher_TabWidget.setTabPosition(QtWidgets.QTabWidget.North)
+        self.DownloadSwitcher_TabWidget.setElideMode(QtCore.Qt.ElideMiddle)
+        self.DownloadSwitcher_TabWidget.setUsesScrollButtons(False)
+        self.DownloadSwitcher_TabWidget.setObjectName("DownloadSwitcher_TabWidget")
+        self.JavaTab = QtWidgets.QWidget()
+        self.JavaTab.setObjectName("JavaTab")
+        self.JavaScrollArea = QtWidgets.QScrollArea(self.JavaTab)
+        self.JavaScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
+        self.JavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.JavaScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.JavaScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.JavaScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.JavaScrollArea.setLineWidth(0)
+        self.JavaScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.JavaScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.JavaScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.JavaScrollArea.setWidgetResizable(True)
+        self.JavaScrollArea.setObjectName("JavaScrollArea")
+        self.JavaScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.JavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
+        self.JavaScrollAreaWidgetContents.setObjectName("JavaScrollAreaWidgetContents")
+        self.JavaScrollArea.setWidget(self.JavaScrollAreaWidgetContents)
+        self.DownloadSwitcher_TabWidget.addTab(self.JavaTab, "")
+        self.SpigotTab = QtWidgets.QWidget()
+        self.SpigotTab.setObjectName("SpigotTab")
+        self.SpigotScrollArea = QtWidgets.QScrollArea(self.SpigotTab)
+        self.SpigotScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
+        self.SpigotScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.SpigotScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.SpigotScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.SpigotScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.SpigotScrollArea.setLineWidth(0)
+        self.SpigotScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.SpigotScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.SpigotScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.SpigotScrollArea.setWidgetResizable(True)
+        self.SpigotScrollArea.setObjectName("SpigotScrollArea")
+        self.SpigotScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.SpigotScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
+        self.SpigotScrollAreaWidgetContents.setObjectName("SpigotScrollAreaWidgetContents")
+        self.SpigotScrollArea.setWidget(self.SpigotScrollAreaWidgetContents)
+        self.DownloadSwitcher_TabWidget.addTab(self.SpigotTab, "")
+        self.PaperTab = QtWidgets.QWidget()
+        self.PaperTab.setObjectName("PaperTab")
+        self.PaperScrollArea = QtWidgets.QScrollArea(self.PaperTab)
+        self.PaperScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
+        self.PaperScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.PaperScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.PaperScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.PaperScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.PaperScrollArea.setLineWidth(0)
+        self.PaperScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.PaperScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.PaperScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.PaperScrollArea.setWidgetResizable(True)
+        self.PaperScrollArea.setObjectName("PaperScrollArea")
+        self.PaperScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.PaperScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
+        self.PaperScrollAreaWidgetContents.setObjectName("PaperScrollAreaWidgetContents")
+        self.PaperScrollArea.setWidget(self.PaperScrollAreaWidgetContents)
+        self.DownloadSwitcher_TabWidget.addTab(self.PaperTab, "")
+        self.BungeeCordTab = QtWidgets.QWidget()
+        self.BungeeCordTab.setObjectName("BungeeCordTab")
+        self.BungeeCordScrollArea = QtWidgets.QScrollArea(self.BungeeCordTab)
+        self.BungeeCordScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
+        self.BungeeCordScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.BungeeCordScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.BungeeCordScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.BungeeCordScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.BungeeCordScrollArea.setLineWidth(0)
+        self.BungeeCordScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.BungeeCordScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.BungeeCordScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.BungeeCordScrollArea.setWidgetResizable(True)
+        self.BungeeCordScrollArea.setObjectName("BungeeCordScrollArea")
+        self.BungeeCordScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.BungeeCordScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
+        self.BungeeCordScrollAreaWidgetContents.setObjectName("BungeeCordScrollAreaWidgetContents")
+        self.BungeeCordScrollArea.setWidget(self.BungeeCordScrollAreaWidgetContents)
+        self.DownloadSwitcher_TabWidget.addTab(self.BungeeCordTab, "")
         self.FunctionsStackedWidget.addWidget(self.DownloadPage)
         self.ConsolePage = QtWidgets.QWidget()
         self.ConsolePage.setObjectName("ConsolePage")
@@ -1706,7 +1674,8 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(6)
+        self.FunctionsStackedWidget.setCurrentIndex(0)
+        self.DownloadSwitcher_TabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1758,23 +1727,16 @@ class Ui_MCSL2_MainWindow(object):
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.Download_Type_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Download_Type_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "  [ 运行环境 ] Java"))
-        self.Download_Type_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "  [ 服务端 ] Spigot"))
-        self.Download_Type_ComboBox.setItemText(3, _translate("MCSL2_MainWindow", "  [ 服务端 ] Paper"))
-        self.Download_Type_ComboBox.setItemText(4, _translate("MCSL2_MainWindow", "  [ 服务端 ] BungeeCord"))
-        self.Download_Type_Label.setText(_translate("MCSL2_MainWindow", "下载类型："))
-        self.Download_Versions_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Download_Versions_Label.setText(_translate("MCSL2_MainWindow", "下载版本："))
-        self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.Download_Save_Path_Label.setText(_translate("MCSL2_MainWindow", "保存路径:"))
-        self.Manually_Choose_Download_Save_Path_PushButton.setText(_translate("MCSL2_MainWindow", "选择.."))
         self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
         self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
         self.Gitee_radioButton.setText(_translate("MCSL2_MainWindow", "Gitee"))
         self.SharePoint_radioButton.setText(_translate("MCSL2_MainWindow", "SharePoint"))
         self.GitHub_radioButton.setText(_translate("MCSL2_MainWindow", "GitHub"))
         self.GHProxy_radioButton.setText(_translate("MCSL2_MainWindow", "GHProxy"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab), _translate("MCSL2_MainWindow", "[ 核心 ] Paper"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab), _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))

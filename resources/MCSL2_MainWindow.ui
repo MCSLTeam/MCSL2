@@ -249,6 +249,9 @@ QPushButton:pressed
        <height>71</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -653,8 +656,11 @@ QPushButton:pressed
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -1765,424 +1771,6 @@ QPushButton:pressed
        <string>下载</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="Download_Type_ComboBox">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>180</y>
-        <width>461</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QComboBox {
-    border-radius: 3px;
-    padding: 1px 2px 1px 2px;
-    min-width: 9em;
-	border: 2px solid rgb(223, 223, 223);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 20px;
-    border-left-color: rgb(223, 223, 223);
-    border-left-style: solid;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBox.png);
-}
-QComboBox QAbstractItemView
-{
-	border-radius: 10px;
-	background: rgba(255,255,255,1);
-    border: 1px solid rgba(228,228,228,1);
-    border-radius: 0px 0px 5px 5px;
-	font-size: 14px;
-    outline: 0px;
-}
-QComboBox QAbstractItemView::item
-{
-	border-radius: 7px;
-	font-size:25px;
-	color:#666667;
-	padding-left:9px;
-	background-color:#FFFFFF;
-	min-height: 33px;
-	min-width: 60px;
-}
-QComboBox QAbstractItemView::item:hover
-{
-	border-radius: 7px;
-	background-color: rgb(0, 120, 212);
-	color:#FFFFFF;
-}
-</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>  请选择</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>  [ 运行环境 ] Java</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>  [ 服务端 ] Spigot</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>  [ 服务端 ] Paper</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>  [ 服务端 ] BungeeCord</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="Download_Type_Background">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>140</y>
-        <width>651</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Download_Type_Label">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>180</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>下载类型：</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="Download_Versions_ComboBox">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>310</y>
-        <width>461</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QComboBox {
-    border-radius: 3px;
-    padding: 1px 2px 1px 2px;
-    min-width: 9em;
-	border: 2px solid rgb(223, 223, 223);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 20px;
-    border-left-color: rgb(223, 223, 223);
-    border-left-style: solid;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBox.png);
-}
-QComboBox QAbstractItemView
-{
-	border-radius: 10px;
-	background: rgba(255,255,255,1);
-    border: 1px solid rgba(228,228,228,1);
-    border-radius: 0px 0px 5px 5px;
-	font-size: 14px;
-    outline: 0px;
-}
-QComboBox QAbstractItemView::item
-{
-	border-radius: 7px;
-	font-size:25px;
-	color:#666667;
-	padding-left:9px;
-	background-color:#FFFFFF;
-	min-height: 33px;
-	min-width: 60px;
-}
-QComboBox QAbstractItemView::item:hover
-{
-	border-radius: 7px;
-	background-color: rgb(0, 120, 212);
-	color:#FFFFFF;
-}
-</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>  请选择</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="Download_Versions_Label">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>310</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>下载版本：</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Download_Versions_Background">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>270</y>
-        <width>651</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Download_Progress_Background">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>400</y>
-        <width>651</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Download_PushButton">
-      <property name="geometry">
-       <rect>
-        <x>560</x>
-        <y>430</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
-      </property>
-      <property name="text">
-       <string>下载</string>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Download_Save_Path_Label">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>430</y>
-        <width>101</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>保存路径:</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="Download_Save_Path_LineEdit">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>430</y>
-        <width>281</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLineEdit
-{
-	border-radius: 3px;
-	border: 2px;
-	border-color: rgb(223, 223, 223);
-    border-style: solid;
-}
-</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Manually_Choose_Download_Save_Path_PushButton">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>430</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
-      </property>
-      <property name="text">
-       <string>选择..</string>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
-      </property>
-     </widget>
      <widget class="QLabel" name="Download_Source_Background">
       <property name="geometry">
        <rect>
@@ -2329,25 +1917,389 @@ QPushButton:pressed
        <string>GHProxy</string>
       </property>
      </widget>
-     <zorder>Download_Progress_Background</zorder>
-     <zorder>Download_Versions_Background</zorder>
-     <zorder>Download_Type_Background</zorder>
-     <zorder>Download_Label</zorder>
-     <zorder>Download_Type_ComboBox</zorder>
-     <zorder>Download_Type_Label</zorder>
-     <zorder>Download_Versions_ComboBox</zorder>
-     <zorder>Download_Versions_Label</zorder>
-     <zorder>Download_PushButton</zorder>
-     <zorder>Download_Save_Path_Label</zorder>
-     <zorder>Download_Save_Path_LineEdit</zorder>
-     <zorder>Manually_Choose_Download_Save_Path_PushButton</zorder>
-     <zorder>Download_Source_Background</zorder>
-     <zorder>Download_Source_Label</zorder>
-     <zorder>luoxisCloud_radioButton</zorder>
-     <zorder>Gitee_radioButton</zorder>
-     <zorder>SharePoint_radioButton</zorder>
-     <zorder>GitHub_radioButton</zorder>
-     <zorder>GHProxy_radioButton</zorder>
+     <widget class="QTabWidget" name="DownloadSwitcher_TabWidget">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>150</y>
+        <width>651</width>
+        <height>411</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTabWidget
+{
+    background-color:rgb(247, 247, 247);
+}
+QTabWidget::pane
+{
+    background-color: rgb(235, 235, 235);
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+    border:none;
+}
+QTabBar::tab
+{
+	background-color:rgb(247, 247, 247);
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	min-width: 100px;
+	min-height: 20px;
+	padding: 8px;
+}
+
+QTabBar::tab:selected
+{
+	background-color: rgb(235, 235, 235);
+}</string>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="elideMode">
+       <enum>Qt::ElideMiddle</enum>
+      </property>
+      <property name="usesScrollButtons">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="JavaTab">
+       <attribute name="title">
+        <string>[ 运行环境 ] Java</string>
+       </attribute>
+       <widget class="QScrollArea" name="JavaScrollArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>631</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="JavaScrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>619</width>
+           <height>351</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="SpigotTab">
+       <attribute name="title">
+        <string>[ 核心 ] Spigot</string>
+       </attribute>
+       <widget class="QScrollArea" name="SpigotScrollArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>631</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="SpigotScrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>619</width>
+           <height>351</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="PaperTab">
+       <attribute name="title">
+        <string>[ 核心 ] Paper</string>
+       </attribute>
+       <widget class="QScrollArea" name="PaperScrollArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>631</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="PaperScrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>619</width>
+           <height>351</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="BungeeCordTab">
+       <attribute name="title">
+        <string>[ 核心 ] BungeeCord</string>
+       </attribute>
+       <widget class="QScrollArea" name="BungeeCordScrollArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>631</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="BungeeCordScrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>619</width>
+           <height>351</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="ConsolePage">
      <widget class="QLabel" name="Console_Label">
@@ -3249,7 +3201,6 @@ QComboBox QAbstractItemView::item:hover
   </widget>
  </widget>
  <resources>
-  <include location="MCSL2_Icon.qrc"/>
   <include location="MCSL2_Icon.qrc"/>
  </resources>
  <connections/>
