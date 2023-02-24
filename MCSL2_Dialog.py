@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt, QCoreApplication, QMetaObject, QRect
 from PyQt5.QtGui import QFont, QCursor, QIcon, QPixmap
 from PyQt5.QtWidgets import QPushButton, QLabel, QDialog
 
+
 class Ui_MCSL2_Dialog(object):
     def setupUi(self, MCSL2_Dialog):
         MCSL2_Dialog.setObjectName("MCSL2_Dialog")

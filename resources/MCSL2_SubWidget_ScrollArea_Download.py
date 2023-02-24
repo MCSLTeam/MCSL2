@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\resources\MCSL2_SubWidget_ScrollArea.ui'
+# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\resources\MCSL2_SubWidget_ScrollArea_Download.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,18 +11,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MCSL2_SubWidget_ScrollArea(object):
-    def setupUi(self, MCSL2_SubWidget_ScrollArea):
-        MCSL2_SubWidget_ScrollArea.setObjectName("MCSL2_SubWidget_ScrollArea")
-        MCSL2_SubWidget_ScrollArea.resize(580, 70)
-        self.GraphWidget = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea)
+class Ui_MCSL2_SubWidget_ScrollArea_Download(object):
+    def setupUi(self, MCSL2_SubWidget_ScrollArea_Download):
+        MCSL2_SubWidget_ScrollArea_Download.setObjectName("MCSL2_SubWidget_ScrollArea_Download")
+        MCSL2_SubWidget_ScrollArea_Download.resize(580, 70)
+        self.GraphWidget = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea_Download)
         self.GraphWidget.setGeometry(QtCore.QRect(10, 10, 51, 51))
         self.GraphWidget.setStyleSheet("QWidget{\n"
 "    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 4px;\n"
 "}")
         self.GraphWidget.setObjectName("GraphWidget")
-        self.IntroductionWidget = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea)
+        self.IntroductionWidget = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea_Download)
         self.IntroductionWidget.setGeometry(QtCore.QRect(70, 10, 421, 51))
         self.IntroductionWidget.setStyleSheet("QWidget\n"
 "{\n"
@@ -30,7 +30,7 @@ class Ui_MCSL2_SubWidget_ScrollArea(object):
 "    border-radius: 8px\n"
 "}")
         self.IntroductionWidget.setObjectName("IntroductionWidget")
-        self.Download_PushButton = QtWidgets.QPushButton(MCSL2_SubWidget_ScrollArea)
+        self.Download_PushButton = QtWidgets.QPushButton(MCSL2_SubWidget_ScrollArea_Download)
         self.Download_PushButton.setGeometry(QtCore.QRect(510, 10, 51, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -58,11 +58,11 @@ class Ui_MCSL2_SubWidget_ScrollArea(object):
         self.Download_PushButton.setFlat(False)
         self.Download_PushButton.setObjectName("Download_PushButton")
 
-        self.retranslateUi(MCSL2_SubWidget_ScrollArea)
-        QtCore.QMetaObject.connectSlotsByName(MCSL2_SubWidget_ScrollArea)
+        self.retranslateUi(MCSL2_SubWidget_ScrollArea_Download)
+        QtCore.QMetaObject.connectSlotsByName(MCSL2_SubWidget_ScrollArea_Download)
 
-    def retranslateUi(self, MCSL2_SubWidget_ScrollArea):
+    def retranslateUi(self, MCSL2_SubWidget_ScrollArea_Download):
         _translate = QtCore.QCoreApplication.translate
-        MCSL2_SubWidget_ScrollArea.setWindowTitle(_translate("MCSL2_SubWidget_ScrollArea", "MCSL 2"))
-        self.Download_PushButton.setText(_translate("MCSL2_SubWidget_ScrollArea", "下载"))
+        MCSL2_SubWidget_ScrollArea_Download.setWindowTitle(_translate("MCSL2_SubWidget_ScrollArea_Download", "MCSL 2"))
+        self.Download_PushButton.setText(_translate("MCSL2_SubWidget_ScrollArea_Download", "下载"))
 import MCSL2_Icon_rc

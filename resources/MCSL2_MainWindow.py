@@ -611,7 +611,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Core_PushButton.setFlat(False)
         self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
         self.Download_Java_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
-        self.Download_Java_PushButton.setGeometry(QtCore.QRect(240, 70, 91, 31))
+        self.Download_Java_PushButton.setGeometry(QtCore.QRect(200, 70, 81, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -665,7 +665,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Manual_Import_Core_PushButton.setFlat(False)
         self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
         self.Manual_Select_Java_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
-        self.Manual_Select_Java_PushButton.setGeometry(QtCore.QRect(130, 70, 91, 31))
+        self.Manual_Select_Java_PushButton.setGeometry(QtCore.QRect(110, 70, 81, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -691,63 +691,6 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Manual_Select_Java_PushButton.setFlat(False)
         self.Manual_Select_Java_PushButton.setObjectName("Manual_Select_Java_PushButton")
-        self.Select_Java_ComboBox = QtWidgets.QComboBox(self.Configuration_Widget)
-        self.Select_Java_ComboBox.setGeometry(QtCore.QRect(70, 20, 261, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Select_Java_ComboBox.setFont(font)
-        self.Select_Java_ComboBox.setStyleSheet("QComboBox {\n"
-"    border-radius: 3px;\n"
-"    padding: 1px 2px 1px 2px;\n"
-"    min-width: 9em;\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 20px;\n"
-"    border-left-color: rgb(223, 223, 223);\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 4px;\n"
-"    border-bottom-right-radius: 4px;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-"}\n"
-"QComboBox QAbstractItemView\n"
-"{\n"
-"    border-radius: 10px;\n"
-"    background: rgba(255,255,255,1);\n"
-"    border: 1px solid rgba(228,228,228,1);\n"
-"    border-radius: 0px 0px 5px 5px;\n"
-"    font-size: 14px;\n"
-"    outline: 0px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    font-size:25px;\n"
-"    color:#666667;\n"
-"    padding-left:9px;\n"
-"    background-color:#FFFFFF;\n"
-"    min-height: 33px;\n"
-"    min-width: 60px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item:hover\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    color:#FFFFFF;\n"
-"}\n"
-"")
-        self.Select_Java_ComboBox.setObjectName("Select_Java_ComboBox")
-        self.Select_Java_ComboBox.addItem("")
-        self.Select_Java_ComboBox.addItem("")
-        self.Select_Java_ComboBox.addItem("")
-        self.Select_Java_ComboBox.addItem("")
         self.Set_Core_Background = QtWidgets.QLabel(self.Configuration_Widget)
         self.Set_Core_Background.setGeometry(QtCore.QRect(0, 220, 351, 121))
         font = QtGui.QFont()
@@ -857,7 +800,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Core_Label.setFont(font)
         self.Core_Label.setObjectName("Core_Label")
         self.Auto_Find_Java_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
-        self.Auto_Find_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 91, 31))
+        self.Auto_Find_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 81, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -890,6 +833,37 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.Memory_Unit_Label.setFont(font)
         self.Memory_Unit_Label.setObjectName("Memory_Unit_Label")
+        self.Java_Version_Label = QtWidgets.QLabel(self.Configuration_Widget)
+        self.Java_Version_Label.setGeometry(QtCore.QRect(80, 20, 191, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Java_Version_Label.setFont(font)
+        self.Java_Version_Label.setText("")
+        self.Java_Version_Label.setObjectName("Java_Version_Label")
+        self.Founded_Java_List_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
+        self.Founded_Java_List_PushButton.setGeometry(QtCore.QRect(290, 70, 51, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Founded_Java_List_PushButton.setFont(font)
+        self.Founded_Java_List_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Founded_Java_List_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        self.Founded_Java_List_PushButton.setObjectName("Founded_Java_List_PushButton")
         self.Set_Core_Background.raise_()
         self.Set_Memory_Background.raise_()
         self.Set_Java_Background.raise_()
@@ -897,7 +871,6 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Java_PushButton.raise_()
         self.Manual_Import_Core_PushButton.raise_()
         self.Manual_Select_Java_PushButton.raise_()
-        self.Select_Java_ComboBox.raise_()
         self.Memory_1_Label.raise_()
         self.MinMemory_LineEdit.raise_()
         self.ConfigTip3_Label.raise_()
@@ -907,6 +880,8 @@ class Ui_MCSL2_MainWindow(object):
         self.Core_Label.raise_()
         self.Auto_Find_Java_PushButton.raise_()
         self.Memory_Unit_Label.raise_()
+        self.Java_Version_Label.raise_()
+        self.Founded_Java_List_PushButton.raise_()
         self.FunctionsStackedWidget.addWidget(self.ConfigPage)
         self.DownloadPage = QtWidgets.QWidget()
         self.DownloadPage.setObjectName("DownloadPage")
@@ -1404,83 +1379,8 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Server_Label.setFont(font)
         self.Choose_Server_Label.setObjectName("Choose_Server_Label")
-        self.Choose_Server_ComboBox = QtWidgets.QComboBox(self.ChooseServerPage)
-        self.Choose_Server_ComboBox.setGeometry(QtCore.QRect(220, 320, 411, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Choose_Server_ComboBox.setFont(font)
-        self.Choose_Server_ComboBox.setStyleSheet("QComboBox {\n"
-"    border-radius: 3px;\n"
-"    padding: 1px 2px 1px 2px;\n"
-"    min-width: 9em;\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 20px;\n"
-"    border-left-color: rgb(223, 223, 223);\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 4px;\n"
-"    border-bottom-right-radius: 4px;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-"}\n"
-"QComboBox QAbstractItemView\n"
-"{\n"
-"    border-radius: 10px;\n"
-"    background: rgba(255,255,255,1);\n"
-"    border: 1px solid rgba(228,228,228,1);\n"
-"    border-radius: 0px 0px 5px 5px;\n"
-"    font-size: 14px;\n"
-"    outline: 0px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    font-size:25px;\n"
-"    color:#666667;\n"
-"    padding-left:9px;\n"
-"    background-color:#FFFFFF;\n"
-"    min-height: 33px;\n"
-"    min-width: 60px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item:hover\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    color:#FFFFFF;\n"
-"}\n"
-"")
-        self.Choose_Server_ComboBox.setObjectName("Choose_Server_ComboBox")
-        self.Choose_Server_ComboBox.addItem("")
-        self.Choose_Server_Label2 = QtWidgets.QLabel(self.ChooseServerPage)
-        self.Choose_Server_Label2.setGeometry(QtCore.QRect(60, 320, 141, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Choose_Server_Label2.setFont(font)
-        self.Choose_Server_Label2.setObjectName("Choose_Server_Label2")
-        self.Choose_Server_Background = QtWidgets.QLabel(self.ChooseServerPage)
-        self.Choose_Server_Background.setGeometry(QtCore.QRect(30, 280, 651, 111))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Server_Background.setFont(font)
-        self.Choose_Server_Background.setAutoFillBackground(False)
-        self.Choose_Server_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Choose_Server_Background.setText("")
-        self.Choose_Server_Background.setObjectName("Choose_Server_Background")
         self.Completed_Choose_Server_PushButton = QtWidgets.QPushButton(self.ChooseServerPage)
-        self.Completed_Choose_Server_PushButton.setGeometry(QtCore.QRect(560, 410, 121, 51))
+        self.Completed_Choose_Server_PushButton.setGeometry(QtCore.QRect(560, 510, 121, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(14)
@@ -1501,7 +1401,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Completed_Choose_Server_PushButton.setFlat(False)
         self.Completed_Choose_Server_PushButton.setObjectName("Completed_Choose_Server_PushButton")
         self.Choose_Server_Tip1_Widget = QtWidgets.QWidget(self.ChooseServerPage)
-        self.Choose_Server_Tip1_Widget.setGeometry(QtCore.QRect(30, 140, 651, 111))
+        self.Choose_Server_Tip1_Widget.setGeometry(QtCore.QRect(30, 140, 651, 81))
         self.Choose_Server_Tip1_Widget.setStyleSheet("QWidget\n"
 "{\n"
 "    background-color: rgb(247, 247, 247);\n"
@@ -1509,7 +1409,7 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Choose_Server_Tip1_Widget.setObjectName("Choose_Server_Tip1_Widget")
         self.Choose_Server_Tip1_Label = QtWidgets.QLabel(self.Choose_Server_Tip1_Widget)
-        self.Choose_Server_Tip1_Label.setGeometry(QtCore.QRect(10, 20, 611, 71))
+        self.Choose_Server_Tip1_Label.setGeometry(QtCore.QRect(20, 0, 601, 71))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -1517,29 +1417,55 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_Tip1_Label.setAutoFillBackground(False)
         self.Choose_Server_Tip1_Label.setStyleSheet("")
         self.Choose_Server_Tip1_Label.setObjectName("Choose_Server_Tip1_Label")
-        self.Choose_Server_Background.raise_()
-        self.Choose_Server_Label.raise_()
-        self.Choose_Server_ComboBox.raise_()
-        self.Choose_Server_Label2.raise_()
-        self.Completed_Choose_Server_PushButton.raise_()
-        self.Choose_Server_Tip1_Widget.raise_()
+        self.ChooseServerScrollArea = QtWidgets.QScrollArea(self.ChooseServerPage)
+        self.ChooseServerScrollArea.setGeometry(QtCore.QRect(30, 240, 651, 251))
+        self.ChooseServerScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.ChooseServerScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.ChooseServerScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.ChooseServerScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.ChooseServerScrollArea.setLineWidth(0)
+        self.ChooseServerScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.ChooseServerScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.ChooseServerScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.ChooseServerScrollArea.setWidgetResizable(True)
+        self.ChooseServerScrollArea.setObjectName("ChooseServerScrollArea")
+        self.ChooseServerScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.ChooseServerScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 639, 251))
+        self.ChooseServerScrollAreaWidgetContents.setObjectName("ChooseServerScrollAreaWidgetContents")
+        self.ChooseServerScrollArea.setWidget(self.ChooseServerScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseServerPage)
         self.ChooseJavaPage = QtWidgets.QWidget()
         self.ChooseJavaPage.setObjectName("ChooseJavaPage")
-        self.Choose_Java_Background = QtWidgets.QLabel(self.ChooseJavaPage)
-        self.Choose_Java_Background.setGeometry(QtCore.QRect(30, 280, 651, 111))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Java_Background.setFont(font)
-        self.Choose_Java_Background.setAutoFillBackground(False)
-        self.Choose_Java_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Choose_Java_Background.setText("")
-        self.Choose_Java_Background.setObjectName("Choose_Java_Background")
         self.Choose_Java_Label = QtWidgets.QLabel(self.ChooseJavaPage)
         self.Choose_Java_Label.setGeometry(QtCore.QRect(30, 80, 171, 51))
         font = QtGui.QFont()
@@ -1549,15 +1475,8 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Java_Label.setFont(font)
         self.Choose_Java_Label.setObjectName("Choose_Java_Label")
-        self.Choose_Java_Label2 = QtWidgets.QLabel(self.ChooseJavaPage)
-        self.Choose_Java_Label2.setGeometry(QtCore.QRect(60, 320, 141, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Choose_Java_Label2.setFont(font)
-        self.Choose_Java_Label2.setObjectName("Choose_Java_Label2")
         self.Completed_Choose_Java_PushButton = QtWidgets.QPushButton(self.ChooseJavaPage)
-        self.Completed_Choose_Java_PushButton.setGeometry(QtCore.QRect(560, 410, 121, 51))
+        self.Completed_Choose_Java_PushButton.setGeometry(QtCore.QRect(560, 490, 121, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(14)
@@ -1577,77 +1496,52 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Completed_Choose_Java_PushButton.setFlat(False)
         self.Completed_Choose_Java_PushButton.setObjectName("Completed_Choose_Java_PushButton")
-        self.Choose_Java_ComboBox = QtWidgets.QComboBox(self.ChooseJavaPage)
-        self.Choose_Java_ComboBox.setGeometry(QtCore.QRect(180, 320, 471, 31))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Choose_Java_ComboBox.setFont(font)
-        self.Choose_Java_ComboBox.setStyleSheet("QComboBox {\n"
-"    border-radius: 3px;\n"
-"    padding: 1px 2px 1px 2px;\n"
-"    min-width: 9em;\n"
-"    border: 2px solid rgb(223, 223, 223);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 20px;\n"
-"    border-left-color: rgb(223, 223, 223);\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 4px;\n"
-"    border-bottom-right-radius: 4px;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-"}\n"
-"QComboBox QAbstractItemView\n"
-"{\n"
-"    border-radius: 10px;\n"
-"    background: rgba(255,255,255,1);\n"
-"    border: 1px solid rgba(228,228,228,1);\n"
-"    border-radius: 0px 0px 5px 5px;\n"
-"    font-size: 14px;\n"
-"    outline: 0px;\n"
-"}\n"
-"QComboBox QAbstractItemView::item\n"
-"{\n"
+        self.ChooseJavaScrollArea = QtWidgets.QScrollArea(self.ChooseJavaPage)
+        self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 631, 321))
+        self.ChooseJavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.ChooseJavaScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: rgb(230, 230, 230);\n"
 "    border-radius: 7px;\n"
-"    font-size:25px;\n"
-"    color:#666667;\n"
-"    padding-left:9px;\n"
-"    background-color:#FFFFFF;\n"
-"    min-height: 33px;\n"
-"    min-width: 60px;\n"
 "}\n"
-"QComboBox QAbstractItemView::item:hover\n"
-"{\n"
-"    border-radius: 7px;\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    color:#FFFFFF;\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
 "}\n"
-"")
-        self.Choose_Java_ComboBox.setObjectName("Choose_Java_ComboBox")
-        self.Choose_Java_ComboBox.addItem("")
-        self.Choose_Java_Tip1_Widget = QtWidgets.QWidget(self.ChooseJavaPage)
-        self.Choose_Java_Tip1_Widget.setGeometry(QtCore.QRect(30, 140, 651, 111))
-        self.Choose_Java_Tip1_Widget.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
 "}")
-        self.Choose_Java_Tip1_Widget.setObjectName("Choose_Java_Tip1_Widget")
-        self.Choose_Java_Tip1 = QtWidgets.QLabel(self.Choose_Java_Tip1_Widget)
-        self.Choose_Java_Tip1.setGeometry(QtCore.QRect(10, 20, 611, 71))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Java_Tip1.setFont(font)
-        self.Choose_Java_Tip1.setAutoFillBackground(False)
-        self.Choose_Java_Tip1.setStyleSheet("")
-        self.Choose_Java_Tip1.setObjectName("Choose_Java_Tip1")
+        self.ChooseJavaScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.ChooseJavaScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.ChooseJavaScrollArea.setLineWidth(0)
+        self.ChooseJavaScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.ChooseJavaScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.ChooseJavaScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.ChooseJavaScrollArea.setWidgetResizable(True)
+        self.ChooseJavaScrollArea.setObjectName("ChooseJavaScrollArea")
+        self.ChooseJavaScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 321))
+        self.ChooseJavaScrollAreaWidgetContents.setObjectName("ChooseJavaScrollAreaWidgetContents")
+        self.ChooseJavaScrollArea.setWidget(self.ChooseJavaScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
         self.Background = QtWidgets.QLabel(self.CentralWidget)
         self.Background.setGeometry(QtCore.QRect(0, 0, 211, 581))
@@ -1675,7 +1569,7 @@ class Ui_MCSL2_MainWindow(object):
 
         self.retranslateUi(MCSL2_MainWindow)
         self.FunctionsStackedWidget.setCurrentIndex(0)
-        self.DownloadSwitcher_TabWidget.setCurrentIndex(3)
+        self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -1714,10 +1608,6 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
         self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Manual_Select_Java_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
-        self.Select_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Select_Java_ComboBox.setItemText(1, _translate("MCSL2_MainWindow", "123"))
-        self.Select_Java_ComboBox.setItemText(2, _translate("MCSL2_MainWindow", "123213"))
-        self.Select_Java_ComboBox.setItemText(3, _translate("MCSL2_MainWindow", "2132132"))
         self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
         self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
 "你也可以自己复制，并重命名为server.jar。"))
@@ -1726,6 +1616,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
+        self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "列表"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
         self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
@@ -1761,15 +1652,9 @@ class Ui_MCSL2_MainWindow(object):
 "    作者邮箱: lxhtz.dl@qq.com "))
         self.Check_Update_PushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
-        self.Choose_Server_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Choose_Server_Label2.setText(_translate("MCSL2_MainWindow", "请选择服务器："))
         self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
         self.Choose_Server_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
 "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
-        self.Choose_Java_Label2.setText(_translate("MCSL2_MainWindow", "请选择Java："))
         self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
-        self.Choose_Java_ComboBox.setItemText(0, _translate("MCSL2_MainWindow", "  请选择"))
-        self.Choose_Java_Tip1.setText(_translate("MCSL2_MainWindow", "emm...看来自动查找搜索到的Java部分路径过长，导致\n"
-"在配置服务器页面的下拉框里无法完全显示捏...所以在这里选择吧！"))
 import MCSL2_Icon_rc
