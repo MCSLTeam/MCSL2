@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MCSL2_SubWidget_ScrollArea</class>
- <widget class="QWidget" name="MCSL2_SubWidget_ScrollArea">
+ <class>MCSL2_SubWidget_ScrollArea_Download</class>
+ <widget class="QWidget" name="MCSL2_SubWidget_ScrollArea_Download">
   <property name="geometry">
    <rect>
     <x>0</x>

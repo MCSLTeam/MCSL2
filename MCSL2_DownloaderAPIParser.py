@@ -27,4 +27,5 @@ def DecodeDownloadJsons(RefreshUrl):
         FileFormats.insert(0, FileFormat)
         FileName = i["filename"]
         FileNames.insert(0, FileName)
+    print(SubWidgetNames, DownloadUrls, FileNames, FileFormats)
     return SubWidgetNames, DownloadUrls, FileNames, FileFormats

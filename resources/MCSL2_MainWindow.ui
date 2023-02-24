@@ -660,7 +660,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -1212,9 +1212,9 @@ QPushButton:pressed
       <widget class="QPushButton" name="Download_Java_PushButton">
        <property name="geometry">
         <rect>
-         <x>240</x>
+         <x>200</x>
          <y>70</y>
-         <width>91</width>
+         <width>81</width>
          <height>31</height>
         </rect>
        </property>
@@ -1302,9 +1302,9 @@ QPushButton:pressed
       <widget class="QPushButton" name="Manual_Select_Java_PushButton">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>110</x>
          <y>70</y>
-         <width>91</width>
+         <width>81</width>
          <height>31</height>
         </rect>
        </property>
@@ -1343,90 +1343,6 @@ QPushButton:pressed
        <property name="flat">
         <bool>false</bool>
        </property>
-      </widget>
-      <widget class="QComboBox" name="Select_Java_ComboBox">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>20</y>
-         <width>261</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft YaHei UI</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QComboBox {
-    border-radius: 3px;
-    padding: 1px 2px 1px 2px;
-    min-width: 9em;
-	border: 2px solid rgb(223, 223, 223);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 20px;
-    border-left-color: rgb(223, 223, 223);
-    border-left-style: solid;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBox.png);
-}
-QComboBox QAbstractItemView
-{
-	border-radius: 10px;
-	background: rgba(255,255,255,1);
-    border: 1px solid rgba(228,228,228,1);
-    border-radius: 0px 0px 5px 5px;
-	font-size: 14px;
-    outline: 0px;
-}
-QComboBox QAbstractItemView::item
-{
-	border-radius: 7px;
-	font-size:25px;
-	color:#666667;
-	padding-left:9px;
-	background-color:#FFFFFF;
-	min-height: 33px;
-	min-width: 60px;
-}
-QComboBox QAbstractItemView::item:hover
-{
-	border-radius: 7px;
-	background-color: rgb(0, 120, 212);
-	color:#FFFFFF;
-}
-</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>  请选择</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>123</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>123213</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>2132132</string>
-        </property>
-       </item>
       </widget>
       <widget class="QLabel" name="Set_Core_Background">
        <property name="geometry">
@@ -1671,7 +1587,7 @@ QComboBox QAbstractItemView::item:hover
         <rect>
          <x>20</x>
          <y>70</y>
-         <width>91</width>
+         <width>81</width>
          <height>31</height>
         </rect>
        </property>
@@ -1730,6 +1646,64 @@ QPushButton:pressed
         <string>MB</string>
        </property>
       </widget>
+      <widget class="QLabel" name="Java_Version_Label">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>20</y>
+         <width>191</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Founded_Java_List_PushButton">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>70</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(227, 227, 227);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
+}</string>
+       </property>
+       <property name="text">
+        <string>列表</string>
+       </property>
+      </widget>
       <zorder>Set_Core_Background</zorder>
       <zorder>Set_Memory_Background</zorder>
       <zorder>Set_Java_Background</zorder>
@@ -1737,7 +1711,6 @@ QPushButton:pressed
       <zorder>Download_Java_PushButton</zorder>
       <zorder>Manual_Import_Core_PushButton</zorder>
       <zorder>Manual_Select_Java_PushButton</zorder>
-      <zorder>Select_Java_ComboBox</zorder>
       <zorder>Memory_1_Label</zorder>
       <zorder>MinMemory_LineEdit</zorder>
       <zorder>ConfigTip3_Label</zorder>
@@ -1747,6 +1720,8 @@ QPushButton:pressed
       <zorder>Core_Label</zorder>
       <zorder>Auto_Find_Java_PushButton</zorder>
       <zorder>Memory_Unit_Label</zorder>
+      <zorder>Java_Version_Label</zorder>
+      <zorder>Founded_Java_List_PushButton</zorder>
      </widget>
     </widget>
     <widget class="QWidget" name="DownloadPage">
@@ -2725,128 +2700,11 @@ QPushButton:pressed
        <string>选择服务器</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="Choose_Server_ComboBox">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>320</y>
-        <width>411</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QComboBox {
-    border-radius: 3px;
-    padding: 1px 2px 1px 2px;
-    min-width: 9em;
-	border: 2px solid rgb(223, 223, 223);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 20px;
-    border-left-color: rgb(223, 223, 223);
-    border-left-style: solid;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBox.png);
-}
-QComboBox QAbstractItemView
-{
-	border-radius: 10px;
-	background: rgba(255,255,255,1);
-    border: 1px solid rgba(228,228,228,1);
-    border-radius: 0px 0px 5px 5px;
-	font-size: 14px;
-    outline: 0px;
-}
-QComboBox QAbstractItemView::item
-{
-	border-radius: 7px;
-	font-size:25px;
-	color:#666667;
-	padding-left:9px;
-	background-color:#FFFFFF;
-	min-height: 33px;
-	min-width: 60px;
-}
-QComboBox QAbstractItemView::item:hover
-{
-	border-radius: 7px;
-	background-color: rgb(0, 120, 212);
-	color:#FFFFFF;
-}
-</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>  请选择</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="Choose_Server_Label2">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>320</y>
-        <width>141</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>请选择服务器：</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Choose_Server_Background">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>280</y>
-        <width>651</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QPushButton" name="Completed_Choose_Server_PushButton">
       <property name="geometry">
        <rect>
         <x>560</x>
-        <y>410</y>
+        <y>510</y>
         <width>121</width>
         <height>51</height>
        </rect>
@@ -2887,7 +2745,7 @@ QPushButton:pressed
         <x>30</x>
         <y>140</y>
         <width>651</width>
-        <height>111</height>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -2900,9 +2758,9 @@ QPushButton:pressed
       <widget class="QLabel" name="Choose_Server_Tip1_Label">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>611</width>
+         <x>20</x>
+         <y>0</y>
+         <width>601</width>
          <height>71</height>
         </rect>
        </property>
@@ -2924,43 +2782,85 @@ MCSL 2将会读取目录下的文件夹名称以确定一个服务器。</string
        </property>
       </widget>
      </widget>
-     <zorder>Choose_Server_Background</zorder>
-     <zorder>Choose_Server_Label</zorder>
-     <zorder>Choose_Server_ComboBox</zorder>
-     <zorder>Choose_Server_Label2</zorder>
-     <zorder>Completed_Choose_Server_PushButton</zorder>
-     <zorder>Choose_Server_Tip1_Widget</zorder>
-    </widget>
-    <widget class="QWidget" name="ChooseJavaPage">
-     <widget class="QLabel" name="Choose_Java_Background">
+     <widget class="QScrollArea" name="ChooseServerScrollArea">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>280</y>
+        <y>240</y>
         <width>651</width>
-        <height>111</height>
+        <height>251</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
+      <property name="cursor" stdset="0">
+       <cursorShape>ArrowCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
+       <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
 }</string>
       </property>
-      <property name="text">
-       <string/>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="ChooseServerScrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>639</width>
+         <height>251</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
+    </widget>
+    <widget class="QWidget" name="ChooseJavaPage">
      <widget class="QLabel" name="Choose_Java_Label">
       <property name="geometry">
        <rect>
@@ -2982,30 +2882,11 @@ MCSL 2将会读取目录下的文件夹名称以确定一个服务器。</string
        <string>选择Java</string>
       </property>
      </widget>
-     <widget class="QLabel" name="Choose_Java_Label2">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>320</y>
-        <width>141</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>请选择Java：</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="Completed_Choose_Java_PushButton">
       <property name="geometry">
        <rect>
         <x>560</x>
-        <y>410</y>
+        <y>490</y>
         <width>121</width>
         <height>51</height>
        </rect>
@@ -3040,115 +2921,80 @@ QPushButton:pressed
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QComboBox" name="Choose_Java_ComboBox">
+     <widget class="QScrollArea" name="ChooseJavaScrollArea">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>320</y>
-        <width>471</width>
-        <height>31</height>
+        <x>40</x>
+        <y>150</y>
+        <width>631</width>
+        <height>321</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>9</pointsize>
-       </font>
+      <property name="cursor" stdset="0">
+       <cursorShape>ArrowCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QComboBox {
-    border-radius: 3px;
-    padding: 1px 2px 1px 2px;
-    min-width: 9em;
-	border: 2px solid rgb(223, 223, 223);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 20px;
-    border-left-color: rgb(223, 223, 223);
-    border-left-style: solid;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBox.png);
-}
-QComboBox QAbstractItemView
-{
-	border-radius: 10px;
-	background: rgba(255,255,255,1);
-    border: 1px solid rgba(228,228,228,1);
-    border-radius: 0px 0px 5px 5px;
-	font-size: 14px;
-    outline: 0px;
-}
-QComboBox QAbstractItemView::item
-{
+       <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: rgb(230, 230, 230);
 	border-radius: 7px;
-	font-size:25px;
-	color:#666667;
-	padding-left:9px;
-	background-color:#FFFFFF;
-	min-height: 33px;
-	min-width: 60px;
 }
-QComboBox QAbstractItemView::item:hover
-{
-	border-radius: 7px;
-	background-color: rgb(0, 120, 212);
-	color:#FFFFFF;
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
 }
-</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>  请选择</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QWidget" name="Choose_Java_Tip1_Widget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>140</y>
-        <width>651</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
 }</string>
       </property>
-      <widget class="QLabel" name="Choose_Java_Tip1">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="ChooseJavaScrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>611</width>
-         <height>71</height>
+         <x>0</x>
+         <y>0</y>
+         <width>619</width>
+         <height>321</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft YaHei UI</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>emm...看来自动查找搜索到的Java部分路径过长，导致
-在配置服务器页面的下拉框里无法完全显示捏...所以在这里选择吧！</string>
        </property>
       </widget>
      </widget>
