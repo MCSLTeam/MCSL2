@@ -5,9 +5,9 @@ from PyQt5.QtCore import (
     pyqtSignal,
     QRect,
     QCoreApplication,
-    QMetaObject
+    QMetaObject, QRectF
 )
-from PyQt5.QtGui import QMouseEvent, QFont, QPixmap, QCursor, QIcon
+from PyQt5.QtGui import QMouseEvent, QFont, QPixmap, QCursor, QIcon, QColor, QPainter, QPainterPath, QBrush
 from PyQt5.QtWidgets import (
     QWidget,
     QPushButton,
@@ -46,7 +46,14 @@ import subprocess
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def __init__(self):
         super(MCSL2MainWindow, self).__init__()
-
+        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        effect = QGraphicsDropShadowEffect(self)
+        effect.setBlurRadius(12)
+        effect.setOffset(0, 0)
+        effect.setColor(QColor("#F0F8FF"))
+        self.setGraphicsEffect(effect)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAutoFillBackground(True)
         self.setupUi(self)
         self._startPos = None
         self._endPos = None
@@ -73,7 +80,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # Functions binding
         self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
         self.Start_PushButton.clicked.connect(self.LaunchMinecraftServer)
-        self.Manual_Select_Java_PushButton.clicked.connect(self.ManuallySelectJava)
         self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
         self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
         self.Check_Update_PushButton.clicked.connect(self.CheckUpdate)
@@ -83,7 +89,40 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveAMinecraftServer)
 
-    def mouseMoveEvent(self, e: QMouseEvent):  # 重写移动事件
+    def paintEvent(self, event):
+        # 阴影
+        path = QPainterPath()
+        path.setFillRule(Qt.WindingFill)
+
+        pat = QPainter(self)
+        pat.setRenderHint(pat.Antialiasing)
+        pat.fillPath(path, QBrush(Qt.gray))
+
+        color = QColor(192, 192, 192, 50)
+
+        for i in range(10):
+            i_path = QPainterPath()
+            i_path.setFillRule(Qt.WindingFill)
+            ref = QRectF(10 - i, 10 - i, self.width() - (10 - i) * 2, self.height() - (10 - i) * 2)
+            # i_path.addRect(ref)
+            i_path.addRoundedRect(ref, 944, 944)
+            color.setAlpha(150 - i ** 0.5 * 50)
+            pat.setPen(color)
+            pat.drawPath(i_path)
+
+        pat2 = QPainter(self)
+        pat2.setRenderHint(pat2.Antialiasing)
+        pat2.setBrush(QColor("#F0F8FF"))
+        pat2.setPen(Qt.transparent)
+
+        rect = self.rect()
+        rect.setLeft(9)
+        rect.setTop(9)
+        rect.setWidth(rect.width() - 9)
+        rect.setHeight(rect.height() - 9)
+        pat2.drawRoundedRect(rect, 4, 4)
+
+    def mouseMoveEvent(self, e: QMouseEvent):
         if self._tracking:
             self._endPos = e.pos() - self._startPos
             self.move(self.pos() + self._endPos)
@@ -241,10 +280,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def ManuallySelectJava(self):
         JavaPathSysList = QFileDialog.getOpenFileName(self, '选择java.exe程序', getcwd(), "java.exe")
         if JavaPathSysList[0] != "":
-            self.Select_Java_ComboBox.clear()
             JavaPaths.append(JavaPathSysList[0])
-            for i in range(len(JavaPaths)):
-                self.Select_Java_ComboBox.addItem(JavaPaths[i])
         else:
             Tip = "看来你没有选择任何的Java呢！"
             CallMCSL2Dialog(Tip, 0)
@@ -271,15 +307,16 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         else:
             CoreStatus = 0
 
-        # The Java path parser
-        if self.Select_Java_ComboBox.currentText() != "  请选择":
-            if len(JavaPaths) != 0:
-                JavaPath = JavaPaths[self.Select_Java_ComboBox.currentIndex()]
-                JavaStatus = 1
-            else:
-                JavaStatus = 0
-        else:
-            JavaStatus = 0
+        JavaStatus = 1
+        # # The Java path parser
+        # if self.Select_Java_ComboBox.currentText() != "  请选择":
+        #     if len(JavaPaths) != 0:
+        #         JavaPath = JavaPaths[self.Select_Java_ComboBox.currentIndex()]
+        #         JavaStatus = 1
+        #     else:
+        #         JavaStatus = 0
+        # else:
+        #     JavaStatus = 0
 
         # The min memory parser
         if self.MinMemory_LineEdit.text() != "":
@@ -433,16 +470,16 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
         elif CanCreate == 1:
             CallMCSL2Dialog(Tip, 0)
-            ServerFolderPath = ".\\" + ServerName
+            ServerFolderPath = ".\\Server\\" + ServerName
             mkdir(ServerFolderPath)
             copy(CorePath, ServerFolderPath)
-            ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
-                                'max_memory': MaxMemory}
-            ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
-            ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
-            with open(ConfigPath, 'w+', encoding='utf-8') as SaveConfig:
-                SaveConfig.write(ServerConfigJson)
-                SaveConfig.close()
+            # ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
+            #                     'max_memory': MaxMemory}
+            # ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
+            # ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
+            # with open(ConfigPath, 'w+', encoding='utf-8') as SaveConfig:
+            #     SaveConfig.write(ServerConfigJson)
+            #     SaveConfig.close()
             # SaveConfig = open(ConfigPath, 'w+')
             # SaveConfig.write(ServerConfigJson)
             # SaveConfig.close()
@@ -520,7 +557,21 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def InitSubWidget(self, Mode):
         if Mode == 0:  # Download
-            pass
+            GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
+            if GraphType == 0:
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+            if GraphType == 1:
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/SpigotIcon.png"))
+            if GraphType == 2:
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/PaperIcon.png"))
+            if GraphType == 3:
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/BungeeCordIcon.png"))
+            else:
+                pass
+        elif Mode == 1: # Select Java
+            self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+        elif Mode == 2: # Select Server
+            self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
         # if Mode == 1:  # Select
 
         # The function of getting Minecraft server console's output
@@ -531,8 +582,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # The function of checking update
 
     def CheckUpdate(self):
-        CheckUpdateUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/versionInfo'
-        LatestVersion = float(get(CheckUpdateUrl).text)
+        CheckUpdateUrl = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/versionInfo.json'
+        LatestVersionJson = get(CheckUpdateUrl).text
+        LatestVersion = loads(LatestVersionJson)['MCSLLatestVersion']
         if float(LatestVersion) > Version:
             Tip = "检测到新版本:v" + str(LatestVersion)
             CallMCSL2Dialog(Tip, 0)
@@ -574,21 +626,6 @@ class MCSL2SubWidget_Select(QWidget, Ui_MCSL2_SubWidget_ScrollArea_Select):
         self.setupUi(self)
 
 
-# The function of calling MCSL2 Dialog
-def CallMCSL2Dialog(Tip, isNeededTwoButtons):
-    SaveTip = open(r'Tip', 'w+')
-    SaveTip.write(Tip)
-    SaveTip.close()
-    if isNeededTwoButtons == 0:
-        MCSL2Dialog().exec()
-        remove(r'Tip')
-    elif isNeededTwoButtons == 1:
-        MCSL2AskDialog().exec()
-        remove(r'Tip')
-    else:
-        pass
-
-
 class fileSearchThread(QThread):
     global JavaPaths
     sinOut = pyqtSignal(str)
@@ -621,6 +658,20 @@ class fileSearchThread(QThread):
                     SearchTMP_2 = ospath.join(DirPath, folder)
                     JavaPaths.append(SearchTMP_2)
                     self.sinOut.emit(ospath.join(DirPath, folder))
+
+# The function of calling MCSL2 Dialog
+def CallMCSL2Dialog(Tip, isNeededTwoButtons):
+    SaveTip = open(r'Tip', 'w+')
+    SaveTip.write(Tip)
+    SaveTip.close()
+    if isNeededTwoButtons == 0:
+        MCSL2Dialog().exec()
+        remove(r'Tip')
+    elif isNeededTwoButtons == 1:
+        MCSL2AskDialog().exec()
+        remove(r'Tip')
+    else:
+        pass
 
 
 # Start MCSL

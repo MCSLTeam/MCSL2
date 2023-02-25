@@ -13,59 +13,65 @@
   <property name="windowTitle">
    <string>MCSL 2</string>
   </property>
-  <widget class="QWidget" name="GraphWidget" native="true">
+  <widget class="QWidget" name="MCSL2_SubWidget_Download" native="true">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>51</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QWidget{
-	background-color: rgb(247, 247, 247);
-	border-radius: 4px;
-}</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="IntroductionWidget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>10</y>
-     <width>421</width>
-     <height>51</height>
+     <x>0</x>
+     <y>0</y>
+     <width>580</width>
+     <height>70</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QWidget
 {
+	border-radius: 4px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+   </property>
+   <widget class="QWidget" name="IntroductionWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>10</y>
+      <width>421</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget
+{
 	background-color: rgb(247, 247, 247);
 	border-radius: 8px
 }</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Download_PushButton">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>10</y>
-     <width>51</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Microsoft YaHei UI</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Download_PushButton">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>10</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
 {
 	background-color: rgb(0, 120, 212);
 	border-radius: 8px;
@@ -83,13 +89,30 @@ QPushButton:pressed
 	border-radius: 8px;
     color: rgb(255, 255, 255);
 }</string>
-   </property>
-   <property name="text">
-    <string>下载</string>
-   </property>
-   <property name="flat">
-    <bool>false</bool>
-   </property>
+    </property>
+    <property name="text">
+     <string>下载</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QWidget" name="GraphWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget{
+	background-color: rgb(247, 247, 247);
+	border-radius: 4px;
+}</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>

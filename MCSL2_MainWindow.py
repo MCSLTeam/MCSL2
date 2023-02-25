@@ -9,7 +9,6 @@ from PyQt5.QtGui import QFont, QPixmap, QCursor, QIcon
 from PyQt5.QtWidgets import (
     QWidget,
     QPushButton,
-    QGraphicsDropShadowEffect,
     QLineEdit,
     QComboBox,
     QStackedWidget,
@@ -24,6 +23,7 @@ import MCSL2_Icon
 
 
 class Ui_MCSL2_MainWindow(object):
+
     def setupUi(self, MCSL2_MainWindow):
         MCSL2_MainWindow.setObjectName("MCSL2_MainWindow")
         MCSLWindowIcon = QIcon()
@@ -37,13 +37,6 @@ class Ui_MCSL2_MainWindow(object):
         MCSLWindowIcon.addPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Selected, QIcon.On)
         MCSL2_MainWindow.setWindowIcon(MCSLWindowIcon)
         MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
-        effect = QGraphicsDropShadowEffect(self)
-        effect.setBlurRadius(12)
-        effect.setOffset(0, 0)
-        effect.setColor(Qt.gray)
-        MCSL2_MainWindow.setGraphicsEffect(effect)
-        MCSL2_MainWindow.setWindowFlags(MCSL2_MainWindow.windowFlags() | Qt.FramelessWindowHint)
-        MCSL2_MainWindow.setAttribute(Qt.WA_TranslucentBackground, True)
         self.CentralWidget = QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QWidget(self.CentralWidget)
@@ -621,7 +614,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Core_PushButton.setFlat(False)
         self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
         self.Download_Java_PushButton = QPushButton(self.Configuration_Widget)
-        self.Download_Java_PushButton.setGeometry(QRect(200, 70, 81, 31))
+        self.Download_Java_PushButton.setGeometry(QRect(130, 70, 101, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -674,33 +667,6 @@ class Ui_MCSL2_MainWindow(object):
                                                          "}")
         self.Manual_Import_Core_PushButton.setFlat(False)
         self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
-        self.Manual_Select_Java_PushButton = QPushButton(self.Configuration_Widget)
-        self.Manual_Select_Java_PushButton.setGeometry(QRect(110, 70, 81, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Manual_Select_Java_PushButton.setFont(font)
-        self.Manual_Select_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Manual_Select_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 120, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:hover\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 110, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:pressed\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 100, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}")
-        self.Manual_Select_Java_PushButton.setFlat(False)
-        self.Manual_Select_Java_PushButton.setObjectName("Manual_Select_Java_PushButton")
         self.Set_Core_Background = QLabel(self.Configuration_Widget)
         self.Set_Core_Background.setGeometry(QRect(0, 220, 351, 121))
         font = QFont()
@@ -810,7 +776,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Core_Label.setFont(font)
         self.Core_Label.setObjectName("Core_Label")
         self.Auto_Find_Java_PushButton = QPushButton(self.Configuration_Widget)
-        self.Auto_Find_Java_PushButton.setGeometry(QRect(20, 70, 81, 31))
+        self.Auto_Find_Java_PushButton.setGeometry(QRect(20, 70, 101, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -852,7 +818,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Java_Version_Label.setText("")
         self.Java_Version_Label.setObjectName("Java_Version_Label")
         self.Founded_Java_List_PushButton = QPushButton(self.Configuration_Widget)
-        self.Founded_Java_List_PushButton.setGeometry(QRect(290, 70, 51, 31))
+        self.Founded_Java_List_PushButton.setGeometry(QRect(240, 70, 101, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -880,7 +846,6 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Core_PushButton.raise_()
         self.Download_Java_PushButton.raise_()
         self.Manual_Import_Core_PushButton.raise_()
-        self.Manual_Select_Java_PushButton.raise_()
         self.Memory_1_Label.raise_()
         self.MinMemory_LineEdit.raise_()
         self.ConfigTip3_Label.raise_()
@@ -1645,12 +1610,121 @@ class Ui_MCSL2_MainWindow(object):
                                         "}")
         self.Background_2.setText("")
         self.Background_2.setObjectName("Background_2")
+        self.MCSL2_SubWidget_Select = QWidget(self.CentralWidget)
+        self.MCSL2_SubWidget_Select.setGeometry(QRect(-580, 0, 580, 70))
+        self.MCSL2_SubWidget_Select.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 4px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.MCSL2_SubWidget_Select.setObjectName("MCSL2_SubWidget_Select")
+        self.GraphWidget_S = QWidget(self.MCSL2_SubWidget_Select)
+        self.GraphWidget_S.setGeometry(QRect(10, 10, 51, 51))
+        self.GraphWidget_S.setStyleSheet("QWidget{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 4px;\n"
+"}")
+        self.GraphWidget_S.setObjectName("GraphWidget_S")
+        self.Select_PushButton = QPushButton(self.MCSL2_SubWidget_Select)
+        self.Select_PushButton.setGeometry(QRect(510, 10, 51, 51))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Select_PushButton.setFont(font)
+        self.Select_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Select_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.Select_PushButton.setFlat(False)
+        self.Select_PushButton.setObjectName("Select_PushButton")
+        self.IntroductionWidget_S = QWidget(self.MCSL2_SubWidget_Select)
+        self.IntroductionWidget_S.setGeometry(QRect(70, 10, 421, 51))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.IntroductionWidget_S.setFont(font)
+        self.IntroductionWidget_S.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 8px\n"
+"}")
+        self.IntroductionWidget_S.setObjectName("IntroductionWidget_S")
+        self.MCSL2_SubWidget_Download = QWidget(self.CentralWidget)
+        self.MCSL2_SubWidget_Download.setGeometry(QRect(-580, 70, 580, 70))
+        self.MCSL2_SubWidget_Download.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 4px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
+        self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+        self.IntroductionWidget_D.setGeometry(QRect(70, 10, 421, 51))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.IntroductionWidget_D.setFont(font)
+        self.IntroductionWidget_D.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 8px\n"
+"}")
+        self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+        self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
+        self.Download_PushButton.setGeometry(QRect(510, 10, 51, 51))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Download_PushButton.setFont(font)
+        self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Download_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.Download_PushButton.setFlat(False)
+        self.Download_PushButton.setObjectName("Download_PushButton")
+        self.GraphWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+        self.GraphWidget_D.setGeometry(QRect(10, 10, 51, 51))
+        self.GraphWidget_D.setStyleSheet("QWidget{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 4px;\n"
+"}")
+        self.GraphWidget_D.setObjectName("GraphWidget_D")
+        self.MCSL2_SubWidget_Download.raise_()
+        self.MCSL2_SubWidget_Select.raise_()
         self.Background_2.raise_()
         self.Background.raise_()
         self.OptionsWidget.raise_()
         self.FunctionsStackedWidget.raise_()
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
-
         self.retranslateUi(MCSL2_MainWindow)
         self.FunctionsStackedWidget.setCurrentIndex(0)
         self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
@@ -1692,7 +1766,6 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
         self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
-        self.Manual_Select_Java_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
         self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
                                                                      "你也可以自己复制，并重命名为server.jar。"))
@@ -1701,7 +1774,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
-        self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "列表"))
+        self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
         self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
@@ -1747,4 +1820,6 @@ class Ui_MCSL2_MainWindow(object):
                                            "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
         self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Select_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
+        self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
 

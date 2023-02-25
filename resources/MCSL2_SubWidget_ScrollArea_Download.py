@@ -15,22 +15,27 @@ class Ui_MCSL2_SubWidget_ScrollArea_Download(object):
     def setupUi(self, MCSL2_SubWidget_ScrollArea_Download):
         MCSL2_SubWidget_ScrollArea_Download.setObjectName("MCSL2_SubWidget_ScrollArea_Download")
         MCSL2_SubWidget_ScrollArea_Download.resize(580, 70)
-        self.GraphWidget = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea_Download)
-        self.GraphWidget.setGeometry(QtCore.QRect(10, 10, 51, 51))
-        self.GraphWidget.setStyleSheet("QWidget{\n"
-"    background-color: rgb(247, 247, 247);\n"
+        self.MCSL2_SubWidget_Download = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea_Download)
+        self.MCSL2_SubWidget_Download.setGeometry(QtCore.QRect(0, 0, 580, 70))
+        self.MCSL2_SubWidget_Download.setStyleSheet("QWidget\n"
+"{\n"
 "    border-radius: 4px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
 "}")
-        self.GraphWidget.setObjectName("GraphWidget")
-        self.IntroductionWidget = QtWidgets.QWidget(MCSL2_SubWidget_ScrollArea_Download)
+        self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
+        self.IntroductionWidget = QtWidgets.QWidget(self.MCSL2_SubWidget_Download)
         self.IntroductionWidget.setGeometry(QtCore.QRect(70, 10, 421, 51))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.IntroductionWidget.setFont(font)
         self.IntroductionWidget.setStyleSheet("QWidget\n"
 "{\n"
 "    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 8px\n"
 "}")
         self.IntroductionWidget.setObjectName("IntroductionWidget")
-        self.Download_PushButton = QtWidgets.QPushButton(MCSL2_SubWidget_ScrollArea_Download)
+        self.Download_PushButton = QtWidgets.QPushButton(self.MCSL2_SubWidget_Download)
         self.Download_PushButton.setGeometry(QtCore.QRect(510, 10, 51, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -57,6 +62,13 @@ class Ui_MCSL2_SubWidget_ScrollArea_Download(object):
 "}")
         self.Download_PushButton.setFlat(False)
         self.Download_PushButton.setObjectName("Download_PushButton")
+        self.GraphWidget = QtWidgets.QWidget(self.MCSL2_SubWidget_Download)
+        self.GraphWidget.setGeometry(QtCore.QRect(10, 10, 51, 51))
+        self.GraphWidget.setStyleSheet("QWidget{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 4px;\n"
+"}")
+        self.GraphWidget.setObjectName("GraphWidget")
 
         self.retranslateUi(MCSL2_SubWidget_ScrollArea_Download)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_SubWidget_ScrollArea_Download)
