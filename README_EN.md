@@ -19,6 +19,8 @@ ___
 <a href="https://github.com/LxHTT/MCSL2/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/LxHTT/MCSL2"></a>
 <a href="https://github.com/LxHTT/MCSL2/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/LxHTT/MCSL2"></a>
 
+![Alt](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repobeats analytics image")
+
 This is a remake of my old project [MCSL](https://github.com/LxHTT/MCSL).
 
 At first I prefer developing with C#, but it seems that I don't have enough knowledge of it.  ~~SO FOOL~~  So I turned to Python again.
@@ -30,7 +32,7 @@ The official website of MCSL 2 API：[https://whdlx.gitee.io/mcslapi](https://wh
 (In China, you may need to use a web acceleration tool for GitHub, such as Watt Toolkit.)
 
 MCSL 2 has redesigned the user interface, develop with cleaner code logic. In addition to Launch, Configuration, and Download, many extension tools have been added to MCSL 2.
-You can preview the UI of MCSL 2 [here](https://github.com/LxHTT/MCSL2/blob/master/MCSL_PREVIEW_EN.md).
+You can preview the UI of MCSL 2 [here](https://mcsl.netlify.app/preview).
 
 Please report the bugs of my program to make MCSL 2 better.
 

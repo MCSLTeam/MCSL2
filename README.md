@@ -19,6 +19,8 @@ ___
 <a href="https://github.com/LxHTT/MCSL2/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/LxHTT/MCSL2"></a>
 <a href="https://github.com/LxHTT/MCSL2/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/LxHTT/MCSL2"></a>
 
+![Alt](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repobeats analytics image")
+
 这是对旧项目[MCSL](https://github.com/LxHTT/MCSL)的Remake。
 
 本来使用C#开发，但由于知识有限，无奈继续使用Python。
@@ -30,7 +32,7 @@ MCSL 2 API官网：[https://whdlx.gitee.io/mcslapi](https://whdlx.gitee.io/mcsla
 (国内可能需要使用针对GitHub的网络加速工具，例如 Watt Toolkit.)
 
 MCSL 2重新设计了用户界面，用更简洁的代码逻辑开发。除了启动、配置和下载之外，MCSL 2还增加了许多扩展工具。
-你可以在[这里](https://github.com/LxHTT/MCSL2/blob/master/MCSL_PREVIEW.md)预览MCSL 2的界面。
+你可以在[这里](https://mcsl.netlify.app/preview)预览MCSL 2的界面。
 
 请积极反馈程序的错误，以使MCSL 2变得更好。
 

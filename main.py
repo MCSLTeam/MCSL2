@@ -5,7 +5,7 @@ from PyQt5.QtCore import (
     pyqtSignal,
     QRect,
     QCoreApplication,
-    QMetaObject, QRectF
+    QMetaObject, QRectF, QSize
 )
 from PyQt5.QtGui import QMouseEvent, QFont, QPixmap, QCursor, QIcon, QColor, QPainter, QPainterPath, QBrush
 from PyQt5.QtWidgets import (
@@ -32,13 +32,9 @@ from time import sleep
 from threading import Thread
 from string import ascii_uppercase
 import MCSL2_Icon
-import MCSL2_DownloaderAPIParser
-import MCSL2_Downloader
 from MCSL2_MainWindow import *
 from MCSL2_Dialog import *
 from MCSL2_AskDialog import *
-from MCSL2_SubWidget_ScrollArea_Download import *
-from MCSL2_SubWidget_ScrollArea_Select import *
 import subprocess
 
 
@@ -85,30 +81,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Check_Update_PushButton.clicked.connect(self.CheckUpdate)
         # self.Download_PushButton.clicked.connect(self.StartDownload)
         # self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
-        # self.Manually_Choose_Download_Save_Path_PushButton.clicked.connect(self.SetDownloadSavePath)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveAMinecraftServer)
 
     def paintEvent(self, event):
-        # 阴影
-        path = QPainterPath()
-        path.setFillRule(Qt.WindingFill)
-
-        pat = QPainter(self)
-        pat.setRenderHint(pat.Antialiasing)
-        pat.fillPath(path, QBrush(Qt.gray))
-
-        color = QColor(192, 192, 192, 50)
-
-        for i in range(10):
-            i_path = QPainterPath()
-            i_path.setFillRule(Qt.WindingFill)
-            ref = QRectF(10 - i, 10 - i, self.width() - (10 - i) * 2, self.height() - (10 - i) * 2)
-            # i_path.addRect(ref)
-            i_path.addRoundedRect(ref, 944, 944)
-            color.setAlpha(150 - i ** 0.5 * 50)
-            pat.setPen(color)
-            pat.drawPath(i_path)
 
         pat2 = QPainter(self)
         pat2.setRenderHint(pat2.Antialiasing)
@@ -536,42 +512,106 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def RefreshDownloadType(self):
         global DownloadSource
-        MCSL2_DownloaderAPIParser.ParseDownloaderAPIUrl(DownloadSource, self.DownloadSwitcher_TabWidget.currentIndex())
-        # self.InitSubWidget(Mode='0')
-        self.AddWidgetToScrollArea()
+        ParseDownloaderAPIUrlSS = ParseDownloaderAPIUrl(DownloadSource, self.DownloadSwitcher_TabWidget.currentIndex())
+        SubWidgetNames = ParseDownloaderAPIUrlSS[0]
+        DownloadUrls = ParseDownloaderAPIUrlSS[1]
+        FileNames = ParseDownloaderAPIUrlSS[2]
+        FileFormats = ParseDownloaderAPIUrlSS[3]
+        self.InitSubWidget(0, SubWidgetNames, DownloadUrls, FileNames, FileFormats)
 
-        # Add SubWidget to Scroll area
-
-    def AddWidgetToScrollArea(self):
-        if self.DownloadSwitcher_TabWidget.currentIndex() == 0:
-            for i in range(20):
-                self.JavaScrollArea.setWidget(MCSL2SubWidget_Download)
-        elif self.DownloadSwitcher_TabWidget.currentIndex() == 1:
-            self.SpigotScrollArea.setWidget(MCSL2SubWidget_Download)
-        elif self.DownloadSwitcher_TabWidget.currentIndex() == 2:
-            self.PaperScrollArea.setWidget(MCSL2SubWidget_Download)
-        elif self.DownloadSwitcher_TabWidget.currentIndex() == 3:
-            self.BungeeCordScrollArea.setWidget(MCSL2SubWidget_Download)
-        else:
-            pass
-
-    def InitSubWidget(self, Mode):
+    def InitSubWidget(self, Mode, SubWidgetNames, DownloadUrls, FileNames, FileFormats):
         if Mode == 0:  # Download
+
             GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
             if GraphType == 0:
-                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
-            if GraphType == 1:
-                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/SpigotIcon.png"))
-            if GraphType == 2:
-                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/PaperIcon.png"))
-            if GraphType == 3:
-                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/BungeeCordIcon.png"))
+                for i in range(len(SubWidgetNames)):
+                    self.MCSL2_SubWidget_Download = QWidget()
+                    self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
+                    self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
+                    self.MCSL2_SubWidget_Download.setStyleSheet("QWidget\n"
+                                                                "{\n"
+                                                                "    border-radius: 4px;\n"
+                                                                "    background-color: rgba(247, 247, 247, 247)\n"
+                                                                "}")
+                    self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
+                    self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+                    self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
+                    self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
+                    font = QFont()
+                    font.setFamily("Microsoft YaHei UI")
+                    font.setPointSize(10)
+                    self.IntroductionWidget_D.setFont(font)
+                    self.IntroductionWidget_D.setStyleSheet("QWidget\n"
+                                                            "{\n"
+                                                            "    background-color: rgb(247, 247, 247);\n"
+                                                            "    border-radius: 8px\n"
+                                                            "}")
+                    self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+                    self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
+                    self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
+                    self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
+                    font = QFont()
+                    font.setFamily("Microsoft YaHei UI")
+                    font.setPointSize(10)
+                    self.IntroductionLabel_D.setFont(font)
+                    self.IntroductionLabel_D.setText("")
+                    self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
+                    self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
+                    self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
+                    self.Download_PushButton.setMinimumSize(QSize(51, 51))
+                    font = QFont()
+                    font.setFamily("Microsoft YaHei UI")
+                    font.setPointSize(10)
+                    self.Download_PushButton.setFont(font)
+                    self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+                    self.Download_PushButton.setStyleSheet("QPushButton\n"
+                                                           "{\n"
+                                                           "    background-color: rgb(0, 120, 212);\n"
+                                                           "    border-radius: 8px;\n"
+                                                           "    color: rgb(255, 255, 255);\n"
+                                                           "}\n"
+                                                           "QPushButton:hover\n"
+                                                           "{\n"
+                                                           "    background-color: rgb(0, 110, 212);\n"
+                                                           "    border-radius: 8px;\n"
+                                                           "    color: rgb(255, 255, 255);\n"
+                                                           "}\n"
+                                                           "QPushButton:pressed\n"
+                                                           "{\n"
+                                                           "    background-color: rgb(0, 100, 212);\n"
+                                                           "    border-radius: 8px;\n"
+                                                           "    color: rgb(255, 255, 255);\n"
+                                                           "}")
+                    self.Download_PushButton.setFlat(False)
+                    self.Download_PushButton.setObjectName("Download_PushButton")
+                    self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
+                    self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
+                    self.GraphWidget_D.setMinimumSize(QSize(51, 51))
+                    self.GraphWidget_D.setStyleSheet("QLabel\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(247, 247, 247);\n"
+                                                     "    border-radius: 4px;\n"
+                                                     "}")
+                    self.GraphWidget_D.setText("")
+                    self.GraphWidget_D.setObjectName("GraphWidget_D")
+                    self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+                    self.JavaVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
+            # if GraphType == 1:
+            #     self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/SpigotIcon.png"))
+            #     self.SpigotScrollArea.setWidget(self.MCSL2_SubWidget_Download)
+            # if GraphType == 2:
+            #     self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/PaperIcon.png"))
+            #     self.PaperScrollArea.setWidget(self.MCSL2_SubWidget_Download)
+            # if GraphType == 3:
+            #     self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/BungeeCordIcon.png"))
+            #     self.BungeeCordScrollArea.setWidget(self.MCSL2_SubWidget_Download)
             else:
                 pass
-        elif Mode == 1: # Select Java
-            self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
-        elif Mode == 2: # Select Server
-            self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
+
+        # elif Mode == 1:  # Select Java
+        #     self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+        # elif Mode == 2:  # Select Server
+        #     self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
         # if Mode == 1:  # Select
 
         # The function of getting Minecraft server console's output
@@ -611,21 +651,6 @@ class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
         self.setupUi(self)
 
 
-class MCSL2SubWidget_Download(QWidget, Ui_MCSL2_SubWidget_ScrollArea_Download):
-    def __init__(self):
-        super(MCSL2SubWidget_Download, self).__init__()
-        self.setupUi(self)
-    #
-    # def SetGraph(self):
-    #     while True:
-
-
-class MCSL2SubWidget_Select(QWidget, Ui_MCSL2_SubWidget_ScrollArea_Select):
-    def __init__(self):
-        super(MCSL2SubWidget_Select, self).__init__()
-        self.setupUi(self)
-
-
 class fileSearchThread(QThread):
     global JavaPaths
     sinOut = pyqtSignal(str)
@@ -659,6 +684,7 @@ class fileSearchThread(QThread):
                     JavaPaths.append(SearchTMP_2)
                     self.sinOut.emit(ospath.join(DirPath, folder))
 
+
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip, isNeededTwoButtons):
     SaveTip = open(r'Tip', 'w+')
@@ -674,6 +700,62 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons):
         pass
 
 
+def InitMCSL(isFirstLaunch):
+    if isFirstLaunch == 1:
+        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。", isNeededTwoButtons=0)
+        mkdir(r'MCSL2')
+        mkdir(r'MCSL2/Aria2')
+        with open(r'./MCSL2/MCSL2_Config.json', 'w+', encoding='utf-8') as InitConfig:
+            ConfigTemplate = ""
+            InitConfig.write(ConfigTemplate)
+            InitConfig.close()
+        with open(r'./MCSL2/MCSL2_ServerList.json', 'w+', encoding='utf-8') as InitServerList:
+            ServerListTemplate = "{\n  \"MCSLServerList\": [\n\n  ]\n}"
+            InitServerList.write(ServerListTemplate)
+            InitServerList.close()
+        if not ospath.exists(r'Servers'):
+            mkdir(r'./Servers')
+        pass
+    else:
+        if not ospath.exists(r'Servers'):
+            mkdir(r'./Servers')
+        pass
+
+
+def ParseDownloaderAPIUrl(DownloadSource, DownloadType):
+    UrlPrefix = 'https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/'
+    SourceSuffix = ['SharePoint', 'Gitee', 'luoxisCloud', 'GHProxy', 'GitHub']
+    TypeSuffix = ['/JavaDownloadInfo.json', '/SpigotDownloadInfo.json', '/PaperDownloadInfo.json',
+                  '/BungeeCordDownloadInfo.json']
+    DownloadAPIUrl = UrlPrefix + SourceSuffix[DownloadSource] + TypeSuffix[DownloadType]
+    DecodeDownloadJsonsSS = DecodeDownloadJsons(DownloadAPIUrl)
+    SubWidgetNames = DecodeDownloadJsonsSS[0]
+    DownloadUrls = DecodeDownloadJsonsSS[1]
+    FileNames = DecodeDownloadJsonsSS[2]
+    FileFormats = DecodeDownloadJsonsSS[3]
+    return SubWidgetNames, DownloadUrls, FileNames, FileFormats
+
+
+def DecodeDownloadJsons(RefreshUrl):
+    SubWidgetNames = []
+    DownloadUrls = []
+    FileFormats = []
+    FileNames = []
+    DownloadJson = get(RefreshUrl).text
+    PyDownloadList = loads(DownloadJson)['MCSLDownloadList']
+    for i in PyDownloadList:
+        SubWidgetName = i["name"]
+        SubWidgetNames.insert(0, SubWidgetName)
+        DownloadUrl = i["url"]
+        DownloadUrls.insert(0, DownloadUrl)
+        FileFormat = i["format"]
+        FileFormats.insert(0, FileFormat)
+        FileName = i["filename"]
+        FileNames.insert(0, FileName)
+    print(SubWidgetNames, DownloadUrls, FileNames, FileFormats)
+    return SubWidgetNames, DownloadUrls, FileNames, FileFormats
+
+
 # Start MCSL
 JavaPaths = []
 DiskSymbols = []
@@ -681,10 +763,14 @@ SearchStatus = 0
 CorePath = ""
 DownloadSource = 0
 Version = 2.0
+
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 MCSLProcess = QApplication(argv)
 MCSLMainWindow = MCSL2MainWindow()
 MCSLMainWindow.show()
-# CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。")
+if not ospath.exists(r'MCSL2'):
+    InitMCSL(isFirstLaunch=1)
+else:
+    InitMCSL(isFirstLaunch=0)
 exit(MCSLProcess.exec_())

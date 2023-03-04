@@ -1006,6 +1006,11 @@ class Ui_MCSL2_MainWindow(object):
         self.JavaScrollAreaWidgetContents = QtWidgets.QWidget()
         self.JavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
         self.JavaScrollAreaWidgetContents.setObjectName("JavaScrollAreaWidgetContents")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.JavaScrollAreaWidgetContents)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.JavaVerticalLayout = QtWidgets.QVBoxLayout()
+        self.JavaVerticalLayout.setObjectName("JavaVerticalLayout")
+        self.verticalLayout_2.addLayout(self.JavaVerticalLayout)
         self.JavaScrollArea.setWidget(self.JavaScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.JavaTab, "")
         self.SpigotTab = QtWidgets.QWidget()
@@ -1533,116 +1538,6 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Background_2.setText("")
         self.Background_2.setObjectName("Background_2")
-        self.MCSL2_SubWidget_Select = QtWidgets.QWidget(self.CentralWidget)
-        self.MCSL2_SubWidget_Select.setGeometry(QtCore.QRect(-580, 0, 580, 70))
-        self.MCSL2_SubWidget_Select.setStyleSheet("QWidget\n"
-"{\n"
-"    border-radius: 4px;\n"
-"    background-color: rgba(247, 247, 247, 247)\n"
-"}")
-        self.MCSL2_SubWidget_Select.setObjectName("MCSL2_SubWidget_Select")
-        self.GraphWidget_S = QtWidgets.QWidget(self.MCSL2_SubWidget_Select)
-        self.GraphWidget_S.setGeometry(QtCore.QRect(10, 10, 51, 51))
-        self.GraphWidget_S.setStyleSheet("QWidget{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 4px;\n"
-"}")
-        self.GraphWidget_S.setObjectName("GraphWidget_S")
-        self.Select_PushButton = QtWidgets.QPushButton(self.MCSL2_SubWidget_Select)
-        self.Select_PushButton.setGeometry(QtCore.QRect(510, 10, 51, 51))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Select_PushButton.setFont(font)
-        self.Select_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Select_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
-        self.Select_PushButton.setFlat(False)
-        self.Select_PushButton.setObjectName("Select_PushButton")
-        self.IntroductionWidget_S = QtWidgets.QWidget(self.MCSL2_SubWidget_Select)
-        self.IntroductionWidget_S.setGeometry(QtCore.QRect(70, 10, 421, 51))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.IntroductionWidget_S.setFont(font)
-        self.IntroductionWidget_S.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 8px\n"
-"}")
-        self.IntroductionWidget_S.setObjectName("IntroductionWidget_S")
-        self.MCSL2_SubWidget_Download = QtWidgets.QWidget(self.CentralWidget)
-        self.MCSL2_SubWidget_Download.setGeometry(QtCore.QRect(-580, 70, 580, 70))
-        self.MCSL2_SubWidget_Download.setStyleSheet("QWidget\n"
-"{\n"
-"    border-radius: 4px;\n"
-"    background-color: rgba(247, 247, 247, 247)\n"
-"}")
-        self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
-        self.IntroductionWidget_D = QtWidgets.QWidget(self.MCSL2_SubWidget_Download)
-        self.IntroductionWidget_D.setGeometry(QtCore.QRect(70, 10, 421, 51))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.IntroductionWidget_D.setFont(font)
-        self.IntroductionWidget_D.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 8px\n"
-"}")
-        self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
-        self.Download_PushButton = QtWidgets.QPushButton(self.MCSL2_SubWidget_Download)
-        self.Download_PushButton.setGeometry(QtCore.QRect(510, 10, 51, 51))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Download_PushButton.setFont(font)
-        self.Download_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Download_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
-        self.Download_PushButton.setFlat(False)
-        self.Download_PushButton.setObjectName("Download_PushButton")
-        self.GraphWidget_D = QtWidgets.QWidget(self.MCSL2_SubWidget_Download)
-        self.GraphWidget_D.setGeometry(QtCore.QRect(10, 10, 51, 51))
-        self.GraphWidget_D.setStyleSheet("QWidget{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 4px;\n"
-"}")
-        self.GraphWidget_D.setObjectName("GraphWidget_D")
-        self.MCSL2_SubWidget_Download.raise_()
-        self.MCSL2_SubWidget_Select.raise_()
         self.Background_2.raise_()
         self.Background.raise_()
         self.OptionsWidget.raise_()
@@ -1738,6 +1633,4 @@ class Ui_MCSL2_MainWindow(object):
 "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
         self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
-        self.Select_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
-        self.Download_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
 import MCSL2_Icon_rc
