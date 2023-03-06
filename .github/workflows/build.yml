@@ -46,7 +46,7 @@ jobs:
         run: >
           python -m nuitka
           --standalone --enable-plugin=pyqt5 --onefile
-          --output-dir build
+          --output-dir=build
           --show-progress --assume-yes-for-downloads
           --disable-console --macos-create-app-bundle
           --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
