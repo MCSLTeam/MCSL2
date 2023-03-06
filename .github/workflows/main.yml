@@ -22,27 +22,30 @@ jobs:
           python-version: '3.9'
           architecture: 'x64'
 
-      # nuitka action 依赖全局环境的py包，这里不能创建虚拟环境
       - name: Install Necessary Packages
         run: |
-          python -m pip install poetry pip setuptools -U
-
-      # win 的奇怪 bug
-      - name: Install Deps for Windows
-        if: runner.os == 'Windows'
-        run: |
-          pip install PyQt5==5.15.2
+          python -m pip install poetry pip setuptools tomlkit -U
 
       - name: Install Deps for Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install -y libfuse2
 
-      # nuitka action 依赖全局环境的py包，这里不能创建虚拟环境
-      - name: Install Deps using Poetry
-        run: |
-          poetry config virtualenvs.create false
-          poetry install --no-root
+      # win 上 poetry 的奇怪 bug 导致 poetry install 装不上依赖
+      - name: Install Deps on Windows
+        if: runner.os == 'Windows'
+        run: >
+          python -c
+          "import os;
+          from pathlib import Path;
+          from tomlkit import parse;
+          deps = parse(
+              (Path.cwd() / 'pyproject.toml').read_text(encoding=u8)
+          )['tool']['poetry']['dependencies'];
+          for d, v in deps.entries():
+              os.system(
+                  f'pip install \"{d}{f\"==v\" if v.startswith(\"^\") else v}\"'
+              )"
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
