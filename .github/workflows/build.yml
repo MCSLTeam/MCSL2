@@ -30,7 +30,7 @@ jobs:
 
       - name: Install Necessary Packages
         run: |
-          python -m pip install poetry pip setuptools tomlkit -U
+          python -m pip install poetry pip setuptools tomlkit imageio -U
 
       - name: Install Deps for Linux
         if: runner.os == 'Linux'
@@ -38,7 +38,7 @@ jobs:
           sudo apt-get install -y libfuse2
 
       # win 上 poetry 的奇怪 bug 导致 poetry install 装不上依赖
-      - name: Install Deps
+      - name: Install Project Deps
         run: |
           python .github/utils/install_deps.py
 
