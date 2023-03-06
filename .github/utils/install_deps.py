@@ -11,5 +11,5 @@ if "python" in deps:
     del deps["python"]
 
 for d, v in deps.items():
-    v = f"=={v}" if v.startswith("^") else v
+    v = f"=={v.removeprefix('^')}" if v.startswith("^") else v
     os.system(f'pip install "{d}{v}"')
