@@ -45,9 +45,11 @@ jobs:
       - name: Build Executable
         run: >
           python -m nuitka
-          --standalone --show-progress --show-memory
-          --enable-plugin=pyqt5 --onefile
-          --windows-disable-console --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
+          --standalone --enable-plugin=pyqt5 --onefile
+          --output-dir build
+          --show-progress --assume-yes-for-downloads
+          --disable-console --macos-create-app-bundle
+          --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
           --windows-product-name=MCSL2 --windows-file-version=2.0.0 --windows-product-version=2.0.0
           --windows-file-description="A Minecraft Server Launcher"
           main.py
