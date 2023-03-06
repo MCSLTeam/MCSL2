@@ -16,14 +16,46 @@ class Ui_MCSL2_Dialog(object):
         MCSL2_Dialog.setObjectName("MCSL2_Dialog")
         MCSL2_Dialog.resize(413, 242)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Disabled, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Active, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Active, QtGui.QIcon.On)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Normal,
+            QtGui.QIcon.Off,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Normal,
+            QtGui.QIcon.On,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Disabled,
+            QtGui.QIcon.Off,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Disabled,
+            QtGui.QIcon.On,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Active,
+            QtGui.QIcon.Off,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Active,
+            QtGui.QIcon.On,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Selected,
+            QtGui.QIcon.Off,
+        )
+        icon.addPixmap(
+            QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"),
+            QtGui.QIcon.Selected,
+            QtGui.QIcon.On,
+        )
         MCSL2_Dialog.setWindowIcon(icon)
         self.Dialog_PushButton = QtWidgets.QPushButton(MCSL2_Dialog)
         self.Dialog_PushButton.setGeometry(QtCore.QRect(160, 190, 91, 31))
@@ -32,24 +64,26 @@ class Ui_MCSL2_Dialog(object):
         font.setPointSize(10)
         self.Dialog_PushButton.setFont(font)
         self.Dialog_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Dialog_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 7px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 7px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 7px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Dialog_PushButton.setStyleSheet(
+            "QPushButton\n"
+            "{\n"
+            "    background-color: rgb(0, 120, 212);\n"
+            "    border-radius: 7px;\n"
+            "    color: rgb(255, 255, 255);\n"
+            "}\n"
+            "QPushButton:hover\n"
+            "{\n"
+            "    background-color: rgb(0, 110, 212);\n"
+            "    border-radius: 7px;\n"
+            "    color: rgb(255, 255, 255);\n"
+            "}\n"
+            "QPushButton:pressed\n"
+            "{\n"
+            "    background-color: rgb(0, 100, 212);\n"
+            "    border-radius: 7px;\n"
+            "    color: rgb(255, 255, 255);\n"
+            "}"
+        )
         self.Dialog_PushButton.setObjectName("Dialog_PushButton")
         self.Dialog_label = QtWidgets.QLabel(MCSL2_Dialog)
         self.Dialog_label.setGeometry(QtCore.QRect(30, 20, 351, 151))
@@ -57,20 +91,21 @@ class Ui_MCSL2_Dialog(object):
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
         self.Dialog_label.setFont(font)
-        self.Dialog_label.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border-radius: 10px\n"
-"}")
+        self.Dialog_label.setStyleSheet(
+            "QLabel\n"
+            "{\n"
+            "    background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px\n"
+            "}"
+        )
         self.Dialog_label.setText("")
         self.Dialog_label.setAlignment(QtCore.Qt.AlignCenter)
         self.Dialog_label.setObjectName("Dialog_label")
         self.Background = QtWidgets.QLabel(MCSL2_Dialog)
         self.Background.setGeometry(QtCore.QRect(0, 0, 413, 242))
-        self.Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgba(247, 247, 247,85%);\n"
-"}")
+        self.Background.setStyleSheet(
+            "QLabel\n" "{\n" "    background-color: rgba(247, 247, 247,85%);\n" "}"
+        )
         self.Background.setText("")
         self.Background.setObjectName("Background")
         self.Background.raise_()
@@ -84,4 +119,6 @@ class Ui_MCSL2_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         MCSL2_Dialog.setWindowTitle(_translate("MCSL2_Dialog", "提示"))
         self.Dialog_PushButton.setText(_translate("MCSL2_Dialog", "知道了"))
+
+
 import MCSL2_Icon_rc
