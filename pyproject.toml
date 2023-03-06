@@ -19,6 +19,9 @@ Nuitka = "^1.4.8"
 ordered-set = "^4.1.0"
 zstandard = "^0.20.0"
 
+[tool.black]
+extend-exclude = "(MCSL2_Icon.py)"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
