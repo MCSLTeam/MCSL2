@@ -26,7 +26,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install poetry pip setuptools -U
-          poetry config settings.virtualenvs.create false
+          poetry config virtualenvs.create false
           poetry install --no-root
 
       - name: Build Executable
