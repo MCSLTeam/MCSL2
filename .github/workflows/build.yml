@@ -32,20 +32,9 @@ jobs:
           sudo apt-get install -y libfuse2
 
       # win 上 poetry 的奇怪 bug 导致 poetry install 装不上依赖
-      - name: Install Deps on Windows
-        if: runner.os == 'Windows'
+      - name: Install Deps
         run: >
-          python -c
-          "import os;
-          from pathlib import Path;
-          from tomlkit import parse;
-          deps = parse(
-              (Path.cwd() / 'pyproject.toml').read_text(encoding=u8)
-          )['tool']['poetry']['dependencies'];
-          for d, v in deps.entries():
-              os.system(
-                  f'pip install \"{d}{f\"==v\" if v.startswith(\"^\") else v}\"'
-              )"
+          python .github/utils/install_deps.py
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
