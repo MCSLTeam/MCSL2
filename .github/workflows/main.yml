@@ -4,14 +4,14 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-  
+
     strategy:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-      
+
     runs-on: ${{ matrix.os }}
-    
+
     steps:
       - name: Check-out repository
         uses: actions/checkout@v3
@@ -21,12 +21,14 @@ jobs:
         with:
           python-version: '3.9'
           architecture: 'x64'
-            
+
+      # nuitka action 依赖全局环境的py包，这里不能创建虚拟环境
       - name: Install Dependencies
         run: |
           python -m pip install poetry pip setuptools -U
-          poetry install
-          
+          poetry config settings.virtualenvs.create false
+          poetry install --no-root
+
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
         with:
@@ -39,7 +41,7 @@ jobs:
           windows-file-version: 2.0.0
           windows-product-version: 2.0.0
           windows-file-description: A Minecraft Server Launcher
-  
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
