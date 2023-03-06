@@ -44,7 +44,7 @@ jobs:
 
       - name: Build Executable
         run: >
-          nuitka
+          python -m nuitka
           --standalone --show-progress --show-memory
           --enable-plugin=pyqt5 --onefile
           --windows-disable-console --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
