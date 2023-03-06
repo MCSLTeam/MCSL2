@@ -28,6 +28,11 @@ jobs:
           python -m pip install poetry pip setuptools -U
           poetry config virtualenvs.create false
           poetry install --no-root
+          
+      - name: Install Deps for Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y libfuse2
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
