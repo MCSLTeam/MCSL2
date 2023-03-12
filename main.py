@@ -53,21 +53,25 @@ from MCSL2_MainWindow import *
 from MCSL2_Dialog import *
 from MCSL2_AskDialog import *
 import subprocess
+import utils
 
 
 # Initialize MainWindow
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def __init__(self):
         super(MCSL2MainWindow, self).__init__()
+        # 设置无边框
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        #设置阴影
         effect = QGraphicsDropShadowEffect(self)
-        effect.setBlurRadius(12)
-        effect.setOffset(0, 0)
-        effect.setColor(QColor("#F0F8FF"))
-        self.setGraphicsEffect(effect)
-        self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setAutoFillBackground(True)
+        effect.setBlurRadius(12)#阴影半径
+        effect.setOffset(0, 0)#阴影纵横偏移量
+        effect.setColor(QColor("#F0F8FF"))#阴影颜色
+        self.setGraphicsEffect(effect)#应用阴影
+        self.setAttribute(Qt.WA_TranslucentBackground)#窗口透明
+        self.setAutoFillBackground(True)#用于设置当窗口作为被包含窗口时, 是否需要绘制背景
         self.setupUi(self)
+        #以下三个用于无边框的移动问题
         self._startPos = None
         self._endPos = None
         self._tracking = False
@@ -104,8 +108,16 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Completed_Save_PushButton.clicked.connect(self.SaveAMinecraftServer)
 
     def paintEvent(self, event):
+        '''
+        重写了基类的paintEvent函数，绘制圆角矩形
+        1、使用setBrush函数设置填充颜色为"#F0F8FF"，然后使用setPen函数设置边框颜色为透明。
+        2、函数定义一个矩形对象并设置其坐标和大小，再使用drawRoundedRect函数绘制一个圆角矩形。
+        3、矩形的四个角落的圆角半径都为4个像素。最终的效果是在QWidget上绘制了一个带有圆角的外框。
+        :param event:
+        :return:
+        '''
         pat2 = QPainter(self)
-        pat2.setRenderHint(pat2.Antialiasing)
+        pat2.setRenderHint(pat2.Antialiasing)#抗锯齿
         pat2.setBrush(QColor("#F0F8FF"))
         pat2.setPen(Qt.transparent)
 
@@ -116,30 +128,34 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         rect.setHeight(rect.height() - 9)
         pat2.drawRoundedRect(rect, 4, 4)
 
-    def mouseMoveEvent(self, e: QMouseEvent):
+    #以下重写窗口的鼠标事件，(mouseMoveEvent到mouseReleaseEvent)
+    def mouseMoveEvent(self, e: QMouseEvent): #鼠标移动
         if self._tracking:
             self._endPos = e.pos() - self._startPos
             self.move(self.pos() + self._endPos)
 
-    def mousePressEvent(self, e: QMouseEvent):
+    def mousePressEvent(self, e: QMouseEvent): #鼠标按下
         if e.button() == Qt.LeftButton:
             self._startPos = QPoint(e.x(), e.y())
             self._tracking = True
 
-    def mouseReleaseEvent(self, e: QMouseEvent):
+    def mouseReleaseEvent(self, e: QMouseEvent): #鼠标释放
         if e.button() == Qt.LeftButton:
             self._tracking = False
             self._startPos = None
             self._endPos = None
 
+    #退出函数
     def Quit(self):
         MCSLProcess.quit()
 
+    #缩放到最小
     def Minimize(self):
         MCSLMainWindow.showMinimized()
 
         # Pages Navigation
 
+    #首页
     def ToHomePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(0)
         self.Blue1.setStyleSheet(
@@ -156,6 +172,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
 
+    #配置页
     def ToConfigPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
         self.Blue2.setStyleSheet(
@@ -172,6 +189,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
 
+    #下载页
     def ToDownloadPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(2)
         self.Blue3.setStyleSheet(
@@ -188,6 +206,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
 
+    #命令行页
     def ToConsolePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(3)
         self.Blue4.setStyleSheet(
@@ -204,6 +223,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
 
+    #工具页
     def ToToolsPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(4)
         self.Blue5.setStyleSheet(
@@ -220,6 +240,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue5.setVisible(True)
         self.Blue6.setVisible(False)
 
+    #关于页
     def ToAboutPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(5)
         self.Blue6.setStyleSheet(
@@ -236,9 +257,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(True)
 
+    #选择服务器页
     def ToChooseServerPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(6)
 
+    #选择Java页
     def ToChooseJavaPage(self):
         global JavaPaths
         self.FunctionsStackedWidget.setCurrentIndex(7)
@@ -248,6 +271,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         # Download Sources Changer
 
+    #以下是选择下载方式的函数(ChoseSharePointDownloadSource到ChoseGitHubDownloadSource)
     def ChoseSharePointDownloadSource(self):
         global DownloadSource
         DownloadSource = 0
@@ -282,6 +306,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         #             print(result.decode('utf-8').strip('\r\n'))
         #     else:
         #         break
+
 
     def ManuallySelectJava(self):
         JavaPathSysList = QFileDialog.getOpenFileName(
@@ -696,29 +721,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
 
     def AutoDetectJava(self):
-        global SearchStatus, DiskSymbols
-        for c in ascii_uppercase:
-            DiskSymbol = c + ":"
-            if ospath.isdir(DiskSymbol):
-                DiskSymbol = c + ":\\"
-                DiskSymbols.append(DiskSymbol)
-        self.thread = fileSearchThread("java.exe")
-        self.thread.start()
-        # if len(JavaPaths) != 0:
-        #     for i in range(len(JavaPaths)):
-        #         self.Select_Java_ComboBox.addItem(JavaPaths[i])
-        while True:
-            if SearchStatus == 1:
-                Tip = "搜索完毕。"
-                CallMCSL2Dialog(Tip, 0)
-                self.ToChooseJavaPage()
-                break
-            else:
-                sleep(1)
-                continue
-        #
-        # if len(JavaPaths) != 0:
-        #     for i in range(len(JavaPaths)):
+        global JavaPaths
+
+        utils.FindJava()
+        JavaPaths = utils.java_list
+        print(JavaPaths)
+
 
     def ShowFoundedJavaList_Back(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
@@ -902,45 +910,6 @@ class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
         super(MCSL2AskDialog, self).__init__()
         self.setupUi(self)
 
-
-class fileSearchThread(QThread):
-    global JavaPaths
-    sinOut = pyqtSignal(str)
-
-    def __init__(self, key):
-        super().__init__()
-        self.key = key
-
-    def run(self):
-        global SearchStatus
-        threads = []
-        for each in DiskSymbols:
-            t = Thread(
-                target=self.search,
-                args=(
-                    self.key,
-                    each,
-                ),
-            )
-            threads.append(t)
-            t.start()
-        for i in range(len(threads)):
-            threads[i].join()
-        SearchStatus = 1
-
-    def search(self, keyword, path):
-        global JavaPaths
-        for DirPath, DirNames, SearchFileNames in walk(path):
-            for SearchFileName in SearchFileNames:
-                if SearchFileName.__contains__(keyword):
-                    SearchTMP_1 = ospath.join(DirPath, SearchFileName)
-                    JavaPaths.append(SearchTMP_1)
-                    self.sinOut.emit(ospath.join(DirPath, SearchFileName))
-            for folder in DirNames:
-                if folder.__contains__(keyword):
-                    SearchTMP_2 = ospath.join(DirPath, folder)
-                    JavaPaths.append(SearchTMP_2)
-                    self.sinOut.emit(ospath.join(DirPath, folder))
 
 
 # The function of calling MCSL2 Dialog
