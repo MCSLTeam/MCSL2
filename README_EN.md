@@ -27,9 +27,7 @@ At first I prefer developing with C#, but it seems that I don't have enough know
 
 The official website of MCSL 2：[https://mcsl.netlify.app](https://mcsl.netlify.app)
 
-The official website of MCSL 2 API：[https://whdlx.gitee.io/mcslapi](https://whdlx.gitee.io/mcslapi)
-
-(In China, you may need to use a web acceleration tool for GitHub, such as Watt Toolkit.)
+The official website of MCSL 2 API：[https://mcslapi.netlify.app/](https://mcslapi.netlify.app/)
 
 MCSL 2 has redesigned the user interface, develop with cleaner code logic. In addition to Launch, Configuration, and Download, many extension tools have been added to MCSL 2.
 You can preview the UI of MCSL 2 [here](https://mcsl.netlify.app/preview).
