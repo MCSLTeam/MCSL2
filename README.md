@@ -27,9 +27,7 @@ ___
 
 MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)
 
-MCSL 2 API官网：[https://whdlx.gitee.io/mcslapi](https://whdlx.gitee.io/mcslapi)
-
-(国内可能需要使用针对GitHub的网络加速工具，例如 Watt Toolkit.)
+MCSL 2 API官网：[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)
 
 MCSL 2重新设计了用户界面，用更简洁的代码逻辑开发。除了启动、配置和下载之外，MCSL 2还增加了许多扩展工具。
 你可以在[这里](https://mcsl.netlify.app/preview)预览MCSL 2的界面。
