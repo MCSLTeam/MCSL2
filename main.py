@@ -43,12 +43,10 @@ from json import loads, dumps
 from requests import get
 from shutil import copy
 from sys import exit, argv
-from os import getcwd, mkdir, remove, walk
+from os import getcwd, mkdir, remove
 from os import path as ospath
-from time import sleep
-from threading import Thread
-from string import ascii_uppercase
 import MCSL2_Icon
+import MCSL2_JavaDetector
 from MCSL2_MainWindow import *
 from MCSL2_Dialog import *
 from MCSL2_AskDialog import *
@@ -696,26 +694,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
 
     def AutoDetectJava(self):
-        global SearchStatus, DiskSymbols
-        for c in ascii_uppercase:
-            DiskSymbol = c + ":"
-            if ospath.isdir(DiskSymbol):
-                DiskSymbol = c + ":\\"
-                DiskSymbols.append(DiskSymbol)
-        self.thread = fileSearchThread("java.exe")
-        self.thread.start()
-        # if len(JavaPaths) != 0:
-        #     for i in range(len(JavaPaths)):
-        #         self.Select_Java_ComboBox.addItem(JavaPaths[i])
-        while True:
-            if SearchStatus == 1:
-                Tip = "搜索完毕。"
-                CallMCSL2Dialog(Tip, 0)
-                self.ToChooseJavaPage()
-                break
-            else:
-                sleep(1)
-                continue
+        global SearchStatus, JavaPaths
+        MCSL2_JavaDetector.FindJava()
+        JavaPaths = MCSL2_JavaDetector.FoundJava
         #
         # if len(JavaPaths) != 0:
         #     for i in range(len(JavaPaths)):
@@ -901,46 +882,6 @@ class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
     def __init__(self):
         super(MCSL2AskDialog, self).__init__()
         self.setupUi(self)
-
-
-class fileSearchThread(QThread):
-    global JavaPaths
-    sinOut = pyqtSignal(str)
-
-    def __init__(self, key):
-        super().__init__()
-        self.key = key
-
-    def run(self):
-        global SearchStatus
-        threads = []
-        for each in DiskSymbols:
-            t = Thread(
-                target=self.search,
-                args=(
-                    self.key,
-                    each,
-                ),
-            )
-            threads.append(t)
-            t.start()
-        for i in range(len(threads)):
-            threads[i].join()
-        SearchStatus = 1
-
-    def search(self, keyword, path):
-        global JavaPaths
-        for DirPath, DirNames, SearchFileNames in walk(path):
-            for SearchFileName in SearchFileNames:
-                if SearchFileName.__contains__(keyword):
-                    SearchTMP_1 = ospath.join(DirPath, SearchFileName)
-                    JavaPaths.append(SearchTMP_1)
-                    self.sinOut.emit(ospath.join(DirPath, SearchFileName))
-            for folder in DirNames:
-                if folder.__contains__(keyword):
-                    SearchTMP_2 = ospath.join(DirPath, folder)
-                    JavaPaths.append(SearchTMP_2)
-                    self.sinOut.emit(ospath.join(DirPath, folder))
 
 
 # The function of calling MCSL2 Dialog
