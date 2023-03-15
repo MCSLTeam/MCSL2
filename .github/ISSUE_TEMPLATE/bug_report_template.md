@@ -1,7 +1,7 @@
 ---
-name: BUG_REPORT
+name: BUG_REPORT_TEMPLATE
 about: Create a report to help us improve
-title: BUG
+title: BUG｜
 labels: bug
 assignees: ''
 
