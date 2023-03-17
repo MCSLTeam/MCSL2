@@ -11,7 +11,7 @@
 ___
 
 <p align="center">
-中文  |  <a href="https://github.com/LxHTT/MCSL2/blob/master/README_EN.md">English</a>
+中文  |  <a href="https://github.com/LxHTT/MCSL2/blob/master/README_EN.md" target="_blank">English</a>
 </p>
 
 ___
