@@ -21,14 +21,14 @@ ___
 
 ![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "仓库分析")
 
-这是对旧项目[MCSL](https://github.com/LxHTT/MCSL)的重制。
+这是对旧项目[MCSL](https://github.com/LxHTT/MCSL)的Remake。
 
 原计划使用 C# 开发，
 但由于知识有限，无奈继续使用 Python。
 
-MCSL 2官网：[MCSL.netlify.app](https://mcsl.netlify.app)
+MCSL 2官网：[mcsl.netlify.app](https://mcsl.netlify.app)
 
-MCSL 2 API官网：[MCSLAPI.netlify.app](https://mcslapi.netlify.app/)
+MCSL 2 API官网：[mcslapi.netlify.app](https://mcslapi.netlify.app/)
 
 MCSL 2 重新设计了用户界面，用更简洁的代码逻辑开发。
 除了启动、配置和下载之外，MCSL 2 还增加了许多扩展工具。
