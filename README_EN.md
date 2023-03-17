@@ -42,5 +42,5 @@ The software is released under the GPLv3 open source license.
 ___
 ## Special Thanks
 
-- [Luoxis Cloud](https://www.df100.ltd) by **Dimension Frontier**
+- [Luoxis Cloud](https://www.df100.ltd) by **星姮十织**
 - [ZCloud](https://ztsin.cn/) by **Z_Tsin**
