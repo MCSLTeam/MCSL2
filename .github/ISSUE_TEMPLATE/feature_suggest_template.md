@@ -6,9 +6,12 @@ labels: enhancement
 assignees: ''
 
 ---
+<!--
+请将 `[ ]` 设置成 `[x]` 来确认
+-->
 
-- [x]  没人提出过
-- [x]  软件为最新版本
+- [ ] 未在 [Issues](https://github.com/LxHTT/MCSL2/issues) 中看到其他相同功能
+- [ ] MCSL 2 为 [最新稳定版](https://github.com/LxHTT/MCSL2/releases/latest) 或 [最新构建版](https://github.com/LxHTT/MCSL2/actions)
 ___
 
 ### 描述
