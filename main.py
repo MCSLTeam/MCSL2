@@ -89,6 +89,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.ShowFoundedJavaList_Back
         )
         self.Founded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
+        self.DoNotUpdate_PushButton.clicked.connect(self.ToAboutPage)
 
         # Functions binding
         self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
@@ -739,7 +740,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # The function of refreshing download type.
 
     def RefreshDownloadType(self):
-        global DownloadSource
+        global DownloadSource, DownloadUrls
         ParseDownloaderAPIUrlSS = ParseDownloaderAPIUrl(
             DownloadSource, self.DownloadSwitcher_TabWidget.currentIndex()
         )
@@ -747,489 +748,479 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         DownloadUrls = ParseDownloaderAPIUrlSS[1]
         FileNames = ParseDownloaderAPIUrlSS[2]
         FileFormats = ParseDownloaderAPIUrlSS[3]
-        self.InitSubWidget(0, SubWidgetNames, DownloadUrls, FileNames, FileFormats)
+        self.InitDownloadSubWidget(SubWidgetNames, DownloadUrls)
 
-    def InitSubWidget(self, Mode, SubWidgetNames, DownloadUrls, FileNames, FileFormats):
-        if Mode == 0:  # Download
-            GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
-            if GraphType == 0:
-                for i in range(len(SubWidgetNames)):
-                    self.MCSL2_SubWidget_Download = QWidget()
-                    self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
-                    self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
-                    self.MCSL2_SubWidget_Download.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    border-radius: 4px;\n"
-                        "    background-color: rgba(247, 247, 247, 247)\n"
-                        "}"
-                    )
-                    self.MCSL2_SubWidget_Download.setObjectName(
-                        "MCSL2_SubWidget_Download"
-                    )
-                    self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
-                    self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
-                    self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionWidget_D.setFont(font)
-                    self.IntroductionWidget_D.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 8px\n"
-                        "}"
-                    )
-                    self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
-                    self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
-                    self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
-                    self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionLabel_D.setFont(font)
-                    self.IntroductionLabel_D.setText("")
-                    self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                    self.Download_PushButton = QPushButton(
-                        self.MCSL2_SubWidget_Download
-                    )
-                    self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
-                    self.Download_PushButton.setMinimumSize(QSize(51, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.Download_PushButton.setFont(font)
-                    self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-                    self.Download_PushButton.setStyleSheet(
-                        "QPushButton\n"
-                        "{\n"
-                        "    background-color: rgb(0, 120, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:hover\n"
-                        "{\n"
-                        "    background-color: rgb(0, 110, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:pressed\n"
-                        "{\n"
-                        "    background-color: rgb(0, 100, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}"
-                    )
-                    self.Download_PushButton.setFlat(False)
-                    self.Download_PushButton.setObjectName("Download_PushButton")
-                    self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
-                    self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
-                    self.GraphWidget_D.setMinimumSize(QSize(51, 51))
-                    self.GraphWidget_D.setStyleSheet(
-                        "QLabel\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 4px;\n"
-                        "}"
-                    )
-                    self.GraphWidget_D.setText("")
-                    self.GraphWidget_D.setObjectName("GraphWidget_D")
-                    self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
-                    self.GraphWidget_D.setScaledContents(True)
-                    self.IntroductionLabel_D.setText(SubWidgetNames[i])
-                    self.Download_PushButton.setText("下载")
-                    self.JavaVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
-            elif GraphType == 1:
-                for i in range(len(SubWidgetNames)):
-                    self.MCSL2_SubWidget_Download = QWidget()
-                    self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
-                    self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
-                    self.MCSL2_SubWidget_Download.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    border-radius: 4px;\n"
-                        "    background-color: rgba(247, 247, 247, 247)\n"
-                        "}"
-                    )
-                    self.MCSL2_SubWidget_Download.setObjectName(
-                        "MCSL2_SubWidget_Download"
-                    )
-                    self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
-                    self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
-                    self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionWidget_D.setFont(font)
-                    self.IntroductionWidget_D.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 8px\n"
-                        "}"
-                    )
-                    self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
-                    self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
-                    self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
-                    self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionLabel_D.setFont(font)
-                    self.IntroductionLabel_D.setText("")
-                    self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                    self.Download_PushButton = QPushButton(
-                        self.MCSL2_SubWidget_Download
-                    )
-                    self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
-                    self.Download_PushButton.setMinimumSize(QSize(51, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.Download_PushButton.setFont(font)
-                    self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-                    self.Download_PushButton.setStyleSheet(
-                        "QPushButton\n"
-                        "{\n"
-                        "    background-color: rgb(0, 120, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:hover\n"
-                        "{\n"
-                        "    background-color: rgb(0, 110, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:pressed\n"
-                        "{\n"
-                        "    background-color: rgb(0, 100, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}"
-                    )
-                    self.Download_PushButton.setFlat(False)
-                    self.Download_PushButton.setObjectName("Download_PushButton")
-                    self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
-                    self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
-                    self.GraphWidget_D.setMinimumSize(QSize(51, 51))
-                    self.GraphWidget_D.setStyleSheet(
-                        "QLabel\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 4px;\n"
-                        "}"
-                    )
-                    self.GraphWidget_D.setText("")
-                    self.GraphWidget_D.setObjectName("GraphWidget_D")
-                    self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/SpigotIcon.png"))
-                    self.GraphWidget_D.setScaledContents(True)
-                    self.IntroductionLabel_D.setText(SubWidgetNames[i])
-                    self.Download_PushButton.setText("下载")
-                    self.SpigotVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
-            elif GraphType == 2:
-                for i in range(len(SubWidgetNames)):
-                    self.MCSL2_SubWidget_Download = QWidget()
-                    self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
-                    self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
-                    self.MCSL2_SubWidget_Download.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    border-radius: 4px;\n"
-                        "    background-color: rgba(247, 247, 247, 247)\n"
-                        "}"
-                    )
-                    self.MCSL2_SubWidget_Download.setObjectName(
-                        "MCSL2_SubWidget_Download"
-                    )
-                    self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
-                    self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
-                    self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionWidget_D.setFont(font)
-                    self.IntroductionWidget_D.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 8px\n"
-                        "}"
-                    )
-                    self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
-                    self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
-                    self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
-                    self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionLabel_D.setFont(font)
-                    self.IntroductionLabel_D.setText("")
-                    self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                    self.Download_PushButton = QPushButton(
-                        self.MCSL2_SubWidget_Download
-                    )
-                    self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
-                    self.Download_PushButton.setMinimumSize(QSize(51, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.Download_PushButton.setFont(font)
-                    self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-                    self.Download_PushButton.setStyleSheet(
-                        "QPushButton\n"
-                        "{\n"
-                        "    background-color: rgb(0, 120, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:hover\n"
-                        "{\n"
-                        "    background-color: rgb(0, 110, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:pressed\n"
-                        "{\n"
-                        "    background-color: rgb(0, 100, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}"
-                    )
-                    self.Download_PushButton.setFlat(False)
-                    self.Download_PushButton.setObjectName("Download_PushButton")
-                    self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
-                    self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
-                    self.GraphWidget_D.setMinimumSize(QSize(51, 51))
-                    self.GraphWidget_D.setStyleSheet(
-                        "QLabel\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 4px;\n"
-                        "}"
-                    )
-                    self.GraphWidget_D.setText("")
-                    self.GraphWidget_D.setObjectName("GraphWidget_D")
-                    self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/PaperIcon.png"))
-                    self.GraphWidget_D.setScaledContents(True)
-                    self.IntroductionLabel_D.setText(SubWidgetNames[i])
-                    self.Download_PushButton.setText("下载")
-                    self.PaperVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
-            elif GraphType == 3:
-                for i in range(len(SubWidgetNames)):
-                    self.MCSL2_SubWidget_Download = QWidget()
-                    self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
-                    self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
-                    self.MCSL2_SubWidget_Download.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    border-radius: 4px;\n"
-                        "    background-color: rgba(247, 247, 247, 247)\n"
-                        "}"
-                    )
-                    self.MCSL2_SubWidget_Download.setObjectName(
-                        "MCSL2_SubWidget_Download"
-                    )
-                    self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
-                    self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
-                    self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionWidget_D.setFont(font)
-                    self.IntroductionWidget_D.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 8px\n"
-                        "}"
-                    )
-                    self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
-                    self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
-                    self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
-                    self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionLabel_D.setFont(font)
-                    self.IntroductionLabel_D.setText("")
-                    self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                    self.Download_PushButton = QPushButton(
-                        self.MCSL2_SubWidget_Download
-                    )
-                    self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
-                    self.Download_PushButton.setMinimumSize(QSize(51, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.Download_PushButton.setFont(font)
-                    self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-                    self.Download_PushButton.setStyleSheet(
-                        "QPushButton\n"
-                        "{\n"
-                        "    background-color: rgb(0, 120, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:hover\n"
-                        "{\n"
-                        "    background-color: rgb(0, 110, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:pressed\n"
-                        "{\n"
-                        "    background-color: rgb(0, 100, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}"
-                    )
-                    self.Download_PushButton.setFlat(False)
-                    self.Download_PushButton.setObjectName("Download_PushButton")
-                    self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
-                    self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
-                    self.GraphWidget_D.setMinimumSize(QSize(51, 51))
-                    self.GraphWidget_D.setStyleSheet(
-                        "QLabel\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 4px;\n"
-                        "}"
-                    )
-                    self.GraphWidget_D.setText("")
-                    self.GraphWidget_D.setObjectName("GraphWidget_D")
-                    self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/BungeeCordIcon.png"))
-                    self.GraphWidget_D.setScaledContents(True)
-                    self.IntroductionLabel_D.setText(SubWidgetNames[i])
-                    self.Download_PushButton.setText("下载")
-                    self.BCVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
-            elif GraphType == 4:
-                for i in range(len(SubWidgetNames)):
-                    self.MCSL2_SubWidget_Download = QWidget()
-                    self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
-                    self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
-                    self.MCSL2_SubWidget_Download.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    border-radius: 4px;\n"
-                        "    background-color: rgba(247, 247, 247, 247)\n"
-                        "}"
-                    )
-                    self.MCSL2_SubWidget_Download.setObjectName(
-                        "MCSL2_SubWidget_Download"
-                    )
-                    self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
-                    self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
-                    self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionWidget_D.setFont(font)
-                    self.IntroductionWidget_D.setStyleSheet(
-                        "QWidget\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 8px\n"
-                        "}"
-                    )
-                    self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
-                    self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
-                    self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
-                    self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.IntroductionLabel_D.setFont(font)
-                    self.IntroductionLabel_D.setText("")
-                    self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                    self.Download_PushButton = QPushButton(
-                        self.MCSL2_SubWidget_Download
-                    )
-                    self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
-                    self.Download_PushButton.setMinimumSize(QSize(51, 51))
-                    font = QFont()
-                    font.setFamily("Microsoft YaHei UI")
-                    font.setPointSize(10)
-                    self.Download_PushButton.setFont(font)
-                    self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-                    self.Download_PushButton.setStyleSheet(
-                        "QPushButton\n"
-                        "{\n"
-                        "    background-color: rgb(0, 120, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:hover\n"
-                        "{\n"
-                        "    background-color: rgb(0, 110, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}\n"
-                        "QPushButton:pressed\n"
-                        "{\n"
-                        "    background-color: rgb(0, 100, 212);\n"
-                        "    border-radius: 8px;\n"
-                        "    color: rgb(255, 255, 255);\n"
-                        "}"
-                    )
-                    self.Download_PushButton.setFlat(False)
-                    self.Download_PushButton.setObjectName("Download_PushButton")
-                    self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
-                    self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
-                    self.GraphWidget_D.setMinimumSize(QSize(51, 51))
-                    self.GraphWidget_D.setStyleSheet(
-                        "QLabel\n"
-                        "{\n"
-                        "    background-color: rgb(247, 247, 247);\n"
-                        "    border-radius: 4px;\n"
-                        "}"
-                    )
-                    self.GraphWidget_D.setText("")
-                    self.GraphWidget_D.setObjectName("GraphWidget_D")
-                    self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
-                    self.GraphWidget_D.setScaledContents(True)
-                    self.IntroductionLabel_D.setText(SubWidgetNames[i])
-                    self.Download_PushButton.setText("下载")
-                    self.OfficialCoreVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
-            else:
-                pass
+    def InitDownloadSubWidget(self, SubWidgetNames, DownloadUrls):
+        GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
+        if GraphType == 0:
+            for i in range(len(SubWidgetNames)):
+                self.MCSL2_SubWidget_Download = QWidget()
+                self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
+                self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
+                self.MCSL2_SubWidget_Download.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    border-radius: 4px;\n"
+                    "    background-color: rgba(247, 247, 247, 247)\n"
+                    "}"
+                )
+                self.MCSL2_SubWidget_Download.setObjectName(
+                    "MCSL2_SubWidget_Download"
+                )
+                self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+                self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
+                self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionWidget_D.setFont(font)
+                self.IntroductionWidget_D.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 8px\n"
+                    "}"
+                )
+                self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+                self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
+                self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
+                self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionLabel_D.setFont(font)
+                self.IntroductionLabel_D.setText("")
+                self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
+                self.Download_PushButton = QPushButton(
+                    self.MCSL2_SubWidget_Download
+                )
+                self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
+                self.Download_PushButton.setMinimumSize(QSize(51, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.Download_PushButton.setFont(font)
+                self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+                self.Download_PushButton.setStyleSheet(
+                    "QPushButton\n"
+                    "{\n"
+                    "    background-color: rgb(0, 120, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:hover\n"
+                    "{\n"
+                    "    background-color: rgb(0, 110, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:pressed\n"
+                    "{\n"
+                    "    background-color: rgb(0, 100, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}"
+                )
+                self.Download_PushButton.setFlat(False)
+                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
+                self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
+                self.GraphWidget_D.setMinimumSize(QSize(51, 51))
+                self.GraphWidget_D.setStyleSheet(
+                    "QLabel\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 4px;\n"
+                    "}"
+                )
+                self.GraphWidget_D.setText("")
+                self.GraphWidget_D.setObjectName("GraphWidget_D")
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+                self.GraphWidget_D.setScaledContents(True)
+                self.IntroductionLabel_D.setText(SubWidgetNames[i])
+                self.Download_PushButton.setText("下载")
+                self.JavaVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
+        elif GraphType == 1:
+            for i in range(len(SubWidgetNames)):
+                self.MCSL2_SubWidget_Download = QWidget()
+                self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
+                self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
+                self.MCSL2_SubWidget_Download.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    border-radius: 4px;\n"
+                    "    background-color: rgba(247, 247, 247, 247)\n"
+                    "}"
+                )
+                self.MCSL2_SubWidget_Download.setObjectName(
+                    "MCSL2_SubWidget_Download"
+                )
+                self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+                self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
+                self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionWidget_D.setFont(font)
+                self.IntroductionWidget_D.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 8px\n"
+                    "}"
+                )
+                self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+                self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
+                self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
+                self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionLabel_D.setFont(font)
+                self.IntroductionLabel_D.setText("")
+                self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
+                self.Download_PushButton = QPushButton(
+                    self.MCSL2_SubWidget_Download
+                )
+                self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
+                self.Download_PushButton.setMinimumSize(QSize(51, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.Download_PushButton.setFont(font)
+                self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+                self.Download_PushButton.setStyleSheet(
+                    "QPushButton\n"
+                    "{\n"
+                    "    background-color: rgb(0, 120, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:hover\n"
+                    "{\n"
+                    "    background-color: rgb(0, 110, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:pressed\n"
+                    "{\n"
+                    "    background-color: rgb(0, 100, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}"
+                )
+                self.Download_PushButton.setFlat(False)
+                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
+                self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
+                self.GraphWidget_D.setMinimumSize(QSize(51, 51))
+                self.GraphWidget_D.setStyleSheet(
+                    "QLabel\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 4px;\n"
+                    "}"
+                )
+                self.GraphWidget_D.setText("")
+                self.GraphWidget_D.setObjectName("GraphWidget_D")
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/SpigotIcon.png"))
+                self.GraphWidget_D.setScaledContents(True)
+                self.IntroductionLabel_D.setText(SubWidgetNames[i])
+                self.Download_PushButton.setText("下载")
+                # self.Download_PushButton.clicked.connect()
+                self.SpigotVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
+        elif GraphType == 2:
+            for i in range(len(SubWidgetNames)):
+                self.MCSL2_SubWidget_Download = QWidget()
+                self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
+                self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
+                self.MCSL2_SubWidget_Download.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    border-radius: 4px;\n"
+                    "    background-color: rgba(247, 247, 247, 247)\n"
+                    "}"
+                )
+                self.MCSL2_SubWidget_Download.setObjectName(
+                    "MCSL2_SubWidget_Download"
+                )
+                self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+                self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
+                self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionWidget_D.setFont(font)
+                self.IntroductionWidget_D.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 8px\n"
+                    "}"
+                )
+                self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+                self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
+                self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
+                self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionLabel_D.setFont(font)
+                self.IntroductionLabel_D.setText("")
+                self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
+                self.Download_PushButton = QPushButton(
+                    self.MCSL2_SubWidget_Download
+                )
+                self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
+                self.Download_PushButton.setMinimumSize(QSize(51, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.Download_PushButton.setFont(font)
+                self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+                self.Download_PushButton.setStyleSheet(
+                    "QPushButton\n"
+                    "{\n"
+                    "    background-color: rgb(0, 120, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:hover\n"
+                    "{\n"
+                    "    background-color: rgb(0, 110, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:pressed\n"
+                    "{\n"
+                    "    background-color: rgb(0, 100, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}"
+                )
+                self.Download_PushButton.setFlat(False)
+                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
+                self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
+                self.GraphWidget_D.setMinimumSize(QSize(51, 51))
+                self.GraphWidget_D.setStyleSheet(
+                    "QLabel\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 4px;\n"
+                    "}"
+                )
+                self.GraphWidget_D.setText("")
+                self.GraphWidget_D.setObjectName("GraphWidget_D")
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/PaperIcon.png"))
+                self.GraphWidget_D.setScaledContents(True)
+                self.IntroductionLabel_D.setText(SubWidgetNames[i])
+                self.Download_PushButton.setText("下载")
+                self.PaperVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
+        elif GraphType == 3:
+            for i in range(len(SubWidgetNames)):
+                self.MCSL2_SubWidget_Download = QWidget()
+                self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
+                self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
+                self.MCSL2_SubWidget_Download.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    border-radius: 4px;\n"
+                    "    background-color: rgba(247, 247, 247, 247)\n"
+                    "}"
+                )
+                self.MCSL2_SubWidget_Download.setObjectName(
+                    "MCSL2_SubWidget_Download"
+                )
+                self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+                self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
+                self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionWidget_D.setFont(font)
+                self.IntroductionWidget_D.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 8px\n"
+                    "}"
+                )
+                self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+                self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
+                self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
+                self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionLabel_D.setFont(font)
+                self.IntroductionLabel_D.setText("")
+                self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
+                self.Download_PushButton = QPushButton(
+                    self.MCSL2_SubWidget_Download
+                )
+                self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
+                self.Download_PushButton.setMinimumSize(QSize(51, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.Download_PushButton.setFont(font)
+                self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+                self.Download_PushButton.setStyleSheet(
+                    "QPushButton\n"
+                    "{\n"
+                    "    background-color: rgb(0, 120, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:hover\n"
+                    "{\n"
+                    "    background-color: rgb(0, 110, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:pressed\n"
+                    "{\n"
+                    "    background-color: rgb(0, 100, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}"
+                )
+                self.Download_PushButton.setFlat(False)
+                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
+                self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
+                self.GraphWidget_D.setMinimumSize(QSize(51, 51))
+                self.GraphWidget_D.setStyleSheet(
+                    "QLabel\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 4px;\n"
+                    "}"
+                )
+                self.GraphWidget_D.setText("")
+                self.GraphWidget_D.setObjectName("GraphWidget_D")
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/BungeeCordIcon.png"))
+                self.GraphWidget_D.setScaledContents(True)
+                self.IntroductionLabel_D.setText(SubWidgetNames[i])
+                self.Download_PushButton.setText("下载")
+                self.BCVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
+        elif GraphType == 4:
+            for i in range(len(SubWidgetNames)):
+                self.MCSL2_SubWidget_Download = QWidget()
+                self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
+                self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
+                self.MCSL2_SubWidget_Download.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    border-radius: 4px;\n"
+                    "    background-color: rgba(247, 247, 247, 247)\n"
+                    "}"
+                )
+                self.MCSL2_SubWidget_Download.setObjectName(
+                    "MCSL2_SubWidget_Download"
+                )
+                self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
+                self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
+                self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionWidget_D.setFont(font)
+                self.IntroductionWidget_D.setStyleSheet(
+                    "QWidget\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 8px\n"
+                    "}"
+                )
+                self.IntroductionWidget_D.setObjectName("IntroductionWidget_D")
+                self.IntroductionLabel_D = QLabel(self.IntroductionWidget_D)
+                self.IntroductionLabel_D.setGeometry(QRect(10, 0, 401, 51))
+                self.IntroductionLabel_D.setMinimumSize(QSize(401, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.IntroductionLabel_D.setFont(font)
+                self.IntroductionLabel_D.setText("")
+                self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
+                self.Download_PushButton = QPushButton(
+                    self.MCSL2_SubWidget_Download
+                )
+                self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
+                self.Download_PushButton.setMinimumSize(QSize(51, 51))
+                font = QFont()
+                font.setFamily("Microsoft YaHei UI")
+                font.setPointSize(10)
+                self.Download_PushButton.setFont(font)
+                self.Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+                self.Download_PushButton.setStyleSheet(
+                    "QPushButton\n"
+                    "{\n"
+                    "    background-color: rgb(0, 120, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:hover\n"
+                    "{\n"
+                    "    background-color: rgb(0, 110, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}\n"
+                    "QPushButton:pressed\n"
+                    "{\n"
+                    "    background-color: rgb(0, 100, 212);\n"
+                    "    border-radius: 8px;\n"
+                    "    color: rgb(255, 255, 255);\n"
+                    "}"
+                )
+                self.Download_PushButton.setFlat(False)
+                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
+                self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
+                self.GraphWidget_D.setMinimumSize(QSize(51, 51))
+                self.GraphWidget_D.setStyleSheet(
+                    "QLabel\n"
+                    "{\n"
+                    "    background-color: rgb(247, 247, 247);\n"
+                    "    border-radius: 4px;\n"
+                    "}"
+                )
+                self.GraphWidget_D.setText("")
+                self.GraphWidget_D.setObjectName("GraphWidget_D")
+                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/OfficialCoreIcon.png"))
+                self.GraphWidget_D.setScaledContents(True)
+                self.IntroductionLabel_D.setText(SubWidgetNames[i])
+                self.Download_PushButton.setText("下载")
+                self.OfficialCoreVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
+        else:
+            pass
 
-        # elif Mode == 1:  # Select Java
-        #     self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
-        # elif Mode == 2:  # Select Server
-        #     self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
-        # if Mode == 1:  # Select
 
         # The function of getting Minecraft server console's output
         # def GetMCConsoleOutput(self):
         #     subprocess.run(['cmd', '/c', 'dir'], stdout=subprocess.PIPE)
         #     output = result.stdout.decode('utf-8')
 
-        # The function of checking update
+    # The function of checking update
 
     def CheckUpdate(self):
-        CheckUpdateUrl = (
-            "https://jsd.cdn.zzko.cn/gh/LxHTT/MCSL2@master/versionInfo.json"
-        )
-        LatestVersionJson = get(CheckUpdateUrl).text
-        LatestVersion = loads(LatestVersionJson)["MCSLLatestVersion"]
-        if float(LatestVersion) > Version:
-            Tip = "检测到新版本:v" + str(LatestVersion)
-            CallMCSL2Dialog(Tip, 0)
-        elif float(LatestVersion) == Version:
-            Tip = "已是最新版本:v" + str(LatestVersion)
-            CallMCSL2Dialog(Tip, 0)
-        elif float(LatestVersion) < Version:
-            Tip = (
-                "开发者是不是(\n\n内部版本号: v"
-                + str(Version)
-                + "\n\n发布版本号: v"
-                + str(LatestVersion)
-            )
-            CallMCSL2Dialog(Tip, 0)
-        else:
-            pass
+        CheckUpdateUrlPrefix = "http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version="
+        CheckUpdateUrl = CheckUpdateUrlPrefix + Version
+        LatestVersionInformation = get(CheckUpdateUrl).text.split("|")
+        print(LatestVersionInformation)
+        if LatestVersionInformation[0] == "true":
+            # New version.
+            UpdateDownloadUrl = LatestVersionInformation[3]
+            GetUpdateContentsUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark"
+            WhatInLatestVersion = get(GetUpdateContentsUrl).text
+            LatestVersionNumber = LatestVersionInformation[4]
+            self.Update_Introduction_Title_Label.setText("这是最新版本"+LatestVersionNumber+"的说明：")
+            self.Update_Introduction_Label.setText(WhatInLatestVersion)
+            self.FunctionsStackedWidget.setCurrentIndex(8)
+        elif LatestVersionInformation[0] == "false":
+            Tip = "已经是最新版！"
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
 
 
 # Customize dialogs
@@ -1329,7 +1320,7 @@ DiskSymbols = []
 SearchStatus = 0
 CorePath = ""
 DownloadSource = 0
-Version = '2.0.0.1'
+Version = '2.0.0'
 
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)

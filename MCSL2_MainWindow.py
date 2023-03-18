@@ -1828,15 +1828,120 @@ class Ui_MCSL2_MainWindow(object):
         )
         self.ChooseJavaScrollArea.setWidget(self.ChooseJavaScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
+        self.UpdatePage = QWidget()
+        self.UpdatePage.setObjectName("UpdatePage")
+        self.Update_Label = QLabel(self.UpdatePage)
+        self.Update_Label.setGeometry(QRect(30, 80, 171, 51))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Update_Label.setFont(font)
+        self.Update_Label.setObjectName("Update_Label")
+        self.Update_Tip1_Widget = QWidget(self.UpdatePage)
+        self.Update_Tip1_Widget.setGeometry(QRect(30, 140, 651, 81))
+        self.Update_Tip1_Widget.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Update_Tip1_Widget.setObjectName("Update_Tip1_Widget")
+        self.Update_Tip1_Label = QLabel(self.Update_Tip1_Widget)
+        self.Update_Tip1_Label.setGeometry(QRect(20, 10, 601, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Update_Tip1_Label.setFont(font)
+        self.Update_Tip1_Label.setAutoFillBackground(False)
+        self.Update_Tip1_Label.setStyleSheet("")
+        self.Update_Tip1_Label.setObjectName("Update_Tip1_Label")
+        self.DoNotUpdate_PushButton = QPushButton(self.UpdatePage)
+        self.DoNotUpdate_PushButton.setGeometry(QRect(340, 490, 101, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.DoNotUpdate_PushButton.setFont(font)
+        self.DoNotUpdate_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.DoNotUpdate_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        self.DoNotUpdate_PushButton.setObjectName("DoNotUpdate_PushButton")
+        self.Update_PushButton = QPushButton(self.UpdatePage)
+        self.Update_PushButton.setGeometry(QRect(450, 490, 231, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(16)
+        self.Update_PushButton.setFont(font)
+        self.Update_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Update_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.Update_PushButton.setFlat(False)
+        self.Update_PushButton.setObjectName("Update_PushButton")
+        self.Update_Introduction_Widget = QWidget(self.UpdatePage)
+        self.Update_Introduction_Widget.setGeometry(QRect(30, 230, 651, 221))
+        self.Update_Introduction_Widget.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.Update_Introduction_Widget.setObjectName("Update_Introduction_Widget")
+        self.Update_Introduction_Title_Label = QLabel(self.Update_Introduction_Widget)
+        self.Update_Introduction_Title_Label.setGeometry(QRect(20, 20, 601, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Update_Introduction_Title_Label.setFont(font)
+        self.Update_Introduction_Title_Label.setAutoFillBackground(False)
+        self.Update_Introduction_Title_Label.setStyleSheet("")
+        self.Update_Introduction_Title_Label.setObjectName("Update_Introduction_Title_Label")
+        self.Update_Introduction_Label = QLabel(self.Update_Introduction_Widget)
+        self.Update_Introduction_Label.setGeometry(QRect(20, 60, 601, 141))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Update_Introduction_Label.setFont(font)
+        self.Update_Introduction_Label.setAutoFillBackground(False)
+        self.Update_Introduction_Label.setStyleSheet("")
+        self.Update_Introduction_Label.setText("")
+        self.Update_Introduction_Label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.Update_Introduction_Label.setObjectName("Update_Introduction_Label")
+        self.FunctionsStackedWidget.addWidget(self.UpdatePage)
         self.Background = QLabel(self.CentralWidget)
         self.Background.setGeometry(QRect(0, 0, 211, 581))
-        self.Background.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(255, 255, 255);\n"
-            "    border-radius: 10px\n"
-            "}"
-        )
+        self.Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 10px\n"
+"}")
         self.Background.setText("")
         self.Background.setObjectName("Background")
         self.Background_2 = QLabel(self.CentralWidget)
@@ -1947,41 +2052,31 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Label.setText(_translate("MCSL2_MainWindow", "关于"))
         self.MCSL2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
         self.MCSL2_Author_Label_1.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
-        self.MCSL2_Author_Label_2.setText(
-            _translate("MCSL2_MainWindow", "Bilibili：\n" "落雪无痕LxHTT")
-        )
-        self.Description_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "    这是对MCSL的Remake。 \n"
-                "\n"
-                "    本来使用C#开发，但由于知识有限，无奈继续\n"
-                "\n"
-                "    使用Python。 \n"
-                "\n"
-                "    MCSL 2 重构UI，使用更加清晰的代码逻辑开发，\n"
-                "\n"
-                "    除了启动、配置、下载以外，添加了诸多拓展工具。 \n"
-                "\n"
-                "    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
-                "\n"
-                "    作者邮箱: lxhtz.dl@qq.com ",
-            )
-        )
+        self.MCSL2_Author_Label_2.setText(_translate("MCSL2_MainWindow", "Bilibili：\n"
+"落雪无痕LxHTT"))
+        self.Description_Label.setText(_translate("MCSL2_MainWindow", "    这是对MCSL的Remake。 \n"
+"\n"
+"    本来使用C#开发，但由于知识有限，无奈继续\n"
+"\n"
+"    使用Python。 \n"
+"\n"
+"    MCSL 2 重构UI，使用更加清晰的代码逻辑开发，\n"
+"\n"
+"    除了启动、配置、下载以外，添加了诸多拓展工具。 \n"
+"\n"
+"    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
+"\n"
+"    作者邮箱: lxhtz.dl@qq.com "))
         self.Check_Update_PushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
-        self.Completed_Choose_Server_PushButton.setText(
-            _translate("MCSL2_MainWindow", "选好了")
-        )
-        self.Choose_Server_Tip1_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
-                "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。",
-            )
-        )
+        self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Choose_Server_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
+"MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
-        self.Completed_Choose_Java_PushButton.setText(
-            _translate("MCSL2_MainWindow", "选好了")
-        )
-        # self.Select_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
+        self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Update_Label.setText(_translate("MCSL2_MainWindow", "程序更新"))
+        self.Update_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2发布新版本啦！你想更新吗？"))
+        self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "丑拒"))
+        self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
+        self.Update_Introduction_Title_Label.setText(_translate("MCSL2_MainWindow", "这是最新版本的说明："))
+

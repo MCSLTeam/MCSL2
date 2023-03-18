@@ -660,7 +660,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -3094,6 +3094,225 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          <width>619</width>
          <height>321</height>
         </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="UpdatePage">
+     <widget class="QLabel" name="Update_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>程序更新</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="Update_Tip1_Widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>651</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <widget class="QLabel" name="Update_Tip1_Label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>601</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>MCSL 2发布新版本啦！你想更新吗？</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="DoNotUpdate_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>490</y>
+        <width>101</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>丑拒</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Update_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>490</y>
+        <width>231</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 10px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 10px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>火速更新</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="Update_Introduction_Widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>230</y>
+        <width>651</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <widget class="QLabel" name="Update_Introduction_Title_Label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>601</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>这是最新版本的说明：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Update_Introduction_Label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>60</y>
+         <width>601</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
       </widget>
      </widget>
