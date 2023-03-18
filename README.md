@@ -22,7 +22,7 @@ ___
 ![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "仓库分析")
 
 这是对旧项目[MCSL](https://github.com/LxHTT/MCSL)的Remake。
-
+___
 原计划使用 C# 开发，
 但由于知识有限，无奈继续使用 Python。
 
