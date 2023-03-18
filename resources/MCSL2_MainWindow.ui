@@ -1896,7 +1896,7 @@ QTabBar::tab:selected
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -2068,6 +2068,11 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>351</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QVBoxLayout" name="SpigotVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </widget>
@@ -2149,6 +2154,11 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>351</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QVBoxLayout" name="PaperVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </widget>
@@ -2230,9 +2240,139 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>351</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QVBoxLayout" name="BCVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </widget>
+      <widget class="QWidget" name="OfficialCoreTab">
+       <attribute name="title">
+        <string>[ 核心 ] 官方</string>
+       </attribute>
+       <widget class="QScrollArea" name="OfficialCoreScrollArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>631</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="OfficialCoreScrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>619</width>
+           <height>351</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QVBoxLayout" name="OfficialCoreVerticalLayout"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="More_Download_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>140</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(227, 227, 227);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>更多</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="ConsolePage">

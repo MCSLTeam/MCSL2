@@ -1151,9 +1151,12 @@ class Ui_MCSL2_MainWindow(object):
         self.SpigotScrollArea.setObjectName("SpigotScrollArea")
         self.SpigotScrollAreaWidgetContents = QWidget()
         self.SpigotScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 351))
-        self.SpigotScrollAreaWidgetContents.setObjectName(
-            "SpigotScrollAreaWidgetContents"
-        )
+        self.SpigotScrollAreaWidgetContents.setObjectName("SpigotScrollAreaWidgetContents")
+        self.verticalLayout = QVBoxLayout(self.SpigotScrollAreaWidgetContents)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.SpigotVerticalLayout = QVBoxLayout()
+        self.SpigotVerticalLayout.setObjectName("SpigotVerticalLayout")
+        self.verticalLayout.addLayout(self.SpigotVerticalLayout)
         self.SpigotScrollArea.setWidget(self.SpigotScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.SpigotTab, "")
         self.PaperTab = QWidget()
@@ -1203,9 +1206,12 @@ class Ui_MCSL2_MainWindow(object):
         self.PaperScrollArea.setObjectName("PaperScrollArea")
         self.PaperScrollAreaWidgetContents = QWidget()
         self.PaperScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 351))
-        self.PaperScrollAreaWidgetContents.setObjectName(
-            "PaperScrollAreaWidgetContents"
-        )
+        self.PaperScrollAreaWidgetContents.setObjectName("PaperScrollAreaWidgetContents")
+        self.verticalLayout_3 = QVBoxLayout(self.PaperScrollAreaWidgetContents)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.PaperVerticalLayout = QVBoxLayout()
+        self.PaperVerticalLayout.setObjectName("PaperVerticalLayout")
+        self.verticalLayout_3.addLayout(self.PaperVerticalLayout)
         self.PaperScrollArea.setWidget(self.PaperScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.PaperTab, "")
         self.BungeeCordTab = QWidget()
@@ -1259,11 +1265,90 @@ class Ui_MCSL2_MainWindow(object):
         self.BungeeCordScrollArea.setObjectName("BungeeCordScrollArea")
         self.BungeeCordScrollAreaWidgetContents = QWidget()
         self.BungeeCordScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 351))
-        self.BungeeCordScrollAreaWidgetContents.setObjectName(
-            "BungeeCordScrollAreaWidgetContents"
-        )
+        self.BungeeCordScrollAreaWidgetContents.setObjectName("BungeeCordScrollAreaWidgetContents")
+        self.verticalLayout_4 = QVBoxLayout(self.BungeeCordScrollAreaWidgetContents)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.BCVerticalLayout = QVBoxLayout()
+        self.BCVerticalLayout.setObjectName("BCVerticalLayout")
+        self.verticalLayout_4.addLayout(self.BCVerticalLayout)
         self.BungeeCordScrollArea.setWidget(self.BungeeCordScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.BungeeCordTab, "")
+        self.OfficialCoreTab = QWidget()
+        self.OfficialCoreTab.setObjectName("OfficialCoreTab")
+        self.OfficialCoreScrollArea = QScrollArea(self.OfficialCoreTab)
+        self.OfficialCoreScrollArea.setGeometry(QRect(10, 10, 631, 351))
+        self.OfficialCoreScrollArea.viewport().setProperty("cursor", QCursor(Qt.ArrowCursor))
+        self.OfficialCoreScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.OfficialCoreScrollArea.setFrameShape(QFrame.NoFrame)
+        self.OfficialCoreScrollArea.setFrameShadow(QFrame.Plain)
+        self.OfficialCoreScrollArea.setLineWidth(0)
+        self.OfficialCoreScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.OfficialCoreScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.OfficialCoreScrollArea.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.OfficialCoreScrollArea.setWidgetResizable(True)
+        self.OfficialCoreScrollArea.setObjectName("OfficialCoreScrollArea")
+        self.OfficialCoreScrollAreaWidgetContents = QWidget()
+        self.OfficialCoreScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 351))
+        self.OfficialCoreScrollAreaWidgetContents.setObjectName("OfficialCoreScrollAreaWidgetContents")
+        self.verticalLayout_5 = QVBoxLayout(self.OfficialCoreScrollAreaWidgetContents)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.OfficialCoreVerticalLayout = QVBoxLayout()
+        self.OfficialCoreVerticalLayout.setObjectName("OfficialCoreVerticalLayout")
+        self.verticalLayout_5.addLayout(self.OfficialCoreVerticalLayout)
+        self.OfficialCoreScrollArea.setWidget(self.OfficialCoreScrollAreaWidgetContents)
+        self.DownloadSwitcher_TabWidget.addTab(self.OfficialCoreTab, "")
+        self.More_Download_PushButton = QPushButton(self.DownloadPage)
+        self.More_Download_PushButton.setGeometry(QRect(640, 140, 51, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.More_Download_PushButton.setFont(font)
+        self.More_Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.More_Download_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        self.More_Download_PushButton.setObjectName("More_Download_PushButton")
         self.FunctionsStackedWidget.addWidget(self.DownloadPage)
         self.ConsolePage = QWidget()
         self.ConsolePage.setObjectName("ConsolePage")
@@ -1849,22 +1934,12 @@ class Ui_MCSL2_MainWindow(object):
         )
         self.GitHub_radioButton.setText(_translate("MCSL2_MainWindow", "GitHub"))
         self.GHProxy_radioButton.setText(_translate("MCSL2_MainWindow", "GHProxy"))
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab),
-            _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] Paper"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"),
-        )
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab), _translate("MCSL2_MainWindow", "[ 核心 ] Paper"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab), _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab), _translate("MCSL2_MainWindow", "[ 核心 ] 官方"))
+        self.More_Download_PushButton.setText(_translate("MCSL2_MainWindow", "更多"))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))
