@@ -660,7 +660,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>8</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -1896,7 +1896,7 @@ QTabBar::tab:selected
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -3025,7 +3025,7 @@ QPushButton:pressed
        <rect>
         <x>40</x>
         <y>150</y>
-        <width>631</width>
+        <width>641</width>
         <height>321</height>
        </rect>
       </property>
@@ -3091,10 +3091,15 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>619</width>
+         <width>629</width>
          <height>321</height>
         </rect>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QVBoxLayout" name="ChooseJavaScrollAreaVerticalLayout"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </widget>

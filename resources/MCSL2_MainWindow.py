@@ -1565,7 +1565,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Completed_Choose_Java_PushButton.setFlat(False)
         self.Completed_Choose_Java_PushButton.setObjectName("Completed_Choose_Java_PushButton")
         self.ChooseJavaScrollArea = QtWidgets.QScrollArea(self.ChooseJavaPage)
-        self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 631, 321))
+        self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 641, 321))
         self.ChooseJavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseJavaScrollArea.setStyleSheet("QScrollArea{\n"
 "    border: 0px solid;\n"
@@ -1607,8 +1607,13 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseJavaScrollArea.setWidgetResizable(True)
         self.ChooseJavaScrollArea.setObjectName("ChooseJavaScrollArea")
         self.ChooseJavaScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 321))
+        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 321))
         self.ChooseJavaScrollAreaWidgetContents.setObjectName("ChooseJavaScrollAreaWidgetContents")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.ChooseJavaScrollAreaWidgetContents)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.ChooseJavaScrollAreaVerticalLayout = QtWidgets.QVBoxLayout()
+        self.ChooseJavaScrollAreaVerticalLayout.setObjectName("ChooseJavaScrollAreaVerticalLayout")
+        self.verticalLayout_6.addLayout(self.ChooseJavaScrollAreaVerticalLayout)
         self.ChooseJavaScrollArea.setWidget(self.ChooseJavaScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
         self.UpdatePage = QtWidgets.QWidget()
@@ -1743,8 +1748,8 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
 
         self.retranslateUi(MCSL2_MainWindow)
-        self.FunctionsStackedWidget.setCurrentIndex(8)
-        self.DownloadSwitcher_TabWidget.setCurrentIndex(4)
+        self.FunctionsStackedWidget.setCurrentIndex(0)
+        self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):

@@ -1816,16 +1816,17 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseJavaScrollArea.setLineWidth(0)
         self.ChooseJavaScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.ChooseJavaScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.ChooseJavaScrollArea.setSizeAdjustPolicy(
-            QAbstractScrollArea.AdjustToContents
-        )
+        self.ChooseJavaScrollArea.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.ChooseJavaScrollArea.setWidgetResizable(True)
         self.ChooseJavaScrollArea.setObjectName("ChooseJavaScrollArea")
         self.ChooseJavaScrollAreaWidgetContents = QWidget()
-        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 321))
-        self.ChooseJavaScrollAreaWidgetContents.setObjectName(
-            "ChooseJavaScrollAreaWidgetContents"
-        )
+        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 629, 321))
+        self.ChooseJavaScrollAreaWidgetContents.setObjectName("ChooseJavaScrollAreaWidgetContents")
+        self.verticalLayout_6 = QVBoxLayout(self.ChooseJavaScrollAreaWidgetContents)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.ChooseJavaScrollAreaVerticalLayout = QVBoxLayout()
+        self.ChooseJavaScrollAreaVerticalLayout.setObjectName("ChooseJavaScrollAreaVerticalLayout")
+        self.verticalLayout_6.addLayout(self.ChooseJavaScrollAreaVerticalLayout)
         self.ChooseJavaScrollArea.setWidget(self.ChooseJavaScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
         self.UpdatePage = QWidget()
