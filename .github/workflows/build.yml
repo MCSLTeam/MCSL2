@@ -83,7 +83,7 @@ jobs:
         
       - name: Compress Artifacts
         run: |
-          for name in `ls`
+          for name in ./*
             do 7z a "${name}.zip" "./${name}/*"
           done
 
