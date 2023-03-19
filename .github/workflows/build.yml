@@ -67,7 +67,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "2.0"
-          # Newline-delimited list of path globs for asset files to upload
+          tag_name: ${{ github.GITHUB_REF }}
           files: |
             build/*.exe
             build/*.bin
