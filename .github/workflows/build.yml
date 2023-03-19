@@ -62,14 +62,4 @@ jobs:
             build/*.exe
             build/*.bin
             build/*.app/**/*
-      
-      - name: Set up a release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_GH_ACCESS_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          prerelease: false
-          draft: false
 
