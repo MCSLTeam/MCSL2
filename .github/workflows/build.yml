@@ -67,12 +67,15 @@ jobs:
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v3
+        with:
+          path: '~/dl'
         
-      # - name: Rename Artifacts
-      #   run: |
-      #     for name in `ls *`;
-      #       do mv $name ${name}.zip;
-      #     done
+      - name: Rename Artifacts
+        run: |
+          cd ~/dl
+          for name in `ls *`;
+            do mv $name ${name}.zip;
+          done
 
       - name: Get Time
         run: >
@@ -85,4 +88,4 @@ jobs:
           automatic_release_tag: ${{ env.TIME }}
           prerelease: true
           title: Auto Release ${{ env.TIME }}
-          files: '*.*'
+          files: '~/dl/*'
