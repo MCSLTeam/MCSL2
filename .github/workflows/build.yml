@@ -64,15 +64,12 @@ jobs:
             build/*.app/**/*
       
       - name: Set up a release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GH_ACCESS_TOKEN }}
         with:
-          name: "2.0"
-          tag_name: ${{ github.GITHUB_REF }}
-          files: |
-            build/*.exe
-            build/*.bin
-            build/*.app/**/*
-          repository: LxHTT/MCSL2
-          token: ${{ secrets.RELEASE_GH_ACCESS_TOKEN }}
-          generate_release_notes: "released by GitHub Actions."
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          prerelease: false
+          draft: false
 
