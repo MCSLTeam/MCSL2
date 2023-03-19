@@ -3,3 +3,5 @@ poetry.lock
 .idea/**
 PackagedProcess/**
 ParseOneDriveLink/**
+Servers/**
+MCSL2/**
