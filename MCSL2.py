@@ -85,7 +85,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
         self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
         self.Download_Core_PushButton.clicked.connect(self.ToDownloadPage)
-        self.Completed_Choose_Java_PushButton.clicked.connect(
+        self.Choose_Java_Back_PushButton.clicked.connect(
             self.ShowFoundedJavaList_Back
         )
         self.Founded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
@@ -301,7 +301,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
 
     def SaveMinecraftServer(self):
-        global CorePath
+        global CorePath, JavaPath
         """
         0 -> Illegal
         1 -> OK
@@ -313,16 +313,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         else:
             CoreStatus = 0
 
-        JavaStatus = 1
-        # # The Java path parser
-        # if self.Select_Java_ComboBox.currentText() != "  请选择":
-        #     if len(JavaPaths) != 0:
-        #         JavaPath = JavaPaths[self.Select_Java_ComboBox.currentIndex()]
-        #         JavaStatus = 1
-        #     else:
-        #         JavaStatus = 0
-        # else:
-        #     JavaStatus = 0
+        # The Java path parser
+        if JavaPath != 0:
+            if len(JavaPaths) != 0:
+                JavaStatus = 1
+            else:
+                JavaStatus = 0
+        else:
+            JavaStatus = 0
 
         # The min memory parser
         if self.MinMemory_LineEdit.text() != "":
@@ -674,14 +672,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
         elif CanCreate == 1:
             CallMCSL2Dialog(Tip, 0)
-            ServerFolderPath = ".\\Server\\" + ServerName
+            ServerFolderPath = "./Servers/" + ServerName
             mkdir(ServerFolderPath)
             copy(CorePath, ServerFolderPath)
             ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
                                 'max_memory': MaxMemory}
             ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
-            ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
-            with open(ConfigPath, 'w+', encoding='utf-8') as SaveConfig:
+            print(ServerConfigJson)
+            ConfigPath = "Servers//" + ServerName + "//" + "MCSL2ServerConfig.json"
+            with open(ConfigPath, 'w+') as SaveConfig:
                 SaveConfig.write(ServerConfigJson)
                 SaveConfig.close()
             SaveConfig = open(ConfigPath, 'w+')
@@ -693,6 +692,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             NameStatus = 0
             JavaStatus = 0
             CoreStatus = 0
+            JavaPath = 0
             CallMCSL2Dialog(Tip, 0)
         else:
             Tip = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
@@ -1296,10 +1296,16 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
 
     def ParseSrollAreaItemButtons(self):
+        global ScrollAreaStatus
         SenderButton = str(self.sender().objectName()).split("_PushButton")
-        SelectDownloadItemIndexNumber = SenderButton[1]
+        SelectDownloadItemIndexNumber = int(SenderButton[1])
         if self.FunctionsStackedWidget.currentIndex() == 7:
-            pass
+            self.ChooseJava(JavaIndex=SelectDownloadItemIndexNumber)
+
+    def ChooseJava(self, JavaIndex):
+        global JavaPaths, JavaPath
+        JavaPath = JavaPaths[JavaIndex]
+        self.FunctionsStackedWidget.setCurrentIndex(1)
 
     # The function of checking update
     def CheckUpdate(self):
@@ -1411,6 +1417,7 @@ def DecodeDownloadJsons(RefreshUrl):
 
 
 # Start MCSL
+JavaPath = 0
 JavaPaths = []
 DiskSymbols = []
 SearchStatus = 0

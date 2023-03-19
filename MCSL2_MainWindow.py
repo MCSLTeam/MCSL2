@@ -1749,68 +1749,64 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Java_Label.setFont(font)
         self.Choose_Java_Label.setObjectName("Choose_Java_Label")
-        self.Completed_Choose_Java_PushButton = QPushButton(self.ChooseJavaPage)
-        self.Completed_Choose_Java_PushButton.setGeometry(QRect(560, 510, 121, 51))
+        self.Choose_Java_Back_PushButton = QPushButton(self.ChooseJavaPage)
+        self.Choose_Java_Back_PushButton.setGeometry(QRect(200, 90, 101, 41))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(14)
-        self.Completed_Choose_Java_PushButton.setFont(font)
-        self.Completed_Choose_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Completed_Choose_Java_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 8px;\n"
-            "    color: rgb(255, 255, 255);\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(0, 107, 212);\n"
-            "    border-radius: 8px;\n"
-            "    color: rgb(255, 255, 255);\n"
-            "}"
-        )
-        self.Completed_Choose_Java_PushButton.setFlat(False)
-        self.Completed_Choose_Java_PushButton.setObjectName(
-            "Completed_Choose_Java_PushButton"
-        )
+        self.Choose_Java_Back_PushButton.setFont(font)
+        self.Choose_Java_Back_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Choose_Java_Back_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        self.Choose_Java_Back_PushButton.setFlat(False)
+        self.Choose_Java_Back_PushButton.setObjectName("Choose_Java_Back_PushButton")
         self.ChooseJavaScrollArea = QScrollArea(self.ChooseJavaPage)
-        self.ChooseJavaScrollArea.setGeometry(QRect(40, 150, 641, 351))
-        self.ChooseJavaScrollArea.viewport().setProperty(
-            "cursor", QCursor(Qt.ArrowCursor)
-        )
-        self.ChooseJavaScrollArea.setStyleSheet(
-            "QScrollArea{\n"
-            "    border: 0px solid;\n"
-            "    border-right-color: #dcdbdc;\n"
-            "    background-color: transparent;\n"
-            "}\n"
-            "QScrollBar:vertical {\n"
-            "    border: none;\n"
-            "    background: transparent;\n"
-            "    width: 12px;\n"
-            "}\n"
-            "QScrollBar::handle:vertical {\n"
-            "    background: rgb(220, 220, 220);\n"
-            "    min-height: 20px;\n"
-            "    border-radius: 5px;\n"
-            "}\n"
-            "QScrollBar::add-line:vertial \n"
-            "{    \n"
-            "    height: 0px;\n"
-            "}\n"
-            "QScrollBar::sub-line:vertial \n"
-            "{    \n"
-            "    height: 0px;\n"
-            "}\n"
-            "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-            "{    \n"
-            "    height: 0px;\n"
-            "}\n"
-            "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-            "    background: none;\n"
-            "}"
-        )
+        self.ChooseJavaScrollArea.setGeometry(QRect(40, 150, 641, 401))
+        self.ChooseJavaScrollArea.viewport().setProperty("cursor", QCursor(Qt.ArrowCursor))
+        self.ChooseJavaScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial \n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{    \n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.ChooseJavaScrollArea.setFrameShape(QFrame.NoFrame)
         self.ChooseJavaScrollArea.setFrameShadow(QFrame.Plain)
         self.ChooseJavaScrollArea.setLineWidth(0)
@@ -1820,7 +1816,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseJavaScrollArea.setWidgetResizable(True)
         self.ChooseJavaScrollArea.setObjectName("ChooseJavaScrollArea")
         self.ChooseJavaScrollAreaWidgetContents = QWidget()
-        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 629, 351))
+        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 629, 401))
         self.ChooseJavaScrollAreaWidgetContents.setObjectName("ChooseJavaScrollAreaWidgetContents")
         self.verticalLayout_6 = QVBoxLayout(self.ChooseJavaScrollAreaWidgetContents)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -1972,27 +1968,18 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "配置服务器"))
         self.MCSL2_Title_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
-        self.MCSL2_Title_Author_Label.setText(
-            _translate("MCSL2_MainWindow", "by LxHTT")
-        )
+        self.MCSL2_Title_Author_Label.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
         self.Download_Page_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.Server_Console_Page_PushButton.setText(
-            _translate("MCSL2_MainWindow", "服务器控制台")
-        )
+        self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "更多工具"))
         self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "关于"))
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
-        self.HomeTip1_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "如何搭建一个Java版Minecraft服务器？\n"
-                "1.准备好Java、核心、电脑\n"
-                "（提示：可使用本程序下载）\n"
-                "2.配置参数（本程序“配置服务器”页）\n"
-                "3. 开启服务器。将服务器IP告诉玩家。",
-            )
-        )
+        self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "如何搭建一个Java版Minecraft服务器？\n"
+"1.准备好Java、核心、电脑\n"
+"（提示：可使用本程序下载）\n"
+"2.配置参数（本程序“配置服务器”页）\n"
+"3. 开启服务器。将服务器IP告诉玩家。"))
         self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
         self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
@@ -2000,44 +1987,30 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_Label.setText(_translate("MCSL2_MainWindow", "配置服务器"))
         self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
-        self.ConfigTip1_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "一个服务器最基础的三个部件\n" "1.存放的文件夹路径\n" "2.服务器核心\n" "3.Java路径",
-            )
-        )
-        self.ConfigTip2_Label.setText(
-            _translate(
-                "MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n" "以服务器名称命名的文件夹\n" "以存储服务器文件。"
-            )
-        )
+        self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
+"1.存放的文件夹路径\n"
+"2.服务器核心\n"
+"3.Java路径"))
+        self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n"
+"以服务器名称命名的文件夹\n"
+"以存储服务器文件。"))
         self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
-        self.Manual_Import_Core_PushButton.setText(
-            _translate("MCSL2_MainWindow", "手动导入")
-        )
+        self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
-        self.ConfigTip3_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "MCSL 2会把核心复制到文件夹中。当然，\n" "你也可以自己复制，并重命名为server.jar。",
-            )
-        )
+        self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
+"你也可以自己复制，并重命名为server.jar。"))
         self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
         self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
         self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
-        self.Founded_Java_List_PushButton.setText(
-            _translate("MCSL2_MainWindow", "Java列表")
-        )
+        self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
         self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
         self.Gitee_radioButton.setText(_translate("MCSL2_MainWindow", "Gitee"))
-        self.SharePoint_radioButton.setText(
-            _translate("MCSL2_MainWindow", "SharePoint")
-        )
+        self.SharePoint_radioButton.setText(_translate("MCSL2_MainWindow", "SharePoint"))
         self.GitHub_radioButton.setText(_translate("MCSL2_MainWindow", "GitHub"))
         self.GHProxy_radioButton.setText(_translate("MCSL2_MainWindow", "GHProxy"))
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
@@ -2074,7 +2047,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
 "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
-        self.Completed_Choose_Java_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Choose_Java_Back_PushButton.setText(_translate("MCSL2_MainWindow", "返回"))
         self.Update_Label.setText(_translate("MCSL2_MainWindow", "程序更新"))
         self.Update_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2发布新版本啦！你想更新吗？"))
         self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "丑拒"))

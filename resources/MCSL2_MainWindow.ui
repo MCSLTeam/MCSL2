@@ -660,7 +660,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -2998,13 +2998,13 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <string>选择Java</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Completed_Choose_Java_PushButton">
+     <widget class="QPushButton" name="Choose_Java_Back_PushButton">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>510</y>
-        <width>121</width>
-        <height>51</height>
+        <x>200</x>
+        <y>90</y>
+        <width>101</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -3019,19 +3019,22 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
-	background-color: rgb(0, 120, 212);
-	border-radius: 8px;
-	color: rgb(255, 255, 255);
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(227, 227, 227);
+	border-radius: 7px;
 }
 QPushButton:pressed
 {
-    background-color: rgb(0, 107, 212);
-	border-radius: 8px;
-    color: rgb(255, 255, 255);
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
 }</string>
       </property>
       <property name="text">
-       <string>选好了</string>
+       <string>返回</string>
       </property>
       <property name="flat">
        <bool>false</bool>
@@ -3043,7 +3046,7 @@ QPushButton:pressed
         <x>40</x>
         <y>150</y>
         <width>641</width>
-        <height>351</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="cursor" stdset="0">
@@ -3109,7 +3112,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          <x>0</x>
          <y>0</y>
          <width>629</width>
-         <height>351</height>
+         <height>401</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
