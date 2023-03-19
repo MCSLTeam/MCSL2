@@ -62,4 +62,21 @@ jobs:
             build/*.exe
             build/*.bin
             build/*.app/**/*
+    
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        
+      - name: Get Time
+        run: >
+          echo "TIME=${date +%Y%m%d%H%M%S}" >> $GITHUB_ENV
 
+      - name: Create GitHub Release
+        uses: pipe-cd/actions-gh-release@v2.6.0
+        with:
+          tag: ${{ env.TIME }}
+          title: Auto Release ${{ env.TIME }}
+          prerelease: true
+          release_file: ./**
