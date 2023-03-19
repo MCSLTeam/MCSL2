@@ -65,7 +65,7 @@ jobs:
 #     needs:
 #       - build
     steps:
-      - name: Install Rename
+      - name: Install Tools
         run: sudo apt install rename p7zip-full -y
 
 #       - name: Download Artifact
@@ -74,7 +74,9 @@ jobs:
       - name: Write File
         run: |
           echo "testfile" > test.txt
-          7z a -tzip test test.txt 
+          7z a test.zip test.txt
+          rm test.txt
+          mv test.zip test
         
       - name: Rename Artifacts
         run: rename 's/$/\.zip/' *
