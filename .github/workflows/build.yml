@@ -5,90 +5,95 @@ on: [push, workflow_dispatch]
 permissions: write-all
 
 jobs:
-#   build:
 
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         os: [macos-latest, ubuntu-latest, windows-latest]
+  build:
+    strategy:
+      fail-fast: false
 
-#     runs-on: ${{ matrix.os }}
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
 
-#     steps:
-#       - name: Check-out repository
-#         uses: actions/checkout@v3
+    runs-on: ${{ matrix.os }}
 
-#       - name: Setup Python
-#         uses: actions/setup-python@v4
-#         with:
-#           python-version: '3.9'
-#           architecture: 'x64'
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v3
 
-#       - name: Install Necessary Packages
-#         run: |
-#           python -m pip install poetry pip setuptools tomlkit imageio -U
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
 
-#       - name: Install Deps for Linux
-#         if: runner.os == 'Linux'
-#         run: |
-#           sudo apt-get install -y libfuse2
+      - name: Install Necessary Packages
+        run: |
+          python -m pip install poetry pip setuptools tomlkit imageio -U
 
-#       # todo: 使用 pdm
-#       # win 上 poetry 的奇怪 bug 导致 poetry install 装不上依赖
-#       - name: Install Project Deps
-#         run: |
-#           python .github/utils/install_deps.py
+      - name: Install Deps for Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y libfuse2
 
-#       - name: Build Executable
-#         run: >
-#           python -m nuitka
-#           --standalone --enable-plugin=pyqt5 --onefile
-#           --output-dir=build
-#           --show-progress --assume-yes-for-downloads
-#           --disable-console --macos-create-app-bundle
-#           --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
-#           --windows-product-name=MCSL2 --windows-file-version=2.0.0 --windows-product-version=2.0.0
-#           --windows-file-description="A Minecraft Server Launcher"
-#           MCSL2.py
+      # todo: 使用 pdm
+      # win 上 poetry 的奇怪 bug 导致 poetry install 装不上依赖
+      - name: Install Project Deps
+        run: |
+          python .github/utils/install_deps.py
 
-#       - name: Upload Artifacts
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: ${{ runner.os }} Build
-#           path: |
-#             build/*.exe
-#             build/*.bin
-#             build/*.app/**/*
+      - name: Build Executable
+        run: >
+          python -m nuitka
+          --standalone --enable-plugin=pyqt5 --onefile
+          --output-dir=build
+          --show-progress --assume-yes-for-downloads
+          --disable-console --macos-create-app-bundle
+          --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
+          --windows-product-name=MCSL2 --windows-file-version=2.0.0 --windows-product-version=2.0.0
+          --windows-file-description="A Minecraft Server Launcher"
+          MCSL2.py
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }} Build
+          path: |
+            build/*.exe
+            build/*.bin
+            build/*.app/**/*
 
   release:
     runs-on: ubuntu-latest
-#     needs:
-#       - build
+
+    needs:
+      - build
+
     steps:
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Asia/Shanghai"
+  
       - name: Install Tools
-        run: sudo apt install rename p7zip-full -y
+        run: sudo apt install rename -y
 
-#       - name: Download Artifact
-#         uses: actions/download-artifact@v3
-
-      - name: Write File
-        run: |
-          echo "testfile" > test.txt
-          7z a test.zip test.txt
-          rm test.txt
-          mv test.zip test
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
         
       - name: Rename Artifacts
         run: rename 's/$/\.zip/' *
 
       - name: Get Time
-        run: echo "TIME=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+        run: |
+          echo "TAG_TIME=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+          echo "DISPLAY_TIME=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{ env.TIME }}
+          automatic_release_tag: ${{ env.TAG_TIME }}
           prerelease: true
-          title: Auto Release ${{ env.TIME }}
+          title: Auto Release ${{ env.DISPLAY_TIME }}
           files: '*'
