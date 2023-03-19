@@ -660,7 +660,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -1984,7 +1984,24 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <layout class="QVBoxLayout" name="JavaVerticalLayout"/>
+           <layout class="QVBoxLayout" name="JavaVerticalLayout">
+            <item>
+             <widget class="QListView" name="JavaListView">
+              <property name="autoScroll">
+               <bool>false</bool>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="showDropIndicator" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -2985,7 +3002,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <property name="geometry">
        <rect>
         <x>560</x>
-        <y>490</y>
+        <y>510</y>
         <width>121</width>
         <height>51</height>
        </rect>
@@ -3026,7 +3043,7 @@ QPushButton:pressed
         <x>40</x>
         <y>150</y>
         <width>641</width>
-        <height>321</height>
+        <height>351</height>
        </rect>
       </property>
       <property name="cursor" stdset="0">
@@ -3092,7 +3109,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          <x>0</x>
          <y>0</y>
          <width>629</width>
-         <height>321</height>
+         <height>351</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">

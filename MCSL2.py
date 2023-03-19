@@ -677,17 +677,22 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             ServerFolderPath = ".\\Server\\" + ServerName
             mkdir(ServerFolderPath)
             copy(CorePath, ServerFolderPath)
-            # ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
-            #                     'max_memory': MaxMemory}
-            # ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
-            # ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
-            # with open(ConfigPath, 'w+', encoding='utf-8') as SaveConfig:
-            #     SaveConfig.write(ServerConfigJson)
-            #     SaveConfig.close()
-            # SaveConfig = open(ConfigPath, 'w+')
-            # SaveConfig.write(ServerConfigJson)
-            # SaveConfig.close()
+            ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
+                                'max_memory': MaxMemory}
+            ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
+            ConfigPath = ".\\" + ServerName + ".\\" + "MCSL2ServerConfig.json"
+            with open(ConfigPath, 'w+', encoding='utf-8') as SaveConfig:
+                SaveConfig.write(ServerConfigJson)
+                SaveConfig.close()
+            SaveConfig = open(ConfigPath, 'w+')
+            SaveConfig.write(ServerConfigJson)
+            SaveConfig.close()
             Tip = "服务器部署完毕！"
+            MinMemStatus = 0
+            MaxMemStatus = 0
+            NameStatus = 0
+            JavaStatus = 0
+            CoreStatus = 0
             CallMCSL2Dialog(Tip, 0)
         else:
             Tip = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
@@ -736,8 +741,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue6.setVisible(False)
         self.RefreshDownloadType()
 
-        # The function of refreshing download type.
-
+    # The function of refreshing download type.
     def RefreshDownloadType(self):
         global DownloadSource, DownloadUrls
         ParseDownloaderAPIUrlSS = ParseDownloaderAPIUrl(
@@ -821,7 +825,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "}"
                 )
                 self.Download_PushButton.setFlat(False)
-                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.Download_PushButton.setObjectName("Download_PushButton" + str(i))
                 self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
                 self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
                 self.GraphWidget_D.setMinimumSize(QSize(51, 51))
@@ -838,7 +842,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
-                # self.Download_PushButton.clicked.connect(print(1))
+                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
                 self.JavaVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         elif GraphType == 1:
             for i in range(len(SubWidgetNames)):
@@ -910,7 +914,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "}"
                 )
                 self.Download_PushButton.setFlat(False)
-                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.Download_PushButton.setObjectName("Download_PushButton" + str(i))
                 self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
                 self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
                 self.GraphWidget_D.setMinimumSize(QSize(51, 51))
@@ -927,7 +931,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
-                # self.Download_PushButton.clicked.connect()
+                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
                 self.SpigotVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         elif GraphType == 2:
             for i in range(len(SubWidgetNames)):
@@ -999,7 +1003,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "}"
                 )
                 self.Download_PushButton.setFlat(False)
-                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.Download_PushButton.setObjectName("Download_PushButton" + str(i))
                 self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
                 self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
                 self.GraphWidget_D.setMinimumSize(QSize(51, 51))
@@ -1087,7 +1091,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "}"
                 )
                 self.Download_PushButton.setFlat(False)
-                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.Download_PushButton.setObjectName("Download_PushButton" + str(i))
                 self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
                 self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
                 self.GraphWidget_D.setMinimumSize(QSize(51, 51))
@@ -1104,6 +1108,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
+                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
                 self.BCVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         elif GraphType == 4:
             for i in range(len(SubWidgetNames)):
@@ -1175,7 +1180,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "}"
                 )
                 self.Download_PushButton.setFlat(False)
-                self.Download_PushButton.setObjectName("Download_PushButton")
+                self.Download_PushButton.setObjectName("Download_PushButton" + str(i))
                 self.GraphWidget_D = QLabel(self.MCSL2_SubWidget_Download)
                 self.GraphWidget_D.setGeometry(QRect(30, 10, 51, 51))
                 self.GraphWidget_D.setMinimumSize(QSize(51, 51))
@@ -1192,6 +1197,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
+                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
                 self.OfficialCoreVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         else:
             pass
@@ -1244,7 +1250,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 "}"
             )
             self.Select_PushButton.setFlat(False)
-            self.Select_PushButton.setObjectName("Select_PushButton")
+            self.Select_PushButton.setObjectName("Select_PushButton" + str(i))
             self.IntroductionWidget_S = QWidget(self.MCSL2_SubWidget_Select)
             self.IntroductionWidget_S.setGeometry(QRect(100, 10, 421, 51))
             self.IntroductionWidget_S.setMinimumSize(QSize(421, 51))
@@ -1285,14 +1291,21 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.GraphWidget_S.setScaledContents(True)
             self.IntroductionLabel_S.setText(JavaPaths[i])
             self.Select_PushButton.setText("选择")
+            self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+
             self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
+
+    def ParseSrollAreaItemButtons(self):
+        SenderButton = str(self.sender().objectName()).split("_PushButton")
+        SelectDownloadItemIndexNumber = SenderButton[1]
+        if self.FunctionsStackedWidget.currentIndex() == 7:
+            pass
 
     # The function of checking update
     def CheckUpdate(self):
         CheckUpdateUrlPrefix = "http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version="
         CheckUpdateUrl = CheckUpdateUrlPrefix + Version
         LatestVersionInformation = get(CheckUpdateUrl).text.split("|")
-        print(LatestVersionInformation)
         if LatestVersionInformation[0] == "true":
             # New version.
             UpdateDownloadUrl = LatestVersionInformation[3]
@@ -1394,7 +1407,6 @@ def DecodeDownloadJsons(RefreshUrl):
         FileFormats.insert(0, FileFormat)
         FileName = i["filename"]
         FileNames.insert(0, FileName)
-    print(SubWidgetNames, DownloadUrls, FileNames, FileFormats)
     return SubWidgetNames, DownloadUrls, FileNames, FileFormats
 
 
@@ -1404,7 +1416,7 @@ DiskSymbols = []
 SearchStatus = 0
 CorePath = ""
 DownloadSource = 0
-Version = '2.0.0'
+Version = '2.0.1'
 
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)

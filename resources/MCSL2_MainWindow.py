@@ -1544,7 +1544,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Java_Label.setFont(font)
         self.Choose_Java_Label.setObjectName("Choose_Java_Label")
         self.Completed_Choose_Java_PushButton = QtWidgets.QPushButton(self.ChooseJavaPage)
-        self.Completed_Choose_Java_PushButton.setGeometry(QtCore.QRect(560, 490, 121, 51))
+        self.Completed_Choose_Java_PushButton.setGeometry(QtCore.QRect(560, 510, 121, 51))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(14)
@@ -1565,7 +1565,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Completed_Choose_Java_PushButton.setFlat(False)
         self.Completed_Choose_Java_PushButton.setObjectName("Completed_Choose_Java_PushButton")
         self.ChooseJavaScrollArea = QtWidgets.QScrollArea(self.ChooseJavaPage)
-        self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 641, 321))
+        self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 641, 351))
         self.ChooseJavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseJavaScrollArea.setStyleSheet("QScrollArea{\n"
 "    border: 0px solid;\n"
@@ -1607,7 +1607,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseJavaScrollArea.setWidgetResizable(True)
         self.ChooseJavaScrollArea.setObjectName("ChooseJavaScrollArea")
         self.ChooseJavaScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 321))
+        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 351))
         self.ChooseJavaScrollAreaWidgetContents.setObjectName("ChooseJavaScrollAreaWidgetContents")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.ChooseJavaScrollAreaWidgetContents)
         self.verticalLayout_6.setObjectName("verticalLayout_6")

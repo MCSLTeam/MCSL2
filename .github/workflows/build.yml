@@ -52,7 +52,7 @@ jobs:
           --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
           --windows-product-name=MCSL2 --windows-file-version=2.0.0 --windows-product-version=2.0.0
           --windows-file-description="A Minecraft Server Launcher"
-          main.py
+          MCSL2.py
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3

@@ -2,3 +2,4 @@ venv/**
 poetry.lock
 .idea/**
 PackagedProcess/**
+ParseOneDriveLink/**
