@@ -72,10 +72,7 @@ jobs:
         
       - name: Rename Artifacts
         run: |
-          cd ~/dl
-          for name in `ls`;
-            do mv $name ${name}.zip;
-          done
+          rename 's/$/\.zip/' ~/dl/*
 
       - name: Get Time
         run: >
