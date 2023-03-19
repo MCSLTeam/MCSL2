@@ -65,18 +65,19 @@ jobs:
     needs:
       - build
     steps:
+      - name: Install Rename
+        run: sudo apt install rename
+
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
           path: '~/dl'
         
       - name: Rename Artifacts
-        run: |
-          rename 's/$/\.zip/' ~/dl/*
+        run: rename 's/$/\.zip/' ~/dl/*
 
       - name: Get Time
-        run: >
-          echo "TIME=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+        run: echo "TIME=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: "marvinpinto/action-automatic-releases@latest"
