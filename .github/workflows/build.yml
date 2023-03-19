@@ -80,6 +80,8 @@ jobs:
 
       - name: Download Artifact
         uses: actions/download-artifact@v3
+        with:
+          path: ./
         
       - name: Rename Artifacts
         run: rename 's/$/\.zip/' *
