@@ -76,15 +76,16 @@ jobs:
           timezoneLinux: "Asia/Shanghai"
   
       - name: Install Tools
-        run: sudo apt install rename -y
+        run: sudo apt install p7zip-full -y
 
-      - name: Download Artifact
+      - name: Download Artifacts
         uses: actions/download-artifact@v3
-        with:
-          path: ./
         
-      - name: Rename Artifacts
-        run: rename 's/$/\.zip/' *
+      - name: Compress Artifacts
+        run: |
+          for name in `ls`
+            do 7z a "${name}.zip" "./${name}/*"
+          done
 
       - name: Get Time
         run: |
@@ -98,4 +99,4 @@ jobs:
           automatic_release_tag: ${{ env.TAG_TIME }}
           prerelease: true
           title: Auto Release ${{ env.DISPLAY_TIME }}
-          files: '*'
+          files: '*.zip'
