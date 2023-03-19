@@ -76,9 +76,10 @@ jobs:
           echo "TIME=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
 
       - name: Create GitHub Release
-        uses: pipe-cd/actions-gh-release@v2.6.0
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          tag: ${{ env.TIME }}
-          title: Auto Release ${{ env.TIME }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ env.TIME }}
           prerelease: true
-          release_file: ./**
+          title: Auto Release ${{ env.TIME }}
+          files: ./*
