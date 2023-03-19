@@ -19,7 +19,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.8'
           architecture: 'x64'
 
       # - name: Set up GCC
@@ -62,3 +62,17 @@ jobs:
             build/*.exe
             build/*.bin
             build/*.app/**/*
+      
+      - name: Set up a release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "2.0"
+          # Newline-delimited list of path globs for asset files to upload
+          files: |
+            build/*.exe
+            build/*.bin
+            build/*.app/**/*
+          repository: LxHTT/MCSL2
+          token: ${{ secrets.RELEASE_GH_ACCESS_TOKEN }}
+          generate_release_notes: "released by GitHub Actions."
+
