@@ -89,7 +89,7 @@ jobs:
 
       - name: Get Time
         run: |
-          echo "TAG_TIME=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+          echo "TAG_TIME=$(date +"%Y-%m-%d %H:%M")" >> $GITHUB_ENV
           echo "DISPLAY_TIME=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
 
       - name: Create GitHub Release
@@ -97,6 +97,6 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: ${{ env.TAG_TIME }}
-          prerelease: true
-          title: Auto Release ${{ env.DISPLAY_TIME }}
+          prerelease: false
+          title: AutoRelease ${{ env.DISPLAY_TIME }}
           files: '*.zip'
