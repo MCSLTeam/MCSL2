@@ -1,6 +1,6 @@
-from PyQt5.QtCore import Qt, QCoreApplication, QMetaObject, QRect
-from PyQt5.QtGui import QFont, QCursor, QIcon, QPixmap
-from PyQt5.QtWidgets import QPushButton, QLabel
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
+from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
+from PyQt5.QtWidgets import QLabel, QPushButton
 
 
 class Ui_MCSL2_AskDialog(object):
