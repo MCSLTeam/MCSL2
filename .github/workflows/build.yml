@@ -44,12 +44,21 @@ jobs:
           python -m pip install -r requirements.txt -r requirements.dev.txt
 
       - name: Build Executable
+        if: runner.os != 'Windows'
         run: >
           python -m nuitka
           --standalone --enable-plugin=pyqt5 --onefile
-          --output-dir=build
-          --show-progress --assume-yes-for-downloads
+          --output-dir=build --assume-yes-for-downloads
           --disable-console --macos-create-app-bundle
+          MCSL2.py
+
+      - name: Build Executable on Windows
+        if: runner.os == 'Windows'
+        run: >
+          python -m nuitka
+          --standalone --enable-plugin=pyqt5 --onefile
+          --output-dir=build --assume-yes-for-downloads
+          --disable-console --msvc==latest --clang
           --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
           --windows-product-name=MCSL2 --windows-file-version=2.0.0 --windows-product-version=2.0.0
           --windows-file-description="A Minecraft Server Launcher"
