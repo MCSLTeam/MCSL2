@@ -751,7 +751,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         DownloadUrls = ParseDownloaderAPIUrlSS[1]
         FileNames = ParseDownloaderAPIUrlSS[2]
         FileFormats = ParseDownloaderAPIUrlSS[3]
-        self.InitDownloadSubWidget(SubWidgetNames, DownloadUrls)
+        if SubWidgetNames == DownloadUrls and SubWidgetNames == FileNames and SubWidgetNames == FileFormats and SubWidgetNames == -1:
+            pass
+        else:
+            self.InitDownloadSubWidget(SubWidgetNames, DownloadUrls)
 
     def InitDownloadSubWidget(self, SubWidgetNames, DownloadUrls):
         GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
@@ -1402,7 +1405,12 @@ def DecodeDownloadJsons(RefreshUrl):
     DownloadUrls = []
     FileFormats = []
     FileNames = []
-    DownloadJson = get(RefreshUrl).text
+    try:
+        DownloadJson = get(RefreshUrl).text
+    except:
+        Tip = "网络开小差了，请重试刷新下载哦"
+        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+        return -1,-1,-1,-1
     PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
     for i in PyDownloadList:
         SubWidgetName = i["name"]
