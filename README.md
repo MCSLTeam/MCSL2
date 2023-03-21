@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://mcsl.netlify.app" target="_blank"><img alt="MCSL 2" src="https://www.helloimg.com/images/2023/01/28/oRgCMu.png"/></a>
+<a href="https://mcsl.netlify.app" target="_blank"><img alt="MCSL 2" src="https://s3.bmp.ovh/imgs/2023/03/21/5afb21934bd980ab.png"/></a>
 </p>
 
 # MCSL2   |   一个简洁全能的 Minecraft 服务器启动器
