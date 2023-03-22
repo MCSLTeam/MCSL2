@@ -1,7 +1,10 @@
 venv/**
+.venv/**
 poetry.lock
 .idea/**
 PackagedProcess/**
 ParseOneDriveLink/**
 Servers/**
 MCSL2/**
+pdm.lock
+.pdm.toml

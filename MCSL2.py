@@ -1,56 +1,28 @@
-from PyQt5.QtCore import (
-    Qt,
-    QPoint,
-    QThread,
-    pyqtSignal,
-    QRect,
-    QCoreApplication,
-    QMetaObject,
-    QRectF,
-    QSize,
-)
-from PyQt5.QtGui import (
-    QMouseEvent,
-    QFont,
-    QPixmap,
-    QCursor,
-    QIcon,
-    QColor,
-    QPainter,
-    QPainterPath,
-    QBrush,
-)
-from PyQt5.QtWidgets import (
-    QWidget,
-    QPushButton,
-    QMainWindow,
-    QGraphicsDropShadowEffect,
-    QFileDialog,
-    QListView,
-    QApplication,
-    QLineEdit,
-    QComboBox,
-    QStackedWidget,
-    QLabel,
-    QDialog,
-    QRadioButton,
-    QTabWidget,
-    QScrollArea,
-    QFrame,
-    QAbstractScrollArea,
-)
-from json import loads, dumps
-from requests import get
-from shutil import copy
-from sys import exit, argv
+from json import dumps, loads
 from os import getcwd, mkdir, remove
 from os import path as ospath
-import MCSL2_Icon
+from shutil import copy
+from sys import argv, exit
+
+from PyQt5.QtCore import QPoint, QRect, QSize, Qt
+from PyQt5.QtGui import QColor, QCursor, QFont, QMouseEvent, QPainter, QPixmap
+from PyQt5.QtWidgets import (
+    QApplication,
+    QDialog,
+    QFileDialog,
+    QGraphicsDropShadowEffect,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QWidget,
+)
+from requests import get
+
+import MCSL2_Icon as _  # noqa: F401
 import MCSL2_JavaDetector
-from MCSL2_MainWindow import *
-from MCSL2_Dialog import *
-from MCSL2_AskDialog import *
-import subprocess
+from MCSL2_AskDialog import *  # noqa: F403
+from MCSL2_Dialog import *  # noqa: F403
+from MCSL2_MainWindow import *  # noqa: F403
 
 
 # Initialize MainWindow
@@ -85,9 +57,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
         self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
         self.Download_Core_PushButton.clicked.connect(self.ToDownloadPage)
-        self.Choose_Java_Back_PushButton.clicked.connect(
-            self.ShowFoundedJavaList_Back
-        )
+        self.Choose_Java_Back_PushButton.clicked.connect(self.ShowFoundedJavaList_Back)
         self.Founded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
         self.DoNotUpdate_PushButton.clicked.connect(self.ToAboutPage)
 
@@ -325,8 +295,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # The min memory parser
         if self.MinMemory_LineEdit.text() != "":
             if (
-                    int(self.MinMemory_LineEdit.text()) % 1 == 0
-                    and int(self.MinMemory_LineEdit.text()) != 0
+                int(self.MinMemory_LineEdit.text()) % 1 == 0
+                and int(self.MinMemory_LineEdit.text()) != 0
             ):
                 MinMemory = int(self.MinMemory_LineEdit.text())
                 MinMemStatus = 1
@@ -338,8 +308,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # The max memory parser
         if self.MaxMemory_LineEdit.text() != "":
             if (
-                    int(self.MaxMemory_LineEdit.text()) % 1 == 0
-                    and int(self.MaxMemory_LineEdit.text()) != 0
+                int(self.MaxMemory_LineEdit.text()) % 1 == 0
+                and int(self.MaxMemory_LineEdit.text()) != 0
             ):
                 MaxMemory = int(self.MaxMemory_LineEdit.text())
                 MaxMemStatus = 1
@@ -369,300 +339,300 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # Pop-up determine
         # 5
         if (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你什么都没设置好呢\n\n（恼"
 
         # 4
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了最小内存\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了最大内存\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了服务器名称\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了Java\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "你只设置好了Java\n\n（恼"
 
         # 3
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了内存\n\n（恼"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、Java和最大内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、服务器名称和最大内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "Java、服务器名称和最大内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、Java和最小内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、服务器名称和最小内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "Java、服务器名称和最小内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心和内存还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "服务器核心和Java还没设置好呢\n\n（恼"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "服务器名称和内存还没设置好呢\n\n（恼"
 
         # 2
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩Java和服务器核心没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩服务器名称和服务器核心没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩服务器名称和Java没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩服务器核心和最小内存没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩Java和最小内存没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩服务器名称和最小内存没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩内存没设置好力\n\n（喜"
 
         # 1
         elif (
-                MinMemStatus == 0
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 0
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最小内存没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 0
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 0
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最大内存没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 0
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 0
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩服务器名称没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 0
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 0
+            and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩Java没设置好力\n\n（喜"
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 0
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩服务器核心没设置好力\n\n（喜"
 
         # 0
         elif (
-                MinMemStatus == 1
-                and MaxMemStatus == 1
-                and NameStatus == 1
-                and JavaStatus == 1
-                and CoreStatus == 1
+            MinMemStatus == 1
+            and MaxMemStatus == 1
+            and NameStatus == 1
+            and JavaStatus == 1
+            and CoreStatus == 1
         ):
             CanCreate = 1
             Tip = "关闭此窗口后，\n\n服务器将会开始部署。"
@@ -675,15 +645,19 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             ServerFolderPath = "./Servers/" + ServerName
             mkdir(ServerFolderPath)
             copy(CorePath, ServerFolderPath)
-            ServerConfigDict = {'name': ServerName, 'java_path': JavaPath, 'min_memory': MinMemory,
-                                'max_memory': MaxMemory}
+            ServerConfigDict = {
+                "name": ServerName,
+                "java_path": JavaPath,
+                "min_memory": MinMemory,
+                "max_memory": MaxMemory,
+            }
             ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
             print(ServerConfigJson)
             ConfigPath = "Servers//" + ServerName + "//" + "MCSL2ServerConfig.json"
-            with open(ConfigPath, 'w+') as SaveConfig:
+            with open(ConfigPath, "w+") as SaveConfig:
                 SaveConfig.write(ServerConfigJson)
                 SaveConfig.close()
-            SaveConfig = open(ConfigPath, 'w+')
+            SaveConfig = open(ConfigPath, "w+")
             SaveConfig.write(ServerConfigJson)
             SaveConfig.close()
             Tip = "服务器部署完毕！"
@@ -751,7 +725,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         DownloadUrls = ParseDownloaderAPIUrlSS[1]
         FileNames = ParseDownloaderAPIUrlSS[2]
         FileFormats = ParseDownloaderAPIUrlSS[3]
-        if SubWidgetNames == DownloadUrls and SubWidgetNames == FileNames and SubWidgetNames == FileFormats and SubWidgetNames == -1:
+        if (
+            SubWidgetNames == DownloadUrls
+            and SubWidgetNames == FileNames
+            and SubWidgetNames == FileFormats
+            and SubWidgetNames == -1
+        ):
             pass
         else:
             self.InitDownloadSubWidget(SubWidgetNames, DownloadUrls)
@@ -770,9 +749,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "    background-color: rgba(247, 247, 247, 247)\n"
                     "}"
                 )
-                self.MCSL2_SubWidget_Download.setObjectName(
-                    "MCSL2_SubWidget_Download"
-                )
+                self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
                 self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
                 self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
                 self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
@@ -797,9 +774,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.IntroductionLabel_D.setFont(font)
                 self.IntroductionLabel_D.setText("")
                 self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                self.Download_PushButton = QPushButton(
-                    self.MCSL2_SubWidget_Download
-                )
+                self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
                 self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
                 self.Download_PushButton.setMinimumSize(QSize(51, 51))
                 font = QFont()
@@ -845,7 +820,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
-                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+                self.Download_PushButton.clicked.connect(
+                    lambda: self.ParseSrollAreaItemButtons()
+                )
                 self.JavaVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         elif GraphType == 1:
             for i in range(len(SubWidgetNames)):
@@ -859,9 +836,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "    background-color: rgba(247, 247, 247, 247)\n"
                     "}"
                 )
-                self.MCSL2_SubWidget_Download.setObjectName(
-                    "MCSL2_SubWidget_Download"
-                )
+                self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
                 self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
                 self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
                 self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
@@ -886,9 +861,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.IntroductionLabel_D.setFont(font)
                 self.IntroductionLabel_D.setText("")
                 self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                self.Download_PushButton = QPushButton(
-                    self.MCSL2_SubWidget_Download
-                )
+                self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
                 self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
                 self.Download_PushButton.setMinimumSize(QSize(51, 51))
                 font = QFont()
@@ -934,7 +907,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
-                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+                self.Download_PushButton.clicked.connect(
+                    lambda: self.ParseSrollAreaItemButtons()
+                )
                 self.SpigotVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         elif GraphType == 2:
             for i in range(len(SubWidgetNames)):
@@ -948,9 +923,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "    background-color: rgba(247, 247, 247, 247)\n"
                     "}"
                 )
-                self.MCSL2_SubWidget_Download.setObjectName(
-                    "MCSL2_SubWidget_Download"
-                )
+                self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
                 self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
                 self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
                 self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
@@ -975,9 +948,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.IntroductionLabel_D.setFont(font)
                 self.IntroductionLabel_D.setText("")
                 self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                self.Download_PushButton = QPushButton(
-                    self.MCSL2_SubWidget_Download
-                )
+                self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
                 self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
                 self.Download_PushButton.setMinimumSize(QSize(51, 51))
                 font = QFont()
@@ -1036,9 +1007,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "    background-color: rgba(247, 247, 247, 247)\n"
                     "}"
                 )
-                self.MCSL2_SubWidget_Download.setObjectName(
-                    "MCSL2_SubWidget_Download"
-                )
+                self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
                 self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
                 self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
                 self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
@@ -1063,9 +1032,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.IntroductionLabel_D.setFont(font)
                 self.IntroductionLabel_D.setText("")
                 self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                self.Download_PushButton = QPushButton(
-                    self.MCSL2_SubWidget_Download
-                )
+                self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
                 self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
                 self.Download_PushButton.setMinimumSize(QSize(51, 51))
                 font = QFont()
@@ -1111,7 +1078,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
-                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+                self.Download_PushButton.clicked.connect(
+                    lambda: self.ParseSrollAreaItemButtons()
+                )
                 self.BCVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         elif GraphType == 4:
             for i in range(len(SubWidgetNames)):
@@ -1125,9 +1094,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     "    background-color: rgba(247, 247, 247, 247)\n"
                     "}"
                 )
-                self.MCSL2_SubWidget_Download.setObjectName(
-                    "MCSL2_SubWidget_Download"
-                )
+                self.MCSL2_SubWidget_Download.setObjectName("MCSL2_SubWidget_Download")
                 self.IntroductionWidget_D = QWidget(self.MCSL2_SubWidget_Download)
                 self.IntroductionWidget_D.setGeometry(QRect(100, 10, 421, 51))
                 self.IntroductionWidget_D.setMinimumSize(QSize(421, 51))
@@ -1152,9 +1119,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self.IntroductionLabel_D.setFont(font)
                 self.IntroductionLabel_D.setText("")
                 self.IntroductionLabel_D.setObjectName("IntroductionLabel_D")
-                self.Download_PushButton = QPushButton(
-                    self.MCSL2_SubWidget_Download
-                )
+                self.Download_PushButton = QPushButton(self.MCSL2_SubWidget_Download)
                 self.Download_PushButton.setGeometry(QRect(540, 10, 51, 51))
                 self.Download_PushButton.setMinimumSize(QSize(51, 51))
                 font = QFont()
@@ -1196,11 +1161,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 )
                 self.GraphWidget_D.setText("")
                 self.GraphWidget_D.setObjectName("GraphWidget_D")
-                self.GraphWidget_D.setPixmap(QPixmap(":/MCSL2_Icon/OfficialCoreIcon.png"))
+                self.GraphWidget_D.setPixmap(
+                    QPixmap(":/MCSL2_Icon/OfficialCoreIcon.png")
+                )
                 self.GraphWidget_D.setScaledContents(True)
                 self.IntroductionLabel_D.setText(SubWidgetNames[i])
                 self.Download_PushButton.setText("下载")
-                self.Download_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+                self.Download_PushButton.clicked.connect(
+                    lambda: self.ParseSrollAreaItemButtons()
+                )
                 self.OfficialCoreVerticalLayout.addWidget(self.MCSL2_SubWidget_Download)
         else:
             pass
@@ -1294,9 +1263,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.GraphWidget_S.setScaledContents(True)
             self.IntroductionLabel_S.setText(JavaPaths[i])
             self.Select_PushButton.setText("选择")
-            self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+            self.Select_PushButton.clicked.connect(
+                lambda: self.ParseSrollAreaItemButtons()
+            )
 
-            self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
+            self.ChooseJavaScrollAreaVerticalLayout.addWidget(
+                self.MCSL2_SubWidget_Select
+            )
 
     def ParseSrollAreaItemButtons(self):
         global ScrollAreaStatus
@@ -1321,7 +1294,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             GetUpdateContentsUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark"
             WhatInLatestVersion = get(GetUpdateContentsUrl).text
             LatestVersionNumber = LatestVersionInformation[4]
-            self.Update_Introduction_Title_Label.setText("这是最新版本" + LatestVersionNumber + "的说明：")
+            self.Update_Introduction_Title_Label.setText(
+                "这是最新版本" + LatestVersionNumber + "的说明："
+            )
             self.Update_Introduction_Label.setText(WhatInLatestVersion)
             self.FunctionsStackedWidget.setCurrentIndex(8)
         elif LatestVersionInformation[0] == "false":
@@ -1367,7 +1342,7 @@ def InitMCSL(isFirstLaunch):
             InitConfig.write(ConfigTemplate)
             InitConfig.close()
         with open(
-                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as InitServerList:
             ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             InitServerList.write(ServerListTemplate)
@@ -1389,7 +1364,7 @@ def ParseDownloaderAPIUrl(DownloadSource, DownloadType):
         "/SpigotDownloadInfo.json",
         "/PaperDownloadInfo.json",
         "/BungeeCordDownloadInfo.json",
-        "/OfficialCoreDownloadInfo.json"
+        "/OfficialCoreDownloadInfo.json",
     ]
     DownloadAPIUrl = UrlPrefix + SourceSuffix[DownloadSource] + TypeSuffix[DownloadType]
     DecodeDownloadJsonsSS = DecodeDownloadJsons(DownloadAPIUrl)
@@ -1410,7 +1385,7 @@ def DecodeDownloadJsons(RefreshUrl):
     except:
         Tip = "网络开小差了，请重试刷新下载哦"
         CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
-        return -1,-1,-1,-1
+        return -1, -1, -1, -1
     PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
     for i in PyDownloadList:
         SubWidgetName = i["name"]
@@ -1431,7 +1406,7 @@ DiskSymbols = []
 SearchStatus = 0
 CorePath = ""
 DownloadSource = 0
-Version = '2.0.1'
+Version = "2.0.1"
 
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
