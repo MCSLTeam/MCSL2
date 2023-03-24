@@ -1337,7 +1337,7 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons):
 
 def InitMCSL(isFirstLaunch):
     if isFirstLaunch == 1:
-        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。", isNeededTwoButtons=0)
+        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n(本提示仅在首次启动出现)", isNeededTwoButtons=0)
         mkdir(r"MCSL2")
         mkdir(r"MCSL2/Aria2")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
@@ -1360,7 +1360,7 @@ def InitMCSL(isFirstLaunch):
 
 
 def ParseDownloaderAPIUrl(DownloadSource, DownloadType):
-    UrlPrefix = "https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/"
+    UrlPrefix = "https://raw.iqiq.io/LxHTT/MCSLDownloaderAPI/master/"
     SourceSuffix = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
     TypeSuffix = [
         "/JavaDownloadInfo.json",
