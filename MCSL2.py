@@ -1,5 +1,5 @@
 from json import dumps, loads
-from os import getcwd, mkdir, remove
+from os import getcwd, mkdir, remove, sep
 from os import path as ospath
 from shutil import copy
 from sys import argv, exit
@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 from requests import get
+from win32api import GetFileVersionInfo, HIWORD, LOWORD
 
 import MCSL2_Icon as _  # noqa: F401
 import MCSL2_JavaDetector
@@ -1261,7 +1262,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.GraphWidget_S.setObjectName("GraphWidget_S")
             self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
             self.GraphWidget_S.setScaledContents(True)
-            self.IntroductionLabel_S.setText(JavaPaths[i])
+            JavaVersion = getFileVersion(File=JavaPaths[i])
+            self.IntroductionLabel_S.setText("Java版本：" + JavaVersion + "\n" + JavaPaths[i])
             self.Select_PushButton.setText("选择")
             self.Select_PushButton.clicked.connect(
                 lambda: self.ParseSrollAreaItemButtons()
@@ -1282,6 +1284,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global JavaPaths, JavaPath
         JavaPath = JavaPaths[JavaIndex]
         self.FunctionsStackedWidget.setCurrentIndex(1)
+        self.Java_Version_Label.setText(getFileVersion(File=JavaPath))
 
     # The function of checking update
     def CheckUpdate(self):
@@ -1398,6 +1401,13 @@ def DecodeDownloadJsons(RefreshUrl):
         FileNames.insert(0, FileName)
     return SubWidgetNames, DownloadUrls, FileNames, FileFormats
 
+def getFileVersion(File):
+    FileVersionInfo = GetFileVersionInfo(File, sep)
+    FileVersionMS = FileVersionInfo['FileVersionMS']
+    FileVersionLS = FileVersionInfo['FileVersionLS']
+    Version = '%d.%d.%d.%04d' % (
+    HIWORD(FileVersionMS), LOWORD(FileVersionMS), HIWORD(FileVersionLS), LOWORD(FileVersionLS))
+    return Version
 
 # Start MCSL
 JavaPath = 0
