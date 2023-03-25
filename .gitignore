@@ -8,3 +8,5 @@ Servers/**
 MCSL2/**
 pdm.lock
 .pdm.toml
+1.py
+Console.bat

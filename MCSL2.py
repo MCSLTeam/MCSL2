@@ -1,7 +1,8 @@
 from json import dumps, loads
-from os import getcwd, mkdir, remove
+from os import getcwd, mkdir, remove, sep
 from os import path as ospath
 from shutil import copy
+from subprocess import Popen, PIPE
 from sys import argv, exit
 
 from PyQt5.QtCore import QPoint, QRect, QSize, Qt, pyqtSlot, QThread
@@ -17,6 +18,7 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 from requests import get
+from win32api import GetFileVersionInfo, HIWORD, LOWORD
 
 import MCSL2_Icon as _  # noqa: F401
 import MCSL2_JavaDetector
@@ -71,15 +73,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
-
-        # register Java finder workThread factory
-        self.javaPath = []
-        self.javaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
-        self.javaFindWorkThreadFactory.FuzzySearch = True
-        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
-        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
-        # create java finder workThread instance and start
-        self.javaFindWorkThreadFactory.Create().start()
 
     def paintEvent(self, event):
         pat2 = QPainter(self)
@@ -221,6 +214,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ToChooseJavaPage(self):
         global JavaPaths
+
         self.FunctionsStackedWidget.setCurrentIndex(7)
         self.InitSelectJavaSubWidget()
 
@@ -247,9 +241,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         DownloadSource = 4
 
     def LaunchMinecraftServer(self):
-        pass
-        # Fix = '-Xms2048M -Xmx2048M -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -jar '
-        # monitor = subprocess.Popen(LaunchCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        Fix = '-Xms2048M -Xmx2048M -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -jar '
+        # LaunchCommand = "\\" + str(JavaPath) + "\\" + Fix + "./Servers/" + ServerName +
+        # monitor = Popen(LaunchCommand, shell=True, stdout=PIPE, stderr=PIPE)
         # while True:
         #     result = monitor.stdout.readline()
         #     if result != b'':
@@ -271,16 +265,18 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
 
     def ManuallyImportCore(self):
-        global CorePath
+        global CorePath, CoreFileName
         CoreSysList = QFileDialog.getOpenFileName(self, "选择服务器核心", getcwd(), "*.jar")
         if CoreSysList[0] != "":
             CorePath = CoreSysList[0]
+            print(CorePath)
+            CoreFileName = CorePath.split("/")[-1]
         else:
             Tip = "看来你没有选择任何的服务器核心呢！"
             CallMCSL2Dialog(Tip, 0)
 
     def SaveMinecraftServer(self):
-        global CorePath, JavaPath
+        global CorePath, JavaPath, MaxMemory, MinMemory, CoreFileName
         """
         0 -> Illegal
         1 -> OK
@@ -338,6 +334,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     NameStatus = 0
             Path1 = ".\\" + TMPServerName
             if not ospath.exists(TMPServerName):
+                global ServerName
                 ServerName = TMPServerName
                 NameStatus = 1
             else:
@@ -650,6 +647,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         if CanCreate == 0:
             CallMCSL2Dialog(Tip, 0)
         elif CanCreate == 1:
+            global GlobalServerList
             CallMCSL2Dialog(Tip, 0)
             ServerFolderPath = "./Servers/" + ServerName
             mkdir(ServerFolderPath)
@@ -661,6 +659,24 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 "max_memory": MaxMemory,
             }
             ServerConfigJson = dumps(ServerConfigDict, ensure_ascii=False)
+            with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as ReadGlobalServerListFile:
+                GlobalServerList = loads(ReadGlobalServerListFile.read())
+                print(GlobalServerList)
+                print(type(GlobalServerList))
+                ServerCount = len(GlobalServerList)
+                print(ServerCount)
+                GlobalServerList[ServerCount+1] = {
+                    "name": ServerName,
+                    "core_file_name": CoreFileName,
+                    "java_path": JavaPath,
+                    "min_memory": MinMemory,
+                    "max_memory": MaxMemory,
+                }
+                ReadGlobalServerListFile.close()
+            with open(r'MCSL2/MCSL2_ServerList.json', "w", encoding='utf-8') as WriteGlobalServerListFile:
+                WriteGlobalServerListFile.write(dumps(GlobalServerList))
+                WriteGlobalServerListFile.close()
+
             print(ServerConfigJson)
             ConfigPath = "Servers//" + ServerName + "//" + "MCSL2ServerConfig.json"
             with open(ConfigPath, "w+") as SaveConfig:
@@ -690,6 +706,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def JavaDetectFinished(self, _JavaPaths: list):
         global JavaPaths
         JavaPaths = _JavaPaths
+        with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
+            SaveFoundedJava.writelines(JavaPaths)
 
     @pyqtSlot(int)
     def OnJavaFindWorkThreadFinished(self, sequenceNumber):
@@ -1209,6 +1227,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
 
         # 重新添加子控件
+        if len(JavaPaths) == 0:
+            if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
+                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
+                    FoundedJavaTMP = ReadFoundedJava.readlines()
+                    print(FoundedJavaTMP)
+                    JavaPaths = FoundedJavaTMP
+                    
         for i in range(len(JavaPaths)):
             self.MCSL2_SubWidget_Select = QWidget()
             self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
@@ -1289,15 +1314,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.GraphWidget_S.setObjectName("GraphWidget_S")
             self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
             self.GraphWidget_S.setScaledContents(True)
-            self.IntroductionLabel_S.setText(JavaPaths[i])
+            JavaVersion = GetFileVersion(File=JavaPaths[i])
+            self.IntroductionLabel_S.setText("Java版本：" + JavaVersion + "\n" + JavaPaths[i])
             self.Select_PushButton.setText("选择")
-            self.Select_PushButton.clicked.connect(
-                lambda: self.ParseSrollAreaItemButtons()
-            )
+            self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
 
-            self.ChooseJavaScrollAreaVerticalLayout.addWidget(
-                self.MCSL2_SubWidget_Select
-            )
+            self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
 
     def ParseSrollAreaItemButtons(self):
         global ScrollAreaStatus
@@ -1310,6 +1332,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global JavaPaths, JavaPath
         JavaPath = JavaPaths[JavaIndex]
         self.FunctionsStackedWidget.setCurrentIndex(1)
+        self.Java_Version_Label.setText(GetFileVersion(File=JavaPath))
 
     # The function of checking update
     def CheckUpdate(self):
@@ -1362,7 +1385,8 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons):
 
 def InitMCSL(isFirstLaunch):
     if isFirstLaunch == 1:
-        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。", isNeededTwoButtons=0)
+        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n(本提示仅在首次启动出现)",
+                        isNeededTwoButtons=0)
         mkdir(r"MCSL2")
         mkdir(r"MCSL2/Aria2")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
@@ -1372,7 +1396,10 @@ def InitMCSL(isFirstLaunch):
         with open(
                 r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as InitServerList:
-            ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
+            ServerListTemplate = '{\n  "MCSLServerList": [\n    {\n      "name": "MCSLReplacer",\n      ' \
+                                 '"core_file_name": "MCSLReplacer",\n      "java_path": "MCSLReplacer",' \
+                                 '\n      "min_memory": "MCSLReplacer",\n      "max_memory": "MCSLReplacer"\n    }\n  ' \
+                                 ']\n} '
             InitServerList.write(ServerListTemplate)
             InitServerList.close()
         if not ospath.exists(r"Servers"):
@@ -1385,7 +1412,7 @@ def InitMCSL(isFirstLaunch):
 
 
 def ParseDownloaderAPIUrl(DownloadSource, DownloadType):
-    UrlPrefix = "https://jsd.cdn.zzko.cn/gh/LxHTT/MCSLDownloaderAPI@master/"
+    UrlPrefix = "https://raw.iqiq.io/LxHTT/MCSLDownloaderAPI/master/"
     SourceSuffix = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
     TypeSuffix = [
         "/JavaDownloadInfo.json",
@@ -1411,7 +1438,7 @@ def DecodeDownloadJsons(RefreshUrl):
     try:
         DownloadJson = get(RefreshUrl).text
     except:
-        Tip = "网络开小差了，请重试刷新下载哦"
+        Tip = "无法连接MCSLAPI，\n\n请检查网络或系统代理设置"
         CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
         return -1, -1, -1, -1
     PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
@@ -1425,6 +1452,15 @@ def DecodeDownloadJsons(RefreshUrl):
         FileName = i["filename"]
         FileNames.insert(0, FileName)
     return SubWidgetNames, DownloadUrls, FileNames, FileFormats
+
+
+def GetFileVersion(File):
+    FileVersionInfo = GetFileVersionInfo(File, sep)
+    FileVersionMS = FileVersionInfo['FileVersionMS']
+    FileVersionLS = FileVersionInfo['FileVersionLS']
+    Version = '%d.%d.%d.%04d' % (
+        HIWORD(FileVersionMS), LOWORD(FileVersionMS), HIWORD(FileVersionLS), LOWORD(FileVersionLS))
+    return Version
 
 
 # Start MCSL
