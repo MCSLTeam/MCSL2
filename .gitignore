@@ -11,3 +11,5 @@ pdm.lock
 1.py
 Console.bat
 __pycache__
+/.vs
+/env
