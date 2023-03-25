@@ -28,6 +28,30 @@ ___
  - **✅ 自动查找Java**： 厌倦了手动翻目录？自动查找Java帮你解决！
  - **🔧 拓展工具系统**： 使用各种拓展工具，让你的MCSL2更加强大！
 ___
+### 开发
+
+该项目使用了 Python 3.8 进行开发。
+
+1. 如果尚未安装 Python 3.10，请在您的计算机上安装它。它可以从 [Python.org](https://www.python.org/downloads/) 下载，也可以使用 `brew` 或 `apt` 等包管理器，具体取决于您的系统。
+
+2. 从 GitHub 克隆存储库：
+
+```bash
+git clone https://github.com/LxHTT/MCSL2.git
+```
+
+3. 导航到克隆的存储库目录：
+
+```bash
+cd MCSL2
+```
+
+4. 安装依赖项：
+
+```bash
+pip install -r requirements.txt
+```
+___
 ### 相关链接
 MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)  
 MCSL 2 API官网：[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
@@ -44,20 +68,3 @@ ___
 还有所有的贡献者们！  
 
 <a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
-___
-## 开发文档 
-~~其实我就不知道该写啥好~~  
-本项目基于Python 3.8.0开发。
-### 1.克隆本仓库
-```commandline
-git clone https://github.com/LxHTT/MCSL2.git
-```
-### 2.安装依赖
-```commandline
-pip install -r requirements.txt
-```
-或者  
-```commandline
-pip3 install -r requirements.txt
-```
-### ~~摆烂~~ **开始开发**

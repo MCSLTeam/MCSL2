@@ -29,6 +29,30 @@ ___
  - **✅ Automatic find Java**: Tired of manually flipping through directories? Automatically find Java can help you solve it!
  - **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful!
 ___
+### Development
+
+This app uses Python 3.10, and [poetry](https://python-poetry.org/) for dependency management.
+
+1. Install Python 3.10 on your machine if it isn't already installed. It can be downloaded from the official [Python.org](https://www.python.org/downloads/) or with a package manager like `brew` or `apt`, depending on your system.
+
+2. Clone the repository from GitHub:
+
+```bash
+git clone https://github.com/LxHTT/MCSL2.git
+```
+
+3. Navigate to the cloned repository directory:
+
+```bash
+cd MCSL2
+```
+
+4. Install the dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+___
 ### Related link
 MCSL 2 Official Website:[https://mcsl.netlify.app](https://mcsl.netlify.app)  
 MCSLAPI Official Website:[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
@@ -42,24 +66,6 @@ ___
 - [Luoxis Cloud](https://www.df100.ltd) from **星姮十织**
 - [ZCloud](https://ztsin.cn/) from **Z_Tsin**
 
-And all the contributors!  
+And all the contributors!
 
 <a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
-
-___
-## Development document
-~~Actually, I don't know what to write.~~ XD  
-This project was developed based on Python 3.8.0.
-### 1. Clone this repository
-```commandline
-git clone https://github.com/LxHTT/MCSL2.git
-```
-### 2. Install the requirements
-```commandline
-pip install -r requirements.txt
-```
-or  
-```commandline
-pip3 install -r requirements.txt
-```
-### ~~Give up~~ **start programming**
