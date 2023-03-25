@@ -669,13 +669,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 print(type(GlobalServerList))
                 ServerCount = len(GlobalServerList)
                 print(ServerCount)
-                GlobalServerList[ServerCount+1] = {
+                GlobalServerList['MCSLServerList'].append({
                     "name": ServerName,
                     "core_file_name": CoreFileName,
                     "java_path": JavaPath,
                     "min_memory": MinMemory,
                     "max_memory": MaxMemory,
-                }
+                })
                 ReadGlobalServerListFile.close()
             with open(r'MCSL2/MCSL2_ServerList.json', "w", encoding='utf-8') as WriteGlobalServerListFile:
                 WriteGlobalServerListFile.write(dumps(GlobalServerList))
@@ -710,9 +710,20 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def JavaDetectFinished(self, _JavaPaths: list):
         global JavaPaths
         JavaPaths = _JavaPaths
-        with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
-            SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
-
+        if not ospath.exists(r"./MCSL2"):
+            pass
+        else:
+            if ospath.exists(r"./MCSL2/AutoDetectJavaHistory.txt"):
+                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
+                    SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
+                    SaveFoundedJava.close()
+            else:
+                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as InitFoundedJava:
+                    InitFoundedJava.write("")
+                    InitFoundedJava.close()
+                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
+                    SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
+                    SaveFoundedJava.close()
     @pyqtSlot(int)
     def OnJavaFindWorkThreadFinished(self, sequenceNumber):
 
@@ -1229,7 +1240,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
         for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
             self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
-
+        if ospath.exists(r"./MCSL2/AutoDetectJavaHistory.txt"):
+            with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as InitFoundedJava:
+                InitFoundedJava.write("")
+                InitFoundedJava.close()
+            with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
+                SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
+                SaveFoundedJava.close()
         # 重新添加子控件
         if len(JavaPaths) == 0:
             if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
@@ -1389,25 +1406,25 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons):
 
 def InitMCSL(isFirstLaunch):
     if isFirstLaunch == 1:
-        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n(本提示仅在首次启动出现)",
+        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n\n(本提示仅在首次启动出现)",
                         isNeededTwoButtons=0)
-        mkdir(r"MCSL2")
-        mkdir(r"MCSL2/Aria2")
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
-            ConfigTemplate = ""
-            InitConfig.write(ConfigTemplate)
-            InitConfig.close()
-        with open(
-                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-        ) as InitServerList:
-            ServerListTemplate = '{\n  "MCSLServerList": [\n    {\n      "name": "MCSLReplacer",\n      ' \
-                                 '"core_file_name": "MCSLReplacer",\n      "java_path": "MCSLReplacer",' \
-                                 '\n      "min_memory": "MCSLReplacer",\n      "max_memory": "MCSLReplacer"\n    }\n  ' \
-                                 ']\n} '
-            InitServerList.write(ServerListTemplate)
-            InitServerList.close()
+        if not ospath.exists(r"MCSL2"):
+            mkdir(r"MCSL2")
+            mkdir(r"MCSL2/Aria2")
+            with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
+                ConfigTemplate = ""
+                InitConfig.write(ConfigTemplate)
+                InitConfig.close()
+            with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as InitServerList:
+                ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
+                InitServerList.write(ServerListTemplate)
+                InitServerList.close()
+            with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as InitFoundedJava:
+                InitFoundedJava.write("")
+                InitFoundedJava.close()
         if not ospath.exists(r"Servers"):
             mkdir(r"./Servers")
+
         pass
     else:
         if not ospath.exists(r"Servers"):
