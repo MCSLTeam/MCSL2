@@ -1,5 +1,5 @@
 from json import dumps, loads
-from os import getcwd, mkdir, remove, sep
+from os import getcwd, mkdir, sep
 from os import path as ospath
 from shutil import copy
 from sys import argv, exit
