@@ -75,7 +75,7 @@ class Ui_MCSL2_MainWindow(object):
         )
         font = QFont()
         #font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(21)
+        font.setPointSize(15)
         self.Close_PushButton.setText("×")
         self.Close_PushButton.setFont(font)
         self.Close_PushButton.setObjectName("Close_PushButton")
