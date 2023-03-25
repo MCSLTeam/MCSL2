@@ -2026,10 +2026,10 @@ class Ui_MCSL2_MainWindow(object):
             _translate(
                 "MCSL2_MainWindow",
                 "如何搭建一个Java版Minecraft服务器？\n"
-                "1.准备好Java、核心、电脑\n"
-                "（提示：可使用本程序下载）\n"
+                "1.准备好Java、服务器核心、一台电脑\n"
+                "（提示：可使用本程序下载Java与核心）\n"
                 "2.配置参数（本程序“配置服务器”页）\n"
-                "3. 开启服务器。将服务器IP告诉玩家。",
+                "3.开启服务器。将服务器IP告诉玩家。",
             )
         )
         self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
@@ -2042,12 +2042,12 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip1_Label.setText(
             _translate(
                 "MCSL2_MainWindow",
-                "一个服务器最基础的三个部件\n" "1.存放的文件夹路径\n" "2.服务器核心\n" "3.Java路径",
+                "搭建服务器只需要：\n" "1.存放服务器的文件夹\n" "2.服务器核心\n" "3.Java",
             )
         )
         self.ConfigTip2_Label.setText(
             _translate(
-                "MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n" "以服务器名称命名的文件夹\n" "以存储服务器文件。"
+                "MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n" "以服务器名称命名的文件夹\n" "来存储服务器文件。"
             )
         )
         self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
