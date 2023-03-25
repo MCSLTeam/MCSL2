@@ -134,6 +134,6 @@ jobs:
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           automatic_release_tag: ${{ env.TAG_TIME }}
-          prerelease: false
+          prerelease: true
           title: AutoRelease ${{ env.DISPLAY_TIME }}
           files: '*.zip'
