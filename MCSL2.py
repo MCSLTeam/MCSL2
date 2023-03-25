@@ -353,7 +353,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             NameStatus = 0
 
         # Pop-up determine
-# Create List
+        # Create List
         ChkVal = []
         ChkVal.append(MinMemStatus)
         ChkVal.append(MaxMemStatus)
@@ -486,7 +486,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                         else:
                             CanCreate = 0
                             Tip = "你什么都没设置好呢\n\n（恼"
-                            #终于写完了.jpg
+                            # 终于写完了.jpg
 
         # Server processor
         if CanCreate == 0:
@@ -550,9 +550,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     @pyqtSlot(list)
     def JavaDetectFinished(self, _JavaPaths: list):
         global JavaPaths
-        JavaPaths = _JavaPaths
 
-        with open("MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
+        with open("MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as SaveFoundedJava:
+            JavaPaths = list({p[:-1] for p in SaveFoundedJava.readlines()}.union(set(JavaPaths)).union(set(_JavaPaths)))
+            # 获取新发现的Java路径,或者用户选择的Java路径
             SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
 
     @pyqtSlot(int)
@@ -566,7 +567,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 释放AutoDetectJava中禁用的按钮
         self.Auto_Find_Java_PushButton.setEnabled(True)
         # 更新self.ChooseJavaScrollAreaVerticalLayout中的内容
-
 
     def ShowFoundedJavaList_Back(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
@@ -1300,8 +1300,8 @@ def DecodeDownloadJsons(RefreshUrl):
     except:
         print(DownloadJson)
         Tip = "可能解析api内容失败\n\n请检查网络或自己的节点设置"
-        CallMCSL2Dialog(Tip,isNeededTwoButtons=0)
-        return -1,-1,-1,-1
+        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+        return -1, -1, -1, -1
 
 
 def GetFileVersion(File):
