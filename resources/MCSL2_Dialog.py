@@ -121,4 +121,3 @@ class Ui_MCSL2_Dialog(object):
         self.Dialog_PushButton.setText(_translate("MCSL2_Dialog", "知道了"))
 
 
-import MCSL2_Icon_rc

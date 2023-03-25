@@ -2,20 +2,16 @@ from json import dumps, loads
 from os import getcwd, mkdir, remove, sep
 from os import path as ospath
 from shutil import copy
-from subprocess import Popen, PIPE
 from sys import argv, exit
 
-from PyQt5.QtCore import QPoint, QRect, QSize, Qt
-from PyQt5.QtGui import QColor, QCursor, QFont, QMouseEvent, QPainter, QPixmap
+from PyQt5.QtCore import QPoint, QSize, pyqtSlot
+from PyQt5.QtGui import QColor, QMouseEvent, QPainter
 from PyQt5.QtWidgets import (
     QApplication,
     QDialog,
     QFileDialog,
     QGraphicsDropShadowEffect,
-    QLabel,
     QMainWindow,
-    QPushButton,
-    QWidget,
 )
 from requests import get
 from win32api import GetFileVersionInfo, HIWORD, LOWORD
@@ -74,6 +70,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
 
+        # register Java finder workThread factory
+        self.javaPath = []
+        self.javaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
+        self.javaFindWorkThreadFactory.FuzzySearch = True
+        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
+        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
+        # create java finder workThread instance and start
+        self.javaFindWorkThreadFactory.Create().start()
     def paintEvent(self, event):
         pat2 = QPainter(self)
         pat2.setRenderHint(pat2.Antialiasing)
@@ -698,20 +702,29 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
 
     def AutoDetectJava(self):
-        Tip = "开始查找..."
-        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
-        global SearchStatus, JavaPaths
-        MCSL2_JavaDetector.FindJava()
-        JavaPaths = MCSL2_JavaDetector.FoundJava
-        with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as CleanFoundedJava:
-            CleanFoundedJava.write("")
-            CleanFoundedJava.close()
-        with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'a', encoding='utf-8') as SaveFoundedJava:
-            for i in range(len(JavaPaths)):
-                SaveFoundedJava.write(str(JavaPaths[i]) + '\n')
-            SaveFoundedJava.close()
-        Tip = "搜索完毕。\n找到" + str(len(JavaPaths)) + "个Java。\n请点击Java列表查看。"
-        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+        # 防止同时多次运行worker线程
+        self.Auto_Find_Java_PushButton.setDisabled(True)
+        self.javaFindWorkThreadFactory.Create().start()
+
+    @pyqtSlot(list)
+    def JavaDetectFinished(self, _JavaPaths: list):
+        global JavaPaths
+        JavaPaths = _JavaPaths
+        with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
+            SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
+
+    @pyqtSlot(int)
+    def OnJavaFindWorkThreadFinished(self, sequenceNumber):
+
+        # 如果不是第一次运行worker线程
+        if sequenceNumber > 1:
+            Tip = "搜索完毕。\n找到" + str(len(JavaPaths)) + "个Java。\n请点击Java列表查看。"
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+
+        # 释放AutoDetectJava中禁用的按钮
+        self.Auto_Find_Java_PushButton.setEnabled(True)
+        # 更新self.ChooseJavaScrollAreaVerticalLayout中的内容
+
 
     def ShowFoundedJavaList_Back(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
@@ -1213,17 +1226,18 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def InitSelectJavaSubWidget(self):
         global JavaPaths
+        # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
+        for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
+            self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
+
+        # 重新添加子控件
         if len(JavaPaths) == 0:
             if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
                 with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
-                    FoundedJavaTMP = ReadFoundedJava.readlines()
-                    for i in range(len(FoundedJavaTMP)):
-                        FoundedJavaTMP[i] = FoundedJavaTMP[i][:-1]
+                    FoundedJavaTMP = [p[:-1] for p in ReadFoundedJava.readlines()]
                     print(FoundedJavaTMP)
                     JavaPaths = FoundedJavaTMP
-                    ReadFoundedJava.close()
-        # for i in range(len(JavaPaths)):
-        #     pass
+                    
         for i in range(len(JavaPaths)):
             self.MCSL2_SubWidget_Select = QWidget()
             self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
