@@ -1106,7 +1106,7 @@ QPushButton:pressed
        <property name="text">
         <string>一个服务器最基础的三个部件
 1.存放的文件夹路径
-2.服务器核心
+2.服务端核心
 3.Java路径</string>
        </property>
       </widget>
@@ -1534,7 +1534,7 @@ QPushButton:pressed
         </font>
        </property>
        <property name="text">
-        <string>服务器核心：</string>
+        <string>服务端核心：</string>
        </property>
       </widget>
       <widget class="QPushButton" name="Auto_Find_Java_PushButton">

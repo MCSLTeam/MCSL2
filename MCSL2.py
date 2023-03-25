@@ -270,13 +270,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ManuallyImportCore(self):
         global CorePath, CoreFileName
-        CoreSysList = QFileDialog.getOpenFileName(self, "选择服务器核心", getcwd(), "*.jar")
+        CoreSysList = QFileDialog.getOpenFileName(self, "选择服务端核心", getcwd(), "*.jar")
         if CoreSysList[0] != "":
             CorePath = CoreSysList[0]
             print(CorePath)
             CoreFileName = CorePath.split("/")[-1]
         else:
-            Tip = "看来你没有选择任何的服务器核心呢！"
+            Tip = "看来你没有选择任何的服务端核心呢！"
             CallMCSL2Dialog(Tip, 0)
 
     def SaveMinecraftServer(self):
@@ -367,14 +367,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "关闭此窗口后，\n\n服务器将会开始部署。"
                         else:
                             CanCreate = 0
-                            Tip = "只剩服务器核心没设置好力\n\n（喜"
+                            Tip = "只剩服务端核心没设置好力\n\n（喜"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
                             Tip = "只剩Java没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "只剩Java和服务器核心没设置好力\n\n（喜"
+                            Tip = "只剩Java和服务端核心没设置好力\n\n（喜"
                 else:
                     if (ChkVal[3] == 1):
                         if (ChkVal[4] == 1):
@@ -382,7 +382,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "只剩服务器名称没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "只剩服务器名称和服务器核心没设置好力\n\n（喜"
+                            Tip = "只剩服务器名称和服务端核心没设置好力\n\n（喜"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
@@ -398,14 +398,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "只剩最大内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
+                            Tip = "只剩最大内存和服务端核心没设置好力\n\n（喜"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
                             Tip = "只剩最大内存和Java没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "服务器核心、Java和最大内存还没设置好呢\n\n（恼"
+                            Tip = "服务端核心、Java和最大内存还没设置好呢\n\n（恼"
                 else:
                     if (ChkVal[3] == 1):
                         if (ChkVal[4] == 1):
@@ -413,7 +413,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "只剩服务器名称和最大内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "服务器核心、服务器名称和最大内存还没设置好呢\n\n（恼"
+                            Tip = "服务端核心、服务器名称和最大内存还没设置好呢\n\n（恼"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
@@ -430,14 +430,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "只剩最小内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "只剩服务器核心和最小内存没设置好力\n\n（喜"
+                            Tip = "只剩服务端核心和最小内存没设置好力\n\n（喜"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
                             Tip = "只剩Java和最小内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "服务器核心、Java和最小内存还没设置好呢\n\n（恼"
+                            Tip = "服务端核心、Java和最小内存还没设置好呢\n\n（恼"
                 else:
                     if (ChkVal[3] == 1):
                         if (ChkVal[4] == 1):
@@ -445,7 +445,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "只剩服务器名称和最小内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "服务器核心、服务器名称和最小内存还没设置好呢\n\n（恼"
+                            Tip = "服务端核心、服务器名称和最小内存还没设置好呢\n\n（恼"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
@@ -461,7 +461,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                             Tip = "只剩内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
-                            Tip = "服务器核心和内存还没设置好呢\n\n（恼"
+                            Tip = "服务端核心和内存还没设置好呢\n\n（恼"
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
@@ -480,7 +480,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     else:
                         if (ChkVal[4] == 1):
                             CanCreate = 0
-                            Tip = "你只设置好了服务器核心\n\n（恼"
+                            Tip = "你只设置好了服务端核心\n\n（恼"
                         else:
                             CanCreate = 0
                             Tip = "你什么都没设置好呢\n\n（恼"

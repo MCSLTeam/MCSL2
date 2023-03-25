@@ -2089,7 +2089,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip1_Label.setText(
             _translate(
                 "MCSL2_MainWindow",
-                "一个服务器最基础的三个部件\n" "1.存放的文件夹路径\n" "2.服务器核心\n" "3.Java路径",
+                "一个服务器最基础的三个部件\n" "1.存放的文件夹路径\n" "2.服务端核心\n" "3.Java路径",
             )
         )
         self.ConfigTip2_Label.setText(
@@ -2111,7 +2111,7 @@ class Ui_MCSL2_MainWindow(object):
         )
         self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
         self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
-        self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
+        self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务端核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
         self.Founded_Java_List_PushButton.setText(

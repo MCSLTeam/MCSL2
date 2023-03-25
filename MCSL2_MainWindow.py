@@ -2026,7 +2026,7 @@ class Ui_MCSL2_MainWindow(object):
             _translate(
                 "MCSL2_MainWindow",
                 "如何搭建一个Java版Minecraft服务器？\n"
-                "1.准备好Java、服务器核心、一台电脑\n"
+                "1.准备好Java、服务端核心、一台电脑\n"
                 "（提示：可使用本程序下载Java与核心）\n"
                 "2.配置参数（本程序“配置服务器”页）\n"
                 "3.开启服务器。将服务器IP告诉玩家。",
@@ -2042,7 +2042,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip1_Label.setText(
             _translate(
                 "MCSL2_MainWindow",
-                "搭建服务器只需要：\n" "1.存放服务器的文件夹\n" "2.服务器核心\n" "3.Java",
+                "搭建服务器只需要：\n" "1.存放服务器的文件夹\n" "2.服务端核心\n" "3.Java",
             )
         )
         self.ConfigTip2_Label.setText(
@@ -2064,7 +2064,7 @@ class Ui_MCSL2_MainWindow(object):
         )
         self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
         self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
-        self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
+        self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务端核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
         self.Founded_Java_List_PushButton.setText(
