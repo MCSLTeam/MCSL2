@@ -23,7 +23,7 @@ ___
 ~~Can help you very easily open a server of Minecraft: Java Edition.~~ XD
 
  - **💻 Simple and beautiful interface**: Written with Qt5 framework, collocate with QSS，*powered by rounded corners*
- - **🎞️ Multiple servers can be managed**: With a MCSL2, the servers are all yours!
+ - **🎞️ Multiple servers can be managed**: With MCSL 2, servers are all in your control!
  - **⏬ All-in-One download service**: Powered by MCSLAPI, with the Aria2 download engine, speed fly!
  - **⚡ Quickly configure a server**: A few options to quickly configure a new server!
  - **✅ Automatic find Java**: Tired of manually flipping through directories? Automatically find Java can help you solve it!
