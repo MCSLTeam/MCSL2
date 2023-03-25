@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\resources\MCSL2_AskDialog.ui'
+# Form implementation generated from reading ui file 'resources\MCSL2_AskDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\resources\MCSL2_MainWindow.ui'
+# Form implementation generated from reading ui file 'resources\MCSL2_MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
