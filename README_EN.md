@@ -31,7 +31,7 @@ ___
 ___
 ### Development
 
-This app uses Python 3.10, and [poetry](https://python-poetry.org/) for dependency management.
+This app uses Python 3.8.
 
 1. Install Python 3.10 on your machine if it isn't already installed. It can be downloaded from the official [Python.org](https://www.python.org/downloads/) or with a package manager like `brew` or `apt`, depending on your system.
 
