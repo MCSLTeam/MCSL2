@@ -43,7 +43,7 @@ ___
 
 还有所有的贡献者们！  
 
-<a href="https://github.com/xianyongjian080402/Minecraft-Optimal-Starter_3/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
+<a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
 ___
 ## 开发文档 
 ~~其实我就不知道该写啥好~~  

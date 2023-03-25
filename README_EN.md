@@ -44,7 +44,8 @@ ___
 
 And all the contributors!  
 
-<a href="https://github.com/xianyongjian080402/Minecraft-Optimal-Starter_3/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
+<a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
+
 ___
 ## Development document
 ~~Actually, I don't know what to write.~~ XD  
