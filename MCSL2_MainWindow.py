@@ -73,7 +73,11 @@ class Ui_MCSL2_MainWindow(object):
             "    border-radius: 11px;\n"
             "}"
         )
-        self.Close_PushButton.setText("")
+        font = QFont()
+        #font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(21)
+        self.Close_PushButton.setText("×")
+        self.Close_PushButton.setFont(font)
         self.Close_PushButton.setObjectName("Close_PushButton")
         self.Minimize_PushButton = QPushButton(self.OptionsWidget)
         self.Minimize_PushButton.setGeometry(QRect(60, 20, 31, 23))
@@ -95,7 +99,9 @@ class Ui_MCSL2_MainWindow(object):
             "    border-radius: 11px;\n"
             "}"
         )
-        self.Minimize_PushButton.setText("")
+        font.setPointSize(30)
+        self.Minimize_PushButton.setText("-")
+        self.Minimize_PushButton.setFont(font)
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QPushButton(self.OptionsWidget)
         self.Home_Page_PushButton.setEnabled(True)
