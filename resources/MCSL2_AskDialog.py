@@ -152,4 +152,3 @@ class Ui_MCSL2_AskDialog(object):
         self.Dialog_PushButton_Cancel.setText(_translate("MCSL2_AskDialog", "取消"))
 
 
-import MCSL2_Icon_rc

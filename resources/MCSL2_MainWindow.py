@@ -2200,4 +2200,3 @@ class Ui_MCSL2_MainWindow(object):
         )
 
 
-import MCSL2_Icon_rc

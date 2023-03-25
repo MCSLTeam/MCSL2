@@ -2,20 +2,16 @@ from json import dumps, loads
 from os import getcwd, mkdir, remove, sep
 from os import path as ospath
 from shutil import copy
-from subprocess import Popen, PIPE
 from sys import argv, exit
 
-from PyQt5.QtCore import QPoint, QRect, QSize, Qt, pyqtSlot, QThread
-from PyQt5.QtGui import QColor, QCursor, QFont, QMouseEvent, QPainter, QPixmap
+from PyQt5.QtCore import QPoint, QSize, pyqtSlot
+from PyQt5.QtGui import QColor, QMouseEvent, QPainter
 from PyQt5.QtWidgets import (
     QApplication,
     QDialog,
     QFileDialog,
     QGraphicsDropShadowEffect,
-    QLabel,
     QMainWindow,
-    QPushButton,
-    QWidget,
 )
 from requests import get
 from win32api import GetFileVersionInfo, HIWORD, LOWORD
@@ -74,6 +70,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
 
+        # register Java finder workThread factory
+        self.javaPath = []
+        self.javaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
+        self.javaFindWorkThreadFactory.FuzzySearch = True
+        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
+        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
+        # create java finder workThread instance and start
+        self.javaFindWorkThreadFactory.Create().start()
     def paintEvent(self, event):
         pat2 = QPainter(self)
         pat2.setRenderHint(pat2.Antialiasing)
@@ -707,7 +711,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global JavaPaths
         JavaPaths = _JavaPaths
         with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
-            SaveFoundedJava.writelines(JavaPaths)
+            SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
 
     @pyqtSlot(int)
     def OnJavaFindWorkThreadFinished(self, sequenceNumber):
@@ -1230,7 +1234,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         if len(JavaPaths) == 0:
             if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
                 with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
-                    FoundedJavaTMP = ReadFoundedJava.readlines()
+                    FoundedJavaTMP = [p[:-1] for p in ReadFoundedJava.readlines()]
                     print(FoundedJavaTMP)
                     JavaPaths = FoundedJavaTMP
                     
