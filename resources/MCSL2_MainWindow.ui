@@ -1984,7 +1984,24 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <layout class="QVBoxLayout" name="JavaVerticalLayout"/>
+           <layout class="QVBoxLayout" name="JavaVerticalLayout">
+            <item>
+             <widget class="QListView" name="JavaListView">
+              <property name="autoScroll">
+               <bool>false</bool>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="showDropIndicator" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -2068,6 +2085,11 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>351</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QVBoxLayout" name="SpigotVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </widget>
@@ -2149,6 +2171,11 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>351</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QVBoxLayout" name="PaperVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </widget>
@@ -2230,9 +2257,139 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>351</height>
           </rect>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QVBoxLayout" name="BCVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </widget>
+      <widget class="QWidget" name="OfficialCoreTab">
+       <attribute name="title">
+        <string>[ 核心 ] 官方</string>
+       </attribute>
+       <widget class="QScrollArea" name="OfficialCoreScrollArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>631</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::sub-line:vertial 
+{	
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{	
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="OfficialCoreScrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>619</width>
+           <height>351</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QVBoxLayout" name="OfficialCoreVerticalLayout"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="More_Download_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>140</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(227, 227, 227);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>更多</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="ConsolePage">
@@ -2841,13 +2998,13 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <string>选择Java</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Completed_Choose_Java_PushButton">
+     <widget class="QPushButton" name="Choose_Java_Back_PushButton">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>490</y>
-        <width>121</width>
-        <height>51</height>
+        <x>200</x>
+        <y>90</y>
+        <width>101</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -2862,19 +3019,22 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
-	background-color: rgb(0, 120, 212);
-	border-radius: 8px;
-	color: rgb(255, 255, 255);
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(227, 227, 227);
+	border-radius: 7px;
 }
 QPushButton:pressed
 {
-    background-color: rgb(0, 107, 212);
-	border-radius: 8px;
-    color: rgb(255, 255, 255);
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
 }</string>
       </property>
       <property name="text">
-       <string>选好了</string>
+       <string>返回</string>
       </property>
       <property name="flat">
        <bool>false</bool>
@@ -2885,8 +3045,8 @@ QPushButton:pressed
        <rect>
         <x>40</x>
         <y>150</y>
-        <width>631</width>
-        <height>321</height>
+        <width>641</width>
+        <height>401</height>
        </rect>
       </property>
       <property name="cursor" stdset="0">
@@ -2951,9 +3111,233 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>619</width>
-         <height>321</height>
+         <width>629</width>
+         <height>401</height>
         </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QVBoxLayout" name="ChooseJavaScrollAreaVerticalLayout"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="UpdatePage">
+     <widget class="QLabel" name="Update_Label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>程序更新</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="Update_Tip1_Widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>651</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <widget class="QLabel" name="Update_Tip1_Label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>601</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>MCSL 2发布新版本啦！你想更新吗？</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="DoNotUpdate_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>490</y>
+        <width>101</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>丑拒</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Update_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>490</y>
+        <width>231</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 10px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 10px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>火速更新</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="Update_Introduction_Widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>230</y>
+        <width>651</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <widget class="QLabel" name="Update_Introduction_Title_Label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>601</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>这是最新版本的说明：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Update_Introduction_Label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>60</y>
+         <width>601</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Microsoft YaHei UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
       </widget>
      </widget>

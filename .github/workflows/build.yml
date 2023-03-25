@@ -2,13 +2,21 @@ name: Build with Nuitka
 
 on: [push, workflow_dispatch]
 
+permissions: write-all
+
 jobs:
   build:
-
     strategy:
       fail-fast: false
+
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        architecture:
+          - x64
+          - x86
 
     runs-on: ${{ matrix.os }}
 
@@ -19,46 +27,113 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-          architecture: 'x64'
+          python-version: '3.8'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements.dev.txt
 
-      # - name: Set up GCC
-      #   uses: egor-tensin/setup-gcc@v1
-      #   with:
-      #     version: latest
-      #     platform: x64
-
-      - name: Install Necessary Packages
+      - name: Update Pip
         run: |
-          python -m pip install poetry pip setuptools tomlkit imageio -U
+          python -m pip install pip setuptools -U
 
       - name: Install Deps for Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install -y libfuse2
 
-      # win 上 poetry 的奇怪 bug 导致 poetry install 装不上依赖
       - name: Install Project Deps
         run: |
-          python .github/utils/install_deps.py
+          python -m pip install -r requirements.txt -r requirements.dev.txt
 
-      - name: Build Executable
+      - name: Build Executable on Linux
+        if: runner.os == 'Linux'
         run: >
           python -m nuitka
-          --standalone --enable-plugin=pyqt5 --onefile
+          --standalone
+          --enable-plugin=pyqt5
+          --onefile
           --output-dir=build
-          --show-progress --assume-yes-for-downloads
-          --disable-console --macos-create-app-bundle
-          --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT"
-          --windows-product-name=MCSL2 --windows-file-version=2.0.0 --windows-product-version=2.0.0
+          --assume-yes-for-downloads
+          --disable-console
+          MCSL2.py
+
+      - name: Build Executable on macOS
+        if: runner.os == 'macOS'
+        run: >
+          python -m nuitka
+          --standalone
+          --enable-plugin=pyqt5
+          --onefile
+          --output-dir=build
+          --assume-yes-for-downloads
+          --disable-console
+          --macos-create-app-bundle
+          --macos-app-icon=pack.ico
+          MCSL2.py
+
+      - name: Build Executable on Windows
+        if: runner.os == 'Windows'
+        run: >
+          python -m nuitka
+          --standalone
+          --enable-plugin=pyqt5
+          --onefile
+          --output-dir=build
+          --assume-yes-for-downloads
+          --disable-console
+          --msvc=latest
+          --clang
+          --windows-icon-from-ico=pack.ico
+          --windows-company-name="LxHTT"
+          --windows-product-name=MCSL2
+          --windows-file-version=2.0.0 
+          --windows-product-version=2.0.0
           --windows-file-description="A Minecraft Server Launcher"
-          main.py
+          MCSL2.py
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ runner.os }} Build
+          name: ${{ runner.os }} ${{ matrix.architecture }} Build
           path: |
             build/*.exe
             build/*.bin
             build/*.app/**/*
+
+  release:
+    runs-on: ubuntu-latest
+
+    needs:
+      - build
+
+    steps:
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'Asia/Shanghai'
+
+      - name: Install Tools
+        run: sudo apt install p7zip-full -y
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Compress Artifacts
+        run: |
+          for name in ./*
+            do 7z a "${name}.zip" "./${name}/*"
+          done
+
+      - name: Get Time
+        run: |
+          echo "TAG_TIME=$(date +"%Y-%m-%d-%H-%M")" >> $GITHUB_ENV
+          echo "DISPLAY_TIME=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: ${{ env.TAG_TIME }}
+          prerelease: false
+          title: AutoRelease ${{ env.DISPLAY_TIME }}
+          files: '*.zip'

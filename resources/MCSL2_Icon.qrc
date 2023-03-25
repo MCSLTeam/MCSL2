@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="MCSL2_Icon">
+    <file>OfficialCoreIcon.png</file>
     <file>BungeeCordIcon.png</file>
     <file>PaperIcon.png</file>
     <file>JavaIcon.png</file>

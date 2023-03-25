@@ -1,20 +1,21 @@
-from PyQt5.QtCore import Qt, pyqtSignal, QRect, QCoreApplication, QMetaObject
-from PyQt5.QtGui import QFont, QPixmap, QCursor, QIcon
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
+from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import (
-    QWidget,
-    QPushButton,
-    QLineEdit,
-    QComboBox,
-    QStackedWidget,
-    QLabel,
-    QRadioButton,
-    QTabWidget,
-    QScrollArea,
-    QFrame,
     QAbstractScrollArea,
+    QComboBox,
+    QFrame,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QRadioButton,
+    QScrollArea,
+    QStackedWidget,
+    QTabWidget,
     QVBoxLayout,
+    QWidget,
 )
-import MCSL2_Icon
+
+import MCSL2_Icon as _  # noqa: F401
 
 
 class Ui_MCSL2_MainWindow(object):
@@ -1154,6 +1155,11 @@ class Ui_MCSL2_MainWindow(object):
         self.SpigotScrollAreaWidgetContents.setObjectName(
             "SpigotScrollAreaWidgetContents"
         )
+        self.verticalLayout = QVBoxLayout(self.SpigotScrollAreaWidgetContents)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.SpigotVerticalLayout = QVBoxLayout()
+        self.SpigotVerticalLayout.setObjectName("SpigotVerticalLayout")
+        self.verticalLayout.addLayout(self.SpigotVerticalLayout)
         self.SpigotScrollArea.setWidget(self.SpigotScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.SpigotTab, "")
         self.PaperTab = QWidget()
@@ -1206,6 +1212,11 @@ class Ui_MCSL2_MainWindow(object):
         self.PaperScrollAreaWidgetContents.setObjectName(
             "PaperScrollAreaWidgetContents"
         )
+        self.verticalLayout_3 = QVBoxLayout(self.PaperScrollAreaWidgetContents)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.PaperVerticalLayout = QVBoxLayout()
+        self.PaperVerticalLayout.setObjectName("PaperVerticalLayout")
+        self.verticalLayout_3.addLayout(self.PaperVerticalLayout)
         self.PaperScrollArea.setWidget(self.PaperScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.PaperTab, "")
         self.BungeeCordTab = QWidget()
@@ -1262,8 +1273,99 @@ class Ui_MCSL2_MainWindow(object):
         self.BungeeCordScrollAreaWidgetContents.setObjectName(
             "BungeeCordScrollAreaWidgetContents"
         )
+        self.verticalLayout_4 = QVBoxLayout(self.BungeeCordScrollAreaWidgetContents)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.BCVerticalLayout = QVBoxLayout()
+        self.BCVerticalLayout.setObjectName("BCVerticalLayout")
+        self.verticalLayout_4.addLayout(self.BCVerticalLayout)
         self.BungeeCordScrollArea.setWidget(self.BungeeCordScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.BungeeCordTab, "")
+        self.OfficialCoreTab = QWidget()
+        self.OfficialCoreTab.setObjectName("OfficialCoreTab")
+        self.OfficialCoreScrollArea = QScrollArea(self.OfficialCoreTab)
+        self.OfficialCoreScrollArea.setGeometry(QRect(10, 10, 631, 351))
+        self.OfficialCoreScrollArea.viewport().setProperty(
+            "cursor", QCursor(Qt.ArrowCursor)
+        )
+        self.OfficialCoreScrollArea.setStyleSheet(
+            "QScrollArea{\n"
+            "    border: 0px solid;\n"
+            "    border-right-color: #dcdbdc;\n"
+            "    background-color: transparent;\n"
+            "}\n"
+            "QScrollBar:vertical {\n"
+            "    border: none;\n"
+            "    background: transparent;\n"
+            "    width: 12px;\n"
+            "}\n"
+            "QScrollBar::handle:vertical {\n"
+            "    background: rgb(220, 220, 220);\n"
+            "    min-height: 20px;\n"
+            "    border-radius: 5px;\n"
+            "}\n"
+            "QScrollBar::add-line:vertial \n"
+            "{    \n"
+            "    height: 0px;\n"
+            "}\n"
+            "QScrollBar::sub-line:vertial \n"
+            "{    \n"
+            "    height: 0px;\n"
+            "}\n"
+            "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+            "{    \n"
+            "    height: 0px;\n"
+            "}\n"
+            "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+            "    background: none;\n"
+            "}"
+        )
+        self.OfficialCoreScrollArea.setFrameShape(QFrame.NoFrame)
+        self.OfficialCoreScrollArea.setFrameShadow(QFrame.Plain)
+        self.OfficialCoreScrollArea.setLineWidth(0)
+        self.OfficialCoreScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.OfficialCoreScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.OfficialCoreScrollArea.setSizeAdjustPolicy(
+            QAbstractScrollArea.AdjustToContents
+        )
+        self.OfficialCoreScrollArea.setWidgetResizable(True)
+        self.OfficialCoreScrollArea.setObjectName("OfficialCoreScrollArea")
+        self.OfficialCoreScrollAreaWidgetContents = QWidget()
+        self.OfficialCoreScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 351))
+        self.OfficialCoreScrollAreaWidgetContents.setObjectName(
+            "OfficialCoreScrollAreaWidgetContents"
+        )
+        self.verticalLayout_5 = QVBoxLayout(self.OfficialCoreScrollAreaWidgetContents)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.OfficialCoreVerticalLayout = QVBoxLayout()
+        self.OfficialCoreVerticalLayout.setObjectName("OfficialCoreVerticalLayout")
+        self.verticalLayout_5.addLayout(self.OfficialCoreVerticalLayout)
+        self.OfficialCoreScrollArea.setWidget(self.OfficialCoreScrollAreaWidgetContents)
+        self.DownloadSwitcher_TabWidget.addTab(self.OfficialCoreTab, "")
+        self.More_Download_PushButton = QPushButton(self.DownloadPage)
+        self.More_Download_PushButton.setGeometry(QRect(640, 140, 51, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.More_Download_PushButton.setFont(font)
+        self.More_Download_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.More_Download_PushButton.setStyleSheet(
+            "QPushButton\n"
+            "{\n"
+            "    background-color: rgb(230, 230, 230);\n"
+            "    border-radius: 7px;\n"
+            "}\n"
+            "QPushButton:hover\n"
+            "{\n"
+            "    background-color: rgb(227, 227, 227);\n"
+            "    border-radius: 7px;\n"
+            "}\n"
+            "QPushButton:pressed\n"
+            "{\n"
+            "    background-color: rgb(225, 225, 225);\n"
+            "    border-radius: 7px;\n"
+            "}"
+        )
+        self.More_Download_PushButton.setObjectName("More_Download_PushButton")
         self.FunctionsStackedWidget.addWidget(self.DownloadPage)
         self.ConsolePage = QWidget()
         self.ConsolePage.setObjectName("ConsolePage")
@@ -1664,33 +1766,34 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Java_Label.setFont(font)
         self.Choose_Java_Label.setObjectName("Choose_Java_Label")
-        self.Completed_Choose_Java_PushButton = QPushButton(self.ChooseJavaPage)
-        self.Completed_Choose_Java_PushButton.setGeometry(QRect(560, 490, 121, 51))
+        self.Choose_Java_Back_PushButton = QPushButton(self.ChooseJavaPage)
+        self.Choose_Java_Back_PushButton.setGeometry(QRect(200, 90, 101, 41))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(14)
-        self.Completed_Choose_Java_PushButton.setFont(font)
-        self.Completed_Choose_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Completed_Choose_Java_PushButton.setStyleSheet(
+        self.Choose_Java_Back_PushButton.setFont(font)
+        self.Choose_Java_Back_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Choose_Java_Back_PushButton.setStyleSheet(
             "QPushButton\n"
             "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 8px;\n"
-            "    color: rgb(255, 255, 255);\n"
+            "    background-color: rgb(230, 230, 230);\n"
+            "    border-radius: 7px;\n"
+            "}\n"
+            "QPushButton:hover\n"
+            "{\n"
+            "    background-color: rgb(227, 227, 227);\n"
+            "    border-radius: 7px;\n"
             "}\n"
             "QPushButton:pressed\n"
             "{\n"
-            "    background-color: rgb(0, 107, 212);\n"
-            "    border-radius: 8px;\n"
-            "    color: rgb(255, 255, 255);\n"
+            "    background-color: rgb(225, 225, 225);\n"
+            "    border-radius: 7px;\n"
             "}"
         )
-        self.Completed_Choose_Java_PushButton.setFlat(False)
-        self.Completed_Choose_Java_PushButton.setObjectName(
-            "Completed_Choose_Java_PushButton"
-        )
+        self.Choose_Java_Back_PushButton.setFlat(False)
+        self.Choose_Java_Back_PushButton.setObjectName("Choose_Java_Back_PushButton")
         self.ChooseJavaScrollArea = QScrollArea(self.ChooseJavaPage)
-        self.ChooseJavaScrollArea.setGeometry(QRect(40, 150, 631, 321))
+        self.ChooseJavaScrollArea.setGeometry(QRect(40, 150, 641, 401))
         self.ChooseJavaScrollArea.viewport().setProperty(
             "cursor", QCursor(Qt.ArrowCursor)
         )
@@ -1698,7 +1801,8 @@ class Ui_MCSL2_MainWindow(object):
             "QScrollArea{\n"
             "    border: 0px solid;\n"
             "    border-right-color: #dcdbdc;\n"
-            "    background-color: transparent;\n"
+            "    background-color: rgb(230, 230, 230);\n"
+            "    border-radius: 7px;\n"
             "}\n"
             "QScrollBar:vertical {\n"
             "    border: none;\n"
@@ -1737,12 +1841,138 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseJavaScrollArea.setWidgetResizable(True)
         self.ChooseJavaScrollArea.setObjectName("ChooseJavaScrollArea")
         self.ChooseJavaScrollAreaWidgetContents = QWidget()
-        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 619, 321))
+        self.ChooseJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 629, 401))
         self.ChooseJavaScrollAreaWidgetContents.setObjectName(
             "ChooseJavaScrollAreaWidgetContents"
         )
+        self.verticalLayout_6 = QVBoxLayout(self.ChooseJavaScrollAreaWidgetContents)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.ChooseJavaScrollAreaVerticalLayout = QVBoxLayout()
+        self.ChooseJavaScrollAreaVerticalLayout.setObjectName(
+            "ChooseJavaScrollAreaVerticalLayout"
+        )
+        self.verticalLayout_6.addLayout(self.ChooseJavaScrollAreaVerticalLayout)
         self.ChooseJavaScrollArea.setWidget(self.ChooseJavaScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseJavaPage)
+        self.UpdatePage = QWidget()
+        self.UpdatePage.setObjectName("UpdatePage")
+        self.Update_Label = QLabel(self.UpdatePage)
+        self.Update_Label.setGeometry(QRect(30, 80, 171, 51))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Update_Label.setFont(font)
+        self.Update_Label.setObjectName("Update_Label")
+        self.Update_Tip1_Widget = QWidget(self.UpdatePage)
+        self.Update_Tip1_Widget.setGeometry(QRect(30, 140, 651, 81))
+        self.Update_Tip1_Widget.setStyleSheet(
+            "QWidget\n"
+            "{\n"
+            "    background-color: rgb(247, 247, 247);\n"
+            "    border-radius: 10px\n"
+            "}"
+        )
+        self.Update_Tip1_Widget.setObjectName("Update_Tip1_Widget")
+        self.Update_Tip1_Label = QLabel(self.Update_Tip1_Widget)
+        self.Update_Tip1_Label.setGeometry(QRect(20, 10, 601, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Update_Tip1_Label.setFont(font)
+        self.Update_Tip1_Label.setAutoFillBackground(False)
+        self.Update_Tip1_Label.setStyleSheet("")
+        self.Update_Tip1_Label.setObjectName("Update_Tip1_Label")
+        self.DoNotUpdate_PushButton = QPushButton(self.UpdatePage)
+        self.DoNotUpdate_PushButton.setGeometry(QRect(340, 490, 101, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.DoNotUpdate_PushButton.setFont(font)
+        self.DoNotUpdate_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.DoNotUpdate_PushButton.setStyleSheet(
+            "QPushButton\n"
+            "{\n"
+            "    background-color: rgb(247, 247, 247);\n"
+            "    border-radius: 7px;\n"
+            "}\n"
+            "QPushButton:hover\n"
+            "{\n"
+            "    background-color: rgb(230, 230, 230);\n"
+            "    border-radius: 7px;\n"
+            "}\n"
+            "QPushButton:pressed\n"
+            "{\n"
+            "    background-color: rgb(225, 225, 225);\n"
+            "    border-radius: 7px;\n"
+            "}"
+        )
+        self.DoNotUpdate_PushButton.setObjectName("DoNotUpdate_PushButton")
+        self.Update_PushButton = QPushButton(self.UpdatePage)
+        self.Update_PushButton.setGeometry(QRect(450, 490, 231, 61))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(16)
+        self.Update_PushButton.setFont(font)
+        self.Update_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Update_PushButton.setStyleSheet(
+            "QPushButton\n"
+            "{\n"
+            "    background-color: rgb(0, 120, 212);\n"
+            "    border-radius: 10px;\n"
+            "    color: rgb(255, 255, 255);\n"
+            "}\n"
+            "QPushButton:hover\n"
+            "{\n"
+            "    background-color: rgb(0, 110, 212);\n"
+            "    border-radius: 10px;\n"
+            "    color: rgb(255, 255, 255);\n"
+            "}\n"
+            "QPushButton:pressed\n"
+            "{\n"
+            "    background-color: rgb(0, 100, 212);\n"
+            "    border-radius: 10px;\n"
+            "    color: rgb(255, 255, 255);\n"
+            "}"
+        )
+        self.Update_PushButton.setFlat(False)
+        self.Update_PushButton.setObjectName("Update_PushButton")
+        self.Update_Introduction_Widget = QWidget(self.UpdatePage)
+        self.Update_Introduction_Widget.setGeometry(QRect(30, 230, 651, 221))
+        self.Update_Introduction_Widget.setStyleSheet(
+            "QWidget\n"
+            "{\n"
+            "    background-color: rgb(247, 247, 247);\n"
+            "    border-radius: 10px\n"
+            "}"
+        )
+        self.Update_Introduction_Widget.setObjectName("Update_Introduction_Widget")
+        self.Update_Introduction_Title_Label = QLabel(self.Update_Introduction_Widget)
+        self.Update_Introduction_Title_Label.setGeometry(QRect(20, 20, 601, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Update_Introduction_Title_Label.setFont(font)
+        self.Update_Introduction_Title_Label.setAutoFillBackground(False)
+        self.Update_Introduction_Title_Label.setStyleSheet("")
+        self.Update_Introduction_Title_Label.setObjectName(
+            "Update_Introduction_Title_Label"
+        )
+        self.Update_Introduction_Label = QLabel(self.Update_Introduction_Widget)
+        self.Update_Introduction_Label.setGeometry(QRect(20, 60, 601, 141))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Update_Introduction_Label.setFont(font)
+        self.Update_Introduction_Label.setAutoFillBackground(False)
+        self.Update_Introduction_Label.setStyleSheet("")
+        self.Update_Introduction_Label.setText("")
+        self.Update_Introduction_Label.setAlignment(
+            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop
+        )
+        self.Update_Introduction_Label.setObjectName("Update_Introduction_Label")
+        self.FunctionsStackedWidget.addWidget(self.UpdatePage)
         self.Background = QLabel(self.CentralWidget)
         self.Background.setGeometry(QRect(0, 0, 211, 581))
         self.Background.setStyleSheet(
@@ -1865,6 +2095,11 @@ class Ui_MCSL2_MainWindow(object):
             self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab),
             _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"),
         )
+        self.DownloadSwitcher_TabWidget.setTabText(
+            self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab),
+            _translate("MCSL2_MainWindow", "[ 核心 ] 官方"),
+        )
+        self.More_Download_PushButton.setText(_translate("MCSL2_MainWindow", "更多"))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))
@@ -1906,7 +2141,13 @@ class Ui_MCSL2_MainWindow(object):
             )
         )
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
-        self.Completed_Choose_Java_PushButton.setText(
-            _translate("MCSL2_MainWindow", "选好了")
+        self.Choose_Java_Back_PushButton.setText(_translate("MCSL2_MainWindow", "返回"))
+        self.Update_Label.setText(_translate("MCSL2_MainWindow", "程序更新"))
+        self.Update_Tip1_Label.setText(
+            _translate("MCSL2_MainWindow", "MCSL 2发布新版本啦！你想更新吗？")
         )
-        # self.Select_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
+        self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "丑拒"))
+        self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
+        self.Update_Introduction_Title_Label.setText(
+            _translate("MCSL2_MainWindow", "这是最新版本的说明：")
+        )

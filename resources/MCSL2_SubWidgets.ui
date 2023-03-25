@@ -166,6 +166,9 @@ QPushButton:pressed
      <property name="text">
       <string/>
      </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="MCSL2_SubWidget_Download" native="true">
@@ -319,6 +322,9 @@ QPushButton:pressed
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
