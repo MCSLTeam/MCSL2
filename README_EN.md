@@ -20,7 +20,7 @@ ___
 ![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repobeats analytics image")
 ___
 ### What can MCSL2 do? 
-~~Can help you very easily open a Minecraft: Java Edition game server.~~ XD
+~~Can help you very easily open a server of Minecraft: Java Edition.~~ XD
 
  - **💻 Simple and beautiful interface**: Written with Qt5 framework, collocate with QSS，powered by rounded corners（
  - **🎞️ Multiple servers can be managed**: With a MCSL2, the servers are all yours!

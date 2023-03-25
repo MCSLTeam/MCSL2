@@ -2025,7 +2025,7 @@ class Ui_MCSL2_MainWindow(object):
         self.HomeTip1_Label.setText(
             _translate(
                 "MCSL2_MainWindow",
-                "如何搭建一个Java版Minecraft服务器？\n"
+                "如何搭建一个 Minecraft Java 的服务器？\n"
                 "1.准备好Java、服务端核心、一台电脑\n"
                 "（提示：可使用本程序下载Java与核心）\n"
                 "2.配置参数（本程序“配置服务器”页）\n"

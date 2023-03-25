@@ -19,7 +19,7 @@ ___
 ![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "仓库分析")
 ___
 ### 他能干什么？  
-~~可以帮助你非常方便的开启一个Java版Minecraft服务器。（废话文学~~
+~~可以帮助你非常方便的开启一个 Minecraft Java 的的服务器。（废话文学~~
 
  - **💻 简洁美观的界面**： 采用Qt编写，配合自己搓的QSS，由圆角强势驱动（
  - **🎞️ 可管理多服务器**： 一个MCSL2，服务器尽在掌控之中！

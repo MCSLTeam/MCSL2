@@ -764,7 +764,7 @@ QPushButton:pressed
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>如何搭建一个Java版Minecraft服务器？
+        <string>如何搭建一个 Minecraft Java 的服务器？
 1.准备好Java、核心、电脑
 （提示：可使用本程序下载）
 2.配置参数（本程序“配置服务器”页）
