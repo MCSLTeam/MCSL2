@@ -4,7 +4,7 @@ from os import path as ospath
 from shutil import copy
 from sys import argv, exit
 
-from PyQt5.QtCore import QPoint, QRect, QSize, Qt
+from PyQt5.QtCore import QPoint, QRect, QSize, Qt, pyqtSlot, QThread
 from PyQt5.QtGui import QColor, QCursor, QFont, QMouseEvent, QPainter, QPixmap
 from PyQt5.QtWidgets import (
     QApplication,
@@ -71,6 +71,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
+
+        # register Java finder workThread factory
+        self.javaPath = []
+        self.javaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
+        self.javaFindWorkThreadFactory.FuzzySearch = True
+        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
+        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
+        # create java finder workThread instance and start
+        self.javaFindWorkThreadFactory.Create().start()
 
     def paintEvent(self, event):
         pat2 = QPainter(self)
@@ -295,8 +304,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # The min memory parser
         if self.MinMemory_LineEdit.text() != "":
             if (
-                int(self.MinMemory_LineEdit.text()) % 1 == 0
-                and int(self.MinMemory_LineEdit.text()) != 0
+                    int(self.MinMemory_LineEdit.text()) % 1 == 0
+                    and int(self.MinMemory_LineEdit.text()) != 0
             ):
                 MinMemory = int(self.MinMemory_LineEdit.text())
                 MinMemStatus = 1
@@ -308,8 +317,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # The max memory parser
         if self.MaxMemory_LineEdit.text() != "":
             if (
-                int(self.MaxMemory_LineEdit.text()) % 1 == 0
-                and int(self.MaxMemory_LineEdit.text()) != 0
+                    int(self.MaxMemory_LineEdit.text()) % 1 == 0
+                    and int(self.MaxMemory_LineEdit.text()) != 0
             ):
                 MaxMemory = int(self.MaxMemory_LineEdit.text())
                 MaxMemStatus = 1
@@ -339,300 +348,300 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # Pop-up determine
         # 5
         if (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你什么都没设置好呢\n\n（恼"
 
         # 4
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了最小内存\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了最大内存\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了服务器名称\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了Java\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "你只设置好了Java\n\n（恼"
 
         # 3
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "你只设置好了内存\n\n（恼"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、Java和最大内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、服务器名称和最大内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "Java、服务器名称和最大内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、Java和最小内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心、服务器名称和最小内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "Java、服务器名称和最小内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "服务器核心和内存还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "服务器核心和Java还没设置好呢\n\n（恼"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "服务器名称和内存还没设置好呢\n\n（恼"
 
         # 2
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩Java和服务器核心没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩服务器名称和服务器核心没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩服务器名称和Java没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩服务器核心和最小内存没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩Java和最小内存没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩服务器名称和最小内存没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩内存没设置好力\n\n（喜"
 
         # 1
         elif (
-            MinMemStatus == 0
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 0
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最小内存没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 0
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 0
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩最大内存没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 0
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 0
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩服务器名称没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 0
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 0
+                and CoreStatus == 1
         ):
             CanCreate = 0
             Tip = "只剩Java没设置好力\n\n（喜"
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 0
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 0
         ):
             CanCreate = 0
             Tip = "只剩服务器核心没设置好力\n\n（喜"
 
         # 0
         elif (
-            MinMemStatus == 1
-            and MaxMemStatus == 1
-            and NameStatus == 1
-            and JavaStatus == 1
-            and CoreStatus == 1
+                MinMemStatus == 1
+                and MaxMemStatus == 1
+                and NameStatus == 1
+                and JavaStatus == 1
+                and CoreStatus == 1
         ):
             CanCreate = 1
             Tip = "关闭此窗口后，\n\n服务器将会开始部署。"
@@ -673,13 +682,27 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0)
 
     def AutoDetectJava(self):
-        Tip = "开始查找..."
-        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
-        global SearchStatus, JavaPaths
-        MCSL2_JavaDetector.FindJava()
-        JavaPaths = MCSL2_JavaDetector.FoundJava
-        Tip = "搜索完毕。\n找到" + str(len(JavaPaths)) + "个Java。\n请点击Java列表查看。"
-        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+        # 防止同时多次运行worker线程
+        self.Auto_Find_Java_PushButton.setDisabled(True)
+        self.javaFindWorkThreadFactory.Create().start()
+
+    @pyqtSlot(list)
+    def JavaDetectFinished(self, _JavaPaths: list):
+        global JavaPaths
+        JavaPaths = _JavaPaths
+
+    @pyqtSlot(int)
+    def OnJavaFindWorkThreadFinished(self, sequenceNumber):
+
+        # 如果不是第一次运行worker线程
+        if sequenceNumber > 1:
+            Tip = "搜索完毕。\n找到" + str(len(JavaPaths)) + "个Java。\n请点击Java列表查看。"
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+
+        # 释放AutoDetectJava中禁用的按钮
+        self.Auto_Find_Java_PushButton.setEnabled(True)
+        # 更新self.ChooseJavaScrollAreaVerticalLayout中的内容
+
 
     def ShowFoundedJavaList_Back(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
@@ -726,10 +749,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         FileNames = ParseDownloaderAPIUrlSS[2]
         FileFormats = ParseDownloaderAPIUrlSS[3]
         if (
-            SubWidgetNames == DownloadUrls
-            and SubWidgetNames == FileNames
-            and SubWidgetNames == FileFormats
-            and SubWidgetNames == -1
+                SubWidgetNames == DownloadUrls
+                and SubWidgetNames == FileNames
+                and SubWidgetNames == FileFormats
+                and SubWidgetNames == -1
         ):
             pass
         else:
@@ -1181,6 +1204,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def InitSelectJavaSubWidget(self):
         global JavaPaths
+        # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
+        for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
+            self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
+
+        # 重新添加子控件
         for i in range(len(JavaPaths)):
             self.MCSL2_SubWidget_Select = QWidget()
             self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
@@ -1342,7 +1370,7 @@ def InitMCSL(isFirstLaunch):
             InitConfig.write(ConfigTemplate)
             InitConfig.close()
         with open(
-            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as InitServerList:
             ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             InitServerList.write(ServerListTemplate)
