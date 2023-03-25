@@ -1087,12 +1087,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
                 SaveFoundedJava.close()
         # 重新添加子控件
-        if len(JavaPaths) == 0:
-            if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
-                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
-                    FoundedJavaTMP = [p[:-1] for p in ReadFoundedJava.readlines()]
-                    print(FoundedJavaTMP)
-                    JavaPaths = FoundedJavaTMP
+        #if len(JavaPaths) == 0:
+            #if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
+                #with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
+                    #FoundedJavaTMP = [p[:-1] for p in ReadFoundedJava.readlines()]
+                    #print(FoundedJavaTMP)
+                    #JavaPaths = FoundedJavaTMP
                     
         for i in range(len(JavaPaths)):
             self.MCSL2_SubWidget_Select = QWidget()
