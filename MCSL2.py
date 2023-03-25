@@ -1301,17 +1301,23 @@ def DecodeDownloadJsons(RefreshUrl):
         Tip = "无法连接MCSLAPI，\n\n请检查网络或系统代理设置"
         CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
         return -1, -1, -1, -1
-    PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
-    for i in PyDownloadList:
-        SubWidgetName = i["name"]
-        SubWidgetNames.insert(0, SubWidgetName)
-        DownloadUrl = i["url"]
-        DownloadUrls.insert(0, DownloadUrl)
-        FileFormat = i["format"]
-        FileFormats.insert(0, FileFormat)
-        FileName = i["filename"]
-        FileNames.insert(0, FileName)
-    return SubWidgetNames, DownloadUrls, FileNames, FileFormats
+    try:
+        PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
+        for i in PyDownloadList:
+            SubWidgetName = i["name"]
+            SubWidgetNames.insert(0, SubWidgetName)
+            DownloadUrl = i["url"]
+            DownloadUrls.insert(0, DownloadUrl)
+            FileFormat = i["format"]
+            FileFormats.insert(0, FileFormat)
+            FileName = i["filename"]
+            FileNames.insert(0, FileName)
+        return SubWidgetNames, DownloadUrls, FileNames, FileFormats
+    except:
+        print(DownloadJson)
+        Tip = "可能解析api内容失败\n\n请检查网络或自己的节点设置"
+        CallMCSL2Dialog(Tip,isNeededTwoButtons=0)
+        return -1,-1,-1,-1
 
 
 def GetFileVersion(File):
