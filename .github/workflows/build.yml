@@ -76,20 +76,19 @@ jobs:
         if: runner.os == 'Windows'
         run: >
           python -m nuitka
+          --mingw64
           --standalone
           --enable-plugin=pyqt5
           --onefile
           --output-dir=build
           --assume-yes-for-downloads
-          --disable-console
-          --msvc=latest
-          --clang
+          --windows-disable-console
           --windows-icon-from-ico=pack.ico
           --windows-company-name="LxHTT"
           --windows-product-name=MCSL2
-          --windows-file-version=2.0.0 
+          --windows-file-version=2.0.0
           --windows-product-version=2.0.0
-          --windows-file-description="A Minecraft Server Launcher"
+          --windows-file-description="MCSL2"
           MCSL2.py
 
       - name: Upload Artifacts
