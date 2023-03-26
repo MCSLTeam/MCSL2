@@ -95,6 +95,4 @@ class Ui_MCSL2_Dialog(object):
         _translate = QCoreApplication.translate
         MCSL2_Dialog.setWindowTitle(_translate("MCSL2_Dialog", "提示"))
         self.Dialog_PushButton.setText(_translate("MCSL2_Dialog", "知道了"))
-        Tip = open(r"Tip", "r").read()
-        self.Dialog_label.setText(_translate("MCSL2_Dialog", Tip))
         self.Dialog_PushButton.clicked.connect(self.close)

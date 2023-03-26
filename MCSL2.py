@@ -1,5 +1,5 @@
 from json import dumps, loads
-from os import getcwd, mkdir, remove, sep
+from os import getcwd, mkdir, sep
 from os import path as ospath
 from shutil import copy
 from sys import argv, exit
@@ -26,6 +26,7 @@ from MCSL2_MainWindow import *  # noqa: F403
 # Initialize MainWindow
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def __init__(self):
+        InitMCSL()
         super(MCSL2MainWindow, self).__init__()
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
         effect = QGraphicsDropShadowEffect(self)
@@ -78,6 +79,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
         # create java finder workThread instance and start
         self.javaFindWorkThreadFactory.Create().start()
+
     def paintEvent(self, event):
         pat2 = QPainter(self)
         pat2.setRenderHint(pat2.Antialiasing)
@@ -351,7 +353,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             NameStatus = 0
 
         # Pop-up determine
-# Create List
+        # Create List
         ChkVal = []
         ChkVal.append(MinMemStatus)
         ChkVal.append(MaxMemStatus)
@@ -484,7 +486,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                         else:
                             CanCreate = 0
                             Tip = "你什么都没设置好呢\n\n（恼"
-                            #终于写完了.jpg
+                            # 终于写完了.jpg
 
         # Server processor
         if CanCreate == 0:
@@ -548,21 +550,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     @pyqtSlot(list)
     def JavaDetectFinished(self, _JavaPaths: list):
         global JavaPaths
-        JavaPaths = _JavaPaths
-        if not ospath.exists(r"./MCSL2"):
-            pass
-        else:
-            if ospath.exists(r"./MCSL2/AutoDetectJavaHistory.txt"):
-                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
-                    SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
-                    SaveFoundedJava.close()
-            else:
-                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as InitFoundedJava:
-                    InitFoundedJava.write("")
-                    InitFoundedJava.close()
-                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
-                    SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
-                    SaveFoundedJava.close()
+
+        with open("MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as SaveFoundedJava:
+            JavaPaths = list({p[:-1] for p in SaveFoundedJava.readlines()}.union(set(JavaPaths)).union(set(_JavaPaths)))
+            # 获取新发现的Java路径,或者用户选择的Java路径
+            SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
+
     @pyqtSlot(int)
     def OnJavaFindWorkThreadFinished(self, sequenceNumber):
 
@@ -574,7 +567,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 释放AutoDetectJava中禁用的按钮
         self.Auto_Find_Java_PushButton.setEnabled(True)
         # 更新self.ChooseJavaScrollAreaVerticalLayout中的内容
-
 
     def ShowFoundedJavaList_Back(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
@@ -1079,21 +1071,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
         for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
             self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
-        if ospath.exists(r"./MCSL2/AutoDetectJavaHistory.txt"):
-            with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as InitFoundedJava:
-                InitFoundedJava.write("")
-                InitFoundedJava.close()
-            with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w', encoding='utf-8') as SaveFoundedJava:
-                SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
-                SaveFoundedJava.close()
+
         # 重新添加子控件
         if len(JavaPaths) == 0:
-            if ospath.exists(r"MCSL2/AutoDetectJavaHistory.txt"):
-                with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
+            if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+                with open("MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
                     FoundedJavaTMP = [p[:-1] for p in ReadFoundedJava.readlines()]
                     print(FoundedJavaTMP)
                     JavaPaths = FoundedJavaTMP
-                    
+
         for i in range(len(JavaPaths)):
             self.MCSL2_SubWidget_Select = QWidget()
             self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
@@ -1217,50 +1203,48 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
 # Customize dialogs
 class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
-    def __init__(self):
+    def __init__(self, Tip):
         super(MCSL2Dialog, self).__init__()
         self.setupUi(self)
+        self.Dialog_label.setText(Tip)
 
 
 class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
-    def __init__(self):
+    def __init__(self, Tip):
         super(MCSL2AskDialog, self).__init__()
         self.setupUi(self)
+        self.Dialog_label.setText(Tip)
 
 
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip, isNeededTwoButtons):
-    SaveTip = open(r"Tip", "w+")
-    SaveTip.write(Tip)
-    SaveTip.close()
     if isNeededTwoButtons == 0:
-        MCSL2Dialog().exec()
-        remove(r"Tip")
+        MCSL2Dialog(Tip).exec()
     elif isNeededTwoButtons == 1:
-        MCSL2AskDialog().exec()
-        remove(r"Tip")
+        MCSL2AskDialog(Tip).exec()
     else:
         pass
 
 
-def InitMCSL(isFirstLaunch):
-    if isFirstLaunch == 1:
-        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n\n(本提示仅在首次启动出现)",
+def InitMCSL():
+    if not ospath.exists(r"MCSL2"):
+        mkdir(r"MCSL2")
+        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n(本提示仅在首次启动出现)",
                         isNeededTwoButtons=0)
-        if not ospath.exists(r"MCSL2"):
-            mkdir(r"MCSL2")
-            mkdir(r"MCSL2/Aria2")
-            with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
-                ConfigTemplate = ""
-                InitConfig.write(ConfigTemplate)
-                InitConfig.close()
-            with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as InitServerList:
-                ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
-                InitServerList.write(ServerListTemplate)
-                InitServerList.close()
-            with open(r"./MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as InitFoundedJava:
-                InitFoundedJava.write("")
-                InitFoundedJava.close()
+        mkdir(r"MCSL2/Aria2")
+        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
+            ConfigTemplate = ""
+            InitConfig.write(ConfigTemplate)
+            InitConfig.close()
+        with open(
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+        ) as InitServerList:
+            ServerListTemplate = '{\n  "MCSLServerList": [\n    {\n      "name": "MCSLReplacer",\n      ' \
+                                 '"core_file_name": "MCSLReplacer",\n      "java_path": "MCSLReplacer",' \
+                                 '\n      "min_memory": "MCSLReplacer",\n      "max_memory": "MCSLReplacer"\n    }\n  ' \
+                                 ']\n} '
+            InitServerList.write(ServerListTemplate)
+            InitServerList.close()
         if not ospath.exists(r"Servers"):
             mkdir(r"./Servers")
 
@@ -1316,8 +1300,8 @@ def DecodeDownloadJsons(RefreshUrl):
     except:
         print(DownloadJson)
         Tip = "可能解析api内容失败\n\n请检查网络或自己的节点设置"
-        CallMCSL2Dialog(Tip,isNeededTwoButtons=0)
-        return -1,-1,-1,-1
+        CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+        return -1, -1, -1, -1
 
 
 def GetFileVersion(File):
@@ -1329,22 +1313,20 @@ def GetFileVersion(File):
     return Version
 
 
-# Start MCSL
-JavaPath = 0
-JavaPaths = []
-DiskSymbols = []
-SearchStatus = 0
-CorePath = ""
-DownloadSource = 0
-Version = "2.0.1"
+if __name__ == '__main__':
+    # Start MCSL
+    JavaPath = 0
+    JavaPaths = []
+    DiskSymbols = []
+    SearchStatus = 0
+    CorePath = ""
+    DownloadSource = 0
+    Version = "2.0.1"
 
-QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-MCSLProcess = QApplication(argv)
-MCSLMainWindow = MCSL2MainWindow()
-MCSLMainWindow.show()
-if not ospath.exists(r"MCSL2"):
-    InitMCSL(isFirstLaunch=1)
-else:
-    InitMCSL(isFirstLaunch=0)
-exit(MCSLProcess.exec_())
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+    MCSLProcess = QApplication(argv)
+    MCSLMainWindow = MCSL2MainWindow()
+    MCSLMainWindow.show()
+
+    exit(MCSLProcess.exec_())
