@@ -64,7 +64,7 @@ class Ui_MCSL2_MainWindow(object):
             "}\n"
             "QPushButton:hover\n"
             "{\n"
-            "    background-color: rgb(193, 6, 16);\n"
+            "    background-color: rgb(255, 0, 0);\n"
             "    border-radius: 11px;\n"
             "}\n"
             "QPushButton:pressed\n"
@@ -85,12 +85,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Minimize_PushButton.setStyleSheet(
             "QPushButton\n"
             "{\n"
-            "    background-color: rgb(225, 225, 0);\n"
+            "    background-color: rgb(238, 201, 0);\n"
             "    border-radius: 11px;\n"
             "}\n"
             "QPushButton:hover\n"
             "{\n"
-            "    background-color: rgb(161, 182, 0);\n"
+            "    background-color: rgb(255, 220, 0);\n"
             "    border-radius: 11px;\n"
             "}\n"
             "QPushButton:pressed\n"
@@ -2143,7 +2143,7 @@ class Ui_MCSL2_MainWindow(object):
             _translate(
                 "MCSL2_MainWindow",
                 "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
-                "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。",
+                "MCSL 2将会读取目录下的文件夹名称以确定一个合理的服务目录器。",
             )
         )
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
@@ -2152,7 +2152,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Tip1_Label.setText(
             _translate("MCSL2_MainWindow", "MCSL 2发布新版本啦！你想更新吗？")
         )
-        self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "丑拒"))
+        self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "我拒绝"))
         self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
         self.Update_Introduction_Title_Label.setText(
             _translate("MCSL2_MainWindow", "这是最新版本的说明：")

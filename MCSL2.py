@@ -1,5 +1,5 @@
 from json import dumps, loads
-from os import getcwd, mkdir, remove, sep
+from os import getcwd, mkdir, sep
 from os import path as ospath
 from shutil import copy
 from sys import argv, exit
@@ -354,133 +354,128 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         # Pop-up determine
         # Create List
-        ChkVal = []
-        ChkVal.append(MinMemStatus)
-        ChkVal.append(MaxMemStatus)
-        ChkVal.append(NameStatus)
-        ChkVal.append(JavaStatus)
-        ChkVal.append(CoreStatus)
-        if (ChkVal[0] == 1):
-            if (ChkVal[1] == 1):
-                if (ChkVal[2] == 1):
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+        ChkVal = [MinMemStatus, MaxMemStatus, NameStatus, JavaStatus, CoreStatus]
+        if ChkVal[0] == 1:
+            if ChkVal[1] == 1:
+                if ChkVal[2] == 1:
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 1
                             Tip = "关闭此窗口后，\n\n服务器将会开始部署。"
                         else:
                             CanCreate = 0
                             Tip = "只剩服务器核心没设置好力\n\n（喜"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩Java没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "只剩Java和服务器核心没设置好力\n\n（喜"
                 else:
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩服务器名称没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "只剩服务器名称和服务器核心没设置好力\n\n（喜"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩服务器名称和Java没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "你只设置好了内存\n\n（恼"
             else:
-                if (ChkVal[2] == 1):
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+                if ChkVal[2] == 1:
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩最大内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "只剩最大内存和服务器核心没设置好力\n\n（喜"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩最大内存和Java没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "服务器核心、Java和最大内存还没设置好呢\n\n（恼"
                 else:
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩服务器名称和最大内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "服务器核心、服务器名称和最大内存还没设置好呢\n\n（恼"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "Java、服务器名称和最大内存还没设置好呢\n\n（恼"
                         else:
                             CanCreate = 0
                             Tip = "你只设置好了最小内存\n\n（恼"
         else:
-            if (ChkVal[1] == 1):
-                if (ChkVal[2] == 1):
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+            if ChkVal[1] == 1:
+                if ChkVal[2] == 1:
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩最小内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "只剩服务器核心和最小内存没设置好力\n\n（喜"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩Java和最小内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "服务器核心、Java和最小内存还没设置好呢\n\n（恼"
                 else:
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩服务器名称和最小内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "服务器核心、服务器名称和最小内存还没设置好呢\n\n（恼"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "Java、服务器名称和最小内存还没设置好呢\n\n（恼"
                         else:
                             CanCreate = 0
                             Tip = "你只设置好了最大内存\n\n（恼"
             else:
-                if (ChkVal[2] == 1):
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+                if ChkVal[2] == 1:
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "只剩内存没设置好力\n\n（喜"
                         else:
                             CanCreate = 0
                             Tip = "服务器核心和内存还没设置好呢\n\n（恼"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "Java和内存还没设置好呢\n\n（恼"
                         else:
                             CanCreate = 0
                             Tip = "你只设置好了服务器名称\n\n（恼"
                 else:
-                    if (ChkVal[3] == 1):
-                        if (ChkVal[4] == 1):
+                    if ChkVal[3] == 1:
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "服务器名称和内存还没设置好呢\n\n（恼"
                         else:
                             CanCreate = 0
                             Tip = "你只设置好了Java\n\n（恼"
                     else:
-                        if (ChkVal[4] == 1):
+                        if ChkVal[4] == 1:
                             CanCreate = 0
                             Tip = "你只设置好了服务器核心\n\n（恼"
                         else:
@@ -1233,7 +1228,9 @@ def InitMCSL():
                         isNeededTwoButtons=0)
         mkdir(r"MCSL2/Aria2")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
-            ConfigTemplate = ""
+            ConfigTemplate = '{\n  "BasicSettings": [\n    {\n      "language": "zh_cn",\n      ' \
+                             '"config_sers"'
+                             ']\n} '
             InitConfig.write(ConfigTemplate)
             InitConfig.close()
         with open(
