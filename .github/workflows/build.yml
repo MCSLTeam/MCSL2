@@ -76,7 +76,6 @@ jobs:
         if: runner.os == 'Windows'
         run: >
           python -m nuitka
-          --mingw64
           --standalone
           --enable-plugin=pyqt5
           --onefile
