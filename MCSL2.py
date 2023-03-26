@@ -1229,7 +1229,7 @@ def InitMCSL():
         mkdir(r"MCSL2/Aria2")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
             ConfigTemplate = '{\n  "BasicSettings": [\n    {\n      "language": "zh_cn",\n      ' \
-                             '"config_sers"'
+                             '"config_version": "0.0.1"' \
                              ']\n} '
             InitConfig.write(ConfigTemplate)
             InitConfig.close()
