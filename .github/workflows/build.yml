@@ -82,7 +82,6 @@ jobs:
           --onefile
           --output-dir=build
           --assume-yes-for-downloads
-          --windows-disable-console
           --windows-icon-from-ico=pack.ico
           --windows-company-name="LxHTT"
           --windows-product-name=MCSL2
