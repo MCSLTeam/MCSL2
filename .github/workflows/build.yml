@@ -41,6 +41,11 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install -y libfuse2
+      
+      - name: Install Deps for Windows
+        if: runner.os == 'Windows'
+        run: |
+          pip install pypiwin32
 
       - name: Install Project Deps
         run: |
