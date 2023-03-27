@@ -59,7 +59,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.DoNotUpdate_PushButton.clicked.connect(self.ToAboutPage)
 
         # Functions binding
-        self.DownloadSwitcher_TabWidget.currentChanged.connect(self.beforeRefreshDownloadType)
+        self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
         self.Start_PushButton.clicked.connect(self.LaunchMinecraftServer)
         self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
         self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
@@ -68,6 +68,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
+
 
         # register Java finder workThread factory
         self.javaPath = []
@@ -170,7 +171,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
-        self.beforeRefreshDownloadType()
+        self.RefreshDownloadType()
 
     def ToConsolePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(3)
@@ -610,32 +611,44 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     # The function of refreshing download type.
 
-    def beforeRefreshDownloadType(self):
+    def RefreshDownloadType(self):
         global DownloadSource, DownloadUrls
-        workThread = self.fetchDownloadURLThreadFactory.create(
-            (DownloadSource, self.DownloadSwitcher_TabWidget.currentIndex()),
-            True,
-            self.RefreshDownloadType
-        )
-        if workThread.isRunning():
-            return
+        # 如果存在DownloadSource且不为空,则不再重新获取
+        if self.downloadUrlDict.get(DownloadSource) is not None:
+            idx = self.DownloadSwitcher_TabWidget.currentIndex()
+            self.InitDownloadSubWidget(
+                self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'],
+                self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
+            )
         else:
-            workThread.start()
+            workThread = self.fetchDownloadURLThreadFactory.create(
+                downloadSrc=DownloadSource,
+                _singleton=True,
+                finishSlot=self.updateDownloadUrlDict
+                )
+            if workThread.isRunning():
+                return
+            else:
+                workThread.start()
 
-    @pyqtSlot(tuple)
-    def RefreshDownloadType(self, rv: tuple):
-        global DownloadSource, DownloadUrls
-        SubWidgetNames, DownloadUrls, FileNames, FileFormats = rv[1]
-        if (
-                SubWidgetNames == DownloadUrls
-                and SubWidgetNames == FileNames
-                and SubWidgetNames == FileFormats
-                and SubWidgetNames == -1
-        ):
-            pass
-        else:
-            self.downloadUrlDict.update()
-            self.InitDownloadSubWidget(SubWidgetNames, DownloadUrls)
+    @pyqtSlot(dict)
+    def updateDownloadUrlDict(self, _downloadUrlDict: dict):
+        self.downloadUrlDict.update(_downloadUrlDict)
+        self.RefreshDownloadType()
+
+    # def RefreshDownloadType(self, rv: tuple):
+    #     global DownloadSource, DownloadUrls
+    #     SubWidgetNames, DownloadUrls, FileNames, FileFormats = rv[1]
+    #     if (
+    #             SubWidgetNames == DownloadUrls
+    #             and SubWidgetNames == FileNames
+    #             and SubWidgetNames == FileFormats
+    #             and SubWidgetNames == -1
+    #     ):
+    #         pass
+    #     else:
+    #         self.downloadUrlDict.update()
+    #         self.InitDownloadSubWidget(SubWidgetNames, DownloadUrls)
 
     def InitDownloadSubWidget(self, SubWidgetNames, DownloadUrls):
         GraphType = self.DownloadSwitcher_TabWidget.currentIndex()

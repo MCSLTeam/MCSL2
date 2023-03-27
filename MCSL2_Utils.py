@@ -1,7 +1,5 @@
 import json
-import time
-from typing import Optional, Callable, Union, Iterable, Any
-import weakref
+from typing import Callable, Any
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
@@ -39,6 +37,27 @@ def ParseDownloaderAPIUrl(DownloadSource, DownloadType):
     FileNames = DecodeDownloadJsonsSS[2]
     FileFormats = DecodeDownloadJsonsSS[3]
     return SubWidgetNames, DownloadUrls, FileNames, FileFormats
+
+
+def ParseDownloaderAPIUrl1(DownloadSource):
+    UrlPrefix = "https://raw.iqiq.io/LxHTT/MCSLDownloaderAPI/master/"
+    SourceSuffix = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
+    TypeSuffix = [
+        "/JavaDownloadInfo.json",
+        "/SpigotDownloadInfo.json",
+        "/PaperDownloadInfo.json",
+        "/BungeeCordDownloadInfo.json",
+        "/OfficialCoreDownloadInfo.json",
+    ]
+    rv = {}
+    for i in range(len(TypeSuffix)):
+        DownloadAPIUrl = UrlPrefix + SourceSuffix[DownloadSource] + TypeSuffix[i]
+        SubWidgetNames, DownloadUrls, FileNames, FileFormats = DecodeDownloadJsons(DownloadAPIUrl)
+        rv.update({
+            i: dict(zip(("SubWidgetNames", "DownloadUrls", "FileNames", "FileFormats"),
+                        (SubWidgetNames, DownloadUrls, FileNames, FileFormats)))
+        })
+    return {DownloadSource: rv}
 
 
 def DecodeDownloadJsons(RefreshUrl):
@@ -181,12 +200,12 @@ class FetchDownloadURLThread(QThread):
     用于获取网页内容的线程
     结束时发射fetchSignal信号，参数为url和data组成的元组
     """
-    fetchSignal = pyqtSignal(tuple)
+    fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, arg, finishSlot: Callable = ...):
+    def __init__(self, downloadSrc, finishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.arg = arg
+        self.downloadSrc = downloadSrc
         self.data = None
         if finishSlot is not ...:
             self.fetchSignal.connect(finishSlot)
@@ -195,10 +214,7 @@ class FetchDownloadURLThread(QThread):
         return self.url
 
     def run(self):
-        arg1, arg2 = self.arg
-        r = ParseDownloaderAPIUrl(arg1, arg2)
-        time.sleep(3)
-        self.fetchSignal.emit(r)
+        self.fetchSignal.emit(ParseDownloaderAPIUrl1(self.downloadSrc))
 
     def getData(self):
         return self.data
@@ -206,22 +222,24 @@ class FetchDownloadURLThread(QThread):
 
 @singleton
 class FetchDownloadURLThreadFactory:
-    singletonThread = {}
+    singletonThread:dict[int,FetchDownloadURLThread] = {}
 
     @classmethod
-    def create(cls, arg: tuple, _singleton=False,
+    def create(cls,
+               downloadSrc: int,
+               _singleton=False,
                finishSlot=...) -> FetchDownloadURLThread:
+
         print({k: v.isRunning() for k, v in cls.singletonThread.items()})
         if _singleton:
 
-            if arg in cls.singletonThread and cls.singletonThread[arg].isRunning():
+            if downloadSrc in cls.singletonThread and cls.singletonThread[downloadSrc].isRunning():
                 print("线程已存在，返回已存在的线程")
 
-                return cls.singletonThread[arg]
+                return cls.singletonThread[downloadSrc]
             else:
-                thread = FetchDownloadURLThread(arg, finishSlot)
-                # 添加弱引用
-                cls.singletonThread[arg] = thread
+                thread = FetchDownloadURLThread(downloadSrc, finishSlot)
+                cls.singletonThread[downloadSrc] = thread
                 return thread
         else:
-            return FetchDownloadURLThread(arg, finishSlot)
+            return FetchDownloadURLThread(downloadSrc, finishSlot)
