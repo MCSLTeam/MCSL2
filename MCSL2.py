@@ -15,12 +15,11 @@ from PyQt5.QtWidgets import (
     QMainWindow,
 )
 from requests import get
-from win32api import GetFileVersionInfo, HIWORD, LOWORD
 
 import MCSL2_Icon as _  # noqa: F401
 import MCSL2_JavaDetector
 from MCSL2_MainWindow import *  # noqa: F403
-from MCSL2_Utils import CallMCSL2Dialog, FetchDownloadURLThreadFactory, InitMCSL
+from MCSL2_Utils import *
 
 
 # Initialize MainWindow
@@ -911,7 +910,6 @@ def GetJavaVersion(File):
 
 
 if __name__ == '__main__':
-    # Start MCSL
     JavaPath = 0
     JavaPaths = []
     DiskSymbols = []
