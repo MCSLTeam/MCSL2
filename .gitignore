@@ -10,6 +10,6 @@ pdm.lock
 .pdm.toml
 1.py
 Console.bat
-__pycache__
+__pycache__/
 /.vs
 /env
