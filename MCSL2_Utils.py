@@ -1,6 +1,7 @@
 import json
 from typing import Callable, Any
 
+from PyQt5 import QtCore
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from requests import get
@@ -126,7 +127,6 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons, parent=None):
         dialog = MCSL2AskDialog(Tip, parent)
     else:
         return
-    dialog.exec()
     return dialog
 
 
@@ -222,7 +222,7 @@ class FetchDownloadURLThread(QThread):
 
 @singleton
 class FetchDownloadURLThreadFactory:
-    singletonThread:dict[int,FetchDownloadURLThread] = {}
+    singletonThread: dict[int, FetchDownloadURLThread] = {}
 
     @classmethod
     def create(cls,
