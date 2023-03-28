@@ -11,15 +11,15 @@ from MCSL2_Libs.MCSL2_AskDialog import Ui_MCSL2_AskDialog
 from MCSL2_Libs.MCSL2_Dialog import Ui_MCSL2_Dialog
 
 
-def singleton(cls):
-    instances = {}
+def Singleton(cls):
+    Instances = {}
 
-    def get_instance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
+    def GetInstance(*args, **kwargs):
+        if cls not in Instances:
+            Instances[cls] = cls(*args, **kwargs)
+        return Instances[cls]
 
-    return get_instance
+    return GetInstance
 
 
 def InitMCSL():
@@ -115,23 +115,23 @@ def DecodeDownloadJsons(RefreshUrl):
             FileNames.insert(0, FileName)
         return SubWidgetNames, DownloadUrls, FileNames, FileFormats
     except:
-        print(DownloadJson)
+        # print(DownloadJson)
         # Tip = "可能解析api内容失败\n\n请检查网络或自己的节点设置"
         # CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
         return -1, -1, -1, -1
 
 
-def readJsonFile(filename):
-    filename = 'MCSL2/' + filename
-    with open(filename, 'r', encoding='utf-8') as f:
-        data = load(f)
-    return data
+def ReadJsonFile(FileName):
+    FileName = 'MCSL2/' + FileName
+    with open(FileName, 'r', encoding='utf-8') as RJsonFile:
+        Data = load(RJsonFile)
+    return Data
 
 
-def saveJsonFile(filename, data):
-    filename = 'MCSL2/' + filename
-    with open(filename, 'w', encoding='utf-8') as f:
-        dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
+def SaveJsonFile(FileName, Data):
+    FileName = 'MCSL2/' + FileName
+    with open(FileName, 'w', encoding='utf-8') as SJsonFile:
+        dump(Data, SJsonFile, ensure_ascii=False, indent=4, sort_keys=True)
 
 
 # Customize dialogs
@@ -152,78 +152,78 @@ class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
 # The function of calling MCSL2 Dialog
 def CallMCSL2Dialog(Tip, isNeededTwoButtons, parent=None):
     if isNeededTwoButtons == 0:
-        dialog = MCSL2Dialog(Tip, parent)
+        Dialog = MCSL2Dialog(Tip, parent)
     elif isNeededTwoButtons == 1:
-        dialog = MCSL2AskDialog(Tip, parent)
+        Dialog = MCSL2AskDialog(Tip, parent)
     else:
         return
-    dialog.exec_()
-    return dialog
+    Dialog.exec_()
+    return Dialog
 
 
 class JsonReadThread(QThread):
     readSignal = pyqtSignal(dict)
 
-    def __init__(self, filename, finishSlot: Callable[[dict, ], Any] = ...):
+    def __init__(self, FileName, FinishSlot: Callable[[dict, ], Any] = ...):
         super().__init__()
-        self.filename = filename
-        self.data = None
-        if finishSlot is not ...:
-            self.readSignal.connect(finishSlot)
+        self.FileName = FileName
+        self.Data = None
+        if FinishSlot is not ...:
+            self.readSignal.connect(FinishSlot)
 
-    def getFileName(self):
-        return self.filename
+    def GetFileName(self):
+        return self.FileName
 
     def run(self):
-        self.data = readJsonFile(self.filename)
-        self.readSignal.emit(self.data)
+        self.Data = ReadJsonFile(self.FileName)
+        self.readSignal.emit(self.Data)
 
-    def getData(self):
-        return self.data
+    def GetData(self):
+        return self.Data
 
 
 class JsonSaveThread(QThread):
     saveSignal = pyqtSignal(bool)
 
-    def __init__(self, filename, data, finishSlot: Callable[[], Any] = ...):
+    def __init__(self, FileName, Data, FinishSlot: Callable[[], Any] = ...):
         super().__init__()
-        self.filename = filename
-        self.data = data
-        if finishSlot is not ...:
-            self.saveSignal.connect(finishSlot)
+        self.FileName = FileName
+        self.Data = Data
+        if FinishSlot is not ...:
+            self.saveSignal.connect(FinishSlot)
 
-    def getFileName(self):
-        return self.filename
+    def GetFileName(self):
+        return self.FileName
 
     def run(self):
         try:
-            saveJsonFile(self.filename, self.data)
+            SaveJsonFile(self.FileName, self.Data)
             self.saveSignal.emit(True)
         except Exception as e:
-            print(e)
+            # print(e)
             self.saveSignal.emit(False)
 
 
-@singleton
+@Singleton
 class JsonReadThreadFactory:
     """
         虽然我不会去实例化这个类，但我还是加了个singleton装饰器...
     """
 
     @classmethod
-    def create(cls, filename, finishSlot: Callable[[dict, ], Any] = ...) -> JsonReadThread:
-        return JsonReadThread(filename, finishSlot)
+    def Create(cls, FileName, FinishSlot: Callable[[dict, ], Any] = ...) -> JsonReadThread:
+        return JsonReadThread(FileName, FinishSlot)
 
 
-@singleton
+@Singleton
 class JsonSaveThreadFactory:
     """
         虽然我不会去实例化这个类，但我还是加了个singleton装饰器...
     """
 
     @classmethod
-    def create(cls, filename, data, finishSlot: Callable[[], Any] = ...) -> JsonSaveThread:
-        return JsonSaveThread(filename, data, finishSlot)
+    def Create(cls, FileName, Data, FinishSlot: Callable[[], Any] = ...) -> JsonSaveThread:
+        return JsonSaveThread(FileName, Data, FinishSlot)
 
 
 class FetchDownloadURLThread(QThread):
@@ -233,25 +233,25 @@ class FetchDownloadURLThread(QThread):
     """
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, downloadSrc, finishSlot: Callable = ...):
+    def __init__(self, DownloadSource, FinishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.downloadSrc = downloadSrc
-        self.data = None
-        if finishSlot is not ...:
-            self.fetchSignal.connect(finishSlot)
+        self.DownloadSource = DownloadSource
+        self.Data = None
+        if FinishSlot is not ...:
+            self.fetchSignal.connect(FinishSlot)
 
     def getURL(self):
         return self.url
 
     def run(self):
-        self.fetchSignal.emit(ParseDownloaderAPIUrl1(self.downloadSrc))
+        self.fetchSignal.emit(ParseDownloaderAPIUrl1(self.DownloadSource))
 
     def getData(self):
-        return self.data
+        return self.Data
 
 
-@singleton
+@Singleton
 class FetchDownloadURLThreadFactory:
     singletonThread: Dict[int, FetchDownloadURLThread] = {}
 
@@ -261,11 +261,11 @@ class FetchDownloadURLThreadFactory:
                _singleton=False,
                finishSlot=...) -> FetchDownloadURLThread:
 
-        print({k: v.isRunning() for k, v in cls.singletonThread.items()})
+        # print({k: v.isRunning() for k, v in cls.singletonThread.items()})
         if _singleton:
 
             if downloadSrc in cls.singletonThread and cls.singletonThread[downloadSrc].isRunning():
-                print("线程已存在，返回已存在的线程")
+                # print("线程已存在，返回已存在的线程")
 
                 return cls.singletonThread[downloadSrc]
             else:

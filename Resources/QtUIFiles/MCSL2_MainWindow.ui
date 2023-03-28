@@ -1763,6 +1763,74 @@ QPushButton:pressed
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">RadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    font: 14px 'Segoe UI', 'Microsoft YaHei';
+    color: black;
+}
+
+RadioButton::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 11px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+RadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+RadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+RadioButton::indicator:checked {
+    height: 22px;
+    width: 22px;
+    border: none;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+RadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}</string>
+      </property>
       <property name="text">
        <string>luoxis云</string>
       </property>
@@ -1782,6 +1850,74 @@ QPushButton:pressed
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">RadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    font: 14px 'Segoe UI', 'Microsoft YaHei';
+    color: black;
+}
+
+RadioButton::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 11px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+RadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+RadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+RadioButton::indicator:checked {
+    height: 22px;
+    width: 22px;
+    border: none;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+RadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}</string>
+      </property>
       <property name="text">
        <string>Gitee</string>
       </property>
@@ -1800,6 +1936,74 @@ QPushButton:pressed
         <family>Microsoft YaHei UI</family>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">RadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    font: 14px 'Segoe UI', 'Microsoft YaHei';
+    color: black;
+}
+
+RadioButton::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 11px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+RadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+RadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+RadioButton::indicator:checked {
+    height: 22px;
+    width: 22px;
+    border: none;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+RadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}</string>
       </property>
       <property name="text">
        <string>SharePoint</string>
@@ -1823,6 +2027,74 @@ QPushButton:pressed
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">RadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    font: 14px 'Segoe UI', 'Microsoft YaHei';
+    color: black;
+}
+
+RadioButton::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 11px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+RadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+RadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+RadioButton::indicator:checked {
+    height: 22px;
+    width: 22px;
+    border: none;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+RadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}</string>
+      </property>
       <property name="text">
        <string>GitHub</string>
       </property>
@@ -1841,6 +2113,74 @@ QPushButton:pressed
         <family>Microsoft YaHei UI</family>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">RadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    font: 14px 'Segoe UI', 'Microsoft YaHei';
+    color: black;
+}
+
+RadioButton::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 11px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+RadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+RadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+RadioButton::indicator:checked {
+    height: 22px;
+    width: 22px;
+    border: none;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 --ThemeColorPrimary,
+            stop:1 --ThemeColorPrimary);
+}
+
+RadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+RadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}</string>
       </property>
       <property name="text">
        <string>GHProxy</string>
@@ -1936,16 +2276,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -2039,16 +2379,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -2125,16 +2465,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -2211,16 +2551,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -2297,16 +2637,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -2739,17 +3079,17 @@ QPushButton:pressed
 }</string>
       </property>
       <property name="text">
-       <string>    这是对MCSL的Remake。 
+       <string>    这是对MCSL的Remake。
 
     本来使用C#开发，但由于知识有限，无奈继续
 
-    使用Python。 
+    使用Python。
 
     MCSL 2 重构UI，使用更加清晰的代码逻辑开发，
 
-    除了启动、配置、下载以外，添加了诸多拓展工具。 
+    除了启动、配置、下载以外，添加了诸多拓展工具。
 
-    遇到Bug，请积极反馈，以帮助改进MCSL 2。 
+    遇到Bug，请积极反馈，以帮助改进MCSL 2。
 
     作者邮箱: lxhtz.dl@qq.com </string>
       </property>
@@ -2927,16 +3267,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -3069,16 +3409,16 @@ QScrollBar::handle:vertical {
 	min-height: 20px;
 	border-radius: 5px;
 }
-QScrollBar::add-line:vertial 
-{	
+QScrollBar::add-line:vertial
+{
     height: 0px;
 }
-QScrollBar::sub-line:vertial 
-{	
+QScrollBar::sub-line:vertial
+{
     height: 0px;
 }
 QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
-{	
+{
     height: 0px;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -3391,7 +3731,7 @@ QPushButton:pressed
  </widget>
  <resources>
   <include location="../Icons/MCSL2_Icon.qrc"/>
-  <include location="MCSL2_Icon.qrc"/>
+  <include location="../Icons/MCSL2_Icon.qrc"/>
  </resources>
  <connections/>
 </ui>

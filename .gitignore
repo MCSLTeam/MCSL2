@@ -3,7 +3,7 @@ venv/**
 poetry.lock
 .idea/**
 OfflineBuild/**
-DebugTool/ParseOneDriveLink/ParseOneDriveLink.exe
+Tools/ParseOneDriveLink/ParseOneDriveLink.exe
 Servers/**
 MCSL2/**
 pdm.lock

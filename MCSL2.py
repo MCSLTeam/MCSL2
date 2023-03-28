@@ -64,23 +64,22 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
         self.Check_Update_PushButton.clicked.connect(self.CheckUpdate)
         # self.Download_PushButton.clicked.connect(self.StartDownload)
-        # self.Download_Type_ComboBox.currentIndexChanged.connect(self.RefreshDownloadType)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
 
-        # register Java finder workThread factory
+        # Register Java finder workThread factory
         self.javaPath = []
-        self.javaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
-        self.javaFindWorkThreadFactory.FuzzySearch = True
-        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
-        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
-        # create java finder workThread instance and start
-        self.javaFindWorkThreadFactory.Create().start()
+        self.JavaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
+        self.JavaFindWorkThreadFactory.FuzzySearch = True
+        self.JavaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
+        self.JavaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
+        # Create java finder workThread instance and start
+        self.JavaFindWorkThreadFactory.Create().start()
 
-        # init factories
+        # Init factories
         self.fetchDownloadURLThreadFactory = FetchDownloadURLThreadFactory()
 
-        # init download url dict
+        # Init download url dict
         self.downloadUrlDict = {}
 
     def paintEvent(self, event):
@@ -551,7 +550,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def AutoDetectJava(self):
         # 防止同时多次运行worker线程
         self.Auto_Find_Java_PushButton.setDisabled(True)
-        self.javaFindWorkThreadFactory.Create().start()
+        self.JavaFindWorkThreadFactory.Create().start()
 
     @pyqtSlot(list)
     def JavaDetectFinished(self, _JavaPaths: list):
