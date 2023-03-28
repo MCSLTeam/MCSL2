@@ -1,8 +1,7 @@
-import re
-import subprocess
-from json import dumps, loads
-from os import getcwd, mkdir, sep
-from os import path as ospath
+from re import search
+from subprocess import check_output, STDOUT
+from json import dumps
+from os import getcwd
 from shutil import copy
 from sys import argv, exit
 
@@ -14,7 +13,6 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QMainWindow,
 )
-from requests import get
 
 import MCSL2_Icon as _  # noqa: F401
 import MCSL2_JavaDetector
@@ -86,6 +84,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.downloadUrlDict = {}
 
     def paintEvent(self, event):
+        super().paintEvent(event)
         pat2 = QPainter(self)
         pat2.setRenderHint(pat2.Antialiasing)
         pat2.setBrush(QColor("#F0F8FF"))
@@ -896,10 +895,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
 def GetJavaVersion(File):
     # 运行java.exe并捕获输出
-    output = subprocess.check_output([File, '-version'], stderr=subprocess.STDOUT)
+    output = check_output([File, '-version'], stderr=STDOUT)
     # 从输出中提取版本信息
     version_pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
-    version_match = re.search(version_pattern, output.decode('utf-8'))
+    version_match = search(version_pattern, output.decode('utf-8'))
 
     # 输出版本信息
     if version_match:

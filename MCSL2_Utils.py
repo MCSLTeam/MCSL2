@@ -1,9 +1,8 @@
-import json
-from typing import Callable, Any
-from os import  mkdir
+from json import load, loads, dump
+from os import mkdir
 from os import path as ospath
+from typing import Callable, Any
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from requests import get
@@ -104,7 +103,7 @@ def DecodeDownloadJsons(RefreshUrl):
         # CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
         return -2, -2, -2, -2
     try:
-        PyDownloadList = json.loads(DownloadJson)["MCSLDownloadList"]
+        PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
         for i in PyDownloadList:
             SubWidgetName = i["name"]
             SubWidgetNames.insert(0, SubWidgetName)
@@ -125,14 +124,14 @@ def DecodeDownloadJsons(RefreshUrl):
 def readJsonFile(filename):
     filename = 'MCSL2/' + filename
     with open(filename, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+        data = load(f)
     return data
 
 
 def saveJsonFile(filename, data):
     filename = 'MCSL2/' + filename
     with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
+        dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
 
 
 # Customize dialogs
