@@ -1,5 +1,5 @@
 from json import load, loads, dump
-from os import mkdir
+from os import mkdir, listdir
 from os import path as ospath
 from typing import Callable, Any, Dict
 
@@ -23,8 +23,11 @@ def Singleton(cls):
 
 
 def InitMCSL():
+    global LogFilesCount
     if not ospath.exists(r"MCSL2"):
+        LogFilesCount = 0
         mkdir(r"MCSL2")
+        mkdir(r"MCSL2/Logs")
         CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n(本提示仅在首次启动出现)",
                         isNeededTwoButtons=0)
         mkdir(r"MCSL2/Aria2")
@@ -46,6 +49,7 @@ def InitMCSL():
 
         pass
     else:
+        LogFilesCount = len(listdir(r"MCSL2/Logs"))
         if not ospath.exists(r"Servers"):
             mkdir(r"./Servers")
         pass

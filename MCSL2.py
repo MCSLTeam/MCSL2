@@ -4,7 +4,6 @@ from json import dumps
 from os import getcwd
 from shutil import copy
 from sys import argv, exit
-
 from PyQt5.QtCore import QPoint, QSize, pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent, QPainter
 from PyQt5.QtWidgets import (
@@ -915,11 +914,9 @@ if __name__ == '__main__':
     CorePath = ""
     DownloadSource = 0
     Version = "2.0.1"
-
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     MCSLProcess = QApplication(argv)
     MCSLMainWindow = MCSL2MainWindow()
     MCSLMainWindow.show()
-
     exit(MCSLProcess.exec_())
