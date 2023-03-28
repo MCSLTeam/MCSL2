@@ -8,7 +8,7 @@ Servers/**
 MCSL2/**
 pdm.lock
 .pdm.toml
-__pycache__/
-MCSL2_Libs/__pycache__/
+/__pycache__
+/MCSL2_Libs/__pycache__
 /.vs
 /env
