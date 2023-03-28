@@ -1,7 +1,7 @@
 from json import load, loads, dump
 from os import mkdir
 from os import path as ospath
-from typing import Callable, Any
+from typing import Callable, Any, Dict
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
@@ -253,7 +253,7 @@ class FetchDownloadURLThread(QThread):
 
 @singleton
 class FetchDownloadURLThreadFactory:
-    singletonThread: dict[int, FetchDownloadURLThread] = {}
+    singletonThread: Dict[int, FetchDownloadURLThread] = {}
 
     @classmethod
     def create(cls,
