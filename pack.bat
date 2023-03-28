@@ -1,2 +1,0 @@
-nuitka --mingw64 --standalone --enable-plugin=pyqt5 --windows-icon-from-ico=pack.ico --windows-company-name="LxHTT" --windows-product-name=MCSL2 --assume-yes-for-downloads --windows-file-version=2.0.0 --windows-product-version=2.0.0 --windows-file-description="MCSL2" --onefile --output-dir=build MCSL2.py
-pause

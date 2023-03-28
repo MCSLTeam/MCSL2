@@ -1,0 +1,1 @@
+nuitka --mingw64 --standalone --enable-plugin=pyqt5 --onefile --output-dir=OfflineBuild --assume-yes-for-downloads --windows-disable-console --windows-icon-from-ico=MCSL2.ico --windows-company-name="LxHTT" --windows-product-name="MCSL 2" --windows-file-version=2.0.0 --windows-product-version=2.0.0 --windows-file-description="MC Server Launcher 2" MCSL2.py

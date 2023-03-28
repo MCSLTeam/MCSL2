@@ -56,6 +56,12 @@ jobs:
           --output-dir=build
           --assume-yes-for-downloads
           --disable-console
+          --linux-icon=MCSL2.ico
+          --company-name="LxHTT"
+          --product-name="MCSL 2"
+          --file-version=2.0.0
+          --product-version=2.0.0
+          --file-description="MC Server Launcher 2"
           MCSL2.py
 
       - name: Build Executable on macOS
@@ -66,10 +72,16 @@ jobs:
           --enable-plugin=pyqt5
           --onefile
           --output-dir=build
-          --assume-yes-for-downloads
+          --assume-yes-for-download
           --disable-console
+          --macos-app-mode=gui
+          --macos-app-icon=MCSL2.ico
+          --company-name="LxHTT"
+          --product-name="MCSL 2"
+          --file-version=2.0.0
+          --macos-app-version=2.0.0
+          --file-description="MC Server Launcher 2"
           --macos-create-app-bundle
-          --macos-app-icon=pack.ico
           MCSL2.py
 
       - name: Build Executable on Windows
@@ -82,12 +94,13 @@ jobs:
           --onefile
           --output-dir=build
           --assume-yes-for-downloads
-          --windows-icon-from-ico=pack.ico
+          --windows-disable-console
+          --windows-icon-from-ico=MCSL2.ico
           --windows-company-name="LxHTT"
-          --windows-product-name=MCSL2
+          --windows-product-name="MCSL 2"
           --windows-file-version=2.0.0
           --windows-product-version=2.0.0
-          --windows-file-description="MCSL2"
+          --windows-file-description="MC Server Launcher 2"
           MCSL2.py
 
       - name: Upload Artifacts

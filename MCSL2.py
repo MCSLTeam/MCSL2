@@ -14,10 +14,10 @@ from PyQt5.QtWidgets import (
     QMainWindow,
 )
 
-import MCSL2_Icon as _  # noqa: F401
-import MCSL2_JavaDetector
-from MCSL2_MainWindow import *  # noqa: F403
-from MCSL2_Utils import *
+from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
+from MCSL2_Libs import MCSL2_JavaDetector
+from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
+from MCSL2_Libs.MCSL2_Utils import *
 
 
 # Initialize MainWindow
