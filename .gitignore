@@ -13,3 +13,4 @@ Console.bat
 __pycache__/
 /.vs
 /env
+build/
