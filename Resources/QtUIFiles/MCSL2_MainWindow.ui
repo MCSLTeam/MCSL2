@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>944</width>
-    <height>583</height>
+    <width>962</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,8 +28,8 @@
    <widget class="QWidget" name="OptionsWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>10</x>
+      <y>10</y>
       <width>211</width>
       <height>581</height>
      </rect>
@@ -39,8 +39,8 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>31</width>
-       <height>23</height>
+       <width>22</width>
+       <height>22</height>
       </rect>
      </property>
      <property name="cursor">
@@ -70,10 +70,10 @@ QPushButton:pressed
     <widget class="QPushButton" name="Minimize_PushButton">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>50</x>
        <y>20</y>
-       <width>31</width>
-       <height>23</height>
+       <width>22</width>
+       <height>22</height>
       </rect>
      </property>
      <property name="cursor">
@@ -124,22 +124,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	text-align: left;
 	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
 }
 QPushButton:hover
 {
+	text-align: left;
 	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
+	text-align: left;
 	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>主页</string>
+      <string>     主页</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -148,6 +151,9 @@ QPushButton:pressed
       <bool>false</bool>
      </property>
      <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
       <bool>false</bool>
      </property>
     </widget>
@@ -175,22 +181,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(247, 247, 247);
+	text-align: left;
+	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
 }
 QPushButton:hover
 {
+	text-align: left;
 	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
+	text-align: left;
 	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>配置服务器</string>
+      <string>     配置</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -286,22 +295,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(247, 247, 247);
+	text-align: left;
+	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
 }
 QPushButton:hover
 {
+	text-align: left;
 	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
+	text-align: left;
 	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>下载</string>
+      <string>     下载</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -337,22 +349,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(247, 247, 247);
+	text-align: left;
+	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
 }
 QPushButton:hover
 {
+	text-align: left;
 	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
+	text-align: left;
 	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>服务器控制台</string>
+      <string>     终端</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -388,22 +403,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(247, 247, 247);
+	text-align: left;
+	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
 }
 QPushButton:hover
 {
+	text-align: left;
 	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
+	text-align: left;
 	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>更多工具</string>
+      <string>     工具</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -439,22 +457,25 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
-	background-color: rgb(247, 247, 247);
+	text-align: left;
+	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
 }
 QPushButton:hover
 {
+	text-align: left;
 	background-color: rgb(243, 243, 243);
 	border-radius: 7px;
 }
 QPushButton:pressed
 {
+	text-align: left;
 	background-color: rgb(233, 233, 233);
 	border-radius: 7px;
 }</string>
      </property>
      <property name="text">
-      <string>关于</string>
+      <string>     关于</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -472,7 +493,7 @@ QPushButton:pressed
      </property>
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>45</x>
        <y>150</y>
        <width>10</width>
        <height>21</height>
@@ -483,6 +504,9 @@ QPushButton:pressed
        <family>Microsoft YaHei UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -501,7 +525,7 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue2">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>45</x>
        <y>210</y>
        <width>10</width>
        <height>21</height>
@@ -512,6 +536,9 @@ QPushButton:pressed
        <family>Microsoft YaHei UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -530,7 +557,7 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue3">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>45</x>
        <y>270</y>
        <width>10</width>
        <height>21</height>
@@ -541,6 +568,9 @@ QPushButton:pressed
        <family>Microsoft YaHei UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -559,7 +589,7 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue4">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>45</x>
        <y>330</y>
        <width>10</width>
        <height>21</height>
@@ -570,6 +600,9 @@ QPushButton:pressed
        <family>Microsoft YaHei UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -588,7 +621,7 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue5">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>45</x>
        <y>390</y>
        <width>10</width>
        <height>21</height>
@@ -599,6 +632,9 @@ QPushButton:pressed
        <family>Microsoft YaHei UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -617,7 +653,7 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue6">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>45</x>
        <y>450</y>
        <width>10</width>
        <height>21</height>
@@ -628,6 +664,9 @@ QPushButton:pressed
        <family>Microsoft YaHei UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
@@ -647,8 +686,8 @@ QPushButton:pressed
    <widget class="QStackedWidget" name="FunctionsStackedWidget">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>-20</y>
+      <x>220</x>
+      <y>-10</y>
       <width>731</width>
       <height>601</height>
      </rect>
@@ -3686,8 +3725,8 @@ QPushButton:pressed
    <widget class="QLabel" name="Background">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>10</x>
+      <y>10</y>
       <width>211</width>
       <height>581</height>
      </rect>
@@ -3703,19 +3742,39 @@ QPushButton:pressed
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="Shadow">
+    <property name="geometry">
+     <rect>
+      <x>8</x>
+      <y>8</y>
+      <width>945</width>
+      <height>585</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel
+{
+	background-color: rgba(230, 230, 230, 15%);
+	border-radius: 10px
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <widget class="QLabel" name="Background_2">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>0</y>
-      <width>821</width>
+      <x>200</x>
+      <y>10</y>
+      <width>751</width>
       <height>581</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QLabel
 {
-	background-color: rgba(255, 255, 255,85%);
+	background-color: rgba(255, 255, 255, 55%);
 	border-radius: 10px
 }</string>
     </property>
@@ -3724,13 +3783,13 @@ QPushButton:pressed
     </property>
    </widget>
    <zorder>Background_2</zorder>
+   <zorder>Shadow</zorder>
    <zorder>Background</zorder>
    <zorder>OptionsWidget</zorder>
    <zorder>FunctionsStackedWidget</zorder>
   </widget>
  </widget>
  <resources>
-  <include location="../Icons/MCSL2_Icon.qrc"/>
   <include location="../Icons/MCSL2_Icon.qrc"/>
  </resources>
  <connections/>

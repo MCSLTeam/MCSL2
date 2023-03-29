@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="MCSL2_Icon">
+    <file>About.svg</file>
+    <file>Home.svg</file>
+    <file>Toolbox.svg</file>
+    <file>Configuration.svg</file>
+    <file>Console.svg</file>
+    <file>Download.svg</file>
     <file>OfficialCoreIcon.png</file>
     <file>BungeeCordIcon.png</file>
     <file>PaperIcon.png</file>

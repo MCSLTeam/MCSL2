@@ -45,54 +45,50 @@ class Ui_MCSL2_MainWindow(object):
             QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Selected, QIcon.On
         )
         MCSL2_MainWindow.setWindowIcon(MCSLWindowIcon)
-        MCSL2_MainWindow.setFixedSize(944, 583)  # Make the size of window unchangeable.
+        MCSL2_MainWindow.setFixedSize(962, 601)  # Make the size of window unchangeable.
         self.CentralWidget = QWidget(MCSL2_MainWindow)
         self.CentralWidget.setObjectName("CentralWidget")
         self.OptionsWidget = QWidget(self.CentralWidget)
-        self.OptionsWidget.setGeometry(QRect(0, 0, 211, 581))
+        self.OptionsWidget.setGeometry(QRect(10, 10, 211, 581))
         self.OptionsWidget.setObjectName("OptionsWidget")
         self.Close_PushButton = QPushButton(self.OptionsWidget)
-        self.Close_PushButton.setGeometry(QRect(20, 20, 31, 23))
+        self.Close_PushButton.setGeometry(QRect(20, 20, 22, 22))
         self.Close_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Close_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(232, 17, 35);\n"
-            "    border-radius: 11px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(193, 6, 16);\n"
-            "    border-radius: 11px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(170, 0, 0);\n"
-            "    border-radius: 11px;\n"
-            "}"
-        )
+        self.Close_PushButton.setStyleSheet("QPushButton\n"
+                                            "{\n"
+                                            "    background-color: rgb(232, 17, 35);\n"
+                                            "    border-radius: 11px;\n"
+                                            "}\n"
+                                            "QPushButton:hover\n"
+                                            "{\n"
+                                            "    background-color: rgb(193, 6, 16);\n"
+                                            "    border-radius: 11px;\n"
+                                            "}\n"
+                                            "QPushButton:pressed\n"
+                                            "{\n"
+                                            "    background-color: rgb(170, 0, 0);\n"
+                                            "    border-radius: 11px;\n"
+                                            "}")
         self.Close_PushButton.setText("")
         self.Close_PushButton.setObjectName("Close_PushButton")
         self.Minimize_PushButton = QPushButton(self.OptionsWidget)
-        self.Minimize_PushButton.setGeometry(QRect(60, 20, 31, 23))
+        self.Minimize_PushButton.setGeometry(QRect(50, 20, 22, 22))
         self.Minimize_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Minimize_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(225, 225, 0);\n"
-            "    border-radius: 11px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(161, 182, 0);\n"
-            "    border-radius: 11px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(161, 161, 0);\n"
-            "    border-radius: 11px;\n"
-            "}"
-        )
+        self.Minimize_PushButton.setStyleSheet("QPushButton\n"
+                                               "{\n"
+                                               "    background-color: rgb(225, 225, 0);\n"
+                                               "    border-radius: 11px;\n"
+                                               "}\n"
+                                               "QPushButton:hover\n"
+                                               "{\n"
+                                               "    background-color: rgb(183, 161, 0);\n"
+                                               "    border-radius: 11px;\n"
+                                               "}\n"
+                                               "QPushButton:pressed\n"
+                                               "{\n"
+                                               "    background-color: rgb(161, 161, 0);\n"
+                                               "    border-radius: 11px;\n"
+                                               "}")
         self.Minimize_PushButton.setText("")
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.Home_Page_PushButton = QPushButton(self.OptionsWidget)
@@ -103,23 +99,28 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(13)
         self.Home_Page_PushButton.setFont(font)
         self.Home_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Home_Page_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(243, 243, 243);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(233, 233, 233);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
+        self.Home_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                "{\n"
+                                                "    text-align: left;\n"
+                                                "    background-color: rgb(247, 247, 247);\n"
+                                                "    border-radius: 7px;\n"
+                                                "}\n"
+                                                "QPushButton:hover\n"
+                                                "{\n"
+                                                "    text-align: left;\n"
+                                                "    background-color: rgb(243, 243, 243);\n"
+                                                "    border-radius: 7px;\n"
+                                                "}\n"
+                                                "QPushButton:pressed\n"
+                                                "{\n"
+                                                "    text-align: left;\n"
+                                                "    background-color: rgb(233, 233, 233);\n"
+                                                "    border-radius: 7px;\n"
+                                                "}")
+        self.Home_Page_PushButton.setCheckable(False)
+        self.Home_Page_PushButton.setChecked(False)
+        self.Home_Page_PushButton.setAutoExclusive(False)
+        self.Home_Page_PushButton.setFlat(False)
         self.Home_Page_PushButton.setObjectName("Home_Page_PushButton")
         self.Config_Page_PushButton = QPushButton(self.OptionsWidget)
         self.Config_Page_PushButton.setEnabled(True)
@@ -129,23 +130,27 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(13)
         self.Config_Page_PushButton.setFont(font)
         self.Config_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Config_Page_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(243, 243, 243);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(233, 233, 233);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
+        self.Config_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                  "{\n"
+                                                  "    text-align: left;\n"
+                                                  "    background-color: rgb(255, 255, 255);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}\n"
+                                                  "QPushButton:hover\n"
+                                                  "{\n"
+                                                  "    text-align: left;\n"
+                                                  "    background-color: rgb(243, 243, 243);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}\n"
+                                                  "QPushButton:pressed\n"
+                                                  "{\n"
+                                                  "    text-align: left;\n"
+                                                  "    background-color: rgb(233, 233, 233);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}")
+        self.Config_Page_PushButton.setCheckable(False)
+        self.Config_Page_PushButton.setChecked(False)
+        self.Config_Page_PushButton.setAutoExclusive(False)
         self.Config_Page_PushButton.setObjectName("Config_Page_PushButton")
         self.MCSL2_Title_Label = QLabel(self.OptionsWidget)
         self.MCSL2_Title_Label.setGeometry(QRect(100, 60, 111, 31))
@@ -175,23 +180,27 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(13)
         self.Download_Page_PushButton.setFont(font)
         self.Download_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Download_Page_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(243, 243, 243);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(233, 233, 233);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
+        self.Download_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                    "{\n"
+                                                    "    text-align: left;\n"
+                                                    "    background-color: rgb(255, 255, 255);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    text-align: left;\n"
+                                                    "    background-color: rgb(243, 243, 243);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    text-align: left;\n"
+                                                    "    background-color: rgb(233, 233, 233);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}")
+        self.Download_Page_PushButton.setCheckable(False)
+        self.Download_Page_PushButton.setChecked(False)
+        self.Download_Page_PushButton.setAutoExclusive(False)
         self.Download_Page_PushButton.setObjectName("Download_Page_PushButton")
         self.Server_Console_Page_PushButton = QPushButton(self.OptionsWidget)
         self.Server_Console_Page_PushButton.setEnabled(True)
@@ -201,26 +210,28 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(13)
         self.Server_Console_Page_PushButton.setFont(font)
         self.Server_Console_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Server_Console_Page_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(243, 243, 243);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(233, 233, 233);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
-        self.Server_Console_Page_PushButton.setObjectName(
-            "Server_Console_Page_PushButton"
-        )
+        self.Server_Console_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                          "{\n"
+                                                          "    text-align: left;\n"
+                                                          "    background-color: rgb(255, 255, 255);\n"
+                                                          "    border-radius: 7px;\n"
+                                                          "}\n"
+                                                          "QPushButton:hover\n"
+                                                          "{\n"
+                                                          "    text-align: left;\n"
+                                                          "    background-color: rgb(243, 243, 243);\n"
+                                                          "    border-radius: 7px;\n"
+                                                          "}\n"
+                                                          "QPushButton:pressed\n"
+                                                          "{\n"
+                                                          "    text-align: left;\n"
+                                                          "    background-color: rgb(233, 233, 233);\n"
+                                                          "    border-radius: 7px;\n"
+                                                          "}")
+        self.Server_Console_Page_PushButton.setCheckable(False)
+        self.Server_Console_Page_PushButton.setChecked(False)
+        self.Server_Console_Page_PushButton.setAutoExclusive(False)
+        self.Server_Console_Page_PushButton.setObjectName("Server_Console_Page_PushButton")
         self.Tools_Page_PushButton = QPushButton(self.OptionsWidget)
         self.Tools_Page_PushButton.setEnabled(True)
         self.Tools_Page_PushButton.setGeometry(QRect(20, 380, 171, 41))
@@ -229,23 +240,27 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(13)
         self.Tools_Page_PushButton.setFont(font)
         self.Tools_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Tools_Page_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(243, 243, 243);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(233, 233, 233);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
+        self.Tools_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(255, 255, 255);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}\n"
+                                                 "QPushButton:hover\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(243, 243, 243);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}\n"
+                                                 "QPushButton:pressed\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(233, 233, 233);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}")
+        self.Tools_Page_PushButton.setCheckable(False)
+        self.Tools_Page_PushButton.setChecked(False)
+        self.Tools_Page_PushButton.setAutoExclusive(False)
         self.Tools_Page_PushButton.setObjectName("Tools_Page_PushButton")
         self.About_Page_PushButton = QPushButton(self.OptionsWidget)
         self.About_Page_PushButton.setEnabled(True)
@@ -255,32 +270,37 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(13)
         self.About_Page_PushButton.setFont(font)
         self.About_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.About_Page_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(243, 243, 243);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(233, 233, 233);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
+        self.About_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(255, 255, 255);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}\n"
+                                                 "QPushButton:hover\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(243, 243, 243);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}\n"
+                                                 "QPushButton:pressed\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(233, 233, 233);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}")
+        self.About_Page_PushButton.setCheckable(False)
+        self.About_Page_PushButton.setChecked(False)
+        self.About_Page_PushButton.setAutoExclusive(False)
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
         self.Blue1 = QLabel(self.OptionsWidget)
         self.Blue1.setEnabled(True)
         self.Blue1.setVisible(True)
-        self.Blue1.setGeometry(QRect(20, 150, 10, 21))
+        self.Blue1.setGeometry(QRect(45, 150, 10, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.Blue1.setFont(font)
+        self.Blue1.setCursor(QCursor(Qt.PointingHandCursor))
         self.Blue1.setAutoFillBackground(False)
         self.Blue1.setStyleSheet(
             "QLabel\n"
@@ -294,11 +314,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue2 = QLabel(self.OptionsWidget)
         self.Blue2.setEnabled(True)
         self.Blue2.setVisible(False)
-        self.Blue2.setGeometry(QRect(20, 210, 10, 21))
+        self.Blue2.setGeometry(QRect(45, 210, 10, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.Blue2.setFont(font)
+        self.Blue2.setCursor(QCursor(Qt.PointingHandCursor))
         self.Blue2.setAutoFillBackground(False)
         self.Blue2.setStyleSheet(
             "QLabel\n"
@@ -312,11 +333,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue3 = QLabel(self.OptionsWidget)
         self.Blue3.setEnabled(True)
         self.Blue3.setVisible(False)
-        self.Blue3.setGeometry(QRect(20, 270, 10, 21))
+        self.Blue3.setGeometry(QRect(45, 270, 10, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.Blue3.setFont(font)
+        self.Blue3.setCursor(QCursor(Qt.PointingHandCursor))
         self.Blue3.setAutoFillBackground(False)
         self.Blue3.setStyleSheet(
             "QLabel\n"
@@ -330,11 +352,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue4 = QLabel(self.OptionsWidget)
         self.Blue4.setEnabled(True)
         self.Blue4.setVisible(False)
-        self.Blue4.setGeometry(QRect(20, 330, 10, 21))
+        self.Blue4.setGeometry(QRect(45, 330, 10, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.Blue4.setFont(font)
+        self.Blue4.setCursor(QCursor(Qt.PointingHandCursor))
         self.Blue4.setAutoFillBackground(False)
         self.Blue4.setStyleSheet(
             "QLabel\n"
@@ -348,11 +371,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue5 = QLabel(self.OptionsWidget)
         self.Blue5.setEnabled(True)
         self.Blue5.setVisible(False)
-        self.Blue5.setGeometry(QRect(20, 390, 10, 21))
+        self.Blue5.setGeometry(QRect(45, 390, 10, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.Blue5.setFont(font)
+        self.Blue5.setCursor(QCursor(Qt.PointingHandCursor))
         self.Blue5.setAutoFillBackground(False)
         self.Blue5.setStyleSheet(
             "QLabel\n"
@@ -366,11 +390,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue6 = QLabel(self.OptionsWidget)
         self.Blue6.setEnabled(True)
         self.Blue6.setVisible(False)
-        self.Blue6.setGeometry(QRect(20, 450, 10, 21))
+        self.Blue6.setGeometry(QRect(45, 450, 10, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.Blue6.setFont(font)
+        self.Blue6.setCursor(QCursor(Qt.PointingHandCursor))
         self.Blue6.setAutoFillBackground(False)
         self.Blue6.setStyleSheet(
             "QLabel\n"
@@ -382,7 +407,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue6.setText("")
         self.Blue6.setObjectName("Blue6")
         self.FunctionsStackedWidget = QStackedWidget(self.CentralWidget)
-        self.FunctionsStackedWidget.setGeometry(QRect(210, -20, 731, 601))
+        self.FunctionsStackedWidget.setGeometry(QRect(210, -10, 731, 601))
         self.FunctionsStackedWidget.setAutoFillBackground(False)
         self.FunctionsStackedWidget.setObjectName("FunctionsStackedWidget")
         self.HomePage = QWidget()
@@ -2302,7 +2327,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Introduction_Label.setObjectName("Update_Introduction_Label")
         self.FunctionsStackedWidget.addWidget(self.UpdatePage)
         self.Background = QLabel(self.CentralWidget)
-        self.Background.setGeometry(QRect(0, 0, 211, 581))
+        self.Background.setGeometry(QRect(10, 10, 211, 581))
         self.Background.setStyleSheet(
             "QLabel\n"
             "{\n"
@@ -2312,18 +2337,26 @@ class Ui_MCSL2_MainWindow(object):
         )
         self.Background.setText("")
         self.Background.setObjectName("Background")
+        self.Shadow = QLabel(self.CentralWidget)
+        self.Shadow.setGeometry(QRect(8, 8, 945, 585))
+        self.Shadow.setStyleSheet("QLabel\n"
+                                  "{\n"
+                                  "    background-color: rgba(230, 230, 230, 15%);\n"
+                                  "    border-radius: 10px\n"
+                                  "}")
+        self.Shadow.setText("")
+        self.Shadow.setObjectName("Shadow")
         self.Background_2 = QLabel(self.CentralWidget)
-        self.Background_2.setGeometry(QRect(120, 0, 821, 581))
-        self.Background_2.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgba(255, 255, 255,82%);\n"
-            "    border-radius: 10px\n"
-            "}"
-        )
+        self.Background_2.setGeometry(QRect(200, 10, 751, 581))
+        self.Background_2.setStyleSheet("QLabel\n"
+                                        "{\n"
+                                        "    background-color: rgba(255, 255, 255, 55%);\n"
+                                        "    border-radius: 10px\n"
+                                        "}")
         self.Background_2.setText("")
         self.Background_2.setObjectName("Background_2")
         self.Background_2.raise_()
+        self.Shadow.raise_()
         self.Background.raise_()
         self.OptionsWidget.raise_()
         self.FunctionsStackedWidget.raise_()
@@ -2336,18 +2369,14 @@ class Ui_MCSL2_MainWindow(object):
     def retranslateUi(self, MCSL2_MainWindow):
         _translate = QCoreApplication.translate
         MCSL2_MainWindow.setWindowTitle(_translate("MCSL2_MainWindow", "MCSL 2"))
-        self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "主页"))
-        self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "配置服务器"))
+        self.Home_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     主页"))
+        self.Config_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     配置"))
         self.MCSL2_Title_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
-        self.MCSL2_Title_Author_Label.setText(
-            _translate("MCSL2_MainWindow", "by LxHTT")
-        )
-        self.Download_Page_PushButton.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.Server_Console_Page_PushButton.setText(
-            _translate("MCSL2_MainWindow", "服务器控制台")
-        )
-        self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "更多工具"))
-        self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "关于"))
+        self.MCSL2_Title_Author_Label.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
+        self.Download_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     下载"))
+        self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     终端"))
+        self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     工具"))
+        self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     关于"))
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
         self.HomeTip1_Label.setText(

@@ -33,6 +33,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAutoFillBackground(True)
         self.setupUi(self)
+        self.Home_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Home.svg"))
+        self.Config_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Configuration.svg"))
+        self.Download_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Download.svg"))
+        self.Server_Console_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Console.svg"))
+        self.Tools_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Toolbox.svg"))
+        self.About_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/About.svg"))
         self._startPos = None
         self._endPos = None
         self._tracking = False
@@ -81,20 +87,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # Init download url dict
         self.downloadUrlDict = {}
 
-    def paintEvent(self, event):
-        super().paintEvent(event)
-        pat2 = QPainter(self)
-        pat2.setRenderHint(pat2.Antialiasing)
-        pat2.setBrush(QColor("#F0F8FF"))
-        pat2.setPen(Qt.transparent)
-
-        rect = self.rect()
-        rect.setLeft(9)
-        rect.setTop(9)
-        rect.setWidth(rect.width() - 9)
-        rect.setHeight(rect.height() - 9)
-        pat2.drawRoundedRect(rect, 4, 4)
-
     def mouseMoveEvent(self, e: QMouseEvent):
         if self._tracking:
             self._endPos = e.pos() - self._startPos
@@ -117,17 +109,16 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def Minimize(self):
         MCSLMainWindow.showMinimized()
 
-        # Pages Navigation
-
+    # Pages Navigation
     def ToHomePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(0)
-        self.Blue1.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 5px\n"
-            "}"
-        )
+        self.Blue1.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(True)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -137,13 +128,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ToConfigPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(1)
-        self.Blue2.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 5px\n"
-            "}"
-        )
+        self.Blue2.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(True)
         self.Blue3.setVisible(False)
@@ -155,13 +146,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 清空缓存
         self.downloadUrlDict.clear()
         self.FunctionsStackedWidget.setCurrentIndex(2)
-        self.Blue3.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 5px\n"
-            "}"
-        )
+        self.Blue3.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(True)
@@ -172,13 +163,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ToConsolePage(self):
         self.FunctionsStackedWidget.setCurrentIndex(3)
-        self.Blue4.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 5px\n"
-            "}"
-        )
+        self.Blue4.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -188,13 +179,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ToToolsPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(4)
-        self.Blue5.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 5px\n"
-            "}"
-        )
+        self.Blue5.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -204,13 +195,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ToAboutPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(5)
-        self.Blue6.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 5px\n"
-            "}"
-        )
+        self.Blue6.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
@@ -914,6 +905,47 @@ if __name__ == '__main__':
     CorePath = ""
     DownloadSource = 0
     Version = "2.0.1"
+    CurrentNavigationStyleSheet = "QPushButton\n" \
+                                  "{\n" \
+                                  "    text-align: left;\n" \
+                                  "    background-color: rgb(247, 247, 247);\n" \
+                                  "    border-radius: 7px;\n" \
+                                  "}\n" \
+                                  "QPushButton:hover\n" \
+                                  "{\n" \
+                                  "    text-align: left;\n" \
+                                  "    background-color: rgb(243, 243, 243);\n" \
+                                  "    border-radius: 7px;\n" \
+                                  "}\n" \
+                                  "QPushButton:pressed\n" \
+                                  "{\n" \
+                                  "    text-align: left;\n" \
+                                  "    background-color: rgb(233, 233, 233);\n" \
+                                  "    border-radius: 7px;\n" \
+                                  "}"
+    OtherNavigationStyleSheet = "QPushButton\n" \
+                                "{\n" \
+                                "    text-align: left;\n" \
+                                "    background-color: rgb(255, 255, 255);\n" \
+                                "    border-radius: 7px;\n" \
+                                "}\n" \
+                                "QPushButton:hover\n" \
+                                "{\n" \
+                                "    text-align: left;\n" \
+                                "    background-color: rgb(243, 243, 243);\n" \
+                                "    border-radius: 7px;\n" \
+                                "}\n" \
+                                "QPushButton:pressed\n" \
+                                "{\n" \
+                                "    text-align: left;\n" \
+                                "    background-color: rgb(233, 233, 233);\n" \
+                                "    border-radius: 7px;\n" \
+                                "}"
+    BlueStyleSheet = "QLabel\n" \
+                     "{\n" \
+                     "    background-color: rgb(0, 120, 212);\n" \
+                     "    border-radius: 5px\n" \
+                     "}"
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     MCSLProcess = QApplication(argv)
