@@ -45,6 +45,61 @@ ___
 
 <a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
 ___
+
+## 快速上手
+
+#### 0.依赖
+
+MCSL2 依赖 python3 运行环境。请确保你的 python 版本大于 3.6。
+
+其他的依赖可以通过在本仓库中的requirements来安装，可以使用：
+```commandline
+pip install -r requirements.txt
+```
+或者
+```commandline
+pip3 install -r requirements.txt
+```
+来安装。
+
+### 1.安装
+
+在 [Releases](https://github.com/LxHTT/MCSL2/releases) 中选择最新的 Release 并下载对应系统版本的压缩包来安装MCSL2。
+
+### 2.启动
+
+在 Windows 系统中，将MCSL2.exe放置到拥有可写入权限的文件夹中。
+
+在第一次启动后，会自动生成 MCSL2 与 Servers 文件夹。
+
+### 3.构建服务器
+
+#### 3.1 配置Java
+
+转到配置服务器页面，点击Java部分的自动查找按钮，将自动查找所有可用的 Java 。
+
+点击 Java列表 选择合适的Java版本。
+
+##### 或者
+
+转到下载页面，下载合适的Java版本。
+
+#### 3.2 配置内存
+
+再在下面输入预计分配的最小内存与最大内存。
+
+#### 3.3 配置服务器核心
+
+接下来选择服务器核心（同上，可以在软件中下载）
+
+##### 最后输入服务器名称
+
+再点击存储，即可。
+
+### 好了就是酱紫 ~~然后就可以摆烂了~~
+
+---
+
 ## 开发文档 
 ~~其实我就不知道该写啥好~~  
 本项目基于Python 3.8.0开发。

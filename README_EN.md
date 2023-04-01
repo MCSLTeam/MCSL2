@@ -46,6 +46,56 @@ And all the contributors!
 
 <a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
 
+## Quick Start
+
+#### 0.Dependencies 
+
+MCSL2 relies on the python3 runtime environment. Please ensure that your python version is greater than 3.6.
+
+Other dependencies can be installed through the requirements.txt in this repository, using:
+```commandline
+pip install -r requirements.txt
+```
+or
+```commandline
+pip3 install -r requirements.txt
+```
+to install.
+
+#### 1.Installation
+
+The latest release can be found [Here](https://github.com/LxHTT/MCSL2/releases), download the latest version that matches your system.
+
+### 2.Start up
+
+When you are using a Windows machine, please set MCSL2.exe into a folder with read and write permissions.
+
+While the first launch, the /MCSL2 and /Servers Folder folders will be automatically created.
+
+### 3.Build server
+
+#### 3.1 Config Java
+
+Go to the Server-Config page, click Auto Search in the Java area. It will automatically search for all available Java.
+
+Click Java list, then select the appropriate Java version.
+
+##### Or
+
+Go to the Download page, download an appropriate Java version. Then select it.
+
+#### 3.2 Config Memory
+
+After that, enter the expected min-memory and the max-memory on the Server-Config page.
+
+#### 3.3 Config Server core
+
+Select the Server.jar at the Server-Config page. (You can also download using the same method as downloading Java)
+
+##### Last, enter your server name, and you are ready to rock!
+
+### That's it, have fun!
+
 ___
 ## Development document
 ~~Actually, I don't know what to write.~~ XD  

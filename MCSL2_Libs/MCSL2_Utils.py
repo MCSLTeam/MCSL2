@@ -48,6 +48,8 @@ def InitMCSL():
             mkdir(r"./Servers")
 
         pass
+    elif not ospath.exists(r"MCSL2/Logs"):
+        mkdir(r"MCSL2/Logs")
     else:
         LogFilesCount = len(listdir(r"MCSL2/Logs"))
         if not ospath.exists(r"Servers"):
