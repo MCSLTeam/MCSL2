@@ -1,6 +1,6 @@
 from re import search
 from subprocess import check_output, STDOUT
-from json import dumps
+from json import dumps, loads
 from os import getcwd
 from shutil import copy
 from sys import argv, exit
@@ -12,9 +12,11 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QMainWindow,
 )
+from requests import get
 
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
+from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_Utils import *
 
@@ -730,7 +732,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
             return
         elif subWidgetNames == -1:
-            Tip = "可能解析api内容失败\n\n请检查网络或自己的节点设置"
+            Tip = "可能解析API内容失败\n\n请检查网络或自己的节点设置"
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
             return
 
