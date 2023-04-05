@@ -1,11 +1,13 @@
+import platform
 from re import search
 from subprocess import check_output, STDOUT
 from json import dumps, loads
-from os import getcwd
+from os import getcwd, environ
 from shutil import copy
 from sys import argv, exit
+
 from PyQt5.QtCore import QPoint, QSize, pyqtSlot
-from PyQt5.QtGui import QColor, QMouseEvent, QPainter
+from PyQt5.QtGui import QColor, QMouseEvent
 from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
@@ -35,6 +37,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAutoFillBackground(True)
         self.setupUi(self)
+
         self.Home_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Home.svg"))
         self.Config_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Configuration.svg"))
         self.Download_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Download.svg"))
@@ -246,9 +249,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def LaunchMinecraftServer(self):
         Fix = '-Xms2048M -Xmx2048M -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -jar '
         # LaunchCommand = "\\" + str(JavaPath) + "\\" + Fix + "./Servers/" + ServerName +
-        # monitor = Popen(LaunchCommand, shell=True, stdout=PIPE, stderr=PIPE)
+        # Monitor = Popen(LaunchCommand, shell=True, stdout=PIPE, stderr=PIPE)
         # while True:
-        #     result = monitor.stdout.readline()
+        #     result = Monitor.stdout.readline()
         #     if result != b'':
         #         try:
         #             print(result.decode('gbk').strip('\r\n'))
@@ -884,6 +887,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
 
 
+
 def GetJavaVersion(File):
     # 运行java.exe并捕获输出
     output = check_output([File, '-version'], stderr=STDOUT)
@@ -950,7 +954,25 @@ if __name__ == '__main__':
                      "}"
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+    if platform.system() == "Windows":
+        from MCSL2_Libs.MCSL2_ScalingFixer import ScalingFixer
+        Scaling = ScalingFixer().Scan()
+        Scaling = Scaling[-2] + Scaling[-1]
+        if Scaling == "25":
+            Scaling = ScalingFixer().Scan().replace(".", "")
+            QApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+            isSupportedDPI = False
+        else:
+            isSupportedDPI = True
+    elif platform.system() == "Darwin" or platform.system() == "macOS" or platform.system() == "Linux":
+        pass
+    # environ["QT_FONT_DPI"] = "96"
+    environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
     MCSLProcess = QApplication(argv)
+    if not isSupportedDPI:
+        CallMCSL2Dialog(
+            Tip=f"警告：\n您正以不受官方支持的{Scaling}%缩放比运行MCSL2。\n任何由此原因造成的关于UI的Bug将不予修复。\n\n此次启动的UI将以兼容模式初始化，\n因此会变得模糊。",
+            isNeededTwoButtons=0)
     MCSLMainWindow = MCSL2MainWindow()
     MCSLMainWindow.show()
     exit(MCSLProcess.exec_())

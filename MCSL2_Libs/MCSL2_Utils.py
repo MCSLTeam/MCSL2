@@ -7,8 +7,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
 
 
-from MCSL2_Libs.MCSL2_AskDialog import Ui_MCSL2_AskDialog
-from MCSL2_Libs.MCSL2_Dialog import Ui_MCSL2_Dialog
+from MCSL2_Libs.MCSL2_Dialog import Ui_MCSL2_Dialog, Ui_MCSL2_AskDialog
 
 
 def Singleton(cls):
@@ -28,8 +27,6 @@ def InitMCSL():
         LogFilesCount = 0
         mkdir(r"MCSL2")
         mkdir(r"MCSL2/Logs")
-        CallMCSL2Dialog(Tip="请注意：\n\n本程序无法在125%的\n\nDPI缩放比下正常运行。\n(本提示仅在首次启动出现)",
-                        isNeededTwoButtons=0)
         mkdir(r"MCSL2/Aria2")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
             ConfigTemplate = ""
@@ -46,12 +43,15 @@ def InitMCSL():
             InitServerList.close()
         if not ospath.exists(r"Servers"):
             mkdir(r"./Servers")
-
+        if not ospath.exists(r"MCSL2/Logs"):
+            mkdir(r"MCSL2/Logs")
         pass
     else:
         LogFilesCount = len(listdir(r"MCSL2/Logs"))
         if not ospath.exists(r"Servers"):
             mkdir(r"./Servers")
+        if not ospath.exists(r"MCSL2/Logs"):
+            mkdir(r"MCSL2/Logs")
         pass
 
 
