@@ -904,6 +904,7 @@ def GetJavaVersion(File):
 
 
 if __name__ == '__main__':
+    isSupportedDPI = None
     JavaPath = 0
     JavaPaths = []
     DiskSymbols = []
@@ -965,7 +966,9 @@ if __name__ == '__main__':
         else:
             isSupportedDPI = True
     elif platform.system() == "Darwin" or platform.system() == "macOS" or platform.system() == "Linux":
-        pass
+        isSupportedDPI = True
+    else:
+        isSupportedDPI = True
     # environ["QT_FONT_DPI"] = "96"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
     MCSLProcess = QApplication(argv)
