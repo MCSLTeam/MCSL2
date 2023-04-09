@@ -1,4 +1,4 @@
-name: Build with Nuitka
+name: Build and Release
 
 on: [push, workflow_dispatch]
 
@@ -56,7 +56,6 @@ jobs:
           --onefile
           --output-dir=build
           --assume-yes-for-downloads
-          --disable-console
           --linux-icon=MCSL2.ico
           --company-name="LxHTT"
           --product-name="MCSL 2"
@@ -71,18 +70,12 @@ jobs:
           python -m nuitka
           --standalone
           --enable-plugin=pyqt5
-          --onefile
+          --macos-create-app-bundle
           --output-dir=build
           --assume-yes-for-download
           --disable-console
-          --macos-app-mode=gui
+          --macos-app-version=2.0
           --macos-app-icon=MCSL2.ico
-          --company-name="LxHTT"
-          --product-name="MCSL 2"
-          --file-version=2.0.0
-          --macos-app-version=2.0.0
-          --file-description="MC Server Launcher 2"
-          --macos-create-app-bundle
           MCSL2.py
 
       - name: Build Executable on Windows
@@ -95,7 +88,6 @@ jobs:
           --onefile
           --output-dir=build
           --assume-yes-for-downloads
-          --windows-disable-console
           --windows-icon-from-ico=MCSL2.ico
           --windows-company-name="LxHTT"
           --windows-product-name="MCSL 2"
@@ -146,6 +138,6 @@ jobs:
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           automatic_release_tag: ${{ env.TAG_TIME }}
-          prerelease: false
+          prerelease: true
           title: AutoRelease ${{ env.DISPLAY_TIME }}
           files: '*.zip'
