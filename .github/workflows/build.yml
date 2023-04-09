@@ -69,6 +69,7 @@ jobs:
         run: >
           python -m nuitka
           --standalone
+          --onefile
           --enable-plugin=pyqt5
           --macos-create-app-bundle
           --output-dir=build
