@@ -1,7 +1,8 @@
+from json import loads
 from typing import Dict, Callable
+
 from PyQt5.QtCore import pyqtSignal, QThread
 from requests import get
-from json import loads
 
 
 def Singleton(cls):

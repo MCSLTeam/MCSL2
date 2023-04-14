@@ -6,7 +6,6 @@ from typing import Callable, Any
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
 
-
 from MCSL2_Libs.MCSL2_Dialog import Ui_MCSL2_Dialog, Ui_MCSL2_AskDialog
 
 

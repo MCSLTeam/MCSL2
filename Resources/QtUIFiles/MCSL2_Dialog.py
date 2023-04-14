@@ -84,4 +84,3 @@ class Ui_MCSL2_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         MCSL2_Dialog.setWindowTitle(_translate("MCSL2_Dialog", "提示"))
         self.Dialog_PushButton.setText(_translate("MCSL2_Dialog", "知道了"))
-import MCSL2_Icon_rc

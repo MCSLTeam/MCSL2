@@ -1,9 +1,8 @@
 import platform
-from re import search
-from subprocess import check_output, STDOUT
 from json import dumps, loads
-from os import getcwd, environ
+from os import getcwd, environ, remove
 from shutil import copy
+from subprocess import CalledProcessError
 from sys import argv, exit
 
 from PyQt5.QtCore import QPoint, QSize, pyqtSlot
@@ -19,6 +18,7 @@ from requests import get
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
+from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_Utils import *
 
@@ -265,7 +265,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self, "选择java.exe程序", getcwd(), "java.exe"
         )
         if JavaPathSysList[0] != "":
-            JavaPaths.append(JavaPathSysList[0])
+            v = GetJavaVersion(JavaPathSysList[0])
+            if not isinstance(v, CalledProcessError):
+                JavaPaths.append(Java(JavaPathSysList[0], v))
+            else:
+                CallMCSL2Dialog(f"选择的Java无效:\t\n{v.output}", 0)
         else:
             Tip = "看来你没有选择任何的Java呢！"
             CallMCSL2Dialog(Tip, 0)
@@ -550,11 +554,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     @pyqtSlot(list)
     def JavaDetectFinished(self, _JavaPaths: list):
         global JavaPaths
-
-        with open("MCSL2/AutoDetectJavaHistory.txt", 'w+', encoding='utf-8') as SaveFoundedJava:
+        # 向前兼容
+        if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+            remove("MCSL2/AutoDetectJavaHistory.txt")
+        with open("MCSL2/AutoDetectJavaHistory.json", 'w+', encoding='utf-8') as SaveFoundedJava:
             JavaPaths = list({p[:-1] for p in SaveFoundedJava.readlines()}.union(set(JavaPaths)).union(set(_JavaPaths)))
+            JavaPaths.sort(key=lambda x: x.Version, reverse=False)
+            JavaPathList = [{"Path": e.Path, "Version": e.Version} for e in JavaPaths]
             # 获取新发现的Java路径,或者用户选择的Java路径
-            SaveFoundedJava.writelines([p + '\n' for p in JavaPaths])
+            dump({"java": JavaPathList}, SaveFoundedJava, sort_keys=True, indent=4, ensure_ascii=False)
 
     @pyqtSlot(int)
     def OnJavaFindWorkThreadFinished(self, sequenceNumber):
@@ -758,14 +766,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
             self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
 
-        # 重新添加子控件
-        if len(JavaPaths) == 0:
-            if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
-                with open("MCSL2/AutoDetectJavaHistory.txt", 'r', encoding='utf-8') as ReadFoundedJava:
-                    FoundedJavaTMP = [p[:-1] for p in ReadFoundedJava.readlines()]
-                    print(FoundedJavaTMP)
-                    JavaPaths = FoundedJavaTMP
-
         for i in range(len(JavaPaths)):
             self.MCSL2_SubWidget_Select = QWidget()
             self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
@@ -846,8 +846,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.GraphWidget_S.setObjectName("GraphWidget_S")
             self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
             self.GraphWidget_S.setScaledContents(True)
-            JavaVersion = GetJavaVersion(File=JavaPaths[i])
-            self.IntroductionLabel_S.setText("Java版本：" + JavaVersion + "\n" + JavaPaths[i])
+            self.IntroductionLabel_S.setText("Java版本：" + JavaPaths[i].Version + "\n" + JavaPaths[i].Path)
             self.Select_PushButton.setText("选择")
             self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
 
@@ -864,7 +863,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global JavaPaths, JavaPath
         JavaPath = JavaPaths[JavaIndex]
         self.FunctionsStackedWidget.setCurrentIndex(1)
-        self.Java_Version_Label.setText(GetJavaVersion(File=JavaPath))
+        self.Java_Version_Label.setText(JavaPath.Version)
 
     # The function of checking update
     def CheckUpdate(self):
@@ -885,22 +884,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         elif LatestVersionInformation[0] == "false":
             Tip = "已经是最新版！"
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
-
-
-
-def GetJavaVersion(File):
-    # 运行java.exe并捕获输出
-    output = check_output([File, '-version'], stderr=STDOUT)
-    # 从输出中提取版本信息
-    version_pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
-    version_match = search(version_pattern, output.decode('utf-8'))
-
-    # 输出版本信息
-    if version_match:
-        version = '.'.join(filter(None, version_match.groups()))
-        return version
-    else:
-        return "Failed to retrieve Java version information."
 
 
 if __name__ == '__main__':

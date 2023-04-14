@@ -2218,4 +2218,3 @@ class Ui_MCSL2_MainWindow(object):
         self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "丑拒"))
         self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
         self.Update_Introduction_Title_Label.setText(_translate("MCSL2_MainWindow", "这是最新版本的说明："))
-import MCSL2_Icon_rc
