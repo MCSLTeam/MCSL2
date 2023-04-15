@@ -1,6 +1,7 @@
 from os import listdir
 from os import path as ospath
-from re import match
+from re import match, search
+from subprocess import check_output, STDOUT, CalledProcessError
 
 from PyQt5.QtCore import QThread, pyqtSignal
 
@@ -20,6 +21,45 @@ MatchKeywords = {
 
 # fmt: on
 
+class Java:
+    def __init__(self, path, ver):
+        self._path = path
+        self._version = ver
+
+    @property
+    def Path(self):
+        return self._path
+
+    @property
+    def Version(self):
+        return self._version
+
+    def __hash__(self):
+        return hash((self._path, self._version))
+
+    def __eq__(self, other):
+        if isinstance(other, Java):
+            return self._path == other._path and self._version == other._version
+
+
+def GetJavaVersion(File):
+    # 运行java.exe并捕获输出
+    try:
+        output = check_output([File, '-version'], stderr=STDOUT)
+    except CalledProcessError as e:
+        print(f"获取Java信息时出错:{e.cmd} | {e.output}")
+        return e
+    # 从输出中提取版本信息
+    version_pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
+    version_match = search(version_pattern, output.decode('utf-8'))
+
+    # 输出版本信息
+    if version_match:
+        version = '.'.join(filter(None, version_match.groups()))
+        return version
+    else:
+        return "Failed to retrieve Java version information."
+
 
 def FindStr(s):
     for _s in MatchKeywords:
@@ -33,15 +73,20 @@ def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
     if FuzzySearch:
         if ospath.isfile(Path):
             return JavaPathList
-        for File in listdir(Path):
-            try:
-                if ospath.isfile(Path + "/" + File):
-                    if match(f".*?bin/{FileKeyword}.{FileExtended}", Path + "/" + File):
-                        JavaPathList.append(Path + "/" + File)
-                elif FindStr(File.lower()):
-                    JavaPathList.extend(SearchFile(Path + "/" + File, FileKeyword, FileExtended, FuzzySearch))
-            except PermissionError:
-                pass
+        try:
+            for File in listdir(Path):
+                try:
+                    if ospath.isfile(Path + "/" + File):
+                        if match(f".*?bin/{FileKeyword}.{FileExtended}", Path + "/" + File):
+                            v = GetJavaVersion(Path + "/" + File)
+                            if not isinstance(v, CalledProcessError):
+                                JavaPathList.append(Java(Path + "/" + File, v))
+                    elif FindStr(File.lower()):
+                        JavaPathList.extend(SearchFile(Path + "/" + File, FileKeyword, FileExtended, FuzzySearch))
+                except PermissionError:
+                    pass
+        except FileNotFoundError as e:
+            print(f'扫描路径时出错: {e}')
     return JavaPathList
 
 

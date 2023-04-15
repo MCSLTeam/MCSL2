@@ -17,10 +17,11 @@
 # # ScalingFixer().CalculateDPI()
 #
 
+from win32.lib import win32con
 from win32.win32api import GetSystemMetrics
 from win32.win32gui import GetDC
 from win32.win32print import GetDeviceCaps
-from win32.lib import win32con
+
 
 class ScalingFixer:
     def __init__(self):
@@ -31,6 +32,7 @@ class ScalingFixer:
         ScreenSize = self.GetScreenSize()
         Scaling = round(RealResolution[0] / ScreenSize[0], 2)
         return str(Scaling)
+
     def GetRealResolution(self):
         """获取真实的分辨率"""
         hDC = GetDC(0)
