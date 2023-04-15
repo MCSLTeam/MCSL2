@@ -21,7 +21,7 @@ from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_Utils import *
-
+from MCSL2_Libs.MCSL2_ScalingFixer import ScalingFixer
 
 # Initialize MainWindow
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
@@ -938,18 +938,12 @@ if __name__ == '__main__':
                      "}"
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-    if platform.system() == "Windows":
-        from MCSL2_Libs.MCSL2_ScalingFixer import ScalingFixer
-        Scaling = ScalingFixer().Scan()
-        Scaling = Scaling[-2] + Scaling[-1]
-        if Scaling == "25":
-            Scaling = ScalingFixer().Scan().replace(".", "")
-            QApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-            isSupportedDPI = False
-        else:
-            isSupportedDPI = True
-    elif platform.system() == "Darwin" or platform.system() == "macOS" or platform.system() == "Linux":
-        isSupportedDPI = True
+    Scaling = ScalingFixer().Scan()
+    Scaling = Scaling[-2] + Scaling[-1]
+    if Scaling == "25":
+        Scaling = ScalingFixer().Scan().replace(".", "")
+        QApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+        isSupportedDPI = False
     else:
         isSupportedDPI = True
     # environ["QT_FONT_DPI"] = "96"
