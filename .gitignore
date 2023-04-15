@@ -3,12 +3,12 @@ venv/**
 poetry.lock
 .idea/**
 OfflineBuild/**
-Tools/ParseOneDriveLink/ParseOneDriveLink.exe
-Servers/**
-MCSL2/**
+*.exe
+Servers/
+MCSL2/
 pdm.lock
 .pdm.toml
 /__pycache__
-/MCSL2_Libs/__pycache__
+MCSL2_Libs/__pycache__/
 /.vs
 /env
