@@ -21,9 +21,9 @@ class DownloadURLParser:
         pass
 
     def ParseDownloaderAPIUrl(DownloadSource):
-        UrlPrefix = "https://raw.iqiq.io/LxHTT/MCSLDownloaderAPI/master/"
-        SourceSuffix = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
-        TypeSuffix = [
+        UrlArg = "https://raw.iqiq.io/LxHTT/MCSLDownloaderAPI/master/"
+        SourceArg = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
+        TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",
             "/PaperDownloadInfo.json",
@@ -31,8 +31,8 @@ class DownloadURLParser:
             "/OfficialCoreDownloadInfo.json",
         ]
         rv = {}
-        for i in range(len(TypeSuffix)):
-            DownloadAPIUrl = UrlPrefix + SourceSuffix[DownloadSource] + TypeSuffix[i]
+        for i in range(len(TypeArg)):
+            DownloadAPIUrl = UrlArg + SourceArg[DownloadSource] + TypeArg[i]
             SubWidgetNames, DownloadUrls, FileNames, FileFormats = DownloadURLParser.DecodeDownloadJsons(DownloadAPIUrl)
             rv.update({
                 i: dict(zip(("SubWidgetNames", "DownloadUrls", "FileNames", "FileFormats"),

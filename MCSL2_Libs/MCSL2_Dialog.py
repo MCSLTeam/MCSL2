@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
 from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
-from PyQt5.QtWidgets import QLabel, QPushButton
+from PyQt5.QtWidgets import QLabel, QPushButton, QDialog
 
 
 class Ui_MCSL2_Dialog(object):
@@ -218,3 +218,28 @@ class Ui_MCSL2_AskDialog(object):
         self.Dialog_PushButton_Accept.setText(_translate("MCSL2_AskDialog", "确定"))
         self.Dialog_PushButton_Cancel.setText(_translate("MCSL2_AskDialog", "取消"))
         self.Dialog_PushButton_Accept.clicked.connect(self.close)
+
+# Customize dialogs
+class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
+    def __init__(self, Tip, parent=None):
+        super(MCSL2Dialog, self).__init__(parent=parent)
+        self.setupUi(self)
+        self.Dialog_label.setText(Tip)
+
+
+class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
+    def __init__(self, Tip, parent=None):
+        super(MCSL2AskDialog, self).__init__(parent=parent)
+        self.setupUi(self)
+        self.Dialog_label.setText(Tip)
+
+# The function of calling MCSL2 Dialog
+def CallMCSL2Dialog(Tip, isNeededTwoButtons, parent=None):
+    if isNeededTwoButtons == 0:
+        Dialog = MCSL2Dialog(Tip, parent)
+    elif isNeededTwoButtons == 1:
+        Dialog = MCSL2AskDialog(Tip, parent)
+    else:
+        return
+    Dialog.exec_()
+    return Dialog

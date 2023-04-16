@@ -5,7 +5,7 @@ LogType = ['INFO', 'WARN', 'FAIL', 'ERR!']
 Logs = []
 
 
-class MCSL2Logger(object):
+class MCSL2Logger:
     def __init__(self, Msg, MsgLevel, LogFilesCount):
         self.Msg = Msg
         self.MsgLevel = MsgLevel  # Can be 0 , 1 , 2 , 3

@@ -1,12 +1,6 @@
 from json import load, dump
-from os import mkdir, listdir
-from os import path as ospath
 from typing import Callable, Any
-
 from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import QDialog
-
-from MCSL2_Libs.MCSL2_Dialog import Ui_MCSL2_Dialog, Ui_MCSL2_AskDialog
 
 
 def Singleton(cls):
@@ -19,50 +13,6 @@ def Singleton(cls):
 
     return GetInstance
 
-
-def InitMCSL():
-    global LogFilesCount
-    if not ospath.exists(r"MCSL2"):
-        LogFilesCount = 0
-        mkdir(r"MCSL2")
-        mkdir(r"MCSL2/Logs")
-        mkdir(r"MCSL2/Aria2")
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
-            ConfigTemplate = ""
-            InitConfig.write(ConfigTemplate)
-            InitConfig.close()
-        with open(
-                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-        ) as InitServerList:
-            ServerListTemplate = '{\n  "MCSLServerList": [\n    {\n      "name": "MCSLReplacer",\n      ' \
-                                 '"core_file_name": "MCSLReplacer",\n      "java_path": "MCSLReplacer",' \
-                                 '\n      "min_memory": "MCSLReplacer",\n      "max_memory": "MCSLReplacer"\n    }\n  ' \
-                                 ']\n} '
-            InitServerList.write(ServerListTemplate)
-            InitServerList.close()
-        if not ospath.exists(r"Servers"):
-            mkdir(r"./Servers")
-        if not ospath.exists(r"MCSL2/Logs"):
-            mkdir(r"MCSL2/Logs")
-        pass
-    else:
-        LogFilesCount = len(listdir(r"MCSL2/Logs"))
-        if not ospath.exists(r"Servers"):
-            mkdir(r"./Servers")
-        if not ospath.exists(r"MCSL2/Logs"):
-            mkdir(r"MCSL2/Logs")
-        pass
-
-
-
-
-
-
-
-
-
-
-
 def ReadJsonFile(FileName):
     FileName = 'MCSL2/' + FileName
     with open(FileName, 'r', encoding='utf-8') as RJsonFile:
@@ -74,34 +24,6 @@ def SaveJsonFile(FileName, Data):
     FileName = 'MCSL2/' + FileName
     with open(FileName, 'w', encoding='utf-8') as SJsonFile:
         dump(Data, SJsonFile, ensure_ascii=False, indent=4, sort_keys=True)
-
-
-# Customize dialogs
-class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
-    def __init__(self, Tip, parent=None):
-        super(MCSL2Dialog, self).__init__(parent=parent)
-        self.setupUi(self)
-        self.Dialog_label.setText(Tip)
-
-
-class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
-    def __init__(self, Tip, parent=None):
-        super(MCSL2AskDialog, self).__init__(parent=parent)
-        self.setupUi(self)
-        self.Dialog_label.setText(Tip)
-
-
-# The function of calling MCSL2 Dialog
-def CallMCSL2Dialog(Tip, isNeededTwoButtons, parent=None):
-    if isNeededTwoButtons == 0:
-        Dialog = MCSL2Dialog(Tip, parent)
-    elif isNeededTwoButtons == 1:
-        Dialog = MCSL2AskDialog(Tip, parent)
-    else:
-        return
-    Dialog.exec_()
-    return Dialog
-
 
 class JsonReadThread(QThread):
     readSignal = pyqtSignal(dict)
