@@ -23,6 +23,7 @@ from MCSL2_Libs.MCSL2_ServerController import ServerSaver
 from MCSL2_Libs.MCSL2_ScalingFixer import ScalingFixer
 from MCSL2_Libs.MCSL2_Updater import Updater
 
+
 # Initialize MainWindow
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def __init__(self):
@@ -246,20 +247,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global DownloadSource
         DownloadSource = 4
 
-    def LaunchMinecraftServer(self):
-        Fix = '-Xms2048M -Xmx2048M -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -jar '
-        # LaunchCommand = "\\" + str(JavaPath) + "\\" + Fix + "./Servers/" + ServerName +
-        # Monitor = Popen(LaunchCommand, shell=True, stdout=PIPE, stderr=PIPE)
-        # while True:
-        #     result = Monitor.stdout.readline()
-        #     if result != b'':
-        #         try:
-        #             print(result.decode('gbk').strip('\r\n'))
-        #         except:
-        #             print(result.decode('utf-8').strip('\r\n'))
-        #     else:
-        #         break
-
     def ManuallySelectJava(self):
         JavaPathSysList = QFileDialog.getOpenFileName(
             self, "选择java.exe程序", getcwd(), "java.exe"
@@ -269,10 +256,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             if not isinstance(v, CalledProcessError):
                 JavaPaths.append(Java(JavaPathSysList[0], v))
             else:
-                CallMCSL2Dialog(f"选择的Java无效:\t\n{v.output}", 0)
+                CallMCSL2Dialog(f"选择的Java无效:\t\n{v.output}", 0, ButtonArg=None)
         else:
             Tip = "看来你没有选择任何的Java呢！"
-            CallMCSL2Dialog(Tip, 0)
+            CallMCSL2Dialog(Tip, 0, ButtonArg=None)
 
     def ManuallyImportCore(self):
         global CorePath, CoreFileName
@@ -283,7 +270,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CoreFileName = CorePath.split("/")[-1]
         else:
             Tip = "看来你没有选择任何的服务器核心呢！"
-            CallMCSL2Dialog(Tip, 0)
+            CallMCSL2Dialog(Tip, 0, ButtonArg=None)
 
     def SaveMinecraftServer(self):
         global CorePath, JavaPath, MaxMemory, MinMemory, CoreFileName
@@ -371,7 +358,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         # Server processor
         if CanCreate == 0:
-            CallMCSL2Dialog(Tip, 0)
+            CallMCSL2Dialog(Tip, 0, ButtonArg=None)
         elif CanCreate == 1:
             ServerSaver.SaveServer(Tip, ServerName, CorePath, JavaPath, MinMemory, MaxMemory, CoreFileName)
             MinMemStatus = 0
@@ -382,7 +369,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             JavaPath = 0
         else:
             Tip = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
 
     def AutoDetectJava(self):
         # 防止同时多次运行worker线程
@@ -408,7 +395,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 如果不是第一次运行worker线程
         if sequenceNumber > 1:
             Tip = "搜索完毕。\n找到" + str(len(JavaPaths)) + "个Java。\n请点击Java列表查看。"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
 
         # 释放AutoDetectJava中禁用的按钮
         self.Auto_Find_Java_PushButton.setEnabled(True)
@@ -578,11 +565,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def initDownloadLayout(self, layout, subWidgetNames, pixMap):
         if subWidgetNames == -2:
             Tip = "无法连接MCSLAPI，\n\n请检查网络或系统代理设置"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
             return
         elif subWidgetNames == -1:
             Tip = "可能解析API内容失败\n\n请检查网络或自己的节点设置"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
             return
 
         for i in reversed(range(layout.count())):
@@ -707,13 +694,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def CheckUpdate(self):
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
+                                                                                                                  "").replace(
+                "\'", "").split(",")
             self.Update_Introduction_Title_Label.setText("这是最新版本" + LatestVersionInformation[0] + "的说明：")
             self.Update_Introduction_Label.setText(str(LatestVersionInformation[1]).replace("\\n", "\n"))
             self.FunctionsStackedWidget.setCurrentIndex(8)
         else:
             pass
-
 
 
 if __name__ == '__main__':

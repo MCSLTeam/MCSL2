@@ -217,7 +217,16 @@ class Ui_MCSL2_AskDialog(object):
         MCSL2_AskDialog.setWindowTitle(_translate("MCSL2_AskDialog", "提示"))
         self.Dialog_PushButton_Accept.setText(_translate("MCSL2_AskDialog", "确定"))
         self.Dialog_PushButton_Cancel.setText(_translate("MCSL2_AskDialog", "取消"))
-        self.Dialog_PushButton_Accept.clicked.connect(self.close)
+        self.Dialog_PushButton_Accept.clicked.connect(self.Accept)
+        self.Dialog_PushButton_Cancel.clicked.connect(self.Cancel)
+
+    def Accept(self):
+        self.close()
+        return 1
+
+    def Cancel(self):
+        self.close()
+        return 0
 
 # Customize dialogs
 class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
@@ -228,17 +237,20 @@ class MCSL2Dialog(QDialog, Ui_MCSL2_Dialog):
 
 
 class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
-    def __init__(self, Tip, parent=None):
+    def __init__(self, Tip, ButtonArg, parent=None):
         super(MCSL2AskDialog, self).__init__(parent=parent)
         self.setupUi(self)
+        ButtonArg = str(ButtonArg).split("|")
         self.Dialog_label.setText(Tip)
+        self.Dialog_PushButton_Accept.setText(ButtonArg[0])
+        self.Dialog_PushButton_Cancel.setText(ButtonArg[1])
 
 # The function of calling MCSL2 Dialog
-def CallMCSL2Dialog(Tip, isNeededTwoButtons, parent=None):
+def CallMCSL2Dialog(Tip, isNeededTwoButtons, ButtonArg, parent=None):
     if isNeededTwoButtons == 0:
         Dialog = MCSL2Dialog(Tip, parent)
     elif isNeededTwoButtons == 1:
-        Dialog = MCSL2AskDialog(Tip, parent)
+        Dialog = MCSL2AskDialog(Tip, ButtonArg, parent)
     else:
         return
     Dialog.exec_()
