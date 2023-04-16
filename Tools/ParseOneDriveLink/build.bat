@@ -1,1 +1,1 @@
-nuitka --mingw64 --standalone --show-progress --show-memory  --onefile --output-dir=PackagedProcess ParseOneDriveLink.py
+D:\Python38\python.exe -m nuitka --mingw64 --standalone --full-compat --onefile --output-dir=PackagedProcess ParseOneDriveLink.py
