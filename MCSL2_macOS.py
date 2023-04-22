@@ -245,20 +245,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global DownloadSource
         DownloadSource = 4
 
-    def LaunchMinecraftServer(self):
-        Fix = '-Xms2048M -Xmx2048M -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -jar '
-        # LaunchCommand = "\\" + str(JavaPath) + "\\" + Fix + "./Servers/" + ServerName +
-        # Monitor = Popen(LaunchCommand, shell=True, stdout=PIPE, stderr=PIPE)
-        # while True:
-        #     result = Monitor.stdout.readline()
-        #     if result != b'':
-        #         try:
-        #             print(result.decode('gbk').strip('\r\n'))
-        #         except:
-        #             print(result.decode('utf-8').strip('\r\n'))
-        #     else:
-        #         break
-
     def ManuallySelectJava(self):
         JavaPathSysList = QFileDialog.getOpenFileName(
             self, "选择java.exe程序", getcwd(), "java.exe"
@@ -712,7 +698,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.FunctionsStackedWidget.setCurrentIndex(8)
         else:
             pass
-
 
 
 if __name__ == '__main__':

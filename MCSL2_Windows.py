@@ -23,7 +23,6 @@ from MCSL2_Libs.MCSL2_ServerController import ServerSaver
 from MCSL2_Libs.MCSL2_ScalingFixer import ScalingFixer
 from MCSL2_Libs.MCSL2_Updater import Updater
 
-
 # Initialize MainWindow
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def __init__(self):
@@ -217,6 +216,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Check_Update_PushButton.setText("检查更新 (当前版本" + Version + ")")
 
     def ToChooseServerPage(self):
+
         self.FunctionsStackedWidget.setCurrentIndex(6)
 
     def ToChooseJavaPage(self):
@@ -442,10 +442,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 如果存在DownloadSource且不为空,则不再重新获取
         if self.downloadUrlDict.get(DownloadSource) is not None:
             idx = self.DownloadSwitcher_TabWidget.currentIndex()
-            self.InitDownloadSubWidget(
-                self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'],
-                self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
-            )
+            self.InitDownloadSubWidget(self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'])
         else:
             workThread = self.fetchDownloadURLThreadFactory.create(
                 downloadSrc=DownloadSource,
@@ -462,7 +459,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.downloadUrlDict.update(_downloadUrlDict)
         self.RefreshDownloadType()
 
-    def InitDownloadSubWidget(self, SubWidgetNames, DownloadUrls):
+    def InitDownloadSubWidget(self, SubWidgetNames):
         GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
         if GraphType == 0:
             self.initDownloadLayout(self.JavaVerticalLayout, SubWidgetNames, QPixmap(":/MCSL2_Icon/JavaIcon.png"))
@@ -568,7 +565,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
             return
         elif subWidgetNames == -1:
-            Tip = "可能解析API内容失败\n\n请检查网络或自己的节点设置"
+            Tip = "可能解析API内容失败\n\n请检查网络或系统代理设置"
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
             return
 
@@ -694,9 +691,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def CheckUpdate(self):
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
-                                                                                                                  "").replace(
-                "\'", "").split(",")
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
             self.Update_Introduction_Title_Label.setText("这是最新版本" + LatestVersionInformation[0] + "的说明：")
             self.Update_Introduction_Label.setText(str(LatestVersionInformation[1]).replace("\\n", "\n"))
             self.FunctionsStackedWidget.setCurrentIndex(8)
@@ -770,7 +765,7 @@ if __name__ == '__main__':
     if not isSupportedDPI:
         CallMCSL2Dialog(
             Tip=f"警告：\n您正以不受官方支持的{Scaling}%缩放比运行MCSL2。\n任何由此原因造成的关于UI的Bug将不予修复。\n\n此次启动的UI将以兼容模式初始化，\n因此会变得模糊。",
-            isNeededTwoButtons=0)
+            isNeededTwoButtons=0, ButtonArg=None)
     MCSLMainWindow = MCSL2MainWindow()
     MCSLMainWindow.show()
     exit(MCSLProcess.exec_())

@@ -21,7 +21,7 @@ class DownloadURLParser:
         pass
 
     def ParseDownloaderAPIUrl(DownloadSource):
-        UrlArg = "https://raw.iqiq.io/LxHTT/MCSLDownloaderAPI/master/"
+        UrlArg = "https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master/"
         SourceArg = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
         TypeArg = [
             "/JavaDownloadInfo.json",
