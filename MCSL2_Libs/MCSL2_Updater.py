@@ -14,7 +14,7 @@ class Updater:
             return 1, Arg
         elif LatestVersionInformation[0] == "false":
             Tip = "已经是最新版！"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0)
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
             return [0]
         else:
             pass

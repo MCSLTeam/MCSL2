@@ -10,6 +10,12 @@
     <height>601</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MCSL 2</string>
   </property>
@@ -475,7 +481,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     关于</string>
+      <string>     更多</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -1739,492 +1745,6 @@ QPushButton:pressed
        <string>下载</string>
       </property>
      </widget>
-     <widget class="QLabel" name="Download_Source_Background">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>60</y>
-        <width>431</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Download_Source_Label">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>80</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>下载源：</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="luoxisCloud_radioButton">
-      <property name="geometry">
-       <rect>
-        <x>560</x>
-        <y>70</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">RadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    font: 14px 'Segoe UI', 'Microsoft YaHei';
-    color: black;
-}
-
-RadioButton::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 11px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-RadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-RadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-RadioButton::indicator:checked {
-    height: 22px;
-    width: 22px;
-    border: none;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-RadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}</string>
-      </property>
-      <property name="text">
-       <string>luoxis云</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="Gitee_radioButton">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>70</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">RadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    font: 14px 'Segoe UI', 'Microsoft YaHei';
-    color: black;
-}
-
-RadioButton::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 11px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-RadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-RadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-RadioButton::indicator:checked {
-    height: 22px;
-    width: 22px;
-    border: none;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-RadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}</string>
-      </property>
-      <property name="text">
-       <string>Gitee</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="SharePoint_radioButton">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>70</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">RadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    font: 14px 'Segoe UI', 'Microsoft YaHei';
-    color: black;
-}
-
-RadioButton::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 11px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-RadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-RadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-RadioButton::indicator:checked {
-    height: 22px;
-    width: 22px;
-    border: none;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-RadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}</string>
-      </property>
-      <property name="text">
-       <string>SharePoint</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="GitHub_radioButton">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>100</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">RadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    font: 14px 'Segoe UI', 'Microsoft YaHei';
-    color: black;
-}
-
-RadioButton::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 11px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-RadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-RadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-RadioButton::indicator:checked {
-    height: 22px;
-    width: 22px;
-    border: none;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-RadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}</string>
-      </property>
-      <property name="text">
-       <string>GitHub</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="GHProxy_radioButton">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>100</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">RadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    font: 14px 'Segoe UI', 'Microsoft YaHei';
-    color: black;
-}
-
-RadioButton::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 11px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-RadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-RadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-RadioButton::indicator:checked {
-    height: 22px;
-    width: 22px;
-    border: none;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 --ThemeColorPrimary,
-            stop:1 --ThemeColorPrimary);
-}
-
-RadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-RadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}</string>
-      </property>
-      <property name="text">
-       <string>GHProxy</string>
-      </property>
-     </widget>
      <widget class="QTabWidget" name="DownloadSwitcher_TabWidget">
       <property name="geometry">
        <rect>
@@ -2275,7 +1795,7 @@ QTabBar::tab:selected
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -2363,24 +1883,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <layout class="QVBoxLayout" name="JavaVerticalLayout">
-            <item>
-             <widget class="QListView" name="JavaListView">
-              <property name="autoScroll">
-               <bool>false</bool>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-              <property name="showDropIndicator" stdset="0">
-               <bool>false</bool>
-              </property>
-              <property name="verticalScrollMode">
-               <enum>QAbstractItemView::ScrollPerPixel</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <layout class="QVBoxLayout" name="JavaVerticalLayout"/>
           </item>
          </layout>
         </widget>
@@ -2945,7 +2448,7 @@ QPushButton:pressed
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="AboutPage">
+    <widget class="QWidget" name="SettingsPage">
      <widget class="QLabel" name="About_Label">
       <property name="geometry">
        <rect>
@@ -2964,213 +2467,3324 @@ QPushButton:pressed
        </font>
       </property>
       <property name="text">
-       <string>关于</string>
+       <string>更多</string>
       </property>
      </widget>
-     <widget class="QLabel" name="About_Background">
+     <widget class="QScrollArea" name="SettingsScrollArea">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>140</y>
-        <width>261</width>
-        <height>231</height>
+        <y>130</y>
+        <width>641</width>
+        <height>421</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
+      <property name="cursor" stdset="0">
+       <cursorShape>ArrowCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QLabel
+       <string notr="true">QScrollArea{
+	border: 0px solid;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 0px;
+}
+QScrollBar::handle:vertical {
+	min-height: 0px;
+}
+QScrollBar::add-line:vertial
 {
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
+    height: 0px;
+}
+QScrollBar::sub-line:vertial
+{
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
 }</string>
       </property>
-      <property name="text">
-       <string/>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
-     </widget>
-     <widget class="QLabel" name="MCSL2_Icon_Label">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>170</y>
-        <width>71</width>
-        <height>71</height>
-       </rect>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
       </property>
-      <property name="text">
-       <string/>
+      <property name="lineWidth">
+       <number>0</number>
       </property>
-      <property name="pixmap">
-       <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
       </property>
-      <property name="scaledContents">
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
+      <property name="widgetResizable">
        <bool>true</bool>
       </property>
-     </widget>
-     <widget class="QLabel" name="MCSL2_Label">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>180</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>MCSL 2</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="MCSL2_Author_Label_1">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>210</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>by LxHTT</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="MCSL2_Author_Avatar">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>270</y>
-        <width>71</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Author.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="MCSL2_Author_Label_2">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>280</y>
-        <width>111</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Bilibili：
-落雪无痕LxHTT</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Description_Label">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>140</y>
-        <width>381</width>
-        <height>311</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel
+      <widget class="QWidget" name="SettingsScrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>641</width>
+         <height>1677</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QVBoxLayout" name="SettingsVerticalLayout">
+          <item>
+           <widget class="QWidget" name="ServerSettingsWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
 {
-	background-color: rgb(247, 247, 247);
-	border-radius: 10px
-}</string>
-      </property>
-      <property name="text">
-       <string>    这是对MCSL的Remake。
-
-    本来使用C#开发，但由于知识有限，无奈继续
-
-    使用Python。
-
-    MCSL 2 重构UI，使用更加清晰的代码逻辑开发，
-
-    除了启动、配置、下载以外，添加了诸多拓展工具。
-
-    遇到Bug，请积极反馈，以帮助改进MCSL 2。
-
-    作者邮箱: lxhtz.dl@qq.com </string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Check_Update_PushButton">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>390</y>
-        <width>261</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QCheckBox" name="AutoRunLastServerSetting">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>50</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>开启MCSL2时自动运行上次运行的服务器</string>
+             </property>
+            </widget>
+            <widget class="QCheckBox" name="AcceptAllMojangEULASetting">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>80</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>同意所有新添加服务器的Mojang EULA</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+            <widget class="QCheckBox" name="StopServerSettings">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>110</y>
+               <width>410</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>关闭服务器时向服务器发送 stop 指令而不是结束进程</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QWidget" name="ServerSettingsTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="ServerSettingsWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>服务器设置</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="ServerSettingsWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="ConfigPageSettingsWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QCheckBox" name="OnlySaveGlobalServerConfigs">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>93</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>仅保存全局服务器设置</string>
+             </property>
+            </widget>
+            <widget class="QWidget" name="ConfigPageSettingsTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="ConfigPageSettingsWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>配置页设置</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="ConfigPageSettingsWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QLabel" name="HowToAddServer">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>63</y>
+               <width>171</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>添加服务器引导方式</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="HowToAddServerComboBox">
+             <property name="geometry">
+              <rect>
+               <x>370</x>
+               <y>60</y>
+               <width>221</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 239, 238);
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(212, 213, 212);
+    padding: 5px 31px 6px 11px;
+    color: black;
+    background-color: rgb(254, 254, 254);
+    text-align: left;
+}
+
+QComboBox:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+QComboBox:pressed {
+    background-color: rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(238, 239, 238);
+    color: rgba(0, 0, 0, 0.63);
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: right;
+    width: 35px;
+    border-left-style: solid;
+}
+QComboBox::down-arrow
+{
+    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    background-color: rgb(249, 249, 249);
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item {
+    padding-left: 0px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: rgba(0, 0, 0, 9);
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0, 0, 0, 7);
+    color: black;
+}
+
+QComboBox QAbstractItemView::item:selected:active {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.7);
+}</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>初始 (新手+进阶)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>总是新手</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>总是进阶</string>
+              </property>
+             </item>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="DownloadSettingsWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>250</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>250</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QWidget" name="DownloadSettingsTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="DownloadSettingsWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>下载设置</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="DownloadSettingsWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QLabel" name="MCSLAPIDownloadSource">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>63</y>
+               <width>171</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>MCSLAPI下载源选择</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="MCSLAPIDownloadSourceComboBox">
+             <property name="geometry">
+              <rect>
+               <x>350</x>
+               <y>60</y>
+               <width>241</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 239, 238);
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(212, 213, 212);
+    padding: 5px 31px 6px 11px;
+    color: black;
+    background-color: rgb(254, 254, 254);
+    text-align: left;
+}
+
+QComboBox:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+QComboBox:pressed {
+    background-color: rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(238, 239, 238);
+    color: rgba(0, 0, 0, 0.63);
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: right;
+    width: 35px;
+    border-left-style: solid;
+}
+QComboBox::down-arrow
+{
+    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    background-color: rgb(249, 249, 249);
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item {
+    padding-left: 0px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: rgba(0, 0, 0, 9);
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0, 0, 0, 7);
+    color: black;
+}
+
+QComboBox QAbstractItemView::item:selected:active {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.7);
+}</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>国内SharePoint</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Gitee</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>luoxis云（暂不可用）</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>GHProxy</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>GitHub</string>
+              </property>
+             </item>
+            </widget>
+            <widget class="QLabel" name="Aria2ThreadCount">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>103</y>
+               <width>171</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Aria2引擎线程数</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="Aria2ThreadCountComboBox">
+             <property name="geometry">
+              <rect>
+               <x>490</x>
+               <y>100</y>
+               <width>101</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 239, 238);
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(212, 213, 212);
+    padding: 5px 31px 6px 11px;
+    color: black;
+    background-color: rgb(254, 254, 254);
+    text-align: left;
+}
+
+QComboBox:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+QComboBox:pressed {
+    background-color: rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(238, 239, 238);
+    color: rgba(0, 0, 0, 0.63);
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: right;
+    width: 35px;
+    border-left-style: solid;
+}
+QComboBox::down-arrow
+{
+    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    background-color: rgb(249, 249, 249);
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item {
+    padding-left: 0px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: rgba(0, 0, 0, 9);
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0, 0, 0, 7);
+    color: black;
+}
+
+QComboBox QAbstractItemView::item:selected:active {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.7);
+}</string>
+             </property>
+             <property name="currentIndex">
+              <number>3</number>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>1</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>16</string>
+              </property>
+             </item>
+            </widget>
+            <widget class="QCheckBox" name="AlwaysAskDownloadPath">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>140</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>总是询问下载保存位置</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QLabel" name="AlwaysAskDownloadPathTip">
+             <property name="geometry">
+              <rect>
+               <x>60</x>
+               <y>170</y>
+               <width>451</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>若不勾选，则会保存至MCSL2/Downloads文件夹。</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="SameFileException">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>203</y>
+               <width>221</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>下载保存位置存在同名文件处理</string>
+             </property>
+            </widget>
+            <widget class="QRadioButton" name="SameFileExceptionStop">
+             <property name="geometry">
+              <rect>
+               <x>510</x>
+               <y>200</y>
+               <width>81</width>
+               <height>24</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    color: black;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+QRadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+QRadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+QRadioButton::indicator:checked {
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QRadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+QRadioButton::indicator:checked {
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+</string>
+             </property>
+             <property name="text">
+              <string>停止</string>
+             </property>
+            </widget>
+            <widget class="QRadioButton" name="SameFileExceptionAsk">
+             <property name="geometry">
+              <rect>
+               <x>350</x>
+               <y>200</y>
+               <width>71</width>
+               <height>24</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    color: black;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+QRadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+QRadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+QRadioButton::indicator:checked {
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QRadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+QRadioButton::indicator:checked {
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+</string>
+             </property>
+             <property name="text">
+              <string>询问</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QRadioButton" name="SameFileExceptionReWrite">
+             <property name="geometry">
+              <rect>
+               <x>430</x>
+               <y>200</y>
+               <width>71</width>
+               <height>24</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    min-height: 24px;
+    max-height: 24px;
+    background-color: transparent;
+    color: black;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+    border: 2px solid #999999;
+    background-color: rgba(0, 0, 0, 5);
+    margin-right: 4px;
+}
+
+QRadioButton::indicator:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+QRadioButton::indicator:pressed {
+    border: 2px solid #bbbbbb;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(225, 224, 223),
+            stop:1 rgb(225, 224, 223));
+}
+
+QRadioButton::indicator:checked {
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton::indicator:checked:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.6 rgb(255, 255, 255),
+            stop:0.7 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton::indicator:checked:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+
+QRadioButton:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QRadioButton::indicator:disabled {
+    border: 2px solid #bbbbbb;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+QRadioButton::indicator:checked {
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+            stop:0 rgb(255, 255, 255),
+            stop:0.5 rgb(255, 255, 255),
+            stop:0.6 rgb(0, 120, 212),
+            stop:1 rgb(0, 120, 212));
+}
+</string>
+             </property>
+             <property name="text">
+              <string>覆盖</string>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="ConsoleSettingsWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>195</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>195</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QWidget" name="ConsoleSettingsTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="ConsoleSettingsWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>终端设置</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="ConsoleSettingsWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QLabel" name="ConsoleOutputEncoding">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>103</y>
+               <width>171</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>控制台输出编码</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="ConsoleOutputEncodingComboBox">
+             <property name="geometry">
+              <rect>
+               <x>350</x>
+               <y>100</y>
+               <width>241</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 239, 238);
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(212, 213, 212);
+    padding: 5px 31px 6px 11px;
+    color: black;
+    background-color: rgb(254, 254, 254);
+    text-align: left;
+}
+
+QComboBox:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+QComboBox:pressed {
+    background-color: rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(238, 239, 238);
+    color: rgba(0, 0, 0, 0.63);
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: right;
+    width: 35px;
+    border-left-style: solid;
+}
+QComboBox::down-arrow
+{
+    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    background-color: rgb(249, 249, 249);
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item {
+    padding-left: 0px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: rgba(0, 0, 0, 9);
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0, 0, 0, 7);
+    color: black;
+}
+
+QComboBox QAbstractItemView::item:selected:active {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.7);
+}</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>UTF-8（默认）</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>GBK（乱码可尝试）</string>
+              </property>
+             </item>
+            </widget>
+            <widget class="QLabel" name="ConsoleInputDecoding">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>143</y>
+               <width>171</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>发送指令编码</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="ConsoleInputDecodingComboBox">
+             <property name="geometry">
+              <rect>
+               <x>350</x>
+               <y>140</y>
+               <width>241</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 239, 238);
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(212, 213, 212);
+    padding: 5px 31px 6px 11px;
+    color: black;
+    background-color: rgb(254, 254, 254);
+    text-align: left;
+}
+
+QComboBox:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+QComboBox:pressed {
+    background-color: rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(238, 239, 238);
+    color: rgba(0, 0, 0, 0.63);
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: right;
+    width: 35px;
+    border-left-style: solid;
+}
+QComboBox::down-arrow
+{
+    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    background-color: rgb(249, 249, 249);
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item {
+    padding-left: 0px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: rgba(0, 0, 0, 9);
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0, 0, 0, 7);
+    color: black;
+}
+
+QComboBox QAbstractItemView::item:selected:active {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.7);
+}</string>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>与输出相同</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>UTF-8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>GBK</string>
+              </property>
+             </item>
+            </widget>
+            <widget class="QCheckBox" name="EnableQuickMenu">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>60</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>启用快捷菜单</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="UISettingsWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QWidget" name="UISettingsTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="UISettingsWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>界面设置</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="UISettingsWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QLabel" name="TransparentSetting">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>60</y>
+               <width>171</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>背景透明度</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="DarkMode">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>143</y>
+               <width>171</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>深色模式</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="DarkModeComboBox">
+             <property name="geometry">
+              <rect>
+               <x>470</x>
+               <y>144</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 239, 238);
+    border-radius: 5px;
+    border-bottom: 1px solid rgb(212, 213, 212);
+    padding: 5px 31px 6px 11px;
+    color: black;
+    background-color: rgb(254, 254, 254);
+    text-align: left;
+}
+
+QComboBox:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+QComboBox:pressed {
+    background-color: rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(238, 239, 238);
+    color: rgba(0, 0, 0, 0.63);
+}
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: right;
+    width: 35px;
+    border-left-style: solid;
+}
+QComboBox::down-arrow
+{
+    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    background-color: rgb(249, 249, 249);
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item {
+    padding-left: 0px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: rgba(0, 0, 0, 9);
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0, 0, 0, 7);
+    color: black;
+}
+
+QComboBox QAbstractItemView::item:selected:active {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.7);
+}</string>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>浅色</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>深色</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>跟随系统</string>
+              </property>
+             </item>
+            </widget>
+            <widget class="QCheckBox" name="ExchangeButton">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>100</y>
+               <width>261</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>交换窗口最小化和关闭按钮顺序</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+            <widget class="QSlider" name="TransparentPercentSlider">
+             <property name="geometry">
+              <rect>
+               <x>370</x>
+               <y>70</y>
+               <width>181</width>
+               <height>24</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QSlider:horizontal {
+    min-height: 24px;
+}
+
+QSlider::groove:horizontal {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 100);
+    border-radius: 2px;
+}
+
+QSlider::sub-page:horizontal {
+    background: rgb(0, 120, 212);
+    height: 4px;
+    border-radius: 2px;
+}
+
+QSlider::handle:horizontal {
+    border: 1px solid rgb(222, 222, 222);
+    width: 20px;
+    min-height: 24px;
+    margin: -9px 0;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+        stop:0 rgb(0, 120, 212),
+        stop:0.48 rgb(0, 120, 212),
+        stop:0.55 rgb(255, 255, 255),
+        stop:1 rgb(255, 255, 255));
+}
+
+QSlider::handle:horizontal:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+        stop:0 rgb(0, 120, 212),
+        stop:0.55 rgb(0, 120, 212),
+        stop:0.65 rgb(255, 255, 255),
+        stop:1 rgb(255, 255, 255));
+}
+
+QSlider::handle:horizontal:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+        stop:0 rgb(0, 120, 212),
+        stop:0.4 rgb(0, 120, 212),
+        stop:0.5 rgb(255, 255, 255),
+        stop:1 rgb(255, 255, 255));
+}
+
+QSlider::groove:horizontal:disabled {
+    background-color: rgba(0, 0, 0, 75);
+}
+
+QSlider::handle:horizontal:disabled {
+    background-color: #808080;
+    border: 5px solid #cccccc;
+}
+
+
+QSlider:vertical {
+    min-width: 24px;
+}
+
+QSlider::groove:vertical {
+    width: 4px;
+    background-color: rgba(0, 0, 0, 100);
+    border-radius: 2px;
+}
+
+QSlider::add-page:vertical {
+    background: rgb(0, 120, 212);
+    width: 4px;
+    border-radius: 2px;
+}
+
+QSlider::handle:vertical {
+    border: 1px solid rgb(222, 222, 222);
+    height: 20px;
+    min-width: 24px;
+    margin: 0 -9px;
+    border-radius: 11px;
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+        stop:0 rgb(0, 120, 212),
+        stop:0.48 rgb(0, 120, 212),
+        stop:0.55 rgb(255, 255, 255),
+        stop:1 rgb(255, 255, 255));
+}
+
+QSlider::handle:vertical:hover {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+        stop:0 rgb(0, 120, 212),
+        stop:0.55 rgb(0, 120, 212),
+        stop:0.65 rgb(255, 255, 255),
+        stop:1 rgb(255, 255, 255));
+}
+
+QSlider::handle:vertical:pressed {
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+        stop:0 rgb(0, 120, 212),
+        stop:0.4 rgb(0, 120, 212),
+        stop:0.5 rgb(255, 255, 255),
+        stop:1 rgb(255, 255, 255));
+}
+
+QSlider::groove:vertical:disabled {
+    background-color: rgba(0, 0, 0, 75);
+}
+
+QSlider::handle:vertical:disabled {
+    background-color: #808080;
+    border: 5px solid #cccccc;
+}
+</string>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>55</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="invertedAppearance">
+              <bool>false</bool>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::NoTicks</enum>
+             </property>
+            </widget>
+            <widget class="QLabel" name="TransparentPercentNum">
+             <property name="geometry">
+              <rect>
+               <x>560</x>
+               <y>60</y>
+               <width>31</width>
+               <height>41</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>--%</string>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="SoftwareSettingsWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QCheckBox" name="AlwaysRunAsAdministrator">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>93</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>总以管理员身份运行</string>
+             </property>
+            </widget>
+            <widget class="QWidget" name="SoftwareSettingsTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="SoftwareSettingsWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>软件设置</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="SoftwareSettingsWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QCheckBox" name="StartOnStartup">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>60</y>
+               <width>410</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>410</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox {
+    color: black;
+    spacing: 8px;
+    min-width: 28px;
+    min-height: 20px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(241, 241, 241);
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid rgb(132, 132, 132);
+    background-color: rgb(232, 232, 232);
+}
+
+QCheckBox::indicator:pressed {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked,
+QCheckBox::indicator:indeterminate {
+    border: 1px solid rgb(0, 120, 212);
+    background-color: rgb(0, 120, 212);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
+}
+
+QCheckBox::indicator:indeterminate {
+    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
+}
+
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:indeterminate:hover {
+    border: 1px solid --ThemeColorLight1;
+    background-color: --ThemeColorLight1;
+}
+
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:indeterminate:pressed {
+    border: 1px solid --ThemeColorLight3;
+    background-color: --ThemeColorLight3;
+}
+
+QCheckBox:disabled {
+    color: rgba(0, 0, 0, 110);
+}
+
+QCheckBox::indicator:disabled {
+    border: 1px solid #bbbbbb;
+    background-color: rgb(224, 224, 224);
+}
+
+QCheckBox::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate:disabled {
+    border: 1px solid rgb(199, 199, 199);
+    background-color: rgb(199, 199, 199);
+}</string>
+             </property>
+             <property name="text">
+              <string>开机自动启动</string>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="UpdaterWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QWidget" name="UpdaterTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="UpdaterWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>81</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>软件更新</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="UpdaterWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QLabel" name="CurrentVersionLabel">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>60</y>
+               <width>571</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>当前版本：</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="LastUpdateTime">
+             <property name="geometry">
+              <rect>
+               <x>150</x>
+               <y>110</y>
+               <width>311</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>最后一次检查更新时间：</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="UpdatePushButton">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>110</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 6px;
+	color: rgb(255, 255, 255);
 }
 QPushButton:hover
 {
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
+    background-color: rgb(0, 110, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
 }
 QPushButton:pressed
 {
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
+    background-color: rgb(0, 100, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
 }</string>
-      </property>
-      <property name="text">
-       <string>检查更新</string>
-      </property>
+             </property>
+             <property name="text">
+              <string>检查更新</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="AboutWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>620</width>
+              <height>330</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>620</width>
+              <height>330</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QWidget
+{
+	border-radius: 7px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+            </property>
+            <widget class="QWidget" name="AboutTitle" native="true">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>10</y>
+               <width>120</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+             </property>
+             <widget class="QLabel" name="AboutWidgetTitleLabel">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>51</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>关于</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="AboutWidgetBlue">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>10</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 10px
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QLabel" name="AboutContent">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>55</y>
+               <width>571</width>
+               <height>131</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>MCSL2是一个开源非营利性项目，遵循GNU GPL 3.0开源协议。
+任何人皆可使用MCSL2的源码进行再编译、修改以及发行，
+但必须在相关源代码中以及软件中给出声明，
+并且二次分发版本的项目名称应与“MCSL2”有明显辨识度。
+
+Copyright ©落雪无痕LxHTT. All right reserved.</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="OpenSourceCodePushButton">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>280</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 6px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
+}</string>
+             </property>
+             <property name="text">
+              <string>打开源代码仓库</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+            <widget class="QLabel" name="MCSL2_Author_Label_1">
+             <property name="geometry">
+              <rect>
+               <x>120</x>
+               <y>240</y>
+               <width>111</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>by LxHTT</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="MCSL2_Label">
+             <property name="geometry">
+              <rect>
+               <x>120</x>
+               <y>210</y>
+               <width>111</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>14</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>MCSL 2</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="MCSL2_Icon_Label">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>200</y>
+               <width>71</width>
+               <height>71</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QLabel" name="MCSL2_Author_Label_2">
+             <property name="geometry">
+              <rect>
+               <x>300</x>
+               <y>210</y>
+               <width>111</width>
+               <height>41</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Bilibili：
+落雪无痕LxHTT</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="MCSL2_Author_Avatar">
+             <property name="geometry">
+              <rect>
+               <x>210</x>
+               <y>200</y>
+               <width>71</width>
+               <height>71</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Author.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="JoinQQGroup">
+             <property name="geometry">
+              <rect>
+               <x>160</x>
+               <y>280</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 6px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
+}</string>
+             </property>
+             <property name="text">
+              <string>加入官方群聊</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="SystemReportPushButton">
+             <property name="geometry">
+              <rect>
+               <x>290</x>
+               <y>280</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 6px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 6px;
+    color: rgb(255, 255, 255);
+}</string>
+             </property>
+             <property name="text">
+              <string>系统报告</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="ChooseServerPage">

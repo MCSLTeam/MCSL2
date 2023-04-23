@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="MCSL2_Icon">
+    <file>QCheckBoxAccept.svg</file>
+    <file>QCheckBoxPartialAccept.svg</file>
     <file>About.svg</file>
     <file>Home.svg</file>
     <file>Toolbox.svg</file>
@@ -12,7 +14,7 @@
     <file>JavaIcon.png</file>
     <file>SpigotIcon.png</file>
     <file>MCSL2_Author.png</file>
-    <file>QComboBox.png</file>
     <file>MCSL2_Icon.png</file>
+    <file>QComboBoxDownArrow.svg</file>
   </qresource>
 </RCC>

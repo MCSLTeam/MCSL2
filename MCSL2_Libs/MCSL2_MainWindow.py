@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
+from PyQt5.QtCore import QCoreApplication, QRect, Qt, QSize, QMetaObject
 from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import (
     QAbstractScrollArea,
@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (
     QStackedWidget,
     QTabWidget,
     QVBoxLayout,
-    QWidget,
+    QWidget, QCheckBox, QSizePolicy, QSlider,
 )
 
 
@@ -1816,9 +1816,9 @@ class Ui_MCSL2_MainWindow(object):
         self.Tools_Label.setFont(font)
         self.Tools_Label.setObjectName("Tools_Label")
         self.FunctionsStackedWidget.addWidget(self.ToolsPage)
-        self.AboutPage = QWidget()
-        self.AboutPage.setObjectName("AboutPage")
-        self.About_Label = QLabel(self.AboutPage)
+        self.SettingsPage = QWidget()
+        self.SettingsPage.setObjectName("SettingsPage")
+        self.About_Label = QLabel(self.SettingsPage)
         self.About_Label.setGeometry(QRect(30, 80, 71, 51))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -1827,96 +1827,2088 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.About_Label.setFont(font)
         self.About_Label.setObjectName("About_Label")
-        self.About_Background = QLabel(self.AboutPage)
-        self.About_Background.setGeometry(QRect(30, 140, 261, 231))
+        self.SettingsScrollArea = QScrollArea(self.SettingsPage)
+        self.SettingsScrollArea.setGeometry(QRect(30, 130, 641, 421))
+        self.SettingsScrollArea.viewport().setProperty("cursor", QCursor(Qt.ArrowCursor))
+        self.SettingsScrollArea.setStyleSheet("QScrollArea{\n"
+"    border: 0px solid;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 0px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    min-height: 0px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.SettingsScrollArea.setFrameShape(QFrame.NoFrame)
+        self.SettingsScrollArea.setFrameShadow(QFrame.Plain)
+        self.SettingsScrollArea.setLineWidth(0)
+        self.SettingsScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.SettingsScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.SettingsScrollArea.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.SettingsScrollArea.setWidgetResizable(True)
+        self.SettingsScrollArea.setObjectName("SettingsScrollArea")
+        self.SettingsScrollAreaWidgetContents = QWidget()
+        self.SettingsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 641, 1677))
+        self.SettingsScrollAreaWidgetContents.setObjectName("SettingsScrollAreaWidgetContents")
+        self.verticalLayout_7 = QVBoxLayout(self.SettingsScrollAreaWidgetContents)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.SettingsVerticalLayout = QVBoxLayout()
+        self.SettingsVerticalLayout.setObjectName("SettingsVerticalLayout")
+        self.ServerSettingsWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.ServerSettingsWidget.setMinimumSize(QSize(620, 160))
+        self.ServerSettingsWidget.setMaximumSize(QSize(620, 160))
+        self.ServerSettingsWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.ServerSettingsWidget.setObjectName("ServerSettingsWidget")
+        self.AutoRunLastServerSetting = QCheckBox(self.ServerSettingsWidget)
+        self.AutoRunLastServerSetting.setGeometry(QRect(30, 50, 410, 30))
+        self.AutoRunLastServerSetting.setMinimumSize(QSize(28, 20))
+        self.AutoRunLastServerSetting.setMaximumSize(QSize(410, 30))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
-        self.About_Background.setFont(font)
-        self.About_Background.setAutoFillBackground(False)
-        self.About_Background.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 10px\n"
-            "}"
-        )
-        self.About_Background.setText("")
-        self.About_Background.setObjectName("About_Background")
-        self.MCSL2_Icon_Label = QLabel(self.AboutPage)
-        self.MCSL2_Icon_Label.setGeometry(QRect(60, 170, 71, 71))
-        self.MCSL2_Icon_Label.setText("")
-        self.MCSL2_Icon_Label.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
-        self.MCSL2_Icon_Label.setScaledContents(True)
-        self.MCSL2_Icon_Label.setObjectName("MCSL2_Icon_Label")
-        self.MCSL2_Label = QLabel(self.AboutPage)
-        self.MCSL2_Label.setGeometry(QRect(150, 180, 111, 31))
+        self.AutoRunLastServerSetting.setFont(font)
+        self.AutoRunLastServerSetting.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.AutoRunLastServerSetting.setObjectName("AutoRunLastServerSetting")
+        self.AcceptAllMojangEULASetting = QCheckBox(self.ServerSettingsWidget)
+        self.AcceptAllMojangEULASetting.setGeometry(QRect(30, 80, 410, 30))
+        self.AcceptAllMojangEULASetting.setMinimumSize(QSize(28, 20))
+        self.AcceptAllMojangEULASetting.setMaximumSize(QSize(410, 30))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.MCSL2_Label.setFont(font)
-        self.MCSL2_Label.setObjectName("MCSL2_Label")
-        self.MCSL2_Author_Label_1 = QLabel(self.AboutPage)
-        self.MCSL2_Author_Label_1.setGeometry(QRect(150, 210, 111, 31))
+        font.setPointSize(12)
+        self.AcceptAllMojangEULASetting.setFont(font)
+        self.AcceptAllMojangEULASetting.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.AcceptAllMojangEULASetting.setIconSize(QSize(32, 32))
+        self.AcceptAllMojangEULASetting.setObjectName("AcceptAllMojangEULASetting")
+        self.StopServerSettings = QCheckBox(self.ServerSettingsWidget)
+        self.StopServerSettings.setGeometry(QRect(30, 110, 410, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.StopServerSettings.setFont(font)
+        self.StopServerSettings.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.StopServerSettings.setIconSize(QSize(32, 32))
+        self.StopServerSettings.setChecked(True)
+        self.StopServerSettings.setObjectName("StopServerSettings")
+        self.ServerSettingsTitle = QWidget(self.ServerSettingsWidget)
+        self.ServerSettingsTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.ServerSettingsTitle.setMinimumSize(QSize(120, 40))
+        self.ServerSettingsTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ServerSettingsTitle.setObjectName("ServerSettingsTitle")
+        self.ServerSettingsWidgetTitleLabel = QLabel(self.ServerSettingsTitle)
+        self.ServerSettingsWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ServerSettingsWidgetTitleLabel.setFont(font)
+        self.ServerSettingsWidgetTitleLabel.setObjectName("ServerSettingsWidgetTitleLabel")
+        self.ServerSettingsWidgetBlue = QLabel(self.ServerSettingsTitle)
+        self.ServerSettingsWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ServerSettingsWidgetBlue.setFont(font)
+        self.ServerSettingsWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.ServerSettingsWidgetBlue.setAutoFillBackground(False)
+        self.ServerSettingsWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ServerSettingsWidgetBlue.setText("")
+        self.ServerSettingsWidgetBlue.setObjectName("ServerSettingsWidgetBlue")
+        self.SettingsVerticalLayout.addWidget(self.ServerSettingsWidget)
+        self.ConfigPageSettingsWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.ConfigPageSettingsWidget.setMinimumSize(QSize(620, 160))
+        self.ConfigPageSettingsWidget.setMaximumSize(QSize(620, 160))
+        self.ConfigPageSettingsWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.ConfigPageSettingsWidget.setObjectName("ConfigPageSettingsWidget")
+        self.OnlySaveGlobalServerConfigs = QCheckBox(self.ConfigPageSettingsWidget)
+        self.OnlySaveGlobalServerConfigs.setGeometry(QRect(30, 93, 410, 30))
+        self.OnlySaveGlobalServerConfigs.setMinimumSize(QSize(28, 20))
+        self.OnlySaveGlobalServerConfigs.setMaximumSize(QSize(410, 30))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.OnlySaveGlobalServerConfigs.setFont(font)
+        self.OnlySaveGlobalServerConfigs.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.OnlySaveGlobalServerConfigs.setObjectName("OnlySaveGlobalServerConfigs")
+        self.ConfigPageSettingsTitle = QWidget(self.ConfigPageSettingsWidget)
+        self.ConfigPageSettingsTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.ConfigPageSettingsTitle.setMinimumSize(QSize(120, 40))
+        self.ConfigPageSettingsTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ConfigPageSettingsTitle.setObjectName("ConfigPageSettingsTitle")
+        self.ConfigPageSettingsWidgetTitleLabel = QLabel(self.ConfigPageSettingsTitle)
+        self.ConfigPageSettingsWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ConfigPageSettingsWidgetTitleLabel.setFont(font)
+        self.ConfigPageSettingsWidgetTitleLabel.setObjectName("ConfigPageSettingsWidgetTitleLabel")
+        self.ConfigPageSettingsWidgetBlue = QLabel(self.ConfigPageSettingsTitle)
+        self.ConfigPageSettingsWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConfigPageSettingsWidgetBlue.setFont(font)
+        self.ConfigPageSettingsWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.ConfigPageSettingsWidgetBlue.setAutoFillBackground(False)
+        self.ConfigPageSettingsWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ConfigPageSettingsWidgetBlue.setText("")
+        self.ConfigPageSettingsWidgetBlue.setObjectName("ConfigPageSettingsWidgetBlue")
+        self.HowToAddServer = QLabel(self.ConfigPageSettingsWidget)
+        self.HowToAddServer.setGeometry(QRect(30, 63, 171, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.HowToAddServer.setFont(font)
+        self.HowToAddServer.setObjectName("HowToAddServer")
+        self.HowToAddServerComboBox = QComboBox(self.ConfigPageSettingsWidget)
+        self.HowToAddServerComboBox.setGeometry(QRect(370, 60, 221, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.HowToAddServerComboBox.setFont(font)
+        self.HowToAddServerComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.HowToAddServerComboBox.setObjectName("HowToAddServerComboBox")
+        self.HowToAddServerComboBox.addItem("")
+        self.HowToAddServerComboBox.addItem("")
+        self.HowToAddServerComboBox.addItem("")
+        self.SettingsVerticalLayout.addWidget(self.ConfigPageSettingsWidget)
+        self.DownloadSettingsWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.DownloadSettingsWidget.setMinimumSize(QSize(620, 250))
+        self.DownloadSettingsWidget.setMaximumSize(QSize(620, 250))
+        self.DownloadSettingsWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.DownloadSettingsWidget.setObjectName("DownloadSettingsWidget")
+        self.DownloadSettingsTitle = QWidget(self.DownloadSettingsWidget)
+        self.DownloadSettingsTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.DownloadSettingsTitle.setMinimumSize(QSize(120, 40))
+        self.DownloadSettingsTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.DownloadSettingsTitle.setObjectName("DownloadSettingsTitle")
+        self.DownloadSettingsWidgetTitleLabel = QLabel(self.DownloadSettingsTitle)
+        self.DownloadSettingsWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.DownloadSettingsWidgetTitleLabel.setFont(font)
+        self.DownloadSettingsWidgetTitleLabel.setObjectName("DownloadSettingsWidgetTitleLabel")
+        self.DownloadSettingsWidgetBlue = QLabel(self.DownloadSettingsTitle)
+        self.DownloadSettingsWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.DownloadSettingsWidgetBlue.setFont(font)
+        self.DownloadSettingsWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.DownloadSettingsWidgetBlue.setAutoFillBackground(False)
+        self.DownloadSettingsWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.DownloadSettingsWidgetBlue.setText("")
+        self.DownloadSettingsWidgetBlue.setObjectName("DownloadSettingsWidgetBlue")
+        self.MCSLAPIDownloadSource = QLabel(self.DownloadSettingsWidget)
+        self.MCSLAPIDownloadSource.setGeometry(QRect(30, 63, 171, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.MCSLAPIDownloadSource.setFont(font)
+        self.MCSLAPIDownloadSource.setObjectName("MCSLAPIDownloadSource")
+        self.MCSLAPIDownloadSourceComboBox = QComboBox(self.DownloadSettingsWidget)
+        self.MCSLAPIDownloadSourceComboBox.setGeometry(QRect(350, 60, 241, 31))
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.MCSLAPIDownloadSourceComboBox.sizePolicy().hasHeightForWidth())
+        self.MCSLAPIDownloadSourceComboBox.setSizePolicy(sizePolicy)
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.MCSLAPIDownloadSourceComboBox.setFont(font)
+        self.MCSLAPIDownloadSourceComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.MCSLAPIDownloadSourceComboBox.setObjectName("MCSLAPIDownloadSourceComboBox")
+        self.MCSLAPIDownloadSourceComboBox.addItem("")
+        self.MCSLAPIDownloadSourceComboBox.addItem("")
+        self.MCSLAPIDownloadSourceComboBox.addItem("")
+        self.MCSLAPIDownloadSourceComboBox.addItem("")
+        self.MCSLAPIDownloadSourceComboBox.addItem("")
+        self.Aria2ThreadCount = QLabel(self.DownloadSettingsWidget)
+        self.Aria2ThreadCount.setGeometry(QRect(30, 103, 171, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.Aria2ThreadCount.setFont(font)
+        self.Aria2ThreadCount.setObjectName("Aria2ThreadCount")
+        self.Aria2ThreadCountComboBox = QComboBox(self.DownloadSettingsWidget)
+        self.Aria2ThreadCountComboBox.setGeometry(QRect(490, 100, 101, 35))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.Aria2ThreadCountComboBox.setFont(font)
+        self.Aria2ThreadCountComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.Aria2ThreadCountComboBox.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
+        self.Aria2ThreadCountComboBox.setFrame(True)
+        self.Aria2ThreadCountComboBox.setObjectName("Aria2ThreadCountComboBox")
+        self.Aria2ThreadCountComboBox.addItem("")
+        self.Aria2ThreadCountComboBox.addItem("")
+        self.Aria2ThreadCountComboBox.addItem("")
+        self.Aria2ThreadCountComboBox.addItem("")
+        self.Aria2ThreadCountComboBox.addItem("")
+        self.AlwaysAskDownloadPath = QCheckBox(self.DownloadSettingsWidget)
+        self.AlwaysAskDownloadPath.setGeometry(QRect(30, 140, 410, 30))
+        self.AlwaysAskDownloadPath.setMinimumSize(QSize(28, 20))
+        self.AlwaysAskDownloadPath.setMaximumSize(QSize(410, 30))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.AlwaysAskDownloadPath.setFont(font)
+        self.AlwaysAskDownloadPath.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.AlwaysAskDownloadPath.setChecked(True)
+        self.AlwaysAskDownloadPath.setObjectName("AlwaysAskDownloadPath")
+        self.AlwaysAskDownloadPathTip = QLabel(self.DownloadSettingsWidget)
+        self.AlwaysAskDownloadPathTip.setGeometry(QRect(60, 170, 451, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.AlwaysAskDownloadPathTip.setFont(font)
+        self.AlwaysAskDownloadPathTip.setObjectName("AlwaysAskDownloadPathTip")
+        self.SameFileException = QLabel(self.DownloadSettingsWidget)
+        self.SameFileException.setGeometry(QRect(30, 203, 221, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.SameFileException.setFont(font)
+        self.SameFileException.setObjectName("SameFileException")
+        self.SameFileExceptionStop = QRadioButton(self.DownloadSettingsWidget)
+        self.SameFileExceptionStop.setGeometry(QRect(510, 200, 81, 24))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.SameFileExceptionStop.setFont(font)
+        self.SameFileExceptionStop.setStyleSheet("QRadioButton {\n"
+"    min-height: 24px;\n"
+"    max-height: 24px;\n"
+"    background-color: transparent;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"    border-radius: 10px;\n"
+"    border: 2px solid #999999;\n"
+"    background-color: rgba(0, 0, 0, 5);\n"
+"    margin-right: 4px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:hover {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:pressed {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(225, 224, 223),\n"
+"            stop:1 rgb(225, 224, 223));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(255, 255, 255),\n"
+"            stop:0.7 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:disabled {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"")
+        self.SameFileExceptionStop.setObjectName("SameFileExceptionStop")
+        self.SameFileExceptionAsk = QRadioButton(self.DownloadSettingsWidget)
+        self.SameFileExceptionAsk.setGeometry(QRect(350, 200, 71, 24))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.SameFileExceptionAsk.setFont(font)
+        self.SameFileExceptionAsk.setStyleSheet("QRadioButton {\n"
+"    min-height: 24px;\n"
+"    max-height: 24px;\n"
+"    background-color: transparent;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"    border-radius: 10px;\n"
+"    border: 2px solid #999999;\n"
+"    background-color: rgba(0, 0, 0, 5);\n"
+"    margin-right: 4px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:hover {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:pressed {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(225, 224, 223),\n"
+"            stop:1 rgb(225, 224, 223));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(255, 255, 255),\n"
+"            stop:0.7 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:disabled {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"")
+        self.SameFileExceptionAsk.setChecked(True)
+        self.SameFileExceptionAsk.setObjectName("SameFileExceptionAsk")
+        self.SameFileExceptionReWrite = QRadioButton(self.DownloadSettingsWidget)
+        self.SameFileExceptionReWrite.setGeometry(QRect(430, 200, 71, 24))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.SameFileExceptionReWrite.setFont(font)
+        self.SameFileExceptionReWrite.setStyleSheet("QRadioButton {\n"
+"    min-height: 24px;\n"
+"    max-height: 24px;\n"
+"    background-color: transparent;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"    border-radius: 10px;\n"
+"    border: 2px solid #999999;\n"
+"    background-color: rgba(0, 0, 0, 5);\n"
+"    margin-right: 4px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:hover {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:pressed {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(225, 224, 223),\n"
+"            stop:1 rgb(225, 224, 223));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(255, 255, 255),\n"
+"            stop:0.7 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:disabled {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"")
+        self.SameFileExceptionReWrite.setObjectName("SameFileExceptionReWrite")
+        self.SettingsVerticalLayout.addWidget(self.DownloadSettingsWidget)
+        self.ConsoleSettingsWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.ConsoleSettingsWidget.setMinimumSize(QSize(620, 195))
+        self.ConsoleSettingsWidget.setMaximumSize(QSize(620, 195))
+        self.ConsoleSettingsWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.ConsoleSettingsWidget.setObjectName("ConsoleSettingsWidget")
+        self.ConsoleSettingsTitle = QWidget(self.ConsoleSettingsWidget)
+        self.ConsoleSettingsTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.ConsoleSettingsTitle.setMinimumSize(QSize(120, 40))
+        self.ConsoleSettingsTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ConsoleSettingsTitle.setObjectName("ConsoleSettingsTitle")
+        self.ConsoleSettingsWidgetTitleLabel = QLabel(self.ConsoleSettingsTitle)
+        self.ConsoleSettingsWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ConsoleSettingsWidgetTitleLabel.setFont(font)
+        self.ConsoleSettingsWidgetTitleLabel.setObjectName("ConsoleSettingsWidgetTitleLabel")
+        self.ConsoleSettingsWidgetBlue = QLabel(self.ConsoleSettingsTitle)
+        self.ConsoleSettingsWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConsoleSettingsWidgetBlue.setFont(font)
+        self.ConsoleSettingsWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.ConsoleSettingsWidgetBlue.setAutoFillBackground(False)
+        self.ConsoleSettingsWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ConsoleSettingsWidgetBlue.setText("")
+        self.ConsoleSettingsWidgetBlue.setObjectName("ConsoleSettingsWidgetBlue")
+        self.ConsoleOutputEncoding = QLabel(self.ConsoleSettingsWidget)
+        self.ConsoleOutputEncoding.setGeometry(QRect(30, 103, 171, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ConsoleOutputEncoding.setFont(font)
+        self.ConsoleOutputEncoding.setObjectName("ConsoleOutputEncoding")
+        self.ConsoleOutputEncodingComboBox = QComboBox(self.ConsoleSettingsWidget)
+        self.ConsoleOutputEncodingComboBox.setGeometry(QRect(350, 100, 241, 31))
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ConsoleOutputEncodingComboBox.sizePolicy().hasHeightForWidth())
+        self.ConsoleOutputEncodingComboBox.setSizePolicy(sizePolicy)
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.ConsoleOutputEncodingComboBox.setFont(font)
+        self.ConsoleOutputEncodingComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.ConsoleOutputEncodingComboBox.setObjectName("ConsoleOutputEncodingComboBox")
+        self.ConsoleOutputEncodingComboBox.addItem("")
+        self.ConsoleOutputEncodingComboBox.addItem("")
+        self.ConsoleInputDecoding = QLabel(self.ConsoleSettingsWidget)
+        self.ConsoleInputDecoding.setGeometry(QRect(30, 143, 171, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ConsoleInputDecoding.setFont(font)
+        self.ConsoleInputDecoding.setObjectName("ConsoleInputDecoding")
+        self.ConsoleInputDecodingComboBox = QComboBox(self.ConsoleSettingsWidget)
+        self.ConsoleInputDecodingComboBox.setGeometry(QRect(350, 140, 241, 35))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.ConsoleInputDecodingComboBox.setFont(font)
+        self.ConsoleInputDecodingComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.ConsoleInputDecodingComboBox.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
+        self.ConsoleInputDecodingComboBox.setFrame(True)
+        self.ConsoleInputDecodingComboBox.setObjectName("ConsoleInputDecodingComboBox")
+        self.ConsoleInputDecodingComboBox.addItem("")
+        self.ConsoleInputDecodingComboBox.addItem("")
+        self.ConsoleInputDecodingComboBox.addItem("")
+        self.EnableQuickMenu = QCheckBox(self.ConsoleSettingsWidget)
+        self.EnableQuickMenu.setGeometry(QRect(30, 60, 410, 30))
+        self.EnableQuickMenu.setMinimumSize(QSize(28, 20))
+        self.EnableQuickMenu.setMaximumSize(QSize(410, 30))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.EnableQuickMenu.setFont(font)
+        self.EnableQuickMenu.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.EnableQuickMenu.setChecked(True)
+        self.EnableQuickMenu.setObjectName("EnableQuickMenu")
+        self.SettingsVerticalLayout.addWidget(self.ConsoleSettingsWidget)
+        self.UISettingsWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.UISettingsWidget.setMinimumSize(QSize(620, 200))
+        self.UISettingsWidget.setMaximumSize(QSize(620, 200))
+        self.UISettingsWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.UISettingsWidget.setObjectName("UISettingsWidget")
+        self.UISettingsTitle = QWidget(self.UISettingsWidget)
+        self.UISettingsTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.UISettingsTitle.setMinimumSize(QSize(120, 40))
+        self.UISettingsTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.UISettingsTitle.setObjectName("UISettingsTitle")
+        self.UISettingsWidgetTitleLabel = QLabel(self.UISettingsTitle)
+        self.UISettingsWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.UISettingsWidgetTitleLabel.setFont(font)
+        self.UISettingsWidgetTitleLabel.setObjectName("UISettingsWidgetTitleLabel")
+        self.UISettingsWidgetBlue = QLabel(self.UISettingsTitle)
+        self.UISettingsWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.UISettingsWidgetBlue.setFont(font)
+        self.UISettingsWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.UISettingsWidgetBlue.setAutoFillBackground(False)
+        self.UISettingsWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.UISettingsWidgetBlue.setText("")
+        self.UISettingsWidgetBlue.setObjectName("UISettingsWidgetBlue")
+        self.TransparentSetting = QLabel(self.UISettingsWidget)
+        self.TransparentSetting.setGeometry(QRect(30, 60, 171, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.TransparentSetting.setFont(font)
+        self.TransparentSetting.setObjectName("TransparentSetting")
+        self.DarkMode = QLabel(self.UISettingsWidget)
+        self.DarkMode.setGeometry(QRect(30, 143, 171, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.DarkMode.setFont(font)
+        self.DarkMode.setObjectName("DarkMode")
+        self.DarkModeComboBox = QComboBox(self.UISettingsWidget)
+        self.DarkModeComboBox.setGeometry(QRect(470, 144, 121, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.DarkModeComboBox.setFont(font)
+        self.DarkModeComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.DarkModeComboBox.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
+        self.DarkModeComboBox.setFrame(True)
+        self.DarkModeComboBox.setObjectName("DarkModeComboBox")
+        self.DarkModeComboBox.addItem("")
+        self.DarkModeComboBox.addItem("")
+        self.DarkModeComboBox.addItem("")
+        self.ExchangeButton = QCheckBox(self.UISettingsWidget)
+        self.ExchangeButton.setGeometry(QRect(30, 100, 261, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ExchangeButton.setFont(font)
+        self.ExchangeButton.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.ExchangeButton.setIconSize(QSize(32, 32))
+        self.ExchangeButton.setCheckable(True)
+        self.ExchangeButton.setChecked(False)
+        self.ExchangeButton.setObjectName("ExchangeButton")
+        self.TransparentPercentSlider = QSlider(self.UISettingsWidget)
+        self.TransparentPercentSlider.setGeometry(QRect(370, 70, 181, 24))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.TransparentPercentSlider.setFont(font)
+        self.TransparentPercentSlider.setStyleSheet("QSlider:horizontal {\n"
+"    min-height: 24px;\n"
+"}\n"
+"\n"
+"QSlider::groove:horizontal {\n"
+"    height: 4px;\n"
+"    background-color: rgba(0, 0, 0, 100);\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: rgb(0, 120, 212);\n"
+"    height: 4px;\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"    border: 1px solid rgb(222, 222, 222);\n"
+"    width: 20px;\n"
+"    min-height: 24px;\n"
+"    margin: -9px 0;\n"
+"    border-radius: 11px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.48 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(0, 120, 212),\n"
+"        stop:0.65 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.4 rgb(0, 120, 212),\n"
+"        stop:0.5 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::groove:horizontal:disabled {\n"
+"    background-color: rgba(0, 0, 0, 75);\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:disabled {\n"
+"    background-color: #808080;\n"
+"    border: 5px solid #cccccc;\n"
+"}\n"
+"\n"
+"\n"
+"QSlider:vertical {\n"
+"    min-width: 24px;\n"
+"}\n"
+"\n"
+"QSlider::groove:vertical {\n"
+"    width: 4px;\n"
+"    background-color: rgba(0, 0, 0, 100);\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::add-page:vertical {\n"
+"    background: rgb(0, 120, 212);\n"
+"    width: 4px;\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical {\n"
+"    border: 1px solid rgb(222, 222, 222);\n"
+"    height: 20px;\n"
+"    min-width: 24px;\n"
+"    margin: 0 -9px;\n"
+"    border-radius: 11px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.48 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(0, 120, 212),\n"
+"        stop:0.65 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.4 rgb(0, 120, 212),\n"
+"        stop:0.5 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::groove:vertical:disabled {\n"
+"    background-color: rgba(0, 0, 0, 75);\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical:disabled {\n"
+"    background-color: #808080;\n"
+"    border: 5px solid #cccccc;\n"
+"}\n"
+"")
+        self.TransparentPercentSlider.setMaximum(100)
+        self.TransparentPercentSlider.setProperty("value", 55)
+        self.TransparentPercentSlider.setOrientation(Qt.Horizontal)
+        self.TransparentPercentSlider.setInvertedAppearance(False)
+        self.TransparentPercentSlider.setTickPosition(QSlider.NoTicks)
+        self.TransparentPercentSlider.setObjectName("TransparentPercentSlider")
+        self.TransparentPercentNum = QLabel(self.UISettingsWidget)
+        self.TransparentPercentNum.setGeometry(QRect(560, 60, 31, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.TransparentPercentNum.setFont(font)
+        self.TransparentPercentNum.setObjectName("TransparentPercentNum")
+        self.SettingsVerticalLayout.addWidget(self.UISettingsWidget)
+        self.SoftwareSettingsWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.SoftwareSettingsWidget.setMinimumSize(QSize(620, 160))
+        self.SoftwareSettingsWidget.setMaximumSize(QSize(620, 160))
+        self.SoftwareSettingsWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.SoftwareSettingsWidget.setObjectName("SoftwareSettingsWidget")
+        self.AlwaysRunAsAdministrator = QCheckBox(self.SoftwareSettingsWidget)
+        self.AlwaysRunAsAdministrator.setGeometry(QRect(30, 93, 410, 30))
+        self.AlwaysRunAsAdministrator.setMinimumSize(QSize(28, 20))
+        self.AlwaysRunAsAdministrator.setMaximumSize(QSize(410, 30))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.AlwaysRunAsAdministrator.setFont(font)
+        self.AlwaysRunAsAdministrator.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.AlwaysRunAsAdministrator.setObjectName("AlwaysRunAsAdministrator")
+        self.SoftwareSettingsTitle = QWidget(self.SoftwareSettingsWidget)
+        self.SoftwareSettingsTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.SoftwareSettingsTitle.setMinimumSize(QSize(120, 40))
+        self.SoftwareSettingsTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.SoftwareSettingsTitle.setObjectName("SoftwareSettingsTitle")
+        self.SoftwareSettingsWidgetTitleLabel = QLabel(self.SoftwareSettingsTitle)
+        self.SoftwareSettingsWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.SoftwareSettingsWidgetTitleLabel.setFont(font)
+        self.SoftwareSettingsWidgetTitleLabel.setObjectName("SoftwareSettingsWidgetTitleLabel")
+        self.SoftwareSettingsWidgetBlue = QLabel(self.SoftwareSettingsTitle)
+        self.SoftwareSettingsWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.SoftwareSettingsWidgetBlue.setFont(font)
+        self.SoftwareSettingsWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.SoftwareSettingsWidgetBlue.setAutoFillBackground(False)
+        self.SoftwareSettingsWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.SoftwareSettingsWidgetBlue.setText("")
+        self.SoftwareSettingsWidgetBlue.setObjectName("SoftwareSettingsWidgetBlue")
+        self.StartOnStartup = QCheckBox(self.SoftwareSettingsWidget)
+        self.StartOnStartup.setGeometry(QRect(30, 60, 410, 30))
+        self.StartOnStartup.setMinimumSize(QSize(28, 20))
+        self.StartOnStartup.setMaximumSize(QSize(410, 30))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.StartOnStartup.setFont(font)
+        self.StartOnStartup.setStyleSheet("QCheckBox {\n"
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
+        self.StartOnStartup.setObjectName("StartOnStartup")
+        self.SettingsVerticalLayout.addWidget(self.SoftwareSettingsWidget)
+        self.UpdaterWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.UpdaterWidget.setMinimumSize(QSize(620, 160))
+        self.UpdaterWidget.setMaximumSize(QSize(620, 160))
+        self.UpdaterWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.UpdaterWidget.setObjectName("UpdaterWidget")
+        self.UpdaterTitle = QWidget(self.UpdaterWidget)
+        self.UpdaterTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.UpdaterTitle.setMinimumSize(QSize(120, 40))
+        self.UpdaterTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.UpdaterTitle.setObjectName("UpdaterTitle")
+        self.UpdaterWidgetTitleLabel = QLabel(self.UpdaterTitle)
+        self.UpdaterWidgetTitleLabel.setGeometry(QRect(30, 10, 81, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.UpdaterWidgetTitleLabel.setFont(font)
+        self.UpdaterWidgetTitleLabel.setObjectName("UpdaterWidgetTitleLabel")
+        self.UpdaterWidgetBlue = QLabel(self.UpdaterTitle)
+        self.UpdaterWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.UpdaterWidgetBlue.setFont(font)
+        self.UpdaterWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.UpdaterWidgetBlue.setAutoFillBackground(False)
+        self.UpdaterWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.UpdaterWidgetBlue.setText("")
+        self.UpdaterWidgetBlue.setObjectName("UpdaterWidgetBlue")
+        self.CurrentVersionLabel = QLabel(self.UpdaterWidget)
+        self.CurrentVersionLabel.setGeometry(QRect(30, 60, 571, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.CurrentVersionLabel.setFont(font)
+        self.CurrentVersionLabel.setObjectName("CurrentVersionLabel")
+        self.LastUpdateTime = QLabel(self.UpdaterWidget)
+        self.LastUpdateTime.setGeometry(QRect(150, 110, 311, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.LastUpdateTime.setFont(font)
+        self.LastUpdateTime.setObjectName("LastUpdateTime")
+        self.UpdatePushButton = QPushButton(self.UpdaterWidget)
+        self.UpdatePushButton.setGeometry(QRect(30, 110, 101, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.UpdatePushButton.setFont(font)
+        self.UpdatePushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.UpdatePushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.UpdatePushButton.setFlat(False)
+        self.UpdatePushButton.setObjectName("UpdatePushButton")
+        self.SettingsVerticalLayout.addWidget(self.UpdaterWidget)
+        self.AboutWidget = QWidget(self.SettingsScrollAreaWidgetContents)
+        self.AboutWidget.setMinimumSize(QSize(620, 330))
+        self.AboutWidget.setMaximumSize(QSize(620, 330))
+        self.AboutWidget.setStyleSheet("QWidget\n"
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
+        self.AboutWidget.setObjectName("AboutWidget")
+        self.AboutTitle = QWidget(self.AboutWidget)
+        self.AboutTitle.setGeometry(QRect(20, 10, 120, 40))
+        self.AboutTitle.setMinimumSize(QSize(120, 40))
+        self.AboutTitle.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.AboutTitle.setObjectName("AboutTitle")
+        self.AboutWidgetTitleLabel = QLabel(self.AboutTitle)
+        self.AboutWidgetTitleLabel.setGeometry(QRect(30, 10, 51, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.AboutWidgetTitleLabel.setFont(font)
+        self.AboutWidgetTitleLabel.setObjectName("AboutWidgetTitleLabel")
+        self.AboutWidgetBlue = QLabel(self.AboutTitle)
+        self.AboutWidgetBlue.setGeometry(QRect(10, 10, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.AboutWidgetBlue.setFont(font)
+        self.AboutWidgetBlue.setCursor(QCursor(Qt.ArrowCursor))
+        self.AboutWidgetBlue.setAutoFillBackground(False)
+        self.AboutWidgetBlue.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
+        self.AboutWidgetBlue.setText("")
+        self.AboutWidgetBlue.setObjectName("AboutWidgetBlue")
+        self.AboutContent = QLabel(self.AboutWidget)
+        self.AboutContent.setGeometry(QRect(30, 55, 571, 131))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.AboutContent.setFont(font)
+        self.AboutContent.setObjectName("AboutContent")
+        self.OpenSourceCodePushButton = QPushButton(self.AboutWidget)
+        self.OpenSourceCodePushButton.setGeometry(QRect(30, 280, 121, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.OpenSourceCodePushButton.setFont(font)
+        self.OpenSourceCodePushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.OpenSourceCodePushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.OpenSourceCodePushButton.setFlat(False)
+        self.OpenSourceCodePushButton.setObjectName("OpenSourceCodePushButton")
+        self.MCSL2_Author_Label_1 = QLabel(self.AboutWidget)
+        self.MCSL2_Author_Label_1.setGeometry(QRect(120, 240, 111, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(9)
         self.MCSL2_Author_Label_1.setFont(font)
         self.MCSL2_Author_Label_1.setObjectName("MCSL2_Author_Label_1")
-        self.MCSL2_Author_Avatar = QLabel(self.AboutPage)
-        self.MCSL2_Author_Avatar.setGeometry(QRect(60, 270, 71, 71))
-        self.MCSL2_Author_Avatar.setText("")
-        self.MCSL2_Author_Avatar.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Author.png"))
-        self.MCSL2_Author_Avatar.setScaledContents(True)
-        self.MCSL2_Author_Avatar.setObjectName("MCSL2_Author_Avatar")
-        self.MCSL2_Author_Label_2 = QLabel(self.AboutPage)
-        self.MCSL2_Author_Label_2.setGeometry(QRect(150, 280, 111, 41))
+        self.MCSL2_Label = QLabel(self.AboutWidget)
+        self.MCSL2_Label.setGeometry(QRect(120, 210, 111, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.MCSL2_Label.setFont(font)
+        self.MCSL2_Label.setObjectName("MCSL2_Label")
+        self.MCSL2_Icon_Label = QLabel(self.AboutWidget)
+        self.MCSL2_Icon_Label.setGeometry(QRect(30, 200, 71, 71))
+        self.MCSL2_Icon_Label.setText("")
+        self.MCSL2_Icon_Label.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"))
+        self.MCSL2_Icon_Label.setScaledContents(True)
+        self.MCSL2_Icon_Label.setObjectName("MCSL2_Icon_Label")
+        self.MCSL2_Author_Label_2 = QLabel(self.AboutWidget)
+        self.MCSL2_Author_Label_2.setGeometry(QRect(300, 210, 111, 41))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
         self.MCSL2_Author_Label_2.setFont(font)
         self.MCSL2_Author_Label_2.setObjectName("MCSL2_Author_Label_2")
-        self.Description_Label = QLabel(self.AboutPage)
-        self.Description_Label.setGeometry(QRect(310, 140, 381, 311))
+        self.MCSL2_Author_Avatar = QLabel(self.AboutWidget)
+        self.MCSL2_Author_Avatar.setGeometry(QRect(210, 200, 71, 71))
+        self.MCSL2_Author_Avatar.setText("")
+        self.MCSL2_Author_Avatar.setPixmap(QPixmap(":/MCSL2_Icon/MCSL2_Author.png"))
+        self.MCSL2_Author_Avatar.setScaledContents(True)
+        self.MCSL2_Author_Avatar.setObjectName("MCSL2_Author_Avatar")
+        self.JoinQQGroup = QPushButton(self.AboutWidget)
+        self.JoinQQGroup.setGeometry(QRect(160, 280, 121, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
-        self.Description_Label.setFont(font)
-        self.Description_Label.setAutoFillBackground(False)
-        self.Description_Label.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 10px\n"
-            "}"
-        )
-        self.Description_Label.setObjectName("Description_Label")
-        self.Check_Update_PushButton = QPushButton(self.AboutPage)
-        self.Check_Update_PushButton.setGeometry(QRect(30, 390, 261, 41))
+        font.setPointSize(10)
+        self.JoinQQGroup.setFont(font)
+        self.JoinQQGroup.setCursor(QCursor(Qt.PointingHandCursor))
+        self.JoinQQGroup.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.JoinQQGroup.setFlat(False)
+        self.JoinQQGroup.setObjectName("JoinQQGroup")
+        self.SystemReportPushButton = QPushButton(self.AboutWidget)
+        self.SystemReportPushButton.setGeometry(QRect(290, 280, 101, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(13)
-        self.Check_Update_PushButton.setFont(font)
-        self.Check_Update_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Check_Update_PushButton.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(230, 230, 230);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(225, 225, 225);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
-        self.Check_Update_PushButton.setObjectName("Check_Update_PushButton")
-        self.FunctionsStackedWidget.addWidget(self.AboutPage)
+        font.setPointSize(10)
+        self.SystemReportPushButton.setFont(font)
+        self.SystemReportPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.SystemReportPushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.SystemReportPushButton.setFlat(False)
+        self.SystemReportPushButton.setObjectName("SystemReportPushButton")
+        self.SettingsVerticalLayout.addWidget(self.AboutWidget)
+        self.verticalLayout_7.addLayout(self.SettingsVerticalLayout)
+        self.SettingsScrollArea.setWidget(self.SettingsScrollAreaWidgetContents)
+        self.FunctionsStackedWidget.addWidget(self.SettingsPage)
         self.ChooseServerPage = QWidget()
         self.ChooseServerPage.setObjectName("ChooseServerPage")
         self.Choose_Server_Label = QLabel(self.ChooseServerPage)
@@ -1928,85 +3920,6 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Server_Label.setFont(font)
         self.Choose_Server_Label.setObjectName("Choose_Server_Label")
-        self.Choose_Server_ComboBox = QComboBox(self.ChooseServerPage)
-        self.Choose_Server_ComboBox.setGeometry(QRect(220, 320, 411, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Choose_Server_ComboBox.setFont(font)
-        self.Choose_Server_ComboBox.setStyleSheet(
-            "QComboBox {\n"
-            "    border-radius: 3px;\n"
-            "    padding: 1px 2px 1px 2px;\n"
-            "    min-Width: 9em;\n"
-            "    border: 2px solid rgb(223, 223, 223);\n"
-            "}\n"
-            "QComboBox::drop-down\n"
-            "{\n"
-            "    subcontrol-origin: padding;\n"
-            "    subcontrol-position: top right;\n"
-            "    Width: 20px;\n"
-            "    border-left-color: rgb(223, 223, 223);\n"
-            "    border-left-style: solid;\n"
-            "    border-top-right-radius: 4px;\n"
-            "    border-bottom-right-radius: 4px;\n"
-            "}\n"
-            "QComboBox::down-arrow\n"
-            "{\n"
-            "    border-image: url(:/MCSL2_Icon/QComboBox.png);\n"
-            "}\n"
-            "QComboBox QAbstractItemView\n"
-            "{\n"
-            "    border-radius: 10px;\n"
-            "    background: rgba(255,255,255,1);\n"
-            "    border: 1px solid rgba(228,228,228,1);\n"
-            "    border-radius: 0px 0px 5px 5px;\n"
-            "    font-size: 14px;\n"
-            "    outline: 0px;\n"
-            "}\n"
-            "QComboBox QAbstractItemView::item\n"
-            "{\n"
-            "    border-radius: 7px;\n"
-            "    font-size:25px;\n"
-            "    color:#666667;\n"
-            "    padding-left:9px;\n"
-            "    background-color:#FFFFFF;\n"
-            "    min-Height: 33px;\n"
-            "    min-Width: 60px;\n"
-            "}\n"
-            "QComboBox QAbstractItemView::item:hover\n"
-            "{\n"
-            "    border-radius: 7px;\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    color:#FFFFFF;\n"
-            "}\n"
-            ""
-        )
-        self.Choose_Server_ComboBox.setObjectName("Choose_Server_ComboBox")
-        self.Choose_Server_ComboBox.addItem("")
-        self.Choose_Server_Label2 = QLabel(self.ChooseServerPage)
-        self.Choose_Server_Label2.setGeometry(QRect(60, 320, 141, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Choose_Server_Label2.setFont(font)
-        self.Choose_Server_Label2.setObjectName("Choose_Server_Label2")
-        self.Choose_Server_Background = QLabel(self.ChooseServerPage)
-        self.Choose_Server_Background.setGeometry(QRect(30, 280, 651, 111))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Server_Background.setFont(font)
-        self.Choose_Server_Background.setAutoFillBackground(False)
-        self.Choose_Server_Background.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(247, 247, 247);\n"
-            "    border-radius: 10px\n"
-            "}"
-        )
-        self.Choose_Server_Background.setText("")
-        self.Choose_Server_Background.setObjectName("Choose_Server_Background")
         self.Completed_Choose_Server_PushButton = QPushButton(self.ChooseServerPage)
         self.Completed_Choose_Server_PushButton.setGeometry(QRect(560, 510, 121, 51))
         font = QFont()
@@ -2363,7 +4276,10 @@ class Ui_MCSL2_MainWindow(object):
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
         self.retranslateUi(MCSL2_MainWindow)
         self.FunctionsStackedWidget.setCurrentIndex(0)
-        self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
+        self.DownloadSwitcher_TabWidget.setCurrentIndex(1)
+        self.Aria2ThreadCountComboBox.setCurrentIndex(3)
+        self.ConsoleInputDecodingComboBox.setCurrentIndex(0)
+        self.DarkModeComboBox.setCurrentIndex(0)
         QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -2376,19 +4292,14 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     下载"))
         self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     终端"))
         self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     工具"))
-        self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     关于"))
+        self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     更多"))
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
-        self.HomeTip1_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "如何搭建一个Java版Minecraft服务器？\n"
-                "1.准备好Java、服务器核心、一台电脑\n"
-                "（提示：可使用本程序下载Java与核心）\n"
-                "2.配置参数（本程序“配置服务器”页）\n"
-                "3.开启服务器。将服务器IP告诉玩家。",
-            )
-        )
+        self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "如何搭建一个Java版Minecraft服务器？\n"
+"1.准备好Java、核心、电脑\n"
+"（提示：可使用本程序下载）\n"
+"2.配置参数（本程序“配置服务器”页）\n"
+"3. 开启服务器。将服务器IP告诉玩家。"))
         self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
         self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
@@ -2396,115 +4307,113 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_Label.setText(_translate("MCSL2_MainWindow", "配置服务器"))
         self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
-        self.ConfigTip1_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "搭建服务器只需要：\n" "1.存放服务器的文件夹\n" "2.服务器核心\n" "3.Java",
-            )
-        )
-        self.ConfigTip2_Label.setText(
-            _translate(
-                "MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n" "以服务器名称命名的文件夹\n" "来存储服务器文件。"
-            )
-        )
+        self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
+"1.存放的文件夹路径\n"
+"2.服务器核心\n"
+"3.Java路径"))
+        self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n"
+"以服务器名称命名的文件夹\n"
+"以存储服务器文件。"))
         self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
-        self.Manual_Import_Core_PushButton.setText(
-            _translate("MCSL2_MainWindow", "手动导入")
-        )
+        self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
-        self.ConfigTip3_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "MCSL 2会把核心复制到文件夹中。当然，\n" "你也可以自己复制，并重命名为server.jar。",
-            )
-        )
+        self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
+"你也可以自己复制，并重命名为server.jar。"))
         self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
         self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
         self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
-        self.Founded_Java_List_PushButton.setText(
-            _translate("MCSL2_MainWindow", "Java列表")
-        )
+        self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.Download_Source_Label.setText(_translate("MCSL2_MainWindow", "下载源："))
-        self.luoxisCloud_radioButton.setText(_translate("MCSL2_MainWindow", "luoxis云"))
-        self.Gitee_radioButton.setText(_translate("MCSL2_MainWindow", "Gitee"))
-        self.SharePoint_radioButton.setText(
-            _translate("MCSL2_MainWindow", "SharePoint")
-        )
-        self.GitHub_radioButton.setText(_translate("MCSL2_MainWindow", "GitHub"))
-        self.GHProxy_radioButton.setText(_translate("MCSL2_MainWindow", "GHProxy"))
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab),
-            _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] Paper"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"),
-        )
-        self.DownloadSwitcher_TabWidget.setTabText(
-            self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab),
-            _translate("MCSL2_MainWindow", "[ 核心 ] 官方"),
-        )
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab), _translate("MCSL2_MainWindow", "[ 核心 ] Paper"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab), _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab), _translate("MCSL2_MainWindow", "[ 核心 ] 官方"))
         self.More_Download_PushButton.setText(_translate("MCSL2_MainWindow", "更多"))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))
         self.Tools_Label.setText(_translate("MCSL2_MainWindow", "更多工具"))
-        self.About_Label.setText(_translate("MCSL2_MainWindow", "关于"))
-        self.MCSL2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
+        self.About_Label.setText(_translate("MCSL2_MainWindow", "更多"))
+        self.AutoRunLastServerSetting.setText(_translate("MCSL2_MainWindow", "开启MCSL2时自动运行上次运行的服务器"))
+        self.AcceptAllMojangEULASetting.setText(_translate("MCSL2_MainWindow", "同意所有新添加服务器的Mojang EULA"))
+        self.StopServerSettings.setText(_translate("MCSL2_MainWindow", "关闭服务器时向服务器发送 stop 指令而不是结束进程"))
+        self.ServerSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "服务器设置"))
+        self.OnlySaveGlobalServerConfigs.setText(_translate("MCSL2_MainWindow", "仅保存全局服务器设置"))
+        self.ConfigPageSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "配置页设置"))
+        self.HowToAddServer.setText(_translate("MCSL2_MainWindow", "添加服务器引导方式"))
+        self.HowToAddServerComboBox.setItemText(0, _translate("MCSL2_MainWindow", "初始 (新手+进阶)"))
+        self.HowToAddServerComboBox.setItemText(1, _translate("MCSL2_MainWindow", "总是新手"))
+        self.HowToAddServerComboBox.setItemText(2, _translate("MCSL2_MainWindow", "总是进阶"))
+        self.DownloadSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "下载设置"))
+        self.MCSLAPIDownloadSource.setText(_translate("MCSL2_MainWindow", "MCSLAPI下载源选择"))
+        self.MCSLAPIDownloadSourceComboBox.setItemText(0, _translate("MCSL2_MainWindow", "国内SharePoint"))
+        self.MCSLAPIDownloadSourceComboBox.setItemText(1, _translate("MCSL2_MainWindow", "Gitee"))
+        self.MCSLAPIDownloadSourceComboBox.setItemText(2, _translate("MCSL2_MainWindow", "luoxis云（暂不可用）"))
+        self.MCSLAPIDownloadSourceComboBox.setItemText(3, _translate("MCSL2_MainWindow", "GHProxy"))
+        self.MCSLAPIDownloadSourceComboBox.setItemText(4, _translate("MCSL2_MainWindow", "GitHub"))
+        self.Aria2ThreadCount.setText(_translate("MCSL2_MainWindow", "Aria2引擎线程数"))
+        self.Aria2ThreadCountComboBox.setItemText(0, _translate("MCSL2_MainWindow", "1"))
+        self.Aria2ThreadCountComboBox.setItemText(1, _translate("MCSL2_MainWindow", "2"))
+        self.Aria2ThreadCountComboBox.setItemText(2, _translate("MCSL2_MainWindow", "4"))
+        self.Aria2ThreadCountComboBox.setItemText(3, _translate("MCSL2_MainWindow", "8"))
+        self.Aria2ThreadCountComboBox.setItemText(4, _translate("MCSL2_MainWindow", "16"))
+        self.AlwaysAskDownloadPath.setText(_translate("MCSL2_MainWindow", "总是询问下载保存位置"))
+        self.AlwaysAskDownloadPathTip.setText(_translate("MCSL2_MainWindow", "若不勾选，则会保存至MCSL2/Downloads文件夹。"))
+        self.SameFileException.setText(_translate("MCSL2_MainWindow", "下载保存位置存在同名文件处理"))
+        self.SameFileExceptionStop.setText(_translate("MCSL2_MainWindow", "停止"))
+        self.SameFileExceptionAsk.setText(_translate("MCSL2_MainWindow", "询问"))
+        self.SameFileExceptionReWrite.setText(_translate("MCSL2_MainWindow", "覆盖"))
+        self.ConsoleSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "终端设置"))
+        self.ConsoleOutputEncoding.setText(_translate("MCSL2_MainWindow", "控制台输出编码"))
+        self.ConsoleOutputEncodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "UTF-8（默认）"))
+        self.ConsoleOutputEncodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "GBK（乱码可尝试）"))
+        self.ConsoleInputDecoding.setText(_translate("MCSL2_MainWindow", "发送指令编码"))
+        self.ConsoleInputDecodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "与输出相同"))
+        self.ConsoleInputDecodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "UTF-8"))
+        self.ConsoleInputDecodingComboBox.setItemText(2, _translate("MCSL2_MainWindow", "GBK"))
+        self.EnableQuickMenu.setText(_translate("MCSL2_MainWindow", "启用快捷菜单"))
+        self.UISettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "界面设置"))
+        self.TransparentSetting.setText(_translate("MCSL2_MainWindow", "背景透明度"))
+        self.DarkMode.setText(_translate("MCSL2_MainWindow", "深色模式"))
+        self.DarkModeComboBox.setItemText(0, _translate("MCSL2_MainWindow", "浅色"))
+        self.DarkModeComboBox.setItemText(1, _translate("MCSL2_MainWindow", "深色"))
+        self.DarkModeComboBox.setItemText(2, _translate("MCSL2_MainWindow", "跟随系统"))
+        self.ExchangeButton.setText(_translate("MCSL2_MainWindow", "交换窗口最小化和关闭按钮顺序"))
+        self.TransparentPercentNum.setText(_translate("MCSL2_MainWindow", "--%"))
+        self.AlwaysRunAsAdministrator.setText(_translate("MCSL2_MainWindow", "总以管理员身份运行"))
+        self.SoftwareSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "软件设置"))
+        self.StartOnStartup.setText(_translate("MCSL2_MainWindow", "开机自动启动"))
+        self.UpdaterWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "软件更新"))
+        self.CurrentVersionLabel.setText(_translate("MCSL2_MainWindow", "当前版本："))
+        self.LastUpdateTime.setText(_translate("MCSL2_MainWindow", "最后一次检查更新时间："))
+        self.UpdatePushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
+        self.AboutWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "关于"))
+        self.AboutContent.setText(_translate("MCSL2_MainWindow", "MCSL2是一个开源非营利性项目，遵循GNU GPL 3.0开源协议。\n"
+"任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
+"但必须在相关源代码中以及软件中给出声明，\n"
+"并且二次分发版本的项目名称应与“MCSL2”有明显辨识度。\n"
+"\n"
+"Copyright ©落雪无痕LxHTT. All right reserved."))
+        self.OpenSourceCodePushButton.setText(_translate("MCSL2_MainWindow", "打开源代码仓库"))
         self.MCSL2_Author_Label_1.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
-        self.MCSL2_Author_Label_2.setText(
-            _translate("MCSL2_MainWindow", "Bilibili：\n" "落雪无痕LxHTT")
-        )
-        self.Description_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "    这是对MCSL的Remake。 \n"
-                "\n"
-                "    本来使用C#开发，但由于知识有限，无奈继续\n"
-                "\n"
-                "    使用Python。 \n"
-                "\n"
-                "    MCSL 2 重构UI，使用更加清晰的代码逻辑开发，\n"
-                "\n"
-                "    除了启动、配置、下载以外，添加了诸多拓展工具。 \n"
-                "\n"
-                "    遇到Bug，请积极反馈，以帮助改进MCSL 2。 \n"
-                "\n"
-                "    作者邮箱: lxhtz.dl@qq.com ",
-            )
-        )
-        self.Check_Update_PushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
+        self.MCSL2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
+        self.MCSL2_Author_Label_2.setText(_translate("MCSL2_MainWindow", "Bilibili：\n"
+"落雪无痕LxHTT"))
+        self.JoinQQGroup.setText(_translate("MCSL2_MainWindow", "加入官方群聊"))
+        self.SystemReportPushButton.setText(_translate("MCSL2_MainWindow", "系统报告"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
-        self.Completed_Choose_Server_PushButton.setText(
-            _translate("MCSL2_MainWindow", "选好了")
-        )
-        self.Choose_Server_Tip1_Label.setText(
-            _translate(
-                "MCSL2_MainWindow",
-                "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
-                "MCSL 2将会读取目录下的文件夹名称以确定一个服务器。",
-            )
-        )
+        self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
+        self.Choose_Server_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
+"MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
         self.Choose_Java_Back_PushButton.setText(_translate("MCSL2_MainWindow", "返回"))
         self.Update_Label.setText(_translate("MCSL2_MainWindow", "程序更新"))
-        self.Update_Tip1_Label.setText(
-            _translate("MCSL2_MainWindow", "MCSL 2发布新版本啦！你想更新吗？")
-        )
+        self.Update_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2发布新版本啦！你想更新吗？"))
         self.DoNotUpdate_PushButton.setText(_translate("MCSL2_MainWindow", "丑拒"))
         self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
-        self.Update_Introduction_Title_Label.setText(
-            _translate("MCSL2_MainWindow", "这是最新版本的说明：")
-        )
+        self.Update_Introduction_Title_Label.setText(_translate("MCSL2_MainWindow", "这是最新版本的说明："))
+

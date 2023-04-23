@@ -29,6 +29,12 @@
       <height>70</height>
      </size>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>620</width>
+      <height>70</height>
+     </size>
+    </property>
     <property name="styleSheet">
      <string notr="true">QWidget
 {
@@ -181,6 +187,12 @@ QPushButton:pressed
      </rect>
     </property>
     <property name="minimumSize">
+     <size>
+      <width>620</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
      <size>
       <width>620</width>
       <height>70</height>

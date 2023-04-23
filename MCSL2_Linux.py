@@ -71,7 +71,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # self.Start_PushButton.clicked.connect(self.LaunchMinecraftServer)
         self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
         self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
-        self.Check_Update_PushButton.clicked.connect(self.CheckUpdate)
+        self.UpdatePushButton.clicked.connect(self.CheckUpdate)
         # self.Download_PushButton.clicked.connect(self.StartDownload)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
@@ -212,7 +212,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(True)
-        self.Check_Update_PushButton.setText("检查更新 (当前版本" + Version + ")")
+        self.CurrentVersionLabel.setText(f"当前版本：{Version}")
 
     def ToChooseServerPage(self):
         self.FunctionsStackedWidget.setCurrentIndex(6)
@@ -675,6 +675,98 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
             self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
 
+    def InitSelectServerSubWidget(self):
+        global JavaPaths
+        # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
+        for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
+            self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
+
+        for i in range(len(JavaPaths)):
+            self.MCSL2_SubWidget_Select = QWidget()
+            self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
+            self.MCSL2_SubWidget_Select.setMinimumSize(QSize(620, 70))
+            self.MCSL2_SubWidget_Select.setStyleSheet(
+                "QWidget\n"
+                "{\n"
+                "    border-radius: 4px;\n"
+                "    background-color: rgba(247, 247, 247, 247)\n"
+                "}"
+            )
+            self.MCSL2_SubWidget_Select.setObjectName("MCSL2_SubWidget_Select")
+            self.Select_PushButton = QPushButton(self.MCSL2_SubWidget_Select)
+            self.Select_PushButton.setGeometry(QRect(540, 10, 51, 51))
+            self.Select_PushButton.setMinimumSize(QSize(51, 51))
+            font = QFont()
+            font.setFamily("Microsoft YaHei UI")
+            font.setPointSize(10)
+            self.Select_PushButton.setFont(font)
+            self.Select_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+            self.Select_PushButton.setStyleSheet(
+                "QPushButton\n"
+                "{\n"
+                "    background-color: rgb(0, 120, 212);\n"
+                "    border-radius: 8px;\n"
+                "    color: rgb(255, 255, 255);\n"
+                "}\n"
+                "QPushButton:hover\n"
+                "{\n"
+                "    background-color: rgb(0, 110, 212);\n"
+                "    border-radius: 8px;\n"
+                "    color: rgb(255, 255, 255);\n"
+                "}\n"
+                "QPushButton:pressed\n"
+                "{\n"
+                "    background-color: rgb(0, 100, 212);\n"
+                "    border-radius: 8px;\n"
+                "    color: rgb(255, 255, 255);\n"
+                "}"
+            )
+            self.Select_PushButton.setFlat(False)
+            self.Select_PushButton.setObjectName("Select_PushButton" + str(i))
+            self.IntroductionWidget_S = QWidget(self.MCSL2_SubWidget_Select)
+            self.IntroductionWidget_S.setGeometry(QRect(100, 10, 421, 51))
+            self.IntroductionWidget_S.setMinimumSize(QSize(421, 51))
+            font = QFont()
+            font.setFamily("Microsoft YaHei UI")
+            font.setPointSize(10)
+            self.IntroductionWidget_S.setFont(font)
+            self.IntroductionWidget_S.setStyleSheet(
+                "QWidget\n"
+                "{\n"
+                "    background-color: rgb(247, 247, 247);\n"
+                "    border-radius: 8px\n"
+                "}"
+            )
+            self.IntroductionWidget_S.setObjectName("IntroductionWidget_S")
+            self.IntroductionLabel_S = QLabel(self.IntroductionWidget_S)
+            self.IntroductionLabel_S.setGeometry(QRect(10, 0, 401, 51))
+            self.IntroductionLabel_S.setMinimumSize(QSize(401, 51))
+            font = QFont()
+            font.setFamily("Microsoft YaHei UI")
+            font.setPointSize(10)
+            self.IntroductionLabel_S.setFont(font)
+            self.IntroductionLabel_S.setText("")
+            self.IntroductionLabel_S.setObjectName("IntroductionLabel_S")
+            self.GraphWidget_S = QLabel(self.MCSL2_SubWidget_Select)
+            self.GraphWidget_S.setGeometry(QRect(30, 10, 51, 51))
+            self.GraphWidget_S.setMinimumSize(QSize(51, 51))
+            self.GraphWidget_S.setStyleSheet(
+                "QLabel\n"
+                "{\n"
+                "    background-color: rgb(247, 247, 247);\n"
+                "    border-radius: 4px;\n"
+                "}"
+            )
+            self.GraphWidget_S.setText("")
+            self.GraphWidget_S.setObjectName("GraphWidget_S")
+            self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+            self.GraphWidget_S.setScaledContents(True)
+            self.IntroductionLabel_S.setText("Java版本：" + JavaPaths[i].Version + "\n" + JavaPaths[i].Path)
+            self.Select_PushButton.setText("选择")
+            self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+
+            self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
+
     def ParseSrollAreaItemButtons(self):
         global ScrollAreaStatus
         SenderButton = str(self.sender().objectName()).split("_PushButton")
@@ -751,6 +843,7 @@ if __name__ == '__main__':
                      "}"
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     environ["QT_QPA_PLATFORM"] = "wayland"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
     MCSLProcess = QApplication(argv)
