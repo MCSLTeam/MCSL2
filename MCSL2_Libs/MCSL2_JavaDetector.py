@@ -1,3 +1,4 @@
+import platform
 from os import listdir
 from os import path as ospath
 from re import match, search
@@ -13,9 +14,12 @@ MatchKeywords = {
     'env', 'ext', 'file', 'forge', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre',
     'jvm', 'launch', 'mc', 'microsoft', 'mod', 'mojang', 'net', 'netease', 'optifine',
     'oracle', 'path', 'program', 'roaming', 'run', 'runtime', 'server', 'software',
-    'temp', 'users', 'users', 'x64', 'x86',
+    'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr',
     '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
     '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清'
+}
+ExcludedKeywords = {
+    "$", "{", "}", "__"
 }
 
 
@@ -62,6 +66,9 @@ def GetJavaVersion(File):
 
 
 def FindStr(s):
+    for _s in ExcludedKeywords:
+        if _s in s:
+            return False
     for _s in MatchKeywords:
         if _s in s:
             return True
@@ -69,20 +76,34 @@ def FindStr(s):
 
 
 def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
+    # construct _Math function
+    if 'windows' in platform.system().lower():
+        def Match(P, F):
+            return ospath.join(P, F).endswith(r'bin\java.exe')
+    else:
+        def Match(P, F):
+            return ospath.join(P, F).endswith(r'bin/java')
+
+    return SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
+
+
+def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     JavaPathList = []
     if FuzzySearch:
-        if ospath.isfile(Path):
+        if ospath.isfile(Path) or 'x86_64-linux-gnu' in Path:
             return JavaPathList
         try:
             for File in listdir(Path):
                 try:
-                    if ospath.isfile(Path + "/" + File):
-                        if match(f".*?bin/{FileKeyword}.{FileExtended}", Path + "/" + File):
-                            v = GetJavaVersion(Path + "/" + File)
+                    _Path = ospath.join(Path, File)
+                    if ospath.isfile(_Path):
+                        if _Match(Path, File):
+                            v = GetJavaVersion(_Path)
                             if not isinstance(v, CalledProcessError):
-                                JavaPathList.append(Java(Path + "/" + File, v))
+                                JavaPathList.append(Java(_Path, v))
                     elif FindStr(File.lower()):
-                        JavaPathList.extend(SearchFile(Path + "/" + File, FileKeyword, FileExtended, FuzzySearch))
+                        JavaPathList.extend(
+                            SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
                 except PermissionError:
                     pass
         except FileNotFoundError as e:
@@ -93,10 +114,13 @@ def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
 def FindJava(FuzzySearch=True):
     JavaPathList = []
     FoundJava.clear()
-    for i in range(65, 91):
-        Path = chr(i) + ":/"
-        if ospath.exists(Path):
-            JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
+    if "windows" in platform.system().lower():
+        for i in range(65, 91):
+            Path = chr(i) + ":\\"
+            if ospath.exists(Path):
+                JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
+    else:
+        JavaPathList.extend(SearchFile("/usr/lib", "java", "", FuzzySearch))
     return JavaPathList
 
 
