@@ -1,4 +1,3 @@
-import platform
 from os import listdir
 from os import path as ospath
 from re import match, search
@@ -114,13 +113,10 @@ def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
 def FindJava(FuzzySearch=True):
     JavaPathList = []
     FoundJava.clear()
-    if "windows" in platform.system().lower():
-        for i in range(65, 91):
-            Path = chr(i) + ":\\"
-            if ospath.exists(Path):
-                JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
-    else:
-        JavaPathList.extend(SearchFile("/usr/lib", "java", "", FuzzySearch))
+    for i in range(65, 91):
+        Path = chr(i) + ":/"
+        if ospath.exists(Path):
+            JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
     return JavaPathList
 
 
