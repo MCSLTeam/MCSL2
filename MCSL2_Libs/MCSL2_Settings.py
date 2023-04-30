@@ -4,10 +4,6 @@ from json import loads
 class MCSL2Settings:
     def __init__(self):
         """
-
-
-        "background_transparency"
-        "exchange_window_controling_buttons"
         "darkmode"
         "start_at_startup"
         "always_run_as_administrator"
@@ -27,3 +23,5 @@ class MCSL2Settings:
             self.EnableConsoleQuickMenu = ConfigJSON["enable_console_quick_menu"]
             self.ConsoleOutputEncoding = ConfigJSON["console_output_encoding"]
             self.ConsoleInputDecoding = ConfigJSON["console_input_decoding"]
+            self.BackgroundTransparency = ConfigJSON["background_transparency"]
+            self.ExchangeWindowControlling

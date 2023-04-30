@@ -25,7 +25,7 @@ def InitMCSL():
                 "console_output_encoding": "utf-8",
                 "console_input_decoding": "follow",
                 "background_transparency": 55,
-                "exchange_window_controling_buttons": False,
+                "exchange_window_controlling_buttons": False,
                 "darkmode": "light",
                 "start_at_startup": False,
                 "always_run_as_administrator": False,
