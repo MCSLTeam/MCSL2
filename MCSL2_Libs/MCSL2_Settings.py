@@ -3,12 +3,6 @@ from json import loads
 
 class MCSL2Settings:
     def __init__(self):
-        """
-        "darkmode"
-        "start_at_startup"
-        "always_run_as_administrator"
-        "last_update_time"
-        """
         with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as ReadConfig:
             ConfigJSON = loads(ReadConfig.read())
             self.AutoRunLastServer = ConfigJSON["auto_run_last_server"]
@@ -24,4 +18,7 @@ class MCSL2Settings:
             self.ConsoleOutputEncoding = ConfigJSON["console_output_encoding"]
             self.ConsoleInputDecoding = ConfigJSON["console_input_decoding"]
             self.BackgroundTransparency = ConfigJSON["background_transparency"]
-            self.ExchangeWindowControlling
+            self.ExchangeWindowControllingButtons = ConfigJSON["exchange_window_controling_buttons"]
+            self.DarkMode = ConfigJSON["darkmode"]
+            self.StartOnStartup = ConfigJSON["always_run_as_administrator"]
+            self.LastUpdateTime = ConfigJSON["last_update_time"]
