@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Code\Python\MCSL2\Resources\QtUIFiles\MCSL2_MainWindow.ui'
+# Form implementation generated from reading ui file 'E:\MCSLCode\MCSL2\Resources\QtUIFiles\MCSL2_MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -513,44 +513,198 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Config_Label.setFont(font)
         self.Config_Label.setObjectName("Config_Label")
-        self.Others_Background = QtWidgets.QLabel(self.ConfigPage)
-        self.Others_Background.setGeometry(QtCore.QRect(30, 400, 251, 121))
+        self.ConfigModeWidget = QtWidgets.QStackedWidget(self.ConfigPage)
+        self.ConfigModeWidget.setGeometry(QtCore.QRect(30, 140, 670, 451))
+        self.ConfigModeWidget.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.ConfigModeWidget.setLineWidth(1)
+        self.ConfigModeWidget.setObjectName("ConfigModeWidget")
+        self.LeadCPage = QtWidgets.QWidget()
+        self.LeadCPage.setObjectName("LeadCPage")
+        self.LeadConfigTip1 = QtWidgets.QLabel(self.LeadCPage)
+        self.LeadConfigTip1.setGeometry(QtCore.QRect(215, 100, 240, 40))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
-        self.Others_Background.setFont(font)
-        self.Others_Background.setAutoFillBackground(False)
-        self.Others_Background.setStyleSheet("QLabel\n"
+        self.LeadConfigTip1.setFont(font)
+        self.LeadConfigTip1.setAutoFillBackground(False)
+        self.LeadConfigTip1.setStyleSheet("")
+        self.LeadConfigTip1.setObjectName("LeadConfigTip1")
+        self.NoobAddServer = QtWidgets.QCommandLinkButton(self.LeadCPage)
+        self.NoobAddServer.setGeometry(QtCore.QRect(30, 210, 190, 50))
+        self.NoobAddServer.setMinimumSize(QtCore.QSize(190, 50))
+        self.NoobAddServer.setMaximumSize(QtCore.QSize(190, 50))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.NoobAddServer.setFont(font)
+        self.NoobAddServer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.NoobAddServer.setAutoFillBackground(False)
+        self.NoobAddServer.setStyleSheet("QPushButton\n"
 "{\n"
 "    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
+"    border-radius: 7px;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
 "}")
-        self.Others_Background.setText("")
-        self.Others_Background.setObjectName("Others_Background")
-        self.Server_Name_Label = QtWidgets.QLabel(self.ConfigPage)
-        self.Server_Name_Label.setGeometry(QtCore.QRect(50, 420, 91, 41))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Disabled, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Active, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        self.NoobAddServer.setIcon(icon1)
+        self.NoobAddServer.setIconSize(QtCore.QSize(30, 30))
+        self.NoobAddServer.setCheckable(True)
+        self.NoobAddServer.setChecked(False)
+        self.NoobAddServer.setAutoDefault(True)
+        self.NoobAddServer.setDefault(True)
+        self.NoobAddServer.setDescription("")
+        self.NoobAddServer.setObjectName("NoobAddServer")
+        self.ExAddServer = QtWidgets.QCommandLinkButton(self.LeadCPage)
+        self.ExAddServer.setGeometry(QtCore.QRect(240, 210, 190, 50))
+        self.ExAddServer.setMinimumSize(QtCore.QSize(190, 50))
+        self.ExAddServer.setMaximumSize(QtCore.QSize(190, 50))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.ExAddServer.setFont(font)
+        self.ExAddServer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExAddServer.setAutoFillBackground(False)
+        self.ExAddServer.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Disabled, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Active, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        self.ExAddServer.setIcon(icon2)
+        self.ExAddServer.setIconSize(QtCore.QSize(30, 30))
+        self.ExAddServer.setCheckable(True)
+        self.ExAddServer.setChecked(False)
+        self.ExAddServer.setAutoDefault(True)
+        self.ExAddServer.setDefault(True)
+        self.ExAddServer.setDescription("")
+        self.ExAddServer.setObjectName("ExAddServer")
+        self.ImportServer = QtWidgets.QCommandLinkButton(self.LeadCPage)
+        self.ImportServer.setGeometry(QtCore.QRect(450, 210, 190, 50))
+        self.ImportServer.setMinimumSize(QtCore.QSize(190, 50))
+        self.ImportServer.setMaximumSize(QtCore.QSize(190, 50))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.ImportServer.setFont(font)
+        self.ImportServer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ImportServer.setAutoFillBackground(False)
+        self.ImportServer.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Disabled, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Active, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        self.ImportServer.setIcon(icon3)
+        self.ImportServer.setIconSize(QtCore.QSize(30, 30))
+        self.ImportServer.setCheckable(False)
+        self.ImportServer.setChecked(False)
+        self.ImportServer.setAutoDefault(True)
+        self.ImportServer.setDefault(True)
+        self.ImportServer.setDescription("")
+        self.ImportServer.setObjectName("ImportServer")
+        self.LeadConfigTip2 = QtWidgets.QLabel(self.LeadCPage)
+        self.LeadConfigTip2.setGeometry(QtCore.QRect(60, 260, 131, 141))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
-        self.Server_Name_Label.setFont(font)
-        self.Server_Name_Label.setObjectName("Server_Name_Label")
-        self.Server_Name_LineEdit = QtWidgets.QLineEdit(self.ConfigPage)
-        self.Server_Name_LineEdit.setGeometry(QtCore.QRect(150, 430, 111, 21))
+        self.LeadConfigTip2.setFont(font)
+        self.LeadConfigTip2.setAutoFillBackground(False)
+        self.LeadConfigTip2.setStyleSheet("")
+        self.LeadConfigTip2.setTextFormat(QtCore.Qt.AutoText)
+        self.LeadConfigTip2.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
+        self.LeadConfigTip2.setObjectName("LeadConfigTip2")
+        self.LeadConfigTip2_2 = QtWidgets.QLabel(self.LeadCPage)
+        self.LeadConfigTip2_2.setGeometry(QtCore.QRect(270, 260, 141, 71))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(9)
-        self.Server_Name_LineEdit.setFont(font)
-        self.Server_Name_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
-        self.Server_Name_LineEdit.setObjectName("Server_Name_LineEdit")
-        self.Completed_Save_PushButton = QtWidgets.QPushButton(self.ConfigPage)
-        self.Completed_Save_PushButton.setGeometry(QtCore.QRect(50, 470, 211, 31))
+        font.setPointSize(12)
+        self.LeadConfigTip2_2.setFont(font)
+        self.LeadConfigTip2_2.setAutoFillBackground(False)
+        self.LeadConfigTip2_2.setStyleSheet("")
+        self.LeadConfigTip2_2.setTextFormat(QtCore.Qt.AutoText)
+        self.LeadConfigTip2_2.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
+        self.LeadConfigTip2_2.setObjectName("LeadConfigTip2_2")
+        self.LeadConfigTip2_3 = QtWidgets.QLabel(self.LeadCPage)
+        self.LeadConfigTip2_3.setGeometry(QtCore.QRect(480, 260, 141, 51))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.LeadConfigTip2_3.setFont(font)
+        self.LeadConfigTip2_3.setAutoFillBackground(False)
+        self.LeadConfigTip2_3.setStyleSheet("")
+        self.LeadConfigTip2_3.setTextFormat(QtCore.Qt.AutoText)
+        self.LeadConfigTip2_3.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
+        self.LeadConfigTip2_3.setObjectName("LeadConfigTip2_3")
+        self.ConfigModeWidget.addWidget(self.LeadCPage)
+        self.NoobCPage = QtWidgets.QWidget()
+        self.NoobCPage.setObjectName("NoobCPage")
+        self.Completed_Save_PushButton = QtWidgets.QPushButton(self.NoobCPage)
+        self.Completed_Save_PushButton.setGeometry(QtCore.QRect(20, 330, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -576,42 +730,44 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Completed_Save_PushButton.setFlat(False)
         self.Completed_Save_PushButton.setObjectName("Completed_Save_PushButton")
-        self.ConfigTip1_Widget = QtWidgets.QWidget(self.ConfigPage)
-        self.ConfigTip1_Widget.setGeometry(QtCore.QRect(30, 140, 251, 121))
-        self.ConfigTip1_Widget.setStyleSheet("QWidget\n"
+        self.Server_Name_Label = QtWidgets.QLabel(self.NoobCPage)
+        self.Server_Name_Label.setGeometry(QtCore.QRect(20, 280, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Server_Name_Label.setFont(font)
+        self.Server_Name_Label.setObjectName("Server_Name_Label")
+        self.Server_Name_LineEdit = QtWidgets.QLineEdit(self.NoobCPage)
+        self.Server_Name_LineEdit.setGeometry(QtCore.QRect(120, 290, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.Server_Name_LineEdit.setFont(font)
+        self.Server_Name_LineEdit.setStyleSheet("QLineEdit\n"
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
+        self.Server_Name_LineEdit.setObjectName("Server_Name_LineEdit")
+        self.Others_Background = QtWidgets.QLabel(self.NoobCPage)
+        self.Others_Background.setGeometry(QtCore.QRect(0, 260, 251, 121))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Others_Background.setFont(font)
+        self.Others_Background.setAutoFillBackground(False)
+        self.Others_Background.setStyleSheet("QLabel\n"
 "{\n"
 "    background-color: rgb(247, 247, 247);\n"
 "    border-radius: 10px\n"
 "}")
-        self.ConfigTip1_Widget.setObjectName("ConfigTip1_Widget")
-        self.ConfigTip1_Label = QtWidgets.QLabel(self.ConfigTip1_Widget)
-        self.ConfigTip1_Label.setGeometry(QtCore.QRect(10, 20, 211, 81))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.ConfigTip1_Label.setFont(font)
-        self.ConfigTip1_Label.setAutoFillBackground(False)
-        self.ConfigTip1_Label.setStyleSheet("")
-        self.ConfigTip1_Label.setObjectName("ConfigTip1_Label")
-        self.ConfigTip2_Widget = QtWidgets.QWidget(self.ConfigPage)
-        self.ConfigTip2_Widget.setGeometry(QtCore.QRect(30, 280, 251, 101))
-        self.ConfigTip2_Widget.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.ConfigTip2_Widget.setObjectName("ConfigTip2_Widget")
-        self.ConfigTip2_Label = QtWidgets.QLabel(self.ConfigTip2_Widget)
-        self.ConfigTip2_Label.setGeometry(QtCore.QRect(10, 10, 211, 81))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.ConfigTip2_Label.setFont(font)
-        self.ConfigTip2_Label.setAutoFillBackground(False)
-        self.ConfigTip2_Label.setStyleSheet("")
-        self.ConfigTip2_Label.setObjectName("ConfigTip2_Label")
-        self.Configuration_Widget = QtWidgets.QWidget(self.ConfigPage)
-        self.Configuration_Widget.setGeometry(QtCore.QRect(310, 140, 351, 341))
+        self.Others_Background.setText("")
+        self.Others_Background.setObjectName("Others_Background")
+        self.Configuration_Widget = QtWidgets.QWidget(self.NoobCPage)
+        self.Configuration_Widget.setGeometry(QtCore.QRect(280, 0, 351, 291))
         self.Configuration_Widget.setObjectName("Configuration_Widget")
         self.Download_Core_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
         self.Download_Core_PushButton.setGeometry(QtCore.QRect(230, 240, 101, 31))
@@ -695,7 +851,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Manual_Import_Core_PushButton.setFlat(False)
         self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
         self.Set_Core_Background = QtWidgets.QLabel(self.Configuration_Widget)
-        self.Set_Core_Background.setGeometry(QtCore.QRect(0, 220, 351, 121))
+        self.Set_Core_Background.setGeometry(QtCore.QRect(0, 220, 351, 71))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -758,14 +914,6 @@ class Ui_MCSL2_MainWindow(object):
 "}")
         self.Set_Memory_Background.setText("")
         self.Set_Memory_Background.setObjectName("Set_Memory_Background")
-        self.ConfigTip3_Label = QtWidgets.QLabel(self.Configuration_Widget)
-        self.ConfigTip3_Label.setGeometry(QtCore.QRect(20, 280, 311, 41))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.ConfigTip3_Label.setFont(font)
-        self.ConfigTip3_Label.setStyleSheet("")
-        self.ConfigTip3_Label.setObjectName("ConfigTip3_Label")
         self.Java_Label = QtWidgets.QLabel(self.Configuration_Widget)
         self.Java_Label.setGeometry(QtCore.QRect(20, 20, 71, 31))
         font = QtGui.QFont()
@@ -875,7 +1023,6 @@ class Ui_MCSL2_MainWindow(object):
         self.Manual_Import_Core_PushButton.raise_()
         self.Memory_1_Label.raise_()
         self.MinMemory_LineEdit.raise_()
-        self.ConfigTip3_Label.raise_()
         self.Java_Label.raise_()
         self.MaxMemory_LineEdit.raise_()
         self.Memory_2_Label.raise_()
@@ -884,6 +1031,657 @@ class Ui_MCSL2_MainWindow(object):
         self.Memory_Unit_Label.raise_()
         self.Java_Version_Label.raise_()
         self.Founded_Java_List_PushButton.raise_()
+        self.ConfigTip1_Widget = QtWidgets.QWidget(self.NoobCPage)
+        self.ConfigTip1_Widget.setGeometry(QtCore.QRect(0, 0, 251, 121))
+        self.ConfigTip1_Widget.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ConfigTip1_Widget.setObjectName("ConfigTip1_Widget")
+        self.ConfigTip1_Label = QtWidgets.QLabel(self.ConfigTip1_Widget)
+        self.ConfigTip1_Label.setGeometry(QtCore.QRect(10, 20, 211, 81))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConfigTip1_Label.setFont(font)
+        self.ConfigTip1_Label.setAutoFillBackground(False)
+        self.ConfigTip1_Label.setStyleSheet("")
+        self.ConfigTip1_Label.setObjectName("ConfigTip1_Label")
+        self.ConfigTip2_Widget = QtWidgets.QWidget(self.NoobCPage)
+        self.ConfigTip2_Widget.setGeometry(QtCore.QRect(0, 140, 251, 101))
+        self.ConfigTip2_Widget.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ConfigTip2_Widget.setObjectName("ConfigTip2_Widget")
+        self.ConfigTip2_Label = QtWidgets.QLabel(self.ConfigTip2_Widget)
+        self.ConfigTip2_Label.setGeometry(QtCore.QRect(10, 10, 231, 81))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ConfigTip2_Label.setFont(font)
+        self.ConfigTip2_Label.setAutoFillBackground(False)
+        self.ConfigTip2_Label.setStyleSheet("")
+        self.ConfigTip2_Label.setObjectName("ConfigTip2_Label")
+        self.Others_Background.raise_()
+        self.Completed_Save_PushButton.raise_()
+        self.Server_Name_Label.raise_()
+        self.Server_Name_LineEdit.raise_()
+        self.Configuration_Widget.raise_()
+        self.ConfigTip1_Widget.raise_()
+        self.ConfigTip2_Widget.raise_()
+        self.ConfigModeWidget.addWidget(self.NoobCPage)
+        self.ExtendedCPage = QtWidgets.QWidget()
+        self.ExtendedCPage.setObjectName("ExtendedCPage")
+        self.ExConfiguration_Widget = QtWidgets.QWidget(self.ExtendedCPage)
+        self.ExConfiguration_Widget.setGeometry(QtCore.QRect(0, 0, 671, 451))
+        self.ExConfiguration_Widget.setObjectName("ExConfiguration_Widget")
+        self.ExDownload_Core_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExDownload_Core_PushButton.setGeometry(QtCore.QRect(560, 145, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.ExDownload_Core_PushButton.setFont(font)
+        self.ExDownload_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExDownload_Core_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.ExDownload_Core_PushButton.setFlat(False)
+        self.ExDownload_Core_PushButton.setObjectName("ExDownload_Core_PushButton")
+        self.ExDownload_Java_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExDownload_Java_PushButton.setGeometry(QtCore.QRect(130, 70, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.ExDownload_Java_PushButton.setFont(font)
+        self.ExDownload_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExDownload_Java_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.ExDownload_Java_PushButton.setFlat(False)
+        self.ExDownload_Java_PushButton.setObjectName("ExDownload_Java_PushButton")
+        self.ExManual_Import_Core_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExManual_Import_Core_PushButton.setGeometry(QtCore.QRect(450, 145, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.ExManual_Import_Core_PushButton.setFont(font)
+        self.ExManual_Import_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExManual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.ExManual_Import_Core_PushButton.setFlat(False)
+        self.ExManual_Import_Core_PushButton.setObjectName("ExManual_Import_Core_PushButton")
+        self.ExSet_Core_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExSet_Core_Background.setGeometry(QtCore.QRect(330, 130, 341, 61))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExSet_Core_Background.setFont(font)
+        self.ExSet_Core_Background.setAutoFillBackground(False)
+        self.ExSet_Core_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ExSet_Core_Background.setText("")
+        self.ExSet_Core_Background.setObjectName("ExSet_Core_Background")
+        self.ExSet_Java_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExSet_Java_Background.setGeometry(QtCore.QRect(0, 0, 361, 121))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExSet_Java_Background.setFont(font)
+        self.ExSet_Java_Background.setAutoFillBackground(False)
+        self.ExSet_Java_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ExSet_Java_Background.setText("")
+        self.ExSet_Java_Background.setObjectName("ExSet_Java_Background")
+        self.ExMemory_1_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExMemory_1_Label.setGeometry(QtCore.QRect(20, 140, 71, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExMemory_1_Label.setFont(font)
+        self.ExMemory_1_Label.setObjectName("ExMemory_1_Label")
+        self.ExMinMemory_LineEdit = QtWidgets.QLineEdit(self.ExConfiguration_Widget)
+        self.ExMinMemory_LineEdit.setGeometry(QtCore.QRect(70, 150, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.ExMinMemory_LineEdit.setFont(font)
+        self.ExMinMemory_LineEdit.setStyleSheet("QLineEdit\n"
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
+        self.ExMinMemory_LineEdit.setObjectName("ExMinMemory_LineEdit")
+        self.ExSet_Memory_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExSet_Memory_Background.setGeometry(QtCore.QRect(0, 130, 341, 61))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExSet_Memory_Background.setFont(font)
+        self.ExSet_Memory_Background.setAutoFillBackground(False)
+        self.ExSet_Memory_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ExSet_Memory_Background.setText("")
+        self.ExSet_Memory_Background.setObjectName("ExSet_Memory_Background")
+        self.ExJava_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExJava_Label.setGeometry(QtCore.QRect(20, 20, 71, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExJava_Label.setFont(font)
+        self.ExJava_Label.setObjectName("ExJava_Label")
+        self.ExMaxMemory_LineEdit = QtWidgets.QLineEdit(self.ExConfiguration_Widget)
+        self.ExMaxMemory_LineEdit.setGeometry(QtCore.QRect(165, 150, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.ExMaxMemory_LineEdit.setFont(font)
+        self.ExMaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
+        self.ExMaxMemory_LineEdit.setObjectName("ExMaxMemory_LineEdit")
+        self.ExMemory_2_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExMemory_2_Label.setGeometry(QtCore.QRect(140, 140, 21, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(14)
+        self.ExMemory_2_Label.setFont(font)
+        self.ExMemory_2_Label.setObjectName("ExMemory_2_Label")
+        self.ExCore_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExCore_Label.setGeometry(QtCore.QRect(350, 145, 91, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExCore_Label.setFont(font)
+        self.ExCore_Label.setObjectName("ExCore_Label")
+        self.ExAuto_Find_Java_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExAuto_Find_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.ExAuto_Find_Java_PushButton.setFont(font)
+        self.ExAuto_Find_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExAuto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.ExAuto_Find_Java_PushButton.setFlat(False)
+        self.ExAuto_Find_Java_PushButton.setObjectName("ExAuto_Find_Java_PushButton")
+        self.ExJava_Version_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExJava_Version_Label.setGeometry(QtCore.QRect(80, 20, 261, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExJava_Version_Label.setFont(font)
+        self.ExJava_Version_Label.setText("")
+        self.ExJava_Version_Label.setObjectName("ExJava_Version_Label")
+        self.ExFounded_Java_List_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExFounded_Java_List_PushButton.setGeometry(QtCore.QRect(240, 70, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.ExFounded_Java_List_PushButton.setFont(font)
+        self.ExFounded_Java_List_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExFounded_Java_List_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        self.ExFounded_Java_List_PushButton.setObjectName("ExFounded_Java_List_PushButton")
+        self.ExOthers_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExOthers_Background.setGeometry(QtCore.QRect(370, 0, 301, 121))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExOthers_Background.setFont(font)
+        self.ExOthers_Background.setAutoFillBackground(False)
+        self.ExOthers_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ExOthers_Background.setText("")
+        self.ExOthers_Background.setObjectName("ExOthers_Background")
+        self.ExServer_Name_LineEdit = QtWidgets.QLineEdit(self.ExConfiguration_Widget)
+        self.ExServer_Name_LineEdit.setGeometry(QtCore.QRect(500, 30, 151, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(9)
+        self.ExServer_Name_LineEdit.setFont(font)
+        self.ExServer_Name_LineEdit.setStyleSheet("QLineEdit\n"
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
+        self.ExServer_Name_LineEdit.setObjectName("ExServer_Name_LineEdit")
+        self.ExServer_Name_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExServer_Name_Label.setGeometry(QtCore.QRect(400, 20, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExServer_Name_Label.setFont(font)
+        self.ExServer_Name_Label.setObjectName("ExServer_Name_Label")
+        self.ExCompleted_Save_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExCompleted_Save_PushButton.setGeometry(QtCore.QRect(400, 70, 251, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExCompleted_Save_PushButton.setFont(font)
+        self.ExCompleted_Save_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExCompleted_Save_PushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.ExCompleted_Save_PushButton.setFlat(False)
+        self.ExCompleted_Save_PushButton.setObjectName("ExCompleted_Save_PushButton")
+        self.ExMemoryUnitComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
+        self.ExMemoryUnitComboBox.setGeometry(QtCore.QRect(240, 145, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.ExMemoryUnitComboBox.setFont(font)
+        self.ExMemoryUnitComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.ExMemoryUnitComboBox.setObjectName("ExMemoryUnitComboBox")
+        self.ExMemoryUnitComboBox.addItem("")
+        self.ExMemoryUnitComboBox.addItem("")
+        self.ExSet_Encoding_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExSet_Encoding_Background.setGeometry(QtCore.QRect(0, 200, 671, 111))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExSet_Encoding_Background.setFont(font)
+        self.ExSet_Encoding_Background.setAutoFillBackground(False)
+        self.ExSet_Encoding_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ExSet_Encoding_Background.setText("")
+        self.ExSet_Encoding_Background.setObjectName("ExSet_Encoding_Background")
+        self.ExConsoleInputDecoding = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExConsoleInputDecoding.setGeometry(QtCore.QRect(20, 263, 251, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ExConsoleInputDecoding.setFont(font)
+        self.ExConsoleInputDecoding.setObjectName("ExConsoleInputDecoding")
+        self.ExConsoleOutputEncodingComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
+        self.ExConsoleOutputEncodingComboBox.setGeometry(QtCore.QRect(390, 220, 241, 31))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ExConsoleOutputEncodingComboBox.sizePolicy().hasHeightForWidth())
+        self.ExConsoleOutputEncodingComboBox.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.ExConsoleOutputEncodingComboBox.setFont(font)
+        self.ExConsoleOutputEncodingComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.ExConsoleOutputEncodingComboBox.setObjectName("ExConsoleOutputEncodingComboBox")
+        self.ExConsoleOutputEncodingComboBox.addItem("")
+        self.ExConsoleOutputEncodingComboBox.addItem("")
+        self.ExConsoleInputDecodingComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
+        self.ExConsoleInputDecodingComboBox.setGeometry(QtCore.QRect(390, 260, 241, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        font.setKerning(True)
+        self.ExConsoleInputDecodingComboBox.setFont(font)
+        self.ExConsoleInputDecodingComboBox.setStyleSheet("QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
+        self.ExConsoleInputDecodingComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
+        self.ExConsoleInputDecodingComboBox.setFrame(True)
+        self.ExConsoleInputDecodingComboBox.setObjectName("ExConsoleInputDecodingComboBox")
+        self.ExConsoleInputDecodingComboBox.addItem("")
+        self.ExConsoleInputDecodingComboBox.addItem("")
+        self.ExConsoleInputDecodingComboBox.addItem("")
+        self.ExConsoleOutputEncoding = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExConsoleOutputEncoding.setGeometry(QtCore.QRect(20, 223, 271, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ExConsoleOutputEncoding.setFont(font)
+        self.ExConsoleOutputEncoding.setObjectName("ExConsoleOutputEncoding")
+        self.ExJVMArg = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExJVMArg.setGeometry(QtCore.QRect(20, 330, 251, 21))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.ExJVMArg.setFont(font)
+        self.ExJVMArg.setObjectName("ExJVMArg")
+        self.ExJVMArg_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
+        self.ExJVMArg_Background.setGeometry(QtCore.QRect(0, 320, 671, 131))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.ExJVMArg_Background.setFont(font)
+        self.ExJVMArg_Background.setAutoFillBackground(False)
+        self.ExJVMArg_Background.setStyleSheet("QLabel\n"
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
+        self.ExJVMArg_Background.setText("")
+        self.ExJVMArg_Background.setObjectName("ExJVMArg_Background")
+        self.textEdit = QtWidgets.QTextEdit(self.ExConfiguration_Widget)
+        self.textEdit.setGeometry(QtCore.QRect(20, 360, 631, 81))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.textEdit.setFont(font)
+        self.textEdit.setStyleSheet("QTextEdit\n"
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
+        self.textEdit.setObjectName("textEdit")
+        self.ExJVMArg_Background.raise_()
+        self.ExSet_Encoding_Background.raise_()
+        self.ExSet_Java_Background.raise_()
+        self.ExSet_Core_Background.raise_()
+        self.ExSet_Memory_Background.raise_()
+        self.ExDownload_Core_PushButton.raise_()
+        self.ExDownload_Java_PushButton.raise_()
+        self.ExManual_Import_Core_PushButton.raise_()
+        self.ExMemory_1_Label.raise_()
+        self.ExMinMemory_LineEdit.raise_()
+        self.ExJava_Label.raise_()
+        self.ExMaxMemory_LineEdit.raise_()
+        self.ExMemory_2_Label.raise_()
+        self.ExCore_Label.raise_()
+        self.ExAuto_Find_Java_PushButton.raise_()
+        self.ExJava_Version_Label.raise_()
+        self.ExFounded_Java_List_PushButton.raise_()
+        self.ExOthers_Background.raise_()
+        self.ExServer_Name_LineEdit.raise_()
+        self.ExServer_Name_Label.raise_()
+        self.ExCompleted_Save_PushButton.raise_()
+        self.ExMemoryUnitComboBox.raise_()
+        self.ExConsoleInputDecoding.raise_()
+        self.ExConsoleOutputEncodingComboBox.raise_()
+        self.ExConsoleInputDecodingComboBox.raise_()
+        self.ExConsoleOutputEncoding.raise_()
+        self.ExJVMArg.raise_()
+        self.textEdit.raise_()
+        self.ConfigModeWidget.addWidget(self.ExtendedCPage)
         self.FunctionsStackedWidget.addWidget(self.ConfigPage)
         self.DownloadPage = QtWidgets.QWidget()
         self.DownloadPage.setObjectName("DownloadPage")
@@ -1199,7 +1997,7 @@ class Ui_MCSL2_MainWindow(object):
         self.OfficialCoreScrollArea.setWidget(self.OfficialCoreScrollAreaWidgetContents)
         self.DownloadSwitcher_TabWidget.addTab(self.OfficialCoreTab, "")
         self.More_Download_PushButton = QtWidgets.QPushButton(self.DownloadPage)
-        self.More_Download_PushButton.setGeometry(QtCore.QRect(640, 140, 51, 41))
+        self.More_Download_PushButton.setGeometry(QtCore.QRect(610, 100, 71, 41))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -1221,6 +2019,38 @@ class Ui_MCSL2_MainWindow(object):
 "    border-radius: 7px;\n"
 "}")
         self.More_Download_PushButton.setObjectName("More_Download_PushButton")
+        self.GoToDownloadSourceChangerPushButton = QtWidgets.QPushButton(self.DownloadPage)
+        self.GoToDownloadSourceChangerPushButton.setGeometry(QtCore.QRect(500, 100, 101, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.GoToDownloadSourceChangerPushButton.setFont(font)
+        self.GoToDownloadSourceChangerPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.GoToDownloadSourceChangerPushButton.setStyleSheet("QPushButton\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
+        self.GoToDownloadSourceChangerPushButton.setObjectName("GoToDownloadSourceChangerPushButton")
+        self.CurrentDownloadSourceLabel = QtWidgets.QLabel(self.DownloadPage)
+        self.CurrentDownloadSourceLabel.setGeometry(QtCore.QRect(100, 90, 281, 41))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.CurrentDownloadSourceLabel.setFont(font)
+        self.CurrentDownloadSourceLabel.setAutoFillBackground(False)
+        self.CurrentDownloadSourceLabel.setStyleSheet("")
+        self.CurrentDownloadSourceLabel.setObjectName("CurrentDownloadSourceLabel")
         self.FunctionsStackedWidget.addWidget(self.DownloadPage)
         self.ConsolePage = QtWidgets.QWidget()
         self.ConsolePage.setObjectName("ConsolePage")
@@ -3418,46 +4248,8 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Server_Label.setFont(font)
         self.Choose_Server_Label.setObjectName("Choose_Server_Label")
-        self.Completed_Choose_Server_PushButton = QtWidgets.QPushButton(self.ChooseServerPage)
-        self.Completed_Choose_Server_PushButton.setGeometry(QtCore.QRect(560, 510, 121, 51))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
-        self.Completed_Choose_Server_PushButton.setFont(font)
-        self.Completed_Choose_Server_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Completed_Choose_Server_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 107, 212);\n"
-"    border-radius: 8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
-        self.Completed_Choose_Server_PushButton.setFlat(False)
-        self.Completed_Choose_Server_PushButton.setObjectName("Completed_Choose_Server_PushButton")
-        self.Choose_Server_Tip1_Widget = QtWidgets.QWidget(self.ChooseServerPage)
-        self.Choose_Server_Tip1_Widget.setGeometry(QtCore.QRect(30, 140, 651, 81))
-        self.Choose_Server_Tip1_Widget.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
-        self.Choose_Server_Tip1_Widget.setObjectName("Choose_Server_Tip1_Widget")
-        self.Choose_Server_Tip1_Label = QtWidgets.QLabel(self.Choose_Server_Tip1_Widget)
-        self.Choose_Server_Tip1_Label.setGeometry(QtCore.QRect(20, 0, 601, 71))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Choose_Server_Tip1_Label.setFont(font)
-        self.Choose_Server_Tip1_Label.setAutoFillBackground(False)
-        self.Choose_Server_Tip1_Label.setStyleSheet("")
-        self.Choose_Server_Tip1_Label.setObjectName("Choose_Server_Tip1_Label")
         self.ChooseServerScrollArea = QtWidgets.QScrollArea(self.ChooseServerPage)
-        self.ChooseServerScrollArea.setGeometry(QtCore.QRect(30, 240, 651, 251))
+        self.ChooseServerScrollArea.setGeometry(QtCore.QRect(30, 140, 641, 401))
         self.ChooseServerScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseServerScrollArea.setStyleSheet("QScrollArea{\n"
 "    border: 0px solid;\n"
@@ -3499,8 +4291,13 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseServerScrollArea.setWidgetResizable(True)
         self.ChooseServerScrollArea.setObjectName("ChooseServerScrollArea")
         self.ChooseServerScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.ChooseServerScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 639, 251))
+        self.ChooseServerScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 401))
         self.ChooseServerScrollAreaWidgetContents.setObjectName("ChooseServerScrollAreaWidgetContents")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.ChooseServerScrollAreaWidgetContents)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.ChooseServerScrollAreaVerticalLayout = QtWidgets.QVBoxLayout()
+        self.ChooseServerScrollAreaVerticalLayout.setObjectName("ChooseServerScrollAreaVerticalLayout")
+        self.verticalLayout_8.addLayout(self.ChooseServerScrollAreaVerticalLayout)
         self.ChooseServerScrollArea.setWidget(self.ChooseServerScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.ChooseServerPage)
         self.ChooseJavaPage = QtWidgets.QWidget()
@@ -3733,7 +4530,9 @@ class Ui_MCSL2_MainWindow(object):
 
         self.retranslateUi(MCSL2_MainWindow)
         self.FunctionsStackedWidget.setCurrentIndex(0)
-        self.DownloadSwitcher_TabWidget.setCurrentIndex(1)
+        self.ConfigModeWidget.setCurrentIndex(0)
+        self.ExConsoleInputDecodingComboBox.setCurrentIndex(0)
+        self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
         self.Aria2ThreadCountComboBox.setCurrentIndex(3)
         self.ConsoleInputDecodingComboBox.setCurrentIndex(0)
         self.DarkModeComboBox.setCurrentIndex(0)
@@ -3762,27 +4561,58 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
         self.Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选择"))
         self.Config_Label.setText(_translate("MCSL2_MainWindow", "配置服务器"))
-        self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
+        self.LeadConfigTip1.setText(_translate("MCSL2_MainWindow", "请选择您想要添加服务器的方式："))
+        self.NoobAddServer.setText(_translate("MCSL2_MainWindow", "  简易配置"))
+        self.ExAddServer.setText(_translate("MCSL2_MainWindow", "  进阶模式"))
+        self.ImportServer.setText(_translate("MCSL2_MainWindow", "  导入服务器压缩包"))
+        self.LeadConfigTip2.setText(_translate("MCSL2_MainWindow", "保留基础配置。\n"
+" - Java\n"
+" - 服务器核心\n"
+" - 最小最大内存\n"
+" - 服务器名称"))
+        self.LeadConfigTip2_2.setText(_translate("MCSL2_MainWindow", "较简易配置来说，\n"
+"可以配置更多选项。"))
+        self.LeadConfigTip2_3.setText(_translate("MCSL2_MainWindow", "  （未开发完成）"))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
-        self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
-"1.存放的文件夹路径\n"
-"2.服务器核心\n"
-"3.Java路径"))
-        self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在程序目录生成\n"
-"以服务器名称命名的文件夹\n"
-"以存储服务器文件。"))
+        self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
         self.Download_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.Download_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
         self.Manual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
         self.Memory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
-        self.ConfigTip3_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2会把核心复制到文件夹中。当然，\n"
-"你也可以自己复制，并重命名为server.jar。"))
         self.Java_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
         self.Memory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
         self.Core_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
-        self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "MB"))
+        self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "M"))
         self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
+        self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
+"1.存放的文件夹路径\n"
+"2.服务器核心\n"
+"3.Java路径"))
+        self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在Servers目录\n"
+"生成以服务器名称命名的文件夹\n"
+"以存储服务器文件。"))
+        self.ExDownload_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
+        self.ExDownload_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
+        self.ExManual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
+        self.ExMemory_1_Label.setText(_translate("MCSL2_MainWindow", "内存："))
+        self.ExJava_Label.setText(_translate("MCSL2_MainWindow", "Java:"))
+        self.ExMemory_2_Label.setText(_translate("MCSL2_MainWindow", "~"))
+        self.ExCore_Label.setText(_translate("MCSL2_MainWindow", "服务器核心："))
+        self.ExAuto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
+        self.ExFounded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
+        self.ExServer_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
+        self.ExCompleted_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
+        self.ExMemoryUnitComboBox.setItemText(0, _translate("MCSL2_MainWindow", "M"))
+        self.ExMemoryUnitComboBox.setItemText(1, _translate("MCSL2_MainWindow", "G"))
+        self.ExConsoleInputDecoding.setText(_translate("MCSL2_MainWindow", "发送指令编码(优先级高于全局设置）"))
+        self.ExConsoleOutputEncodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "UTF-8（默认）"))
+        self.ExConsoleOutputEncodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "GBK（乱码可尝试）"))
+        self.ExConsoleInputDecodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "与输出相同"))
+        self.ExConsoleInputDecodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "UTF-8"))
+        self.ExConsoleInputDecodingComboBox.setItemText(2, _translate("MCSL2_MainWindow", "GBK"))
+        self.ExConsoleOutputEncoding.setText(_translate("MCSL2_MainWindow", "控制台输出编码(优先级高于全局设置）"))
+        self.ExJVMArg.setText(_translate("MCSL2_MainWindow", "启动时的JVM参数（可不填）"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
@@ -3790,6 +4620,8 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab), _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab), _translate("MCSL2_MainWindow", "[ 核心 ] 官方"))
         self.More_Download_PushButton.setText(_translate("MCSL2_MainWindow", "更多"))
+        self.GoToDownloadSourceChangerPushButton.setText(_translate("MCSL2_MainWindow", "下载源设置"))
+        self.CurrentDownloadSourceLabel.setText(_translate("MCSL2_MainWindow", "当前下载源："))
         self.Console_Label.setText(_translate("MCSL2_MainWindow", "服务器控制台"))
         self.Command_Background.setText(_translate("MCSL2_MainWindow", "  >"))
         self.Send_Command_PushButton.setText(_translate("MCSL2_MainWindow", "发送"))
@@ -3863,9 +4695,6 @@ class Ui_MCSL2_MainWindow(object):
         self.JoinQQGroup.setText(_translate("MCSL2_MainWindow", "加入官方群聊"))
         self.SystemReportPushButton.setText(_translate("MCSL2_MainWindow", "系统报告"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
-        self.Completed_Choose_Server_PushButton.setText(_translate("MCSL2_MainWindow", "选好了"))
-        self.Choose_Server_Tip1_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2存放服务器数据的路径位于MCSL 2根目录以服务器名称命名的文件夹。\n"
-"MCSL 2将会读取目录下的文件夹名称以确定一个服务器。"))
         self.Choose_Java_Label.setText(_translate("MCSL2_MainWindow", "选择Java"))
         self.Choose_Java_Back_PushButton.setText(_translate("MCSL2_MainWindow", "返回"))
         self.Update_Label.setText(_translate("MCSL2_MainWindow", "程序更新"))

@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="MCSL2_Icon">
+    <file>Import.svg</file>
+    <file>Add.svg</file>
+    <file>QuickStart.svg</file>
     <file>QCheckBoxAccept.svg</file>
     <file>QCheckBoxPartialAccept.svg</file>
     <file>About.svg</file>

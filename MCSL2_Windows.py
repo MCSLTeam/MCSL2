@@ -3,7 +3,7 @@ from os import getcwd, environ, remove, path as ospath
 from subprocess import CalledProcessError
 from sys import argv, exit
 
-from PyQt5.QtCore import QPoint, QSize, pyqtSlot
+from PyQt5.QtCore import QPoint, pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent
 from PyQt5.QtWidgets import (
     QApplication,
@@ -19,7 +19,8 @@ from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
 from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
-from MCSL2_Libs.MCSL2_ServerController import ServerSaver
+from MCSL2_Libs.MCSL2_ServerController import CheckAvailableSaveServer, SaveServer, ReadGlobalServerConfig, \
+    ServerLauncher
 from MCSL2_Libs.MCSL2_Updater import Updater
 
 
@@ -44,6 +45,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Console.svg"))
         self.Tools_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Toolbox.svg"))
         self.About_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/About.svg"))
+        self.CurrentDownloadSourceLabel.setText(
+            str(self.CurrentDownloadSourceLabel.text()) + str(self.MCSLAPIDownloadSourceComboBox.currentText()))
         self._startPos = None
         self._endPos = None
         self._tracking = False
@@ -61,7 +64,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.About_Page_PushButton.clicked.connect(self.ToAboutPage)
         self.Config_PushButton.clicked.connect(self.ToConfigPage)
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
-        self.Completed_Choose_Server_PushButton.clicked.connect(self.ToHomePage)
         self.Download_Core_PushButton.clicked.connect(self.ToDownloadPage)
         self.Choose_Java_Back_PushButton.clicked.connect(self.ShowFoundedJavaList_Back)
         self.Founded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
@@ -69,14 +71,18 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         # Functions binding
         self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
-        # self.Start_PushButton.clicked.connect(self.LaunchMinecraftServer)
+        self.GoToDownloadSourceChangerPushButton.clicked.connect(self.ToAboutPage)
+        self.Start_PushButton.clicked.connect(self.StartMCServerHelper)
+        self.MCSLAPIDownloadSourceComboBox.currentIndexChanged.connect(self.DownloadSourceChanger)
         self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
         self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
         self.UpdatePushButton.clicked.connect(self.CheckUpdate)
         # self.Download_PushButton.clicked.connect(self.StartDownload)
         self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
-
+        self.NoobAddServer.clicked.connect(lambda: self.ConfigModeWidget.setCurrentIndex(1))
+        self.ExAddServer.clicked.connect(lambda: self.ConfigModeWidget.setCurrentIndex(2))
+        # self.HowToAddServerComboBox.currentIndexChanged.connect(self.ChangeAddServerMode)
         # Register Java finder workThread factory
         self.javaPath = []
         self.JavaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
@@ -216,8 +222,38 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.CurrentVersionLabel.setText(f"当前版本：{Version}")
 
     def ToChooseServerPage(self):
+        global GlobalServerList
 
-        self.FunctionsStackedWidget.setCurrentIndex(6)
+        GlobalConfig = ReadGlobalServerConfig()
+        ServerCount = GlobalConfig[0]
+        GlobalServerList = GlobalConfig[1]
+        if str(GlobalServerList) == "[]":
+            ReturnNum = CallMCSL2Dialog(Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
+                                        isNeededTwoButtons=1, ButtonArg="添加|取消")
+            print(ReturnNum)
+            if ReturnNum == 1:
+                self.ToConfigPage()
+                QApplication.processEvents()
+            else:
+                pass
+        else:
+            self.FunctionsStackedWidget.setCurrentIndex(6)
+            self.InitSelectServerSubWidget(ServerCount, GlobalServerList)
+
+    def StartMCServerHelper(self):
+        global GlobalServerList, ServerIndexNum
+
+        GlobalServerList = ReadGlobalServerConfig()[1]
+        if str(GlobalServerList) == "[]":
+            ReturnNum = CallMCSL2Dialog(Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
+                                        isNeededTwoButtons=1, ButtonArg="添加|取消")
+            print(ReturnNum)
+            if ReturnNum == 1:
+                self.ToConfigPage()
+                QApplication.processEvents()
+            else:
+                pass
+        ServerLauncher().GetGlobalServerConfig(ServerIndexNum=ServerIndexNum)
 
     def ToChooseJavaPage(self):
         global JavaPaths
@@ -225,27 +261,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.FunctionsStackedWidget.setCurrentIndex(7)
         self.InitSelectJavaSubWidget()
 
+    # def ChangeAddServerMode(self):
+    #
+
     # Download Sources Changer
 
-    def ChoseSharePointDownloadSource(self):
+    def DownloadSourceChanger(self):
         global DownloadSource
-        DownloadSource = 0
-
-    def ChoseGiteeDownloadSource(self):
-        global DownloadSource
-        DownloadSource = 1
-
-    def ChoseLuoxisCloudSource(self):
-        global DownloadSource
-        DownloadSource = 2
-
-    def ChoseGHProxyDownloadSource(self):
-        global DownloadSource
-        DownloadSource = 3
-
-    def ChoseGitHubDownloadSource(self):
-        global DownloadSource
-        DownloadSource = 4
+        DownloadSource = int(self.MCSLAPIDownloadSourceComboBox.currentIndex())
+        self.CurrentDownloadSourceLabel.setText("当前下载源：" + str(self.MCSLAPIDownloadSourceComboBox.currentText()))
 
     def ManuallySelectJava(self):
         JavaPathSysList = QFileDialog.getOpenFileName(
@@ -266,21 +290,21 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         CoreSysList = QFileDialog.getOpenFileName(self, "选择服务器核心", getcwd(), "*.jar")
         if CoreSysList[0] != "":
             CorePath = CoreSysList[0]
-            print(CorePath)
-            CoreFileName = CorePath.split("/")[-1]
+            CoreFileName = CorePath.split("/")
+            CoreFileName = CoreFileName[-1]
         else:
             Tip = "看来你没有选择任何的服务器核心呢！"
             CallMCSL2Dialog(Tip, 0, ButtonArg=None)
 
     def SaveMinecraftServer(self):
-        global CorePath, JavaPath, MaxMemory, MinMemory, CoreFileName
+        global JavaPath, MaxMemory, MinMemory, CoreFileName, CanCreate
         """
         0 -> Illegal
         1 -> OK
         """
 
         # The server core detector
-        if CorePath != "":
+        if CoreFileName != "":
             CoreStatus = 1
         else:
             CoreStatus = 0
@@ -334,7 +358,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 else:
                     NameStatus = 0
             Path1 = ".\\" + TMPServerName
-            if not ospath.exists(TMPServerName):
+            if not ospath.exists(f"./Servers/{TMPServerName}"):
                 global ServerName
                 ServerName = TMPServerName
                 NameStatus = 1
@@ -351,8 +375,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         ChkVal.append(NameStatus)
         ChkVal.append(JavaStatus)
         ChkVal.append(CoreStatus)
-
-        CheckAvailable = ServerSaver.CheckAvailableSaveServer(ChkVal)
+        CheckAvailable = CheckAvailableSaveServer(ChkVal)
         CanCreate = CheckAvailable[0]
         Tip = CheckAvailable[1]
 
@@ -360,7 +383,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         if CanCreate == 0:
             CallMCSL2Dialog(Tip, 0, ButtonArg=None)
         elif CanCreate == 1:
-            ServerSaver.SaveServer(Tip, ServerName, CorePath, JavaPath, MinMemory, MaxMemory, CoreFileName)
+            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            SaveServer(ServerName=ServerName, CorePath=CorePath, JavaPath=JavaPath, MinMemory=MinMemory,
+                       MaxMemory=MaxMemory, CoreFileName=CoreFileName)
             MinMemStatus = 0
             MaxMemStatus = 0
             NameStatus = 0
@@ -442,10 +467,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         # 如果存在DownloadSource且不为空,则不再重新获取
         if self.downloadUrlDict.get(DownloadSource) is not None:
             idx = self.DownloadSwitcher_TabWidget.currentIndex()
-            self.InitDownloadSubWidget(
-                self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'],
-                self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
-            )
+            self.InitDownloadSubWidget(self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'])
+            # self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
         else:
             workThread = self.fetchDownloadURLThreadFactory.create(
                 downloadSrc=DownloadSource,
@@ -462,7 +485,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.downloadUrlDict.update(_downloadUrlDict)
         self.RefreshDownloadType()
 
-    def InitDownloadSubWidget(self, SubWidgetNames, DownloadUrls):
+    def InitDownloadSubWidget(self, SubWidgetNames):
         GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
         if GraphType == 0:
             self.initDownloadLayout(self.JavaVerticalLayout, SubWidgetNames, QPixmap(":/MCSL2_Icon/JavaIcon.png"))
@@ -587,7 +610,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def InitSelectJavaSubWidget(self):
         global JavaPaths
-        # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
         for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
             self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
 
@@ -677,116 +699,125 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
             self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
 
-    def InitSelectServerSubWidget(self):
-        global JavaPaths
-        # 清空self.ChooseJavaScrollAreaVerticalLayout下的所有子控件
-        for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
-            self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
+    def InitSelectServerSubWidget(self, ServerCount, ServerInfoJSON):
+        for i in reversed(range(self.ChooseServerScrollAreaVerticalLayout.count())):
+            self.ChooseServerScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
 
-        for i in range(len(JavaPaths)):
-            self.MCSL2_SubWidget_Select = QWidget()
-            self.MCSL2_SubWidget_Select.setGeometry(QRect(150, 110, 620, 70))
-            self.MCSL2_SubWidget_Select.setMinimumSize(QSize(620, 70))
-            self.MCSL2_SubWidget_Select.setStyleSheet(
-                "QWidget\n"
-                "{\n"
-                "    border-radius: 4px;\n"
-                "    background-color: rgba(247, 247, 247, 247)\n"
-                "}"
-            )
-            self.MCSL2_SubWidget_Select.setObjectName("MCSL2_SubWidget_Select")
-            self.Select_PushButton = QPushButton(self.MCSL2_SubWidget_Select)
-            self.Select_PushButton.setGeometry(QRect(540, 10, 51, 51))
-            self.Select_PushButton.setMinimumSize(QSize(51, 51))
+        for i in range(ServerCount):
+            WidgetServerName = f"名称：{ServerInfoJSON[i]['name']}\n"
+            WidgetCoreFileName = f"服务器核心文件：{ServerInfoJSON[i]['core_file_name']}\n"
+            WidgetJavaPath = f"Java路径：{ServerInfoJSON[i]['java_path']}\n"
+            WidgetMinMemory = f"Java最小内存：{ServerInfoJSON[i]['min_memory']}\n"
+            WidgetMaxMemory = f"Java最大内存：{ServerInfoJSON[i]['max_memory']}\n"
+            if ServerInfoJSON[i]['jvm_arg'] == "":
+                WidgetJavaArg = "JVM参数：无"
+            else:
+                WidgetJavaArg = f"JVM参数：{ServerInfoJSON[i]['jvm_arg']}"
+            ServerInfo = WidgetServerName + WidgetCoreFileName + WidgetJavaPath + WidgetMinMemory + WidgetMaxMemory + WidgetJavaArg
+            self.MCSL2_SubWidget_SelectS = QWidget()
+            self.MCSL2_SubWidget_SelectS.setGeometry(QRect(150, 270, 620, 171))
+            self.MCSL2_SubWidget_SelectS.setMinimumSize(QSize(620, 171))
+            self.MCSL2_SubWidget_SelectS.setMaximumSize(QSize(620, 171))
+            self.MCSL2_SubWidget_SelectS.setStyleSheet("QWidget\n"
+                                                       "{\n"
+                                                       "    border-radius: 4px;\n"
+                                                       "    background-color: rgba(247, 247, 247, 247)\n"
+                                                       "}")
+            self.MCSL2_SubWidget_SelectS.setObjectName("MCSL2_SubWidget_SelectS")
+            self.SelectS_PushButton = QPushButton(self.MCSL2_SubWidget_SelectS)
+            self.SelectS_PushButton.setGeometry(QRect(540, 60, 51, 51))
+            self.SelectS_PushButton.setMinimumSize(QSize(51, 51))
             font = QFont()
             font.setFamily("Microsoft YaHei UI")
             font.setPointSize(10)
-            self.Select_PushButton.setFont(font)
-            self.Select_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
-            self.Select_PushButton.setStyleSheet(
-                "QPushButton\n"
-                "{\n"
-                "    background-color: rgb(0, 120, 212);\n"
-                "    border-radius: 8px;\n"
-                "    color: rgb(255, 255, 255);\n"
-                "}\n"
-                "QPushButton:hover\n"
-                "{\n"
-                "    background-color: rgb(0, 110, 212);\n"
-                "    border-radius: 8px;\n"
-                "    color: rgb(255, 255, 255);\n"
-                "}\n"
-                "QPushButton:pressed\n"
-                "{\n"
-                "    background-color: rgb(0, 100, 212);\n"
-                "    border-radius: 8px;\n"
-                "    color: rgb(255, 255, 255);\n"
-                "}"
-            )
-            self.Select_PushButton.setFlat(False)
-            self.Select_PushButton.setObjectName("Select_PushButton" + str(i))
-            self.IntroductionWidget_S = QWidget(self.MCSL2_SubWidget_Select)
-            self.IntroductionWidget_S.setGeometry(QRect(100, 10, 421, 51))
-            self.IntroductionWidget_S.setMinimumSize(QSize(421, 51))
+            self.SelectS_PushButton.setFont(font)
+            self.SelectS_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+            self.SelectS_PushButton.setStyleSheet("QPushButton\n"
+                                                  "{\n"
+                                                  "    background-color: rgb(0, 120, 212);\n"
+                                                  "    border-radius: 8px;\n"
+                                                  "    color: rgb(255, 255, 255);\n"
+                                                  "}\n"
+                                                  "QPushButton:hover\n"
+                                                  "{\n"
+                                                  "    background-color: rgb(0, 110, 212);\n"
+                                                  "    border-radius: 8px;\n"
+                                                  "    color: rgb(255, 255, 255);\n"
+                                                  "}\n"
+                                                  "QPushButton:pressed\n"
+                                                  "{\n"
+                                                  "    background-color: rgb(0, 100, 212);\n"
+                                                  "    border-radius: 8px;\n"
+                                                  "    color: rgb(255, 255, 255);\n"
+                                                  "}")
+            self.SelectS_PushButton.setFlat(False)
+            self.SelectS_PushButton.setObjectName("SelectS_PushButton" + str(i))
+            self.IntroductionWidget_SS = QWidget(self.MCSL2_SubWidget_SelectS)
+            self.IntroductionWidget_SS.setGeometry(QRect(80, 10, 451, 151))
+            self.IntroductionWidget_SS.setMinimumSize(QSize(421, 51))
             font = QFont()
             font.setFamily("Microsoft YaHei UI")
             font.setPointSize(10)
-            self.IntroductionWidget_S.setFont(font)
-            self.IntroductionWidget_S.setStyleSheet(
-                "QWidget\n"
-                "{\n"
-                "    background-color: rgb(247, 247, 247);\n"
-                "    border-radius: 8px\n"
-                "}"
-            )
-            self.IntroductionWidget_S.setObjectName("IntroductionWidget_S")
-            self.IntroductionLabel_S = QLabel(self.IntroductionWidget_S)
-            self.IntroductionLabel_S.setGeometry(QRect(10, 0, 401, 51))
-            self.IntroductionLabel_S.setMinimumSize(QSize(401, 51))
+            self.IntroductionWidget_SS.setFont(font)
+            self.IntroductionWidget_SS.setStyleSheet("QWidget\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(247, 247, 247);\n"
+                                                     "    border-radius: 8px\n"
+                                                     "}")
+            self.IntroductionWidget_SS.setObjectName("IntroductionWidget_SS")
+            self.IntroductionLabel_SS = QLabel(self.IntroductionWidget_SS)
+            self.IntroductionLabel_SS.setGeometry(QRect(10, 5, 431, 141))
+            self.IntroductionLabel_SS.setMinimumSize(QSize(401, 51))
             font = QFont()
             font.setFamily("Microsoft YaHei UI")
             font.setPointSize(10)
-            self.IntroductionLabel_S.setFont(font)
-            self.IntroductionLabel_S.setText("")
-            self.IntroductionLabel_S.setObjectName("IntroductionLabel_S")
-            self.GraphWidget_S = QLabel(self.MCSL2_SubWidget_Select)
-            self.GraphWidget_S.setGeometry(QRect(30, 10, 51, 51))
-            self.GraphWidget_S.setMinimumSize(QSize(51, 51))
-            self.GraphWidget_S.setStyleSheet(
-                "QLabel\n"
-                "{\n"
-                "    background-color: rgb(247, 247, 247);\n"
-                "    border-radius: 4px;\n"
-                "}"
-            )
-            self.GraphWidget_S.setText("")
-            self.GraphWidget_S.setObjectName("GraphWidget_S")
-            self.GraphWidget_S.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
-            self.GraphWidget_S.setScaledContents(True)
-            self.IntroductionLabel_S.setText("Java版本：" + JavaPaths[i].Version + "\n" + JavaPaths[i].Path)
-            self.Select_PushButton.setText("选择")
-            self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
-
-            self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
+            self.IntroductionLabel_SS.setFont(font)
+            self.IntroductionLabel_SS.setText("")
+            self.IntroductionLabel_SS.setObjectName("IntroductionLabel_SS")
+            self.GraphWidget_SS = QLabel(self.MCSL2_SubWidget_SelectS)
+            self.GraphWidget_SS.setGeometry(QRect(20, 60, 51, 51))
+            self.GraphWidget_SS.setMinimumSize(QSize(51, 51))
+            self.GraphWidget_SS.setStyleSheet("QLabel\n"
+                                              "{\n"
+                                              "    background-color: rgb(247, 247, 247);\n"
+                                              "    border-radius: 4px;\n"
+                                              "}")
+            self.GraphWidget_SS.setText("")
+            self.GraphWidget_SS.setScaledContents(True)
+            self.GraphWidget_SS.setPixmap(QPixmap(":/MCSL2_Icon/JavaIcon.png"))
+            self.GraphWidget_SS.setObjectName("GraphWidget_SS")
+            self.IntroductionLabel_SS.setText(str(ServerInfo))
+            self.SelectS_PushButton.setText("选择")
+            self.SelectS_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
+            self.ChooseServerScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_SelectS)
 
     def ParseSrollAreaItemButtons(self):
         global ScrollAreaStatus
-        SenderButton = str(self.sender().objectName()).split("_PushButton")
-        SelectDownloadItemIndexNumber = int(SenderButton[1])
+        SelectDownloadItemIndexNumber = int(str(self.sender().objectName()).split("_PushButton")[1])
         if self.FunctionsStackedWidget.currentIndex() == 7:
             self.ChooseJava(JavaIndex=SelectDownloadItemIndexNumber)
+        if self.FunctionsStackedWidget.currentIndex() == 6:
+            self.ChooseServer(ServerIndex=SelectDownloadItemIndexNumber)
 
     def ChooseJava(self, JavaIndex):
         global JavaPaths, JavaPath
-        JavaPath = JavaPaths[JavaIndex]
+        JavaPath = JavaPaths[JavaIndex].Path
         self.FunctionsStackedWidget.setCurrentIndex(1)
-        self.Java_Version_Label.setText(JavaPath.Version)
+        self.Java_Version_Label.setText(JavaPaths[JavaIndex].Version)
+
+    def ChooseServer(self, ServerIndex):
+        global ServerIndexNum
+        ServerIndexNum = ServerIndex
+        self.Selected_Server_Label.setText(f"服务器：{GlobalServerList[ServerIndex]['name']}")
+        self.FunctionsStackedWidget.setCurrentIndex(0)
 
     # The function of checking update
     def CheckUpdate(self):
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
+                                                                                                                  "").replace(
+                "\'", "").split(",")
             self.Update_Introduction_Title_Label.setText("这是最新版本" + LatestVersionInformation[0] + "的说明：")
             self.Update_Introduction_Label.setText(str(LatestVersionInformation[1]).replace("\\n", "\n"))
             self.FunctionsStackedWidget.setCurrentIndex(8)
@@ -798,9 +829,14 @@ if __name__ == '__main__':
     JavaPath = 0
     JavaPaths = []
     DiskSymbols = []
+    GlobalServerList = []
+    ServerIndexNum = 0
     SearchStatus = 0
     CorePath = ""
     DownloadSource = 0
+    CanCreate = 0
+    CoreFileName = ""
+    ServerName = ""
     Version = "2.0.1"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \

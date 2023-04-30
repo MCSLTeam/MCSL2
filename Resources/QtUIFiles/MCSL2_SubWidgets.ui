@@ -340,6 +340,169 @@ QPushButton:pressed
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="MCSL2_SubWidget_SelectS" native="true">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>270</y>
+      <width>620</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>620</width>
+      <height>171</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>620</width>
+      <height>171</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget
+{
+	border-radius: 4px;
+	background-color: rgba(247, 247, 247, 247)
+}</string>
+    </property>
+    <widget class="QPushButton" name="SelectS_PushButton">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>60</y>
+       <width>51</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>51</width>
+       <height>51</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 8px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 8px;
+    color: rgb(255, 255, 255);
+}</string>
+     </property>
+     <property name="text">
+      <string>选择</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QWidget" name="IntroductionWidget_SS" native="true">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>10</y>
+       <width>451</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>421</width>
+       <height>51</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 8px
+}</string>
+     </property>
+     <widget class="QLabel" name="IntroductionLabel_SS">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>5</y>
+        <width>431</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>401</width>
+        <height>51</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="GraphWidget_SS">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>51</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>51</width>
+       <height>51</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 4px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
