@@ -705,7 +705,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -1008,7 +1008,7 @@ QPushButton:pressed
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="LeadCPage">
        <widget class="QLabel" name="LeadConfigTip1">
@@ -6434,7 +6434,7 @@ QSlider::handle:vertical:disabled {
               <rect>
                <x>560</x>
                <y>60</y>
-               <width>31</width>
+               <width>40</width>
                <height>41</height>
               </rect>
              </property>

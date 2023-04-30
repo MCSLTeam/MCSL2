@@ -3874,7 +3874,7 @@ class Ui_MCSL2_MainWindow(object):
         self.TransparentPercentSlider.setTickPosition(QSlider.NoTicks)
         self.TransparentPercentSlider.setObjectName("TransparentPercentSlider")
         self.TransparentPercentNum = QLabel(self.UISettingsWidget)
-        self.TransparentPercentNum.setGeometry(QRect(560, 60, 31, 41))
+        self.TransparentPercentNum.setGeometry(QRect(560, 60, 40, 41))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)

@@ -2,7 +2,7 @@ from json import dump
 from os import getcwd, environ, remove, path as ospath
 from subprocess import CalledProcessError
 from sys import argv, exit
-
+from datetime import datetime
 from PyQt5.QtCore import QPoint, pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent
 from PyQt5.QtWidgets import (
@@ -21,6 +21,7 @@ from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_ServerController import CheckAvailableSaveServer, SaveServer, ReadGlobalServerConfig, \
     ServerLauncher
+from MCSL2_Libs.MCSL2_Settings import MCSL2Settings
 from MCSL2_Libs.MCSL2_Updater import Updater
 
 
@@ -38,7 +39,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAutoFillBackground(True)
         self.setupUi(self)
-
+        ShowLastUpdateTime = MCSL2Settings().GetConfig(Type="LastUpdateTime")
+        self.LastUpdateTime.setText(f"最后一次检查更新时间：{ShowLastUpdateTime}")
+        self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
         self.Home_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Home.svg"))
         self.Config_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Configuration.svg"))
         self.Download_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Download.svg"))
@@ -73,7 +76,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
         self.GoToDownloadSourceChangerPushButton.clicked.connect(self.ToAboutPage)
         self.Start_PushButton.clicked.connect(self.StartMCServerHelper)
-        self.MCSLAPIDownloadSourceComboBox.currentIndexChanged.connect(self.DownloadSourceChanger)
         self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
         self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
         self.UpdatePushButton.clicked.connect(self.CheckUpdate)
@@ -82,7 +84,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
         self.NoobAddServer.clicked.connect(lambda: self.ConfigModeWidget.setCurrentIndex(1))
         self.ExAddServer.clicked.connect(lambda: self.ConfigModeWidget.setCurrentIndex(2))
-        # self.HowToAddServerComboBox.currentIndexChanged.connect(self.ChangeAddServerMode)
+
         # Register Java finder workThread factory
         self.javaPath = []
         self.JavaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
@@ -97,6 +99,110 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         # Init download url dict
         self.downloadUrlDict = {}
+
+        # Settings bind
+        self.AutoRunLastServerSetting.clicked.connect(self.AutoRunLastServerSettingChanger)
+        self.AcceptAllMojangEULASetting.clicked.connect(self.AcceptAllMojangEULASettingChanger)
+        self.StopServerSettings.clicked.connect(self.StopServerSettingsChanger)
+        self.OnlySaveGlobalServerConfigs.clicked.connect(self.OnlySaveGlobalServerConfigsChanger)
+        self.HowToAddServerComboBox.currentIndexChanged.connect(self.HowToAddServerChanger)
+        self.MCSLAPIDownloadSourceComboBox.currentIndexChanged.connect(self.DownloadSourceChanger)
+        self.Aria2ThreadCountComboBox.currentIndexChanged.connect(self.Aria2ThreadCountChanger)
+        self.AlwaysAskDownloadPath.clicked.connect(self.AlwaysAskDownloadPathChanger)
+        self.SameFileExceptionAsk.clicked.connect(self.SameFileExceptionChanger)
+        self.SameFileExceptionReWrite.clicked.connect(self.SameFileExceptionChanger)
+        self.SameFileExceptionStop.clicked.connect(self.SameFileExceptionChanger)
+        self.EnableQuickMenu.clicked.connect(self.EnableQuickMenuChanger)
+        self.ConsoleOutputEncodingComboBox.currentIndexChanged.connect(self.ConsoleOutputEncodingChanger)
+        self.ConsoleInputDecodingComboBox.currentIndexChanged.connect(self.ConsoleInputDecodingChanger)
+        self.TransparentPercentSlider.valueChanged.connect(self.TransparentPercentChanger)
+        self.ExchangeButton.clicked.connect(self.ExchangeButtonChanger)
+        self.DarkModeComboBox.currentIndexChanged.connect(self.DarkModeChanger)
+        self.StartOnStartup.clicked.connect(self.StartOnStartupChanger)
+        self.AlwaysRunAsAdministrator.clicked.connect(self.AlwaysRunAsAdministratorChanger)
+
+    def AutoRunLastServerSettingChanger(self):
+        if self.AutoRunLastServerSetting.isChecked():
+            pass
+        else:
+            pass
+
+    def AcceptAllMojangEULASettingChanger(self):
+        if self.AcceptAllMojangEULASetting.isChecked():
+            pass
+        else:
+            pass
+
+    def StopServerSettingsChanger(self):
+        if self.StopServerSettings.isChecked():
+            pass
+        else:
+            pass
+
+    def HowToAddServerChanger(self):
+        pass
+
+    def OnlySaveGlobalServerConfigsChanger(self):
+        if self.OnlySaveGlobalServerConfigs.isChecked():
+            pass
+        else:
+            pass
+
+    def MCSLAPIDownloadSourceChanger(self):
+        pass
+
+    def Aria2ThreadCountChanger(self):
+        pass
+
+    def AlwaysAskDownloadPathChanger(self):
+        if self.AlwaysAskDownloadPath.isChecked():
+            pass
+        else:
+            pass
+
+    def SameFileExceptionChanger(self):
+        pass
+
+    def EnableQuickMenuChanger(self):
+        if self.EnableQuickMenu.isChecked():
+            pass
+        else:
+            pass
+
+    def ConsoleOutputEncodingChanger(self):
+        pass
+
+    def ConsoleInputDecodingChanger(self):
+        pass
+
+    def TransparentPercentChanger(self):
+        self.Background_2.setStyleSheet("QLabel\n"
+                                        "{\n"
+                                        f"    background-color: rgba(255, 255, 255, {self.TransparentPercentSlider.value()}%); "
+                                        "\n    border-radius: 10px\n"
+                                        "}")
+        self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
+
+    def ExchangeButtonChanger(self):
+        if self.ExchangeButton.isChecked():
+            pass
+        else:
+            pass
+
+    def DarkModeChanger(self):
+        pass
+
+    def StartOnStartupChanger(self):
+        if self.StartOnStartup.isChecked():
+            pass
+        else:
+            pass
+
+    def AlwaysRunAsAdministratorChanger(self):
+        if self.AlwaysRunAsAdministrator.isChecked():
+            pass
+        else:
+            pass
 
     def mouseMoveEvent(self, e: QMouseEvent):
         if self._tracking:
@@ -228,8 +334,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         ServerCount = GlobalConfig[0]
         GlobalServerList = GlobalConfig[1]
         if str(GlobalServerList) == "[]":
-            ReturnNum = CallMCSL2Dialog(Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
-                                        isNeededTwoButtons=1, ButtonArg="添加|取消")
+            ReturnNum = CallMCSL2Dialog(
+                Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
+                isNeededTwoButtons=1, ButtonArg="添加|取消")
             print(ReturnNum)
             if ReturnNum == 1:
                 self.ToConfigPage()
@@ -245,8 +352,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         GlobalServerList = ReadGlobalServerConfig()[1]
         if str(GlobalServerList) == "[]":
-            ReturnNum = CallMCSL2Dialog(Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
-                                        isNeededTwoButtons=1, ButtonArg="添加|取消")
+            ReturnNum = CallMCSL2Dialog(
+                Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
+                isNeededTwoButtons=1, ButtonArg="添加|取消")
             print(ReturnNum)
             if ReturnNum == 1:
                 self.ToConfigPage()
@@ -260,9 +368,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         self.FunctionsStackedWidget.setCurrentIndex(7)
         self.InitSelectJavaSubWidget()
-
-    # def ChangeAddServerMode(self):
-    #
 
     # Download Sources Changer
 
@@ -384,6 +489,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             CallMCSL2Dialog(Tip, 0, ButtonArg=None)
         elif CanCreate == 1:
             CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            # noinspection PyUnboundLocalVariable
             SaveServer(ServerName=ServerName, CorePath=CorePath, JavaPath=JavaPath, MinMemory=MinMemory,
                        MaxMemory=MaxMemory, CoreFileName=CoreFileName)
             MinMemStatus = 0
@@ -808,11 +914,16 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def ChooseServer(self, ServerIndex):
         global ServerIndexNum
         ServerIndexNum = ServerIndex
+        # noinspection PyTypeChecker
         self.Selected_Server_Label.setText(f"服务器：{GlobalServerList[ServerIndex]['name']}")
         self.FunctionsStackedWidget.setCurrentIndex(0)
 
     # The function of checking update
     def CheckUpdate(self):
+        CurrentTime = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.LastUpdateTime.setText(f"最后一次检查更新时间：{CurrentTime}")
+        MCSL2Settings().ChangeConfig(Type="LastUpdateTime", Arg=CurrentTime)
+        MCSL2Settings().SaveConfig()
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
             LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
