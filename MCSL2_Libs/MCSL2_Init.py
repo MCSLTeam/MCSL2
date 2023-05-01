@@ -1,11 +1,15 @@
 from json import dumps
 from os import mkdir, path as ospath, listdir
 
+from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+
 
 def InitMCSL():
-    global LogFilesCount
+    if not ospath.exists(r"Servers"):
+        mkdir(r"./Servers")
+        MCSL2Logger("无Servers文件夹，创建", MsgArg=None, MsgLevel=0, LogFilesCount=len(listdir(r"MCSL2/Logs"))).Log()
     if not ospath.exists(r"MCSL2"):
-        LogFilesCount = 0
+        MCSL2Logger("程序执行InitMCSL()初始化中...", MsgArg=None, MsgLevel=0, LogFilesCount=len(listdir(r"MCSL2/Logs"))).Log()
         mkdir(r"MCSL2")
         mkdir(r"MCSL2/Logs")
         mkdir(r"MCSL2/Aria2")
@@ -15,9 +19,9 @@ def InitMCSL():
                 "auto_run_last_server": False,
                 "accept_all_mojang_eula": False,
                 "send_stop_instead_of_kill": True,
-                "add_server_mode": "default",
+                "add_server_mode": "Default",
                 "only_save_global_server_config": False,
-                "mcslapi_download_source": "sharepoint",
+                "mcslapi_download_source": "SharePoint",
                 "aria2_thread": 8,
                 "always_ask_save_directory": True,
                 "save_same_file_exception": "ask",
@@ -39,15 +43,21 @@ def InitMCSL():
             ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             InitServerList.write(ServerListTemplate)
             InitServerList.close()
-        if not ospath.exists(r"Servers"):
-            mkdir(r"./Servers")
+    elif not ospath.exists(r"MCSL2/Aria2"):
+        mkdir(r"MCSL2/Aria2")
         if not ospath.exists(r"MCSL2/Logs"):
             mkdir(r"MCSL2/Logs")
+        if not ospath.exists(r"MCSL2/Downloads"):
+            mkdir(r"MCSL2/Downloads")
+            pass
+    elif not ospath.exists(r"MCSL2/Logs"):
+        mkdir(r"MCSL2/Logs")
+        if not ospath.exists(r"MCSL2/Downloads"):
+            mkdir(r"MCSL2/Downloads")
+            pass
+    elif not ospath.exists(r"MCSL2/Downloads"):
+        mkdir(r"MCSL2/Downloads")
         pass
     else:
-        LogFilesCount = len(listdir(r"MCSL2/Logs"))
-        if not ospath.exists(r"Servers"):
-            mkdir(r"./Servers")
-        if not ospath.exists(r"MCSL2/Logs"):
-            mkdir(r"MCSL2/Logs")
         pass
+    return len(listdir(r"MCSL2/Logs"))

@@ -1,8 +1,9 @@
+import platform
 from json import dump
 from os import getcwd, environ, remove, path as ospath
 from subprocess import CalledProcessError
 from sys import argv, exit
-
+from datetime import datetime
 from PyQt5.QtCore import QPoint, pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent
 from PyQt5.QtWidgets import (
@@ -11,23 +12,29 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QMainWindow,
 )
-
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
 from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
+from MCSL2_Libs.MCSL2_Logger import MCSL2Logger, InitNewLogFile
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_ServerController import CheckAvailableSaveServer, SaveServer, ReadGlobalServerConfig, \
     ServerLauncher
+from MCSL2_Libs.MCSL2_Settings import MCSL2Settings
 from MCSL2_Libs.MCSL2_Updater import Updater
 
 
 # Initialize MainWindow
 class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
+    global LogFilesCount
+
     def __init__(self):
-        InitMCSL()
+        global LogFilesCount
+        LogFilesCount = InitMCSL()
+        InitNewLogFile(LogFilesCount)
+        MCSL2Logger("InitMCSL", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         super(MCSL2MainWindow, self).__init__()
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
         effect = QGraphicsDropShadowEffect(self)
@@ -38,7 +45,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAutoFillBackground(True)
         self.setupUi(self)
-
+        MCSL2Logger("InitUI", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        ShowLastUpdateTime = MCSL2Settings().GetConfig(Type="LastUpdateTime")
+        self.LastUpdateTime.setText(f"最后一次检查更新时间：{ShowLastUpdateTime}")
+        self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
         self.Home_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Home.svg"))
         self.Config_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Configuration.svg"))
         self.Download_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Download.svg"))
@@ -50,7 +60,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self._startPos = None
         self._endPos = None
         self._tracking = False
-
+        MCSL2Settings()
+        MCSL2Logger("ReadConfig", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("InitFunctionsBind", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        self.GetNotice()
         # Window event binding
         self.Close_PushButton.clicked.connect(self.Quit)
         self.Minimize_PushButton.clicked.connect(self.Minimize)
@@ -62,27 +75,50 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.clicked.connect(self.ToConsolePage)
         self.Tools_Page_PushButton.clicked.connect(self.ToToolsPage)
         self.About_Page_PushButton.clicked.connect(self.ToAboutPage)
-        self.Config_PushButton.clicked.connect(self.ToConfigPage)
-        self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
-        self.Download_Core_PushButton.clicked.connect(self.ToDownloadPage)
-        self.Choose_Java_Back_PushButton.clicked.connect(self.ShowFoundedJavaList_Back)
-        self.Founded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
-        self.DoNotUpdate_PushButton.clicked.connect(self.ToAboutPage)
 
-        # Functions binding
-        self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
-        self.GoToDownloadSourceChangerPushButton.clicked.connect(self.ToAboutPage)
+        # Functions in home page
+        self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
+        self.Config_PushButton.clicked.connect(self.ToConfigPage)
         self.Start_PushButton.clicked.connect(self.StartMCServerHelper)
-        self.MCSLAPIDownloadSourceComboBox.currentIndexChanged.connect(self.DownloadSourceChanger)
-        self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
-        self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
-        self.UpdatePushButton.clicked.connect(self.CheckUpdate)
-        # self.Download_PushButton.clicked.connect(self.StartDownload)
-        self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
-        self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
+
+        # Functions in config page - lead page
         self.NoobAddServer.clicked.connect(lambda: self.ConfigModeWidget.setCurrentIndex(1))
         self.ExAddServer.clicked.connect(lambda: self.ConfigModeWidget.setCurrentIndex(2))
-        # self.HowToAddServerComboBox.currentIndexChanged.connect(self.ChangeAddServerMode)
+
+        # Functions in config page - noob page
+        self.Auto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
+        self.Download_Java_PushButton.clicked.connect(self.ToDownloadJava)
+        self.Founded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
+        self.Manual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
+        self.Download_Core_PushButton.clicked.connect(self.ToDownloadPage)
+        self.Completed_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
+
+        # Functions in config page - extended page
+        self.ExAuto_Find_Java_PushButton.clicked.connect(self.AutoDetectJava)
+        self.ExDownload_Java_PushButton.clicked.connect(self.ToDownloadJava)
+        self.ExFounded_Java_List_PushButton.clicked.connect(self.ToChooseJavaPage)
+        self.ExManual_Import_Core_PushButton.clicked.connect(self.ManuallyImportCore)
+        self.ExDownload_Core_PushButton.clicked.connect(self.ToDownloadPage)
+        # self.ExMemoryUnitComboBox.currentIndexChanged.connect()
+        # self.ExConsoleOutputEncodingComboBox.currentIndexChanged.connect()
+        # self.ExConsoleInputDecodingComboBox.currentIndexChanged.connect()
+        self.ExCompleted_Save_PushButton.clicked.connect(self.SaveMinecraftServer)
+
+        # Functions in download page
+        self.DownloadSwitcher_TabWidget.currentChanged.connect(self.RefreshDownloadType)
+        self.GoToDownloadSourceChangerPushButton.clicked.connect(self.ToAboutPage)
+        # self.More_Download_PushButton.clicked.connect()
+
+        # Functions in console page
+        # self.Send_Command_PushButton.clicked.connect()
+
+        # Functions in choose java page
+        self.Choose_Java_Back_PushButton.clicked.connect(self.ShowFoundedJavaList_Back)
+
+        # Functions in update page
+        self.DoNotUpdate_PushButton.clicked.connect(self.ToAboutPage)
+        # self.Update_PushButton.clicked.connect()
+
         # Register Java finder workThread factory
         self.javaPath = []
         self.JavaFindWorkThreadFactory = MCSL2_JavaDetector.JavaFindWorkThreadFactory()
@@ -97,6 +133,97 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         # Init download url dict
         self.downloadUrlDict = {}
+
+        # Functions in settings page
+        self.AutoRunLastServerSetting.clicked.connect(lambda: self.CheckBoxSettingsChanger("AutoRunLastServer"))
+        self.AcceptAllMojangEULASetting.clicked.connect(lambda: self.CheckBoxSettingsChanger("AcceptAllMojangEula"))
+        self.StopServerSettings.clicked.connect(lambda: self.CheckBoxSettingsChanger("SendStopInsteadOfKill"))
+        self.OnlySaveGlobalServerConfigs.clicked.connect(
+            lambda: self.CheckBoxSettingsChanger("OnlySaveGlobalServerConfig"))
+
+        self.HowToAddServerComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("AddServerMode", self.HowToAddServerComboBox.currentIndex()))
+        self.MCSLAPIDownloadSourceComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("MCSLAPIDownloadSource",
+                                                self.MCSLAPIDownloadSourceComboBox.currentIndex()))
+        self.Aria2ThreadCountComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("Aria2Thread", self.Aria2ThreadCountComboBox.currentIndex()))
+
+        self.AlwaysAskDownloadPath.clicked.connect(lambda: self.CheckBoxSettingsChanger("AlwaysAskSaveDirectory"))
+
+        self.SameFileExceptionAsk.clicked.connect(lambda: self.SameFileExceptionChanger("ask"))
+        self.SameFileExceptionReWrite.clicked.connect(lambda: self.SameFileExceptionChanger("rewrite"))
+        self.SameFileExceptionStop.clicked.connect(lambda: self.SameFileExceptionChanger("stop"))
+
+        self.EnableQuickMenu.clicked.connect(lambda: self.CheckBoxSettingsChanger("EnableConsoleQuickMenu"))
+
+        self.ConsoleOutputEncodingComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("ConsoleOutputEncoding",
+                                                self.ConsoleOutputEncodingComboBox.currentIndex()))
+        self.ConsoleInputDecodingComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("ConsoleInputDecoding",
+                                                self.ConsoleInputDecodingComboBox.currentIndex()))
+        self.TransparentPercentSlider.valueChanged.connect(self.TransparentPercentChanger)
+
+        self.ExchangeButton.clicked.connect(lambda: self.CheckBoxSettingsChanger("ExchangeWindowControllingButtons"))
+        self.DarkModeComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("DarkMode", self.DarkModeComboBox.currentIndex()))
+        self.StartOnStartup.clicked.connect(lambda: self.CheckBoxSettingsChanger("StartOnStartup"))
+        self.AlwaysRunAsAdministrator.clicked.connect(lambda: self.CheckBoxSettingsChanger("AlwaysRunAsAdministrator"))
+        self.UpdatePushButton.clicked.connect(self.CheckUpdate)
+        # self.OpenSourceCodePushButton.clicked.connect()
+        # self.JoinQQGroup.clicked.connect()
+        # self.SystemReportPushButton.clicked.connect()
+        MCSL2Logger("FinishStarting", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+
+    def CheckBoxSettingsChanger(self, Type):
+        global LogFilesCount
+        if self.sender().isChecked():
+            MCSL2Logger("ChangeConfig", MsgArg=f"{Type}设置为True", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            MCSL2Settings().ChangeConfig(Type=Type, Arg=True)
+        else:
+            MCSL2Logger("ChangeConfig", MsgArg=f"{Type}设置为False", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            MCSL2Settings().ChangeConfig(Type=Type, Arg=False)
+
+    def ComboBoxSettingChanger(self, Type, Count):
+        global LogFilesCount
+        ComboBoxAttr: list
+        if Type == "AddServerMode":
+            ComboBoxAttr = ["Default", "Noob", "Extended"]
+        elif Type == "MCSLAPIDownloadSource":
+            ComboBoxAttr = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
+        elif Type == "Aria2Thread":
+            ComboBoxAttr = ["1", "2", "4", "8", "16"]
+        elif Type == "ConsoleOutputEncoding":
+            ComboBoxAttr = ["utf-8", "gbk"]
+        elif Type == "ConsoleInputDecoding":
+            ComboBoxAttr = ["follow", "utf-8", "gbk"]
+        elif Type == "DarkMode":
+            ComboBoxAttr = ["light", "dark", "system"]
+        else:
+            pass
+        # noinspection PyUnboundLocalVariable
+        MCSL2Logger("ChangeConfig",
+                    MsgArg=f"{Type}设置为{ComboBoxAttr[Count]}",
+                    MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Settings().ChangeConfig(Type=Type, Arg=ComboBoxAttr[Count])
+
+    def SameFileExceptionChanger(self, Arg):
+        global LogFilesCount
+        MCSL2Logger("ChangeConfig",
+                    MsgArg=f"SaveSameFileException设置为{Arg}",
+                    MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Settings().ChangeConfig(Type="SaveSameFileException", Arg=Arg)
+
+
+    def TransparentPercentChanger(self):
+        global LogFilesCount
+        self.Background_2.setStyleSheet("QLabel\n"
+                                        "{\n"
+                                        f"    background-color: rgba(255, 255, 255, {self.TransparentPercentSlider.value()}%); "
+                                        "\n    border-radius: 10px\n"
+                                        "}")
+        self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
 
     def mouseMoveEvent(self, e: QMouseEvent):
         if self._tracking:
@@ -115,14 +242,23 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self._endPos = None
 
     def Quit(self):
+        global LogFilesCount
+        MCSL2Logger("Close_ButtonPressed", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("MCSLExit", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         MCSLProcess.quit()
 
     def Minimize(self):
+        global LogFilesCount
+        MCSL2Logger("Minimize_PushButtonPressed", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("WindowMinimize", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         MCSLMainWindow.showMinimized()
 
     # Pages Navigation
     def ToHomePage(self):
+        global LogFilesCount
+        MCSL2Logger("ToHomePage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(0)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Blue1.setStyleSheet(BlueStyleSheet)
         self.Home_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
         self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
@@ -138,7 +274,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue6.setVisible(False)
 
     def ToConfigPage(self):
+        global LogFilesCount
+        MCSL2Logger("ToConfigPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(1)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Blue2.setStyleSheet(BlueStyleSheet)
         self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Config_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
@@ -154,9 +293,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue6.setVisible(False)
 
     def ToDownloadPage(self):
-        # 清空缓存
+        global LogFilesCount
         self.downloadUrlDict.clear()
+        MCSL2Logger("ToDownloadPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(2)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Blue3.setStyleSheet(BlueStyleSheet)
         self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
@@ -173,7 +314,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.RefreshDownloadType()
 
     def ToConsolePage(self):
+        global LogFilesCount
+        MCSL2Logger("ToConsolePage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(3)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Blue4.setStyleSheet(BlueStyleSheet)
         self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
@@ -189,7 +333,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue6.setVisible(False)
 
     def ToToolsPage(self):
+        global LogFilesCount
+        MCSL2Logger("ToToolsPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(4)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Blue5.setStyleSheet(BlueStyleSheet)
         self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
@@ -205,7 +352,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue6.setVisible(False)
 
     def ToAboutPage(self):
+        global LogFilesCount
+        MCSL2Logger("ToSettingsPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(5)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Blue6.setStyleSheet(BlueStyleSheet)
         self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
@@ -219,59 +369,82 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(True)
+        MCSL2Logger("ChangeCurrentVersionLabel", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.CurrentVersionLabel.setText(f"当前版本：{Version}")
 
     def ToChooseServerPage(self):
         global GlobalServerList
-
+        global LogFilesCount
+        MCSL2Logger("Choose_Server_PushButtonPressed", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("TryToGetGlobalServerList", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         GlobalConfig = ReadGlobalServerConfig()
         ServerCount = GlobalConfig[0]
         GlobalServerList = GlobalConfig[1]
         if str(GlobalServerList) == "[]":
-            ReturnNum = CallMCSL2Dialog(Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
-                                        isNeededTwoButtons=1, ButtonArg="添加|取消")
-            print(ReturnNum)
+            MCSL2Logger("NoServerCanBeFound", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+            MCSL2Logger("ShowDialog", MsgArg="AskMode", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            ReturnNum = CallMCSL2Dialog(
+                Tip="ServerControllerNoServerCanBeFound",
+                OtherTextArg=None,
+                isNeededTwoButtons=1, ButtonArg="添加|取消")
             if ReturnNum == 1:
+                MCSL2Logger("ToChooseServerPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+                MCSL2Logger("TryToGetGlobalServerList", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
                 self.ToConfigPage()
                 QApplication.processEvents()
             else:
                 pass
         else:
             self.FunctionsStackedWidget.setCurrentIndex(6)
+            MCSL2Logger("TryRefreshDownloadType", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
             self.InitSelectServerSubWidget(ServerCount, GlobalServerList)
 
     def StartMCServerHelper(self):
         global GlobalServerList, ServerIndexNum
-
+        global LogFilesCount
+        MCSL2Logger("Start_PushButtonPressed", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("TryToGetGlobalServerList", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         GlobalServerList = ReadGlobalServerConfig()[1]
         if str(GlobalServerList) == "[]":
-            ReturnNum = CallMCSL2Dialog(Tip="没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option",
-                                        isNeededTwoButtons=1, ButtonArg="添加|取消")
-            print(ReturnNum)
+            MCSL2Logger("NoServerCanBeFound", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+            MCSL2Logger("ShowDialog", MsgArg="AskMode", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            ReturnNum = CallMCSL2Dialog(
+                Tip="ServerControllerNoServerCanBeFound",
+                OtherTextArg=None,
+                isNeededTwoButtons=1, ButtonArg="添加|取消")
             if ReturnNum == 1:
+                MCSL2Logger("ToChooseServerPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+                MCSL2Logger("TryToGetGlobalServerList", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
                 self.ToConfigPage()
                 QApplication.processEvents()
             else:
                 pass
-        ServerLauncher.GetGlobalServerConfig(ServerIndexNum=ServerIndexNum)
+        else:
+            MCSL2Logger("TryToGetServerConfig", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            ServerLauncher().GetGlobalServerConfig(ServerIndexNum=ServerIndexNum)
 
     def ToChooseJavaPage(self):
         global JavaPaths
-
+        global LogFilesCount
+        MCSL2Logger("ToChooseJavaPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(7)
         self.InitSelectJavaSubWidget()
-
-    # def ChangeAddServerMode(self):
-    #
+        MCSL2Logger("StartInitSelectJavaSubWidget", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
 
     # Download Sources Changer
 
     def DownloadSourceChanger(self):
         global DownloadSource
+        global LogFilesCount
+        MCSL2Logger("ChangeDownloadSource", MsgArg=str(self.MCSLAPIDownloadSourceComboBox.currentText()), MsgLevel=0,
+                    LogFilesCount=LogFilesCount).Log()
         DownloadSource = int(self.MCSLAPIDownloadSourceComboBox.currentIndex())
         self.CurrentDownloadSourceLabel.setText("当前下载源：" + str(self.MCSLAPIDownloadSourceComboBox.currentText()))
 
     def ManuallySelectJava(self):
+        global LogFilesCount
+        MCSL2Logger("StartManuallySelectJava", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("ShowQFileDialog", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         JavaPathSysList = QFileDialog.getOpenFileName(
             self, "选择java.exe程序", getcwd(), "java.exe"
         )
@@ -279,30 +452,39 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             v = GetJavaVersion(JavaPathSysList[0])
             if not isinstance(v, CalledProcessError):
                 JavaPaths.append(Java(JavaPathSysList[0], v))
+                MCSL2Logger("ChooseJavaOK", MsgArg=f"\nJava路径：{JavaPathSysList[0]}\nJava版本：{v}", MsgLevel=0,
+                            LogFilesCount=LogFilesCount).Log()
             else:
-                CallMCSL2Dialog(f"选择的Java无效:\t\n{v.output}", 0, ButtonArg=None)
+                MCSL2Logger("ChooseJavaInvalid", MsgArg=None, MsgLevel=2, LogFilesCount=LogFilesCount).Log()
+                CallMCSL2Dialog("ConfigPageQFileDialogInvalidJava", OtherTextArg=f"{v.output}", isNeededTwoButtons=0,
+                                ButtonArg=None)
         else:
-            Tip = "看来你没有选择任何的Java呢！"
-            CallMCSL2Dialog(Tip, 0, ButtonArg=None)
+            MCSL2Logger("ChooseJavaNothing", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+            CallMCSL2Dialog("ConfigPageQFileDialogNoJava", OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
 
     def ManuallyImportCore(self):
+        global LogFilesCount
         global CorePath, CoreFileName
+        MCSL2Logger("StartManuallySelectCore", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        MCSL2Logger("ShowQFileDialog", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         CoreSysList = QFileDialog.getOpenFileName(self, "选择服务器核心", getcwd(), "*.jar")
         if CoreSysList[0] != "":
             CorePath = CoreSysList[0]
             CoreFileName = CorePath.split("/")
             CoreFileName = CoreFileName[-1]
+            MCSL2Logger("ChooseCoreOK", MsgArg=CoreFileName, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         else:
-            Tip = "看来你没有选择任何的服务器核心呢！"
-            CallMCSL2Dialog(Tip, 0, ButtonArg=None)
+            MCSL2Logger("ChooseCoreNothing", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+            CallMCSL2Dialog("ConfigPageQFileDialogNoCore", OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
 
     def SaveMinecraftServer(self):
+        global LogFilesCount
         global JavaPath, MaxMemory, MinMemory, CoreFileName, CanCreate
         """
         0 -> Illegal
         1 -> OK
         """
-
+        MCSL2Logger("StartSaveMinecraftServer", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
         # The server core detector
         if CoreFileName != "":
             CoreStatus = 1
@@ -378,32 +560,50 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         CheckAvailable = CheckAvailableSaveServer(ChkVal)
         CanCreate = CheckAvailable[0]
         Tip = CheckAvailable[1]
+        Log = CheckAvailable[2]
 
         # Server processor
         if CanCreate == 0:
-            CallMCSL2Dialog(Tip, 0, ButtonArg=None)
+            MCSL2Logger(Log, MsgArg=None, MsgLevel=2, LogFilesCount=LogFilesCount).Log()
+            MCSL2Logger("AddServerFailed", MsgArg=None, MsgLevel=2, LogFilesCount=LogFilesCount).Log()
+            CallMCSL2Dialog(Tip, OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
         elif CanCreate == 1:
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            MCSL2Logger(Log, MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            CallMCSL2Dialog(Tip, OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
+            AddServerType = None
+            if self.ConfigModeWidget.currentIndex() == 1:
+                AddServerType = "noob"
+            elif self.ExMemoryUnitComboBox.currentText() == "M":
+                AddServerType = "extended_m"
+            elif self.ExMemoryUnitComboBox.currentText() == "G":
+                AddServerType = "extended_g"
+            # noinspection PyUnboundLocalVariable
             SaveServer(ServerName=ServerName, CorePath=CorePath, JavaPath=JavaPath, MinMemory=MinMemory,
-                       MaxMemory=MaxMemory, CoreFileName=CoreFileName)
+                       MaxMemory=MaxMemory, CoreFileName=CoreFileName, AddServerType=AddServerType)
             MinMemStatus = 0
             MaxMemStatus = 0
             NameStatus = 0
             JavaStatus = 0
             CoreStatus = 0
             JavaPath = 0
+            MCSL2Logger("AddServerSuccess", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         else:
-            Tip = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            MCSL2Logger("AddServerUnexpectedFailed", MsgArg=None, MsgLevel=3, LogFilesCount=LogFilesCount).Log()
+            CallMCSL2Dialog("ConfigPageAddServerUnexpectedFailed", OtherTextArg=None, isNeededTwoButtons=0,
+                            ButtonArg=None)
 
     def AutoDetectJava(self):
+        global LogFilesCount
         # 防止同时多次运行worker线程
+        MCSL2Logger("StartAutoDetectJava", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Auto_Find_Java_PushButton.setDisabled(True)
         self.JavaFindWorkThreadFactory.Create().start()
 
     @pyqtSlot(list)
     def JavaDetectFinished(self, _JavaPaths: list):
         global JavaPaths
+        global LogFilesCount
+        global JavaPathList
         # 向前兼容
         if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
             remove("MCSL2/AutoDetectJavaHistory.txt")
@@ -416,17 +616,21 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     @pyqtSlot(int)
     def OnJavaFindWorkThreadFinished(self, sequenceNumber):
-
+        global LogFilesCount
         # 如果不是第一次运行worker线程
         if sequenceNumber > 1:
-            Tip = "搜索完毕。\n找到" + str(len(JavaPaths)) + "个Java。\n请点击Java列表查看。"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            MCSL2Logger("FinishedAutoDetectJava", MsgArg=f"{JavaPathList}\n共搜索到{len(JavaPaths)}个Java", MsgLevel=0,
+                        LogFilesCount=LogFilesCount).Log()
+            CallMCSL2Dialog("ConfigPageAutoDetectJavaFinished", OtherTextArg=str(len(JavaPaths)), isNeededTwoButtons=0,
+                            ButtonArg=None)
 
         # 释放AutoDetectJava中禁用的按钮
         self.Auto_Find_Java_PushButton.setEnabled(True)
         # 更新self.ChooseJavaScrollAreaVerticalLayout中的内容
 
     def ShowFoundedJavaList_Back(self):
+        global LogFilesCount
+        MCSL2Logger("ManuallySkipChooseGotJava", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(1)
         self.Blue2.setStyleSheet(
             "QLabel\n"
@@ -443,7 +647,10 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Blue6.setVisible(False)
 
     def ToDownloadJava(self):
+        global LogFilesCount
+        MCSL2Logger("ManuallySkipChooseGotJava", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(2)
+        MCSL2Logger("SelectJavaDownload", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
         self.Blue3.setStyleSheet(
             "QLabel\n"
@@ -464,12 +671,17 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def RefreshDownloadType(self):
         global DownloadSource, DownloadUrls
+        global LogFilesCount
+        MCSL2Logger("TryRefreshDownloadType", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
         # 如果存在DownloadSource且不为空,则不再重新获取
         if self.downloadUrlDict.get(DownloadSource) is not None:
+            MCSL2Logger("NoNeedToRefreshDownloadType", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
             idx = self.DownloadSwitcher_TabWidget.currentIndex()
+            MCSL2Logger("StartInitDownloadSubWidget", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             self.InitDownloadSubWidget(self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'])
             # self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
         else:
+            MCSL2Logger("StartRefreshDownloadType", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
             workThread = self.fetchDownloadURLThreadFactory.create(
                 downloadSrc=DownloadSource,
                 _singleton=True,
@@ -482,10 +694,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     @pyqtSlot(dict)
     def updateDownloadUrlDict(self, _downloadUrlDict: dict):
+        global LogFilesCount
         self.downloadUrlDict.update(_downloadUrlDict)
         self.RefreshDownloadType()
 
     def InitDownloadSubWidget(self, SubWidgetNames):
+        global LogFilesCount
         GraphType = self.DownloadSwitcher_TabWidget.currentIndex()
         if GraphType == 0:
             self.initDownloadLayout(self.JavaVerticalLayout, SubWidgetNames, QPixmap(":/MCSL2_Icon/JavaIcon.png"))
@@ -501,12 +715,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         else:
             pass
 
-        # The function of getting Minecraft server console's output
-        # def GetMCConsoleOutput(self):
-        #     subprocess.run(['cmd', '/c', 'dir'], stdout=subprocess.PIPE)
-        #     output = result.stdout.decode('utf-8')
-
     def initDownloadSubWidget(self, i):
+        global LogFilesCount
         self.MCSL2_SubWidget_Download = QWidget()
         self.MCSL2_SubWidget_Download.setGeometry(QRect(150, 190, 620, 70))
         self.MCSL2_SubWidget_Download.setMinimumSize(QSize(620, 70))
@@ -586,13 +796,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.GraphWidget_D.setObjectName("GraphWidget_D")
 
     def initDownloadLayout(self, layout, subWidgetNames, pixMap):
+        global LogFilesCount
         if subWidgetNames == -2:
-            Tip = "无法连接MCSLAPI，\n\n请检查网络或系统代理设置"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            Tip = "DownloadPageConnectToMCSLAPIFailed"
+            CallMCSL2Dialog(Tip, OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
             return
         elif subWidgetNames == -1:
-            Tip = "可能解析API内容失败\n\n请检查网络或自己的节点设置"
-            CallMCSL2Dialog(Tip, isNeededTwoButtons=0, ButtonArg=None)
+            Tip = "DownloadPageEncodeMCSLAPIContentFailed"
+            CallMCSL2Dialog(Tip, OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
             return
 
         for i in reversed(range(layout.count())):
@@ -610,6 +821,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def InitSelectJavaSubWidget(self):
         global JavaPaths
+        global LogFilesCount
+        MCSL2Logger("StartInitSelectJavaSubWidget", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         for i in reversed(range(self.ChooseJavaScrollAreaVerticalLayout.count())):
             self.ChooseJavaScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
 
@@ -700,6 +913,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
 
     def InitSelectServerSubWidget(self, ServerCount, ServerInfoJSON):
+        global LogFilesCount
         for i in reversed(range(self.ChooseServerScrollAreaVerticalLayout.count())):
             self.ChooseServerScrollAreaVerticalLayout.itemAt(i).widget().setParent(None)
 
@@ -714,6 +928,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             else:
                 WidgetJavaArg = f"JVM参数：{ServerInfoJSON[i]['jvm_arg']}"
             ServerInfo = WidgetServerName + WidgetCoreFileName + WidgetJavaPath + WidgetMinMemory + WidgetMaxMemory + WidgetJavaArg
+            MCSL2Logger("GotServerInfo", MsgArg=f" - 第{i}个：\nServerInfo", MsgLevel=0,
+                        LogFilesCount=LogFilesCount).Log()
             self.MCSL2_SubWidget_SelectS = QWidget()
             self.MCSL2_SubWidget_SelectS.setGeometry(QRect(150, 270, 620, 171))
             self.MCSL2_SubWidget_SelectS.setMinimumSize(QSize(620, 171))
@@ -792,7 +1008,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.ChooseServerScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_SelectS)
 
     def ParseSrollAreaItemButtons(self):
-        global ScrollAreaStatus
+        global LogFilesCount
+        MCSL2Logger("RunParseSrollAreaItemButtons", MsgArg=str(self.FunctionsStackedWidget.currentIndex()), MsgLevel=0,
+                    LogFilesCount=LogFilesCount).Log()
         SelectDownloadItemIndexNumber = int(str(self.sender().objectName()).split("_PushButton")[1])
         if self.FunctionsStackedWidget.currentIndex() == 7:
             self.ChooseJava(JavaIndex=SelectDownloadItemIndexNumber)
@@ -801,35 +1019,59 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ChooseJava(self, JavaIndex):
         global JavaPaths, JavaPath
+        global LogFilesCount
         JavaPath = JavaPaths[JavaIndex].Path
         self.FunctionsStackedWidget.setCurrentIndex(1)
         self.Java_Version_Label.setText(JavaPaths[JavaIndex].Version)
+        MCSL2Logger("ChoseJava", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
 
     def ChooseServer(self, ServerIndex):
         global ServerIndexNum
+        global LogFilesCount
         ServerIndexNum = ServerIndex
+        # noinspection PyTypeChecker
         self.Selected_Server_Label.setText(f"服务器：{GlobalServerList[ServerIndex]['name']}")
         self.FunctionsStackedWidget.setCurrentIndex(0)
+        MCSL2Logger("ChoseServer", MsgArg=str(self.Selected_Server_Label.text()), MsgLevel=0,
+                    LogFilesCount=LogFilesCount).Log()
 
     # The function of checking update
     def CheckUpdate(self):
+        global LogFilesCount
+        global Version
+        CurrentTime = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.LastUpdateTime.setText(f"最后一次检查更新时间：{CurrentTime}")
+        MCSL2Settings().ChangeConfig(Type="LastUpdateTime", Arg=CurrentTime)
+        MCSL2Logger("CheckUpdate", MsgArg=f"当前版本{Version}", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
+            MCSL2Logger("NewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
+                        LogFilesCount=LogFilesCount).Log()
             LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
                                                                                                                   "").replace(
                 "\'", "").split(",")
-            self.Update_Introduction_Title_Label.setText("这是最新版本" + LatestVersionInformation[0] + "的说明：")
+            MCSL2Logger("UpdateContent", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
+                        LogFilesCount=LogFilesCount).Log()
+            self.Update_Introduction_Title_Label.setText("这是最新版本 v" + LatestVersionInformation[0] + "的说明：")
             self.Update_Introduction_Label.setText(str(LatestVersionInformation[1]).replace("\\n", "\n"))
+            MCSL2Logger("ToUpdatePage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             self.FunctionsStackedWidget.setCurrentIndex(8)
         else:
             pass
 
+    def GetNotice(self):
+        global LogFilesCount
+        MCSL2Logger("GetNotice", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        self.Notice_Label.setText(f"——————公告——————\n{str(Updater(Version).GetNoticeText())}")
+
 
 if __name__ == '__main__':
     JavaPath = 0
+    LogFilesCount = 0
     JavaPaths = []
     DiskSymbols = []
     GlobalServerList = []
+    JavaPathList = []
     ServerIndexNum = 0
     SearchStatus = 0
     CorePath = ""
@@ -837,7 +1079,7 @@ if __name__ == '__main__':
     CanCreate = 0
     CoreFileName = ""
     ServerName = ""
-    Version = "2.0.1"
+    Version = "2.1.3"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \
                                   "    text-align: left;\n" \
@@ -882,7 +1124,9 @@ if __name__ == '__main__':
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    environ["QT_QPA_PLATFORM"] = "wayland"
+    SysType = platform.uname()[0]
+    if SysType == "Linux":
+        environ["QT_QPA_PLATFORM"] = "wayland"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
     MCSLProcess = QApplication(argv)
     MCSLMainWindow = MCSL2MainWindow()

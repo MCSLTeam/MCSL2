@@ -70,10 +70,13 @@ class MCSL2Settings:
             self.DarkMode = Arg
         elif Type == "StartOnStartup":
             self.StartOnStartup = Arg
+        elif Type == "AlwaysRunAsAdministrator":
+            self.AlwaysRunAsAdministrator = Arg
         elif Type == "LastUpdateTime":
             self.LastUpdateTime = Arg
         else:
             pass
+        self.SaveConfig()
 
     def SaveConfig(self):
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as UpdateConfig:

@@ -249,8 +249,17 @@ class MCSL2AskDialog(QDialog, Ui_MCSL2_AskDialog):
         ReturnNum = 0
         self.close()
 
+
 # The function of calling MCSL2 Dialog
-def CallMCSL2Dialog(Tip, isNeededTwoButtons, ButtonArg, parent=None):
+def CallMCSL2Dialog(Tip, OtherTextArg, isNeededTwoButtons, ButtonArg, parent=None):
+    if OtherTextArg is None:
+        OtherTextArg = ""
+    else:
+        pass
+    try:
+        Tip = getattr(DialogMsg(), Tip) + OtherTextArg
+    except AttributeError:
+        Tip = Tip + OtherTextArg
     if isNeededTwoButtons == 0:
         Dialog = MCSL2Dialog(Tip, parent)
     elif isNeededTwoButtons == 1:
@@ -261,5 +270,51 @@ def CallMCSL2Dialog(Tip, isNeededTwoButtons, ButtonArg, parent=None):
     return ReturnNum
 
 
+class DialogMsg:
+    def __init__(self):
+        self.ProgramVersionIsUpToDate = "已经是最新版！"
+        self.ConfigPageBeginToSetUpServer = "关闭此窗口后，\n\n服务器将会开始部署。"
+        self.ConfigPageNoServerCore = "只剩服务器核心没设置好力\n\n（喜"
+        self.ConfigPageNoJava = "只剩Java没设置好力\n\n（喜"
+        self.ConfigPageNoJavaAndServerCore = "只剩Java和服务器核心没设置好力\n\n（喜"
+        self.ConfigPageNoServerName = "只剩服务器名称没设置好力\n\n（喜"
+        self.ConfigPageNoServerNameAndServerCore = "只剩服务器名称和服务器核心没设置好力\n\n（喜"
+        self.ConfigPageNoServerNameAndJava = "只剩服务器名称和Java没设置好力\n\n（喜"
+        self.ConfigPageOnlyMinMemoryAndMaxMemory = "你只设置好了内存\n\n（恼"
+        self.ConfigPageNoMaxMemory = "只剩最大内存没设置好力\n\n（喜"
+        self.ConfigPageNoMaxMemoryAndServerCore = "只剩最大内存和服务器核心没设置好力\n\n（喜"
+        self.ConfigPageNoMaxMemoryAndJava = "只剩最大内存和Java没设置好力\n\n（喜"
+        self.ConfigPageNoServerCoreAndJavaAndMaxMemory = "服务器核心、Java和最大内存还没设置好呢\n\n（恼"
+        self.ConfigPageNoServerNameAndMaxMemory = "只剩服务器名称和最大内存没设置好力\n\n（喜"
+        self.ConfigPageNoServerCodeAndServerNameAndMaxMemory = "服务器核心、服务器名称和最大内存还没设置好呢\n\n（恼"
+        self.ConfigPageNoJavaAndServerNameAndMaxMemory = "Java、服务器名称和最大内存还没设置好呢\n\n（恼"
+        self.ConfigPageOnlyMinMemory = "你只设置好了最小内存\n\n（恼"
+        self.ConfigPageNoMinMemory = "只剩最小内存没设置好力\n\n（喜"
+        self.ConfigPageNoServerCoreAndMinMemory = "只剩服务器核心和最小内存没设置好力\n\n（喜"
+        self.ConfigPageNoJavaAndMinMemory = "只剩Java和最小内存没设置好力\n\n（喜"
+        self.ConfigPageNoServerCoreAndJavaAndMinMemory = "服务器核心、Java和最小内存还没设置好呢\n\n（恼"
+        self.ConfigPageNoServerNameAndMinMemory = "只剩服务器名称和最小内存没设置好力\n\n（喜"
+        self.ConfigPageNoServerCoreAndServerNameAndMinMemory = "服务器核心、服务器名称和最小内存还没设置好呢\n\n（恼"
+        self.ConfigPageNoJavaAndServerNameAndMinMemory = "Java、服务器名称和最小内存还没设置好呢\n\n（恼"
+        self.ConfigPageOnlyMaxMemory = "你只设置好了最大内存\n\n（恼"
+        self.ConfigPageNoMinMemoryAndMaxMemory = "只剩内存没设置好力\n\n（喜"
+        self.ConfigPageNoServerCoreAndMinMemoryAndMaxMemory = "服务器核心和内存还没设置好呢\n\n（恼"
+        self.ConfigPageNoJavaAndMinMemoryAndMaxMemory = "Java和内存还没设置好呢\n\n（恼"
+        self.ConfigPageOnlyServerName = "你只设置好了服务器名称\n\n（恼"
+        self.ConfigPageNoServerNameAndMinMemoryAndMaxMemory = "服务器名称和内存还没设置好呢\n\n（恼"
+        self.ConfigPageOnlyJava = "你只设置好了Java\n\n（恼"
+        self.ConfigPageOnlyServerCore = "你只设置好了服务器核心\n\n（恼"
+        self.ConfigPageNothing = "你什么都没设置好呢\n\n（恼"
+        self.ConfigPageQFileDialogNoCore = "看来你没有选择任何的服务器核心呢！"
+        self.ConfigPageQFileDialogNoJava = "看来你没有选择任何的Java呢！"
+        self.ConfigPageQFileDialogInvalidJava = "选择的Java无效:\t\n"
+        self.ConfigPageAutoDetectJavaFinished = "搜索完毕,请点击Java列表查看。\n结果数量为"
+        self.ConfigPageAddServerUnexpectedFailed = "服务器部署失败，\n\n但不是你的问题，\n\n去找开发者反馈吧！"
+
+        self.ServerControllerNoServerCanBeFound = "没有找到任何已添加的服务器。\n\n点击添加去添加一个吧！\n\n此处界面卡顿请按几下Alt或者Option"
+        self.ServerControllerNoAcceptedMojangEula = "您所启动的服务器\n并未同意Mojang EULA。\n按下\"确定\"来同意，\n或点击\"取消\"以拒绝。"
+
+        self.DownloadPageConnectToMCSLAPIFailed = "无法连接MCSLAPI，\n\n请检查网络或系统代理设置"
+        self.DownloadPageEncodeMCSLAPIContentFailed = "可能解析API内容失败\n\n请检查网络或自己的节点设置"
 
 ReturnNum = 0

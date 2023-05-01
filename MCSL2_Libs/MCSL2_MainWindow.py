@@ -440,14 +440,16 @@ class Ui_MCSL2_MainWindow(object):
         self.Notice_Label.setFont(font)
         self.Notice_Label.setAutoFillBackground(False)
         self.Notice_Label.setStyleSheet("")
+        self.Notice_Label.setTextFormat(Qt.PlainText)
+        self.Notice_Label.setAlignment(Qt.AlignCenter)
         self.Notice_Label.setObjectName("Notice_Label")
         self.HomeTip1_Widget = QWidget(self.HomePage)
         self.HomeTip1_Widget.setGeometry(QRect(30, 290, 321, 171))
         self.HomeTip1_Widget.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                           "{\n"
+                                           "    background-color: rgb(247, 247, 247);\n"
+                                           "    border-radius: 10px\n"
+                                           "}")
         self.HomeTip1_Widget.setObjectName("HomeTip1_Widget")
         self.HomeTip1_Label = QLabel(self.HomeTip1_Widget)
         self.HomeTip1_Label.setGeometry(QRect(10, 20, 281, 131))
@@ -589,21 +591,21 @@ class Ui_MCSL2_MainWindow(object):
         self.NoobAddServer.setCursor(QCursor(Qt.PointingHandCursor))
         self.NoobAddServer.setAutoFillBackground(False)
         self.NoobAddServer.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"    font: 14px \'Microsoft YaHei UI\';\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+                                         "{\n"
+                                         "    background-color: rgb(247, 247, 247);\n"
+                                         "    border-radius: 7px;\n"
+                                         "    font: 14px \'Microsoft YaHei UI\';\n"
+                                         "}\n"
+                                         "QPushButton:hover\n"
+                                         "{\n"
+                                         "    background-color: rgb(230, 230, 230);\n"
+                                         "    border-radius: 7px;\n"
+                                         "}\n"
+                                         "QPushButton:pressed\n"
+                                         "{\n"
+                                         "    background-color: rgb(225, 225, 225);\n"
+                                         "    border-radius: 7px;\n"
+                                         "}")
         icon1 = QIcon()
         icon1.addPixmap(QPixmap(":/MCSL2_Icon/QuickStart.svg"), QIcon.Normal, QIcon.Off)
         icon1.addPixmap(QPixmap(":/MCSL2_Icon/QuickStart.svg"), QIcon.Normal, QIcon.On)
@@ -635,21 +637,21 @@ class Ui_MCSL2_MainWindow(object):
         self.ExAddServer.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExAddServer.setAutoFillBackground(False)
         self.ExAddServer.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"    font: 14px \'Microsoft YaHei UI\';\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+                                       "{\n"
+                                       "    background-color: rgb(247, 247, 247);\n"
+                                       "    border-radius: 7px;\n"
+                                       "    font: 14px \'Microsoft YaHei UI\';\n"
+                                       "}\n"
+                                       "QPushButton:hover\n"
+                                       "{\n"
+                                       "    background-color: rgb(230, 230, 230);\n"
+                                       "    border-radius: 7px;\n"
+                                       "}\n"
+                                       "QPushButton:pressed\n"
+                                       "{\n"
+                                       "    background-color: rgb(225, 225, 225);\n"
+                                       "    border-radius: 7px;\n"
+                                       "}")
         icon2 = QIcon()
         icon2.addPixmap(QPixmap(":/MCSL2_Icon/Add.svg"), QIcon.Normal, QIcon.Off)
         icon2.addPixmap(QPixmap(":/MCSL2_Icon/Add.svg"), QIcon.Normal, QIcon.On)
@@ -681,21 +683,21 @@ class Ui_MCSL2_MainWindow(object):
         self.ImportServer.setCursor(QCursor(Qt.PointingHandCursor))
         self.ImportServer.setAutoFillBackground(False)
         self.ImportServer.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"    font: 14px \'Microsoft YaHei UI\';\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+                                        "{\n"
+                                        "    background-color: rgb(247, 247, 247);\n"
+                                        "    border-radius: 7px;\n"
+                                        "    font: 14px \'Microsoft YaHei UI\';\n"
+                                        "}\n"
+                                        "QPushButton:hover\n"
+                                        "{\n"
+                                        "    background-color: rgb(230, 230, 230);\n"
+                                        "    border-radius: 7px;\n"
+                                        "}\n"
+                                        "QPushButton:pressed\n"
+                                        "{\n"
+                                        "    background-color: rgb(225, 225, 225);\n"
+                                        "    border-radius: 7px;\n"
+                                        "}")
         icon3 = QIcon()
         icon3.addPixmap(QPixmap(":/MCSL2_Icon/Import.svg"), QIcon.Normal, QIcon.Off)
         icon3.addPixmap(QPixmap(":/MCSL2_Icon/Import.svg"), QIcon.Normal, QIcon.On)
@@ -722,7 +724,7 @@ class Ui_MCSL2_MainWindow(object):
         self.LeadConfigTip2.setAutoFillBackground(False)
         self.LeadConfigTip2.setStyleSheet("")
         self.LeadConfigTip2.setTextFormat(Qt.AutoText)
-        self.LeadConfigTip2.setAlignment(Qt.AlignJustify|Qt.AlignVCenter)
+        self.LeadConfigTip2.setAlignment(Qt.AlignJustify | Qt.AlignVCenter)
         self.LeadConfigTip2.setObjectName("LeadConfigTip2")
         self.LeadConfigTip2_2 = QLabel(self.LeadCPage)
         self.LeadConfigTip2_2.setGeometry(QRect(270, 260, 141, 71))
@@ -733,7 +735,7 @@ class Ui_MCSL2_MainWindow(object):
         self.LeadConfigTip2_2.setAutoFillBackground(False)
         self.LeadConfigTip2_2.setStyleSheet("")
         self.LeadConfigTip2_2.setTextFormat(Qt.AutoText)
-        self.LeadConfigTip2_2.setAlignment(Qt.AlignJustify|Qt.AlignVCenter)
+        self.LeadConfigTip2_2.setAlignment(Qt.AlignJustify | Qt.AlignVCenter)
         self.LeadConfigTip2_2.setObjectName("LeadConfigTip2_2")
         self.LeadConfigTip2_3 = QLabel(self.LeadCPage)
         self.LeadConfigTip2_3.setGeometry(QRect(480, 260, 141, 51))
@@ -744,7 +746,7 @@ class Ui_MCSL2_MainWindow(object):
         self.LeadConfigTip2_3.setAutoFillBackground(False)
         self.LeadConfigTip2_3.setStyleSheet("")
         self.LeadConfigTip2_3.setTextFormat(Qt.AutoText)
-        self.LeadConfigTip2_3.setAlignment(Qt.AlignJustify|Qt.AlignVCenter)
+        self.LeadConfigTip2_3.setAlignment(Qt.AlignJustify | Qt.AlignVCenter)
         self.LeadConfigTip2_3.setObjectName("LeadConfigTip2_3")
         self.ConfigModeWidget.addWidget(self.LeadCPage)
         self.NoobCPage = QWidget()
@@ -757,23 +759,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Completed_Save_PushButton.setFont(font)
         self.Completed_Save_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Completed_Save_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 120, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}\n"
+                                                     "QPushButton:hover\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 110, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}\n"
+                                                     "QPushButton:pressed\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 100, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}")
         self.Completed_Save_PushButton.setFlat(False)
         self.Completed_Save_PushButton.setObjectName("Completed_Save_PushButton")
         self.Server_Name_Label = QLabel(self.NoobCPage)
@@ -790,13 +792,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.Server_Name_LineEdit.setFont(font)
         self.Server_Name_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
+                                                "{\n"
+                                                "    border-radius: 3px;\n"
+                                                "    border: 2px;\n"
+                                                "    border-color: rgb(223, 223, 223);\n"
+                                                "    border-style: solid;\n"
+                                                "}\n"
+                                                "")
         self.Server_Name_LineEdit.setObjectName("Server_Name_LineEdit")
         self.Others_Background = QLabel(self.NoobCPage)
         self.Others_Background.setGeometry(QRect(0, 260, 251, 121))
@@ -806,10 +808,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Others_Background.setFont(font)
         self.Others_Background.setAutoFillBackground(False)
         self.Others_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                             "{\n"
+                                             "    background-color: rgb(247, 247, 247);\n"
+                                             "    border-radius: 10px\n"
+                                             "}")
         self.Others_Background.setText("")
         self.Others_Background.setObjectName("Others_Background")
         self.Configuration_Widget = QWidget(self.NoobCPage)
@@ -823,23 +825,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Core_PushButton.setFont(font)
         self.Download_Core_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Download_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 120, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 110, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 100, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}")
         self.Download_Core_PushButton.setFlat(False)
         self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
         self.Download_Java_PushButton = QPushButton(self.Configuration_Widget)
@@ -850,23 +852,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Java_PushButton.setFont(font)
         self.Download_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Download_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 120, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 110, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 100, 212);\n"
+                                                    "    border-radius: 6px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}")
         self.Download_Java_PushButton.setFlat(False)
         self.Download_Java_PushButton.setObjectName("Download_Java_PushButton")
         self.Manual_Import_Core_PushButton = QPushButton(self.Configuration_Widget)
@@ -877,23 +879,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Manual_Import_Core_PushButton.setFont(font)
         self.Manual_Import_Core_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Manual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 120, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}\n"
+                                                         "QPushButton:hover\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 110, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}\n"
+                                                         "QPushButton:pressed\n"
+                                                         "{\n"
+                                                         "    background-color: rgb(0, 100, 212);\n"
+                                                         "    border-radius: 6px;\n"
+                                                         "    color: rgb(255, 255, 255);\n"
+                                                         "}")
         self.Manual_Import_Core_PushButton.setFlat(False)
         self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
         self.Set_Core_Background = QLabel(self.Configuration_Widget)
@@ -904,10 +906,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Core_Background.setFont(font)
         self.Set_Core_Background.setAutoFillBackground(False)
         self.Set_Core_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                               "{\n"
+                                               "    background-color: rgb(247, 247, 247);\n"
+                                               "    border-radius: 10px\n"
+                                               "}")
         self.Set_Core_Background.setText("")
         self.Set_Core_Background.setObjectName("Set_Core_Background")
         self.Set_Java_Background = QLabel(self.Configuration_Widget)
@@ -918,10 +920,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Java_Background.setFont(font)
         self.Set_Java_Background.setAutoFillBackground(False)
         self.Set_Java_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                               "{\n"
+                                               "    background-color: rgb(247, 247, 247);\n"
+                                               "    border-radius: 10px\n"
+                                               "}")
         self.Set_Java_Background.setText("")
         self.Set_Java_Background.setObjectName("Set_Java_Background")
         self.Memory_1_Label = QLabel(self.Configuration_Widget)
@@ -938,13 +940,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.MinMemory_LineEdit.setFont(font)
         self.MinMemory_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
+                                              "{\n"
+                                              "    border-radius: 3px;\n"
+                                              "    border: 2px;\n"
+                                              "    border-color: rgb(223, 223, 223);\n"
+                                              "    border-style: solid;\n"
+                                              "}\n"
+                                              "")
         self.MinMemory_LineEdit.setObjectName("MinMemory_LineEdit")
         self.Set_Memory_Background = QLabel(self.Configuration_Widget)
         self.Set_Memory_Background.setGeometry(QRect(0, 140, 351, 61))
@@ -954,10 +956,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Memory_Background.setFont(font)
         self.Set_Memory_Background.setAutoFillBackground(False)
         self.Set_Memory_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                                 "{\n"
+                                                 "    background-color: rgb(247, 247, 247);\n"
+                                                 "    border-radius: 10px\n"
+                                                 "}")
         self.Set_Memory_Background.setText("")
         self.Set_Memory_Background.setObjectName("Set_Memory_Background")
         self.Java_Label = QLabel(self.Configuration_Widget)
@@ -974,13 +976,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.MaxMemory_LineEdit.setFont(font)
         self.MaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
+                                              "{\n"
+                                              "    border-radius: 3px;\n"
+                                              "    border: 2px;\n"
+                                              "    border-color: rgb(223, 223, 223);\n"
+                                              "    border-style: solid;\n"
+                                              "}\n"
+                                              "")
         self.MaxMemory_LineEdit.setObjectName("MaxMemory_LineEdit")
         self.Memory_2_Label = QLabel(self.Configuration_Widget)
         self.Memory_2_Label.setGeometry(QRect(170, 150, 21, 41))
@@ -1004,23 +1006,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Auto_Find_Java_PushButton.setFont(font)
         self.Auto_Find_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Auto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 120, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}\n"
+                                                     "QPushButton:hover\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 110, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}\n"
+                                                     "QPushButton:pressed\n"
+                                                     "{\n"
+                                                     "    background-color: rgb(0, 100, 212);\n"
+                                                     "    border-radius: 6px;\n"
+                                                     "    color: rgb(255, 255, 255);\n"
+                                                     "}")
         self.Auto_Find_Java_PushButton.setFlat(False)
         self.Auto_Find_Java_PushButton.setObjectName("Auto_Find_Java_PushButton")
         self.Memory_Unit_Label = QLabel(self.Configuration_Widget)
@@ -1046,20 +1048,20 @@ class Ui_MCSL2_MainWindow(object):
         self.Founded_Java_List_PushButton.setFont(font)
         self.Founded_Java_List_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Founded_Java_List_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+                                                        "{\n"
+                                                        "    background-color: rgb(230, 230, 230);\n"
+                                                        "    border-radius: 7px;\n"
+                                                        "}\n"
+                                                        "QPushButton:hover\n"
+                                                        "{\n"
+                                                        "    background-color: rgb(227, 227, 227);\n"
+                                                        "    border-radius: 7px;\n"
+                                                        "}\n"
+                                                        "QPushButton:pressed\n"
+                                                        "{\n"
+                                                        "    background-color: rgb(225, 225, 225);\n"
+                                                        "    border-radius: 7px;\n"
+                                                        "}")
         self.Founded_Java_List_PushButton.setObjectName("Founded_Java_List_PushButton")
         self.Set_Core_Background.raise_()
         self.Set_Memory_Background.raise_()
@@ -1080,10 +1082,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip1_Widget = QWidget(self.NoobCPage)
         self.ConfigTip1_Widget.setGeometry(QRect(0, 0, 251, 121))
         self.ConfigTip1_Widget.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                             "{\n"
+                                             "    background-color: rgb(247, 247, 247);\n"
+                                             "    border-radius: 10px\n"
+                                             "}")
         self.ConfigTip1_Widget.setObjectName("ConfigTip1_Widget")
         self.ConfigTip1_Label = QLabel(self.ConfigTip1_Widget)
         self.ConfigTip1_Label.setGeometry(QRect(10, 20, 211, 81))
@@ -1097,10 +1099,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip2_Widget = QWidget(self.NoobCPage)
         self.ConfigTip2_Widget.setGeometry(QRect(0, 140, 251, 101))
         self.ConfigTip2_Widget.setStyleSheet("QWidget\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                             "{\n"
+                                             "    background-color: rgb(247, 247, 247);\n"
+                                             "    border-radius: 10px\n"
+                                             "}")
         self.ConfigTip2_Widget.setObjectName("ConfigTip2_Widget")
         self.ConfigTip2_Label = QLabel(self.ConfigTip2_Widget)
         self.ConfigTip2_Label.setGeometry(QRect(10, 10, 231, 81))
@@ -1132,23 +1134,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExDownload_Core_PushButton.setFont(font)
         self.ExDownload_Core_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExDownload_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                      "{\n"
+                                                      "    background-color: rgb(0, 120, 212);\n"
+                                                      "    border-radius: 6px;\n"
+                                                      "    color: rgb(255, 255, 255);\n"
+                                                      "}\n"
+                                                      "QPushButton:hover\n"
+                                                      "{\n"
+                                                      "    background-color: rgb(0, 110, 212);\n"
+                                                      "    border-radius: 6px;\n"
+                                                      "    color: rgb(255, 255, 255);\n"
+                                                      "}\n"
+                                                      "QPushButton:pressed\n"
+                                                      "{\n"
+                                                      "    background-color: rgb(0, 100, 212);\n"
+                                                      "    border-radius: 6px;\n"
+                                                      "    color: rgb(255, 255, 255);\n"
+                                                      "}")
         self.ExDownload_Core_PushButton.setFlat(False)
         self.ExDownload_Core_PushButton.setObjectName("ExDownload_Core_PushButton")
         self.ExDownload_Java_PushButton = QPushButton(self.ExConfiguration_Widget)
@@ -1159,23 +1161,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExDownload_Java_PushButton.setFont(font)
         self.ExDownload_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExDownload_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                      "{\n"
+                                                      "    background-color: rgb(0, 120, 212);\n"
+                                                      "    border-radius: 6px;\n"
+                                                      "    color: rgb(255, 255, 255);\n"
+                                                      "}\n"
+                                                      "QPushButton:hover\n"
+                                                      "{\n"
+                                                      "    background-color: rgb(0, 110, 212);\n"
+                                                      "    border-radius: 6px;\n"
+                                                      "    color: rgb(255, 255, 255);\n"
+                                                      "}\n"
+                                                      "QPushButton:pressed\n"
+                                                      "{\n"
+                                                      "    background-color: rgb(0, 100, 212);\n"
+                                                      "    border-radius: 6px;\n"
+                                                      "    color: rgb(255, 255, 255);\n"
+                                                      "}")
         self.ExDownload_Java_PushButton.setFlat(False)
         self.ExDownload_Java_PushButton.setObjectName("ExDownload_Java_PushButton")
         self.ExManual_Import_Core_PushButton = QPushButton(self.ExConfiguration_Widget)
@@ -1186,23 +1188,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExManual_Import_Core_PushButton.setFont(font)
         self.ExManual_Import_Core_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExManual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                           "{\n"
+                                                           "    background-color: rgb(0, 120, 212);\n"
+                                                           "    border-radius: 6px;\n"
+                                                           "    color: rgb(255, 255, 255);\n"
+                                                           "}\n"
+                                                           "QPushButton:hover\n"
+                                                           "{\n"
+                                                           "    background-color: rgb(0, 110, 212);\n"
+                                                           "    border-radius: 6px;\n"
+                                                           "    color: rgb(255, 255, 255);\n"
+                                                           "}\n"
+                                                           "QPushButton:pressed\n"
+                                                           "{\n"
+                                                           "    background-color: rgb(0, 100, 212);\n"
+                                                           "    border-radius: 6px;\n"
+                                                           "    color: rgb(255, 255, 255);\n"
+                                                           "}")
         self.ExManual_Import_Core_PushButton.setFlat(False)
         self.ExManual_Import_Core_PushButton.setObjectName("ExManual_Import_Core_PushButton")
         self.ExSet_Core_Background = QLabel(self.ExConfiguration_Widget)
@@ -1213,10 +1215,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Core_Background.setFont(font)
         self.ExSet_Core_Background.setAutoFillBackground(False)
         self.ExSet_Core_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                                 "{\n"
+                                                 "    background-color: rgb(247, 247, 247);\n"
+                                                 "    border-radius: 10px\n"
+                                                 "}")
         self.ExSet_Core_Background.setText("")
         self.ExSet_Core_Background.setObjectName("ExSet_Core_Background")
         self.ExSet_Java_Background = QLabel(self.ExConfiguration_Widget)
@@ -1227,10 +1229,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Java_Background.setFont(font)
         self.ExSet_Java_Background.setAutoFillBackground(False)
         self.ExSet_Java_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                                 "{\n"
+                                                 "    background-color: rgb(247, 247, 247);\n"
+                                                 "    border-radius: 10px\n"
+                                                 "}")
         self.ExSet_Java_Background.setText("")
         self.ExSet_Java_Background.setObjectName("ExSet_Java_Background")
         self.ExMemory_1_Label = QLabel(self.ExConfiguration_Widget)
@@ -1247,13 +1249,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.ExMinMemory_LineEdit.setFont(font)
         self.ExMinMemory_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
+                                                "{\n"
+                                                "    border-radius: 3px;\n"
+                                                "    border: 2px;\n"
+                                                "    border-color: rgb(223, 223, 223);\n"
+                                                "    border-style: solid;\n"
+                                                "}\n"
+                                                "")
         self.ExMinMemory_LineEdit.setObjectName("ExMinMemory_LineEdit")
         self.ExSet_Memory_Background = QLabel(self.ExConfiguration_Widget)
         self.ExSet_Memory_Background.setGeometry(QRect(0, 130, 341, 61))
@@ -1263,10 +1265,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Memory_Background.setFont(font)
         self.ExSet_Memory_Background.setAutoFillBackground(False)
         self.ExSet_Memory_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                                   "{\n"
+                                                   "    background-color: rgb(247, 247, 247);\n"
+                                                   "    border-radius: 10px\n"
+                                                   "}")
         self.ExSet_Memory_Background.setText("")
         self.ExSet_Memory_Background.setObjectName("ExSet_Memory_Background")
         self.ExJava_Label = QLabel(self.ExConfiguration_Widget)
@@ -1283,13 +1285,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.ExMaxMemory_LineEdit.setFont(font)
         self.ExMaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
+                                                "{\n"
+                                                "    border-radius: 3px;\n"
+                                                "    border: 2px;\n"
+                                                "    border-color: rgb(223, 223, 223);\n"
+                                                "    border-style: solid;\n"
+                                                "}\n"
+                                                "")
         self.ExMaxMemory_LineEdit.setObjectName("ExMaxMemory_LineEdit")
         self.ExMemory_2_Label = QLabel(self.ExConfiguration_Widget)
         self.ExMemory_2_Label.setGeometry(QRect(140, 140, 21, 41))
@@ -1313,23 +1315,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExAuto_Find_Java_PushButton.setFont(font)
         self.ExAuto_Find_Java_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExAuto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                       "{\n"
+                                                       "    background-color: rgb(0, 120, 212);\n"
+                                                       "    border-radius: 6px;\n"
+                                                       "    color: rgb(255, 255, 255);\n"
+                                                       "}\n"
+                                                       "QPushButton:hover\n"
+                                                       "{\n"
+                                                       "    background-color: rgb(0, 110, 212);\n"
+                                                       "    border-radius: 6px;\n"
+                                                       "    color: rgb(255, 255, 255);\n"
+                                                       "}\n"
+                                                       "QPushButton:pressed\n"
+                                                       "{\n"
+                                                       "    background-color: rgb(0, 100, 212);\n"
+                                                       "    border-radius: 6px;\n"
+                                                       "    color: rgb(255, 255, 255);\n"
+                                                       "}")
         self.ExAuto_Find_Java_PushButton.setFlat(False)
         self.ExAuto_Find_Java_PushButton.setObjectName("ExAuto_Find_Java_PushButton")
         self.ExJava_Version_Label = QLabel(self.ExConfiguration_Widget)
@@ -1348,20 +1350,20 @@ class Ui_MCSL2_MainWindow(object):
         self.ExFounded_Java_List_PushButton.setFont(font)
         self.ExFounded_Java_List_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExFounded_Java_List_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+                                                          "{\n"
+                                                          "    background-color: rgb(230, 230, 230);\n"
+                                                          "    border-radius: 7px;\n"
+                                                          "}\n"
+                                                          "QPushButton:hover\n"
+                                                          "{\n"
+                                                          "    background-color: rgb(227, 227, 227);\n"
+                                                          "    border-radius: 7px;\n"
+                                                          "}\n"
+                                                          "QPushButton:pressed\n"
+                                                          "{\n"
+                                                          "    background-color: rgb(225, 225, 225);\n"
+                                                          "    border-radius: 7px;\n"
+                                                          "}")
         self.ExFounded_Java_List_PushButton.setObjectName("ExFounded_Java_List_PushButton")
         self.ExOthers_Background = QLabel(self.ExConfiguration_Widget)
         self.ExOthers_Background.setGeometry(QRect(370, 0, 301, 121))
@@ -1371,10 +1373,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExOthers_Background.setFont(font)
         self.ExOthers_Background.setAutoFillBackground(False)
         self.ExOthers_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                               "{\n"
+                                               "    background-color: rgb(247, 247, 247);\n"
+                                               "    border-radius: 10px\n"
+                                               "}")
         self.ExOthers_Background.setText("")
         self.ExOthers_Background.setObjectName("ExOthers_Background")
         self.ExServer_Name_LineEdit = QLineEdit(self.ExConfiguration_Widget)
@@ -1384,13 +1386,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.ExServer_Name_LineEdit.setFont(font)
         self.ExServer_Name_LineEdit.setStyleSheet("QLineEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
+                                                  "{\n"
+                                                  "    border-radius: 3px;\n"
+                                                  "    border: 2px;\n"
+                                                  "    border-color: rgb(223, 223, 223);\n"
+                                                  "    border-style: solid;\n"
+                                                  "}\n"
+                                                  "")
         self.ExServer_Name_LineEdit.setObjectName("ExServer_Name_LineEdit")
         self.ExServer_Name_Label = QLabel(self.ExConfiguration_Widget)
         self.ExServer_Name_Label.setGeometry(QRect(400, 20, 91, 41))
@@ -1407,23 +1409,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExCompleted_Save_PushButton.setFont(font)
         self.ExCompleted_Save_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.ExCompleted_Save_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                                       "{\n"
+                                                       "    background-color: rgb(0, 120, 212);\n"
+                                                       "    border-radius: 6px;\n"
+                                                       "    color: rgb(255, 255, 255);\n"
+                                                       "}\n"
+                                                       "QPushButton:hover\n"
+                                                       "{\n"
+                                                       "    background-color: rgb(0, 110, 212);\n"
+                                                       "    border-radius: 6px;\n"
+                                                       "    color: rgb(255, 255, 255);\n"
+                                                       "}\n"
+                                                       "QPushButton:pressed\n"
+                                                       "{\n"
+                                                       "    background-color: rgb(0, 100, 212);\n"
+                                                       "    border-radius: 6px;\n"
+                                                       "    color: rgb(255, 255, 255);\n"
+                                                       "}")
         self.ExCompleted_Save_PushButton.setFlat(False)
         self.ExCompleted_Save_PushButton.setObjectName("ExCompleted_Save_PushButton")
         self.ExMemoryUnitComboBox = QComboBox(self.ExConfiguration_Widget)
@@ -1434,62 +1436,62 @@ class Ui_MCSL2_MainWindow(object):
         font.setKerning(True)
         self.ExMemoryUnitComboBox.setFont(font)
         self.ExMemoryUnitComboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding-left: 0px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"}")
+                                                "    border: 1px solid rgb(238, 239, 238);\n"
+                                                "    border-radius: 5px;\n"
+                                                "    border-bottom: 1px solid rgb(212, 213, 212);\n"
+                                                "    padding: 5px 31px 6px 11px;\n"
+                                                "    color: black;\n"
+                                                "    background-color: rgb(254, 254, 254);\n"
+                                                "    text-align: left;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QComboBox:hover {\n"
+                                                "    background-color: rgb(251, 251, 251);\n"
+                                                "}\n"
+                                                "\n"
+                                                "QComboBox:pressed {\n"
+                                                "    background-color: rgb(252, 252, 252);\n"
+                                                "    border-bottom: 1px solid rgb(238, 239, 238);\n"
+                                                "    color: rgba(0, 0, 0, 0.63);\n"
+                                                "}\n"
+                                                "QComboBox::drop-down\n"
+                                                "{\n"
+                                                "    subcontrol-origin: padding;\n"
+                                                "    subcontrol-position: right;\n"
+                                                "    width: 35px;\n"
+                                                "    border-left-style: solid;\n"
+                                                "}\n"
+                                                "QComboBox::down-arrow\n"
+                                                "{\n"
+                                                "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+                                                "}\n"
+                                                "QComboBox QAbstractItemView {\n"
+                                                "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+                                                "    border-radius: 9px;\n"
+                                                "    background-color: rgb(249, 249, 249);\n"
+                                                "    outline: none;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QComboBox QAbstractItemView::item {\n"
+                                                "    padding-left: 0px;\n"
+                                                "    padding-right: 10px;\n"
+                                                "    border-radius: 5px;\n"
+                                                "    border: none;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QComboBox QAbstractItemView::item:hover {\n"
+                                                "    background-color: rgba(0, 0, 0, 9);\n"
+                                                "}\n"
+                                                "\n"
+                                                "QComboBox QAbstractItemView::item:selected {\n"
+                                                "    background-color: rgba(0, 0, 0, 7);\n"
+                                                "    color: black;\n"
+                                                "}\n"
+                                                "\n"
+                                                "QComboBox QAbstractItemView::item:selected:active {\n"
+                                                "    background-color: rgba(0, 0, 0, 0.06);\n"
+                                                "    color: rgba(0, 0, 0, 0.7);\n"
+                                                "}")
         self.ExMemoryUnitComboBox.setObjectName("ExMemoryUnitComboBox")
         self.ExMemoryUnitComboBox.addItem("")
         self.ExMemoryUnitComboBox.addItem("")
@@ -1501,10 +1503,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Encoding_Background.setFont(font)
         self.ExSet_Encoding_Background.setAutoFillBackground(False)
         self.ExSet_Encoding_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                                     "{\n"
+                                                     "    background-color: rgb(247, 247, 247);\n"
+                                                     "    border-radius: 10px\n"
+                                                     "}")
         self.ExSet_Encoding_Background.setText("")
         self.ExSet_Encoding_Background.setObjectName("ExSet_Encoding_Background")
         self.ExConsoleInputDecoding = QLabel(self.ExConfiguration_Widget)
@@ -1527,62 +1529,62 @@ class Ui_MCSL2_MainWindow(object):
         font.setKerning(True)
         self.ExConsoleOutputEncodingComboBox.setFont(font)
         self.ExConsoleOutputEncodingComboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding-left: 0px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"}")
+                                                           "    border: 1px solid rgb(238, 239, 238);\n"
+                                                           "    border-radius: 5px;\n"
+                                                           "    border-bottom: 1px solid rgb(212, 213, 212);\n"
+                                                           "    padding: 5px 31px 6px 11px;\n"
+                                                           "    color: black;\n"
+                                                           "    background-color: rgb(254, 254, 254);\n"
+                                                           "    text-align: left;\n"
+                                                           "}\n"
+                                                           "\n"
+                                                           "QComboBox:hover {\n"
+                                                           "    background-color: rgb(251, 251, 251);\n"
+                                                           "}\n"
+                                                           "\n"
+                                                           "QComboBox:pressed {\n"
+                                                           "    background-color: rgb(252, 252, 252);\n"
+                                                           "    border-bottom: 1px solid rgb(238, 239, 238);\n"
+                                                           "    color: rgba(0, 0, 0, 0.63);\n"
+                                                           "}\n"
+                                                           "QComboBox::drop-down\n"
+                                                           "{\n"
+                                                           "    subcontrol-origin: padding;\n"
+                                                           "    subcontrol-position: right;\n"
+                                                           "    width: 35px;\n"
+                                                           "    border-left-style: solid;\n"
+                                                           "}\n"
+                                                           "QComboBox::down-arrow\n"
+                                                           "{\n"
+                                                           "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+                                                           "}\n"
+                                                           "QComboBox QAbstractItemView {\n"
+                                                           "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+                                                           "    border-radius: 9px;\n"
+                                                           "    background-color: rgb(249, 249, 249);\n"
+                                                           "    outline: none;\n"
+                                                           "}\n"
+                                                           "\n"
+                                                           "QComboBox QAbstractItemView::item {\n"
+                                                           "    padding-left: 0px;\n"
+                                                           "    padding-right: 10px;\n"
+                                                           "    border-radius: 5px;\n"
+                                                           "    border: none;\n"
+                                                           "}\n"
+                                                           "\n"
+                                                           "QComboBox QAbstractItemView::item:hover {\n"
+                                                           "    background-color: rgba(0, 0, 0, 9);\n"
+                                                           "}\n"
+                                                           "\n"
+                                                           "QComboBox QAbstractItemView::item:selected {\n"
+                                                           "    background-color: rgba(0, 0, 0, 7);\n"
+                                                           "    color: black;\n"
+                                                           "}\n"
+                                                           "\n"
+                                                           "QComboBox QAbstractItemView::item:selected:active {\n"
+                                                           "    background-color: rgba(0, 0, 0, 0.06);\n"
+                                                           "    color: rgba(0, 0, 0, 0.7);\n"
+                                                           "}")
         self.ExConsoleOutputEncodingComboBox.setObjectName("ExConsoleOutputEncodingComboBox")
         self.ExConsoleOutputEncodingComboBox.addItem("")
         self.ExConsoleOutputEncodingComboBox.addItem("")
@@ -1594,62 +1596,62 @@ class Ui_MCSL2_MainWindow(object):
         font.setKerning(True)
         self.ExConsoleInputDecodingComboBox.setFont(font)
         self.ExConsoleInputDecodingComboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding-left: 0px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"}")
+                                                          "    border: 1px solid rgb(238, 239, 238);\n"
+                                                          "    border-radius: 5px;\n"
+                                                          "    border-bottom: 1px solid rgb(212, 213, 212);\n"
+                                                          "    padding: 5px 31px 6px 11px;\n"
+                                                          "    color: black;\n"
+                                                          "    background-color: rgb(254, 254, 254);\n"
+                                                          "    text-align: left;\n"
+                                                          "}\n"
+                                                          "\n"
+                                                          "QComboBox:hover {\n"
+                                                          "    background-color: rgb(251, 251, 251);\n"
+                                                          "}\n"
+                                                          "\n"
+                                                          "QComboBox:pressed {\n"
+                                                          "    background-color: rgb(252, 252, 252);\n"
+                                                          "    border-bottom: 1px solid rgb(238, 239, 238);\n"
+                                                          "    color: rgba(0, 0, 0, 0.63);\n"
+                                                          "}\n"
+                                                          "QComboBox::drop-down\n"
+                                                          "{\n"
+                                                          "    subcontrol-origin: padding;\n"
+                                                          "    subcontrol-position: right;\n"
+                                                          "    width: 35px;\n"
+                                                          "    border-left-style: solid;\n"
+                                                          "}\n"
+                                                          "QComboBox::down-arrow\n"
+                                                          "{\n"
+                                                          "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+                                                          "}\n"
+                                                          "QComboBox QAbstractItemView {\n"
+                                                          "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+                                                          "    border-radius: 9px;\n"
+                                                          "    background-color: rgb(249, 249, 249);\n"
+                                                          "    outline: none;\n"
+                                                          "}\n"
+                                                          "\n"
+                                                          "QComboBox QAbstractItemView::item {\n"
+                                                          "    padding-left: 0px;\n"
+                                                          "    padding-right: 10px;\n"
+                                                          "    border-radius: 5px;\n"
+                                                          "    border: none;\n"
+                                                          "}\n"
+                                                          "\n"
+                                                          "QComboBox QAbstractItemView::item:hover {\n"
+                                                          "    background-color: rgba(0, 0, 0, 9);\n"
+                                                          "}\n"
+                                                          "\n"
+                                                          "QComboBox QAbstractItemView::item:selected {\n"
+                                                          "    background-color: rgba(0, 0, 0, 7);\n"
+                                                          "    color: black;\n"
+                                                          "}\n"
+                                                          "\n"
+                                                          "QComboBox QAbstractItemView::item:selected:active {\n"
+                                                          "    background-color: rgba(0, 0, 0, 0.06);\n"
+                                                          "    color: rgba(0, 0, 0, 0.7);\n"
+                                                          "}")
         self.ExConsoleInputDecodingComboBox.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
         self.ExConsoleInputDecodingComboBox.setFrame(True)
         self.ExConsoleInputDecodingComboBox.setObjectName("ExConsoleInputDecodingComboBox")
@@ -1678,27 +1680,27 @@ class Ui_MCSL2_MainWindow(object):
         self.ExJVMArg_Background.setFont(font)
         self.ExJVMArg_Background.setAutoFillBackground(False)
         self.ExJVMArg_Background.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 10px\n"
-"}")
+                                               "{\n"
+                                               "    background-color: rgb(247, 247, 247);\n"
+                                               "    border-radius: 10px\n"
+                                               "}")
         self.ExJVMArg_Background.setText("")
         self.ExJVMArg_Background.setObjectName("ExJVMArg_Background")
-        self.textEdit = QTextEdit(self.ExConfiguration_Widget)
-        self.textEdit.setGeometry(QRect(20, 360, 631, 81))
+        self.ExJVMArgLineEdit = QTextEdit(self.ExConfiguration_Widget)
+        self.ExJVMArgLineEdit.setGeometry(QRect(20, 360, 631, 81))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet("QTextEdit\n"
-"{\n"
-"    border-radius: 3px;\n"
-"    border: 2px;\n"
-"    border-color: rgb(223, 223, 223);\n"
-"    border-style: solid;\n"
-"}\n"
-"")
-        self.textEdit.setObjectName("textEdit")
+        self.ExJVMArgLineEdit.setFont(font)
+        self.ExJVMArgLineEdit.setStyleSheet("QTextEdit\n"
+                                            "{\n"
+                                            "    border-radius: 3px;\n"
+                                            "    border: 2px;\n"
+                                            "    border-color: rgb(223, 223, 223);\n"
+                                            "    border-style: solid;\n"
+                                            "}\n"
+                                            "")
+        self.ExJVMArgLineEdit.setObjectName("ExJVMArgLineEdit")
         self.ExJVMArg_Background.raise_()
         self.ExSet_Encoding_Background.raise_()
         self.ExSet_Java_Background.raise_()
@@ -1726,7 +1728,6 @@ class Ui_MCSL2_MainWindow(object):
         self.ExConsoleInputDecodingComboBox.raise_()
         self.ExConsoleOutputEncoding.raise_()
         self.ExJVMArg.raise_()
-        self.textEdit.raise_()
         self.ConfigModeWidget.addWidget(self.ExtendedCPage)
         self.FunctionsStackedWidget.addWidget(self.ConfigPage)
         self.DownloadPage = QWidget()
@@ -4332,36 +4333,36 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseServerScrollArea.setGeometry(QRect(30, 140, 641, 401))
         self.ChooseServerScrollArea.viewport().setProperty("cursor", QCursor(Qt.ArrowCursor))
         self.ChooseServerScrollArea.setStyleSheet("QScrollArea{\n"
-"    border: 0px solid;\n"
-"    border-right-color: #dcdbdc;\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QScrollBar:vertical {\n"
-"    border: none;\n"
-"    background: transparent;\n"
-"    width: 12px;\n"
-"}\n"
-"QScrollBar::handle:vertical {\n"
-"    background: rgb(220, 220, 220);\n"
-"    min-height: 20px;\n"
-"    border-radius: 5px;\n"
-"}\n"
-"QScrollBar::add-line:vertial\n"
-"{\n"
-"    height: 0px;\n"
-"}\n"
-"QScrollBar::sub-line:vertial\n"
-"{\n"
-"    height: 0px;\n"
-"}\n"
-"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-"{\n"
-"    height: 0px;\n"
-"}\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"    background: none;\n"
-"}")
+                                                  "    border: 0px solid;\n"
+                                                  "    border-right-color: #dcdbdc;\n"
+                                                  "    background-color: rgb(230, 230, 230);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}\n"
+                                                  "QScrollBar:vertical {\n"
+                                                  "    border: none;\n"
+                                                  "    background: transparent;\n"
+                                                  "    width: 12px;\n"
+                                                  "}\n"
+                                                  "QScrollBar::handle:vertical {\n"
+                                                  "    background: rgb(220, 220, 220);\n"
+                                                  "    min-height: 20px;\n"
+                                                  "    border-radius: 5px;\n"
+                                                  "}\n"
+                                                  "QScrollBar::add-line:vertial\n"
+                                                  "{\n"
+                                                  "    height: 0px;\n"
+                                                  "}\n"
+                                                  "QScrollBar::sub-line:vertial\n"
+                                                  "{\n"
+                                                  "    height: 0px;\n"
+                                                  "}\n"
+                                                  "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+                                                  "{\n"
+                                                  "    height: 0px;\n"
+                                                  "}\n"
+                                                  "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+                                                  "    background: none;\n"
+                                                  "}")
         self.ChooseServerScrollArea.setFrameShape(QFrame.NoFrame)
         self.ChooseServerScrollArea.setFrameShadow(QFrame.Plain)
         self.ChooseServerScrollArea.setLineWidth(0)
@@ -4517,20 +4518,20 @@ class Ui_MCSL2_MainWindow(object):
         self.DoNotUpdate_PushButton.setFont(font)
         self.DoNotUpdate_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.DoNotUpdate_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+                                                  "{\n"
+                                                  "    background-color: rgb(247, 247, 247);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}\n"
+                                                  "QPushButton:hover\n"
+                                                  "{\n"
+                                                  "    background-color: rgb(230, 230, 230);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}\n"
+                                                  "QPushButton:pressed\n"
+                                                  "{\n"
+                                                  "    background-color: rgb(225, 225, 225);\n"
+                                                  "    border-radius: 7px;\n"
+                                                  "}")
         self.DoNotUpdate_PushButton.setObjectName("DoNotUpdate_PushButton")
         self.Update_PushButton = QPushButton(self.UpdatePage)
         self.Update_PushButton.setGeometry(QRect(450, 490, 231, 61))
@@ -4540,23 +4541,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_PushButton.setFont(font)
         self.Update_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.Update_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+                                             "{\n"
+                                             "    background-color: rgb(0, 120, 212);\n"
+                                             "    border-radius: 10px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
+                                             "}\n"
+                                             "QPushButton:hover\n"
+                                             "{\n"
+                                             "    background-color: rgb(0, 110, 212);\n"
+                                             "    border-radius: 10px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
+                                             "}\n"
+                                             "QPushButton:pressed\n"
+                                             "{\n"
+                                             "    background-color: rgb(0, 100, 212);\n"
+                                             "    border-radius: 10px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
+                                             "}")
         self.Update_PushButton.setFlat(False)
         self.Update_PushButton.setObjectName("Update_PushButton")
         self.Update_Introduction_Widget = QWidget(self.UpdatePage)
@@ -4653,10 +4654,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
         self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "如何搭建一个Java版Minecraft服务器？\n"
-"1.准备好Java、核心、电脑\n"
-"（提示：可使用本程序下载）\n"
-"2.配置参数（本程序“配置服务器”页）\n"
-"3. 开启服务器。将服务器IP告诉玩家。"))
+                                                                   "1.准备好Java、核心、电脑\n"
+                                                                   "（提示：可使用本程序下载）\n"
+                                                                   "2.配置参数（本程序“配置服务器”页）\n"
+                                                                   "3. 开启服务器。将服务器IP告诉玩家。"))
         self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
         self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
@@ -4667,12 +4668,12 @@ class Ui_MCSL2_MainWindow(object):
         self.ExAddServer.setText(_translate("MCSL2_MainWindow", "  进阶模式"))
         self.ImportServer.setText(_translate("MCSL2_MainWindow", "  导入服务器压缩包"))
         self.LeadConfigTip2.setText(_translate("MCSL2_MainWindow", "保留基础配置。\n"
-" - Java\n"
-" - 服务器核心\n"
-" - 最小最大内存\n"
-" - 服务器名称"))
+                                                                   " - Java\n"
+                                                                   " - 服务器核心\n"
+                                                                   " - 最小最大内存\n"
+                                                                   " - 服务器名称"))
         self.LeadConfigTip2_2.setText(_translate("MCSL2_MainWindow", "较简易配置来说，\n"
-"可以配置更多选项。"))
+                                                                     "可以配置更多选项。"))
         self.LeadConfigTip2_3.setText(_translate("MCSL2_MainWindow", "  （未开发完成）"))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
         self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
@@ -4687,12 +4688,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "M"))
         self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
         self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
-"1.存放的文件夹路径\n"
-"2.服务器核心\n"
-"3.Java路径"))
+                                                                     "1.存放的文件夹路径\n"
+                                                                     "2.服务器核心\n"
+                                                                     "3.Java路径"))
         self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在Servers目录\n"
-"生成以服务器名称命名的文件夹\n"
-"以存储服务器文件。"))
+                                                                     "生成以服务器名称命名的文件夹\n"
+                                                                     "以存储服务器文件。"))
         self.ExDownload_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.ExDownload_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
         self.ExManual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
@@ -4715,11 +4716,16 @@ class Ui_MCSL2_MainWindow(object):
         self.ExConsoleOutputEncoding.setText(_translate("MCSL2_MainWindow", "控制台输出编码(优先级高于全局设置）"))
         self.ExJVMArg.setText(_translate("MCSL2_MainWindow", "启动时的JVM参数（可不填）"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab), _translate("MCSL2_MainWindow", "[ 核心 ] Paper"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab), _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab), _translate("MCSL2_MainWindow", "[ 核心 ] 官方"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab),
+                                                   _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab),
+                                                   _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab),
+                                                   _translate("MCSL2_MainWindow", "[ 核心 ] Paper"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab),
+                                                   _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab),
+                                                   _translate("MCSL2_MainWindow", "[ 核心 ] 官方"))
         self.More_Download_PushButton.setText(_translate("MCSL2_MainWindow", "更多"))
         self.GoToDownloadSourceChangerPushButton.setText(_translate("MCSL2_MainWindow", "下载源设置"))
         self.CurrentDownloadSourceLabel.setText(_translate("MCSL2_MainWindow", "当前下载源："))
@@ -4730,7 +4736,8 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Label.setText(_translate("MCSL2_MainWindow", "更多"))
         self.AutoRunLastServerSetting.setText(_translate("MCSL2_MainWindow", "开启MCSL2时自动运行上次运行的服务器"))
         self.AcceptAllMojangEULASetting.setText(_translate("MCSL2_MainWindow", "同意所有新添加服务器的Mojang EULA"))
-        self.StopServerSettings.setText(_translate("MCSL2_MainWindow", "关闭服务器时向服务器发送 stop 指令而不是结束进程"))
+        self.StopServerSettings.setText(
+            _translate("MCSL2_MainWindow", "关闭服务器时向服务器发送 stop 指令而不是结束进程"))
         self.ServerSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "服务器设置"))
         self.OnlySaveGlobalServerConfigs.setText(_translate("MCSL2_MainWindow", "仅保存全局服务器设置"))
         self.ConfigPageSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "配置页设置"))
@@ -4752,7 +4759,8 @@ class Ui_MCSL2_MainWindow(object):
         self.Aria2ThreadCountComboBox.setItemText(3, _translate("MCSL2_MainWindow", "8"))
         self.Aria2ThreadCountComboBox.setItemText(4, _translate("MCSL2_MainWindow", "16"))
         self.AlwaysAskDownloadPath.setText(_translate("MCSL2_MainWindow", "总是询问下载保存位置"))
-        self.AlwaysAskDownloadPathTip.setText(_translate("MCSL2_MainWindow", "若不勾选，则会保存至MCSL2/Downloads文件夹。"))
+        self.AlwaysAskDownloadPathTip.setText(
+            _translate("MCSL2_MainWindow", "若不勾选，则会保存至MCSL2/Downloads文件夹。"))
         self.SameFileException.setText(_translate("MCSL2_MainWindow", "下载保存位置存在同名文件处理"))
         self.SameFileExceptionStop.setText(_translate("MCSL2_MainWindow", "停止"))
         self.SameFileExceptionAsk.setText(_translate("MCSL2_MainWindow", "询问"))
@@ -4783,16 +4791,16 @@ class Ui_MCSL2_MainWindow(object):
         self.UpdatePushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
         self.AboutWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "关于"))
         self.AboutContent.setText(_translate("MCSL2_MainWindow", "MCSL2是一个开源非营利性项目，遵循GNU GPL 3.0开源协议。\n"
-"任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
-"但必须在相关源代码中以及软件中给出声明，\n"
-"并且二次分发版本的项目名称应与“MCSL2”有明显辨识度。\n"
-"\n"
-"Copyright ©落雪无痕LxHTT. All right reserved."))
+                                                                 "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
+                                                                 "但必须在相关源代码中以及软件中给出声明，\n"
+                                                                 "并且二次分发版本的项目名称应与“MCSL2”有明显辨识度。\n"
+                                                                 "\n"
+                                                                 "Copyright ©落雪无痕LxHTT. All right reserved."))
         self.OpenSourceCodePushButton.setText(_translate("MCSL2_MainWindow", "打开源代码仓库"))
         self.MCSL2_Author_Label_1.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
         self.MCSL2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
         self.MCSL2_Author_Label_2.setText(_translate("MCSL2_MainWindow", "Bilibili：\n"
-"落雪无痕LxHTT"))
+                                                                         "落雪无痕LxHTT"))
         self.JoinQQGroup.setText(_translate("MCSL2_MainWindow", "加入官方群聊"))
         self.SystemReportPushButton.setText(_translate("MCSL2_MainWindow", "系统报告"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))

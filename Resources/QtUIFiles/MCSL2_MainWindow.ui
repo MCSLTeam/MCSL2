@@ -705,7 +705,7 @@ QPushButton:pressed
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="HomePage">
      <widget class="QLabel" name="Home_Label">
@@ -768,6 +768,12 @@ QPushButton:pressed
        </property>
        <property name="text">
         <string>正在获取公告...</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </widget>
@@ -1008,7 +1014,7 @@ QPushButton:pressed
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="LeadCPage">
        <widget class="QLabel" name="LeadConfigTip1">
@@ -3095,7 +3101,7 @@ QComboBox QAbstractItemView::item:selected:active {
           <string/>
          </property>
         </widget>
-        <widget class="QTextEdit" name="textEdit">
+        <widget class="QTextEdit" name="ExJVMArgLineEdit">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -3148,7 +3154,7 @@ QComboBox QAbstractItemView::item:selected:active {
         <zorder>ExConsoleInputDecodingComboBox</zorder>
         <zorder>ExConsoleOutputEncoding</zorder>
         <zorder>ExJVMArg</zorder>
-        <zorder>textEdit</zorder>
+        <zorder>ExJVMArgLineEdit</zorder>
        </widget>
       </widget>
      </widget>
@@ -4031,7 +4037,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>641</width>
+         <width>640</width>
          <height>1677</height>
         </rect>
        </property>
