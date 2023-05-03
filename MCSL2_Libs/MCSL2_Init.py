@@ -9,11 +9,14 @@ def InitMCSL():
         mkdir(r"./Servers")
         MCSL2Logger("无Servers文件夹，创建", MsgArg=None, MsgLevel=0, LogFilesCount=len(listdir(r"MCSL2/Logs"))).Log()
     if not ospath.exists(r"MCSL2"):
-        MCSL2Logger("程序执行InitMCSL()初始化中...", MsgArg=None, MsgLevel=0, LogFilesCount=len(listdir(r"MCSL2/Logs"))).Log()
-        mkdir(r"MCSL2")
-        mkdir(r"MCSL2/Logs")
-        mkdir(r"MCSL2/Aria2")
-        mkdir(r"MCSL2/Downloads")
+        try:
+            MCSL2Logger("程序执行InitMCSL()初始化中...", MsgArg=None, MsgLevel=0, LogFilesCount=len(listdir(r"MCSL2/Logs"))).Log()
+        except FileNotFoundError:
+
+            mkdir(r"MCSL2")
+            mkdir(r"MCSL2/Logs")
+            mkdir(r"MCSL2/Aria2")
+            mkdir(r"MCSL2/Downloads")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
             ConfigTemplate = {
                 "auto_run_last_server": False,
