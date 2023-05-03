@@ -19,7 +19,7 @@ class MCSL2Settings:
             self.ConsoleInputDecoding = self.ConfigJSON["console_input_decoding"]
             self.BackgroundTransparency = self.ConfigJSON["background_transparency"]
             self.ExchangeWindowControllingButtons = self.ConfigJSON["exchange_window_controlling_buttons"]
-            self.DarkMode = self.ConfigJSON["darkmode"]
+            self.ThemeMode = self.ConfigJSON["thememode"]
             self.StartOnStartup = self.ConfigJSON["start_on_startup"]
             self.AlwaysRunAsAdministrator = self.ConfigJSON["always_run_as_administrator"]
             self.LastUpdateTime = self.ConfigJSON["last_update_time"]
@@ -66,8 +66,8 @@ class MCSL2Settings:
             self.BackgroundTransparency = Arg
         elif Type == "ExchangeWindowControllingButtons":
             self.ExchangeWindowControllingButtons = Arg
-        elif Type == "DarkMode":
-            self.DarkMode = Arg
+        elif Type == "ThemeMode":
+            self.ThemeMode = Arg
         elif Type == "StartOnStartup":
             self.StartOnStartup = Arg
         elif Type == "AlwaysRunAsAdministrator":
@@ -95,7 +95,7 @@ class MCSL2Settings:
                 "console_input_decoding": self.ConsoleInputDecoding,
                 "background_transparency": self.BackgroundTransparency,
                 "exchange_window_controlling_buttons": self.ExchangeWindowControllingButtons,
-                "darkmode": self.DarkMode,
+                "thememode": self.ThemeMode,
                 "start_on_startup": self.StartOnStartup,
                 "always_run_as_administrator": self.AlwaysRunAsAdministrator,
                 "last_update_time": self.LastUpdateTime

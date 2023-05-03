@@ -75,6 +75,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.clicked.connect(self.ToConsolePage)
         self.Tools_Page_PushButton.clicked.connect(self.ToToolsPage)
         self.About_Page_PushButton.clicked.connect(self.ToAboutPage)
+        self.Plugin_Page_PushButton.clicked.connect(self.ToPluginPage)
 
         # Functions in home page
         self.Choose_Server_PushButton.clicked.connect(self.ToChooseServerPage)
@@ -166,8 +167,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.TransparentPercentSlider.valueChanged.connect(self.TransparentPercentChanger)
 
         self.ExchangeButton.clicked.connect(lambda: self.CheckBoxSettingsChanger("ExchangeWindowControllingButtons"))
-        self.DarkModeComboBox.currentIndexChanged.connect(
-            lambda: self.ComboBoxSettingChanger("DarkMode", self.DarkModeComboBox.currentIndex()))
+        self.ThemeModeComboBox.currentIndexChanged.connect(
+            lambda: self.ComboBoxSettingChanger("ThemeMode", self.ThemeModeComboBox.currentIndex()))
         self.StartOnStartup.clicked.connect(lambda: self.CheckBoxSettingsChanger("StartOnStartup"))
         self.AlwaysRunAsAdministrator.clicked.connect(lambda: self.CheckBoxSettingsChanger("AlwaysRunAsAdministrator"))
         self.UpdatePushButton.clicked.connect(self.CheckUpdate)
@@ -198,7 +199,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             ComboBoxAttr = ["utf-8", "gbk"]
         elif Type == "ConsoleInputDecoding":
             ComboBoxAttr = ["follow", "utf-8", "gbk"]
-        elif Type == "DarkMode":
+        elif Type == "ThemeMode":
             ComboBoxAttr = ["light", "dark", "system"]
         else:
             pass
@@ -266,12 +267,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(True)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
+        self.Blue8.setVisible(False)
 
     def ToConfigPage(self):
         global LogFilesCount
@@ -285,12 +288,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(True)
         self.Blue3.setVisible(False)
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
+        self.Blue8.setVisible(False)
 
     def ToDownloadPage(self):
         global LogFilesCount
@@ -305,12 +310,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(True)
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
+        self.Blue8.setVisible(False)
         self.RefreshDownloadType()
 
     def ToConsolePage(self):
@@ -325,12 +332,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
         self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
         self.Blue4.setVisible(True)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(False)
+        self.Blue8.setVisible(False)
 
     def ToToolsPage(self):
         global LogFilesCount
@@ -344,12 +353,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Tools_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
         self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(True)
         self.Blue6.setVisible(False)
+        self.Blue8.setVisible(False)
 
     def ToAboutPage(self):
         global LogFilesCount
@@ -363,15 +374,39 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.About_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
         self.Blue1.setVisible(False)
         self.Blue2.setVisible(False)
         self.Blue3.setVisible(False)
         self.Blue4.setVisible(False)
         self.Blue5.setVisible(False)
         self.Blue6.setVisible(True)
+        self.Blue8.setVisible(False)
         MCSL2Logger("ChangeCurrentVersionLabel", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.CurrentVersionLabel.setText(f"当前版本：{Version}")
-
+    def ToPluginPage(self):
+        global LogFilesCount
+        MCSL2Logger("ToSettingsPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        self.FunctionsStackedWidget.setCurrentIndex(-1)
+        MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        self.Blue8.setStyleSheet(BlueStyleSheet)
+        self.Home_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Config_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Download_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Server_Console_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Tools_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.About_Page_PushButton.setStyleSheet(OtherNavigationStyleSheet)
+        self.Plugin_Page_PushButton.setStyleSheet(CurrentNavigationStyleSheet)
+        
+        self.Blue1.setVisible(False)
+        self.Blue2.setVisible(False)
+        self.Blue3.setVisible(False)
+        self.Blue4.setVisible(False)
+        self.Blue5.setVisible(False)
+        self.Blue6.setVisible(False)
+        self.Blue8.setVisible(True)
+        MCSL2Logger("ChangeCurrentVersionLabel", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        self.CurrentVersionLabel.setText(f"当前版本：{Version}")
     def ToChooseServerPage(self):
         global GlobalServerList
         global LogFilesCount
@@ -911,7 +946,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.Select_PushButton.clicked.connect(lambda: self.ParseSrollAreaItemButtons())
 
             self.ChooseJavaScrollAreaVerticalLayout.addWidget(self.MCSL2_SubWidget_Select)
-
+    
     def InitSelectServerSubWidget(self, ServerCount, ServerInfoJSON):
         global LogFilesCount
         for i in reversed(range(self.ChooseServerScrollAreaVerticalLayout.count())):
@@ -1064,7 +1099,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         MCSL2Logger("GetNotice", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Notice_Label.setText(f"——————公告——————\n{str(Updater(Version).GetNoticeText())}")
 
-
+    
 if __name__ == '__main__':
     JavaPath = 0
     LogFilesCount = 0

@@ -292,6 +292,38 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Page_PushButton.setChecked(False)
         self.About_Page_PushButton.setAutoExclusive(False)
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
+
+
+        self.Plugin_Page_PushButton = QPushButton(self.OptionsWidget)
+        self.Plugin_Page_PushButton.setEnabled(True)
+        self.Plugin_Page_PushButton.setGeometry(QRect(20, 510, 171, 41))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(13)
+        self.Plugin_Page_PushButton.setFont(font)
+        self.Plugin_Page_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Plugin_Page_PushButton.setStyleSheet("QPushButton\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(255, 255, 255);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}\n"
+                                                 "QPushButton:hover\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(243, 243, 243);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}\n"
+                                                 "QPushButton:pressed\n"
+                                                 "{\n"
+                                                 "    text-align: left;\n"
+                                                 "    background-color: rgb(233, 233, 233);\n"
+                                                 "    border-radius: 7px;\n"
+                                                 "}")
+        self.Plugin_Page_PushButton.setCheckable(False)
+        self.Plugin_Page_PushButton.setChecked(False)
+        self.Plugin_Page_PushButton.setAutoExclusive(False)
+        self.Plugin_Page_PushButton.setObjectName("Plugin_Page_PushButton")
         self.Blue1 = QLabel(self.OptionsWidget)
         self.Blue1.setEnabled(True)
         self.Blue1.setVisible(True)
@@ -406,6 +438,25 @@ class Ui_MCSL2_MainWindow(object):
         )
         self.Blue6.setText("")
         self.Blue6.setObjectName("Blue6")
+        self.Blue8 = QLabel(self.OptionsWidget)
+        self.Blue8.setEnabled(True)
+        self.Blue8.setVisible(False)
+        self.Blue8.setGeometry(QRect(45, 540, 10, 21))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(12)
+        self.Blue8.setFont(font)
+        self.Blue8.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Blue8.setAutoFillBackground(False)
+        self.Blue8.setStyleSheet(
+            "QLabel\n"
+            "{\n"
+            "    background-color: rgb(0, 120, 212);\n"
+            "    border-radius: 10px\n"
+            "}"
+        )
+        self.Blue8.setText("")
+        self.Blue8.setObjectName("Blue8")
         self.FunctionsStackedWidget = QStackedWidget(self.CentralWidget)
         self.FunctionsStackedWidget.setGeometry(QRect(210, -10, 731, 601))
         self.FunctionsStackedWidget.setAutoFillBackground(False)
@@ -3601,21 +3652,21 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.TransparentSetting.setFont(font)
         self.TransparentSetting.setObjectName("TransparentSetting")
-        self.DarkMode = QLabel(self.UISettingsWidget)
-        self.DarkMode.setGeometry(QRect(30, 143, 171, 21))
+        self.ThemeMode = QLabel(self.UISettingsWidget)
+        self.ThemeMode.setGeometry(QRect(30, 143, 171, 21))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
-        self.DarkMode.setFont(font)
-        self.DarkMode.setObjectName("DarkMode")
-        self.DarkModeComboBox = QComboBox(self.UISettingsWidget)
-        self.DarkModeComboBox.setGeometry(QRect(470, 144, 121, 31))
+        self.ThemeMode.setFont(font)
+        self.ThemeMode.setObjectName("ThemeMode")
+        self.ThemeModeComboBox = QComboBox(self.UISettingsWidget)
+        self.ThemeModeComboBox.setGeometry(QRect(470, 144, 121, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
         font.setKerning(True)
-        self.DarkModeComboBox.setFont(font)
-        self.DarkModeComboBox.setStyleSheet("QComboBox {\n"
+        self.ThemeModeComboBox.setFont(font)
+        self.ThemeModeComboBox.setStyleSheet("QComboBox {\n"
                                             "    border: 1px solid rgb(238, 239, 238);\n"
                                             "    border-radius: 5px;\n"
                                             "    border-bottom: 1px solid rgb(212, 213, 212);\n"
@@ -3672,12 +3723,12 @@ class Ui_MCSL2_MainWindow(object):
                                             "    background-color: rgba(0, 0, 0, 0.06);\n"
                                             "    color: rgba(0, 0, 0, 0.7);\n"
                                             "}")
-        self.DarkModeComboBox.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
-        self.DarkModeComboBox.setFrame(True)
-        self.DarkModeComboBox.setObjectName("DarkModeComboBox")
-        self.DarkModeComboBox.addItem("")
-        self.DarkModeComboBox.addItem("")
-        self.DarkModeComboBox.addItem("")
+        self.ThemeModeComboBox.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
+        self.ThemeModeComboBox.setFrame(True)
+        self.ThemeModeComboBox.setObjectName("ThemeModeComboBox")
+        self.ThemeModeComboBox.addItem("")
+        self.ThemeModeComboBox.addItem("")
+        self.ThemeModeComboBox.addItem("")
         self.ExchangeButton = QCheckBox(self.UISettingsWidget)
         self.ExchangeButton.setGeometry(QRect(30, 100, 261, 31))
         font = QFont()
@@ -4630,6 +4681,15 @@ class Ui_MCSL2_MainWindow(object):
         self.OptionsWidget.raise_()
         self.FunctionsStackedWidget.raise_()
         MCSL2_MainWindow.setCentralWidget(self.CentralWidget)
+        self.PluginPage = QWidget()
+
+        self.PluginPage.setObjectName("HomePage")
+        self.Plugin_Label = QLabel(self.HomePage)
+        self.Plugin_Label.setGeometry(QRect(30, 80, 71, 51))
+
+
+
+
         self.retranslateUi(MCSL2_MainWindow)
         self.FunctionsStackedWidget.setCurrentIndex(0)
         self.ConfigModeWidget.setCurrentIndex(0)
@@ -4637,7 +4697,8 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
         self.Aria2ThreadCountComboBox.setCurrentIndex(3)
         self.ConsoleInputDecodingComboBox.setCurrentIndex(0)
-        self.DarkModeComboBox.setCurrentIndex(0)
+        self.ThemeModeComboBox.setCurrentIndex(0)
+  
         QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -4651,6 +4712,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Server_Console_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     终端"))
         self.Tools_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     工具"))
         self.About_Page_PushButton.setText(_translate("MCSL2_MainWindow", "     更多"))
+        self.Plugin_Page_PushButton.setText(_translate('MCSL2_MainWindow', "     插件"))
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
         self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "如何搭建一个Java版Minecraft服务器？\n"
@@ -4776,10 +4838,10 @@ class Ui_MCSL2_MainWindow(object):
         self.EnableQuickMenu.setText(_translate("MCSL2_MainWindow", "启用快捷菜单"))
         self.UISettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "界面设置"))
         self.TransparentSetting.setText(_translate("MCSL2_MainWindow", "背景透明度"))
-        self.DarkMode.setText(_translate("MCSL2_MainWindow", "深色模式"))
-        self.DarkModeComboBox.setItemText(0, _translate("MCSL2_MainWindow", "浅色"))
-        self.DarkModeComboBox.setItemText(1, _translate("MCSL2_MainWindow", "深色"))
-        self.DarkModeComboBox.setItemText(2, _translate("MCSL2_MainWindow", "跟随系统"))
+        self.ThemeMode.setText(_translate("MCSL2_MainWindow", "主题颜色"))
+        self.ThemeModeComboBox.setItemText(0, _translate("MCSL2_MainWindow", "浅色"))
+        self.ThemeModeComboBox.setItemText(1, _translate("MCSL2_MainWindow", "深色"))
+        self.ThemeModeComboBox.setItemText(2, _translate("MCSL2_MainWindow", "跟随系统"))
         self.ExchangeButton.setText(_translate("MCSL2_MainWindow", "交换窗口最小化和关闭按钮顺序"))
         self.TransparentPercentNum.setText(_translate("MCSL2_MainWindow", "--%"))
         self.AlwaysRunAsAdministrator.setText(_translate("MCSL2_MainWindow", "总以管理员身份运行"))

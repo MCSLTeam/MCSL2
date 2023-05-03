@@ -33,7 +33,7 @@ def InitMCSL():
                 "console_input_decoding": "follow",
                 "background_transparency": 55,
                 "exchange_window_controlling_buttons": False,
-                "darkmode": "light",
+                "thememode": "light",
                 "start_on_startup": False,
                 "always_run_as_administrator": False,
                 "last_update_time": "unknown"
