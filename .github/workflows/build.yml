@@ -100,9 +100,15 @@ jobs:
       - name: Fix App Bundle on macOS
         if: runner.os == 'macOS'
         run: |
-          mkdir build/MCSL2.app/Contents/Resources
-          rm build/MCSL2.app/Contents/_CodeSignature/*
-          rmdir build/MCSL2.app/Contents/_CodeSignature
+          cd build
+          cd MCSL2.app
+          cd Contents
+          mkdir Resources
+          rm _CodeSignature/*
+          rmdir _CodeSignature
+          cd ..
+          cd ..
+          cd ..
           cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
           cp Info.plist build/MCSL2.app/Contents
           DIR=$(dirname "$0")
