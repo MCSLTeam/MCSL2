@@ -100,18 +100,10 @@ jobs:
       - name: Fix App Bundle on macOS
         if: runner.os == 'macOS'
         run: |
-          plutil -replace CFBundleName -string "MCSL2" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleDisplayName -string "MCSL2" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleIdentifier -string "com.lxhtt.mcsl2" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleVersion -string "2.1.3" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleShortVersionString -string "2.1.3" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleIconFile -string "MCSL2.icns" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleGetInfoString -string "MC Server Launcher 2" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleDeveloperName -string "LxHTT" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleContactEmail -string "lxhtz.dl@qq.com" MCSL2.app/Contents/Info.plist
-          plutil -replace CFBundleCopyright -string "Copyright ¬© 2022-2023, LxHTT.,All Rights Reserved." MCSL2.app/Contents/Info.plist
-          plutil -replace LSMinimumSystemVersion -string "10.15" MCSL2.app/Contents/Info.plist
+          mkdir MCSL2.app/Contents/Resources
+          rm MCSL2.app/Contents/_CodeSignature
           cp MCSL2.icns MCSL2.app/Contents/Resources/MCSL2.icns
+          cp Info.plist MCSL2.app/Contents
           DIR=$(dirname "$0")
           "$DIR/MCSL2" "$@"
           chmod +x MCSL2.app/Contents/MacOS/MCSL2.sh

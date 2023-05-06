@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>CFBundleGetInfoString</key>
+        <string>MCServerLauncher2</string>
+
+        <key>CFBundleDeveloperName</key>
+        <string>LxHTT</string>
+
+        <key>CFBundleContactEmail</key>
+        <string>lxhtz.dl@qq.com</string>
+
+        <key>CFBundleDisplayName</key>
+        <string>MCSL2</string>
+
+        <key>CFBundleExecutable</key>
+        <string>MCSL2</string>
+
+        <key>CFBundleIconFile</key>
+        <string>MCSL2.icns</string>
+
+        <key>CFBundleIdentifier</key>
+        <string>com.lxhtt.mcsl2</string>
+
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+
+        <key>CFBundleName</key>
+        <string>MCSL2</string>
+
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+
+        <key>CFBundleShortVersionString</key>
+        <string>2.1.3</string>
+
+        <key>CFBundleVersion</key>
+        <string>2.1.3</string>
+
+        <key>LSApplicationCategoryType</key>
+        <string>public.app-category.productivity</string>
+
+        <key>LSMinimumSystemVersion</key>
+        <string>10.15</string>
+
+        <key>NSHumanReadableCopyright</key>
+        <string>Copyright © 2023 LxHTT</string>
+
+        <key>NSQuitAlwaysKeepsWindows</key>
+        <true/>
+
+        <key>NSRequiresAquaSystemAppearance</key>
+        <false/>
+
+        <key>NSSupportsAutomaticGraphicsSwitching</key>
+        <true/>
+
+    </dict>
+</plist>
