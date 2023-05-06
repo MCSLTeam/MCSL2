@@ -58,8 +58,8 @@ jobs:
           --linux-icon=MCSL2.ico
           --company-name="LxHTT"
           --product-name="MCSL 2"
-          --file-version=2.0.0
-          --product-version=2.0.0
+          --file-version=2.1.3
+          --product-version=2.1.3
           --file-description="MC Server Launcher 2"
           MCSL2.py
 
@@ -74,8 +74,8 @@ jobs:
           --output-dir=build
           --assume-yes-for-download
           --disable-console
-          --macos-app-version=2.0
-          --macos-app-icon=MCSL2.ico
+          --macos-app-version=2.1.3
+          --macos-app-icon=MCSL2.icns
           MCSL2.py
 
       - name: Build on Windows
@@ -92,10 +92,29 @@ jobs:
           --windows-icon-from-ico=MCSL2.ico
           --windows-company-name="LxHTT"
           --windows-product-name="MCSL 2"
-          --windows-file-version=2.0.0
-          --windows-product-version=2.0.0
+          --windows-file-version=2.1.3
+          --windows-product-version=2.1.3
           --windows-file-description="MC Server Launcher 2"
           MCSL2.py
+
+      - name: Fix App Bundle on macOS
+        if: runner.os == 'macOS'
+        run: |
+          plutil -replace CFBundleName -string "MCSL2" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleDisplayName -string "MCSL2" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleIdentifier -string "com.lxhtt.mcsl2" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleVersion -string "2.1.3" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleShortVersionString -string "2.1.3" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleIconFile -string "MCSL2.icns" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleGetInfoString -string "MC Server Launcher 2" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleDeveloperName -string "LxHTT" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleContactEmail -string "lxhtz.dl@qq.com" MCSL2.app/Contents/Info.plist
+          plutil -replace CFBundleCopyright -string "Copyright ¬© 2022-2023, LxHTT.,All Rights Reserved." MCSL2.app/Contents/Info.plist
+          plutil -replace LSMinimumSystemVersion -string "10.15" MCSL2.app/Contents/Info.plist
+          cp MCSL2.icns MCSL2.app/Contents/Resources/MCSL2.icns
+          DIR=$(dirname "$0")
+          "$DIR/MCSL2" "$@"
+          chmod +x MCSL2.app/Contents/MacOS/MCSL2.sh
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -131,8 +150,8 @@ jobs:
 
       - name: Get Time
         run: |
-          echo "TAG_TIME=$(date +"%Y-%m-%d-%H-%M")" >> $GITHUB_ENV
-          echo "DISPLAY_TIME=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+          echo "TAG_TIME=$(date +"v%y.%m.%d-%H%M")" >> $GITHUB_ENV
+          echo "DISPLAY_TIME=$(date +"v%y.%m.%d-%H%M")" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: 'marvinpinto/action-automatic-releases@latest'
@@ -140,5 +159,5 @@ jobs:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           automatic_release_tag: ${{ env.TAG_TIME }}
           prerelease: true
-          title: AutoRelease ${{ env.DISPLAY_TIME }}
+          title: MCSL2 ${{ env.DISPLAY_TIME }}
           files: '*.zip'
