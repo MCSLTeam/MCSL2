@@ -5,7 +5,7 @@ on: [push, workflow_dispatch]
 permissions: write-all
 
 jobs:
-  build:
+  BuildApps:
     strategy:
       fail-fast: false
 
@@ -125,11 +125,11 @@ jobs:
             build/*.bin
             build/*.app/**/*
 
-  release:
+  CreateRelease:
     runs-on: ubuntu-latest
 
     needs:
-      - build
+      - BuildApps
 
     steps:
       - uses: szenius/set-timezone@v1.0
