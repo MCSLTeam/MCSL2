@@ -101,7 +101,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           cd build
-          cd MCSL2.app
+          cd "MCSL2.app"
           cd Contents
           mkdir Resources
           rm _CodeSignature/*
