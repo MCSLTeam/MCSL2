@@ -141,6 +141,8 @@ jobs:
       # 偷懒，签出仓库拿一下 ChangeLog
       - name: Check-out repository
         uses: actions/checkout@v3
+        with:
+          path: repo
 
       - name: Get Time
         run: |
@@ -149,7 +151,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: ./ChangeLog.md
+          body_path: ./repo/ChangeLog.md
           prerelease: true
           draft: false
           tag_name: ${{ env.TAG_TIME }}
