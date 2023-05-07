@@ -145,7 +145,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: ./.github/ChangeLog.md
+          body_path: ChangeLog.md
           prerelease: true
           draft: false
           tag_name: ${{ env.TAG_TIME }}
