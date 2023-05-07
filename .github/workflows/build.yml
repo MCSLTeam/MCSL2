@@ -100,14 +100,10 @@ jobs:
       - name: Fix App Bundle on macOS
         if: runner.os == 'macOS'
         run: |
-          cd build/MCSL2.app/Contents
-          mkdir Resources
-          rm -r _CodeSignature
-          cd ..
-          cd ..
-          cd ..
+          rm -r build/MCSL2.app/Contents/_CodeSignature
+          mkdir build/MCSL2.app/Contents/Resources
           cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
-          cp Info.plist build/MCSL2.app/Contents
+          cp Info.plist build/MCSL2.app/Contents/Resources
           chmod +x build/MCSL2.app/Contents/MacOS/MCSL2
 
       - name: Upload Artifacts
