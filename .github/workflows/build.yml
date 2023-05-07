@@ -155,6 +155,12 @@ jobs:
           prerelease: true
           draft: false
           tag_name: ${{ env.TAG_TIME }}
-          files: '*.zip'
+          files: |
+            MCSL2-Linux-x64.zip
+            MCSL2-Linux-x86.zip
+            MCSL2-Windows-x64.zip
+            MCSL2-Windows-x86.zip
+            MCSL2-macOS-x64.zip
+            MCSL2-macOS-x86.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
