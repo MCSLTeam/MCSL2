@@ -108,9 +108,7 @@ jobs:
           cd ..
           cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
           cp Info.plist build/MCSL2.app/Contents
-          DIR=$(dirname "$0")
-          "$DIR/MCSL2" "$@"
-          chmod +x build/MCSL2.app/Contents/MacOS/MCSL2.sh
+          chmod +x build/MCSL2.app/Contents/MacOS/MCSL2
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
