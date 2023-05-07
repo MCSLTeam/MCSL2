@@ -13,11 +13,16 @@ ___
 </div>
 
 ___
-[![](https://img.shields.io/github/license/LxHTT/MCSL2 "开源协议")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
-[![](https://img.shields.io/github/stars/LxHTT/MCSL2 "Star")](https://github.com/LxHTT/MCSL2/stargazers)
-[![](https://img.shields.io/github/forks/LxHTT/MCSL2 "Fork")](https://github.com/LxHTT/MCSL2/forks)
-
-![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repobeats analytics image")
+[![](https://img.shields.io/github/license/LxHTT/MCSL2?style=for-the-badge "License")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
+[![](https://img.shields.io/github/stars/LxHTT/MCSL2?style=for-the-badge "Star")](https://github.com/LxHTT/MCSL2/stargazers)
+[![](https://img.shields.io/github/forks/LxHTT/MCSL2?style=for-the-badge "Fork")](https://github.com/LxHTT/MCSL2/forks)
+[![](https://img.shields.io/github/actions/workflow/status/LxHTT/MCSL2/build.yml?label=Build&style=for-the-badge "Actions")](https://github.com/LxHTT/MCSL2/actions)  
+[![](https://img.shields.io/github/downloads/LxHTT/MCSL2/total?style=for-the-badge "Downloads")](https://github.com/LxHTT/MCSL2/releases)
+[![](https://img.shields.io/github/v/tag/LxHTT/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/LxHTT/MCSL2/releases/latest)
+[![](https://img.shields.io/github/issues/LxHTT/MCSL2?style=for-the-badge "Issues")](https://github.com/LxHTT/MCSL2/issues)  
+[![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.netlify.app)
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtz.dl%40qq.com-%2357728B?style=for-the-badge)](mailto:lxhtz.dl@qq.com)  
+![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repo Analysis")
 ___
 ### What can MCSL2 do? 
 ~~Can help you very easily open a Minecraft: Java Edition game server.~~ XD
@@ -28,6 +33,11 @@ ___
  - **⚡ Quickly configure a server**: A few options to quickly configure a new server!
  - **✅ Automatic find Java**: Tired of manually flipping through directories? Automatically find Java can help you solve it!
  - **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful!
+___
+### Used open-source project
+[![](https://img.shields.io/badge/python-3.8.0-blue.svg?style=for-the-badge "Python")](https://python.org)
+[![](https://img.shields.io/badge/pyqt5-5.15.9-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
+[![](https://img.shields.io/badge/nuitka-1.5.6-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
 ___
 ### Related link
 MCSL 2 Official Website:[https://mcsl.netlify.app](https://mcsl.netlify.app)  
@@ -62,4 +72,4 @@ or
 ```commandline
 pip3 install -r requirements.txt
 ```
-### ~~Give up~~ **start programming**
+### ~~Give up~~ **Start programming**

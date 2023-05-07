@@ -12,11 +12,16 @@ ___
 </div>
 
 ___
-[![](https://img.shields.io/github/license/LxHTT/MCSL2 "开源协议")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
-[![](https://img.shields.io/github/stars/LxHTT/MCSL2 "Star")](https://github.com/LxHTT/MCSL2/stargazers)
-[![](https://img.shields.io/github/forks/LxHTT/MCSL2 "Fork")](https://github.com/LxHTT/MCSL2/forks)
-
-![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "仓库分析")
+[![](https://img.shields.io/github/license/LxHTT/MCSL2?style=for-the-badge "License")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
+[![](https://img.shields.io/github/stars/LxHTT/MCSL2?style=for-the-badge "Star")](https://github.com/LxHTT/MCSL2/stargazers)
+[![](https://img.shields.io/github/forks/LxHTT/MCSL2?style=for-the-badge "Fork")](https://github.com/LxHTT/MCSL2/forks)
+[![](https://img.shields.io/github/actions/workflow/status/LxHTT/MCSL2/build.yml?label=Build&style=for-the-badge "Actions")](https://github.com/LxHTT/MCSL2/actions)  
+[![](https://img.shields.io/github/downloads/LxHTT/MCSL2/total?style=for-the-badge "Downloads")](https://github.com/LxHTT/MCSL2/releases)
+[![](https://img.shields.io/github/v/tag/LxHTT/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/LxHTT/MCSL2/releases/latest)
+[![](https://img.shields.io/github/issues/LxHTT/MCSL2?style=for-the-badge "Issues")](https://github.com/LxHTT/MCSL2/issues)  
+[![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.netlify.app)
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtz.dl%40qq.com-%2357728B?style=for-the-badge)](mailto:lxhtz.dl@qq.com)  
+![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repo Analysis")
 ___
 ### 他能干什么？  
 ~~可以帮助你非常方便的开启一个Java版Minecraft服务器。（废话文学~~
@@ -28,18 +33,22 @@ ___
  - **✅ 自动查找Java**： 厌倦了手动翻目录？自动查找Java帮你解决！
  - **🔧 拓展工具系统**： 使用各种拓展工具，让你的MCSL2更加强大！
 ___
+### 用到的开源项目
+[![](https://img.shields.io/badge/python-3.8.0-blue.svg?style=for-the-badge "Python")](https://python.org)
+[![](https://img.shields.io/badge/pyqt5-5.15.9-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
+[![](https://img.shields.io/badge/nuitka-1.5.6-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
+___
 ### 相关链接
 MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)  
 MCSL 2 API官网：[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
 GitHub Issue：[https://github.com/LxHTT/MCSL2/issues](https://github.com/LxHTT/MCSL2/issues)  
 QQ官方群聊：[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
-作者邮箱：[mailto:lxhtz.dl@qq.com](mailto:lxhtz.dl@qq.com)  
 GPLv3开源协议：[https://github.com/LxHTT/MCSL2/blob/master/LICENSE](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
 ___
 ### 鸣谢
 
 - [Luoxis 云存储](https://www.df100.ltd) 来自于 **星姮十织**
-- [ZCloud](https://ztsin.cn/) 来自于 **Z_Tsin**
+- [ZCloud](https://ztsin.cn/) 来自于 **Z_Tsin**  
 
 还有所有的贡献者们！  
 
