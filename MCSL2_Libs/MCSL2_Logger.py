@@ -141,3 +141,5 @@ class LoggerMsg:
         self.ToUpdatePage = "FunctionsStackedWidget切换至UpdatePage"
         self.GetNotice = "获取公告中..."
         self.ChangeConfig = "改变设置："
+        self.NoNewVersionAvailable = "已是最新版！"
+        self.CheckUpdateFailed = "检查更新失败！"
