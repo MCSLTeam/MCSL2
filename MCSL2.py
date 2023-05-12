@@ -1,4 +1,4 @@
-import platform
+from platform import uname
 from json import dump
 from os import getcwd, environ, remove, path as ospath
 from subprocess import CalledProcessError
@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import (
 )
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
+from MCSL2_Libs.IndeterminateProgressBar import IndeterminateProgressBar
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
@@ -46,8 +47,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.setAutoFillBackground(True)
         self.setupUi(self)
         MCSL2Logger("InitUI", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
-        ShowLastUpdateTime = MCSL2Settings().GetConfig(Type="LastUpdateTime")
-        self.LastUpdateTime.setText(f"最后一次检查更新时间：{ShowLastUpdateTime}")
         self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
         self.Home_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Home.svg"))
         self.Config_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Configuration.svg"))
@@ -167,7 +166,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
         self.ExchangeButton.clicked.connect(lambda: self.CheckBoxSettingsChanger("ExchangeWindowControllingButtons"))
         self.DarkModeComboBox.currentIndexChanged.connect(
-            lambda: self.ComboBoxSettingChanger("DarkMode", self.DarkModeComboBox.currentIndex()))
+            lambda: self.ComboBoxSettingChanger("ThemeMode", self.DarkModeComboBox.currentIndex()))
         self.StartOnStartup.clicked.connect(lambda: self.CheckBoxSettingsChanger("StartOnStartup"))
         self.AlwaysRunAsAdministrator.clicked.connect(lambda: self.CheckBoxSettingsChanger("AlwaysRunAsAdministrator"))
         self.UpdatePushButton.clicked.connect(self.CheckUpdate)
@@ -198,7 +197,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             ComboBoxAttr = ["utf-8", "gbk"]
         elif Type == "ConsoleInputDecoding":
             ComboBoxAttr = ["follow", "utf-8", "gbk"]
-        elif Type == "DarkMode":
+        elif Type == "ThemeMode":
             ComboBoxAttr = ["light", "dark", "system"]
         else:
             pass
@@ -215,6 +214,41 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                     MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         MCSL2Settings().ChangeConfig(Type="SaveSameFileException", Arg=Arg)
 
+    def InitSettingUI(self):
+        self.AutoRunLastServerSetting.setChecked(MCSL2Settings().AutoRunLastServer)
+        self.AcceptAllMojangEULASetting.setChecked(MCSL2Settings().AcceptAllMojangEula)
+        self.StopServerSettings.setChecked(MCSL2Settings().SendStopInsteadOfKill)
+        HowToAddServerComboBoxAttr = ["Default", "Noob", "Extended"]
+        self.HowToAddServerComboBox.setCurrentIndex(HowToAddServerComboBoxAttr.index(MCSL2Settings().AddServerMode))
+        self.OnlySaveGlobalServerConfigs.setChecked(MCSL2Settings().OnlySaveGlobalServerConfig)
+        MCSLAPIDownloadSourceAttr = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
+        self.MCSLAPIDownloadSourceComboBox.setCurrentIndex(MCSLAPIDownloadSourceAttr.index(MCSL2Settings().MCSLAPIDownloadSource))
+        Aria2ThreadAttr = ["1", "2", "4", "8", "16"]
+        self.Aria2ThreadCountComboBox.setCurrentIndex(Aria2ThreadAttr.index(MCSL2Settings().Aria2Thread))
+        self.AlwaysAskDownloadPath.setChecked(MCSL2Settings().AlwaysAskSaveDirectory)
+        if MCSL2Settings().SaveSameFileException == "ask":
+            self.SameFileExceptionAsk.setChecked(True)
+            self.SameFileExceptionReWrite.setChecked(False)
+            self.SameFileExceptionStop.setChecked(False)
+        elif MCSL2Settings().SaveSameFileException == "rewrite":
+            self.SameFileExceptionAsk.setChecked(False)
+            self.SameFileExceptionReWrite.setChecked(True)
+            self.SameFileExceptionStop.setChecked(False)
+        elif MCSL2Settings().SaveSameFileException == "stop":
+            self.SameFileExceptionAsk.setChecked(False)
+            self.SameFileExceptionReWrite.setChecked(False)
+            self.SameFileExceptionStop.setChecked(True)
+        self.EnableQuickMenu.setChecked(MCSL2Settings().EnableConsoleQuickMenu)
+        ConsoleOutputEncodingAttr = ["utf-8", "gbk"]
+        self.ConsoleOutputEncodingComboBox.setCurrentIndex(ConsoleOutputEncodingAttr.index(MCSL2Settings().ConsoleOutputEncoding))
+        ConsoleInputDecodingAttr = ["follow", "utf-8", "gbk"]
+        self.ConsoleInputDecodingComboBox.setCurrentIndex(ConsoleInputDecodingAttr.index(MCSL2Settings().ConsoleInputDecoding))
+        self.TransparentPercentSlider.setValue(MCSL2Settings().BackgroundTransparency)
+        self.ExchangeButton.setChecked(MCSL2Settings().ExchangeWindowControllingButtons)
+        ThemeModeAttr = ["light", "dark", "system"]
+        self.DarkModeComboBox.setCurrentIndex(ThemeModeAttr.index(MCSL2Settings().ThemeMode))
+        self.StartOnStartup.setChecked(MCSL2Settings().StartOnStartup)
+        self.AlwaysRunAsAdministrator.setChecked(MCSL2Settings().AlwaysRunAsAdministrator)
 
     def TransparentPercentChanger(self):
         global LogFilesCount
@@ -353,6 +387,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def ToAboutPage(self):
         global LogFilesCount
+        self.InitSettingUI()
+        ShowLastUpdateTime = MCSL2Settings().GetConfig(Type="LastUpdateTime")
+        self.LastUpdateTime.setText(f"最后一次检查更新时间：{ShowLastUpdateTime}")
         MCSL2Logger("ToSettingsPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.FunctionsStackedWidget.setCurrentIndex(5)
         MCSL2Logger("RefreshBlue", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
@@ -388,8 +425,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 OtherTextArg=None,
                 isNeededTwoButtons=1, ButtonArg="添加|取消")
             if ReturnNum == 1:
-                MCSL2Logger("ToChooseServerPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
-                MCSL2Logger("TryToGetGlobalServerList", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
                 self.ToConfigPage()
                 QApplication.processEvents()
             else:
@@ -413,8 +448,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 OtherTextArg=None,
                 isNeededTwoButtons=1, ButtonArg="添加|取消")
             if ReturnNum == 1:
-                MCSL2Logger("ToChooseServerPage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
-                MCSL2Logger("TryToGetGlobalServerList", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
                 self.ToConfigPage()
                 QApplication.processEvents()
             else:
@@ -681,6 +714,33 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.InitDownloadSubWidget(self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'])
             # self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
         else:
+            idx = self.DownloadSwitcher_TabWidget.currentIndex()
+            self.RefreshingTip = QLabel()
+            self.RefreshingTip.setGeometry(QRect(30, 80, 221, 51))
+            font = QFont()
+            font.setFamily("Microsoft YaHei UI")
+            font.setPointSize(16)
+            font.setWeight(75)
+            self.RefreshingTip.setFont(font)
+            self.RefreshingTip.setObjectName("RefreshingTip")
+            self.RefreshingTip.setText("加载中\n\n")
+            if idx == 0:
+                self.JavaVerticalLayout.addWidget(self.RefreshingTip)
+                self.JavaVerticalLayout.addWidget(IndeterminateProgressBar(self))
+            elif idx == 1:
+                self.SpigotVerticalLayout.addWidget(self.RefreshingTip)
+                self.SpigotVerticalLayout.addWidget(IndeterminateProgressBar(self))
+            elif idx == 2:
+                self.PaperVerticalLayout.addWidget(self.RefreshingTip)
+                self.PaperVerticalLayout.addWidget(IndeterminateProgressBar(self))
+            elif idx == 3:
+                self.BCVerticalLayout.addWidget(self.RefreshingTip)
+                self.BCVerticalLayout.addWidget(IndeterminateProgressBar(self))
+            elif idx == 4:
+                self.OfficialCoreVerticalLayout.addWidget(self.RefreshingTip)
+                self.OfficialCoreVerticalLayout.addWidget(IndeterminateProgressBar(self))
+            else:
+                pass
             MCSL2Logger("StartRefreshDownloadType", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
             workThread = self.fetchDownloadURLThreadFactory.create(
                 downloadSrc=DownloadSource,
@@ -1045,19 +1105,21 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         MCSL2Logger("CheckUpdate", MsgArg=f"当前版本{Version}", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
             MCSL2Logger("NewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
-                                                                                                                  "").replace(
-                "\'", "").split(",")
-            MCSL2Logger("UpdateContent", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
+            MCSL2Logger("UpdateContent", MsgArg=f"{LatestVersionInformation[1]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
             self.Update_Introduction_Title_Label.setText("这是最新版本 v" + LatestVersionInformation[0] + "的说明：")
             self.Update_Introduction_Label.setText(str(LatestVersionInformation[1]).replace("\\n", "\n"))
             MCSL2Logger("ToUpdatePage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             self.FunctionsStackedWidget.setCurrentIndex(8)
+        elif LatestVersionInformation[0] == 0:
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
+            MCSL2Logger("NoNewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
+                        LogFilesCount=LogFilesCount).Log()
         else:
-            pass
+            MCSL2Logger("CheckUpdateFailed", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
 
     def GetNotice(self):
         global LogFilesCount
@@ -1124,7 +1186,7 @@ if __name__ == '__main__':
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    SysType = platform.uname()[0]
+    SysType = uname()[0]
     if SysType == "Linux":
         environ["QT_QPA_PLATFORM"] = "wayland"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
