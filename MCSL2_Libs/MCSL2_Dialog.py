@@ -1,12 +1,19 @@
-from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt, QSize
 from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
-from PyQt5.QtWidgets import QLabel, QPushButton, QDialog
+from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QSpacerItem, QSizePolicy, QHBoxLayout, QWidget, QGridLayout
 
 
 class Ui_MCSL2_Dialog(object):
     def setupUi(self, MCSL2_Dialog):
         MCSL2_Dialog.setObjectName("MCSL2_Dialog")
         MCSL2_Dialog.setFixedSize(413, 242)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MCSL2_Dialog.sizePolicy().hasHeightForWidth())
+        MCSL2_Dialog.setSizePolicy(sizePolicy)
+        MCSL2_Dialog.setMinimumSize(QSize(413, 260))
+        MCSL2_Dialog.setMaximumSize(QSize(413, 16777215))
         MCSLWindowIcon = QIcon()
         MCSLWindowIcon.addPixmap(
             QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Normal, QIcon.Off
@@ -33,6 +40,84 @@ class Ui_MCSL2_Dialog(object):
             QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Selected, QIcon.On
         )
         MCSL2_Dialog.setWindowIcon(MCSLWindowIcon)
+        MCSL2_Dialog.setStyleSheet("QDialog\n"
+                                   "{\n"
+                                   "    background-color: rgba(247, 247, 247,85%);\n"
+                                   "}")
+        self.gridLayout = QGridLayout(MCSL2_Dialog)
+        self.gridLayout.setObjectName("gridLayout")
+        self.Dialog_label = QLabel(MCSL2_Dialog)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Dialog_label.sizePolicy().hasHeightForWidth())
+        self.Dialog_label.setSizePolicy(sizePolicy)
+        self.Dialog_label.setMinimumSize(QSize(351, 151))
+        self.Dialog_label.setMaximumSize(QSize(351, 16777215))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(11)
+        self.Dialog_label.setFont(font)
+        self.Dialog_label.setStyleSheet("QLabel\n"
+                                        "{\n"
+                                        "    background-color: rgb(255, 255, 255);\n"
+                                        "    border-radius: 10px\n"
+                                        "}")
+        self.Dialog_label.setText("")
+        self.Dialog_label.setAlignment(Qt.AlignCenter)
+        self.Dialog_label.setObjectName("Dialog_label")
+        self.gridLayout.addWidget(self.Dialog_label, 1, 1, 1, 1)
+        spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 1, 2, 1, 1)
+        spacerItem1 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 0, 1, 1, 1)
+        self.Dialog_PushButton = QPushButton(MCSL2_Dialog)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Dialog_PushButton.sizePolicy().hasHeightForWidth())
+        self.Dialog_PushButton.setSizePolicy(sizePolicy)
+        self.Dialog_PushButton.setMinimumSize(QSize(351, 31))
+        self.Dialog_PushButton.setMaximumSize(QSize(351, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Dialog_PushButton.setFont(font)
+        self.Dialog_PushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Dialog_PushButton.setStyleSheet("QPushButton\n"
+                                             "{\n"
+                                             "    background-color: rgb(0, 120, 212);\n"
+                                             "    border-radius: 7px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
+                                             "}\n"
+                                             "QPushButton:hover\n"
+                                             "{\n"
+                                             "    background-color: rgb(0, 110, 212);\n"
+                                             "    border-radius: 7px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
+                                             "}\n"
+                                             "QPushButton:pressed\n"
+                                             "{\n"
+                                             "    background-color: rgb(0, 100, 212);\n"
+                                             "    border-radius: 7px;\n"
+                                             "    color: rgb(255, 255, 255);\n"
+                                             "}")
+        self.Dialog_PushButton.setObjectName("Dialog_PushButton")
+        self.gridLayout.addWidget(self.Dialog_PushButton, 3, 1, 1, 1)
+        spacerItem2 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem2, 2, 1, 1, 1)
+        spacerItem3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem3, 1, 0, 1, 1)
+        spacerItem4 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem4, 4, 1, 1, 1)
+
+        self.retranslateUi(MCSL2_Dialog)
+        QMetaObject.connectSlotsByName(MCSL2_Dialog)
+
+    def retranslateUi(self, MCSL2_Dialog):
+        _translate = QCoreApplication.translate
+        MCSL2_Dialog.setWindowTitle(_translate("MCSL2_Dialog", "提示"))
+        self.Dialog_PushButton.setText(_translate("MCSL2_Dialog", "知道了"))
         self.Dialog_PushButton = QPushButton(MCSL2_Dialog)
         self.Dialog_PushButton.setGeometry(QRect(160, 190, 91, 31))
         font = QFont()
@@ -102,6 +187,13 @@ class Ui_MCSL2_AskDialog(object):
     def setupUi(self, MCSL2_AskDialog):
         MCSL2_AskDialog.setObjectName("MCSL2_AskDialog")
         MCSL2_AskDialog.setFixedSize(413, 242)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MCSL2_AskDialog.sizePolicy().hasHeightForWidth())
+        MCSL2_AskDialog.setSizePolicy(sizePolicy)
+        MCSL2_AskDialog.setMinimumSize(QSize(413, 260))
+        MCSL2_AskDialog.setMaximumSize(QSize(413, 16777215))
         MCSLWindowIcon = QIcon()
         MCSLWindowIcon.addPixmap(
             QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Normal, QIcon.Off
@@ -128,95 +220,125 @@ class Ui_MCSL2_AskDialog(object):
             QPixmap(":/MCSL2_Icon/MCSL2_Icon.png"), QIcon.Selected, QIcon.On
         )
         MCSL2_AskDialog.setWindowIcon(MCSLWindowIcon)
-        self.Dialog_PushButton_Accept = QPushButton(MCSL2_AskDialog)
-        self.Dialog_PushButton_Accept.setGeometry(QRect(90, 190, 91, 31))
-        font = QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
-        self.Dialog_PushButton_Accept.setFont(font)
-        self.Dialog_PushButton_Accept.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Dialog_PushButton_Accept.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(0, 120, 212);\n"
-            "    border-radius: 7px;\n"
-            "    color: rgb(255, 255, 255);\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(0, 110, 212);\n"
-            "    border-radius: 7px;\n"
-            "    color: rgb(255, 255, 255);\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(0, 100, 212);\n"
-            "    border-radius: 7px;\n"
-            "    color: rgb(255, 255, 255);\n"
-            "}"
-        )
-        self.Dialog_PushButton_Accept.setObjectName("Dialog_PushButton")
+        MCSL2_AskDialog.setStyleSheet("QDialog\n"
+                                   "{\n"
+                                   "    background-color: rgba(247, 247, 247,85%);\n"
+                                   "}")
+        self.gridLayout = QGridLayout(MCSL2_AskDialog)
+        self.gridLayout.setObjectName("gridLayout")
         self.Dialog_label = QLabel(MCSL2_AskDialog)
-        self.Dialog_label.setGeometry(QRect(30, 20, 351, 151))
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Dialog_label.sizePolicy().hasHeightForWidth())
+        self.Dialog_label.setSizePolicy(sizePolicy)
+        self.Dialog_label.setMinimumSize(QSize(351, 151))
+        self.Dialog_label.setMaximumSize(QSize(351, 16777215))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
         self.Dialog_label.setFont(font)
-        self.Dialog_label.setStyleSheet(
-            "QLabel\n"
-            "{\n"
-            "    background-color: rgb(255, 255, 255);\n"
-            "    border-radius: 10px\n"
-            "}"
-        )
+        self.Dialog_label.setStyleSheet("QLabel\n"
+                                        "{\n"
+                                        "    background-color: rgb(255, 255, 255);\n"
+                                        "    border-radius: 10px\n"
+                                        "}")
         self.Dialog_label.setText("")
         self.Dialog_label.setAlignment(Qt.AlignCenter)
         self.Dialog_label.setObjectName("Dialog_label")
-        self.Background = QLabel(MCSL2_AskDialog)
-        self.Background.setGeometry(QRect(0, 0, 413, 242))
-        self.Background.setStyleSheet(
-            "QLabel\n" "{\n" "    background-color: rgba(247, 247, 247,85%);\n" "}"
-        )
-        self.Background.setText("")
-        self.Background.setObjectName("Background")
-        self.Dialog_PushButton_Cancel = QPushButton(MCSL2_AskDialog)
-        self.Dialog_PushButton_Cancel.setGeometry(QRect(230, 190, 91, 31))
+        self.gridLayout.addWidget(self.Dialog_label, 1, 1, 1, 1)
+        spacerItem = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
+        self.ButtonWidget = QWidget(MCSL2_AskDialog)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(35)
+        sizePolicy.setVerticalStretch(40)
+        sizePolicy.setHeightForWidth(self.ButtonWidget.sizePolicy().hasHeightForWidth())
+        self.ButtonWidget.setSizePolicy(sizePolicy)
+        self.ButtonWidget.setMinimumSize(QSize(351, 40))
+        self.ButtonWidget.setMaximumSize(QSize(351, 40))
+        self.ButtonWidget.setObjectName("ButtonWidget")
+        self.horizontalLayout = QHBoxLayout(self.ButtonWidget)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.Dialog_PushButton_Cancel = QPushButton(self.ButtonWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Dialog_PushButton_Cancel.sizePolicy().hasHeightForWidth())
+        self.Dialog_PushButton_Cancel.setSizePolicy(sizePolicy)
+        self.Dialog_PushButton_Cancel.setMinimumSize(QSize(165, 31))
+        self.Dialog_PushButton_Cancel.setMaximumSize(QSize(170, 31))
         font = QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.Dialog_PushButton_Cancel.setFont(font)
         self.Dialog_PushButton_Cancel.setCursor(QCursor(Qt.PointingHandCursor))
-        self.Dialog_PushButton_Cancel.setStyleSheet(
-            "QPushButton\n"
-            "{\n"
-            "    background-color: rgb(255, 255, 255);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:hover\n"
-            "{\n"
-            "    background-color: rgb(240, 240, 240);\n"
-            "    border-radius: 7px;\n"
-            "}\n"
-            "QPushButton:pressed\n"
-            "{\n"
-            "    background-color: rgb(229, 229, 229);\n"
-            "    border-radius: 7px;\n"
-            "}"
-        )
-        self.Dialog_PushButton_Cancel.setObjectName("Dialog_PushButton_2")
-        self.Background.raise_()
-        self.Dialog_PushButton_Accept.raise_()
-        self.Dialog_label.raise_()
-        self.Dialog_PushButton_Cancel.raise_()
-        self.setWindowFlags(Qt.WindowCloseButtonHint)
+        self.Dialog_PushButton_Cancel.setStyleSheet("QPushButton\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(255, 255, 255);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(240, 240, 240);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(229, 229, 229);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "}")
+        self.Dialog_PushButton_Cancel.setObjectName("Dialog_PushButton_Cancel")
+        self.horizontalLayout.addWidget(self.Dialog_PushButton_Cancel)
+        self.Dialog_PushButton_Accept = QPushButton(self.ButtonWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Dialog_PushButton_Accept.sizePolicy().hasHeightForWidth())
+        self.Dialog_PushButton_Accept.setSizePolicy(sizePolicy)
+        self.Dialog_PushButton_Accept.setMinimumSize(QSize(160, 31))
+        self.Dialog_PushButton_Accept.setMaximumSize(QSize(170, 31))
+        font = QFont()
+        font.setFamily("Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.Dialog_PushButton_Accept.setFont(font)
+        self.Dialog_PushButton_Accept.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Dialog_PushButton_Accept.setStyleSheet("QPushButton\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 120, 212);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:hover\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 110, 212);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}\n"
+                                                    "QPushButton:pressed\n"
+                                                    "{\n"
+                                                    "    background-color: rgb(0, 100, 212);\n"
+                                                    "    border-radius: 7px;\n"
+                                                    "    color: rgb(255, 255, 255);\n"
+                                                    "}")
+        self.Dialog_PushButton_Accept.setObjectName("Dialog_PushButton_Accept")
+        self.horizontalLayout.addWidget(self.Dialog_PushButton_Accept)
+        self.gridLayout.addWidget(self.ButtonWidget, 2, 1, 1, 1)
+        spacerItem1 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 3, 1, 1, 1)
+        spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem2, 1, 2, 1, 1)
+        spacerItem3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem3, 1, 0, 1, 1)
+
         self.retranslateUi(MCSL2_AskDialog)
         QMetaObject.connectSlotsByName(MCSL2_AskDialog)
 
     def retranslateUi(self, MCSL2_AskDialog):
         _translate = QCoreApplication.translate
         MCSL2_AskDialog.setWindowTitle(_translate("MCSL2_AskDialog", "提示"))
-        self.Dialog_PushButton_Accept.setText(_translate("MCSL2_AskDialog", "确定"))
         self.Dialog_PushButton_Cancel.setText(_translate("MCSL2_AskDialog", "取消"))
+        self.Dialog_PushButton_Accept.setText(_translate("MCSL2_AskDialog", "确定"))
 
 
 # Customize dialogs
@@ -273,6 +395,7 @@ def CallMCSL2Dialog(Tip, OtherTextArg, isNeededTwoButtons, ButtonArg, parent=Non
 class DialogMsg:
     def __init__(self):
         self.ProgramVersionIsUpToDate = "已经是最新版！"
+        self.ProgramCheckUpdateFailed = "检查更新失败！"
         self.ConfigPageBeginToSetUpServer = "关闭此窗口后，\n\n服务器将会开始部署。"
         self.ConfigPageNoServerCore = "只剩服务器核心没设置好力\n\n（喜"
         self.ConfigPageNoJava = "只剩Java没设置好力\n\n（喜"
