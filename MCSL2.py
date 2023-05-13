@@ -22,7 +22,7 @@ from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger, InitNewLogFile
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_ServerController import CheckAvailableSaveServer, SaveServer, ReadGlobalServerConfig, \
-    ServerLauncher
+    ServerLauncher, FileReader
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 from MCSL2_Libs.MCSL2_Updater import Updater
 
@@ -459,6 +459,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         else:
             MCSL2Logger("TryToGetServerConfig", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             ServerLauncher().GetGlobalServerConfig(ServerIndexNum=ServerIndexNum)
+            self.ToConsolePage()
 
     def ToChooseJavaPage(self):
         global JavaPaths
