@@ -3,7 +3,11 @@ from os import mkdir
 from os.path import realpath
 from shutil import copy
 from subprocess import Popen, PIPE
+
+from PyQt5.QtCore import QThread
+
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
+from MCSL2_Libs.MCSL2_Settings import MCSL2Settings
 
 
 def CheckAvailableSaveServer(ChkVal):
@@ -219,6 +223,8 @@ def ReadGlobalServerConfig():
 
 class ServerLauncher:
     def __init__(self):
+        self.GetMonitor = None
+        self.Monitor = None
         self.MaxMemory = None
         self.MinMemory = None
         self.MemoryUnit = None
@@ -264,7 +270,7 @@ class ServerLauncher:
                 self.AcceptEula(self.CoreFolder)
                 self.Launch(LaunchCommand)
             else:
-                self.Launch(LaunchCommand)
+                pass
 
     def CheckEulaAcceptStatus(self, CoreFolder):
         try:
@@ -285,13 +291,23 @@ class ServerLauncher:
 
     def Launch(self, LaunchCommand):
         RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
-        Monitor = Popen(LaunchCommand, shell=True, cwd=str(RealServerWorkingDirectory), stdout=PIPE, stderr=PIPE)
-        while True:
-            result = Monitor.stdout.readline()
-            if result != b'':
-                try:
-                    print(result.decode('gbk').strip('\r\n'))
-                except:
-                    print(result.decode('utf-8').strip('\r\n'))
-            else:
-                break
+        self.Monitor = Popen(LaunchCommand, shell=True, cwd=str(RealServerWorkingDirectory), stdout=PIPE, stderr=PIPE)
+        # self.GetMonitor = GetServerOutput()
+        # self.GetMonitor.start()
+        # self.GetMonitor.wait()
+#
+#
+# class GetServerOutput(QThread):
+#     def __init__(self):
+#         self.Output = None
+#         super().__init__()
+#
+#     def run(self):
+#         self.Output = ServerLauncher().Monitor.stdout.readline()
+#         if self.Output != b'':
+#             # 写Decode又获取Encode的屑，但某种层面确实是对的 - LxHTT
+#             DecodeType = MCSL2Settings().GetConfig("ConsoleOutputEncoding")
+#             print(self.Output.decode(DecodeType).strip('\r\n'))
+#         else:
+#             print("No output.")
+#         self.quit()
