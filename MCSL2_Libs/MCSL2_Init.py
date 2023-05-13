@@ -12,7 +12,7 @@ def InitMCSL():
         mkdir(r"MCSL2/Logs")
         mkdir(r"MCSL2/Aria2")
         mkdir(r"MCSL2/Downloads")
-        MCSL2Logger("程序执行InitMCSL()初始化中...", MsgArg=None, MsgLevel=0,
+        MCSL2Logger("RunInitMCSLFunction", MsgArg=None, MsgLevel=0,
                     LogFilesCount=len(listdir(r"MCSL2/Logs"))).Log()
     # 以上是主文件夹
 
