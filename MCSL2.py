@@ -23,7 +23,7 @@ from MCSL2_Libs.MCSL2_Logger import MCSL2Logger, InitNewLogFile
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_ServerController import CheckAvailableSaveServer, SaveServer, ReadGlobalServerConfig, \
     ServerLauncher
-from MCSL2_Libs.MCSL2_Settings import MCSL2Settings
+from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 from MCSL2_Libs.MCSL2_Updater import Updater
 
 
@@ -170,8 +170,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.StartOnStartup.clicked.connect(lambda: self.CheckBoxSettingsChanger("StartOnStartup"))
         self.AlwaysRunAsAdministrator.clicked.connect(lambda: self.CheckBoxSettingsChanger("AlwaysRunAsAdministrator"))
         self.UpdatePushButton.clicked.connect(self.CheckUpdate)
-        # self.OpenSourceCodePushButton.clicked.connect()
-        # self.JoinQQGroup.clicked.connect()
+        self.OpenSourceCodePushButton.clicked.connect(lambda: OpenWebUrl("https://www.github.com/MCSL2", LogFilesCount=LogFilesCount))
+        self.JoinQQGroup.clicked.connect(lambda: OpenWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ", LogFilesCount=LogFilesCount))
         # self.SystemReportPushButton.clicked.connect()
         MCSL2Logger("FinishStarting", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
 
@@ -191,8 +191,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             ComboBoxAttr = ["Default", "Noob", "Extended"]
         elif Type == "MCSLAPIDownloadSource":
             ComboBoxAttr = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
+            self.DownloadSourceChanger()
         elif Type == "Aria2Thread":
-            ComboBoxAttr = ["1", "2", "4", "8", "16"]
+            ComboBoxAttr = [1, 2, 4, 8, 16]
         elif Type == "ConsoleOutputEncoding":
             ComboBoxAttr = ["utf-8", "gbk"]
         elif Type == "ConsoleInputDecoding":
@@ -222,7 +223,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.HowToAddServerComboBox.setCurrentIndex(HowToAddServerComboBoxAttr.index(MCSL2Settings().AddServerMode))
         self.OnlySaveGlobalServerConfigs.setChecked(MCSL2Settings().OnlySaveGlobalServerConfig)
         MCSLAPIDownloadSourceAttr = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
-        self.MCSLAPIDownloadSourceComboBox.setCurrentIndex(MCSLAPIDownloadSourceAttr.index(MCSL2Settings().MCSLAPIDownloadSource))
+        self.MCSLAPIDownloadSourceComboBox.setCurrentIndex(
+            MCSLAPIDownloadSourceAttr.index(MCSL2Settings().MCSLAPIDownloadSource))
         Aria2ThreadAttr = [1, 2, 4, 8, 16]
         self.Aria2ThreadCountComboBox.setCurrentIndex(Aria2ThreadAttr.index(MCSL2Settings().Aria2Thread))
         self.AlwaysAskDownloadPath.setChecked(MCSL2Settings().AlwaysAskSaveDirectory)
@@ -240,9 +242,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.SameFileExceptionStop.setChecked(True)
         self.EnableQuickMenu.setChecked(MCSL2Settings().EnableConsoleQuickMenu)
         ConsoleOutputEncodingAttr = ["utf-8", "gbk"]
-        self.ConsoleOutputEncodingComboBox.setCurrentIndex(ConsoleOutputEncodingAttr.index(MCSL2Settings().ConsoleOutputEncoding))
+        self.ConsoleOutputEncodingComboBox.setCurrentIndex(
+            ConsoleOutputEncodingAttr.index(MCSL2Settings().ConsoleOutputEncoding))
         ConsoleInputDecodingAttr = ["follow", "utf-8", "gbk"]
-        self.ConsoleInputDecodingComboBox.setCurrentIndex(ConsoleInputDecodingAttr.index(MCSL2Settings().ConsoleInputDecoding))
+        self.ConsoleInputDecodingComboBox.setCurrentIndex(
+            ConsoleInputDecodingAttr.index(MCSL2Settings().ConsoleInputDecoding))
         self.TransparentPercentSlider.setValue(MCSL2Settings().BackgroundTransparency)
         self.ExchangeButton.setChecked(MCSL2Settings().ExchangeWindowControllingButtons)
         ThemeModeAttr = ["light", "dark", "system"]
@@ -1072,6 +1076,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         MCSL2Logger("RunParseSrollAreaItemButtons", MsgArg=str(self.FunctionsStackedWidget.currentIndex()), MsgLevel=0,
                     LogFilesCount=LogFilesCount).Log()
         SelectDownloadItemIndexNumber = int(str(self.sender().objectName()).split("_PushButton")[1])
+        MCSL2Logger("SrollAreaItemButtonNum", MsgArg=str(SelectDownloadItemIndexNumber), MsgLevel=0,
+                    LogFilesCount=LogFilesCount).Log()
         if self.FunctionsStackedWidget.currentIndex() == 7:
             self.ChooseJava(JavaIndex=SelectDownloadItemIndexNumber)
         if self.FunctionsStackedWidget.currentIndex() == 6:
@@ -1105,7 +1111,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         MCSL2Logger("CheckUpdate", MsgArg=f"当前版本{Version}", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
+                                                                                                                  "").replace(
+                "\'", "").split(",")
             MCSL2Logger("NewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
             MCSL2Logger("UpdateContent", MsgArg=f"{LatestVersionInformation[1]}", MsgLevel=0,
@@ -1115,7 +1123,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             MCSL2Logger("ToUpdatePage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             self.FunctionsStackedWidget.setCurrentIndex(8)
         elif LatestVersionInformation[0] == 0:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ", "").replace("\'", "").split(",")
+            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
+                                                                                                                  "").replace(
+                "\'", "").split(",")
             MCSL2Logger("NoNewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
         else:
@@ -1125,6 +1135,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         global LogFilesCount
         MCSL2Logger("GetNotice", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.Notice_Label.setText(f"——————公告——————\n{str(Updater(Version).GetNoticeText())}")
+
 
 
 if __name__ == '__main__':
