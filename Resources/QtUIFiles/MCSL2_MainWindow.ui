@@ -6092,7 +6092,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="text">
-              <string>深色模式</string>
+              <string>主题模式</string>
              </property>
             </widget>
             <widget class="QComboBox" name="DarkModeComboBox">
