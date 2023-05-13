@@ -223,7 +223,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.OnlySaveGlobalServerConfigs.setChecked(MCSL2Settings().OnlySaveGlobalServerConfig)
         MCSLAPIDownloadSourceAttr = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
         self.MCSLAPIDownloadSourceComboBox.setCurrentIndex(MCSLAPIDownloadSourceAttr.index(MCSL2Settings().MCSLAPIDownloadSource))
-        Aria2ThreadAttr = ["1", "2", "4", "8", "16"]
+        Aria2ThreadAttr = [1, 2, 4, 8, 16]
         self.Aria2ThreadCountComboBox.setCurrentIndex(Aria2ThreadAttr.index(MCSL2Settings().Aria2Thread))
         self.AlwaysAskDownloadPath.setChecked(MCSL2Settings().AlwaysAskSaveDirectory)
         if MCSL2Settings().SaveSameFileException == "ask":
