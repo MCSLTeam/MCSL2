@@ -2,6 +2,7 @@ from json import loads, dumps
 from os import mkdir
 from os.path import realpath
 from shutil import copy
+from subprocess import Popen, PIPE
 
 from PyQt5.QtCore import QProcess
 
@@ -290,18 +291,14 @@ class ServerLauncher:
 
     def Launch(self, LaunchCommand):
         RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
-        StartGetServerOutput(LaunchCommand, cwd=str(RealServerWorkingDirectory))
+        Monitor = Popen(LaunchCommand, shell=True, cwd=str(RealServerWorkingDirectory), stdout=PIPE, stderr=PIPE)
+        while True:
+            result = Monitor.stdout.readline()
+            if result != b'':
+                try:
+                    print(result.decode('gbk').strip('\r\n'))
+                except:
+                    print(result.decode('utf-8').strip('\r\n'))
+            else:
+                break
 
-
-class StartGetServerOutput(QProcess):
-    def __init__(self, LaunchCommand, cwd):
-        super().__init__()
-        self.setWorkingDirectory(cwd)
-        self.setProcessChannelMode(QProcess.MergedChannels)
-        self.readyReadStandardOutput.connect(self.on_readyReadStandardOutput)
-        self.start(LaunchCommand)
-
-    def on_readyReadStandardOutput(self):
-        DecodeType = MCSL2Settings().GetConfig("ConsoleOutputEncoding")
-        output = self.readAllStandardOutput().data().decode(DecodeType)
-        print(output.strip('\r\n'))
