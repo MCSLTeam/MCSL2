@@ -1,4 +1,4 @@
-Nuitka==1.5.6
+Nuitka>=1.5.7
 ordered-set>=4.1.0
 zstandard>=0.20.0
-imageio==2.27.0
+imageio>=2.27.0
