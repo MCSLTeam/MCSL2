@@ -4776,7 +4776,7 @@ class Ui_MCSL2_MainWindow(object):
         self.EnableQuickMenu.setText(_translate("MCSL2_MainWindow", "启用快捷菜单"))
         self.UISettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "界面设置"))
         self.TransparentSetting.setText(_translate("MCSL2_MainWindow", "背景透明度"))
-        self.DarkMode.setText(_translate("MCSL2_MainWindow", "深色模式"))
+        self.DarkMode.setText(_translate("MCSL2_MainWindow", "主题模式"))
         self.DarkModeComboBox.setItemText(0, _translate("MCSL2_MainWindow", "浅色"))
         self.DarkModeComboBox.setItemText(1, _translate("MCSL2_MainWindow", "深色"))
         self.DarkModeComboBox.setItemText(2, _translate("MCSL2_MainWindow", "跟随系统"))
