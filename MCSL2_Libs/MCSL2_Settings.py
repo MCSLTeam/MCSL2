@@ -1,6 +1,8 @@
 from json import loads, dumps
 from os import path as ospath
-
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QDesktopServices
+from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
 
 class MCSL2Settings:
     def __init__(self):
@@ -242,3 +244,7 @@ class MCSL2Settings:
             }
             UpdateConfig.write(dumps(NewConfig))
             UpdateConfig.close()
+
+def OpenWebUrl(Url, LogFilesCount):
+    QDesktopServices.openUrl(QUrl(Url))
+    MCSL2Logger("OpenWebBrowser", MsgArg=f"链接：\n{Url}", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
