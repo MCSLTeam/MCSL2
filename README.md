@@ -36,7 +36,7 @@ ___
 ### 用到的开源项目
 [![](https://img.shields.io/badge/python-3.8.0-blue.svg?style=for-the-badge "Python")](https://python.org)
 [![](https://img.shields.io/badge/pyqt5-5.15.9-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
-[![](https://img.shields.io/badge/nuitka-1.5.6-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
+[![](https://img.shields.io/badge/nuitka-1.5.7-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
 ___
 ### 相关链接
 MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)  
