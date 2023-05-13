@@ -1,3 +1,3 @@
-cd /d "E:\MCSLCode\MCSL2"
-D:\Python38\python.exe MCSL2.py
+cd ..
+E:\MCSLCode\MCSL2\VirtualEnvironment\Scripts\python.exe MCSL2.py
 pause
