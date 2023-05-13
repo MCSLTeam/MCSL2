@@ -2,9 +2,8 @@ from json import loads, dumps
 from os import mkdir
 from os.path import realpath
 from shutil import copy
-from subprocess import Popen, PIPE
 
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QProcess
 
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings
@@ -291,23 +290,18 @@ class ServerLauncher:
 
     def Launch(self, LaunchCommand):
         RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
-        self.Monitor = Popen(LaunchCommand, shell=True, cwd=str(RealServerWorkingDirectory), stdout=PIPE, stderr=PIPE)
-        # self.GetMonitor = GetServerOutput()
-        # self.GetMonitor.start()
-        # self.GetMonitor.wait()
-#
-#
-# class GetServerOutput(QThread):
-#     def __init__(self):
-#         self.Output = None
-#         super().__init__()
-#
-#     def run(self):
-#         self.Output = ServerLauncher().Monitor.stdout.readline()
-#         if self.Output != b'':
-#             # 写Decode又获取Encode的屑，但某种层面确实是对的 - LxHTT
-#             DecodeType = MCSL2Settings().GetConfig("ConsoleOutputEncoding")
-#             print(self.Output.decode(DecodeType).strip('\r\n'))
-#         else:
-#             print("No output.")
-#         self.quit()
+        StartGetServerOutput(LaunchCommand, cwd=str(RealServerWorkingDirectory))
+
+
+class StartGetServerOutput(QProcess):
+    def __init__(self, LaunchCommand, cwd):
+        super().__init__()
+        self.setWorkingDirectory(cwd)
+        self.setProcessChannelMode(QProcess.MergedChannels)
+        self.readyReadStandardOutput.connect(self.on_readyReadStandardOutput)
+        self.start(LaunchCommand)
+
+    def on_readyReadStandardOutput(self):
+        DecodeType = MCSL2Settings().GetConfig("ConsoleOutputEncoding")
+        output = self.readAllStandardOutput().data().decode(DecodeType)
+        print(output.strip('\r\n'))
