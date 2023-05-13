@@ -47,6 +47,7 @@ class LoggerMsg:
     def __init__(self):
         self.InitMCSL = "检查程序完整性..."
         self.InitUI = "初始化UI界面..."
+        self.RunInitMCSLFunction = "程序执行InitMCSL()初始化中..."
         self.ReadConfig = "读取配置 MCSL2/MCSL2_Config.json"
         self.InitFunctionsBind = "初始化功能绑定..."
         self.FinishStarting = "程序启动完成！"
@@ -143,3 +144,4 @@ class LoggerMsg:
         self.ChangeConfig = "改变设置："
         self.NoNewVersionAvailable = "已是最新版！"
         self.CheckUpdateFailed = "检查更新失败！"
+        self.SrollAreaItemButtonNum = "检测完毕，索引值为"
