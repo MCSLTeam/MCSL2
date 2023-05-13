@@ -21,8 +21,12 @@ from MCSL2_Libs.MCSL2_Init import InitMCSL
 from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger, InitNewLogFile
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
-from MCSL2_Libs.MCSL2_ServerController import CheckAvailableSaveServer, SaveServer, ReadGlobalServerConfig, \
-    ServerLauncher #, FileReader #会报错
+from MCSL2_Libs.MCSL2_ServerController import (
+    CheckAvailableSaveServer,
+    SaveServer,
+    ReadGlobalServerConfig,
+    ServerLauncher
+)
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 from MCSL2_Libs.MCSL2_Updater import Updater
 
