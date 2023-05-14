@@ -174,7 +174,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.StartOnStartup.clicked.connect(lambda: self.CheckBoxSettingsChanger("StartOnStartup"))
         self.AlwaysRunAsAdministrator.clicked.connect(lambda: self.CheckBoxSettingsChanger("AlwaysRunAsAdministrator"))
         self.UpdatePushButton.clicked.connect(self.CheckUpdate)
-        self.OpenSourceCodePushButton.clicked.connect(lambda: OpenWebUrl("https://www.github.com/MCSL2", LogFilesCount=LogFilesCount))
+        self.OpenSourceCodePushButton.clicked.connect(lambda: OpenWebUrl("https://www.github.com/LxHTT/MCSL2", LogFilesCount=LogFilesCount))
         self.JoinQQGroup.clicked.connect(lambda: OpenWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ", LogFilesCount=LogFilesCount))
         # self.SystemReportPushButton.clicked.connect()
         MCSL2Logger("FinishStarting", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
