@@ -1,5 +1,5 @@
 ---
-name: BUG_REPORT_TEMPLATE
+name: BUG反馈模版
 about: BUG 反馈模版
 title: BUG｜
 labels: bug
