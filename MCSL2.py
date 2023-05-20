@@ -4,7 +4,7 @@ from os import getcwd, environ, remove, path as ospath
 from subprocess import CalledProcessError
 from sys import argv, exit
 from datetime import datetime
-from PyQt5.QtCore import QPoint, pyqtSlot
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent
 from PyQt5.QtWidgets import (
     QApplication,
@@ -36,6 +36,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     global LogFilesCount
 
     def __init__(self):
+        self.__mouseMovePos = None
+        self.__mousePressPos = None
         global LogFilesCount
         LogFilesCount = InitMCSL()
         InitNewLogFile(LogFilesCount)
@@ -51,25 +53,36 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.setAutoFillBackground(True)
         self.setupUi(self)
         MCSL2Logger("InitUI", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        self.Blue2.setVisible(False)
+        self.Blue3.setVisible(False)
+        self.Blue4.setVisible(False)
+        self.Blue5.setVisible(False)
+        self.Blue6.setVisible(False)
         self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
         self.Home_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Home.svg"))
+        self.Home_Page_PushButton.setIconSize(QSize(24, 24))
         self.Config_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Configuration.svg"))
+        self.Config_Page_PushButton.setIconSize(QSize(24, 24))
         self.Download_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Download.svg"))
+        self.Download_Page_PushButton.setIconSize(QSize(24, 24))
         self.Server_Console_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Console.svg"))
+        self.Server_Console_Page_PushButton.setIconSize(QSize(24, 24))
         self.Tools_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/Toolbox.svg"))
+        self.Tools_Page_PushButton.setIconSize(QSize(24, 24))
         self.About_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/About.svg"))
+        self.About_Page_PushButton.setIconSize(QSize(24, 24))
         self.CurrentDownloadSourceLabel.setText(
             str(self.CurrentDownloadSourceLabel.text()) + str(self.MCSLAPIDownloadSourceComboBox.currentText()))
-        self._startPos = None
-        self._endPos = None
-        self._tracking = False
         MCSL2Settings()
         MCSL2Logger("ReadConfig", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         MCSL2Logger("InitFunctionsBind", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         self.GetNotice()
+        self.InitTitleBar()
         # Window event binding
         self.Close_PushButton.clicked.connect(self.Quit)
         self.Minimize_PushButton.clicked.connect(self.Minimize)
+        self.Close_PushButton_R.clicked.connect(self.Quit)
+        self.Minimize_PushButton_R.clicked.connect(self.Minimize)
 
         # Pages navigation binding
         self.Home_Page_PushButton.clicked.connect(self.ToHomePage)
@@ -168,7 +181,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                                                 self.ConsoleInputDecodingComboBox.currentIndex()))
         self.TransparentPercentSlider.valueChanged.connect(self.TransparentPercentChanger)
 
-        self.ExchangeButton.clicked.connect(lambda: self.CheckBoxSettingsChanger("ExchangeWindowControllingButtons"))
+        self.TitleBarInsteadOfmacOS.clicked.connect(lambda: self.CheckBoxSettingsChanger("UseTitleBarInsteadOfmacOSControlling"))
+        self.TitleBarInsteadOfmacOS.clicked.connect(self.InitTitleBar)
         self.DarkModeComboBox.currentIndexChanged.connect(
             lambda: self.ComboBoxSettingChanger("ThemeMode", self.DarkModeComboBox.currentIndex()))
         self.StartOnStartup.clicked.connect(lambda: self.CheckBoxSettingsChanger("StartOnStartup"))
@@ -252,11 +266,45 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.ConsoleInputDecodingComboBox.setCurrentIndex(
             ConsoleInputDecodingAttr.index(MCSL2Settings().ConsoleInputDecoding))
         self.TransparentPercentSlider.setValue(MCSL2Settings().BackgroundTransparency)
-        self.ExchangeButton.setChecked(MCSL2Settings().ExchangeWindowControllingButtons)
+        self.TitleBarInsteadOfmacOS.setChecked(MCSL2Settings().UseTitleBarInsteadOfmacOSControlling)
         ThemeModeAttr = ["light", "dark", "system"]
         self.DarkModeComboBox.setCurrentIndex(ThemeModeAttr.index(MCSL2Settings().ThemeMode))
         self.StartOnStartup.setChecked(MCSL2Settings().StartOnStartup)
         self.AlwaysRunAsAdministrator.setChecked(MCSL2Settings().AlwaysRunAsAdministrator)
+
+    def InitTitleBar(self):
+        TitleBarSetting = MCSL2Settings().GetConfig("UseTitleBarInsteadOfmacOSControlling")
+        if TitleBarSetting == True:
+            self.TitleBarWidget.setVisible(False)
+            self.TitleBarWidget_R.setVisible(True)
+            self.Home_Page_PushButton.setGeometry(QRect(20, 110, 171, 41))
+            self.Config_Page_PushButton.setGeometry(QRect(20, 170, 171, 41))
+            self.Download_Page_PushButton.setGeometry(QRect(20, 230, 171, 41))
+            self.Server_Console_Page_PushButton.setGeometry(QRect(20, 290, 171, 41))
+            self.Tools_Page_PushButton.setGeometry(QRect(20, 350, 171, 41))
+            self.About_Page_PushButton.setGeometry(QRect(20, 410, 171, 41))
+            self.Blue1.setGeometry(QRect(20, 120, 3, 21))
+            self.Blue2.setGeometry(QRect(20, 180, 3, 21))
+            self.Blue3.setGeometry(QRect(20, 240, 3, 21))
+            self.Blue4.setGeometry(QRect(20, 300, 3, 21))
+            self.Blue5.setGeometry(QRect(20, 360, 3, 21))
+            self.Blue6.setGeometry(QRect(20, 420, 3, 21))
+        elif TitleBarSetting == False:
+            self.TitleBarWidget.setVisible(True)
+            self.TitleBarWidget_R.setVisible(False)
+            self.Home_Page_PushButton.setGeometry(QRect(20, 140, 171, 41))
+            self.Config_Page_PushButton.setGeometry(QRect(20, 200, 171, 41))
+            self.Download_Page_PushButton.setGeometry(QRect(20, 260, 171, 41))
+            self.Server_Console_Page_PushButton.setGeometry(QRect(20, 320, 171, 41))
+            self.Tools_Page_PushButton.setGeometry(QRect(20, 380, 171, 41))
+            self.About_Page_PushButton.setGeometry(QRect(20, 440, 171, 41))
+            self.Blue1.setGeometry(QRect(20, 150, 3, 21))
+            self.Blue2.setGeometry(QRect(20, 210, 3, 21))
+            self.Blue3.setGeometry(QRect(20, 270, 3, 21))
+            self.Blue4.setGeometry(QRect(20, 330, 3, 21))
+            self.Blue5.setGeometry(QRect(20, 390, 3, 21))
+            self.Blue6.setGeometry(QRect(20, 450, 3, 21))
+
 
     def TransparentPercentChanger(self):
         global LogFilesCount
@@ -267,21 +315,25 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                                         "}")
         self.TransparentPercentNum.setText(str(self.TransparentPercentSlider.value()) + "%")
 
-    def mouseMoveEvent(self, e: QMouseEvent):
-        if self._tracking:
-            self._endPos = e.pos() - self._startPos
-            self.move(self.pos() + self._endPos)
+    def mousePressEvent(self, event: QMouseEvent):
+        if event.button() == Qt.LeftButton:
+            self.__mousePressPos = event.globalPos()
+            self.__mouseMovePos = event.globalPos()
 
-    def mousePressEvent(self, e: QMouseEvent):
-        if e.button() == Qt.LeftButton:
-            self._startPos = QPoint(e.x(), e.y())
-            self._tracking = True
+    def mouseMoveEvent(self, event: QMouseEvent):
+        if event.buttons() == Qt.LeftButton:
+            # 移动窗口
+            currentPos = self.mapToGlobal(self.pos())
+            globalPos = event.globalPos()
+            diff = globalPos - self.__mouseMovePos
+            newPos = self.mapFromGlobal(currentPos + diff)
+            self.move(newPos)
+            self.__mouseMovePos = globalPos
 
-    def mouseReleaseEvent(self, e: QMouseEvent):
-        if e.button() == Qt.LeftButton:
-            self._tracking = False
-            self._startPos = None
-            self._endPos = None
+    def mouseReleaseEvent(self, event: QMouseEvent):
+        if event.button() == Qt.LeftButton:
+            self.__mousePressPos = None
+            self.__mouseMovePos = None
 
     def Quit(self):
         global LogFilesCount
@@ -1160,6 +1212,7 @@ if __name__ == '__main__':
     Version = "2.1.3"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \
+                                  "    padding-left: 10px;\n" \
                                   "    text-align: left;\n" \
                                   "    background-color: rgb(247, 247, 247);\n" \
                                   "    border-radius: 7px;\n" \
@@ -1178,6 +1231,7 @@ if __name__ == '__main__':
                                   "}"
     OtherNavigationStyleSheet = "QPushButton\n" \
                                 "{\n" \
+                                "    padding-left: 10px;\n" \
                                 "    text-align: left;\n" \
                                 "    background-color: rgb(255, 255, 255);\n" \
                                 "    border-radius: 7px;\n" \
@@ -1197,7 +1251,7 @@ if __name__ == '__main__':
     BlueStyleSheet = "QLabel\n" \
                      "{\n" \
                      "    background-color: rgb(0, 120, 212);\n" \
-                     "    border-radius: 5px\n" \
+                     "    border-radius: 1px\n" \
                      "}"
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)

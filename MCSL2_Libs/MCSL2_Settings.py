@@ -11,7 +11,7 @@ class MCSL2Settings:
                            "OnlySaveGlobalServerConfig", "MCSLAPIDownloadSource", "Aria2Thread",
                            "AlwaysAskSaveDirectory", "SaveSameFileException", "EnableConsoleQuickMenu",
                            "ConsoleOutputEncoding", "ConsoleInputDecoding", "BackgroundTransparency",
-                           "ExchangeWindowControllingButtons", "ThemeMode", "StartOnStartup",
+                           "UseTitleBarInsteadOfmacOSControlling", "ThemeMode", "StartOnStartup",
                            "AlwaysRunAsAdministrator", "LastUpdateTime"]
         if ospath.exists(r"./MCSL2/MCSL2_Config.json"):
             if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
@@ -97,9 +97,9 @@ class MCSL2Settings:
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
-                        self.ExchangeWindowControllingButtons = self.ConfigJSON["exchange_window_controlling_buttons"]
+                        self.UseTitleBarInsteadOfmacOSControlling = self.ConfigJSON["use_title_bar_instead_of_macos_controlling"]
                     except KeyError:
-                        self.ExchangeWindowControllingButtons = False
+                        self.UseTitleBarInsteadOfmacOSControlling = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
@@ -145,7 +145,7 @@ class MCSL2Settings:
                         "console_output_encoding": "utf-8",
                         "console_input_decoding": "follow",
                         "background_transparency": 55,
-                        "exchange_window_controlling_buttons": False,
+                        "use_title_bar_instead_of_macos_controlling": False,
                         "theme_mode": "light",
                         "start_on_startup": False,
                         "always_run_as_administrator": False,
@@ -167,7 +167,7 @@ class MCSL2Settings:
             self.ConsoleOutputEncoding = "utf-8"
             self.ConsoleInputDecoding = "follow"
             self.BackgroundTransparency = 55
-            self.ExchangeWindowControllingButtons = False
+            self.UseTitleBarInsteadOfmacOSControlling = False
             self.ThemeMode = "light"
             self.StartOnStartup = False
             self.AlwaysRunAsAdministrator = False
@@ -206,8 +206,8 @@ class MCSL2Settings:
             self.ConsoleInputDecoding = Arg
         elif Type == "BackgroundTransparency":
             self.BackgroundTransparency = Arg
-        elif Type == "ExchangeWindowControllingButtons":
-            self.ExchangeWindowControllingButtons = Arg
+        elif Type == "UseTitleBarInsteadOfmacOSControlling":
+            self.UseTitleBarInsteadOfmacOSControlling = Arg
         elif Type == "ThemeMode":
             self.ThemeMode = Arg
         elif Type == "StartOnStartup":
@@ -236,7 +236,7 @@ class MCSL2Settings:
                 "console_output_encoding": self.ConsoleOutputEncoding,
                 "console_input_decoding": self.ConsoleInputDecoding,
                 "background_transparency": self.BackgroundTransparency,
-                "exchange_window_controlling_buttons": self.ExchangeWindowControllingButtons,
+                "use_title_bar_instead_of_macos_controlling": self.UseTitleBarInsteadOfmacOSControlling,
                 "theme_mode": self.ThemeMode,
                 "start_on_startup": self.StartOnStartup,
                 "always_run_as_administrator": self.AlwaysRunAsAdministrator,

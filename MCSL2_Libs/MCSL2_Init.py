@@ -49,7 +49,7 @@ def InitMCSL():
                 "console_output_encoding": "utf-8",
                 "console_input_decoding": "follow",
                 "background_transparency": 55,
-                "exchange_window_controlling_buttons": False,
+                "use_title_bar_instead_of_macos_controlling": False,
                 "theme_mode": "light",
                 "start_on_startup": False,
                 "always_run_as_administrator": False,

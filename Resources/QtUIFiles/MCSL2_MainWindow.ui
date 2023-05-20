@@ -40,72 +40,6 @@
       <height>581</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="Close_PushButton">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>22</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton
-{
-	background-color: rgb(232, 17, 35);
-	border-radius: 11px;
-}
-QPushButton:hover
-{
-	background-color: rgb(193, 6, 16);
-	border-radius: 11px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(170, 0, 0);
-	border-radius: 11px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Minimize_PushButton">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>20</y>
-       <width>22</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton
-{
-	background-color: rgb(225, 225, 0);
-	border-radius: 11px;
-}
-QPushButton:hover
-{
-	background-color: rgb(183, 161, 0);
-	border-radius: 11px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(161, 161, 0);
-	border-radius: 11px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QPushButton" name="Home_Page_PushButton">
      <property name="enabled">
       <bool>true</bool>
@@ -130,6 +64,7 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	padding-left: 10px;
 	text-align: left;
 	background-color: rgb(247, 247, 247);
 	border-radius: 7px;
@@ -148,7 +83,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     主页</string>
+      <string>  主页</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -187,6 +122,7 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	padding-left: 10px;
 	text-align: left;
 	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
@@ -205,7 +141,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     配置</string>
+      <string>  配置</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -215,66 +151,6 @@ QPushButton:pressed
      </property>
      <property name="autoExclusive">
       <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="MCSL2_Title_Label">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>60</y>
-       <width>111</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>MCSL 2</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="MCSL2_Title_Author_Label">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>90</y>
-       <width>111</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>by LxHTT</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="MCSL2_Title_Icon_Label">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>71</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="Download_Page_PushButton">
@@ -301,6 +177,7 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	padding-left: 10px;
 	text-align: left;
 	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
@@ -319,7 +196,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     下载</string>
+      <string>  下载</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -355,6 +232,7 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	padding-left: 10px;
 	text-align: left;
 	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
@@ -373,7 +251,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     终端</string>
+      <string>  终端</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -409,6 +287,7 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	padding-left: 10px;
 	text-align: left;
 	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
@@ -427,7 +306,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     工具</string>
+      <string>  插件</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -463,6 +342,7 @@ QPushButton:pressed
      <property name="styleSheet">
       <string notr="true">QPushButton
 {
+	padding-left: 10px;
 	text-align: left;
 	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
@@ -481,7 +361,7 @@ QPushButton:pressed
 }</string>
      </property>
      <property name="text">
-      <string>     更多</string>
+      <string>  更多</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -499,9 +379,9 @@ QPushButton:pressed
      </property>
      <property name="geometry">
       <rect>
-       <x>45</x>
+       <x>20</x>
        <y>150</y>
-       <width>10</width>
+       <width>3</width>
        <height>21</height>
       </rect>
      </property>
@@ -521,7 +401,7 @@ QPushButton:pressed
       <string notr="true">QLabel
 {
 	background-color: rgb(0, 120, 212);
-	border-radius: 10px
+	border-radius: 1px;
 }</string>
      </property>
      <property name="text">
@@ -531,9 +411,9 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue2">
      <property name="geometry">
       <rect>
-       <x>45</x>
+       <x>20</x>
        <y>210</y>
-       <width>10</width>
+       <width>3</width>
        <height>21</height>
       </rect>
      </property>
@@ -553,7 +433,7 @@ QPushButton:pressed
       <string notr="true">QLabel
 {
 	background-color: rgb(0, 120, 212);
-	border-radius: 10px
+	border-radius: 1px;
 }</string>
      </property>
      <property name="text">
@@ -563,9 +443,9 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue3">
      <property name="geometry">
       <rect>
-       <x>45</x>
+       <x>20</x>
        <y>270</y>
-       <width>10</width>
+       <width>3</width>
        <height>21</height>
       </rect>
      </property>
@@ -585,7 +465,7 @@ QPushButton:pressed
       <string notr="true">QLabel
 {
 	background-color: rgb(0, 120, 212);
-	border-radius: 10px
+	border-radius: 1px;
 }</string>
      </property>
      <property name="text">
@@ -595,9 +475,9 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue4">
      <property name="geometry">
       <rect>
-       <x>45</x>
+       <x>20</x>
        <y>330</y>
-       <width>10</width>
+       <width>3</width>
        <height>21</height>
       </rect>
      </property>
@@ -617,7 +497,7 @@ QPushButton:pressed
       <string notr="true">QLabel
 {
 	background-color: rgb(0, 120, 212);
-	border-radius: 10px
+	border-radius: 1px;
 }</string>
      </property>
      <property name="text">
@@ -627,9 +507,9 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue5">
      <property name="geometry">
       <rect>
-       <x>45</x>
+       <x>20</x>
        <y>390</y>
-       <width>10</width>
+       <width>3</width>
        <height>21</height>
       </rect>
      </property>
@@ -649,7 +529,7 @@ QPushButton:pressed
       <string notr="true">QLabel
 {
 	background-color: rgb(0, 120, 212);
-	border-radius: 10px
+	border-radius: 1px;
 }</string>
      </property>
      <property name="text">
@@ -659,9 +539,9 @@ QPushButton:pressed
     <widget class="QLabel" name="Blue6">
      <property name="geometry">
       <rect>
-       <x>45</x>
+       <x>20</x>
        <y>450</y>
-       <width>10</width>
+       <width>3</width>
        <height>21</height>
       </rect>
      </property>
@@ -681,12 +561,129 @@ QPushButton:pressed
       <string notr="true">QLabel
 {
 	background-color: rgb(0, 120, 212);
-	border-radius: 10px
+	border-radius: 1px;
 }</string>
      </property>
      <property name="text">
       <string/>
      </property>
+    </widget>
+    <widget class="QWidget" name="TitleBarWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>171</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="MCSL2_Title_Label">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>50</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>MCSL 2</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Close_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(232, 17, 35);
+	border-radius: 11px;
+}
+QPushButton:hover
+{
+	background-color: rgb(193, 6, 16);
+	border-radius: 11px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(170, 0, 0);
+	border-radius: 11px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Minimize_PushButton">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>0</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(225, 225, 0);
+	border-radius: 11px;
+}
+QPushButton:hover
+{
+	background-color: rgb(183, 161, 0);
+	border-radius: 11px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(161, 161, 0);
+	border-radius: 11px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="MCSL2_Title_Icon_Label">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>30</y>
+        <width>71</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QStackedWidget" name="FunctionsStackedWidget">
@@ -3944,7 +3941,186 @@ QPushButton:pressed
        </font>
       </property>
       <property name="text">
-       <string>更多工具</string>
+       <string>插件</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="ToolsBackground" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>681</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget
+{
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px
+}</string>
+      </property>
+      <widget class="QScrollArea" name="ToolsScrollArea">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>661</width>
+         <height>411</height>
+        </rect>
+       </property>
+       <property name="cursor" stdset="0">
+        <cursorShape>ArrowCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QScrollArea{
+	border: 0px solid;
+	border-right-color: #dcdbdc;
+	background-color: transparent;
+}
+QScrollBar:vertical {
+	border: none;
+	background: transparent;
+	width: 12px;
+}
+QScrollBar::handle:vertical {
+	background: rgb(220, 220, 220);
+	min-height: 20px;
+	border-radius: 5px;
+}
+QScrollBar::add-line:vertial
+{
+    height: 0px;
+}
+QScrollBar::sub-line:vertial
+{
+    height: 0px;
+}
+QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
+{
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="ToolsScrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>649</width>
+          <height>411</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <layout class="QVBoxLayout" name="ToolsVerticalLayout"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="GoToChangeToolsConfigPushButton">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>90</y>
+        <width>91</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(230, 230, 230);
+	border-radius: 7px;
+}
+QPushButton:hover
+{
+	background-color: rgb(227, 227, 227);
+	border-radius: 7px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 7px;
+}</string>
+      </property>
+      <property name="text">
+       <string>插件设置</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="InstallToolsPushButton">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>90</y>
+        <width>91</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft YaHei UI</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	background-color: rgb(0, 120, 212);
+	border-radius: 7px;
+	color: rgb(255, 255, 255);
+}
+QPushButton:hover
+{
+    background-color: rgb(0, 110, 212);
+	border-radius: 7px;
+    color: rgb(255, 255, 255);
+}
+QPushButton:pressed
+{
+    background-color: rgb(0, 100, 212);
+	border-radius: 7px;
+    color: rgb(255, 255, 255);
+}</string>
+      </property>
+      <property name="text">
+       <string>安装插件</string>
       </property>
      </widget>
     </widget>
@@ -4037,7 +4213,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>640</width>
+         <width>641</width>
          <height>1677</height>
         </rect>
        </property>
@@ -6195,7 +6371,7 @@ QComboBox QAbstractItemView::item:selected:active {
               </property>
              </item>
             </widget>
-            <widget class="QCheckBox" name="ExchangeButton">
+            <widget class="QCheckBox" name="TitleBarInsteadOfmacOS">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -6278,7 +6454,7 @@ QCheckBox::indicator:indeterminate:disabled {
 }</string>
              </property>
              <property name="text">
-              <string>交换窗口最小化和关闭按钮顺序</string>
+              <string>使用标题栏而不是类macOS样式</string>
              </property>
              <property name="iconSize">
               <size>
@@ -7819,11 +7995,137 @@ QPushButton:pressed
      <string/>
     </property>
    </widget>
+   <widget class="QWidget" name="TitleBarWidget_R" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>941</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget
+{
+	background-color: rgb(235, 235, 235);
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}</string>
+    </property>
+    <widget class="QLabel" name="MCSL2_Title_Icon_Label_R">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>9</y>
+       <width>24</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Icons/MCSL2_Icon.qrc">:/MCSL2_Icon/MCSL2_Icon.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Minimize_PushButton_R">
+     <property name="geometry">
+      <rect>
+       <x>870</x>
+       <y>10</y>
+       <width>22</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+	background-color: rgb(225, 225, 0);
+	border-radius: 11px;
+}
+QPushButton:hover
+{
+	background-color: rgb(183, 161, 0);
+	border-radius: 11px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(161, 161, 0);
+	border-radius: 11px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Close_PushButton_R">
+     <property name="geometry">
+      <rect>
+       <x>900</x>
+       <y>10</y>
+       <width>22</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+	background-color: rgb(232, 17, 35);
+	border-radius: 11px;
+}
+QPushButton:hover
+{
+	background-color: rgb(193, 6, 16);
+	border-radius: 11px;
+}
+QPushButton:pressed
+{
+	background-color: rgb(170, 0, 0);
+	border-radius: 11px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MCSL2_Title_Label_R">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>10</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>MCSL 2</string>
+     </property>
+    </widget>
+   </widget>
    <zorder>Background_2</zorder>
    <zorder>Shadow</zorder>
    <zorder>Background</zorder>
    <zorder>OptionsWidget</zorder>
    <zorder>FunctionsStackedWidget</zorder>
+   <zorder>TitleBarWidget_R</zorder>
   </widget>
  </widget>
  <resources>

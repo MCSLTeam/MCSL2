@@ -1,7 +1,7 @@
-import platform
+from platform import system
 from os import listdir
 from os import path as ospath
-from re import match, search
+from re import search
 from subprocess import check_output, STDOUT, CalledProcessError
 
 from PyQt5.QtCore import QThread, pyqtSignal
@@ -77,7 +77,7 @@ def FindStr(s):
 
 def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
     # construct _Math function
-    if 'windows' in platform.system().lower():
+    if 'windows' in system().lower():
         def Match(P, F):
             return ospath.join(P, F).endswith(r'bin\java.exe')
     else:
@@ -114,7 +114,7 @@ def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
 def FindJava(FuzzySearch=True):
     JavaPathList = []
     FoundJava.clear()
-    if 'windows' in platform.system().lower():
+    if 'windows' in system().lower():
         for i in range(65, 91):
             Path = chr(i) + ":\\"
             if ospath.exists(Path):
