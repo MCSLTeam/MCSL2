@@ -72,7 +72,6 @@ jobs:
           --enable-plugin=pyqt5
           --output-dir=build
           --assume-yes-for-download
-          --disable-console
           MCSL2.py
 
       - name: Build on Windows
@@ -97,12 +96,8 @@ jobs:
       - name: Fix App Bundle on macOS
         if: runner.os == 'macOS'
         run: |
-          chmod +x build/MCSL2.app/Contents/MacOS/MCSL2
-          rm -r build/MCSL2.app/Contents/_CodeSignature
-          mkdir build/MCSL2.app/Contents/Resources
-          cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
-          cp Info.plist build/MCSL2.app/Contents/Resources
-
+          chmod +x build/MCSL2
+          
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -110,7 +105,7 @@ jobs:
           path: |
             build/*.exe
             build/*.bin
-            build/*.app/**/*
+            build/MCSL2
 
   CreateRelease:
     runs-on: ubuntu-latest
