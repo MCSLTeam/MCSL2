@@ -44,6 +44,36 @@
         <key>LSMinimumSystemVersion</key>
         <string>10.15</string>
 
+        <key>NSDesktopFolderUsageDescription</key>
+        <string>获得访问桌面文件夹的权限</string>
+
+        <key>NSDocumentsFolderUsageDescription</key>
+        <string>获得访问文档文件夹的权限</string>
+
+        <key>NSDownloadsFolderUsageDescription</key>
+        <string>获得访问下载文件夹的权限</string>
+
+        <key>NSNetworkVolumesUsageDescription</key>
+        <string>获得访问网络磁盘的权限</string>
+
+        <key>NSRemovableVolumesUsageDescription</key>
+        <string>获得访问可移动磁盘的权限</string>
+
+        <key>NSFileProviderDomainUsageDescription</key>
+        <string>获得访问ProviderDomain的权限</string>
+
+        <key>NSAppleScriptEnabled</key>
+        <string>获得启用AppleScript的权限</string>
+
+        <key>NSUpdateSecurityPolicy</key>
+        <string>This app requires permission to update the security policy.</string>
+
+        <key>NSSystemAdministrationUsageDescription</key>
+        <string>Allow the app to make changes to your system configuration.</string>
+
+        <key>NSLocalNetworkUsageDescription</key>
+        <string>Allow the app to use your local network.</string>
+
         <key>NSHumanReadableCopyright</key>
         <string>Copyright © 2023 LxHTT</string>
 
