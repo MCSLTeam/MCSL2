@@ -71,7 +71,14 @@ jobs:
           --onefile
           --enable-plugin=pyqt5
           --output-dir=build
+          --macos-create-app-bundle
+          --macos-signed-app-name="com.lxhtt.mcsl2"
+          --macos-app-name="MCSL2"
+          --macos-app-mode="gui"
           --assume-yes-for-download
+          --disable-console
+          --macos-app-version=2.1.3.5
+          --macos-app-icon=MCSL2.icns
           MCSL2.py
 
       - name: Build on Windows
@@ -96,7 +103,12 @@ jobs:
       - name: Fix App Bundle on macOS
         if: runner.os == 'macOS'
         run: |
-          chmod +x build/MCSL2
+           chmod +x build/MCSL2.app/Contents/MacOS/MCSL2
+           rm -r build/MCSL2.app/Contents/_CodeSignature
+           mkdir build/MCSL2.app/Contents/Resources
+           cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
+           cp Info.plist build/MCSL2.app/Contents/Resources
+           cp Info.plist build/MCSL2.app/Contents
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -105,7 +117,7 @@ jobs:
           path: |
             build/*.exe
             build/*.bin
-            build/MCSL2
+            build/*.app/**/*
 
   CreateRelease:
     runs-on: ubuntu-latest
