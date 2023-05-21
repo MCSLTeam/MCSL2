@@ -58,8 +58,8 @@ jobs:
           --linux-icon=MCSL2.ico
           --company-name="LxHTT"
           --product-name="MCSL 2"
-          --file-version=2.1.3
-          --product-version=2.1.3
+          --file-version=2.1.3.5
+          --product-version=2.1.3.5
           --file-description="MC Server Launcher 2"
           MCSL2.py
 
@@ -71,10 +71,14 @@ jobs:
           --onefile
           --enable-plugin=pyqt5
           --macos-create-app-bundle
+          --macos-signed-app-name="com.lxhtt.mcsl2"
+          --macos-app-name="MCSL2"
+          --macos-app-mode="gui"
+          --macos-app-protected-resource="NSDesktopFolderUsageDescription", "NSDocumentsFolderUsageDescription", "NSDownloadsFolderUsageDescription", "NSNetworkVolumesUsageDescription", "NSRemovableVolumesUsageDescription", "NSFileProviderDomainUsageDescription", "NSAppleScriptEnabled", "NSUpdateSecurityPolicy", "NSSystemAdministrationUsageDescription:", "NSLocalNetworkUsageDescription"
           --output-dir=build
           --assume-yes-for-download
           --disable-console
-          --macos-app-version=2.1.3
+          --macos-app-version=2.1.3.5
           --macos-app-icon=MCSL2.icns
           MCSL2.py
 
@@ -92,19 +96,19 @@ jobs:
           --windows-icon-from-ico=MCSL2.ico
           --windows-company-name="LxHTT"
           --windows-product-name="MCSL 2"
-          --windows-file-version=2.1.3
-          --windows-product-version=2.1.3
+          --windows-file-version=2.1.3.5
+          --windows-product-version=2.1.3.5
           --windows-file-description="MC Server Launcher 2"
           MCSL2.py
 
       - name: Fix App Bundle on macOS
         if: runner.os == 'macOS'
         run: |
-          rm -r build/MCSL2.app/Contents/_CodeSignature
-          mkdir build/MCSL2.app/Contents/Resources
-          cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
-          cp Info.plist build/MCSL2.app/Contents/Resources
           chmod +x build/MCSL2.app/Contents/MacOS/MCSL2
+#          rm -r build/MCSL2.app/Contents/_CodeSignature
+#          mkdir build/MCSL2.app/Contents/Resources
+#          cp MCSL2.icns build/MCSL2.app/Contents/Resources/MCSL2.icns
+#          cp Info.plist build/MCSL2.app/Contents/Resources
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
