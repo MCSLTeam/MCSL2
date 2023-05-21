@@ -70,15 +70,9 @@ jobs:
           --standalone
           --onefile
           --enable-plugin=pyqt5
-          --macos-create-app-bundle
-          --macos-signed-app-name="com.lxhtt.mcsl2"
-          --macos-app-name="MCSL2"
-          --macos-app-mode="gui"
           --output-dir=build
           --assume-yes-for-download
           --disable-console
-          --macos-app-version=2.1.3.5
-          --macos-app-icon=MCSL2.icns
           MCSL2.py
 
       - name: Build on Windows
