@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsDropShadowEffect,
-    QMainWindow,
+    QMainWindow, QListView,
 )
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
@@ -73,6 +73,12 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.About_Page_PushButton.setIconSize(QSize(24, 24))
         self.CurrentDownloadSourceLabel.setText(
             str(self.CurrentDownloadSourceLabel.text()) + str(self.MCSLAPIDownloadSourceComboBox.currentText()))
+        self.HowToAddServerComboBox.setView(QListView())
+        self.MCSLAPIDownloadSourceComboBox.setView(QListView())
+        self.Aria2ThreadCountComboBox.setView(QListView())
+        self.ConsoleInputDecodingComboBox.setView(QListView())
+        self.ConsoleOutputEncodingComboBox.setView(QListView())
+        self.DarkModeComboBox.setView(QListView())
         MCSL2Settings()
         MCSL2Logger("ReadConfig", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         MCSL2Logger("InitFunctionsBind", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
@@ -274,36 +280,36 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def InitTitleBar(self):
         TitleBarSetting = MCSL2Settings().GetConfig("UseTitleBarInsteadOfmacOSControlling")
-        if TitleBarSetting == True:
+        if TitleBarSetting:
             self.TitleBarWidget.setVisible(False)
             self.TitleBarWidget_R.setVisible(True)
-            self.Home_Page_PushButton.setGeometry(QRect(20, 110, 171, 41))
-            self.Config_Page_PushButton.setGeometry(QRect(20, 170, 171, 41))
-            self.Download_Page_PushButton.setGeometry(QRect(20, 230, 171, 41))
-            self.Server_Console_Page_PushButton.setGeometry(QRect(20, 290, 171, 41))
-            self.Tools_Page_PushButton.setGeometry(QRect(20, 350, 171, 41))
-            self.About_Page_PushButton.setGeometry(QRect(20, 410, 171, 41))
-            self.Blue1.setGeometry(QRect(20, 120, 3, 21))
-            self.Blue2.setGeometry(QRect(20, 180, 3, 21))
-            self.Blue3.setGeometry(QRect(20, 240, 3, 21))
-            self.Blue4.setGeometry(QRect(20, 300, 3, 21))
-            self.Blue5.setGeometry(QRect(20, 360, 3, 21))
-            self.Blue6.setGeometry(QRect(20, 420, 3, 21))
-        elif TitleBarSetting == False:
+            self.Home_Page_PushButton.move(20, 110)
+            self.Config_Page_PushButton.move(20, 170)
+            self.Download_Page_PushButton.move(20, 230)
+            self.Server_Console_Page_PushButton.move(20, 290)
+            self.Tools_Page_PushButton.move(20, 350)
+            self.About_Page_PushButton.move(20, 410)
+            self.Blue1.move(20, 120)
+            self.Blue2.move(20, 180)
+            self.Blue3.move(20, 240)
+            self.Blue4.move(20, 300)
+            self.Blue5.move(20, 360)
+            self.Blue6.move(20, 420)
+        elif not TitleBarSetting:
             self.TitleBarWidget.setVisible(True)
             self.TitleBarWidget_R.setVisible(False)
-            self.Home_Page_PushButton.setGeometry(QRect(20, 140, 171, 41))
-            self.Config_Page_PushButton.setGeometry(QRect(20, 200, 171, 41))
-            self.Download_Page_PushButton.setGeometry(QRect(20, 260, 171, 41))
-            self.Server_Console_Page_PushButton.setGeometry(QRect(20, 320, 171, 41))
-            self.Tools_Page_PushButton.setGeometry(QRect(20, 380, 171, 41))
-            self.About_Page_PushButton.setGeometry(QRect(20, 440, 171, 41))
-            self.Blue1.setGeometry(QRect(20, 150, 3, 21))
-            self.Blue2.setGeometry(QRect(20, 210, 3, 21))
-            self.Blue3.setGeometry(QRect(20, 270, 3, 21))
-            self.Blue4.setGeometry(QRect(20, 330, 3, 21))
-            self.Blue5.setGeometry(QRect(20, 390, 3, 21))
-            self.Blue6.setGeometry(QRect(20, 450, 3, 21))
+            self.Home_Page_PushButton.move(20, 140)
+            self.Config_Page_PushButton.move(20, 200)
+            self.Download_Page_PushButton.move(20, 260)
+            self.Server_Console_Page_PushButton.move(20, 320)
+            self.Tools_Page_PushButton.move(20, 380)
+            self.About_Page_PushButton.move(20, 440)
+            self.Blue1.move(20, 150)
+            self.Blue2.move(20, 210)
+            self.Blue3.move(20, 270)
+            self.Blue4.move(20, 330)
+            self.Blue5.move(20, 390)
+            self.Blue6.move(20, 450)
 
 
     def TransparentPercentChanger(self):
@@ -335,11 +341,49 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.__mousePressPos = None
             self.__mouseMovePos = None
 
+    def touchEvent(self, touch_event):
+        if touch_event.touchPointStates() & Qt.TouchPointMoved:
+            touch_points = touch_event.touchPoints()
+            if len(touch_points) == 2:
+                # Two finger scroll detected
+                old_pos = touch_points[0].lastPos()
+                new_pos = touch_points[1].lastPos()
+                delta = new_pos - old_pos
+
+                # Determine scroll direction
+                if abs(delta.x()) > abs(delta.y()):
+                    pass
+                else:
+                    if self.FunctionsStackedWidget.currentIndex() == 2:
+                        if self.DownloadSwitcher_TabWidget.currentIndex() == 0:
+                            self.JavaScrollArea.setValue(self.JavaScrollArea.value() - delta.y())
+                        if self.DownloadSwitcher_TabWidget.currentIndex() == 1:
+                            self.SpigotScrollArea.setValue(self.SpigotScrollArea.value() - delta.y())
+                        if self.DownloadSwitcher_TabWidget.currentIndex() == 2:
+                            self.PaperScrollArea.setValue(self.PaperScrollArea.value() - delta.y())
+                        if self.DownloadSwitcher_TabWidget.currentIndex() == 3:
+                            self.BungeeCordScrollArea.setValue(self.BungeeCordScrollArea.value() - delta.y())
+                        if self.DownloadSwitcher_TabWidget.currentIndex() == 4:
+                            self.OfficialCoreScrollArea.setValue(self.OfficialCoreScrollArea.value() - delta.y())
+                        else:
+                            pass
+                    elif self.FunctionsStackedWidget.currentIndex() == 5:
+                        self.SettingsScrollArea.setValue(self.SettingsScrollArea.value() - delta.y())
+                    elif self.FunctionsStackedWidget.currentIndex() == 6:
+                        self.ChooseServerScrollArea.setValue(self.ChooseServerScrollArea.value() - delta.y())
+                    elif self.FunctionsStackedWidget.currentIndex() == 7:
+                        self.ChooseJavaScrollArea.setValue(self.ChooseJavaScrollArea.value() - delta.y())
+                    elif self.FunctionsStackedWidget.currentIndex() == 8:
+                        self.Update_Introduction_LabelScrollAreascrollArea.setValue(self.Update_Introduction_LabelScrollAreascrollArea.value() - delta.y())
+                    else:
+                        pass
+
+
     def Quit(self):
-        global LogFilesCount
-        MCSL2Logger("Close_ButtonPressed", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
-        MCSL2Logger("MCSLExit", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
-        MCSLProcess.quit()
+            global LogFilesCount
+            MCSL2Logger("Close_ButtonPressed", MsgArg=None, MsgLevel=1, LogFilesCount=LogFilesCount).Log()
+            MCSL2Logger("MCSLExit", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+            MCSLProcess.quit()
 
     def Minimize(self):
         global LogFilesCount
@@ -1168,21 +1212,15 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         MCSL2Logger("CheckUpdate", MsgArg=f"当前版本{Version}", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
         LatestVersionInformation = Updater(Version).GetLatestVersionInformation()
         if LatestVersionInformation[0] == 1:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
-                                                                                                                  "").replace(
-                "\'", "").split(",")
-            MCSL2Logger("NewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
+            MCSL2Logger("NewVersionAvailable", MsgArg=f"{LatestVersionInformation[1][0]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
-            MCSL2Logger("UpdateContent", MsgArg=f"{LatestVersionInformation[1]}", MsgLevel=0,
+            MCSL2Logger("UpdateContent", MsgArg=f"{LatestVersionInformation[1][1]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
-            self.Update_Introduction_Title_Label.setText("这是最新版本 v" + LatestVersionInformation[0] + "的说明：")
-            self.Update_Introduction_Label.setText(str(LatestVersionInformation[1]).replace("\\n", "\n"))
+            self.Update_Introduction_Title_Label.setText("这是最新版本 v" + LatestVersionInformation[1][0] + "的说明：")
+            self.Update_Introduction_Label.setText(str(LatestVersionInformation[1][1]).replace("\\n", "\n"))
             MCSL2Logger("ToUpdatePage", MsgArg=None, MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             self.FunctionsStackedWidget.setCurrentIndex(8)
         elif LatestVersionInformation[0] == 0:
-            LatestVersionInformation = str(LatestVersionInformation[1]).replace("(", "").replace(")", "").replace(" ",
-                                                                                                                  "").replace(
-                "\'", "").split(",")
             MCSL2Logger("NoNewVersionAvailable", MsgArg=f"{LatestVersionInformation[0]}", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
         else:
@@ -1209,7 +1247,7 @@ if __name__ == '__main__':
     CanCreate = 0
     CoreFileName = ""
     ServerName = ""
-    Version = "2.1.3"
+    Version = "2.1.3.5"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \
                                   "    padding-left: 10px;\n" \

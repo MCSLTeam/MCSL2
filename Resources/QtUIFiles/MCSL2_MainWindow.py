@@ -44,24 +44,24 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Page_PushButton.setFont(font)
         self.Home_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Home_Page_PushButton.setStyleSheet("QPushButton\n"
-                                                "{\n"
-                                                "    padding-left: 10px;\n"
-                                                "    text-align: left;\n"
-                                                "    background-color: rgb(247, 247, 247);\n"
-                                                "    border-radius: 7px;\n"
-                                                "}\n"
-                                                "QPushButton:hover\n"
-                                                "{\n"
-                                                "    text-align: left;\n"
-                                                "    background-color: rgb(243, 243, 243);\n"
-                                                "    border-radius: 7px;\n"
-                                                "}\n"
-                                                "QPushButton:pressed\n"
-                                                "{\n"
-                                                "    text-align: left;\n"
-                                                "    background-color: rgb(233, 233, 233);\n"
-                                                "    border-radius: 7px;\n"
-                                                "}")
+"{\n"
+"    padding-left: 10px;\n"
+"    text-align: left;\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(243, 243, 243);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(233, 233, 233);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Home_Page_PushButton.setCheckable(False)
         self.Home_Page_PushButton.setChecked(False)
         self.Home_Page_PushButton.setAutoExclusive(False)
@@ -76,24 +76,24 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_Page_PushButton.setFont(font)
         self.Config_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Config_Page_PushButton.setStyleSheet("QPushButton\n"
-                                                  "{\n"
-                                                  "    padding-left: 10px;\n"
-                                                  "    text-align: left;\n"
-                                                  "    background-color: rgb(255, 255, 255);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}\n"
-                                                  "QPushButton:hover\n"
-                                                  "{\n"
-                                                  "    text-align: left;\n"
-                                                  "    background-color: rgb(243, 243, 243);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}\n"
-                                                  "QPushButton:pressed\n"
-                                                  "{\n"
-                                                  "    text-align: left;\n"
-                                                  "    background-color: rgb(233, 233, 233);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}")
+"{\n"
+"    padding-left: 10px;\n"
+"    text-align: left;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(243, 243, 243);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(233, 233, 233);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Config_Page_PushButton.setCheckable(False)
         self.Config_Page_PushButton.setChecked(False)
         self.Config_Page_PushButton.setAutoExclusive(False)
@@ -107,24 +107,24 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Page_PushButton.setFont(font)
         self.Download_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Download_Page_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    padding-left: 10px;\n"
-                                                    "    text-align: left;\n"
-                                                    "    background-color: rgb(255, 255, 255);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    text-align: left;\n"
-                                                    "    background-color: rgb(243, 243, 243);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    text-align: left;\n"
-                                                    "    background-color: rgb(233, 233, 233);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}")
+"{\n"
+"    padding-left: 10px;\n"
+"    text-align: left;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(243, 243, 243);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(233, 233, 233);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Download_Page_PushButton.setCheckable(False)
         self.Download_Page_PushButton.setChecked(False)
         self.Download_Page_PushButton.setAutoExclusive(False)
@@ -138,24 +138,24 @@ class Ui_MCSL2_MainWindow(object):
         self.Server_Console_Page_PushButton.setFont(font)
         self.Server_Console_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Server_Console_Page_PushButton.setStyleSheet("QPushButton\n"
-                                                          "{\n"
-                                                          "    padding-left: 10px;\n"
-                                                          "    text-align: left;\n"
-                                                          "    background-color: rgb(255, 255, 255);\n"
-                                                          "    border-radius: 7px;\n"
-                                                          "}\n"
-                                                          "QPushButton:hover\n"
-                                                          "{\n"
-                                                          "    text-align: left;\n"
-                                                          "    background-color: rgb(243, 243, 243);\n"
-                                                          "    border-radius: 7px;\n"
-                                                          "}\n"
-                                                          "QPushButton:pressed\n"
-                                                          "{\n"
-                                                          "    text-align: left;\n"
-                                                          "    background-color: rgb(233, 233, 233);\n"
-                                                          "    border-radius: 7px;\n"
-                                                          "}")
+"{\n"
+"    padding-left: 10px;\n"
+"    text-align: left;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(243, 243, 243);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(233, 233, 233);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Server_Console_Page_PushButton.setCheckable(False)
         self.Server_Console_Page_PushButton.setChecked(False)
         self.Server_Console_Page_PushButton.setAutoExclusive(False)
@@ -169,24 +169,24 @@ class Ui_MCSL2_MainWindow(object):
         self.Tools_Page_PushButton.setFont(font)
         self.Tools_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Tools_Page_PushButton.setStyleSheet("QPushButton\n"
-                                                 "{\n"
-                                                 "    padding-left: 10px;\n"
-                                                 "    text-align: left;\n"
-                                                 "    background-color: rgb(255, 255, 255);\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "}\n"
-                                                 "QPushButton:hover\n"
-                                                 "{\n"
-                                                 "    text-align: left;\n"
-                                                 "    background-color: rgb(243, 243, 243);\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "}\n"
-                                                 "QPushButton:pressed\n"
-                                                 "{\n"
-                                                 "    text-align: left;\n"
-                                                 "    background-color: rgb(233, 233, 233);\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "}")
+"{\n"
+"    padding-left: 10px;\n"
+"    text-align: left;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(243, 243, 243);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(233, 233, 233);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Tools_Page_PushButton.setCheckable(False)
         self.Tools_Page_PushButton.setChecked(False)
         self.Tools_Page_PushButton.setAutoExclusive(False)
@@ -200,24 +200,24 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Page_PushButton.setFont(font)
         self.About_Page_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.About_Page_PushButton.setStyleSheet("QPushButton\n"
-                                                 "{\n"
-                                                 "    padding-left: 10px;\n"
-                                                 "    text-align: left;\n"
-                                                 "    background-color: rgb(255, 255, 255);\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "}\n"
-                                                 "QPushButton:hover\n"
-                                                 "{\n"
-                                                 "    text-align: left;\n"
-                                                 "    background-color: rgb(243, 243, 243);\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "}\n"
-                                                 "QPushButton:pressed\n"
-                                                 "{\n"
-                                                 "    text-align: left;\n"
-                                                 "    background-color: rgb(233, 233, 233);\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "}")
+"{\n"
+"    padding-left: 10px;\n"
+"    text-align: left;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(243, 243, 243);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    text-align: left;\n"
+"    background-color: rgb(233, 233, 233);\n"
+"    border-radius: 7px;\n"
+"}")
         self.About_Page_PushButton.setCheckable(False)
         self.About_Page_PushButton.setChecked(False)
         self.About_Page_PushButton.setAutoExclusive(False)
@@ -232,10 +232,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Blue1.setAutoFillBackground(False)
         self.Blue1.setStyleSheet("QLabel\n"
-                                 "{\n"
-                                 "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 1px;\n"
-                                 "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 1px;\n"
+"}")
         self.Blue1.setText("")
         self.Blue1.setObjectName("Blue1")
         self.Blue2 = QtWidgets.QLabel(self.OptionsWidget)
@@ -247,10 +247,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Blue2.setAutoFillBackground(False)
         self.Blue2.setStyleSheet("QLabel\n"
-                                 "{\n"
-                                 "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 1px;\n"
-                                 "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 1px;\n"
+"}")
         self.Blue2.setText("")
         self.Blue2.setObjectName("Blue2")
         self.Blue3 = QtWidgets.QLabel(self.OptionsWidget)
@@ -262,10 +262,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Blue3.setAutoFillBackground(False)
         self.Blue3.setStyleSheet("QLabel\n"
-                                 "{\n"
-                                 "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 1px;\n"
-                                 "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 1px;\n"
+"}")
         self.Blue3.setText("")
         self.Blue3.setObjectName("Blue3")
         self.Blue4 = QtWidgets.QLabel(self.OptionsWidget)
@@ -277,10 +277,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Blue4.setAutoFillBackground(False)
         self.Blue4.setStyleSheet("QLabel\n"
-                                 "{\n"
-                                 "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 1px;\n"
-                                 "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 1px;\n"
+"}")
         self.Blue4.setText("")
         self.Blue4.setObjectName("Blue4")
         self.Blue5 = QtWidgets.QLabel(self.OptionsWidget)
@@ -292,10 +292,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Blue5.setAutoFillBackground(False)
         self.Blue5.setStyleSheet("QLabel\n"
-                                 "{\n"
-                                 "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 1px;\n"
-                                 "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 1px;\n"
+"}")
         self.Blue5.setText("")
         self.Blue5.setObjectName("Blue5")
         self.Blue6 = QtWidgets.QLabel(self.OptionsWidget)
@@ -307,10 +307,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Blue6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Blue6.setAutoFillBackground(False)
         self.Blue6.setStyleSheet("QLabel\n"
-                                 "{\n"
-                                 "    background-color: rgb(0, 120, 212);\n"
-                                 "    border-radius: 1px;\n"
-                                 "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 1px;\n"
+"}")
         self.Blue6.setText("")
         self.Blue6.setObjectName("Blue6")
         self.TitleBarWidget = QtWidgets.QWidget(self.OptionsWidget)
@@ -327,40 +327,40 @@ class Ui_MCSL2_MainWindow(object):
         self.Close_PushButton.setGeometry(QtCore.QRect(0, 0, 22, 22))
         self.Close_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Close_PushButton.setStyleSheet("QPushButton\n"
-                                            "{\n"
-                                            "    background-color: rgb(232, 17, 35);\n"
-                                            "    border-radius: 11px;\n"
-                                            "}\n"
-                                            "QPushButton:hover\n"
-                                            "{\n"
-                                            "    background-color: rgb(193, 6, 16);\n"
-                                            "    border-radius: 11px;\n"
-                                            "}\n"
-                                            "QPushButton:pressed\n"
-                                            "{\n"
-                                            "    background-color: rgb(170, 0, 0);\n"
-                                            "    border-radius: 11px;\n"
-                                            "}")
+"{\n"
+"    background-color: rgb(232, 17, 35);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(193, 6, 16);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(170, 0, 0);\n"
+"    border-radius: 11px;\n"
+"}")
         self.Close_PushButton.setText("")
         self.Close_PushButton.setObjectName("Close_PushButton")
         self.Minimize_PushButton = QtWidgets.QPushButton(self.TitleBarWidget)
         self.Minimize_PushButton.setGeometry(QtCore.QRect(30, 0, 22, 22))
         self.Minimize_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Minimize_PushButton.setStyleSheet("QPushButton\n"
-                                               "{\n"
-                                               "    background-color: rgb(225, 225, 0);\n"
-                                               "    border-radius: 11px;\n"
-                                               "}\n"
-                                               "QPushButton:hover\n"
-                                               "{\n"
-                                               "    background-color: rgb(183, 161, 0);\n"
-                                               "    border-radius: 11px;\n"
-                                               "}\n"
-                                               "QPushButton:pressed\n"
-                                               "{\n"
-                                               "    background-color: rgb(161, 161, 0);\n"
-                                               "    border-radius: 11px;\n"
-                                               "}")
+"{\n"
+"    background-color: rgb(225, 225, 0);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(183, 161, 0);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(161, 161, 0);\n"
+"    border-radius: 11px;\n"
+"}")
         self.Minimize_PushButton.setText("")
         self.Minimize_PushButton.setObjectName("Minimize_PushButton")
         self.MCSL2_Title_Icon_Label = QtWidgets.QLabel(self.TitleBarWidget)
@@ -389,10 +389,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Notice_Widget = QtWidgets.QWidget(self.HomePage)
         self.Notice_Widget.setGeometry(QtCore.QRect(30, 140, 321, 141))
         self.Notice_Widget.setStyleSheet("QWidget\n"
-                                         "{\n"
-                                         "    background-color: rgb(247, 247, 247);\n"
-                                         "    border-radius: 10px\n"
-                                         "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Notice_Widget.setObjectName("Notice_Widget")
         self.Notice_Label = QtWidgets.QLabel(self.Notice_Widget)
         self.Notice_Label.setGeometry(QtCore.QRect(10, 20, 281, 101))
@@ -408,10 +408,10 @@ class Ui_MCSL2_MainWindow(object):
         self.HomeTip1_Widget = QtWidgets.QWidget(self.HomePage)
         self.HomeTip1_Widget.setGeometry(QtCore.QRect(30, 290, 321, 171))
         self.HomeTip1_Widget.setStyleSheet("QWidget\n"
-                                           "{\n"
-                                           "    background-color: rgb(247, 247, 247);\n"
-                                           "    border-radius: 10px\n"
-                                           "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.HomeTip1_Widget.setObjectName("HomeTip1_Widget")
         self.HomeTip1_Label = QtWidgets.QLabel(self.HomeTip1_Widget)
         self.HomeTip1_Label.setGeometry(QtCore.QRect(10, 20, 281, 131))
@@ -440,23 +440,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Start_PushButton.setFont(font)
         self.Start_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Start_PushButton.setStyleSheet("QPushButton\n"
-                                            "{\n"
-                                            "    background-color: rgb(0, 120, 212);\n"
-                                            "    border-radius: 10px;\n"
-                                            "    color: rgb(255, 255, 255);\n"
-                                            "}\n"
-                                            "QPushButton:hover\n"
-                                            "{\n"
-                                            "    background-color: rgb(0, 110, 212);\n"
-                                            "    border-radius: 10px;\n"
-                                            "    color: rgb(255, 255, 255);\n"
-                                            "}\n"
-                                            "QPushButton:pressed\n"
-                                            "{\n"
-                                            "    background-color: rgb(0, 100, 212);\n"
-                                            "    border-radius: 10px;\n"
-                                            "    color: rgb(255, 255, 255);\n"
-                                            "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Start_PushButton.setFlat(False)
         self.Start_PushButton.setObjectName("Start_PushButton")
         self.Config_PushButton = QtWidgets.QPushButton(self.HomePageButtons_Widget)
@@ -467,20 +467,20 @@ class Ui_MCSL2_MainWindow(object):
         self.Config_PushButton.setFont(font)
         self.Config_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Config_PushButton.setStyleSheet("QPushButton\n"
-                                             "{\n"
-                                             "    background-color: rgb(247, 247, 247);\n"
-                                             "    border-radius: 7px;\n"
-                                             "}\n"
-                                             "QPushButton:hover\n"
-                                             "{\n"
-                                             "    background-color: rgb(230, 230, 230);\n"
-                                             "    border-radius: 7px;\n"
-                                             "}\n"
-                                             "QPushButton:pressed\n"
-                                             "{\n"
-                                             "    background-color: rgb(225, 225, 225);\n"
-                                             "    border-radius: 7px;\n"
-                                             "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Config_PushButton.setObjectName("Config_PushButton")
         self.Choose_Server_PushButton = QtWidgets.QPushButton(self.HomePageButtons_Widget)
         self.Choose_Server_PushButton.setGeometry(QtCore.QRect(10, 10, 111, 51))
@@ -490,20 +490,20 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Server_PushButton.setFont(font)
         self.Choose_Server_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Choose_Server_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(247, 247, 247);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(230, 230, 230);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(225, 225, 225);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Choose_Server_PushButton.setObjectName("Choose_Server_PushButton")
         self.FunctionsStackedWidget.addWidget(self.HomePage)
         self.ConfigPage = QtWidgets.QWidget()
@@ -547,21 +547,21 @@ class Ui_MCSL2_MainWindow(object):
         self.NoobAddServer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.NoobAddServer.setAutoFillBackground(False)
         self.NoobAddServer.setStyleSheet("QPushButton\n"
-                                         "{\n"
-                                         "    background-color: rgb(247, 247, 247);\n"
-                                         "    border-radius: 7px;\n"
-                                         "    font: 14px \'Microsoft YaHei UI\';\n"
-                                         "}\n"
-                                         "QPushButton:hover\n"
-                                         "{\n"
-                                         "    background-color: rgb(230, 230, 230);\n"
-                                         "    border-radius: 7px;\n"
-                                         "}\n"
-                                         "QPushButton:pressed\n"
-                                         "{\n"
-                                         "    background-color: rgb(225, 225, 225);\n"
-                                         "    border-radius: 7px;\n"
-                                         "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon1.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/QuickStart.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
@@ -593,21 +593,21 @@ class Ui_MCSL2_MainWindow(object):
         self.ExAddServer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExAddServer.setAutoFillBackground(False)
         self.ExAddServer.setStyleSheet("QPushButton\n"
-                                       "{\n"
-                                       "    background-color: rgb(247, 247, 247);\n"
-                                       "    border-radius: 7px;\n"
-                                       "    font: 14px \'Microsoft YaHei UI\';\n"
-                                       "}\n"
-                                       "QPushButton:hover\n"
-                                       "{\n"
-                                       "    background-color: rgb(230, 230, 230);\n"
-                                       "    border-radius: 7px;\n"
-                                       "}\n"
-                                       "QPushButton:pressed\n"
-                                       "{\n"
-                                       "    background-color: rgb(225, 225, 225);\n"
-                                       "    border-radius: 7px;\n"
-                                       "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon2.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Add.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
@@ -639,21 +639,21 @@ class Ui_MCSL2_MainWindow(object):
         self.ImportServer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ImportServer.setAutoFillBackground(False)
         self.ImportServer.setStyleSheet("QPushButton\n"
-                                        "{\n"
-                                        "    background-color: rgb(247, 247, 247);\n"
-                                        "    border-radius: 7px;\n"
-                                        "    font: 14px \'Microsoft YaHei UI\';\n"
-                                        "}\n"
-                                        "QPushButton:hover\n"
-                                        "{\n"
-                                        "    background-color: rgb(230, 230, 230);\n"
-                                        "    border-radius: 7px;\n"
-                                        "}\n"
-                                        "QPushButton:pressed\n"
-                                        "{\n"
-                                        "    background-color: rgb(225, 225, 225);\n"
-                                        "    border-radius: 7px;\n"
-                                        "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon3.addPixmap(QtGui.QPixmap(":/MCSL2_Icon/Import.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
@@ -680,7 +680,7 @@ class Ui_MCSL2_MainWindow(object):
         self.LeadConfigTip2.setAutoFillBackground(False)
         self.LeadConfigTip2.setStyleSheet("")
         self.LeadConfigTip2.setTextFormat(QtCore.Qt.AutoText)
-        self.LeadConfigTip2.setAlignment(QtCore.Qt.AlignJustify | QtCore.Qt.AlignVCenter)
+        self.LeadConfigTip2.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
         self.LeadConfigTip2.setObjectName("LeadConfigTip2")
         self.LeadConfigTip2_2 = QtWidgets.QLabel(self.LeadCPage)
         self.LeadConfigTip2_2.setGeometry(QtCore.QRect(270, 260, 141, 71))
@@ -691,7 +691,7 @@ class Ui_MCSL2_MainWindow(object):
         self.LeadConfigTip2_2.setAutoFillBackground(False)
         self.LeadConfigTip2_2.setStyleSheet("")
         self.LeadConfigTip2_2.setTextFormat(QtCore.Qt.AutoText)
-        self.LeadConfigTip2_2.setAlignment(QtCore.Qt.AlignJustify | QtCore.Qt.AlignVCenter)
+        self.LeadConfigTip2_2.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
         self.LeadConfigTip2_2.setObjectName("LeadConfigTip2_2")
         self.LeadConfigTip2_3 = QtWidgets.QLabel(self.LeadCPage)
         self.LeadConfigTip2_3.setGeometry(QtCore.QRect(480, 260, 141, 51))
@@ -702,7 +702,7 @@ class Ui_MCSL2_MainWindow(object):
         self.LeadConfigTip2_3.setAutoFillBackground(False)
         self.LeadConfigTip2_3.setStyleSheet("")
         self.LeadConfigTip2_3.setTextFormat(QtCore.Qt.AutoText)
-        self.LeadConfigTip2_3.setAlignment(QtCore.Qt.AlignJustify | QtCore.Qt.AlignVCenter)
+        self.LeadConfigTip2_3.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
         self.LeadConfigTip2_3.setObjectName("LeadConfigTip2_3")
         self.ConfigModeWidget.addWidget(self.LeadCPage)
         self.NoobCPage = QtWidgets.QWidget()
@@ -715,23 +715,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Completed_Save_PushButton.setFont(font)
         self.Completed_Save_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Completed_Save_PushButton.setStyleSheet("QPushButton\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 120, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}\n"
-                                                     "QPushButton:hover\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 110, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}\n"
-                                                     "QPushButton:pressed\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 100, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Completed_Save_PushButton.setFlat(False)
         self.Completed_Save_PushButton.setObjectName("Completed_Save_PushButton")
         self.Server_Name_Label = QtWidgets.QLabel(self.NoobCPage)
@@ -748,13 +748,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.Server_Name_LineEdit.setFont(font)
         self.Server_Name_LineEdit.setStyleSheet("QLineEdit\n"
-                                                "{\n"
-                                                "    border-radius: 3px;\n"
-                                                "    border: 2px;\n"
-                                                "    border-color: rgb(223, 223, 223);\n"
-                                                "    border-style: solid;\n"
-                                                "}\n"
-                                                "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.Server_Name_LineEdit.setObjectName("Server_Name_LineEdit")
         self.Others_Background = QtWidgets.QLabel(self.NoobCPage)
         self.Others_Background.setGeometry(QtCore.QRect(0, 260, 251, 121))
@@ -764,10 +764,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Others_Background.setFont(font)
         self.Others_Background.setAutoFillBackground(False)
         self.Others_Background.setStyleSheet("QLabel\n"
-                                             "{\n"
-                                             "    background-color: rgb(247, 247, 247);\n"
-                                             "    border-radius: 10px\n"
-                                             "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Others_Background.setText("")
         self.Others_Background.setObjectName("Others_Background")
         self.Configuration_Widget = QtWidgets.QWidget(self.NoobCPage)
@@ -781,23 +781,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Core_PushButton.setFont(font)
         self.Download_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Download_Core_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 110, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 100, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Download_Core_PushButton.setFlat(False)
         self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
         self.Download_Java_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
@@ -808,23 +808,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Download_Java_PushButton.setFont(font)
         self.Download_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Download_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 110, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 100, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Download_Java_PushButton.setFlat(False)
         self.Download_Java_PushButton.setObjectName("Download_Java_PushButton")
         self.Manual_Import_Core_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
@@ -835,23 +835,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Manual_Import_Core_PushButton.setFont(font)
         self.Manual_Import_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Manual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 120, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:hover\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 110, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}\n"
-                                                         "QPushButton:pressed\n"
-                                                         "{\n"
-                                                         "    background-color: rgb(0, 100, 212);\n"
-                                                         "    border-radius: 6px;\n"
-                                                         "    color: rgb(255, 255, 255);\n"
-                                                         "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Manual_Import_Core_PushButton.setFlat(False)
         self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
         self.Set_Core_Background = QtWidgets.QLabel(self.Configuration_Widget)
@@ -862,10 +862,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Core_Background.setFont(font)
         self.Set_Core_Background.setAutoFillBackground(False)
         self.Set_Core_Background.setStyleSheet("QLabel\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Set_Core_Background.setText("")
         self.Set_Core_Background.setObjectName("Set_Core_Background")
         self.Set_Java_Background = QtWidgets.QLabel(self.Configuration_Widget)
@@ -876,10 +876,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Java_Background.setFont(font)
         self.Set_Java_Background.setAutoFillBackground(False)
         self.Set_Java_Background.setStyleSheet("QLabel\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Set_Java_Background.setText("")
         self.Set_Java_Background.setObjectName("Set_Java_Background")
         self.Memory_1_Label = QtWidgets.QLabel(self.Configuration_Widget)
@@ -896,13 +896,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.MinMemory_LineEdit.setFont(font)
         self.MinMemory_LineEdit.setStyleSheet("QLineEdit\n"
-                                              "{\n"
-                                              "    border-radius: 3px;\n"
-                                              "    border: 2px;\n"
-                                              "    border-color: rgb(223, 223, 223);\n"
-                                              "    border-style: solid;\n"
-                                              "}\n"
-                                              "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.MinMemory_LineEdit.setObjectName("MinMemory_LineEdit")
         self.Set_Memory_Background = QtWidgets.QLabel(self.Configuration_Widget)
         self.Set_Memory_Background.setGeometry(QtCore.QRect(0, 140, 351, 61))
@@ -912,10 +912,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Set_Memory_Background.setFont(font)
         self.Set_Memory_Background.setAutoFillBackground(False)
         self.Set_Memory_Background.setStyleSheet("QLabel\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(247, 247, 247);\n"
-                                                 "    border-radius: 10px\n"
-                                                 "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Set_Memory_Background.setText("")
         self.Set_Memory_Background.setObjectName("Set_Memory_Background")
         self.Java_Label = QtWidgets.QLabel(self.Configuration_Widget)
@@ -932,13 +932,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.MaxMemory_LineEdit.setFont(font)
         self.MaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
-                                              "{\n"
-                                              "    border-radius: 3px;\n"
-                                              "    border: 2px;\n"
-                                              "    border-color: rgb(223, 223, 223);\n"
-                                              "    border-style: solid;\n"
-                                              "}\n"
-                                              "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.MaxMemory_LineEdit.setObjectName("MaxMemory_LineEdit")
         self.Memory_2_Label = QtWidgets.QLabel(self.Configuration_Widget)
         self.Memory_2_Label.setGeometry(QtCore.QRect(170, 150, 21, 41))
@@ -962,23 +962,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Auto_Find_Java_PushButton.setFont(font)
         self.Auto_Find_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Auto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 120, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}\n"
-                                                     "QPushButton:hover\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 110, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}\n"
-                                                     "QPushButton:pressed\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 100, 212);\n"
-                                                     "    border-radius: 6px;\n"
-                                                     "    color: rgb(255, 255, 255);\n"
-                                                     "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Auto_Find_Java_PushButton.setFlat(False)
         self.Auto_Find_Java_PushButton.setObjectName("Auto_Find_Java_PushButton")
         self.Memory_Unit_Label = QtWidgets.QLabel(self.Configuration_Widget)
@@ -1004,20 +1004,20 @@ class Ui_MCSL2_MainWindow(object):
         self.Founded_Java_List_PushButton.setFont(font)
         self.Founded_Java_List_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Founded_Java_List_PushButton.setStyleSheet("QPushButton\n"
-                                                        "{\n"
-                                                        "    background-color: rgb(230, 230, 230);\n"
-                                                        "    border-radius: 7px;\n"
-                                                        "}\n"
-                                                        "QPushButton:hover\n"
-                                                        "{\n"
-                                                        "    background-color: rgb(227, 227, 227);\n"
-                                                        "    border-radius: 7px;\n"
-                                                        "}\n"
-                                                        "QPushButton:pressed\n"
-                                                        "{\n"
-                                                        "    background-color: rgb(225, 225, 225);\n"
-                                                        "    border-radius: 7px;\n"
-                                                        "}")
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Founded_Java_List_PushButton.setObjectName("Founded_Java_List_PushButton")
         self.Set_Core_Background.raise_()
         self.Set_Memory_Background.raise_()
@@ -1038,10 +1038,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip1_Widget = QtWidgets.QWidget(self.NoobCPage)
         self.ConfigTip1_Widget.setGeometry(QtCore.QRect(0, 0, 251, 121))
         self.ConfigTip1_Widget.setStyleSheet("QWidget\n"
-                                             "{\n"
-                                             "    background-color: rgb(247, 247, 247);\n"
-                                             "    border-radius: 10px\n"
-                                             "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ConfigTip1_Widget.setObjectName("ConfigTip1_Widget")
         self.ConfigTip1_Label = QtWidgets.QLabel(self.ConfigTip1_Widget)
         self.ConfigTip1_Label.setGeometry(QtCore.QRect(10, 20, 211, 81))
@@ -1055,10 +1055,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigTip2_Widget = QtWidgets.QWidget(self.NoobCPage)
         self.ConfigTip2_Widget.setGeometry(QtCore.QRect(0, 140, 251, 101))
         self.ConfigTip2_Widget.setStyleSheet("QWidget\n"
-                                             "{\n"
-                                             "    background-color: rgb(247, 247, 247);\n"
-                                             "    border-radius: 10px\n"
-                                             "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ConfigTip2_Widget.setObjectName("ConfigTip2_Widget")
         self.ConfigTip2_Label = QtWidgets.QLabel(self.ConfigTip2_Widget)
         self.ConfigTip2_Label.setGeometry(QtCore.QRect(10, 10, 231, 81))
@@ -1090,23 +1090,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExDownload_Core_PushButton.setFont(font)
         self.ExDownload_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExDownload_Core_PushButton.setStyleSheet("QPushButton\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 120, 212);\n"
-                                                      "    border-radius: 6px;\n"
-                                                      "    color: rgb(255, 255, 255);\n"
-                                                      "}\n"
-                                                      "QPushButton:hover\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 110, 212);\n"
-                                                      "    border-radius: 6px;\n"
-                                                      "    color: rgb(255, 255, 255);\n"
-                                                      "}\n"
-                                                      "QPushButton:pressed\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 100, 212);\n"
-                                                      "    border-radius: 6px;\n"
-                                                      "    color: rgb(255, 255, 255);\n"
-                                                      "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.ExDownload_Core_PushButton.setFlat(False)
         self.ExDownload_Core_PushButton.setObjectName("ExDownload_Core_PushButton")
         self.ExDownload_Java_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
@@ -1117,23 +1117,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExDownload_Java_PushButton.setFont(font)
         self.ExDownload_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExDownload_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 120, 212);\n"
-                                                      "    border-radius: 6px;\n"
-                                                      "    color: rgb(255, 255, 255);\n"
-                                                      "}\n"
-                                                      "QPushButton:hover\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 110, 212);\n"
-                                                      "    border-radius: 6px;\n"
-                                                      "    color: rgb(255, 255, 255);\n"
-                                                      "}\n"
-                                                      "QPushButton:pressed\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 100, 212);\n"
-                                                      "    border-radius: 6px;\n"
-                                                      "    color: rgb(255, 255, 255);\n"
-                                                      "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.ExDownload_Java_PushButton.setFlat(False)
         self.ExDownload_Java_PushButton.setObjectName("ExDownload_Java_PushButton")
         self.ExManual_Import_Core_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
@@ -1144,23 +1144,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExManual_Import_Core_PushButton.setFont(font)
         self.ExManual_Import_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExManual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-                                                           "{\n"
-                                                           "    background-color: rgb(0, 120, 212);\n"
-                                                           "    border-radius: 6px;\n"
-                                                           "    color: rgb(255, 255, 255);\n"
-                                                           "}\n"
-                                                           "QPushButton:hover\n"
-                                                           "{\n"
-                                                           "    background-color: rgb(0, 110, 212);\n"
-                                                           "    border-radius: 6px;\n"
-                                                           "    color: rgb(255, 255, 255);\n"
-                                                           "}\n"
-                                                           "QPushButton:pressed\n"
-                                                           "{\n"
-                                                           "    background-color: rgb(0, 100, 212);\n"
-                                                           "    border-radius: 6px;\n"
-                                                           "    color: rgb(255, 255, 255);\n"
-                                                           "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.ExManual_Import_Core_PushButton.setFlat(False)
         self.ExManual_Import_Core_PushButton.setObjectName("ExManual_Import_Core_PushButton")
         self.ExSet_Core_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1171,10 +1171,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Core_Background.setFont(font)
         self.ExSet_Core_Background.setAutoFillBackground(False)
         self.ExSet_Core_Background.setStyleSheet("QLabel\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(247, 247, 247);\n"
-                                                 "    border-radius: 10px\n"
-                                                 "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ExSet_Core_Background.setText("")
         self.ExSet_Core_Background.setObjectName("ExSet_Core_Background")
         self.ExSet_Java_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1185,10 +1185,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Java_Background.setFont(font)
         self.ExSet_Java_Background.setAutoFillBackground(False)
         self.ExSet_Java_Background.setStyleSheet("QLabel\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(247, 247, 247);\n"
-                                                 "    border-radius: 10px\n"
-                                                 "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ExSet_Java_Background.setText("")
         self.ExSet_Java_Background.setObjectName("ExSet_Java_Background")
         self.ExMemory_1_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1205,13 +1205,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.ExMinMemory_LineEdit.setFont(font)
         self.ExMinMemory_LineEdit.setStyleSheet("QLineEdit\n"
-                                                "{\n"
-                                                "    border-radius: 3px;\n"
-                                                "    border: 2px;\n"
-                                                "    border-color: rgb(223, 223, 223);\n"
-                                                "    border-style: solid;\n"
-                                                "}\n"
-                                                "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.ExMinMemory_LineEdit.setObjectName("ExMinMemory_LineEdit")
         self.ExSet_Memory_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExSet_Memory_Background.setGeometry(QtCore.QRect(0, 130, 341, 61))
@@ -1221,10 +1221,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Memory_Background.setFont(font)
         self.ExSet_Memory_Background.setAutoFillBackground(False)
         self.ExSet_Memory_Background.setStyleSheet("QLabel\n"
-                                                   "{\n"
-                                                   "    background-color: rgb(247, 247, 247);\n"
-                                                   "    border-radius: 10px\n"
-                                                   "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ExSet_Memory_Background.setText("")
         self.ExSet_Memory_Background.setObjectName("ExSet_Memory_Background")
         self.ExJava_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1241,13 +1241,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.ExMaxMemory_LineEdit.setFont(font)
         self.ExMaxMemory_LineEdit.setStyleSheet("QLineEdit\n"
-                                                "{\n"
-                                                "    border-radius: 3px;\n"
-                                                "    border: 2px;\n"
-                                                "    border-color: rgb(223, 223, 223);\n"
-                                                "    border-style: solid;\n"
-                                                "}\n"
-                                                "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.ExMaxMemory_LineEdit.setObjectName("ExMaxMemory_LineEdit")
         self.ExMemory_2_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExMemory_2_Label.setGeometry(QtCore.QRect(140, 140, 21, 41))
@@ -1271,23 +1271,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExAuto_Find_Java_PushButton.setFont(font)
         self.ExAuto_Find_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExAuto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(0, 120, 212);\n"
-                                                       "    border-radius: 6px;\n"
-                                                       "    color: rgb(255, 255, 255);\n"
-                                                       "}\n"
-                                                       "QPushButton:hover\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(0, 110, 212);\n"
-                                                       "    border-radius: 6px;\n"
-                                                       "    color: rgb(255, 255, 255);\n"
-                                                       "}\n"
-                                                       "QPushButton:pressed\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(0, 100, 212);\n"
-                                                       "    border-radius: 6px;\n"
-                                                       "    color: rgb(255, 255, 255);\n"
-                                                       "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.ExAuto_Find_Java_PushButton.setFlat(False)
         self.ExAuto_Find_Java_PushButton.setObjectName("ExAuto_Find_Java_PushButton")
         self.ExJava_Version_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1306,20 +1306,20 @@ class Ui_MCSL2_MainWindow(object):
         self.ExFounded_Java_List_PushButton.setFont(font)
         self.ExFounded_Java_List_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExFounded_Java_List_PushButton.setStyleSheet("QPushButton\n"
-                                                          "{\n"
-                                                          "    background-color: rgb(230, 230, 230);\n"
-                                                          "    border-radius: 7px;\n"
-                                                          "}\n"
-                                                          "QPushButton:hover\n"
-                                                          "{\n"
-                                                          "    background-color: rgb(227, 227, 227);\n"
-                                                          "    border-radius: 7px;\n"
-                                                          "}\n"
-                                                          "QPushButton:pressed\n"
-                                                          "{\n"
-                                                          "    background-color: rgb(225, 225, 225);\n"
-                                                          "    border-radius: 7px;\n"
-                                                          "}")
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.ExFounded_Java_List_PushButton.setObjectName("ExFounded_Java_List_PushButton")
         self.ExOthers_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExOthers_Background.setGeometry(QtCore.QRect(370, 0, 301, 121))
@@ -1329,10 +1329,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExOthers_Background.setFont(font)
         self.ExOthers_Background.setAutoFillBackground(False)
         self.ExOthers_Background.setStyleSheet("QLabel\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ExOthers_Background.setText("")
         self.ExOthers_Background.setObjectName("ExOthers_Background")
         self.ExServer_Name_LineEdit = QtWidgets.QLineEdit(self.ExConfiguration_Widget)
@@ -1342,13 +1342,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.ExServer_Name_LineEdit.setFont(font)
         self.ExServer_Name_LineEdit.setStyleSheet("QLineEdit\n"
-                                                  "{\n"
-                                                  "    border-radius: 3px;\n"
-                                                  "    border: 2px;\n"
-                                                  "    border-color: rgb(223, 223, 223);\n"
-                                                  "    border-style: solid;\n"
-                                                  "}\n"
-                                                  "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.ExServer_Name_LineEdit.setObjectName("ExServer_Name_LineEdit")
         self.ExServer_Name_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExServer_Name_Label.setGeometry(QtCore.QRect(400, 20, 91, 41))
@@ -1365,23 +1365,23 @@ class Ui_MCSL2_MainWindow(object):
         self.ExCompleted_Save_PushButton.setFont(font)
         self.ExCompleted_Save_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ExCompleted_Save_PushButton.setStyleSheet("QPushButton\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(0, 120, 212);\n"
-                                                       "    border-radius: 6px;\n"
-                                                       "    color: rgb(255, 255, 255);\n"
-                                                       "}\n"
-                                                       "QPushButton:hover\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(0, 110, 212);\n"
-                                                       "    border-radius: 6px;\n"
-                                                       "    color: rgb(255, 255, 255);\n"
-                                                       "}\n"
-                                                       "QPushButton:pressed\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(0, 100, 212);\n"
-                                                       "    border-radius: 6px;\n"
-                                                       "    color: rgb(255, 255, 255);\n"
-                                                       "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.ExCompleted_Save_PushButton.setFlat(False)
         self.ExCompleted_Save_PushButton.setObjectName("ExCompleted_Save_PushButton")
         self.ExMemoryUnitComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
@@ -1392,62 +1392,62 @@ class Ui_MCSL2_MainWindow(object):
         font.setKerning(True)
         self.ExMemoryUnitComboBox.setFont(font)
         self.ExMemoryUnitComboBox.setStyleSheet("QComboBox {\n"
-                                                "    border: 1px solid rgb(238, 239, 238);\n"
-                                                "    border-radius: 5px;\n"
-                                                "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                "    padding: 5px 31px 6px 11px;\n"
-                                                "    color: black;\n"
-                                                "    background-color: rgb(254, 254, 254);\n"
-                                                "    text-align: left;\n"
-                                                "}\n"
-                                                "\n"
-                                                "QComboBox:hover {\n"
-                                                "    background-color: rgb(251, 251, 251);\n"
-                                                "}\n"
-                                                "\n"
-                                                "QComboBox:pressed {\n"
-                                                "    background-color: rgb(252, 252, 252);\n"
-                                                "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                "    color: rgba(0, 0, 0, 0.63);\n"
-                                                "}\n"
-                                                "QComboBox::drop-down\n"
-                                                "{\n"
-                                                "    subcontrol-origin: padding;\n"
-                                                "    subcontrol-position: right;\n"
-                                                "    width: 35px;\n"
-                                                "    border-left-style: solid;\n"
-                                                "}\n"
-                                                "QComboBox::down-arrow\n"
-                                                "{\n"
-                                                "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                "}\n"
-                                                "QComboBox QAbstractItemView {\n"
-                                                "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                "    border-radius: 9px;\n"
-                                                "    background-color: rgb(249, 249, 249);\n"
-                                                "    outline: none;\n"
-                                                "}\n"
-                                                "\n"
-                                                "QComboBox QAbstractItemView::item {\n"
-                                                "    padding-left: 0px;\n"
-                                                "    padding-right: 10px;\n"
-                                                "    border-radius: 5px;\n"
-                                                "    border: none;\n"
-                                                "}\n"
-                                                "\n"
-                                                "QComboBox QAbstractItemView::item:hover {\n"
-                                                "    background-color: rgba(0, 0, 0, 9);\n"
-                                                "}\n"
-                                                "\n"
-                                                "QComboBox QAbstractItemView::item:selected {\n"
-                                                "    background-color: rgba(0, 0, 0, 7);\n"
-                                                "    color: black;\n"
-                                                "}\n"
-                                                "\n"
-                                                "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                "    color: rgba(0, 0, 0, 0.7);\n"
-                                                "}")
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
         self.ExMemoryUnitComboBox.setObjectName("ExMemoryUnitComboBox")
         self.ExMemoryUnitComboBox.addItem("")
         self.ExMemoryUnitComboBox.addItem("")
@@ -1459,10 +1459,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExSet_Encoding_Background.setFont(font)
         self.ExSet_Encoding_Background.setAutoFillBackground(False)
         self.ExSet_Encoding_Background.setStyleSheet("QLabel\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(247, 247, 247);\n"
-                                                     "    border-radius: 10px\n"
-                                                     "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ExSet_Encoding_Background.setText("")
         self.ExSet_Encoding_Background.setObjectName("ExSet_Encoding_Background")
         self.ExConsoleInputDecoding = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1485,62 +1485,62 @@ class Ui_MCSL2_MainWindow(object):
         font.setKerning(True)
         self.ExConsoleOutputEncodingComboBox.setFont(font)
         self.ExConsoleOutputEncodingComboBox.setStyleSheet("QComboBox {\n"
-                                                           "    border: 1px solid rgb(238, 239, 238);\n"
-                                                           "    border-radius: 5px;\n"
-                                                           "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                           "    padding: 5px 31px 6px 11px;\n"
-                                                           "    color: black;\n"
-                                                           "    background-color: rgb(254, 254, 254);\n"
-                                                           "    text-align: left;\n"
-                                                           "}\n"
-                                                           "\n"
-                                                           "QComboBox:hover {\n"
-                                                           "    background-color: rgb(251, 251, 251);\n"
-                                                           "}\n"
-                                                           "\n"
-                                                           "QComboBox:pressed {\n"
-                                                           "    background-color: rgb(252, 252, 252);\n"
-                                                           "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                           "    color: rgba(0, 0, 0, 0.63);\n"
-                                                           "}\n"
-                                                           "QComboBox::drop-down\n"
-                                                           "{\n"
-                                                           "    subcontrol-origin: padding;\n"
-                                                           "    subcontrol-position: right;\n"
-                                                           "    width: 35px;\n"
-                                                           "    border-left-style: solid;\n"
-                                                           "}\n"
-                                                           "QComboBox::down-arrow\n"
-                                                           "{\n"
-                                                           "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                           "}\n"
-                                                           "QComboBox QAbstractItemView {\n"
-                                                           "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                           "    border-radius: 9px;\n"
-                                                           "    background-color: rgb(249, 249, 249);\n"
-                                                           "    outline: none;\n"
-                                                           "}\n"
-                                                           "\n"
-                                                           "QComboBox QAbstractItemView::item {\n"
-                                                           "    padding-left: 0px;\n"
-                                                           "    padding-right: 10px;\n"
-                                                           "    border-radius: 5px;\n"
-                                                           "    border: none;\n"
-                                                           "}\n"
-                                                           "\n"
-                                                           "QComboBox QAbstractItemView::item:hover {\n"
-                                                           "    background-color: rgba(0, 0, 0, 9);\n"
-                                                           "}\n"
-                                                           "\n"
-                                                           "QComboBox QAbstractItemView::item:selected {\n"
-                                                           "    background-color: rgba(0, 0, 0, 7);\n"
-                                                           "    color: black;\n"
-                                                           "}\n"
-                                                           "\n"
-                                                           "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                           "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                           "    color: rgba(0, 0, 0, 0.7);\n"
-                                                           "}")
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
         self.ExConsoleOutputEncodingComboBox.setObjectName("ExConsoleOutputEncodingComboBox")
         self.ExConsoleOutputEncodingComboBox.addItem("")
         self.ExConsoleOutputEncodingComboBox.addItem("")
@@ -1552,62 +1552,62 @@ class Ui_MCSL2_MainWindow(object):
         font.setKerning(True)
         self.ExConsoleInputDecodingComboBox.setFont(font)
         self.ExConsoleInputDecodingComboBox.setStyleSheet("QComboBox {\n"
-                                                          "    border: 1px solid rgb(238, 239, 238);\n"
-                                                          "    border-radius: 5px;\n"
-                                                          "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                          "    padding: 5px 31px 6px 11px;\n"
-                                                          "    color: black;\n"
-                                                          "    background-color: rgb(254, 254, 254);\n"
-                                                          "    text-align: left;\n"
-                                                          "}\n"
-                                                          "\n"
-                                                          "QComboBox:hover {\n"
-                                                          "    background-color: rgb(251, 251, 251);\n"
-                                                          "}\n"
-                                                          "\n"
-                                                          "QComboBox:pressed {\n"
-                                                          "    background-color: rgb(252, 252, 252);\n"
-                                                          "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                          "    color: rgba(0, 0, 0, 0.63);\n"
-                                                          "}\n"
-                                                          "QComboBox::drop-down\n"
-                                                          "{\n"
-                                                          "    subcontrol-origin: padding;\n"
-                                                          "    subcontrol-position: right;\n"
-                                                          "    width: 35px;\n"
-                                                          "    border-left-style: solid;\n"
-                                                          "}\n"
-                                                          "QComboBox::down-arrow\n"
-                                                          "{\n"
-                                                          "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                          "}\n"
-                                                          "QComboBox QAbstractItemView {\n"
-                                                          "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                          "    border-radius: 9px;\n"
-                                                          "    background-color: rgb(249, 249, 249);\n"
-                                                          "    outline: none;\n"
-                                                          "}\n"
-                                                          "\n"
-                                                          "QComboBox QAbstractItemView::item {\n"
-                                                          "    padding-left: 0px;\n"
-                                                          "    padding-right: 10px;\n"
-                                                          "    border-radius: 5px;\n"
-                                                          "    border: none;\n"
-                                                          "}\n"
-                                                          "\n"
-                                                          "QComboBox QAbstractItemView::item:hover {\n"
-                                                          "    background-color: rgba(0, 0, 0, 9);\n"
-                                                          "}\n"
-                                                          "\n"
-                                                          "QComboBox QAbstractItemView::item:selected {\n"
-                                                          "    background-color: rgba(0, 0, 0, 7);\n"
-                                                          "    color: black;\n"
-                                                          "}\n"
-                                                          "\n"
-                                                          "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                          "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                          "    color: rgba(0, 0, 0, 0.7);\n"
-                                                          "}")
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 0px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"}")
         self.ExConsoleInputDecodingComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
         self.ExConsoleInputDecodingComboBox.setFrame(True)
         self.ExConsoleInputDecodingComboBox.setObjectName("ExConsoleInputDecodingComboBox")
@@ -1636,10 +1636,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExJVMArg_Background.setFont(font)
         self.ExJVMArg_Background.setAutoFillBackground(False)
         self.ExJVMArg_Background.setStyleSheet("QLabel\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ExJVMArg_Background.setText("")
         self.ExJVMArg_Background.setObjectName("ExJVMArg_Background")
         self.ExJVMArgLineEdit = QtWidgets.QTextEdit(self.ExConfiguration_Widget)
@@ -1649,13 +1649,13 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ExJVMArgLineEdit.setFont(font)
         self.ExJVMArgLineEdit.setStyleSheet("QTextEdit\n"
-                                            "{\n"
-                                            "    border-radius: 3px;\n"
-                                            "    border: 2px;\n"
-                                            "    border-color: rgb(223, 223, 223);\n"
-                                            "    border-style: solid;\n"
-                                            "}\n"
-                                            "")
+"{\n"
+"    border-radius: 3px;\n"
+"    border: 2px;\n"
+"    border-color: rgb(223, 223, 223);\n"
+"    border-style: solid;\n"
+"}\n"
+"")
         self.ExJVMArgLineEdit.setObjectName("ExJVMArgLineEdit")
         self.ExJVMArg_Background.raise_()
         self.ExSet_Encoding_Background.raise_()
@@ -1706,31 +1706,31 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.setFont(font)
         self.DownloadSwitcher_TabWidget.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.DownloadSwitcher_TabWidget.setStyleSheet("QTabWidget\n"
-                                                      "{\n"
-                                                      "    background-color:rgb(247, 247, 247);\n"
-                                                      "}\n"
-                                                      "QTabWidget::pane\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(235, 235, 235);\n"
-                                                      "    border-top-right-radius: 8px;\n"
-                                                      "    border-bottom-right-radius: 8px;\n"
-                                                      "    border-bottom-left-radius: 8px;\n"
-                                                      "    border:none;\n"
-                                                      "}\n"
-                                                      "QTabBar::tab\n"
-                                                      "{\n"
-                                                      "    background-color:rgb(247, 247, 247);\n"
-                                                      "    border-top-left-radius: 7px;\n"
-                                                      "    border-top-right-radius: 7px;\n"
-                                                      "    min-width: 100px;\n"
-                                                      "    min-height: 20px;\n"
-                                                      "    padding: 8px;\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QTabBar::tab:selected\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(235, 235, 235);\n"
-                                                      "}")
+"{\n"
+"    background-color:rgb(247, 247, 247);\n"
+"}\n"
+"QTabWidget::pane\n"
+"{\n"
+"    background-color: rgb(235, 235, 235);\n"
+"    border-top-right-radius: 8px;\n"
+"    border-bottom-right-radius: 8px;\n"
+"    border-bottom-left-radius: 8px;\n"
+"    border:none;\n"
+"}\n"
+"QTabBar::tab\n"
+"{\n"
+"    background-color:rgb(247, 247, 247);\n"
+"    border-top-left-radius: 4px;\n"
+"    border-top-right-radius: 4px;\n"
+"    min-width: 50px;\n"
+"    min-height: 20px;\n"
+"    padding: 8px;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected\n"
+"{\n"
+"    background-color: rgb(235, 235, 235);\n"
+"}")
         self.DownloadSwitcher_TabWidget.setTabPosition(QtWidgets.QTabWidget.North)
         self.DownloadSwitcher_TabWidget.setElideMode(QtCore.Qt.ElideMiddle)
         self.DownloadSwitcher_TabWidget.setUsesScrollButtons(False)
@@ -1741,35 +1741,35 @@ class Ui_MCSL2_MainWindow(object):
         self.JavaScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.JavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.JavaScrollArea.setStyleSheet("QScrollArea{\n"
-                                          "    border: 0px solid;\n"
-                                          "    border-right-color: #dcdbdc;\n"
-                                          "    background-color: transparent;\n"
-                                          "}\n"
-                                          "QScrollBar:vertical {\n"
-                                          "    border: none;\n"
-                                          "    background: transparent;\n"
-                                          "    width: 12px;\n"
-                                          "}\n"
-                                          "QScrollBar::handle:vertical {\n"
-                                          "    background: rgb(220, 220, 220);\n"
-                                          "    min-height: 20px;\n"
-                                          "    border-radius: 5px;\n"
-                                          "}\n"
-                                          "QScrollBar::add-line:vertial\n"
-                                          "{\n"
-                                          "    height: 0px;\n"
-                                          "}\n"
-                                          "QScrollBar::sub-line:vertial\n"
-                                          "{\n"
-                                          "    height: 0px;\n"
-                                          "}\n"
-                                          "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                          "{\n"
-                                          "    height: 0px;\n"
-                                          "}\n"
-                                          "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                          "    background: none;\n"
-                                          "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.JavaScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.JavaScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.JavaScrollArea.setLineWidth(0)
@@ -1794,35 +1794,35 @@ class Ui_MCSL2_MainWindow(object):
         self.SpigotScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.SpigotScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.SpigotScrollArea.setStyleSheet("QScrollArea{\n"
-                                            "    border: 0px solid;\n"
-                                            "    border-right-color: #dcdbdc;\n"
-                                            "    background-color: transparent;\n"
-                                            "}\n"
-                                            "QScrollBar:vertical {\n"
-                                            "    border: none;\n"
-                                            "    background: transparent;\n"
-                                            "    width: 12px;\n"
-                                            "}\n"
-                                            "QScrollBar::handle:vertical {\n"
-                                            "    background: rgb(220, 220, 220);\n"
-                                            "    min-height: 20px;\n"
-                                            "    border-radius: 5px;\n"
-                                            "}\n"
-                                            "QScrollBar::add-line:vertial\n"
-                                            "{\n"
-                                            "    height: 0px;\n"
-                                            "}\n"
-                                            "QScrollBar::sub-line:vertial\n"
-                                            "{\n"
-                                            "    height: 0px;\n"
-                                            "}\n"
-                                            "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                            "{\n"
-                                            "    height: 0px;\n"
-                                            "}\n"
-                                            "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                            "    background: none;\n"
-                                            "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.SpigotScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SpigotScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.SpigotScrollArea.setLineWidth(0)
@@ -1847,35 +1847,35 @@ class Ui_MCSL2_MainWindow(object):
         self.PaperScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.PaperScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.PaperScrollArea.setStyleSheet("QScrollArea{\n"
-                                           "    border: 0px solid;\n"
-                                           "    border-right-color: #dcdbdc;\n"
-                                           "    background-color: transparent;\n"
-                                           "}\n"
-                                           "QScrollBar:vertical {\n"
-                                           "    border: none;\n"
-                                           "    background: transparent;\n"
-                                           "    width: 12px;\n"
-                                           "}\n"
-                                           "QScrollBar::handle:vertical {\n"
-                                           "    background: rgb(220, 220, 220);\n"
-                                           "    min-height: 20px;\n"
-                                           "    border-radius: 5px;\n"
-                                           "}\n"
-                                           "QScrollBar::add-line:vertial\n"
-                                           "{\n"
-                                           "    height: 0px;\n"
-                                           "}\n"
-                                           "QScrollBar::sub-line:vertial\n"
-                                           "{\n"
-                                           "    height: 0px;\n"
-                                           "}\n"
-                                           "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                           "{\n"
-                                           "    height: 0px;\n"
-                                           "}\n"
-                                           "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                           "    background: none;\n"
-                                           "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.PaperScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.PaperScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.PaperScrollArea.setLineWidth(0)
@@ -1900,35 +1900,35 @@ class Ui_MCSL2_MainWindow(object):
         self.BungeeCordScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.BungeeCordScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.BungeeCordScrollArea.setStyleSheet("QScrollArea{\n"
-                                                "    border: 0px solid;\n"
-                                                "    border-right-color: #dcdbdc;\n"
-                                                "    background-color: transparent;\n"
-                                                "}\n"
-                                                "QScrollBar:vertical {\n"
-                                                "    border: none;\n"
-                                                "    background: transparent;\n"
-                                                "    width: 12px;\n"
-                                                "}\n"
-                                                "QScrollBar::handle:vertical {\n"
-                                                "    background: rgb(220, 220, 220);\n"
-                                                "    min-height: 20px;\n"
-                                                "    border-radius: 5px;\n"
-                                                "}\n"
-                                                "QScrollBar::add-line:vertial\n"
-                                                "{\n"
-                                                "    height: 0px;\n"
-                                                "}\n"
-                                                "QScrollBar::sub-line:vertial\n"
-                                                "{\n"
-                                                "    height: 0px;\n"
-                                                "}\n"
-                                                "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                                "{\n"
-                                                "    height: 0px;\n"
-                                                "}\n"
-                                                "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                                "    background: none;\n"
-                                                "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.BungeeCordScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.BungeeCordScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.BungeeCordScrollArea.setLineWidth(0)
@@ -1953,35 +1953,35 @@ class Ui_MCSL2_MainWindow(object):
         self.OfficialCoreScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.OfficialCoreScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.OfficialCoreScrollArea.setStyleSheet("QScrollArea{\n"
-                                                  "    border: 0px solid;\n"
-                                                  "    border-right-color: #dcdbdc;\n"
-                                                  "    background-color: transparent;\n"
-                                                  "}\n"
-                                                  "QScrollBar:vertical {\n"
-                                                  "    border: none;\n"
-                                                  "    background: transparent;\n"
-                                                  "    width: 12px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::handle:vertical {\n"
-                                                  "    background: rgb(220, 220, 220);\n"
-                                                  "    min-height: 20px;\n"
-                                                  "    border-radius: 5px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::add-line:vertial\n"
-                                                  "{\n"
-                                                  "    height: 0px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::sub-line:vertial\n"
-                                                  "{\n"
-                                                  "    height: 0px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                                  "{\n"
-                                                  "    height: 0px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                                  "    background: none;\n"
-                                                  "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.OfficialCoreScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.OfficialCoreScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.OfficialCoreScrollArea.setLineWidth(0)
@@ -2008,20 +2008,20 @@ class Ui_MCSL2_MainWindow(object):
         self.More_Download_PushButton.setFont(font)
         self.More_Download_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.More_Download_PushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(230, 230, 230);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(227, 227, 227);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(225, 225, 225);\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "}")
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.More_Download_PushButton.setObjectName("More_Download_PushButton")
         self.GoToDownloadSourceChangerPushButton = QtWidgets.QPushButton(self.DownloadPage)
         self.GoToDownloadSourceChangerPushButton.setGeometry(QtCore.QRect(500, 100, 101, 41))
@@ -2031,20 +2031,20 @@ class Ui_MCSL2_MainWindow(object):
         self.GoToDownloadSourceChangerPushButton.setFont(font)
         self.GoToDownloadSourceChangerPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.GoToDownloadSourceChangerPushButton.setStyleSheet("QPushButton\n"
-                                                               "{\n"
-                                                               "    background-color: rgb(230, 230, 230);\n"
-                                                               "    border-radius: 7px;\n"
-                                                               "}\n"
-                                                               "QPushButton:hover\n"
-                                                               "{\n"
-                                                               "    background-color: rgb(227, 227, 227);\n"
-                                                               "    border-radius: 7px;\n"
-                                                               "}\n"
-                                                               "QPushButton:pressed\n"
-                                                               "{\n"
-                                                               "    background-color: rgb(225, 225, 225);\n"
-                                                               "    border-radius: 7px;\n"
-                                                               "}")
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.GoToDownloadSourceChangerPushButton.setObjectName("GoToDownloadSourceChangerPushButton")
         self.CurrentDownloadSourceLabel = QtWidgets.QLabel(self.DownloadPage)
         self.CurrentDownloadSourceLabel.setGeometry(QtCore.QRect(100, 90, 281, 41))
@@ -2075,10 +2075,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Console_Background.setFont(font)
         self.Console_Background.setAutoFillBackground(False)
         self.Console_Background.setStyleSheet("QLabel\n"
-                                              "{\n"
-                                              "    background-color: rgb(247, 247, 247);\n"
-                                              "    border-radius: 10px\n"
-                                              "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Console_Background.setText("")
         self.Console_Background.setObjectName("Console_Background")
         self.Command_Background = QtWidgets.QLabel(self.ConsolePage)
@@ -2091,10 +2091,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Command_Background.setFont(font)
         self.Command_Background.setAutoFillBackground(False)
         self.Command_Background.setStyleSheet("QLabel\n"
-                                              "{\n"
-                                              "    background-color: rgb(247, 247, 247);\n"
-                                              "    border-radius: 10px\n"
-                                              "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Command_Background.setObjectName("Command_Background")
         self.Send_Command_PushButton = QtWidgets.QPushButton(self.ConsolePage)
         self.Send_Command_PushButton.setGeometry(QtCore.QRect(570, 480, 91, 31))
@@ -2104,23 +2104,23 @@ class Ui_MCSL2_MainWindow(object):
         self.Send_Command_PushButton.setFont(font)
         self.Send_Command_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Send_Command_PushButton.setStyleSheet("QPushButton\n"
-                                                   "{\n"
-                                                   "    background-color: rgb(0, 120, 212);\n"
-                                                   "    border-radius: 6px;\n"
-                                                   "    color: rgb(255, 255, 255);\n"
-                                                   "}\n"
-                                                   "QPushButton:hover\n"
-                                                   "{\n"
-                                                   "    background-color: rgb(0, 110, 212);\n"
-                                                   "    border-radius: 6px;\n"
-                                                   "    color: rgb(255, 255, 255);\n"
-                                                   "}\n"
-                                                   "QPushButton:pressed\n"
-                                                   "{\n"
-                                                   "    background-color: rgb(0, 100, 212);\n"
-                                                   "    border-radius: 6px;\n"
-                                                   "    color: rgb(255, 255, 255);\n"
-                                                   "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Send_Command_PushButton.setFlat(False)
         self.Send_Command_PushButton.setObjectName("Send_Command_PushButton")
         self.Command_LineEdit = QtWidgets.QLineEdit(self.ConsolePage)
@@ -2130,10 +2130,10 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.Command_LineEdit.setFont(font)
         self.Command_LineEdit.setStyleSheet("QLineEdit\n"
-                                            "{\n"
-                                            "    border-radius: 3px;\n"
-                                            "}\n"
-                                            "")
+"{\n"
+"    border-radius: 3px;\n"
+"}\n"
+"")
         self.Command_LineEdit.setObjectName("Command_LineEdit")
         self.FunctionsStackedWidget.addWidget(self.ConsolePage)
         self.ToolsPage = QtWidgets.QWidget()
@@ -2150,44 +2150,44 @@ class Ui_MCSL2_MainWindow(object):
         self.ToolsBackground = QtWidgets.QWidget(self.ToolsPage)
         self.ToolsBackground.setGeometry(QtCore.QRect(30, 140, 681, 441))
         self.ToolsBackground.setStyleSheet("QWidget\n"
-                                           "{\n"
-                                           "    background-color: rgb(247, 247, 247);\n"
-                                           "    border-radius: 10px\n"
-                                           "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ToolsBackground.setObjectName("ToolsBackground")
         self.ToolsScrollArea = QtWidgets.QScrollArea(self.ToolsBackground)
         self.ToolsScrollArea.setGeometry(QtCore.QRect(10, 10, 661, 411))
         self.ToolsScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ToolsScrollArea.setStyleSheet("QScrollArea{\n"
-                                           "    border: 0px solid;\n"
-                                           "    border-right-color: #dcdbdc;\n"
-                                           "    background-color: transparent;\n"
-                                           "}\n"
-                                           "QScrollBar:vertical {\n"
-                                           "    border: none;\n"
-                                           "    background: transparent;\n"
-                                           "    width: 12px;\n"
-                                           "}\n"
-                                           "QScrollBar::handle:vertical {\n"
-                                           "    background: rgb(220, 220, 220);\n"
-                                           "    min-height: 20px;\n"
-                                           "    border-radius: 5px;\n"
-                                           "}\n"
-                                           "QScrollBar::add-line:vertial\n"
-                                           "{\n"
-                                           "    height: 0px;\n"
-                                           "}\n"
-                                           "QScrollBar::sub-line:vertial\n"
-                                           "{\n"
-                                           "    height: 0px;\n"
-                                           "}\n"
-                                           "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                           "{\n"
-                                           "    height: 0px;\n"
-                                           "}\n"
-                                           "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                           "    background: none;\n"
-                                           "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.ToolsScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.ToolsScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.ToolsScrollArea.setLineWidth(0)
@@ -2213,20 +2213,20 @@ class Ui_MCSL2_MainWindow(object):
         self.GoToChangeToolsConfigPushButton.setFont(font)
         self.GoToChangeToolsConfigPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.GoToChangeToolsConfigPushButton.setStyleSheet("QPushButton\n"
-                                                           "{\n"
-                                                           "    background-color: rgb(230, 230, 230);\n"
-                                                           "    border-radius: 7px;\n"
-                                                           "}\n"
-                                                           "QPushButton:hover\n"
-                                                           "{\n"
-                                                           "    background-color: rgb(227, 227, 227);\n"
-                                                           "    border-radius: 7px;\n"
-                                                           "}\n"
-                                                           "QPushButton:pressed\n"
-                                                           "{\n"
-                                                           "    background-color: rgb(225, 225, 225);\n"
-                                                           "    border-radius: 7px;\n"
-                                                           "}")
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.GoToChangeToolsConfigPushButton.setObjectName("GoToChangeToolsConfigPushButton")
         self.InstallToolsPushButton = QtWidgets.QPushButton(self.ToolsPage)
         self.InstallToolsPushButton.setGeometry(QtCore.QRect(520, 90, 91, 41))
@@ -2236,23 +2236,23 @@ class Ui_MCSL2_MainWindow(object):
         self.InstallToolsPushButton.setFont(font)
         self.InstallToolsPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.InstallToolsPushButton.setStyleSheet("QPushButton\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(0, 120, 212);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "    color: rgb(255, 255, 255);\n"
-                                                  "}\n"
-                                                  "QPushButton:hover\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(0, 110, 212);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "    color: rgb(255, 255, 255);\n"
-                                                  "}\n"
-                                                  "QPushButton:pressed\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(0, 100, 212);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "    color: rgb(255, 255, 255);\n"
-                                                  "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 7px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 7px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 7px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.InstallToolsPushButton.setObjectName("InstallToolsPushButton")
         self.FunctionsStackedWidget.addWidget(self.ToolsPage)
         self.SettingsPage = QtWidgets.QWidget()
@@ -2270,32 +2270,97 @@ class Ui_MCSL2_MainWindow(object):
         self.SettingsScrollArea.setGeometry(QtCore.QRect(30, 130, 641, 421))
         self.SettingsScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.SettingsScrollArea.setStyleSheet("QScrollArea{\n"
-                                              "    border: 0px solid;\n"
-                                              "    background-color: transparent;\n"
-                                              "}\n"
-                                              "QScrollBar:vertical {\n"
-                                              "    border: none;\n"
-                                              "    background: transparent;\n"
-                                              "    width: 0px;\n"
-                                              "}\n"
-                                              "QScrollBar::handle:vertical {\n"
-                                              "    min-height: 0px;\n"
-                                              "}\n"
-                                              "QScrollBar::add-line:vertial\n"
-                                              "{\n"
-                                              "    height: 0px;\n"
-                                              "}\n"
-                                              "QScrollBar::sub-line:vertial\n"
-                                              "{\n"
-                                              "    height: 0px;\n"
-                                              "}\n"
-                                              "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                              "{\n"
-                                              "    height: 0px;\n"
-                                              "}\n"
-                                              "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                              "    background: none;\n"
-                                              "}")
+"    border: 0px solid;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 0px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    min-height: 0px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}\n"
+"QComboBox {\n"
+"    border: 1px solid rgb(238, 239, 238);\n"
+"    border-radius: 5px;\n"
+"    border-bottom: 1px solid rgb(212, 213, 212);\n"
+"    padding: 5px 31px 6px 11px;\n"
+"    color: black;\n"
+"    background-color: rgb(254, 254, 254);\n"
+"    text-align: left;\n"
+"    font: 14px \'Microsoft YaHei UI\';\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    background-color: rgb(251, 251, 251);\n"
+"}\n"
+"\n"
+"QComboBox:pressed {\n"
+"    background-color: rgb(252, 252, 252);\n"
+"    border-bottom: 1px solid rgb(238, 239, 238);\n"
+"    color: rgba(0, 0, 0, 0.63);\n"
+"}\n"
+"QComboBox::drop-down\n"
+"{\n"
+"    subcontrol-origin: padding;\n"
+"    subcontrol-position: right;\n"
+"    width: 35px;\n"
+"    border-left-style: solid;\n"
+"}\n"
+"QComboBox::down-arrow\n"
+"{\n"
+"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
+"    border-radius: 9px;\n"
+"    background-color: rgb(249, 249, 249);\n"
+"    outline: none;\n"
+"    font: 14px \'Microsoft YaHei UI\'\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"    margin-top: 4px;\n"
+"    min-height: 30px;\n"
+"    padding-left: 10px;\n"
+"    padding-right: 10px;\n"
+"    border-radius: 5px;\n"
+"    border: none;\n"
+"    font: 14px \'Microsoft YaHei UI\'\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: rgba(0, 0, 0, 9);\n"
+"    height: 27px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgba(0, 0, 0, 7);\n"
+"    color: black;\n"
+"    height: 27px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item:selected:active {\n"
+"    background-color: rgba(0, 0, 0, 0.06);\n"
+"    color: rgba(0, 0, 0, 0.7);\n"
+"    height: 27px;\n"
+"}")
         self.SettingsScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SettingsScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.SettingsScrollArea.setLineWidth(0)
@@ -2315,10 +2380,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ServerSettingsWidget.setMinimumSize(QtCore.QSize(620, 160))
         self.ServerSettingsWidget.setMaximumSize(QtCore.QSize(620, 160))
         self.ServerSettingsWidget.setStyleSheet("QWidget\n"
-                                                "{\n"
-                                                "    border-radius: 7px;\n"
-                                                "    background-color: rgba(247, 247, 247, 247)\n"
-                                                "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.ServerSettingsWidget.setObjectName("ServerSettingsWidget")
         self.AutoRunLastServerSetting = QtWidgets.QCheckBox(self.ServerSettingsWidget)
         self.AutoRunLastServerSetting.setGeometry(QtCore.QRect(30, 50, 410, 30))
@@ -2329,70 +2394,70 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.AutoRunLastServerSetting.setFont(font)
         self.AutoRunLastServerSetting.setStyleSheet("QCheckBox {\n"
-                                                    "    color: black;\n"
-                                                    "    spacing: 8px;\n"
-                                                    "    min-width: 28px;\n"
-                                                    "    min-height: 20px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator {\n"
-                                                    "    width: 18px;\n"
-                                                    "    height: 18px;\n"
-                                                    "    border-radius: 5px;\n"
-                                                    "    border: 1px solid rgb(135, 135, 135);\n"
-                                                    "    background-color: rgb(241, 241, 241);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:hover {\n"
-                                                    "    border: 1px solid rgb(132, 132, 132);\n"
-                                                    "    background-color: rgb(232, 232, 232);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:pressed {\n"
-                                                    "    border: 1px solid rgb(184, 184, 184);\n"
-                                                    "    background-color: rgb(224, 224, 224);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked,\n"
-                                                    "QCheckBox::indicator:indeterminate {\n"
-                                                    "    border: 1px solid rgb(0, 120, 212);\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked {\n"
-                                                    "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:indeterminate {\n"
-                                                    "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked:hover,\n"
-                                                    "QCheckBox::indicator:indeterminate:hover {\n"
-                                                    "    border: 1px solid --ThemeColorLight1;\n"
-                                                    "    background-color: --ThemeColorLight1;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked:pressed,\n"
-                                                    "QCheckBox::indicator:indeterminate:pressed {\n"
-                                                    "    border: 1px solid --ThemeColorLight3;\n"
-                                                    "    background-color: --ThemeColorLight3;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox:disabled {\n"
-                                                    "    color: rgba(0, 0, 0, 110);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:disabled {\n"
-                                                    "    border: 1px solid #bbbbbb;\n"
-                                                    "    background-color: rgb(224, 224, 224);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked:disabled,\n"
-                                                    "QCheckBox::indicator:indeterminate:disabled {\n"
-                                                    "    border: 1px solid rgb(199, 199, 199);\n"
-                                                    "    background-color: rgb(199, 199, 199);\n"
-                                                    "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.AutoRunLastServerSetting.setObjectName("AutoRunLastServerSetting")
         self.AcceptAllMojangEULASetting = QtWidgets.QCheckBox(self.ServerSettingsWidget)
         self.AcceptAllMojangEULASetting.setGeometry(QtCore.QRect(30, 80, 410, 30))
@@ -2403,70 +2468,70 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.AcceptAllMojangEULASetting.setFont(font)
         self.AcceptAllMojangEULASetting.setStyleSheet("QCheckBox {\n"
-                                                      "    color: black;\n"
-                                                      "    spacing: 8px;\n"
-                                                      "    min-width: 28px;\n"
-                                                      "    min-height: 20px;\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator {\n"
-                                                      "    width: 18px;\n"
-                                                      "    height: 18px;\n"
-                                                      "    border-radius: 5px;\n"
-                                                      "    border: 1px solid rgb(135, 135, 135);\n"
-                                                      "    background-color: rgb(241, 241, 241);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:hover {\n"
-                                                      "    border: 1px solid rgb(132, 132, 132);\n"
-                                                      "    background-color: rgb(232, 232, 232);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:pressed {\n"
-                                                      "    border: 1px solid rgb(184, 184, 184);\n"
-                                                      "    background-color: rgb(224, 224, 224);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:checked,\n"
-                                                      "QCheckBox::indicator:indeterminate {\n"
-                                                      "    border: 1px solid rgb(0, 120, 212);\n"
-                                                      "    background-color: rgb(0, 120, 212);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:checked {\n"
-                                                      "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:indeterminate {\n"
-                                                      "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:checked:hover,\n"
-                                                      "QCheckBox::indicator:indeterminate:hover {\n"
-                                                      "    border: 1px solid --ThemeColorLight1;\n"
-                                                      "    background-color: --ThemeColorLight1;\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:checked:pressed,\n"
-                                                      "QCheckBox::indicator:indeterminate:pressed {\n"
-                                                      "    border: 1px solid --ThemeColorLight3;\n"
-                                                      "    background-color: --ThemeColorLight3;\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox:disabled {\n"
-                                                      "    color: rgba(0, 0, 0, 110);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:disabled {\n"
-                                                      "    border: 1px solid #bbbbbb;\n"
-                                                      "    background-color: rgb(224, 224, 224);\n"
-                                                      "}\n"
-                                                      "\n"
-                                                      "QCheckBox::indicator:checked:disabled,\n"
-                                                      "QCheckBox::indicator:indeterminate:disabled {\n"
-                                                      "    border: 1px solid rgb(199, 199, 199);\n"
-                                                      "    background-color: rgb(199, 199, 199);\n"
-                                                      "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.AcceptAllMojangEULASetting.setIconSize(QtCore.QSize(32, 32))
         self.AcceptAllMojangEULASetting.setObjectName("AcceptAllMojangEULASetting")
         self.StopServerSettings = QtWidgets.QCheckBox(self.ServerSettingsWidget)
@@ -2476,70 +2541,70 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.StopServerSettings.setFont(font)
         self.StopServerSettings.setStyleSheet("QCheckBox {\n"
-                                              "    color: black;\n"
-                                              "    spacing: 8px;\n"
-                                              "    min-width: 28px;\n"
-                                              "    min-height: 20px;\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator {\n"
-                                              "    width: 18px;\n"
-                                              "    height: 18px;\n"
-                                              "    border-radius: 5px;\n"
-                                              "    border: 1px solid rgb(135, 135, 135);\n"
-                                              "    background-color: rgb(241, 241, 241);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:hover {\n"
-                                              "    border: 1px solid rgb(132, 132, 132);\n"
-                                              "    background-color: rgb(232, 232, 232);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:pressed {\n"
-                                              "    border: 1px solid rgb(184, 184, 184);\n"
-                                              "    background-color: rgb(224, 224, 224);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:checked,\n"
-                                              "QCheckBox::indicator:indeterminate {\n"
-                                              "    border: 1px solid rgb(0, 120, 212);\n"
-                                              "    background-color: rgb(0, 120, 212);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:checked {\n"
-                                              "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:indeterminate {\n"
-                                              "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:checked:hover,\n"
-                                              "QCheckBox::indicator:indeterminate:hover {\n"
-                                              "    border: 1px solid --ThemeColorLight1;\n"
-                                              "    background-color: --ThemeColorLight1;\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:checked:pressed,\n"
-                                              "QCheckBox::indicator:indeterminate:pressed {\n"
-                                              "    border: 1px solid --ThemeColorLight3;\n"
-                                              "    background-color: --ThemeColorLight3;\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox:disabled {\n"
-                                              "    color: rgba(0, 0, 0, 110);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:disabled {\n"
-                                              "    border: 1px solid #bbbbbb;\n"
-                                              "    background-color: rgb(224, 224, 224);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QCheckBox::indicator:checked:disabled,\n"
-                                              "QCheckBox::indicator:indeterminate:disabled {\n"
-                                              "    border: 1px solid rgb(199, 199, 199);\n"
-                                              "    background-color: rgb(199, 199, 199);\n"
-                                              "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.StopServerSettings.setIconSize(QtCore.QSize(32, 32))
         self.StopServerSettings.setChecked(True)
         self.StopServerSettings.setObjectName("StopServerSettings")
@@ -2547,10 +2612,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ServerSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.ServerSettingsTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.ServerSettingsTitle.setStyleSheet("QWidget\n"
-                                               "{\n"
-                                               "    background-color: rgb(247, 247, 247);\n"
-                                               "    border-radius: 10px\n"
-                                               "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ServerSettingsTitle.setObjectName("ServerSettingsTitle")
         self.ServerSettingsWidgetTitleLabel = QtWidgets.QLabel(self.ServerSettingsTitle)
         self.ServerSettingsWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -2568,10 +2633,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ServerSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ServerSettingsWidgetBlue.setAutoFillBackground(False)
         self.ServerSettingsWidgetBlue.setStyleSheet("QLabel\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "    border-radius: 10px\n"
-                                                    "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.ServerSettingsWidgetBlue.setText("")
         self.ServerSettingsWidgetBlue.setObjectName("ServerSettingsWidgetBlue")
         self.SettingsVerticalLayout.addWidget(self.ServerSettingsWidget)
@@ -2579,10 +2644,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigPageSettingsWidget.setMinimumSize(QtCore.QSize(620, 160))
         self.ConfigPageSettingsWidget.setMaximumSize(QtCore.QSize(620, 160))
         self.ConfigPageSettingsWidget.setStyleSheet("QWidget\n"
-                                                    "{\n"
-                                                    "    border-radius: 7px;\n"
-                                                    "    background-color: rgba(247, 247, 247, 247)\n"
-                                                    "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.ConfigPageSettingsWidget.setObjectName("ConfigPageSettingsWidget")
         self.OnlySaveGlobalServerConfigs = QtWidgets.QCheckBox(self.ConfigPageSettingsWidget)
         self.OnlySaveGlobalServerConfigs.setGeometry(QtCore.QRect(30, 93, 410, 30))
@@ -2593,79 +2658,79 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.OnlySaveGlobalServerConfigs.setFont(font)
         self.OnlySaveGlobalServerConfigs.setStyleSheet("QCheckBox {\n"
-                                                       "    color: black;\n"
-                                                       "    spacing: 8px;\n"
-                                                       "    min-width: 28px;\n"
-                                                       "    min-height: 20px;\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator {\n"
-                                                       "    width: 18px;\n"
-                                                       "    height: 18px;\n"
-                                                       "    border-radius: 5px;\n"
-                                                       "    border: 1px solid rgb(135, 135, 135);\n"
-                                                       "    background-color: rgb(241, 241, 241);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:hover {\n"
-                                                       "    border: 1px solid rgb(132, 132, 132);\n"
-                                                       "    background-color: rgb(232, 232, 232);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:pressed {\n"
-                                                       "    border: 1px solid rgb(184, 184, 184);\n"
-                                                       "    background-color: rgb(224, 224, 224);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:checked,\n"
-                                                       "QCheckBox::indicator:indeterminate {\n"
-                                                       "    border: 1px solid rgb(0, 120, 212);\n"
-                                                       "    background-color: rgb(0, 120, 212);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:checked {\n"
-                                                       "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:indeterminate {\n"
-                                                       "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:checked:hover,\n"
-                                                       "QCheckBox::indicator:indeterminate:hover {\n"
-                                                       "    border: 1px solid --ThemeColorLight1;\n"
-                                                       "    background-color: --ThemeColorLight1;\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:checked:pressed,\n"
-                                                       "QCheckBox::indicator:indeterminate:pressed {\n"
-                                                       "    border: 1px solid --ThemeColorLight3;\n"
-                                                       "    background-color: --ThemeColorLight3;\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox:disabled {\n"
-                                                       "    color: rgba(0, 0, 0, 110);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:disabled {\n"
-                                                       "    border: 1px solid #bbbbbb;\n"
-                                                       "    background-color: rgb(224, 224, 224);\n"
-                                                       "}\n"
-                                                       "\n"
-                                                       "QCheckBox::indicator:checked:disabled,\n"
-                                                       "QCheckBox::indicator:indeterminate:disabled {\n"
-                                                       "    border: 1px solid rgb(199, 199, 199);\n"
-                                                       "    background-color: rgb(199, 199, 199);\n"
-                                                       "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.OnlySaveGlobalServerConfigs.setObjectName("OnlySaveGlobalServerConfigs")
         self.ConfigPageSettingsTitle = QtWidgets.QWidget(self.ConfigPageSettingsWidget)
         self.ConfigPageSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.ConfigPageSettingsTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.ConfigPageSettingsTitle.setStyleSheet("QWidget\n"
-                                                   "{\n"
-                                                   "    background-color: rgb(247, 247, 247);\n"
-                                                   "    border-radius: 10px\n"
-                                                   "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ConfigPageSettingsTitle.setObjectName("ConfigPageSettingsTitle")
         self.ConfigPageSettingsWidgetTitleLabel = QtWidgets.QLabel(self.ConfigPageSettingsTitle)
         self.ConfigPageSettingsWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -2683,10 +2748,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigPageSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ConfigPageSettingsWidgetBlue.setAutoFillBackground(False)
         self.ConfigPageSettingsWidgetBlue.setStyleSheet("QLabel\n"
-                                                        "{\n"
-                                                        "    background-color: rgb(0, 120, 212);\n"
-                                                        "    border-radius: 10px\n"
-                                                        "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.ConfigPageSettingsWidgetBlue.setText("")
         self.ConfigPageSettingsWidgetBlue.setObjectName("ConfigPageSettingsWidgetBlue")
         self.HowToAddServer = QtWidgets.QLabel(self.ConfigPageSettingsWidget)
@@ -2700,66 +2765,13 @@ class Ui_MCSL2_MainWindow(object):
         self.HowToAddServerComboBox.setGeometry(QtCore.QRect(370, 60, 221, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.HowToAddServerComboBox.setFont(font)
-        self.HowToAddServerComboBox.setStyleSheet("QComboBox {\n"
-                                                  "    border: 1px solid rgb(238, 239, 238);\n"
-                                                  "    border-radius: 5px;\n"
-                                                  "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                  "    padding: 5px 31px 6px 11px;\n"
-                                                  "    color: black;\n"
-                                                  "    background-color: rgb(254, 254, 254);\n"
-                                                  "    text-align: left;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QComboBox:hover {\n"
-                                                  "    background-color: rgb(251, 251, 251);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QComboBox:pressed {\n"
-                                                  "    background-color: rgb(252, 252, 252);\n"
-                                                  "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                  "    color: rgba(0, 0, 0, 0.63);\n"
-                                                  "}\n"
-                                                  "QComboBox::drop-down\n"
-                                                  "{\n"
-                                                  "    subcontrol-origin: padding;\n"
-                                                  "    subcontrol-position: right;\n"
-                                                  "    width: 35px;\n"
-                                                  "    border-left-style: solid;\n"
-                                                  "}\n"
-                                                  "QComboBox::down-arrow\n"
-                                                  "{\n"
-                                                  "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                  "}\n"
-                                                  "QComboBox QAbstractItemView {\n"
-                                                  "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                  "    border-radius: 9px;\n"
-                                                  "    background-color: rgb(249, 249, 249);\n"
-                                                  "    outline: none;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QComboBox QAbstractItemView::item {\n"
-                                                  "    padding-left: 0px;\n"
-                                                  "    padding-right: 10px;\n"
-                                                  "    border-radius: 5px;\n"
-                                                  "    border: none;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QComboBox QAbstractItemView::item:hover {\n"
-                                                  "    background-color: rgba(0, 0, 0, 9);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QComboBox QAbstractItemView::item:selected {\n"
-                                                  "    background-color: rgba(0, 0, 0, 7);\n"
-                                                  "    color: black;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                  "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                  "    color: rgba(0, 0, 0, 0.7);\n"
-                                                  "}")
+        self.HowToAddServerComboBox.setStyleSheet("")
         self.HowToAddServerComboBox.setObjectName("HowToAddServerComboBox")
         self.HowToAddServerComboBox.addItem("")
         self.HowToAddServerComboBox.addItem("")
@@ -2769,19 +2781,19 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSettingsWidget.setMinimumSize(QtCore.QSize(620, 250))
         self.DownloadSettingsWidget.setMaximumSize(QtCore.QSize(620, 250))
         self.DownloadSettingsWidget.setStyleSheet("QWidget\n"
-                                                  "{\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "    background-color: rgba(247, 247, 247, 247)\n"
-                                                  "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.DownloadSettingsWidget.setObjectName("DownloadSettingsWidget")
         self.DownloadSettingsTitle = QtWidgets.QWidget(self.DownloadSettingsWidget)
         self.DownloadSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.DownloadSettingsTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.DownloadSettingsTitle.setStyleSheet("QWidget\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(247, 247, 247);\n"
-                                                 "    border-radius: 10px\n"
-                                                 "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.DownloadSettingsTitle.setObjectName("DownloadSettingsTitle")
         self.DownloadSettingsWidgetTitleLabel = QtWidgets.QLabel(self.DownloadSettingsTitle)
         self.DownloadSettingsWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -2799,10 +2811,10 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.DownloadSettingsWidgetBlue.setAutoFillBackground(False)
         self.DownloadSettingsWidgetBlue.setStyleSheet("QLabel\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 120, 212);\n"
-                                                      "    border-radius: 10px\n"
-                                                      "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.DownloadSettingsWidgetBlue.setText("")
         self.DownloadSettingsWidgetBlue.setObjectName("DownloadSettingsWidgetBlue")
         self.MCSLAPIDownloadSource = QtWidgets.QLabel(self.DownloadSettingsWidget)
@@ -2821,66 +2833,13 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSLAPIDownloadSourceComboBox.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.MCSLAPIDownloadSourceComboBox.setFont(font)
-        self.MCSLAPIDownloadSourceComboBox.setStyleSheet("QComboBox {\n"
-                                                         "    border: 1px solid rgb(238, 239, 238);\n"
-                                                         "    border-radius: 5px;\n"
-                                                         "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                         "    padding: 5px 31px 6px 11px;\n"
-                                                         "    color: black;\n"
-                                                         "    background-color: rgb(254, 254, 254);\n"
-                                                         "    text-align: left;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox:hover {\n"
-                                                         "    background-color: rgb(251, 251, 251);\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox:pressed {\n"
-                                                         "    background-color: rgb(252, 252, 252);\n"
-                                                         "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                         "    color: rgba(0, 0, 0, 0.63);\n"
-                                                         "}\n"
-                                                         "QComboBox::drop-down\n"
-                                                         "{\n"
-                                                         "    subcontrol-origin: padding;\n"
-                                                         "    subcontrol-position: right;\n"
-                                                         "    width: 35px;\n"
-                                                         "    border-left-style: solid;\n"
-                                                         "}\n"
-                                                         "QComboBox::down-arrow\n"
-                                                         "{\n"
-                                                         "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                         "}\n"
-                                                         "QComboBox QAbstractItemView {\n"
-                                                         "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                         "    border-radius: 9px;\n"
-                                                         "    background-color: rgb(249, 249, 249);\n"
-                                                         "    outline: none;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item {\n"
-                                                         "    padding-left: 0px;\n"
-                                                         "    padding-right: 10px;\n"
-                                                         "    border-radius: 5px;\n"
-                                                         "    border: none;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item:hover {\n"
-                                                         "    background-color: rgba(0, 0, 0, 9);\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item:selected {\n"
-                                                         "    background-color: rgba(0, 0, 0, 7);\n"
-                                                         "    color: black;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                         "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                         "    color: rgba(0, 0, 0, 0.7);\n"
-                                                         "}")
+        self.MCSLAPIDownloadSourceComboBox.setStyleSheet("")
         self.MCSLAPIDownloadSourceComboBox.setObjectName("MCSLAPIDownloadSourceComboBox")
         self.MCSLAPIDownloadSourceComboBox.addItem("")
         self.MCSLAPIDownloadSourceComboBox.addItem("")
@@ -2898,66 +2857,13 @@ class Ui_MCSL2_MainWindow(object):
         self.Aria2ThreadCountComboBox.setGeometry(QtCore.QRect(490, 100, 101, 35))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.Aria2ThreadCountComboBox.setFont(font)
-        self.Aria2ThreadCountComboBox.setStyleSheet("QComboBox {\n"
-                                                    "    border: 1px solid rgb(238, 239, 238);\n"
-                                                    "    border-radius: 5px;\n"
-                                                    "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                    "    padding: 5px 31px 6px 11px;\n"
-                                                    "    color: black;\n"
-                                                    "    background-color: rgb(254, 254, 254);\n"
-                                                    "    text-align: left;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QComboBox:hover {\n"
-                                                    "    background-color: rgb(251, 251, 251);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QComboBox:pressed {\n"
-                                                    "    background-color: rgb(252, 252, 252);\n"
-                                                    "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                    "    color: rgba(0, 0, 0, 0.63);\n"
-                                                    "}\n"
-                                                    "QComboBox::drop-down\n"
-                                                    "{\n"
-                                                    "    subcontrol-origin: padding;\n"
-                                                    "    subcontrol-position: right;\n"
-                                                    "    width: 35px;\n"
-                                                    "    border-left-style: solid;\n"
-                                                    "}\n"
-                                                    "QComboBox::down-arrow\n"
-                                                    "{\n"
-                                                    "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                    "}\n"
-                                                    "QComboBox QAbstractItemView {\n"
-                                                    "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                    "    border-radius: 9px;\n"
-                                                    "    background-color: rgb(249, 249, 249);\n"
-                                                    "    outline: none;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QComboBox QAbstractItemView::item {\n"
-                                                    "    padding-left: 0px;\n"
-                                                    "    padding-right: 10px;\n"
-                                                    "    border-radius: 5px;\n"
-                                                    "    border: none;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QComboBox QAbstractItemView::item:hover {\n"
-                                                    "    background-color: rgba(0, 0, 0, 9);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QComboBox QAbstractItemView::item:selected {\n"
-                                                    "    background-color: rgba(0, 0, 0, 7);\n"
-                                                    "    color: black;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                    "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                    "    color: rgba(0, 0, 0, 0.7);\n"
-                                                    "}")
+        self.Aria2ThreadCountComboBox.setStyleSheet("")
         self.Aria2ThreadCountComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
         self.Aria2ThreadCountComboBox.setFrame(True)
         self.Aria2ThreadCountComboBox.setObjectName("Aria2ThreadCountComboBox")
@@ -2975,70 +2881,70 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.AlwaysAskDownloadPath.setFont(font)
         self.AlwaysAskDownloadPath.setStyleSheet("QCheckBox {\n"
-                                                 "    color: black;\n"
-                                                 "    spacing: 8px;\n"
-                                                 "    min-width: 28px;\n"
-                                                 "    min-height: 20px;\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator {\n"
-                                                 "    width: 18px;\n"
-                                                 "    height: 18px;\n"
-                                                 "    border-radius: 5px;\n"
-                                                 "    border: 1px solid rgb(135, 135, 135);\n"
-                                                 "    background-color: rgb(241, 241, 241);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:hover {\n"
-                                                 "    border: 1px solid rgb(132, 132, 132);\n"
-                                                 "    background-color: rgb(232, 232, 232);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:pressed {\n"
-                                                 "    border: 1px solid rgb(184, 184, 184);\n"
-                                                 "    background-color: rgb(224, 224, 224);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:checked,\n"
-                                                 "QCheckBox::indicator:indeterminate {\n"
-                                                 "    border: 1px solid rgb(0, 120, 212);\n"
-                                                 "    background-color: rgb(0, 120, 212);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:checked {\n"
-                                                 "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:indeterminate {\n"
-                                                 "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:checked:hover,\n"
-                                                 "QCheckBox::indicator:indeterminate:hover {\n"
-                                                 "    border: 1px solid --ThemeColorLight1;\n"
-                                                 "    background-color: --ThemeColorLight1;\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:checked:pressed,\n"
-                                                 "QCheckBox::indicator:indeterminate:pressed {\n"
-                                                 "    border: 1px solid --ThemeColorLight3;\n"
-                                                 "    background-color: --ThemeColorLight3;\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox:disabled {\n"
-                                                 "    color: rgba(0, 0, 0, 110);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:disabled {\n"
-                                                 "    border: 1px solid #bbbbbb;\n"
-                                                 "    background-color: rgb(224, 224, 224);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QCheckBox::indicator:checked:disabled,\n"
-                                                 "QCheckBox::indicator:indeterminate:disabled {\n"
-                                                 "    border: 1px solid rgb(199, 199, 199);\n"
-                                                 "    background-color: rgb(199, 199, 199);\n"
-                                                 "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.AlwaysAskDownloadPath.setChecked(True)
         self.AlwaysAskDownloadPath.setObjectName("AlwaysAskDownloadPath")
         self.AlwaysAskDownloadPathTip = QtWidgets.QLabel(self.DownloadSettingsWidget)
@@ -3062,83 +2968,83 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.SameFileExceptionStop.setFont(font)
         self.SameFileExceptionStop.setStyleSheet("QRadioButton {\n"
-                                                 "    min-height: 24px;\n"
-                                                 "    max-height: 24px;\n"
-                                                 "    background-color: transparent;\n"
-                                                 "    color: black;\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator {\n"
-                                                 "    width: 16px;\n"
-                                                 "    height: 16px;\n"
-                                                 "    border-radius: 10px;\n"
-                                                 "    border: 2px solid #999999;\n"
-                                                 "    background-color: rgba(0, 0, 0, 5);\n"
-                                                 "    margin-right: 4px;\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:hover {\n"
-                                                 "    background-color: rgba(0, 0, 0, 0);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:pressed {\n"
-                                                 "    border: 2px solid #bbbbbb;\n"
-                                                 "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                 "            stop:0 rgb(255, 255, 255),\n"
-                                                 "            stop:0.5 rgb(255, 255, 255),\n"
-                                                 "            stop:0.6 rgb(225, 224, 223),\n"
-                                                 "            stop:1 rgb(225, 224, 223));\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:checked {\n"
-                                                 "    height: 20px;\n"
-                                                 "    width: 20px;\n"
-                                                 "    border: none;\n"
-                                                 "    border-radius: 10px;\n"
-                                                 "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                 "            stop:0 rgb(255, 255, 255),\n"
-                                                 "            stop:0.5 rgb(255, 255, 255),\n"
-                                                 "            stop:0.6 rgb(0, 120, 212),\n"
-                                                 "            stop:1 rgb(0, 120, 212));\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:checked:hover {\n"
-                                                 "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                 "            stop:0 rgb(255, 255, 255),\n"
-                                                 "            stop:0.6 rgb(255, 255, 255),\n"
-                                                 "            stop:0.7 rgb(0, 120, 212),\n"
-                                                 "            stop:1 rgb(0, 120, 212));\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:checked:pressed {\n"
-                                                 "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                 "            stop:0 rgb(255, 255, 255),\n"
-                                                 "            stop:0.5 rgb(255, 255, 255),\n"
-                                                 "            stop:0.6 rgb(0, 120, 212),\n"
-                                                 "            stop:1 rgb(0, 120, 212));\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton:disabled {\n"
-                                                 "    color: rgba(0, 0, 0, 110);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:disabled {\n"
-                                                 "    border: 2px solid #bbbbbb;\n"
-                                                 "    background-color: rgba(0, 0, 0, 0);\n"
-                                                 "}\n"
-                                                 "\n"
-                                                 "QRadioButton::indicator:checked {\n"
-                                                 "    height: 20px;\n"
-                                                 "    width: 20px;\n"
-                                                 "    border: none;\n"
-                                                 "    border-radius: 10px;\n"
-                                                 "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                 "            stop:0 rgb(255, 255, 255),\n"
-                                                 "            stop:0.5 rgb(255, 255, 255),\n"
-                                                 "            stop:0.6 rgb(0, 120, 212),\n"
-                                                 "            stop:1 rgb(0, 120, 212));\n"
-                                                 "}\n"
-                                                 "")
+"    min-height: 24px;\n"
+"    max-height: 24px;\n"
+"    background-color: transparent;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"    border-radius: 10px;\n"
+"    border: 2px solid #999999;\n"
+"    background-color: rgba(0, 0, 0, 5);\n"
+"    margin-right: 4px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:hover {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:pressed {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(225, 224, 223),\n"
+"            stop:1 rgb(225, 224, 223));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(255, 255, 255),\n"
+"            stop:0.7 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:disabled {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"")
         self.SameFileExceptionStop.setObjectName("SameFileExceptionStop")
         self.SameFileExceptionAsk = QtWidgets.QRadioButton(self.DownloadSettingsWidget)
         self.SameFileExceptionAsk.setGeometry(QtCore.QRect(350, 200, 71, 24))
@@ -3147,83 +3053,83 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.SameFileExceptionAsk.setFont(font)
         self.SameFileExceptionAsk.setStyleSheet("QRadioButton {\n"
-                                                "    min-height: 24px;\n"
-                                                "    max-height: 24px;\n"
-                                                "    background-color: transparent;\n"
-                                                "    color: black;\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator {\n"
-                                                "    width: 16px;\n"
-                                                "    height: 16px;\n"
-                                                "    border-radius: 10px;\n"
-                                                "    border: 2px solid #999999;\n"
-                                                "    background-color: rgba(0, 0, 0, 5);\n"
-                                                "    margin-right: 4px;\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:hover {\n"
-                                                "    background-color: rgba(0, 0, 0, 0);\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:pressed {\n"
-                                                "    border: 2px solid #bbbbbb;\n"
-                                                "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                "            stop:0 rgb(255, 255, 255),\n"
-                                                "            stop:0.5 rgb(255, 255, 255),\n"
-                                                "            stop:0.6 rgb(225, 224, 223),\n"
-                                                "            stop:1 rgb(225, 224, 223));\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:checked {\n"
-                                                "    height: 20px;\n"
-                                                "    width: 20px;\n"
-                                                "    border: none;\n"
-                                                "    border-radius: 10px;\n"
-                                                "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                "            stop:0 rgb(255, 255, 255),\n"
-                                                "            stop:0.5 rgb(255, 255, 255),\n"
-                                                "            stop:0.6 rgb(0, 120, 212),\n"
-                                                "            stop:1 rgb(0, 120, 212));\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:checked:hover {\n"
-                                                "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                "            stop:0 rgb(255, 255, 255),\n"
-                                                "            stop:0.6 rgb(255, 255, 255),\n"
-                                                "            stop:0.7 rgb(0, 120, 212),\n"
-                                                "            stop:1 rgb(0, 120, 212));\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:checked:pressed {\n"
-                                                "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                "            stop:0 rgb(255, 255, 255),\n"
-                                                "            stop:0.5 rgb(255, 255, 255),\n"
-                                                "            stop:0.6 rgb(0, 120, 212),\n"
-                                                "            stop:1 rgb(0, 120, 212));\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton:disabled {\n"
-                                                "    color: rgba(0, 0, 0, 110);\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:disabled {\n"
-                                                "    border: 2px solid #bbbbbb;\n"
-                                                "    background-color: rgba(0, 0, 0, 0);\n"
-                                                "}\n"
-                                                "\n"
-                                                "QRadioButton::indicator:checked {\n"
-                                                "    height: 20px;\n"
-                                                "    width: 20px;\n"
-                                                "    border: none;\n"
-                                                "    border-radius: 10px;\n"
-                                                "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                "            stop:0 rgb(255, 255, 255),\n"
-                                                "            stop:0.5 rgb(255, 255, 255),\n"
-                                                "            stop:0.6 rgb(0, 120, 212),\n"
-                                                "            stop:1 rgb(0, 120, 212));\n"
-                                                "}\n"
-                                                "")
+"    min-height: 24px;\n"
+"    max-height: 24px;\n"
+"    background-color: transparent;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"    border-radius: 10px;\n"
+"    border: 2px solid #999999;\n"
+"    background-color: rgba(0, 0, 0, 5);\n"
+"    margin-right: 4px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:hover {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:pressed {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(225, 224, 223),\n"
+"            stop:1 rgb(225, 224, 223));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(255, 255, 255),\n"
+"            stop:0.7 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:disabled {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"")
         self.SameFileExceptionAsk.setChecked(True)
         self.SameFileExceptionAsk.setObjectName("SameFileExceptionAsk")
         self.SameFileExceptionReWrite = QtWidgets.QRadioButton(self.DownloadSettingsWidget)
@@ -3233,102 +3139,102 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.SameFileExceptionReWrite.setFont(font)
         self.SameFileExceptionReWrite.setStyleSheet("QRadioButton {\n"
-                                                    "    min-height: 24px;\n"
-                                                    "    max-height: 24px;\n"
-                                                    "    background-color: transparent;\n"
-                                                    "    color: black;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator {\n"
-                                                    "    width: 16px;\n"
-                                                    "    height: 16px;\n"
-                                                    "    border-radius: 10px;\n"
-                                                    "    border: 2px solid #999999;\n"
-                                                    "    background-color: rgba(0, 0, 0, 5);\n"
-                                                    "    margin-right: 4px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:hover {\n"
-                                                    "    background-color: rgba(0, 0, 0, 0);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:pressed {\n"
-                                                    "    border: 2px solid #bbbbbb;\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "            stop:0 rgb(255, 255, 255),\n"
-                                                    "            stop:0.5 rgb(255, 255, 255),\n"
-                                                    "            stop:0.6 rgb(225, 224, 223),\n"
-                                                    "            stop:1 rgb(225, 224, 223));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:checked {\n"
-                                                    "    height: 20px;\n"
-                                                    "    width: 20px;\n"
-                                                    "    border: none;\n"
-                                                    "    border-radius: 10px;\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "            stop:0 rgb(255, 255, 255),\n"
-                                                    "            stop:0.5 rgb(255, 255, 255),\n"
-                                                    "            stop:0.6 rgb(0, 120, 212),\n"
-                                                    "            stop:1 rgb(0, 120, 212));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:checked:hover {\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "            stop:0 rgb(255, 255, 255),\n"
-                                                    "            stop:0.6 rgb(255, 255, 255),\n"
-                                                    "            stop:0.7 rgb(0, 120, 212),\n"
-                                                    "            stop:1 rgb(0, 120, 212));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:checked:pressed {\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "            stop:0 rgb(255, 255, 255),\n"
-                                                    "            stop:0.5 rgb(255, 255, 255),\n"
-                                                    "            stop:0.6 rgb(0, 120, 212),\n"
-                                                    "            stop:1 rgb(0, 120, 212));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton:disabled {\n"
-                                                    "    color: rgba(0, 0, 0, 110);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:disabled {\n"
-                                                    "    border: 2px solid #bbbbbb;\n"
-                                                    "    background-color: rgba(0, 0, 0, 0);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QRadioButton::indicator:checked {\n"
-                                                    "    height: 20px;\n"
-                                                    "    width: 20px;\n"
-                                                    "    border: none;\n"
-                                                    "    border-radius: 10px;\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "            stop:0 rgb(255, 255, 255),\n"
-                                                    "            stop:0.5 rgb(255, 255, 255),\n"
-                                                    "            stop:0.6 rgb(0, 120, 212),\n"
-                                                    "            stop:1 rgb(0, 120, 212));\n"
-                                                    "}\n"
-                                                    "")
+"    min-height: 24px;\n"
+"    max-height: 24px;\n"
+"    background-color: transparent;\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator {\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"    border-radius: 10px;\n"
+"    border: 2px solid #999999;\n"
+"    background-color: rgba(0, 0, 0, 5);\n"
+"    margin-right: 4px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:hover {\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:pressed {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(225, 224, 223),\n"
+"            stop:1 rgb(225, 224, 223));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(255, 255, 255),\n"
+"            stop:0.7 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"\n"
+"QRadioButton:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:disabled {\n"
+"    border: 2px solid #bbbbbb;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked {\n"
+"    height: 20px;\n"
+"    width: 20px;\n"
+"    border: none;\n"
+"    border-radius: 10px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"            stop:0 rgb(255, 255, 255),\n"
+"            stop:0.5 rgb(255, 255, 255),\n"
+"            stop:0.6 rgb(0, 120, 212),\n"
+"            stop:1 rgb(0, 120, 212));\n"
+"}\n"
+"")
         self.SameFileExceptionReWrite.setObjectName("SameFileExceptionReWrite")
         self.SettingsVerticalLayout.addWidget(self.DownloadSettingsWidget)
         self.ConsoleSettingsWidget = QtWidgets.QWidget(self.SettingsScrollAreaWidgetContents)
         self.ConsoleSettingsWidget.setMinimumSize(QtCore.QSize(620, 195))
         self.ConsoleSettingsWidget.setMaximumSize(QtCore.QSize(620, 195))
         self.ConsoleSettingsWidget.setStyleSheet("QWidget\n"
-                                                 "{\n"
-                                                 "    border-radius: 7px;\n"
-                                                 "    background-color: rgba(247, 247, 247, 247)\n"
-                                                 "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.ConsoleSettingsWidget.setObjectName("ConsoleSettingsWidget")
         self.ConsoleSettingsTitle = QtWidgets.QWidget(self.ConsoleSettingsWidget)
         self.ConsoleSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.ConsoleSettingsTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.ConsoleSettingsTitle.setStyleSheet("QWidget\n"
-                                                "{\n"
-                                                "    background-color: rgb(247, 247, 247);\n"
-                                                "    border-radius: 10px\n"
-                                                "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.ConsoleSettingsTitle.setObjectName("ConsoleSettingsTitle")
         self.ConsoleSettingsWidgetTitleLabel = QtWidgets.QLabel(self.ConsoleSettingsTitle)
         self.ConsoleSettingsWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -3346,10 +3252,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ConsoleSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ConsoleSettingsWidgetBlue.setAutoFillBackground(False)
         self.ConsoleSettingsWidgetBlue.setStyleSheet("QLabel\n"
-                                                     "{\n"
-                                                     "    background-color: rgb(0, 120, 212);\n"
-                                                     "    border-radius: 10px\n"
-                                                     "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.ConsoleSettingsWidgetBlue.setText("")
         self.ConsoleSettingsWidgetBlue.setObjectName("ConsoleSettingsWidgetBlue")
         self.ConsoleOutputEncoding = QtWidgets.QLabel(self.ConsoleSettingsWidget)
@@ -3368,66 +3274,13 @@ class Ui_MCSL2_MainWindow(object):
         self.ConsoleOutputEncodingComboBox.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.ConsoleOutputEncodingComboBox.setFont(font)
-        self.ConsoleOutputEncodingComboBox.setStyleSheet("QComboBox {\n"
-                                                         "    border: 1px solid rgb(238, 239, 238);\n"
-                                                         "    border-radius: 5px;\n"
-                                                         "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                         "    padding: 5px 31px 6px 11px;\n"
-                                                         "    color: black;\n"
-                                                         "    background-color: rgb(254, 254, 254);\n"
-                                                         "    text-align: left;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox:hover {\n"
-                                                         "    background-color: rgb(251, 251, 251);\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox:pressed {\n"
-                                                         "    background-color: rgb(252, 252, 252);\n"
-                                                         "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                         "    color: rgba(0, 0, 0, 0.63);\n"
-                                                         "}\n"
-                                                         "QComboBox::drop-down\n"
-                                                         "{\n"
-                                                         "    subcontrol-origin: padding;\n"
-                                                         "    subcontrol-position: right;\n"
-                                                         "    width: 35px;\n"
-                                                         "    border-left-style: solid;\n"
-                                                         "}\n"
-                                                         "QComboBox::down-arrow\n"
-                                                         "{\n"
-                                                         "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                         "}\n"
-                                                         "QComboBox QAbstractItemView {\n"
-                                                         "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                         "    border-radius: 9px;\n"
-                                                         "    background-color: rgb(249, 249, 249);\n"
-                                                         "    outline: none;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item {\n"
-                                                         "    padding-left: 0px;\n"
-                                                         "    padding-right: 10px;\n"
-                                                         "    border-radius: 5px;\n"
-                                                         "    border: none;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item:hover {\n"
-                                                         "    background-color: rgba(0, 0, 0, 9);\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item:selected {\n"
-                                                         "    background-color: rgba(0, 0, 0, 7);\n"
-                                                         "    color: black;\n"
-                                                         "}\n"
-                                                         "\n"
-                                                         "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                         "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                         "    color: rgba(0, 0, 0, 0.7);\n"
-                                                         "}")
+        self.ConsoleOutputEncodingComboBox.setStyleSheet("")
         self.ConsoleOutputEncodingComboBox.setObjectName("ConsoleOutputEncodingComboBox")
         self.ConsoleOutputEncodingComboBox.addItem("")
         self.ConsoleOutputEncodingComboBox.addItem("")
@@ -3442,66 +3295,13 @@ class Ui_MCSL2_MainWindow(object):
         self.ConsoleInputDecodingComboBox.setGeometry(QtCore.QRect(350, 140, 241, 35))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.ConsoleInputDecodingComboBox.setFont(font)
-        self.ConsoleInputDecodingComboBox.setStyleSheet("QComboBox {\n"
-                                                        "    border: 1px solid rgb(238, 239, 238);\n"
-                                                        "    border-radius: 5px;\n"
-                                                        "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                                        "    padding: 5px 31px 6px 11px;\n"
-                                                        "    color: black;\n"
-                                                        "    background-color: rgb(254, 254, 254);\n"
-                                                        "    text-align: left;\n"
-                                                        "}\n"
-                                                        "\n"
-                                                        "QComboBox:hover {\n"
-                                                        "    background-color: rgb(251, 251, 251);\n"
-                                                        "}\n"
-                                                        "\n"
-                                                        "QComboBox:pressed {\n"
-                                                        "    background-color: rgb(252, 252, 252);\n"
-                                                        "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                                        "    color: rgba(0, 0, 0, 0.63);\n"
-                                                        "}\n"
-                                                        "QComboBox::drop-down\n"
-                                                        "{\n"
-                                                        "    subcontrol-origin: padding;\n"
-                                                        "    subcontrol-position: right;\n"
-                                                        "    width: 35px;\n"
-                                                        "    border-left-style: solid;\n"
-                                                        "}\n"
-                                                        "QComboBox::down-arrow\n"
-                                                        "{\n"
-                                                        "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                                        "}\n"
-                                                        "QComboBox QAbstractItemView {\n"
-                                                        "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                                        "    border-radius: 9px;\n"
-                                                        "    background-color: rgb(249, 249, 249);\n"
-                                                        "    outline: none;\n"
-                                                        "}\n"
-                                                        "\n"
-                                                        "QComboBox QAbstractItemView::item {\n"
-                                                        "    padding-left: 0px;\n"
-                                                        "    padding-right: 10px;\n"
-                                                        "    border-radius: 5px;\n"
-                                                        "    border: none;\n"
-                                                        "}\n"
-                                                        "\n"
-                                                        "QComboBox QAbstractItemView::item:hover {\n"
-                                                        "    background-color: rgba(0, 0, 0, 9);\n"
-                                                        "}\n"
-                                                        "\n"
-                                                        "QComboBox QAbstractItemView::item:selected {\n"
-                                                        "    background-color: rgba(0, 0, 0, 7);\n"
-                                                        "    color: black;\n"
-                                                        "}\n"
-                                                        "\n"
-                                                        "QComboBox QAbstractItemView::item:selected:active {\n"
-                                                        "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                                        "    color: rgba(0, 0, 0, 0.7);\n"
-                                                        "}")
+        self.ConsoleInputDecodingComboBox.setStyleSheet("")
         self.ConsoleInputDecodingComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
         self.ConsoleInputDecodingComboBox.setFrame(True)
         self.ConsoleInputDecodingComboBox.setObjectName("ConsoleInputDecodingComboBox")
@@ -3517,70 +3317,70 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.EnableQuickMenu.setFont(font)
         self.EnableQuickMenu.setStyleSheet("QCheckBox {\n"
-                                           "    color: black;\n"
-                                           "    spacing: 8px;\n"
-                                           "    min-width: 28px;\n"
-                                           "    min-height: 20px;\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator {\n"
-                                           "    width: 18px;\n"
-                                           "    height: 18px;\n"
-                                           "    border-radius: 5px;\n"
-                                           "    border: 1px solid rgb(135, 135, 135);\n"
-                                           "    background-color: rgb(241, 241, 241);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:hover {\n"
-                                           "    border: 1px solid rgb(132, 132, 132);\n"
-                                           "    background-color: rgb(232, 232, 232);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:pressed {\n"
-                                           "    border: 1px solid rgb(184, 184, 184);\n"
-                                           "    background-color: rgb(224, 224, 224);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:checked,\n"
-                                           "QCheckBox::indicator:indeterminate {\n"
-                                           "    border: 1px solid rgb(0, 120, 212);\n"
-                                           "    background-color: rgb(0, 120, 212);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:checked {\n"
-                                           "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:indeterminate {\n"
-                                           "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:checked:hover,\n"
-                                           "QCheckBox::indicator:indeterminate:hover {\n"
-                                           "    border: 1px solid --ThemeColorLight1;\n"
-                                           "    background-color: --ThemeColorLight1;\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:checked:pressed,\n"
-                                           "QCheckBox::indicator:indeterminate:pressed {\n"
-                                           "    border: 1px solid --ThemeColorLight3;\n"
-                                           "    background-color: --ThemeColorLight3;\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox:disabled {\n"
-                                           "    color: rgba(0, 0, 0, 110);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:disabled {\n"
-                                           "    border: 1px solid #bbbbbb;\n"
-                                           "    background-color: rgb(224, 224, 224);\n"
-                                           "}\n"
-                                           "\n"
-                                           "QCheckBox::indicator:checked:disabled,\n"
-                                           "QCheckBox::indicator:indeterminate:disabled {\n"
-                                           "    border: 1px solid rgb(199, 199, 199);\n"
-                                           "    background-color: rgb(199, 199, 199);\n"
-                                           "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.EnableQuickMenu.setChecked(True)
         self.EnableQuickMenu.setObjectName("EnableQuickMenu")
         self.SettingsVerticalLayout.addWidget(self.ConsoleSettingsWidget)
@@ -3588,19 +3388,19 @@ class Ui_MCSL2_MainWindow(object):
         self.UISettingsWidget.setMinimumSize(QtCore.QSize(620, 200))
         self.UISettingsWidget.setMaximumSize(QtCore.QSize(620, 200))
         self.UISettingsWidget.setStyleSheet("QWidget\n"
-                                            "{\n"
-                                            "    border-radius: 7px;\n"
-                                            "    background-color: rgba(247, 247, 247, 247)\n"
-                                            "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.UISettingsWidget.setObjectName("UISettingsWidget")
         self.UISettingsTitle = QtWidgets.QWidget(self.UISettingsWidget)
         self.UISettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.UISettingsTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.UISettingsTitle.setStyleSheet("QWidget\n"
-                                           "{\n"
-                                           "    background-color: rgb(247, 247, 247);\n"
-                                           "    border-radius: 10px\n"
-                                           "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.UISettingsTitle.setObjectName("UISettingsTitle")
         self.UISettingsWidgetTitleLabel = QtWidgets.QLabel(self.UISettingsTitle)
         self.UISettingsWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -3618,10 +3418,10 @@ class Ui_MCSL2_MainWindow(object):
         self.UISettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.UISettingsWidgetBlue.setAutoFillBackground(False)
         self.UISettingsWidgetBlue.setStyleSheet("QLabel\n"
-                                                "{\n"
-                                                "    background-color: rgb(0, 120, 212);\n"
-                                                "    border-radius: 10px\n"
-                                                "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.UISettingsWidgetBlue.setText("")
         self.UISettingsWidgetBlue.setObjectName("UISettingsWidgetBlue")
         self.TransparentSetting = QtWidgets.QLabel(self.UISettingsWidget)
@@ -3642,66 +3442,13 @@ class Ui_MCSL2_MainWindow(object):
         self.DarkModeComboBox.setGeometry(QtCore.QRect(470, 144, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.DarkModeComboBox.setFont(font)
-        self.DarkModeComboBox.setStyleSheet("QComboBox {\n"
-                                            "    border: 1px solid rgb(238, 239, 238);\n"
-                                            "    border-radius: 5px;\n"
-                                            "    border-bottom: 1px solid rgb(212, 213, 212);\n"
-                                            "    padding: 5px 31px 6px 11px;\n"
-                                            "    color: black;\n"
-                                            "    background-color: rgb(254, 254, 254);\n"
-                                            "    text-align: left;\n"
-                                            "}\n"
-                                            "\n"
-                                            "QComboBox:hover {\n"
-                                            "    background-color: rgb(251, 251, 251);\n"
-                                            "}\n"
-                                            "\n"
-                                            "QComboBox:pressed {\n"
-                                            "    background-color: rgb(252, 252, 252);\n"
-                                            "    border-bottom: 1px solid rgb(238, 239, 238);\n"
-                                            "    color: rgba(0, 0, 0, 0.63);\n"
-                                            "}\n"
-                                            "QComboBox::drop-down\n"
-                                            "{\n"
-                                            "    subcontrol-origin: padding;\n"
-                                            "    subcontrol-position: right;\n"
-                                            "    width: 35px;\n"
-                                            "    border-left-style: solid;\n"
-                                            "}\n"
-                                            "QComboBox::down-arrow\n"
-                                            "{\n"
-                                            "    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-                                            "}\n"
-                                            "QComboBox QAbstractItemView {\n"
-                                            "    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-                                            "    border-radius: 9px;\n"
-                                            "    background-color: rgb(249, 249, 249);\n"
-                                            "    outline: none;\n"
-                                            "}\n"
-                                            "\n"
-                                            "QComboBox QAbstractItemView::item {\n"
-                                            "    padding-left: 0px;\n"
-                                            "    padding-right: 10px;\n"
-                                            "    border-radius: 5px;\n"
-                                            "    border: none;\n"
-                                            "}\n"
-                                            "\n"
-                                            "QComboBox QAbstractItemView::item:hover {\n"
-                                            "    background-color: rgba(0, 0, 0, 9);\n"
-                                            "}\n"
-                                            "\n"
-                                            "QComboBox QAbstractItemView::item:selected {\n"
-                                            "    background-color: rgba(0, 0, 0, 7);\n"
-                                            "    color: black;\n"
-                                            "}\n"
-                                            "\n"
-                                            "QComboBox QAbstractItemView::item:selected:active {\n"
-                                            "    background-color: rgba(0, 0, 0, 0.06);\n"
-                                            "    color: rgba(0, 0, 0, 0.7);\n"
-                                            "}")
+        self.DarkModeComboBox.setStyleSheet("")
         self.DarkModeComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
         self.DarkModeComboBox.setFrame(True)
         self.DarkModeComboBox.setObjectName("DarkModeComboBox")
@@ -3715,70 +3462,70 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.TitleBarInsteadOfmacOS.setFont(font)
         self.TitleBarInsteadOfmacOS.setStyleSheet("QCheckBox {\n"
-                                                  "    color: black;\n"
-                                                  "    spacing: 8px;\n"
-                                                  "    min-width: 28px;\n"
-                                                  "    min-height: 20px;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator {\n"
-                                                  "    width: 18px;\n"
-                                                  "    height: 18px;\n"
-                                                  "    border-radius: 5px;\n"
-                                                  "    border: 1px solid rgb(135, 135, 135);\n"
-                                                  "    background-color: rgb(241, 241, 241);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:hover {\n"
-                                                  "    border: 1px solid rgb(132, 132, 132);\n"
-                                                  "    background-color: rgb(232, 232, 232);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:pressed {\n"
-                                                  "    border: 1px solid rgb(184, 184, 184);\n"
-                                                  "    background-color: rgb(224, 224, 224);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:checked,\n"
-                                                  "QCheckBox::indicator:indeterminate {\n"
-                                                  "    border: 1px solid rgb(0, 120, 212);\n"
-                                                  "    background-color: rgb(0, 120, 212);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:checked {\n"
-                                                  "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:indeterminate {\n"
-                                                  "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:checked:hover,\n"
-                                                  "QCheckBox::indicator:indeterminate:hover {\n"
-                                                  "    border: 1px solid --ThemeColorLight1;\n"
-                                                  "    background-color: --ThemeColorLight1;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:checked:pressed,\n"
-                                                  "QCheckBox::indicator:indeterminate:pressed {\n"
-                                                  "    border: 1px solid --ThemeColorLight3;\n"
-                                                  "    background-color: --ThemeColorLight3;\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox:disabled {\n"
-                                                  "    color: rgba(0, 0, 0, 110);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:disabled {\n"
-                                                  "    border: 1px solid #bbbbbb;\n"
-                                                  "    background-color: rgb(224, 224, 224);\n"
-                                                  "}\n"
-                                                  "\n"
-                                                  "QCheckBox::indicator:checked:disabled,\n"
-                                                  "QCheckBox::indicator:indeterminate:disabled {\n"
-                                                  "    border: 1px solid rgb(199, 199, 199);\n"
-                                                  "    background-color: rgb(199, 199, 199);\n"
-                                                  "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.TitleBarInsteadOfmacOS.setIconSize(QtCore.QSize(32, 32))
         self.TitleBarInsteadOfmacOS.setCheckable(True)
         self.TitleBarInsteadOfmacOS.setChecked(False)
@@ -3790,114 +3537,114 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.TransparentPercentSlider.setFont(font)
         self.TransparentPercentSlider.setStyleSheet("QSlider:horizontal {\n"
-                                                    "    min-height: 24px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::groove:horizontal {\n"
-                                                    "    height: 4px;\n"
-                                                    "    background-color: rgba(0, 0, 0, 100);\n"
-                                                    "    border-radius: 2px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::sub-page:horizontal {\n"
-                                                    "    background: rgb(0, 120, 212);\n"
-                                                    "    height: 4px;\n"
-                                                    "    border-radius: 2px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:horizontal {\n"
-                                                    "    border: 1px solid rgb(222, 222, 222);\n"
-                                                    "    width: 20px;\n"
-                                                    "    min-height: 24px;\n"
-                                                    "    margin: -9px 0;\n"
-                                                    "    border-radius: 11px;\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "        stop:0 rgb(0, 120, 212),\n"
-                                                    "        stop:0.48 rgb(0, 120, 212),\n"
-                                                    "        stop:0.55 rgb(255, 255, 255),\n"
-                                                    "        stop:1 rgb(255, 255, 255));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:horizontal:hover {\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "        stop:0 rgb(0, 120, 212),\n"
-                                                    "        stop:0.55 rgb(0, 120, 212),\n"
-                                                    "        stop:0.65 rgb(255, 255, 255),\n"
-                                                    "        stop:1 rgb(255, 255, 255));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:horizontal:pressed {\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "        stop:0 rgb(0, 120, 212),\n"
-                                                    "        stop:0.4 rgb(0, 120, 212),\n"
-                                                    "        stop:0.5 rgb(255, 255, 255),\n"
-                                                    "        stop:1 rgb(255, 255, 255));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::groove:horizontal:disabled {\n"
-                                                    "    background-color: rgba(0, 0, 0, 75);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:horizontal:disabled {\n"
-                                                    "    background-color: #808080;\n"
-                                                    "    border: 5px solid #cccccc;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "\n"
-                                                    "QSlider:vertical {\n"
-                                                    "    min-width: 24px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::groove:vertical {\n"
-                                                    "    width: 4px;\n"
-                                                    "    background-color: rgba(0, 0, 0, 100);\n"
-                                                    "    border-radius: 2px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::add-page:vertical {\n"
-                                                    "    background: rgb(0, 120, 212);\n"
-                                                    "    width: 4px;\n"
-                                                    "    border-radius: 2px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:vertical {\n"
-                                                    "    border: 1px solid rgb(222, 222, 222);\n"
-                                                    "    height: 20px;\n"
-                                                    "    min-width: 24px;\n"
-                                                    "    margin: 0 -9px;\n"
-                                                    "    border-radius: 11px;\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "        stop:0 rgb(0, 120, 212),\n"
-                                                    "        stop:0.48 rgb(0, 120, 212),\n"
-                                                    "        stop:0.55 rgb(255, 255, 255),\n"
-                                                    "        stop:1 rgb(255, 255, 255));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:vertical:hover {\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "        stop:0 rgb(0, 120, 212),\n"
-                                                    "        stop:0.55 rgb(0, 120, 212),\n"
-                                                    "        stop:0.65 rgb(255, 255, 255),\n"
-                                                    "        stop:1 rgb(255, 255, 255));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:vertical:pressed {\n"
-                                                    "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-                                                    "        stop:0 rgb(0, 120, 212),\n"
-                                                    "        stop:0.4 rgb(0, 120, 212),\n"
-                                                    "        stop:0.5 rgb(255, 255, 255),\n"
-                                                    "        stop:1 rgb(255, 255, 255));\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::groove:vertical:disabled {\n"
-                                                    "    background-color: rgba(0, 0, 0, 75);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QSlider::handle:vertical:disabled {\n"
-                                                    "    background-color: #808080;\n"
-                                                    "    border: 5px solid #cccccc;\n"
-                                                    "}\n"
-                                                    "")
+"    min-height: 24px;\n"
+"}\n"
+"\n"
+"QSlider::groove:horizontal {\n"
+"    height: 4px;\n"
+"    background-color: rgba(0, 0, 0, 100);\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: rgb(0, 120, 212);\n"
+"    height: 4px;\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"    border: 1px solid rgb(222, 222, 222);\n"
+"    width: 20px;\n"
+"    min-height: 24px;\n"
+"    margin: -9px 0;\n"
+"    border-radius: 11px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.48 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(0, 120, 212),\n"
+"        stop:0.65 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.4 rgb(0, 120, 212),\n"
+"        stop:0.5 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::groove:horizontal:disabled {\n"
+"    background-color: rgba(0, 0, 0, 75);\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:disabled {\n"
+"    background-color: #808080;\n"
+"    border: 5px solid #cccccc;\n"
+"}\n"
+"\n"
+"\n"
+"QSlider:vertical {\n"
+"    min-width: 24px;\n"
+"}\n"
+"\n"
+"QSlider::groove:vertical {\n"
+"    width: 4px;\n"
+"    background-color: rgba(0, 0, 0, 100);\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::add-page:vertical {\n"
+"    background: rgb(0, 120, 212);\n"
+"    width: 4px;\n"
+"    border-radius: 2px;\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical {\n"
+"    border: 1px solid rgb(222, 222, 222);\n"
+"    height: 20px;\n"
+"    min-width: 24px;\n"
+"    margin: 0 -9px;\n"
+"    border-radius: 11px;\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.48 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical:hover {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.55 rgb(0, 120, 212),\n"
+"        stop:0.65 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical:pressed {\n"
+"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
+"        stop:0 rgb(0, 120, 212),\n"
+"        stop:0.4 rgb(0, 120, 212),\n"
+"        stop:0.5 rgb(255, 255, 255),\n"
+"        stop:1 rgb(255, 255, 255));\n"
+"}\n"
+"\n"
+"QSlider::groove:vertical:disabled {\n"
+"    background-color: rgba(0, 0, 0, 75);\n"
+"}\n"
+"\n"
+"QSlider::handle:vertical:disabled {\n"
+"    background-color: #808080;\n"
+"    border: 5px solid #cccccc;\n"
+"}\n"
+"")
         self.TransparentPercentSlider.setMaximum(100)
         self.TransparentPercentSlider.setProperty("value", 55)
         self.TransparentPercentSlider.setOrientation(QtCore.Qt.Horizontal)
@@ -3916,10 +3663,10 @@ class Ui_MCSL2_MainWindow(object):
         self.SoftwareSettingsWidget.setMinimumSize(QtCore.QSize(620, 160))
         self.SoftwareSettingsWidget.setMaximumSize(QtCore.QSize(620, 160))
         self.SoftwareSettingsWidget.setStyleSheet("QWidget\n"
-                                                  "{\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "    background-color: rgba(247, 247, 247, 247)\n"
-                                                  "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.SoftwareSettingsWidget.setObjectName("SoftwareSettingsWidget")
         self.AlwaysRunAsAdministrator = QtWidgets.QCheckBox(self.SoftwareSettingsWidget)
         self.AlwaysRunAsAdministrator.setGeometry(QtCore.QRect(30, 93, 410, 30))
@@ -3930,79 +3677,79 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.AlwaysRunAsAdministrator.setFont(font)
         self.AlwaysRunAsAdministrator.setStyleSheet("QCheckBox {\n"
-                                                    "    color: black;\n"
-                                                    "    spacing: 8px;\n"
-                                                    "    min-width: 28px;\n"
-                                                    "    min-height: 20px;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator {\n"
-                                                    "    width: 18px;\n"
-                                                    "    height: 18px;\n"
-                                                    "    border-radius: 5px;\n"
-                                                    "    border: 1px solid rgb(135, 135, 135);\n"
-                                                    "    background-color: rgb(241, 241, 241);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:hover {\n"
-                                                    "    border: 1px solid rgb(132, 132, 132);\n"
-                                                    "    background-color: rgb(232, 232, 232);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:pressed {\n"
-                                                    "    border: 1px solid rgb(184, 184, 184);\n"
-                                                    "    background-color: rgb(224, 224, 224);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked,\n"
-                                                    "QCheckBox::indicator:indeterminate {\n"
-                                                    "    border: 1px solid rgb(0, 120, 212);\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked {\n"
-                                                    "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:indeterminate {\n"
-                                                    "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked:hover,\n"
-                                                    "QCheckBox::indicator:indeterminate:hover {\n"
-                                                    "    border: 1px solid --ThemeColorLight1;\n"
-                                                    "    background-color: --ThemeColorLight1;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked:pressed,\n"
-                                                    "QCheckBox::indicator:indeterminate:pressed {\n"
-                                                    "    border: 1px solid --ThemeColorLight3;\n"
-                                                    "    background-color: --ThemeColorLight3;\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox:disabled {\n"
-                                                    "    color: rgba(0, 0, 0, 110);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:disabled {\n"
-                                                    "    border: 1px solid #bbbbbb;\n"
-                                                    "    background-color: rgb(224, 224, 224);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QCheckBox::indicator:checked:disabled,\n"
-                                                    "QCheckBox::indicator:indeterminate:disabled {\n"
-                                                    "    border: 1px solid rgb(199, 199, 199);\n"
-                                                    "    background-color: rgb(199, 199, 199);\n"
-                                                    "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.AlwaysRunAsAdministrator.setObjectName("AlwaysRunAsAdministrator")
         self.SoftwareSettingsTitle = QtWidgets.QWidget(self.SoftwareSettingsWidget)
         self.SoftwareSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.SoftwareSettingsTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.SoftwareSettingsTitle.setStyleSheet("QWidget\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(247, 247, 247);\n"
-                                                 "    border-radius: 10px\n"
-                                                 "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.SoftwareSettingsTitle.setObjectName("SoftwareSettingsTitle")
         self.SoftwareSettingsWidgetTitleLabel = QtWidgets.QLabel(self.SoftwareSettingsTitle)
         self.SoftwareSettingsWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -4020,10 +3767,10 @@ class Ui_MCSL2_MainWindow(object):
         self.SoftwareSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.SoftwareSettingsWidgetBlue.setAutoFillBackground(False)
         self.SoftwareSettingsWidgetBlue.setStyleSheet("QLabel\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(0, 120, 212);\n"
-                                                      "    border-radius: 10px\n"
-                                                      "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.SoftwareSettingsWidgetBlue.setText("")
         self.SoftwareSettingsWidgetBlue.setObjectName("SoftwareSettingsWidgetBlue")
         self.StartOnStartup = QtWidgets.QCheckBox(self.SoftwareSettingsWidget)
@@ -4035,89 +3782,89 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.StartOnStartup.setFont(font)
         self.StartOnStartup.setStyleSheet("QCheckBox {\n"
-                                          "    color: black;\n"
-                                          "    spacing: 8px;\n"
-                                          "    min-width: 28px;\n"
-                                          "    min-height: 20px;\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator {\n"
-                                          "    width: 18px;\n"
-                                          "    height: 18px;\n"
-                                          "    border-radius: 5px;\n"
-                                          "    border: 1px solid rgb(135, 135, 135);\n"
-                                          "    background-color: rgb(241, 241, 241);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:hover {\n"
-                                          "    border: 1px solid rgb(132, 132, 132);\n"
-                                          "    background-color: rgb(232, 232, 232);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:pressed {\n"
-                                          "    border: 1px solid rgb(184, 184, 184);\n"
-                                          "    background-color: rgb(224, 224, 224);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:checked,\n"
-                                          "QCheckBox::indicator:indeterminate {\n"
-                                          "    border: 1px solid rgb(0, 120, 212);\n"
-                                          "    background-color: rgb(0, 120, 212);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:checked {\n"
-                                          "    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:indeterminate {\n"
-                                          "    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:checked:hover,\n"
-                                          "QCheckBox::indicator:indeterminate:hover {\n"
-                                          "    border: 1px solid --ThemeColorLight1;\n"
-                                          "    background-color: --ThemeColorLight1;\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:checked:pressed,\n"
-                                          "QCheckBox::indicator:indeterminate:pressed {\n"
-                                          "    border: 1px solid --ThemeColorLight3;\n"
-                                          "    background-color: --ThemeColorLight3;\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox:disabled {\n"
-                                          "    color: rgba(0, 0, 0, 110);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:disabled {\n"
-                                          "    border: 1px solid #bbbbbb;\n"
-                                          "    background-color: rgb(224, 224, 224);\n"
-                                          "}\n"
-                                          "\n"
-                                          "QCheckBox::indicator:checked:disabled,\n"
-                                          "QCheckBox::indicator:indeterminate:disabled {\n"
-                                          "    border: 1px solid rgb(199, 199, 199);\n"
-                                          "    background-color: rgb(199, 199, 199);\n"
-                                          "}")
+"    color: black;\n"
+"    spacing: 8px;\n"
+"    min-width: 28px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 18px;\n"
+"    height: 18px;\n"
+"    border-radius: 5px;\n"
+"    border: 1px solid rgb(135, 135, 135);\n"
+"    background-color: rgb(241, 241, 241);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:hover {\n"
+"    border: 1px solid rgb(132, 132, 132);\n"
+"    background-color: rgb(232, 232, 232);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:pressed {\n"
+"    border: 1px solid rgb(184, 184, 184);\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked,\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    border: 1px solid rgb(0, 120, 212);\n"
+"    background-color: rgb(0, 120, 212);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:indeterminate {\n"
+"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:hover,\n"
+"QCheckBox::indicator:indeterminate:hover {\n"
+"    border: 1px solid --ThemeColorLight1;\n"
+"    background-color: --ThemeColorLight1;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:pressed,\n"
+"QCheckBox::indicator:indeterminate:pressed {\n"
+"    border: 1px solid --ThemeColorLight3;\n"
+"    background-color: --ThemeColorLight3;\n"
+"}\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: rgba(0, 0, 0, 110);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:disabled {\n"
+"    border: 1px solid #bbbbbb;\n"
+"    background-color: rgb(224, 224, 224);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked:disabled,\n"
+"QCheckBox::indicator:indeterminate:disabled {\n"
+"    border: 1px solid rgb(199, 199, 199);\n"
+"    background-color: rgb(199, 199, 199);\n"
+"}")
         self.StartOnStartup.setObjectName("StartOnStartup")
         self.SettingsVerticalLayout.addWidget(self.SoftwareSettingsWidget)
         self.UpdaterWidget = QtWidgets.QWidget(self.SettingsScrollAreaWidgetContents)
         self.UpdaterWidget.setMinimumSize(QtCore.QSize(620, 160))
         self.UpdaterWidget.setMaximumSize(QtCore.QSize(620, 160))
         self.UpdaterWidget.setStyleSheet("QWidget\n"
-                                         "{\n"
-                                         "    border-radius: 7px;\n"
-                                         "    background-color: rgba(247, 247, 247, 247)\n"
-                                         "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.UpdaterWidget.setObjectName("UpdaterWidget")
         self.UpdaterTitle = QtWidgets.QWidget(self.UpdaterWidget)
         self.UpdaterTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.UpdaterTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.UpdaterTitle.setStyleSheet("QWidget\n"
-                                        "{\n"
-                                        "    background-color: rgb(247, 247, 247);\n"
-                                        "    border-radius: 10px\n"
-                                        "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.UpdaterTitle.setObjectName("UpdaterTitle")
         self.UpdaterWidgetTitleLabel = QtWidgets.QLabel(self.UpdaterTitle)
         self.UpdaterWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 81, 21))
@@ -4135,10 +3882,10 @@ class Ui_MCSL2_MainWindow(object):
         self.UpdaterWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.UpdaterWidgetBlue.setAutoFillBackground(False)
         self.UpdaterWidgetBlue.setStyleSheet("QLabel\n"
-                                             "{\n"
-                                             "    background-color: rgb(0, 120, 212);\n"
-                                             "    border-radius: 10px\n"
-                                             "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.UpdaterWidgetBlue.setText("")
         self.UpdaterWidgetBlue.setObjectName("UpdaterWidgetBlue")
         self.CurrentVersionLabel = QtWidgets.QLabel(self.UpdaterWidget)
@@ -4163,23 +3910,23 @@ class Ui_MCSL2_MainWindow(object):
         self.UpdatePushButton.setFont(font)
         self.UpdatePushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.UpdatePushButton.setStyleSheet("QPushButton\n"
-                                            "{\n"
-                                            "    background-color: rgb(0, 120, 212);\n"
-                                            "    border-radius: 6px;\n"
-                                            "    color: rgb(255, 255, 255);\n"
-                                            "}\n"
-                                            "QPushButton:hover\n"
-                                            "{\n"
-                                            "    background-color: rgb(0, 110, 212);\n"
-                                            "    border-radius: 6px;\n"
-                                            "    color: rgb(255, 255, 255);\n"
-                                            "}\n"
-                                            "QPushButton:pressed\n"
-                                            "{\n"
-                                            "    background-color: rgb(0, 100, 212);\n"
-                                            "    border-radius: 6px;\n"
-                                            "    color: rgb(255, 255, 255);\n"
-                                            "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.UpdatePushButton.setFlat(False)
         self.UpdatePushButton.setObjectName("UpdatePushButton")
         self.SettingsVerticalLayout.addWidget(self.UpdaterWidget)
@@ -4187,19 +3934,19 @@ class Ui_MCSL2_MainWindow(object):
         self.AboutWidget.setMinimumSize(QtCore.QSize(620, 330))
         self.AboutWidget.setMaximumSize(QtCore.QSize(620, 330))
         self.AboutWidget.setStyleSheet("QWidget\n"
-                                       "{\n"
-                                       "    border-radius: 7px;\n"
-                                       "    background-color: rgba(247, 247, 247, 247)\n"
-                                       "}")
+"{\n"
+"    border-radius: 7px;\n"
+"    background-color: rgba(247, 247, 247, 247)\n"
+"}")
         self.AboutWidget.setObjectName("AboutWidget")
         self.AboutTitle = QtWidgets.QWidget(self.AboutWidget)
         self.AboutTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
         self.AboutTitle.setMinimumSize(QtCore.QSize(120, 40))
         self.AboutTitle.setStyleSheet("QWidget\n"
-                                      "{\n"
-                                      "    background-color: rgb(247, 247, 247);\n"
-                                      "    border-radius: 10px\n"
-                                      "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.AboutTitle.setObjectName("AboutTitle")
         self.AboutWidgetTitleLabel = QtWidgets.QLabel(self.AboutTitle)
         self.AboutWidgetTitleLabel.setGeometry(QtCore.QRect(30, 10, 51, 21))
@@ -4217,10 +3964,10 @@ class Ui_MCSL2_MainWindow(object):
         self.AboutWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.AboutWidgetBlue.setAutoFillBackground(False)
         self.AboutWidgetBlue.setStyleSheet("QLabel\n"
-                                           "{\n"
-                                           "    background-color: rgb(0, 120, 212);\n"
-                                           "    border-radius: 10px\n"
-                                           "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px\n"
+"}")
         self.AboutWidgetBlue.setText("")
         self.AboutWidgetBlue.setObjectName("AboutWidgetBlue")
         self.AboutContent = QtWidgets.QLabel(self.AboutWidget)
@@ -4238,23 +3985,23 @@ class Ui_MCSL2_MainWindow(object):
         self.OpenSourceCodePushButton.setFont(font)
         self.OpenSourceCodePushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.OpenSourceCodePushButton.setStyleSheet("QPushButton\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 120, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:hover\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 110, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed\n"
-                                                    "{\n"
-                                                    "    background-color: rgb(0, 100, 212);\n"
-                                                    "    border-radius: 6px;\n"
-                                                    "    color: rgb(255, 255, 255);\n"
-                                                    "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.OpenSourceCodePushButton.setFlat(False)
         self.OpenSourceCodePushButton.setObjectName("OpenSourceCodePushButton")
         self.MCSL2_Author_Label_1 = QtWidgets.QLabel(self.AboutWidget)
@@ -4298,23 +4045,23 @@ class Ui_MCSL2_MainWindow(object):
         self.JoinQQGroup.setFont(font)
         self.JoinQQGroup.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.JoinQQGroup.setStyleSheet("QPushButton\n"
-                                       "{\n"
-                                       "    background-color: rgb(0, 120, 212);\n"
-                                       "    border-radius: 6px;\n"
-                                       "    color: rgb(255, 255, 255);\n"
-                                       "}\n"
-                                       "QPushButton:hover\n"
-                                       "{\n"
-                                       "    background-color: rgb(0, 110, 212);\n"
-                                       "    border-radius: 6px;\n"
-                                       "    color: rgb(255, 255, 255);\n"
-                                       "}\n"
-                                       "QPushButton:pressed\n"
-                                       "{\n"
-                                       "    background-color: rgb(0, 100, 212);\n"
-                                       "    border-radius: 6px;\n"
-                                       "    color: rgb(255, 255, 255);\n"
-                                       "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.JoinQQGroup.setFlat(False)
         self.JoinQQGroup.setObjectName("JoinQQGroup")
         self.SystemReportPushButton = QtWidgets.QPushButton(self.AboutWidget)
@@ -4325,23 +4072,23 @@ class Ui_MCSL2_MainWindow(object):
         self.SystemReportPushButton.setFont(font)
         self.SystemReportPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.SystemReportPushButton.setStyleSheet("QPushButton\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(0, 120, 212);\n"
-                                                  "    border-radius: 6px;\n"
-                                                  "    color: rgb(255, 255, 255);\n"
-                                                  "}\n"
-                                                  "QPushButton:hover\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(0, 110, 212);\n"
-                                                  "    border-radius: 6px;\n"
-                                                  "    color: rgb(255, 255, 255);\n"
-                                                  "}\n"
-                                                  "QPushButton:pressed\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(0, 100, 212);\n"
-                                                  "    border-radius: 6px;\n"
-                                                  "    color: rgb(255, 255, 255);\n"
-                                                  "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 6px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.SystemReportPushButton.setFlat(False)
         self.SystemReportPushButton.setObjectName("SystemReportPushButton")
         self.SettingsVerticalLayout.addWidget(self.AboutWidget)
@@ -4363,36 +4110,36 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseServerScrollArea.setGeometry(QtCore.QRect(30, 140, 641, 401))
         self.ChooseServerScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseServerScrollArea.setStyleSheet("QScrollArea{\n"
-                                                  "    border: 0px solid;\n"
-                                                  "    border-right-color: #dcdbdc;\n"
-                                                  "    background-color: rgb(230, 230, 230);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}\n"
-                                                  "QScrollBar:vertical {\n"
-                                                  "    border: none;\n"
-                                                  "    background: transparent;\n"
-                                                  "    width: 12px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::handle:vertical {\n"
-                                                  "    background: rgb(220, 220, 220);\n"
-                                                  "    min-height: 20px;\n"
-                                                  "    border-radius: 5px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::add-line:vertial\n"
-                                                  "{\n"
-                                                  "    height: 0px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::sub-line:vertial\n"
-                                                  "{\n"
-                                                  "    height: 0px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                                  "{\n"
-                                                  "    height: 0px;\n"
-                                                  "}\n"
-                                                  "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                                  "    background: none;\n"
-                                                  "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.ChooseServerScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.ChooseServerScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.ChooseServerScrollArea.setLineWidth(0)
@@ -4430,56 +4177,56 @@ class Ui_MCSL2_MainWindow(object):
         self.Choose_Java_Back_PushButton.setFont(font)
         self.Choose_Java_Back_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Choose_Java_Back_PushButton.setStyleSheet("QPushButton\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(230, 230, 230);\n"
-                                                       "    border-radius: 7px;\n"
-                                                       "}\n"
-                                                       "QPushButton:hover\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(227, 227, 227);\n"
-                                                       "    border-radius: 7px;\n"
-                                                       "}\n"
-                                                       "QPushButton:pressed\n"
-                                                       "{\n"
-                                                       "    background-color: rgb(225, 225, 225);\n"
-                                                       "    border-radius: 7px;\n"
-                                                       "}")
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(227, 227, 227);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.Choose_Java_Back_PushButton.setFlat(False)
         self.Choose_Java_Back_PushButton.setObjectName("Choose_Java_Back_PushButton")
         self.ChooseJavaScrollArea = QtWidgets.QScrollArea(self.ChooseJavaPage)
         self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 641, 401))
         self.ChooseJavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseJavaScrollArea.setStyleSheet("QScrollArea{\n"
-                                                "    border: 0px solid;\n"
-                                                "    border-right-color: #dcdbdc;\n"
-                                                "    background-color: rgb(230, 230, 230);\n"
-                                                "    border-radius: 7px;\n"
-                                                "}\n"
-                                                "QScrollBar:vertical {\n"
-                                                "    border: none;\n"
-                                                "    background: transparent;\n"
-                                                "    width: 12px;\n"
-                                                "}\n"
-                                                "QScrollBar::handle:vertical {\n"
-                                                "    background: rgb(220, 220, 220);\n"
-                                                "    min-height: 20px;\n"
-                                                "    border-radius: 5px;\n"
-                                                "}\n"
-                                                "QScrollBar::add-line:vertial\n"
-                                                "{\n"
-                                                "    height: 0px;\n"
-                                                "}\n"
-                                                "QScrollBar::sub-line:vertial\n"
-                                                "{\n"
-                                                "    height: 0px;\n"
-                                                "}\n"
-                                                "QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
-                                                "{\n"
-                                                "    height: 0px;\n"
-                                                "}\n"
-                                                "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-                                                "    background: none;\n"
-                                                "}")
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.ChooseJavaScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.ChooseJavaScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
         self.ChooseJavaScrollArea.setLineWidth(0)
@@ -4512,10 +4259,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Tip1_Widget = QtWidgets.QWidget(self.UpdatePage)
         self.Update_Tip1_Widget.setGeometry(QtCore.QRect(30, 140, 651, 81))
         self.Update_Tip1_Widget.setStyleSheet("QWidget\n"
-                                              "{\n"
-                                              "    background-color: rgb(247, 247, 247);\n"
-                                              "    border-radius: 10px\n"
-                                              "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}")
         self.Update_Tip1_Widget.setObjectName("Update_Tip1_Widget")
         self.Update_Tip1_Label = QtWidgets.QLabel(self.Update_Tip1_Widget)
         self.Update_Tip1_Label.setGeometry(QtCore.QRect(20, 10, 601, 61))
@@ -4534,20 +4281,20 @@ class Ui_MCSL2_MainWindow(object):
         self.DoNotUpdate_PushButton.setFont(font)
         self.DoNotUpdate_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.DoNotUpdate_PushButton.setStyleSheet("QPushButton\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(247, 247, 247);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}\n"
-                                                  "QPushButton:hover\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(230, 230, 230);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}\n"
-                                                  "QPushButton:pressed\n"
-                                                  "{\n"
-                                                  "    background-color: rgb(225, 225, 225);\n"
-                                                  "    border-radius: 7px;\n"
-                                                  "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(230, 230, 230);\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(225, 225, 225);\n"
+"    border-radius: 7px;\n"
+"}")
         self.DoNotUpdate_PushButton.setObjectName("DoNotUpdate_PushButton")
         self.Update_PushButton = QtWidgets.QPushButton(self.UpdatePage)
         self.Update_PushButton.setGeometry(QtCore.QRect(450, 490, 231, 61))
@@ -4557,32 +4304,62 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_PushButton.setFont(font)
         self.Update_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Update_PushButton.setStyleSheet("QPushButton\n"
-                                             "{\n"
-                                             "    background-color: rgb(0, 120, 212);\n"
-                                             "    border-radius: 10px;\n"
-                                             "    color: rgb(255, 255, 255);\n"
-                                             "}\n"
-                                             "QPushButton:hover\n"
-                                             "{\n"
-                                             "    background-color: rgb(0, 110, 212);\n"
-                                             "    border-radius: 10px;\n"
-                                             "    color: rgb(255, 255, 255);\n"
-                                             "}\n"
-                                             "QPushButton:pressed\n"
-                                             "{\n"
-                                             "    background-color: rgb(0, 100, 212);\n"
-                                             "    border-radius: 10px;\n"
-                                             "    color: rgb(255, 255, 255);\n"
-                                             "}")
+"{\n"
+"    background-color: rgb(0, 120, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(0, 110, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(0, 100, 212);\n"
+"    border-radius: 10px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.Update_PushButton.setFlat(False)
         self.Update_PushButton.setObjectName("Update_PushButton")
         self.Update_Introduction_Widget = QtWidgets.QWidget(self.UpdatePage)
         self.Update_Introduction_Widget.setGeometry(QtCore.QRect(30, 230, 651, 221))
         self.Update_Introduction_Widget.setStyleSheet("QWidget\n"
-                                                      "{\n"
-                                                      "    background-color: rgb(247, 247, 247);\n"
-                                                      "    border-radius: 10px\n"
-                                                      "}")
+"{\n"
+"    background-color: rgb(247, 247, 247);\n"
+"    border-radius: 10px\n"
+"}\n"
+"QScrollArea{\n"
+"    border: 0px solid;\n"
+"    border-right-color: #dcdbdc;\n"
+"    background-color: transparent;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 12px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(220, 220, 220);\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QScrollBar::add-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::sub-line:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial\n"
+"{\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.Update_Introduction_Widget.setObjectName("Update_Introduction_Widget")
         self.Update_Introduction_Title_Label = QtWidgets.QLabel(self.Update_Introduction_Widget)
         self.Update_Introduction_Title_Label.setGeometry(QtCore.QRect(20, 20, 601, 31))
@@ -4593,8 +4370,34 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Introduction_Title_Label.setAutoFillBackground(False)
         self.Update_Introduction_Title_Label.setStyleSheet("")
         self.Update_Introduction_Title_Label.setObjectName("Update_Introduction_Title_Label")
-        self.Update_Introduction_Label = QtWidgets.QLabel(self.Update_Introduction_Widget)
-        self.Update_Introduction_Label.setGeometry(QtCore.QRect(20, 60, 601, 141))
+        self.Update_Introduction_LabelScrollAreascrollArea = QtWidgets.QScrollArea(self.Update_Introduction_Widget)
+        self.Update_Introduction_LabelScrollAreascrollArea.setGeometry(QtCore.QRect(20, 60, 621, 151))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Update_Introduction_LabelScrollAreascrollArea.sizePolicy().hasHeightForWidth())
+        self.Update_Introduction_LabelScrollAreascrollArea.setSizePolicy(sizePolicy)
+        self.Update_Introduction_LabelScrollAreascrollArea.setMinimumSize(QtCore.QSize(621, 151))
+        self.Update_Introduction_LabelScrollAreascrollArea.setMaximumSize(QtCore.QSize(621, 151))
+        self.Update_Introduction_LabelScrollAreascrollArea.setStyleSheet("")
+        self.Update_Introduction_LabelScrollAreascrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.Update_Introduction_LabelScrollAreascrollArea.setWidgetResizable(True)
+        self.Update_Introduction_LabelScrollAreascrollArea.setObjectName("Update_Introduction_LabelScrollAreascrollArea")
+        self.Update_Introduction_LabelScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.Update_Introduction_LabelScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 621, 151))
+        self.Update_Introduction_LabelScrollAreaWidgetContents.setObjectName("Update_Introduction_LabelScrollAreaWidgetContents")
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.Update_Introduction_LabelScrollAreaWidgetContents)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.Update_Introduction_Label_VerticalLayout = QtWidgets.QVBoxLayout()
+        self.Update_Introduction_Label_VerticalLayout.setObjectName("Update_Introduction_Label_VerticalLayout")
+        self.Update_Introduction_Label = QtWidgets.QLabel(self.Update_Introduction_LabelScrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Update_Introduction_Label.sizePolicy().hasHeightForWidth())
+        self.Update_Introduction_Label.setSizePolicy(sizePolicy)
+        self.Update_Introduction_Label.setMinimumSize(QtCore.QSize(600, 0))
+        self.Update_Introduction_Label.setMaximumSize(QtCore.QSize(600, 16777215))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
@@ -4602,44 +4405,48 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Introduction_Label.setAutoFillBackground(False)
         self.Update_Introduction_Label.setStyleSheet("")
         self.Update_Introduction_Label.setText("")
-        self.Update_Introduction_Label.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        self.Update_Introduction_Label.setTextFormat(QtCore.Qt.MarkdownText)
+        self.Update_Introduction_Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.Update_Introduction_Label.setObjectName("Update_Introduction_Label")
+        self.Update_Introduction_Label_VerticalLayout.addWidget(self.Update_Introduction_Label)
+        self.verticalLayout_11.addLayout(self.Update_Introduction_Label_VerticalLayout)
+        self.Update_Introduction_LabelScrollAreascrollArea.setWidget(self.Update_Introduction_LabelScrollAreaWidgetContents)
         self.FunctionsStackedWidget.addWidget(self.UpdatePage)
         self.Background = QtWidgets.QLabel(self.CentralWidget)
         self.Background.setGeometry(QtCore.QRect(10, 10, 211, 581))
         self.Background.setStyleSheet("QLabel\n"
-                                      "{\n"
-                                      "    background-color: rgb(255, 255, 255);\n"
-                                      "    border-radius: 10px\n"
-                                      "}")
+"{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 10px\n"
+"}")
         self.Background.setText("")
         self.Background.setObjectName("Background")
         self.Shadow = QtWidgets.QLabel(self.CentralWidget)
         self.Shadow.setGeometry(QtCore.QRect(8, 8, 945, 585))
         self.Shadow.setStyleSheet("QLabel\n"
-                                  "{\n"
-                                  "    background-color: rgba(230, 230, 230, 15%);\n"
-                                  "    border-radius: 10px\n"
-                                  "}")
+"{\n"
+"    background-color: rgba(230, 230, 230, 15%);\n"
+"    border-radius: 10px\n"
+"}")
         self.Shadow.setText("")
         self.Shadow.setObjectName("Shadow")
         self.Background_2 = QtWidgets.QLabel(self.CentralWidget)
         self.Background_2.setGeometry(QtCore.QRect(200, 10, 751, 581))
         self.Background_2.setStyleSheet("QLabel\n"
-                                        "{\n"
-                                        "    background-color: rgba(255, 255, 255, 55%);\n"
-                                        "    border-radius: 10px\n"
-                                        "}")
+"{\n"
+"    background-color: rgba(255, 255, 255, 55%);\n"
+"    border-radius: 10px\n"
+"}")
         self.Background_2.setText("")
         self.Background_2.setObjectName("Background_2")
         self.TitleBarWidget_R = QtWidgets.QWidget(self.CentralWidget)
         self.TitleBarWidget_R.setGeometry(QtCore.QRect(10, 10, 941, 40))
         self.TitleBarWidget_R.setStyleSheet("QWidget\n"
-                                            "{\n"
-                                            "    background-color: rgb(235, 235, 235);\n"
-                                            "    border-top-left-radius: 10px;\n"
-                                            "    border-top-right-radius: 10px;\n"
-                                            "}")
+"{\n"
+"    background-color: rgb(235, 235, 235);\n"
+"    border-top-left-radius: 10px;\n"
+"    border-top-right-radius: 10px;\n"
+"}")
         self.TitleBarWidget_R.setObjectName("TitleBarWidget_R")
         self.MCSL2_Title_Icon_Label_R = QtWidgets.QLabel(self.TitleBarWidget_R)
         self.MCSL2_Title_Icon_Label_R.setGeometry(QtCore.QRect(20, 9, 24, 24))
@@ -4652,40 +4459,40 @@ class Ui_MCSL2_MainWindow(object):
         self.Minimize_PushButton_R.setGeometry(QtCore.QRect(870, 10, 22, 22))
         self.Minimize_PushButton_R.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Minimize_PushButton_R.setStyleSheet("QPushButton\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(225, 225, 0);\n"
-                                                 "    border-radius: 11px;\n"
-                                                 "}\n"
-                                                 "QPushButton:hover\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(183, 161, 0);\n"
-                                                 "    border-radius: 11px;\n"
-                                                 "}\n"
-                                                 "QPushButton:pressed\n"
-                                                 "{\n"
-                                                 "    background-color: rgb(161, 161, 0);\n"
-                                                 "    border-radius: 11px;\n"
-                                                 "}")
+"{\n"
+"    background-color: rgb(225, 225, 0);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(183, 161, 0);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(161, 161, 0);\n"
+"    border-radius: 11px;\n"
+"}")
         self.Minimize_PushButton_R.setText("")
         self.Minimize_PushButton_R.setObjectName("Minimize_PushButton_R")
         self.Close_PushButton_R = QtWidgets.QPushButton(self.TitleBarWidget_R)
         self.Close_PushButton_R.setGeometry(QtCore.QRect(900, 10, 22, 22))
         self.Close_PushButton_R.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Close_PushButton_R.setStyleSheet("QPushButton\n"
-                                              "{\n"
-                                              "    background-color: rgb(232, 17, 35);\n"
-                                              "    border-radius: 11px;\n"
-                                              "}\n"
-                                              "QPushButton:hover\n"
-                                              "{\n"
-                                              "    background-color: rgb(193, 6, 16);\n"
-                                              "    border-radius: 11px;\n"
-                                              "}\n"
-                                              "QPushButton:pressed\n"
-                                              "{\n"
-                                              "    background-color: rgb(170, 0, 0);\n"
-                                              "    border-radius: 11px;\n"
-                                              "}")
+"{\n"
+"    background-color: rgb(232, 17, 35);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"    background-color: rgb(193, 6, 16);\n"
+"    border-radius: 11px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    background-color: rgb(170, 0, 0);\n"
+"    border-radius: 11px;\n"
+"}")
         self.Close_PushButton_R.setText("")
         self.Close_PushButton_R.setObjectName("Close_PushButton_R")
         self.MCSL2_Title_Label_R = QtWidgets.QLabel(self.TitleBarWidget_R)
@@ -4726,10 +4533,10 @@ class Ui_MCSL2_MainWindow(object):
         self.Home_Label.setText(_translate("MCSL2_MainWindow", "主页"))
         self.Notice_Label.setText(_translate("MCSL2_MainWindow", "正在获取公告..."))
         self.HomeTip1_Label.setText(_translate("MCSL2_MainWindow", "如何搭建一个Java版Minecraft服务器？\n"
-                                                                   "1.准备好Java、核心、电脑\n"
-                                                                   "（提示：可使用本程序下载）\n"
-                                                                   "2.配置参数（本程序“配置服务器”页）\n"
-                                                                   "3. 开启服务器。将服务器IP告诉玩家。"))
+"1.准备好Java、核心、电脑\n"
+"（提示：可使用本程序下载）\n"
+"2.配置参数（本程序“配置服务器”页）\n"
+"3. 开启服务器。将服务器IP告诉玩家。"))
         self.Selected_Server_Label.setText(_translate("MCSL2_MainWindow", "未选择服务器！"))
         self.Start_PushButton.setText(_translate("MCSL2_MainWindow", "启动服务器"))
         self.Config_PushButton.setText(_translate("MCSL2_MainWindow", "配置"))
@@ -4740,12 +4547,12 @@ class Ui_MCSL2_MainWindow(object):
         self.ExAddServer.setText(_translate("MCSL2_MainWindow", "  进阶模式"))
         self.ImportServer.setText(_translate("MCSL2_MainWindow", "  导入服务器压缩包"))
         self.LeadConfigTip2.setText(_translate("MCSL2_MainWindow", "保留基础配置。\n"
-                                                                   " - Java\n"
-                                                                   " - 服务器核心\n"
-                                                                   " - 最小最大内存\n"
-                                                                   " - 服务器名称"))
+" - Java\n"
+" - 服务器核心\n"
+" - 最小最大内存\n"
+" - 服务器名称"))
         self.LeadConfigTip2_2.setText(_translate("MCSL2_MainWindow", "较简易配置来说，\n"
-                                                                     "可以配置更多选项。"))
+"可以配置更多选项。"))
         self.LeadConfigTip2_3.setText(_translate("MCSL2_MainWindow", "  （未开发完成）"))
         self.Completed_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
         self.Server_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
@@ -4760,12 +4567,12 @@ class Ui_MCSL2_MainWindow(object):
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "M"))
         self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
         self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
-                                                                     "1.存放的文件夹路径\n"
-                                                                     "2.服务器核心\n"
-                                                                     "3.Java路径"))
+"1.存放的文件夹路径\n"
+"2.服务器核心\n"
+"3.Java路径"))
         self.ConfigTip2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2将会在Servers目录\n"
-                                                                     "生成以服务器名称命名的文件夹\n"
-                                                                     "以存储服务器文件。"))
+"生成以服务器名称命名的文件夹\n"
+"以存储服务器文件。"))
         self.ExDownload_Core_PushButton.setText(_translate("MCSL2_MainWindow", "下载核心"))
         self.ExDownload_Java_PushButton.setText(_translate("MCSL2_MainWindow", "下载Java"))
         self.ExManual_Import_Core_PushButton.setText(_translate("MCSL2_MainWindow", "手动导入"))
@@ -4788,16 +4595,11 @@ class Ui_MCSL2_MainWindow(object):
         self.ExConsoleOutputEncoding.setText(_translate("MCSL2_MainWindow", "控制台输出编码(优先级高于全局设置）"))
         self.ExJVMArg.setText(_translate("MCSL2_MainWindow", "启动时的JVM参数（可不填）"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab),
-                                                   _translate("MCSL2_MainWindow", "[ 运行环境 ] Java"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab),
-                                                   _translate("MCSL2_MainWindow", "[ 核心 ] Spigot"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab),
-                                                   _translate("MCSL2_MainWindow", "[ 核心 ] Paper"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab),
-                                                   _translate("MCSL2_MainWindow", "[ 核心 ] BungeeCord"))
-        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab),
-                                                   _translate("MCSL2_MainWindow", "[ 核心 ] 官方"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "Java"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "Spigot"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.PaperTab), _translate("MCSL2_MainWindow", "Paper"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.BungeeCordTab), _translate("MCSL2_MainWindow", "BungeeCord"))
+        self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.OfficialCoreTab), _translate("MCSL2_MainWindow", "官方"))
         self.More_Download_PushButton.setText(_translate("MCSL2_MainWindow", "更多"))
         self.GoToDownloadSourceChangerPushButton.setText(_translate("MCSL2_MainWindow", "下载源设置"))
         self.CurrentDownloadSourceLabel.setText(_translate("MCSL2_MainWindow", "当前下载源："))
@@ -4810,8 +4612,7 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Label.setText(_translate("MCSL2_MainWindow", "更多"))
         self.AutoRunLastServerSetting.setText(_translate("MCSL2_MainWindow", "开启MCSL2时自动运行上次运行的服务器"))
         self.AcceptAllMojangEULASetting.setText(_translate("MCSL2_MainWindow", "同意所有新添加服务器的Mojang EULA"))
-        self.StopServerSettings.setText(
-            _translate("MCSL2_MainWindow", "关闭服务器时向服务器发送 stop 指令而不是结束进程"))
+        self.StopServerSettings.setText(_translate("MCSL2_MainWindow", "关闭服务器时向服务器发送 stop 指令而不是结束进程"))
         self.ServerSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "服务器设置"))
         self.OnlySaveGlobalServerConfigs.setText(_translate("MCSL2_MainWindow", "仅保存全局服务器设置"))
         self.ConfigPageSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "配置页设置"))
@@ -4833,8 +4634,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Aria2ThreadCountComboBox.setItemText(3, _translate("MCSL2_MainWindow", "8"))
         self.Aria2ThreadCountComboBox.setItemText(4, _translate("MCSL2_MainWindow", "16"))
         self.AlwaysAskDownloadPath.setText(_translate("MCSL2_MainWindow", "总是询问下载保存位置"))
-        self.AlwaysAskDownloadPathTip.setText(
-            _translate("MCSL2_MainWindow", "若不勾选，则会保存至MCSL2/Downloads文件夹。"))
+        self.AlwaysAskDownloadPathTip.setText(_translate("MCSL2_MainWindow", "若不勾选，则会保存至MCSL2/Downloads文件夹。"))
         self.SameFileException.setText(_translate("MCSL2_MainWindow", "下载保存位置存在同名文件处理"))
         self.SameFileExceptionStop.setText(_translate("MCSL2_MainWindow", "停止"))
         self.SameFileExceptionAsk.setText(_translate("MCSL2_MainWindow", "询问"))
@@ -4865,16 +4665,16 @@ class Ui_MCSL2_MainWindow(object):
         self.UpdatePushButton.setText(_translate("MCSL2_MainWindow", "检查更新"))
         self.AboutWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "关于"))
         self.AboutContent.setText(_translate("MCSL2_MainWindow", "MCSL2是一个开源非营利性项目，遵循GNU GPL 3.0开源协议。\n"
-                                                                 "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
-                                                                 "但必须在相关源代码中以及软件中给出声明，\n"
-                                                                 "并且二次分发版本的项目名称应与“MCSL2”有明显辨识度。\n"
-                                                                 "\n"
-                                                                 "Copyright ©落雪无痕LxHTT. All right reserved."))
+"任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
+"但必须在相关源代码中以及软件中给出声明，\n"
+"并且二次分发版本的项目名称应与“MCSL2”有明显辨识度。\n"
+"\n"
+"Copyright ©落雪无痕LxHTT. All right reserved."))
         self.OpenSourceCodePushButton.setText(_translate("MCSL2_MainWindow", "打开源代码仓库"))
         self.MCSL2_Author_Label_1.setText(_translate("MCSL2_MainWindow", "by LxHTT"))
         self.MCSL2_Label.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
         self.MCSL2_Author_Label_2.setText(_translate("MCSL2_MainWindow", "Bilibili：\n"
-                                                                         "落雪无痕LxHTT"))
+"落雪无痕LxHTT"))
         self.JoinQQGroup.setText(_translate("MCSL2_MainWindow", "加入官方群聊"))
         self.SystemReportPushButton.setText(_translate("MCSL2_MainWindow", "系统报告"))
         self.Choose_Server_Label.setText(_translate("MCSL2_MainWindow", "选择服务器"))
@@ -4886,6 +4686,4 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
         self.Update_Introduction_Title_Label.setText(_translate("MCSL2_MainWindow", "这是最新版本的说明："))
         self.MCSL2_Title_Label_R.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
-
-
 import MCSL2_Icon_rc
