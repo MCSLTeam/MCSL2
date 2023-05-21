@@ -36,7 +36,7 @@ class Updater:
 
     def GetNoticeText(self):
         GetNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
-        GetTodayUserCountUrl = "http://api.2018k.cn/today?id=BCF5D58B4AE6471E98CFD5A56604560B"
+        # GetTodayUserCountUrl = "http://api.2018k.cn/today?id=BCF5D58B4AE6471E98CFD5A56604560B"
         try:
             Notice = get(GetNoticeUrl).text
             return Notice
