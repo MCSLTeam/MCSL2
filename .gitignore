@@ -5,7 +5,8 @@ poetry.lock
 .vs/**
 .vscode/**
 Tools/OfflineBuild/**
-*.exe
+Tools/qView.exe
+Tools/ParseOneDriveLink/ParseOneDriveLink.exe
 Servers/**
 MCSL2/**
 pdm.lock
