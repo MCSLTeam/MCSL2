@@ -10,7 +10,8 @@ class Ui_MCSL2_Dialog(object):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MCSL2_Dialog.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            MCSL2_Dialog.sizePolicy().hasHeightForWidth())
         MCSL2_Dialog.setSizePolicy(sizePolicy)
         MCSL2_Dialog.setMinimumSize(QSize(413, 260))
         MCSL2_Dialog.setMaximumSize(QSize(413, 16777215))
@@ -50,7 +51,8 @@ class Ui_MCSL2_Dialog(object):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Dialog_label.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.Dialog_label.sizePolicy().hasHeightForWidth())
         self.Dialog_label.setSizePolicy(sizePolicy)
         self.Dialog_label.setMinimumSize(QSize(351, 151))
         self.Dialog_label.setMaximumSize(QSize(351, 16777215))
@@ -67,15 +69,18 @@ class Ui_MCSL2_Dialog(object):
         self.Dialog_label.setAlignment(Qt.AlignCenter)
         self.Dialog_label.setObjectName("Dialog_label")
         self.gridLayout.addWidget(self.Dialog_label, 1, 1, 1, 1)
-        spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem = QSpacerItem(
+            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 1, 2, 1, 1)
-        spacerItem1 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem1 = QSpacerItem(
+            40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 0, 1, 1, 1)
         self.Dialog_PushButton = QPushButton(MCSL2_Dialog)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Dialog_PushButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.Dialog_PushButton.sizePolicy().hasHeightForWidth())
         self.Dialog_PushButton.setSizePolicy(sizePolicy)
         self.Dialog_PushButton.setMinimumSize(QSize(351, 31))
         self.Dialog_PushButton.setMaximumSize(QSize(351, 31))
@@ -104,11 +109,14 @@ class Ui_MCSL2_Dialog(object):
                                              "}")
         self.Dialog_PushButton.setObjectName("Dialog_PushButton")
         self.gridLayout.addWidget(self.Dialog_PushButton, 3, 1, 1, 1)
-        spacerItem2 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem2 = QSpacerItem(
+            40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem2, 2, 1, 1, 1)
-        spacerItem3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem3 = QSpacerItem(
+            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 1, 0, 1, 1)
-        spacerItem4 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem4 = QSpacerItem(
+            40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem4, 4, 1, 1, 1)
 
         self.retranslateUi(MCSL2_Dialog)
@@ -190,7 +198,8 @@ class Ui_MCSL2_AskDialog(object):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MCSL2_AskDialog.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            MCSL2_AskDialog.sizePolicy().hasHeightForWidth())
         MCSL2_AskDialog.setSizePolicy(sizePolicy)
         MCSL2_AskDialog.setMinimumSize(QSize(413, 260))
         MCSL2_AskDialog.setMaximumSize(QSize(413, 16777215))
@@ -221,16 +230,17 @@ class Ui_MCSL2_AskDialog(object):
         )
         MCSL2_AskDialog.setWindowIcon(MCSLWindowIcon)
         MCSL2_AskDialog.setStyleSheet("QDialog\n"
-                                   "{\n"
-                                   "    background-color: rgba(247, 247, 247,85%);\n"
-                                   "}")
+                                      "{\n"
+                                      "    background-color: rgba(247, 247, 247,85%);\n"
+                                      "}")
         self.gridLayout = QGridLayout(MCSL2_AskDialog)
         self.gridLayout.setObjectName("gridLayout")
         self.Dialog_label = QLabel(MCSL2_AskDialog)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Dialog_label.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.Dialog_label.sizePolicy().hasHeightForWidth())
         self.Dialog_label.setSizePolicy(sizePolicy)
         self.Dialog_label.setMinimumSize(QSize(351, 151))
         self.Dialog_label.setMaximumSize(QSize(351, 16777215))
@@ -247,13 +257,15 @@ class Ui_MCSL2_AskDialog(object):
         self.Dialog_label.setAlignment(Qt.AlignCenter)
         self.Dialog_label.setObjectName("Dialog_label")
         self.gridLayout.addWidget(self.Dialog_label, 1, 1, 1, 1)
-        spacerItem = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem = QSpacerItem(
+            40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         self.ButtonWidget = QWidget(MCSL2_AskDialog)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(35)
         sizePolicy.setVerticalStretch(40)
-        sizePolicy.setHeightForWidth(self.ButtonWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.ButtonWidget.sizePolicy().hasHeightForWidth())
         self.ButtonWidget.setSizePolicy(sizePolicy)
         self.ButtonWidget.setMinimumSize(QSize(351, 40))
         self.ButtonWidget.setMaximumSize(QSize(351, 40))
@@ -264,7 +276,8 @@ class Ui_MCSL2_AskDialog(object):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Dialog_PushButton_Cancel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.Dialog_PushButton_Cancel.sizePolicy().hasHeightForWidth())
         self.Dialog_PushButton_Cancel.setSizePolicy(sizePolicy)
         self.Dialog_PushButton_Cancel.setMinimumSize(QSize(165, 31))
         self.Dialog_PushButton_Cancel.setMaximumSize(QSize(170, 31))
@@ -294,7 +307,8 @@ class Ui_MCSL2_AskDialog(object):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Dialog_PushButton_Accept.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.Dialog_PushButton_Accept.sizePolicy().hasHeightForWidth())
         self.Dialog_PushButton_Accept.setSizePolicy(sizePolicy)
         self.Dialog_PushButton_Accept.setMinimumSize(QSize(160, 31))
         self.Dialog_PushButton_Accept.setMaximumSize(QSize(170, 31))
@@ -324,11 +338,14 @@ class Ui_MCSL2_AskDialog(object):
         self.Dialog_PushButton_Accept.setObjectName("Dialog_PushButton_Accept")
         self.horizontalLayout.addWidget(self.Dialog_PushButton_Accept)
         self.gridLayout.addWidget(self.ButtonWidget, 2, 1, 1, 1)
-        spacerItem1 = QSpacerItem(40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem1 = QSpacerItem(
+            40, 5, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 3, 1, 1, 1)
-        spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem2 = QSpacerItem(
+            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem2, 1, 2, 1, 1)
-        spacerItem3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem3 = QSpacerItem(
+            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 1, 0, 1, 1)
 
         self.retranslateUi(MCSL2_AskDialog)
@@ -337,8 +354,10 @@ class Ui_MCSL2_AskDialog(object):
     def retranslateUi(self, MCSL2_AskDialog):
         _translate = QCoreApplication.translate
         MCSL2_AskDialog.setWindowTitle(_translate("MCSL2_AskDialog", "提示"))
-        self.Dialog_PushButton_Cancel.setText(_translate("MCSL2_AskDialog", "取消"))
-        self.Dialog_PushButton_Accept.setText(_translate("MCSL2_AskDialog", "确定"))
+        self.Dialog_PushButton_Cancel.setText(
+            _translate("MCSL2_AskDialog", "取消"))
+        self.Dialog_PushButton_Accept.setText(
+            _translate("MCSL2_AskDialog", "确定"))
 
 
 # Customize dialogs
@@ -439,5 +458,10 @@ class DialogMsg:
 
         self.DownloadPageConnectToMCSLAPIFailed = "无法连接MCSLAPI，\n\n请检查网络或系统代理设置"
         self.DownloadPageEncodeMCSLAPIContentFailed = "可能解析API内容失败\n\n请检查网络或自己的节点设置"
+        self.NoAria2 = "未找到Aria2！是否需要安装？"
+        self.InstallAria2Failed = "安装Aria2失败，\n\n请自行上网寻找解决办法，\n\n有能力可向开发者反馈。"
+
+        self.Debug = "测试消息：\n"
+
 
 ReturnNum = 0

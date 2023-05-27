@@ -31,14 +31,14 @@ class MCSL2Logger:
         Time = datetime.now().strftime('%H:%M:%S')
         ConsoleLog = f"{Time}  [ {LogColor[self.MsgLevel]}{LogType[self.MsgLevel]}{ColorSuffix} ]  {self.Msg}"
         FileLog = f"{Time}  [ {LogType[self.MsgLevel]} ]  {self.Msg}{HH}"
-        with open(f'MCSL2/Logs/Log{self.LogFilesCountN}.txt', 'a') as WriteLog:
+        with open(f'MCSL2/Logs/Log{self.LogFilesCountN}.txt', 'a', encoding="utf-8") as WriteLog:
             WriteLog.write(f"{FileLog}")
         print(ConsoleLog)
 
 
 def InitNewLogFile(LogFilesCount):
     LogFilesCount += 1
-    with open(f'MCSL2/Logs/Log{LogFilesCount}.txt', 'w+') as GenerateNewLogFile:
+    with open(f'MCSL2/Logs/Log{LogFilesCount}.txt', 'w+', encoding="utf-8") as GenerateNewLogFile:
         GenerateNewLogFile.write("")
         GenerateNewLogFile.close()
 
@@ -145,3 +145,7 @@ class LoggerMsg:
         self.NoNewVersionAvailable = "已是最新版！"
         self.CheckUpdateFailed = "检查更新失败！"
         self.SrollAreaItemButtonNum = "检测完毕，索引值为"
+        self.NoAria2 = "未找到Aria2！"
+        self.InstallAria2Failed = "安装Aria2失败"
+        self.StartDownload = "开始下载..."
+        self.InitAria2 = "初始化Aria2..."

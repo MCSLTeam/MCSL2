@@ -1,4 +1,4 @@
-from platform import uname
+from platform import system
 from json import dump
 from os import getcwd, environ, remove, path as ospath
 from subprocess import CalledProcessError
@@ -14,7 +14,8 @@ from PyQt5.QtWidgets import (
 )
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
-from MCSL2_Libs.IndeterminateProgressBar import IndeterminateProgressBar
+from MCSL2_Libs.MCSL2_Aria2Controller import Aria2Controller
+from MCSL2_Libs.ProgressBar import IndeterminateProgressBar
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
@@ -38,6 +39,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def __init__(self):
         self.__mouseMovePos = None
         self.__mousePressPos = None
+        self.DownloadURLList: list
         global LogFilesCount
         LogFilesCount = InitMCSL()
         InitNewLogFile(LogFilesCount)
@@ -230,6 +232,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         self.JoinQQGroup.clicked.connect(lambda: OpenWebUrl(
             "https://jq.qq.com/?_wv=1027&k=x2ISlviQ", LogFilesCount=LogFilesCount))
         # self.SystemReportPushButton.clicked.connect()
+        MCSL2Logger("InitAria2", MsgArg=None, MsgLevel=0,
+                    LogFilesCount=LogFilesCount).Log()
+        Aria2Controller(LogFilesCount=LogFilesCount).InitAria2Configuration()
+        isAria2 = Aria2Controller(LogFilesCount=LogFilesCount).CheckAria2()
+        if not isAria2:
+            Aria2Controller(
+                LogFilesCount=LogFilesCount).ShowNoAria2Msg()
         MCSL2Logger("FinishStarting", MsgArg=None, MsgLevel=0,
                     LogFilesCount=LogFilesCount).Log()
 
@@ -942,7 +951,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                         MsgLevel=0, LogFilesCount=LogFilesCount).Log()
             self.InitDownloadSubWidget(
                 self.downloadUrlDict[DownloadSource][idx]['SubWidgetNames'])
-            # self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
+            self.DownloadURLList = self.downloadUrlDict[DownloadSource][idx]['DownloadUrls']
+
         else:
             idx = self.DownloadSwitcher_TabWidget.currentIndex()
             self.RefreshingTip = QLabel()
@@ -1331,6 +1341,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.ChooseJava(JavaIndex=SelectDownloadItemIndexNumber)
         if self.FunctionsStackedWidget.currentIndex() == 6:
             self.ChooseServer(ServerIndex=SelectDownloadItemIndexNumber)
+        if self.FunctionsStackedWidget.currentIndex() == 2:
+            Aria2Controller(LogFilesCount=LogFilesCount).Download(
+                self.DownloadURLList[SelectDownloadItemIndexNumber])
 
     def ChooseJava(self, JavaIndex):
         global JavaPaths, JavaPath
@@ -1404,7 +1417,7 @@ if __name__ == '__main__':
     CanCreate = 0
     CoreFileName = ""
     ServerName = ""
-    Version = "2.1.3.5"
+    Version = "2.1.3.6"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \
                                   "    padding-left: 10px;\n" \
@@ -1452,8 +1465,7 @@ if __name__ == '__main__':
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     QApplication.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    SysType = uname()[0]
-    if SysType == "Linux":
+    if system().lower() == "linux":
         environ["QT_QPA_PLATFORM"] = "wayland"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
     MCSLProcess = QApplication(argv)

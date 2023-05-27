@@ -5,14 +5,12 @@ on: [push, workflow_dispatch]
 permissions: write-all
 
 jobs:
-  BuildApps:
+  BuildWindowsVersion:
     strategy:
       fail-fast: false
 
       matrix:
         os:
-          - macos-latest
-          - ubuntu-latest
           - windows-latest
         architecture:
           - x64
@@ -37,52 +35,12 @@ jobs:
         run: |
           python -m pip install pip setuptools -U
 
-      - name: Install Deps for Linux
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install -y libfuse2
 
-      - name: Install Project Deps
+      - name: Install Requirements
         run: |
           python -m pip install -r requirements.txt -r requirements.dev.txt
 
-      - name: Build on Linux
-        if: runner.os == 'Linux'
-        run: >
-          python -m nuitka
-          --standalone
-          --enable-plugin=pyqt5
-          --onefile
-          --output-dir=build
-          --assume-yes-for-downloads
-          --linux-icon=MCSL2.ico
-          --company-name="LxHTT"
-          --product-name="MCSL 2"
-          --file-version=2.1.3.5
-          --product-version=2.1.3.5
-          --file-description="MC Server Launcher 2"
-          MCSL2.py
-
-      - name: Build on macOS
-        if: runner.os == 'macOS'
-        run: >
-          python -m nuitka
-          --standalone
-          --onefile
-          --enable-plugin=pyqt5
-          --macos-create-app-bundle
-          --macos-signed-app-name="com.lxhtt.mcsl2"
-          --macos-app-name="MCSL2"
-          --macos-app-mode="gui"
-          --output-dir=build
-          --assume-yes-for-download
-          --disable-console
-          --macos-app-version=2.1.3.5
-          --macos-app-icon=MCSL2.icns
-          MCSL2.py
-
       - name: Build on Windows
-        if: runner.os == 'Windows'
         run: >
           python -m nuitka 
           --mingw64
@@ -100,8 +58,64 @@ jobs:
           --windows-file-description="MC Server Launcher 2"
           MCSL2.py
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
+          path: |
+            build/*.exe
+
+  BuildmacOSVersion:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - macos-latest
+        architecture:
+          - x64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements.dev.txt
+
+      - name: Update Pip
+        run: |
+          python -m pip install pip setuptools -U
+
+      - name: Install Requirements
+        run: |
+          python -m pip install -r requirements.txt -r requirements.dev.txt
+
+      - name: Build on macOS
+        run: >
+          python -m nuitka
+          --standalone
+          --onefile
+          --enable-plugin=pyqt5
+          --macos-create-app-bundle
+          --macos-signed-app-name="com.lxhtt.mcsl2"
+          --macos-app-name="MCSL2"
+          --macos-app-mode="gui"
+          --output-dir=build
+          --assume-yes-for-download
+          --disable-console
+          --macos-app-version=2.1.3.5
+          --macos-app-icon=MCSL2.icns
+          MCSL2.py
+
       - name: Fix App Bundle on macOS
-        if: runner.os == 'macOS'
         run: |
           chmod +x build/MCSL2.app/Contents/MacOS/MCSL2
           rm -r build/MCSL2.app/Contents/_CodeSignature
@@ -114,15 +128,76 @@ jobs:
         with:
           name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
           path: |
-            build/*.exe
-            build/*.bin
             build/*.app/**/*
+
+  BuildLinuxVersion:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+        architecture:
+          - x64
+          - x86
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements.dev.txt
+
+      - name: Update Pip
+        run: |
+          python -m pip install pip setuptools -U
+
+      - name: Install Deps for Linux
+        run: |
+          sudo apt-get install -y libfuse2
+
+      - name: Install Project Deps
+        run: |
+          python -m pip install -r requirements.txt -r requirements.dev.txt
+
+      - name: Build on Linux
+        run: >
+          python -m nuitka
+          --standalone
+          --enable-plugin=pyqt5
+          --onefile
+          --output-dir=build
+          --assume-yes-for-downloads
+          --linux-icon=MCSL2.ico
+          --company-name="LxHTT"
+          --product-name="MCSL 2"
+          --file-version=2.1.3.5
+          --product-version=2.1.3.5
+          --file-description="MC Server Launcher 2"
+          MCSL2.py
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
+          path: |
+            build/*.bin
 
   CreateRelease:
     runs-on: ubuntu-latest
 
     needs:
-      - BuildApps
+      - BuildWindowsVersion
+      - BuildmacOSVersion
+      - BuildLinuxVersion
 
     steps:
       - uses: szenius/set-timezone@v1.0
@@ -137,11 +212,12 @@ jobs:
 
       - name: Compress Artifacts
         run: |
-          for name in ./*
-            do 7z a "${name}.zip" "./${name}/*"
-          done
+          7z a "MCSL2-Linux-x64.zip" "./MCSL2-Linux-x64/*"
+          7z a "MCSL2-Linux-x86.zip" "./MCSL2-Linux-x86/*"
+          7z a "MCSL2-Windows-x64.zip" "./MCSL2-Windows-x64/*" "./repo/Tools/Aria2/aria2c.exe"
+          7z a "MCSL2-Windows-x86.zip" "./MCSL2-Windows-x86/*" "./repo/Tools/Aria2/aria2c.exe"
+          7z a "MCSL2-macOS-x64.zip" "./MCSL2-macOS-x64/*"
 
-      # 偷懒，签出仓库拿一下 ChangeLog
       - name: Check-out repository
         uses: actions/checkout@v3
         with:
@@ -154,13 +230,12 @@ jobs:
           body_path: ./repo/ChangeLog.md
           prerelease: true
           draft: false
-          tag_name: v2.1.3.5
+          tag_name: v2.1.3.6
           files: |
             MCSL2-Linux-x64.zip
             MCSL2-Linux-x86.zip
             MCSL2-Windows-x64.zip
             MCSL2-Windows-x86.zip
             MCSL2-macOS-x64.zip
-            MCSL2-macOS-x86.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
