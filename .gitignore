@@ -6,8 +6,8 @@ poetry.lock
 .vscode/**
 Tools/OfflineBuild/**
 *.exe
-.Servers/**
-.MCSL2/**
+Servers/**
+MCSL2/**
 pdm.lock
 pdm.toml
 __pycache__/**
