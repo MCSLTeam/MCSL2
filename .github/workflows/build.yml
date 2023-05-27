@@ -224,6 +224,11 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
 
+      - name: Check-out repository
+        uses: actions/checkout@v3
+        with:
+          path: repo
+          
       - name: Compress Artifacts
         run: |
           7z a "MCSL2-${{ matrix.mcsl2version }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
@@ -231,12 +236,6 @@ jobs:
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*" -ir!"./repo/Tools/Aria2/aria2c.exe" -o"MCSL2/Aria2"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*" -ir!"./repo/Tools/Aria2/aria2c.exe" -o"MCSL2/Aria2"
           7z a "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.zip" "./MCSL2-macOS-x64/*"
-
-      - name: Check-out repository
-        uses: actions/checkout@v3
-        with:
-          path: repo
-
 
       - name: Release
         uses: softprops/action-gh-release@v1
