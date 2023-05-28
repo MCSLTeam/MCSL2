@@ -241,6 +241,8 @@ class ServerHandler(QObject):
     def __init__(self, JavaPath: str, Args: List[str]):
         """
         初始化一个服务器处理器
+        JavaPath:Java路径
+        Args:服务器参数,列表形式，形如["-jar","server.jar","nogui","-Xms1G","-Xmx1G"]
         """
         super().__init__()
         self.JavaPath = JavaPath
@@ -381,6 +383,7 @@ class ServerLauncher:
 
     def Launch(self, LaunchCommand):
         RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
+        # TODO:请将这部分改为使用ServerHandler
         Monitor = Popen(LaunchCommand, shell=True, cwd=str(RealServerWorkingDirectory), stdout=PIPE, stderr=PIPE)
         while True:
             result = Monitor.stdout.readline()
