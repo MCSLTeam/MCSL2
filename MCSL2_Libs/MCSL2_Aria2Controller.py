@@ -1,17 +1,39 @@
 from shutil import which
 from subprocess import PIPE, STDOUT, SW_HIDE, CalledProcessError, check_output, Popen
+from typing import Optional
+
 from aria2p import Client, API
 from platform import system
 from os import path as ospath
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 
 
-class Aria2Controller():
+class Aria2Controller:
+    """
+    Aria2Controller is a singleton class that controls aria2c.
+    """
+
+    ########################
+    #  private class vars  #
+    ########################
+
+    _port = 6800
+
+    _aria2 = API(
+        Client(
+            host="http://localhost",
+            port=_port,
+            secret=""
+        )
+    )
+    _downloadTasks = {}
+
     def __init__(self, LogFilesCount):
         super().__init__()
+        self.Aria2Status = None
         self.OSType: str
         self.Aria2Status: bool
         self.LogFilesCount = LogFilesCount
@@ -51,7 +73,7 @@ class Aria2Controller():
             pass
         return self.Aria2Status
 
-    def LinuxCheckPackageExists(PackageName):
+    def LinuxCheckPackageExists(self, PackageName):
         try:
             check_output(["which", PackageName], creationflags=SW_HIDE)
             return True
@@ -75,11 +97,12 @@ class Aria2Controller():
                 self.macOSInstallAria2()
             elif self.OSType == "Linux":
                 LinuxInstall = self.LinuxInstallAria2()
-                if LinuxInstall == True:
+                if LinuxInstall:
                     pass
                 else:
                     MCSL2Logger(
-                        "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2, LogFilesCount=self.LogFilesCount).Log()
+                        "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2,
+                        LogFilesCount=self.LogFilesCount).Log()
                     CallMCSL2Dialog(
                         Tip="InstallAria2Failed",
                         OtherTextArg=None,
@@ -159,8 +182,66 @@ class Aria2Controller():
             Aria2Program = "aria2c"
         ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session "
         Aria2Thread = Aria2ProcessThread(
-            Aria2Program=Aria2Program, ConfigCommand=ConfigCommand, DownloadURL=DownloadURL, LogFilesCount=self.LogFilesCount)
+            Aria2Program=Aria2Program, ConfigCommand=ConfigCommand, DownloadURL=DownloadURL,
+            LogFilesCount=self.LogFilesCount)
         Aria2Thread.start()
+
+    @classmethod
+    def AddUri(cls, uri: str) -> str:
+        """
+        Add a download task to Aria2,and return the gid of the task
+        * normally, this function is only used by Class:DownloadWatcher
+        """
+        gid = cls._aria2.add_uris([uri]).gid
+        if gid in cls._downloadTasks.keys():
+            download = cls._aria2.get_download(gid)
+            if download.status not in ["complete", "error", "removed"]:
+                raise Exception("Download task already exists")
+        cls._downloadTasks.update({gid: [uri]})
+
+        return gid
+
+    @classmethod
+    def AddUris(cls, uris: list):
+        """
+        Add a download task to Aria2,and return the gid of the task
+        * normally, this function is only used by Class:DownloadWatcher
+        """
+        gid = cls._aria2.add_uris(uris).gid
+        if gid in cls._downloadTasks.keys():
+            download = cls._aria2.get_download(gid)
+            if download.status not in ["complete", "error", "removed"]:
+                raise Exception("Download task already exists")
+        cls._downloadTasks.update({gid: uris})
+        return gid
+
+    @classmethod
+    def GetDownloadsStatus(cls, gid: str) -> dict:
+        """
+        Get the state of a download task by gid
+        * normally, this function is only used by Class:DownloadWatcher
+        """
+        download = cls._aria2.get_download(gid)
+        rv = {
+            "speed": download.download_speed_string(),
+            "progress": download.progress_string(),
+            "status": download.status,
+            "totalLength": download.total_length_string(),
+            "completedLength": download.completed_length_string(),
+            "files": download.files,
+        }
+        if download.status == "complete":
+            cls._downloadTasks.pop(gid)
+        return rv
+
+    @classmethod
+    def ApplySettings(cls, Settings: dict):
+        """
+        Apply settings to Aria2,current not used
+        """
+        cls._aria2.port = Settings.get("port", cls._port)
+        cls._port = cls._aria2.port
+
 
 ###################
 #   Aria2 Thread  #
@@ -190,3 +271,60 @@ class Aria2ProcessThread(QThread):
             process.wait()
         except Exception as e:
             print('Error:', e)
+
+
+class DownloadWatcher(QThread):
+    """
+    DownloadWatcher is a QThread that watches the download progress of a download task.
+    download task started and download information emitted every interval.
+    """
+
+    # 每隔一段时间获取一次下载信息(self.Interval)，并发射下载信息OnDownloadInfoGet(dict)
+    OnDownloadInfoGet = pyqtSignal(dict)
+
+    def __init__(self, uris: list, interval=1, parent: Optional[QObject] = ...) -> None:
+        """
+        uris: a list of download urls
+        interval can be a float or int (xxx seconds)
+        """
+        super().__init__(parent)
+        self._uris = uris
+        self._gid = Aria2Controller.AddUris(self._uris)
+        self._stopFlag = False
+        self._interval = interval
+        self._downloadStatus = Aria2Controller.GetDownloadsStatus(self._gid)
+
+    def run(self) -> None:
+        while (status := Aria2Controller.GetDownloadsStatus(self._gid))["status"] not in ["complete", "error",
+                                                                                         "removed"]:
+            if self._stopFlag:
+                break
+            # update download status
+            self._downloadStatus = status
+
+            self.OnDownloadInfoGet.emit(Aria2Controller.GetDownloadsStatus(self._gid))
+
+            if self._interval is int:
+                self.sleep(self._interval)
+            else:
+                self.msleep(min(1, int(self._interval * 1000)))
+
+    @pyqtSlot()
+    def StopWatch(self):
+        self._stopFlag = True
+
+    @property
+    def Gid(self):
+        return self._gid
+
+    @property
+    def Interval(self):
+        return self._interval
+
+    @property
+    def DownloadStatus(self):
+        return self._downloadStatus
+
+    @Interval.setter
+    def Interval(self, interval: float | int):
+        self._interval = interval
