@@ -240,7 +240,7 @@ class ServerHandler(QObject):
     # 当服务器重启时发出的信号
     ServerRestarted = pyqtSignal()
 
-    def __init__(self, JavaPath: str, Args: List[str]):
+    def __init__(self, JavaPath: str, Args: List[str], WorkingDirectory: str):
         """
         初始化一个服务器处理器
         JavaPath:Java路径
@@ -249,6 +249,7 @@ class ServerHandler(QObject):
         super().__init__()
         self.JavaPath = JavaPath
         self.Args = Args
+        self.WorkingDirectory = WorkingDirectory
         self.Server = self.GetServerProcess()
 
     def GetServerProcess(self) -> Server:
@@ -259,11 +260,11 @@ class ServerHandler(QObject):
         server.Process = QProcess()
         server.Process.setProgram(self.JavaPath)
         server.Process.setArguments(self.Args)
-
-        self.Server.Process.readyReadStandardOutput.connect(
-            self.ServerLogOutputHandler())
-        self.Server.Process.finished.connect(
-            lambda: self.ServerClosed.emit(self.Server.Process.exitCode()))
+        server.Process.setWorkingDirectory(self.WorkingDirectory)
+        server.Process.readyReadStandardOutput.connect(
+            self.ServerLogOutputHandler)
+        server.Process.finished.connect(
+            lambda: self.ServerClosed.emit(server.Process.exitCode()))
 
         return server
 
@@ -393,7 +394,6 @@ class ServerLauncher:
             AcceptEula.close()
 
     def Launch(self, LaunchArg):
-        # RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
-        LaunchServer = ServerHandler(
-            Args=LaunchArg, JavaPath=self.JavaPath).GetServerProcess()
-        LaunchServer.StartServer()
+        print(self.JavaPath)
+        ServerHandler(Args=LaunchArg, JavaPath=self.JavaPath,
+                      WorkingDirectory=str(realpath(f"{self.CoreFolder}"))).StartServer()
