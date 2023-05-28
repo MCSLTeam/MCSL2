@@ -211,12 +211,14 @@ def SaveServer(ServerName, CorePath, JavaPath, MinMemory, MaxMemory, CoreFileNam
         SaveConfig.close()
     Tip = "服务器部署完毕！"
 
-    CallMCSL2Dialog(Tip, OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
+    CallMCSL2Dialog(Tip, OtherTextArg=None,
+                    isNeededTwoButtons=0, ButtonArg=None)
 
 
 def ReadGlobalServerConfig():
     with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as ReadGlobalServerConfigFile:
-        GlobalServerList = loads(ReadGlobalServerConfigFile.read())['MCSLServerList']
+        GlobalServerList = loads(ReadGlobalServerConfigFile.read())[
+            'MCSLServerList']
         ServerCount = len(GlobalServerList)
         ReadGlobalServerConfigFile.close()
     return ServerCount, GlobalServerList
@@ -258,8 +260,10 @@ class ServerHandler(QObject):
         server.Process.setProgram(self.JavaPath)
         server.Process.setArguments(self.Args)
 
-        self.Server.Process.readyReadStandardOutput.connect(self.ServerLogOutputHandler())
-        self.Server.Process.finished.connect(lambda: self.ServerClosed.emit(self.Server.Process.exitCode()))
+        self.Server.Process.readyReadStandardOutput.connect(
+            self.ServerLogOutputHandler())
+        self.Server.Process.finished.connect(
+            lambda: self.ServerClosed.emit(self.Server.Process.exitCode()))
 
         return server
 
@@ -271,7 +275,8 @@ class ServerHandler(QObject):
         DataSize = NewData.size()
         if DataSize > self.Server.LastOutputSize:
             # 截取新的输出,由于data可能会达到MB级别，所以使用memoryview来对付QByteArray
-            NewOutput = memoryview(NewData)[self.Server.LastOutputSize:DataSize].tobytes().decode("utf-8")
+            NewOutput = memoryview(NewData)[self.Server.LastOutputSize:DataSize].tobytes(
+            ).decode(MCSL2Settings().ConsoleOutputEncoding)
             self.ServerLogOutput.emit(NewOutput)
             self.Server.LastOutputSize = DataSize
 
@@ -285,7 +290,10 @@ class ServerHandler(QObject):
         """
         停止服务器
         """
-        self.Server.Process.write(b"stop\n")
+        if MCSL2Settings().SendStopInsteadOfKill == True:
+            self.Server.Process.write(b"stop\n")
+        else:
+            self.HaltServer()
 
     def RestartServer(self):
         """
@@ -307,7 +315,8 @@ class ServerHandler(QObject):
         """
         用户向服务器发送命令
         """
-        self.Server.Process.write(f"{Command}\n".encode("utf-8"))
+        self.Server.Process.write(f"{Command}\n".encode(
+            MCSL2Settings().ConsoleInputDecoding))
 
     def IsServerRunning(self):
         return self.Server.Process.state() == QProcess.Running
@@ -348,11 +357,13 @@ class ServerLauncher:
 
     def SetLaunchCommand(self):
         if self.EnableJVMArg == True:
-            LaunchCommand = f"\"{self.JavaPath}\" -Xms{self.MinMemory}{self.MemoryUnit} -Xmx{self.MaxMemory}{self.MemoryUnit} {self.JVMArg} -jar {self.CoreFolder}\\{self.CoreName}"
+            LaunchArg = [f"-Xms{self.MinMemory}{self.MemoryUnit}", f"-Xmx{self.MaxMemory}{self.MemoryUnit}",
+                         f"{self.JVMArg}", "-jar", f"{self.CoreFolder}\\{self.CoreName}"]
         else:
-            LaunchCommand = f"\"{self.JavaPath}\" -Xms{self.MinMemory}{self.MemoryUnit} -Xmx{self.MaxMemory}{self.MemoryUnit} -jar {self.CoreFolder}\\{self.CoreName}"
+            LaunchArg = [f"-Xms{self.MinMemory}{self.MemoryUnit}",
+                         f"-Xmx{self.MaxMemory}{self.MemoryUnit}", "-jar", f"{self.CoreFolder}\\{self.CoreName}"]
         if self.CheckEulaAcceptStatus(self.CoreFolder) == True:
-            self.Launch(LaunchCommand)
+            self.Launch(LaunchArg)
         else:
             ReturnStatus = CallMCSL2Dialog(
                 Tip="ServerControllerNoAcceptedMojangEula",
@@ -360,7 +371,7 @@ class ServerLauncher:
                 isNeededTwoButtons=1, ButtonArg="确定|取消")
             if ReturnStatus == 1:
                 self.AcceptEula(self.CoreFolder)
-                self.Launch(LaunchCommand)
+                self.Launch(LaunchArg)
             else:
                 pass
 
@@ -381,17 +392,8 @@ class ServerLauncher:
             AcceptEula.write("eula=true")
             AcceptEula.close()
 
-    def Launch(self, LaunchCommand):
-        RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
-        # TODO:请将这部分改为使用ServerHandler
-        Monitor = Popen(LaunchCommand, shell=True, cwd=str(RealServerWorkingDirectory), stdout=PIPE, stderr=PIPE)
-        while True:
-            result = Monitor.stdout.readline()
-            if result != b'':
-                try:
-                    print(result.decode('gbk').strip('\r\n'))
-                except:
-                    print(result.decode('utf-8').strip('\r\n'))
-            else:
-                break
-
+    def Launch(self, LaunchArg):
+        # RealServerWorkingDirectory = realpath(f"{self.CoreFolder}")
+        LaunchServer = ServerHandler(
+            Args=LaunchArg, JavaPath=self.JavaPath).GetServerProcess()
+        LaunchServer.StartServer()

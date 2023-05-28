@@ -296,13 +296,14 @@ class DownloadWatcher(QThread):
 
     def run(self) -> None:
         while (status := Aria2Controller.GetDownloadsStatus(self._gid))["status"] not in ["complete", "error",
-                                                                                         "removed"]:
+                                                                                          "removed"]:
             if self._stopFlag:
                 break
             # update download status
             self._downloadStatus = status
 
-            self.OnDownloadInfoGet.emit(Aria2Controller.GetDownloadsStatus(self._gid))
+            self.OnDownloadInfoGet.emit(
+                Aria2Controller.GetDownloadsStatus(self._gid))
 
             if self._interval is int:
                 self.sleep(self._interval)
@@ -326,5 +327,5 @@ class DownloadWatcher(QThread):
         return self._downloadStatus
 
     @Interval.setter
-    def Interval(self, interval: float | int):
+    def Interval(self, interval: float or int):
         self._interval = interval

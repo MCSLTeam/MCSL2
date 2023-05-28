@@ -37,8 +37,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     global LogFilesCount
 
     def __init__(self):
-        self.__mouseMovePos = None
-        self.__mousePressPos = None
         self.DownloadURLList: list
         global LogFilesCount
         LogFilesCount = InitMCSL()
