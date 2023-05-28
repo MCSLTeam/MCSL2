@@ -10,11 +10,11 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsDropShadowEffect,
-    QMainWindow, QListView,
+    QMainWindow, QListView, QProgressDialog,
 )
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
-from MCSL2_Libs.MCSL2_Aria2Controller import Aria2Controller
+from MCSL2_Libs.MCSL2_Aria2Controller import Aria2Controller, DownloadWatcher
 from MCSL2_Libs.ProgressBar import IndeterminateProgressBar
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
@@ -449,6 +449,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         MCSL2Logger("Close_ButtonPressed", MsgArg=None,
                     MsgLevel=1, LogFilesCount=LogFilesCount).Log()
         MCSL2Logger("MCSLExit", MsgArg=None, MsgLevel=0,
+                    LogFilesCount=LogFilesCount).Log()
+        Aria2Controller.Shutdown()
+        MCSL2Logger("Aria2Shutdown", MsgArg=None, MsgLevel=0,
                     LogFilesCount=LogFilesCount).Log()
         MCSLProcess.quit()
 
@@ -1243,7 +1246,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             else:
                 WidgetJavaArg = f"JVM参数：{ServerInfoJSON[i]['jvm_arg']}"
             ServerInfo = WidgetServerName + WidgetCoreFileName + \
-                WidgetJavaPath + WidgetMinMemory + WidgetMaxMemory + WidgetJavaArg
+                         WidgetJavaPath + WidgetMinMemory + WidgetMaxMemory + WidgetJavaArg
             MCSL2Logger("GotServerInfo", MsgArg=f" - 第{i}个：\nServerInfo", MsgLevel=0,
                         LogFilesCount=LogFilesCount).Log()
             self.MCSL2_SubWidget_SelectS = QWidget()
@@ -1340,8 +1343,25 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         if self.FunctionsStackedWidget.currentIndex() == 6:
             self.ChooseServer(ServerIndex=SelectDownloadItemIndexNumber)
         if self.FunctionsStackedWidget.currentIndex() == 2:
-            Aria2Controller(LogFilesCount=LogFilesCount).Download(
-                self.DownloadURLList[SelectDownloadItemIndexNumber])
+            # Aria2Controller(LogFilesCount=LogFilesCount).Download(
+            #     self.DownloadURLList[SelectDownloadItemIndexNumber])
+            # progressBar = QProgressDialog()
+            # progressBar.setParent(self)
+            # progressBar.setMaximum(100)
+            Watcher = DownloadWatcher(uris=[self.DownloadURLList[SelectDownloadItemIndexNumber]], parent=self,
+                                      LogFilesCount=LogFilesCount)
+            # Watcher.OnDownloadInfoGet.connect(
+            #     lambda d: {
+            #         progressBar.setWindowTitle(
+            #             f'下载进度：{d["progress"]},下载速度：{d["speed"]},文件大小：{d["totalLength"]},eta：{d["eta"]}'),
+            #         progressBar.setValue(d["bar"]),
+            #     })
+            Watcher.finished.connect(lambda: {
+
+                CallMCSL2Dialog(Tip="下载完成", OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None)
+            })
+            Watcher.start()
+            # progressBar.show()
 
     def ChooseJava(self, JavaIndex):
         global JavaPaths, JavaPath
