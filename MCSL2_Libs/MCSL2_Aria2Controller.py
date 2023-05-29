@@ -1,12 +1,15 @@
 from shutil import which
 from subprocess import PIPE, STDOUT, SW_HIDE, CalledProcessError, check_output, Popen
 from typing import Optional
+from json import loads
 
 import aria2p
+import requests
 from aria2p import Client, API
 from platform import system
 from os import path as ospath
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QUrl
+from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager, QNetworkReply
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
@@ -110,6 +113,7 @@ class Aria2Controller:
                         isNeededTwoButtons=0, ButtonArg=None)
         else:
             pass
+        self.WinInstallAria2()
 
     ########################################
     #  Install Aria2 (No Windows support)  #
@@ -188,117 +192,138 @@ class Aria2Controller:
         Aria2Thread.start()
 
     @classmethod
-    def AddUri(cls, uri: str) -> str:
-        """
-        Add a download task to Aria2,and return the gid of the task
-        * normally, this function is only used by Class:DownloadWatcher
-        """
-        if not cls.TestAria2Service():
-            cls.StartAria2()
+    def WinInstallAria2(cls):
 
-        gid = cls._aria2.add_uris([uri]).gid
-        if gid in cls._downloadTasks.keys():
-            download = cls._aria2.get_download(gid)
-            if download.status not in ["complete", "error", "removed"]:
-                raise Exception("Download task already exists")
-        cls._downloadTasks.update({gid: [uri]})
-
-        return gid
-
-    @classmethod
-    def AddUris(cls, uris: list):
-        """
-        Add a download task to Aria2,and return the gid of the task
-        * normally, this function is only used by Class:DownloadWatcher
-        """
-        if not cls.TestAria2Service():
-            cls.StartAria2()
-
-        gid = cls._aria2.add_uris(uris).gid
-        if gid in cls._downloadTasks.keys():
-            download = cls._aria2.get_download(gid)
-            if download.status not in ["complete", "error", "removed"]:
-                raise Exception("Download task already exists")
-        cls._downloadTasks.update({gid: uris})
-        return gid
-
-    @classmethod
-    def GetDownloadsStatus(cls, gid: str) -> dict:
-        """
-        Get the state of a download task by gid
-        * normally, this function is only used by Class:DownloadWatcher
-        """
-        download = cls._aria2.get_download(gid)
-        rv = {
-            "speed": download.download_speed_string(),
-            "progress": download.progress_string(),
-            "status": download.status,
-            "totalLength": download.total_length_string(),
-            "completedLength": download.completed_length_string(),
-            "files": download.files,
-            "bar": int(download.progress),
-            "eta": download.eta_string(),
-        }
-        if download.status == "complete":
-            cls._downloadTasks.pop(gid)
-        return rv
-
-    @classmethod
-    def ApplySettings(cls, Settings: dict):
-        """
-        Apply settings to Aria2,current not used
-        """
-        cls._aria2.port = Settings.get("port", cls._port)
-        cls._port = cls._aria2.port
-
-    @classmethod
-    def TestAria2Service(cls):
-        """
-        测试Aria2服务是否正常
-        :return:
-        """
+        url = 'https://api.github.com/repos/aria2/aria2/releases/latest'
         try:
-            cls._aria2.client.get_version()
+            releaseInfo = requests.get(url).json()
         except:
-            return False
-        return True
+            print("获取Aria2仓库release失败")
+            return
 
-    @classmethod
-    def StartAria2(cls):
-        if cls._osType == "Windows":
-            Aria2Program = "MCSL2/Aria2/aria2c.exe"
-        elif cls._osType == "macOS":
-            Aria2Program = "/usr/local/bin/aria2c"
-        elif cls._osType == "Linux":
-            Aria2Program = "aria2c"
-        else:
-            Aria2Program = "aria2c"
-        ConfigCommand = [
-            "--conf-path=MCSL2/Aria2/aria2.conf",
-            "--input-file=MCSL2/Aria2/aria2.session",
-            "--save-session=MCSL2/Aria2/aria2.session"
-        ]
-        QProcess.startDetached(Aria2Program, ConfigCommand)
-        cls._aria2 = API(
-            Client(
-                host="http://localhost",
-                port=cls._port,
-                secret=""
-            )
-        )
+        winPackageInfo = [v for v in releaseInfo["assets"].values() if 'win-32bit' in v["name"]][0]
+        winPackageUrl = winPackageInfo["browser_download_url"]
 
-    @classmethod
-    def DownloadCompletedHandler(cls, gid):
-        cls._aria2: API
+
+@classmethod
+def AddUri(cls, uri: str) -> str:
+    """
+    Add a download task to Aria2,and return the gid of the task
+    * normally, this function is only used by Class:DownloadWatcher
+    """
+    if not cls.TestAria2Service():
+        cls.StartAria2()
+
+    gid = cls._aria2.add_uris([uri]).gid
+    if gid in cls._downloadTasks.keys():
         download = cls._aria2.get_download(gid)
-        cls._aria2.remove([download])
+        if download.status not in ["complete", "error", "removed"]:
+            raise Exception("Download task already exists")
+    cls._downloadTasks.update({gid: [uri]})
 
-    @classmethod
-    def Shutdown(cls):
-        if cls._aria2 is not None:
-            cls._aria2: API
-            cls._aria2.remove_all(True)
-            cls._aria2.client.shutdown()
+    return gid
+
+
+@classmethod
+def AddUris(cls, uris: list):
+    """
+    Add a download task to Aria2,and return the gid of the task
+    * normally, this function is only used by Class:DownloadWatcher
+    """
+    if not cls.TestAria2Service():
+        cls.StartAria2()
+
+    gid = cls._aria2.add_uris(uris).gid
+    if gid in cls._downloadTasks.keys():
+        download = cls._aria2.get_download(gid)
+        if download.status not in ["complete", "error", "removed"]:
+            raise Exception("Download task already exists")
+    cls._downloadTasks.update({gid: uris})
+    return gid
+
+
+@classmethod
+def GetDownloadsStatus(cls, gid: str) -> dict:
+    """
+    Get the state of a download task by gid
+    * normally, this function is only used by Class:DownloadWatcher
+    """
+    download = cls._aria2.get_download(gid)
+    rv = {
+        "speed": download.download_speed_string(),
+        "progress": download.progress_string(),
+        "status": download.status,
+        "totalLength": download.total_length_string(),
+        "completedLength": download.completed_length_string(),
+        "files": download.files,
+        "bar": int(download.progress),
+        "eta": download.eta_string(),
+    }
+    if download.status == "complete":
+        cls._downloadTasks.pop(gid)
+    return rv
+
+
+@classmethod
+def ApplySettings(cls, Settings: dict):
+    """
+    Apply settings to Aria2,current not used
+    """
+    cls._aria2.port = Settings.get("port", cls._port)
+    cls._port = cls._aria2.port
+
+
+@classmethod
+def TestAria2Service(cls):
+    """
+    测试Aria2服务是否正常
+    :return:
+    """
+    try:
+        cls._aria2.client.get_version()
+    except:
+        return False
+    return True
+
+
+@classmethod
+def StartAria2(cls):
+    if cls._osType == "Windows":
+        Aria2Program = "MCSL2/Aria2/aria2c.exe"
+    elif cls._osType == "macOS":
+        Aria2Program = "/usr/local/bin/aria2c"
+    elif cls._osType == "Linux":
+        Aria2Program = "aria2c"
+    else:
+        Aria2Program = "aria2c"
+    ConfigCommand = [
+        "--conf-path=MCSL2/Aria2/aria2.conf",
+        "--input-file=MCSL2/Aria2/aria2.session",
+        "--save-session=MCSL2/Aria2/aria2.session"
+    ]
+    QProcess.startDetached(Aria2Program, ConfigCommand)
+    cls._aria2 = API(
+        Client(
+            host="http://localhost",
+            port=cls._port,
+            secret=""
+        )
+    )
+
+
+@classmethod
+def DownloadCompletedHandler(cls, gid):
+    cls._aria2: API
+    download = cls._aria2.get_download(gid)
+    cls._aria2.remove([download])
+
+
+@classmethod
+def Shutdown(cls):
+    if cls._aria2 is not None:
+        cls._aria2: API
+        cls._aria2.remove_all(True)
+        cls._aria2.client.shutdown()
 
 
 ###################
