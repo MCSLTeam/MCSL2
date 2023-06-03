@@ -39,7 +39,7 @@ ___
 [![](https://img.shields.io/badge/nuitka-1.5.7-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
 ___
 ### 相关链接
-MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)  
+MCSL 2官网：[https://mcsl.com.cn](https://mcsl.com.cn)  
 MCSL 2 API官网：[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
 GitHub Issue：[https://github.com/LxHTT/MCSL2/issues](https://github.com/LxHTT/MCSL2/issues)  
 QQ官方群聊：[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
