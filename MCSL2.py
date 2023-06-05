@@ -1,9 +1,9 @@
-from platform import system
+from datetime import datetime
 from json import dump
 from os import getcwd, environ, remove, path as ospath
+from platform import system
 from subprocess import CalledProcessError
 from sys import argv, exit
-from datetime import datetime
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent
@@ -13,10 +13,10 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QMainWindow, QListView
 )
+
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
 from MCSL2_Libs.MCSL2_Aria2Controller import Aria2Controller, DownloadWatcher
-from MCSL2_Libs.ProgressBar import IndeterminateProgressBar
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
@@ -31,6 +31,7 @@ from MCSL2_Libs.MCSL2_ServerController import (
 )
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 from MCSL2_Libs.MCSL2_Updater import Updater
+from MCSL2_Libs.ProgressBar import IndeterminateProgressBar
 
 
 # Initialize MainWindow

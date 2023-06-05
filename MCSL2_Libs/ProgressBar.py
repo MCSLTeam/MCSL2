@@ -2,6 +2,7 @@
 # and Bilibili. Go to https://github.com/zhiyiYo/PyQt-Fluent-Widgets to know more about it.
 
 from math import floor
+
 from PyQt5.QtCore import (
     QPropertyAnimation,
     pyqtProperty,

@@ -2,7 +2,6 @@ from json import loads, dumps
 from os import mkdir
 from os.path import realpath
 from shutil import copy
-from subprocess import Popen, PIPE
 from typing import List, Optional
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal

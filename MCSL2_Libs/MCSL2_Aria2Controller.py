@@ -1,15 +1,15 @@
+from os import path as ospath
+from os import remove, listdir
+from platform import system
 from shutil import which, rmtree, move
-from subprocess import PIPE, STDOUT, SW_HIDE, CalledProcessError, check_output, Popen
+from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
 from typing import Optional
 from zipfile import ZipFile
 
 import requests
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess
 from PyQt5.QtWidgets import QProgressDialog
 from aria2p import Client, API
-from platform import system
-from os import path as ospath
-from os import remove, listdir
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess
 from requests.exceptions import SSLError
 
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
@@ -81,7 +81,7 @@ class Aria2Controller:
 
     def LinuxCheckPackageExists(self, PackageName):
         try:
-            check_output(["which", PackageName], creationflags=SW_HIDE)
+            check_output(["which", PackageName])
             return True
         except CalledProcessError:
             return False
