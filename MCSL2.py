@@ -239,7 +239,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         isAria2 = Aria2Controller(LogFilesCount=LogFilesCount).CheckAria2()
         if not isAria2:
             Aria2Controller(
-                LogFilesCount=LogFilesCount).ShowNoAria2Msg()
+                LogFilesCount=LogFilesCount).ShowNoAria2Msg(self)
         MCSL2Logger("FinishStarting", MsgArg=None, MsgLevel=0,
                     LogFilesCount=LogFilesCount).Log()
 
