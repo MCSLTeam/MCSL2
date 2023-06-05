@@ -72,7 +72,7 @@ class Aria2Controller:
             else:
                 self.Aria2Status = True
         elif self.OSType == "Linux":
-            self.Aria2Status = self.LinuxCheckPackageExists('aria2')
+            self.Aria2Status = self.LinuxCheckPackageExists('aria2c')
         else:
             pass
         return self.Aria2Status
@@ -113,7 +113,7 @@ class Aria2Controller:
                         isNeededTwoButtons=0, ButtonArg=None)
         else:
             pass
-        self.WinInstallAria2()
+        # self.WinInstallAria2()
 
     ########################################
     #  Install Aria2 (No Windows support)  #
@@ -203,6 +203,10 @@ class Aria2Controller:
 
         winPackageInfo = [v for v in releaseInfo["assets"].values() if 'win-32bit' in v["name"]][0]
         winPackageUrl = winPackageInfo["browser_download_url"]
+
+    @classmethod
+    def Shutdown(cls):
+        pass
 
 
 @classmethod
