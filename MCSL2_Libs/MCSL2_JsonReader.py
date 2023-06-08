@@ -1,5 +1,6 @@
 from json import load, dump
 from typing import Callable, Any
+
 from PyQt5.QtCore import QThread, pyqtSignal
 
 

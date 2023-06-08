@@ -1,21 +1,22 @@
-from platform import system
+from datetime import datetime
 from json import dump
 from os import getcwd, environ, remove, path as ospath
+from platform import system
 from subprocess import CalledProcessError
 from sys import argv, exit
-from datetime import datetime
+
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor, QMouseEvent
 from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsDropShadowEffect,
-    QMainWindow, QListView, QProgressDialog,
+    QMainWindow, QListView
 )
+
 from MCSL2_Libs import MCSL2_Icon as _  # noqa: F401
 from MCSL2_Libs import MCSL2_JavaDetector
 from MCSL2_Libs.MCSL2_Aria2Controller import Aria2Controller, DownloadWatcher
-from MCSL2_Libs.ProgressBar import IndeterminateProgressBar
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
@@ -30,6 +31,7 @@ from MCSL2_Libs.MCSL2_ServerController import (
 )
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 from MCSL2_Libs.MCSL2_Updater import Updater
+from MCSL2_Libs.ProgressBar import IndeterminateProgressBar
 
 
 # Initialize MainWindow
@@ -37,6 +39,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     global LogFilesCount
 
     def __init__(self):
+        self.__mousePressPos = None
+        self.__mouseMovePos = None
         self.DownloadURLList: list
         global LogFilesCount
         LogFilesCount = InitMCSL()
@@ -236,7 +240,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         isAria2 = Aria2Controller(LogFilesCount=LogFilesCount).CheckAria2()
         if not isAria2:
             Aria2Controller(
-                LogFilesCount=LogFilesCount).ShowNoAria2Msg()
+                LogFilesCount=LogFilesCount).ShowNoAria2Msg(self)
         MCSL2Logger("FinishStarting", MsgArg=None, MsgLevel=0,
                     LogFilesCount=LogFilesCount).Log()
 
@@ -388,6 +392,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             # 移动窗口
             currentPos = self.mapToGlobal(self.pos())
             globalPos = event.globalPos()
+            if self.__mouseMovePos is None:
+                event.ignore()
+                return
             diff = globalPos - self.__mouseMovePos
             newPos = self.mapFromGlobal(currentPos + diff)
             self.move(newPos)
@@ -1483,8 +1490,10 @@ if __name__ == '__main__':
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     QApplication.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    if system().lower() == "linux":
-        environ["QT_QPA_PLATFORM"] = "wayland"
+    # issue #62
+    if system().lower() == 'linux':
+        if environ["XDG_SESSION_TYPE"].lower() != 'x11':
+            environ["QT_QPA_PLATFORM"] = "wayland"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
     MCSLProcess = QApplication(argv)
     MCSLMainWindow = MCSL2MainWindow()

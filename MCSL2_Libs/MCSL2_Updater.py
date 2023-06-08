@@ -1,5 +1,7 @@
 from requests import get
+
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
+
 
 class Updater:
     def __init__(self, Version):

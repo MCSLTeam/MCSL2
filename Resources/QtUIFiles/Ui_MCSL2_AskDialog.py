@@ -151,4 +151,3 @@ class Ui_MCSL2_AskDialog(object):
         MCSL2_AskDialog.setWindowTitle(_translate("MCSL2_AskDialog", "提示"))
         self.Dialog_PushButton_Cancel.setText(_translate("MCSL2_AskDialog", "取消"))
         self.Dialog_PushButton_Accept.setText(_translate("MCSL2_AskDialog", "确定"))
-import MCSL2_Icon_rc

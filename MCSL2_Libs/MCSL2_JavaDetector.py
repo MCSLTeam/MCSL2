@@ -1,10 +1,13 @@
-from platform import system
 from os import listdir
 from os import path as ospath
+from platform import system
 from re import search
-from subprocess import check_output, STDOUT, CalledProcessError, SW_HIDE
+from subprocess import check_output, STDOUT, CalledProcessError
 
 from PyQt5.QtCore import QThread, pyqtSignal
+
+if system().lower() == 'windows':
+    from subprocess import SW_HIDE
 
 FoundJava = []
 isNeedFuzzySearch = True
@@ -49,7 +52,10 @@ class Java:
 def GetJavaVersion(File):
     # 运行java.exe并捕获输出
     try:
-        output = check_output([File, '-version'], stderr=STDOUT, creationflags=SW_HIDE)
+        if 'windows' in system().lower():
+            output = check_output([File, '-version'], stderr=STDOUT, creationflags=SW_HIDE)
+        else:
+            output = check_output([File, '-version'], stderr=STDOUT)
     except CalledProcessError as e:
         print(f"获取Java信息时出错:{e.cmd} | {e.output}")
         return e

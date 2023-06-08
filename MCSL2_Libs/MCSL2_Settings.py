@@ -1,8 +1,11 @@
 from json import loads, dumps
 from os import path as ospath
+
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
+
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+
 
 class MCSL2Settings:
     def __init__(self):
