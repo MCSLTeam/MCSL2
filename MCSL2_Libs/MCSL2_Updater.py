@@ -1,17 +1,23 @@
 from requests import get
 
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
-
+from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+MCSLLogger = MCSL2Logger()
 
 class Updater:
     def __init__(self, Version):
-        self.CheckUpdateUrlPrefix = "http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version="
-        self.CheckUpdateUrl = self.CheckUpdateUrlPrefix + Version
+        try:
+            self.CheckUpdateUrlPrefix = "http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version="
+            self.CheckUpdateUrl = self.CheckUpdateUrlPrefix + Version
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
 
     def GetLatestVersionInformation(self):
         try:
             LatestVersionInformation = get(self.CheckUpdateUrl).text.split("|")
-        except:
+        
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
             LatestVersionInformation = ["failed", "failed", "failed", "failed", "failed"]
         if LatestVersionInformation[0] == "true":
             Arg = self.GetMoreInformation(LatestVersionInformation)
@@ -33,7 +39,8 @@ class Updater:
             WhatInLatestVersion = get(GetUpdateContentsUrl).text
             LatestVersionNumber = LatestVersionInformation[4]
             return LatestVersionNumber, WhatInLatestVersion
-        except:
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
             return
 
     def GetNoticeText(self):
@@ -42,5 +49,6 @@ class Updater:
         try:
             Notice = get(GetNoticeUrl).text
             return Notice
-        except:
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
             return "网络连接失败，无法获取公告。"

@@ -3,7 +3,8 @@ from typing import Dict, Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 from requests import get
-
+from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+MCSLLogger = MCSL2Logger()
 
 def Singleton(cls):
     Instances = {}
@@ -22,7 +23,6 @@ class DownloadURLParser:
 
     def ParseDownloaderAPIUrl(DownloadSource):
         UrlArg = "https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master/"
-        SourceArg = ["SharePoint", "Gitee", "luoxisCloud", "GHProxy", "GitHub"]
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",
@@ -32,8 +32,9 @@ class DownloadURLParser:
         ]
         rv = {}
         for i in range(len(TypeArg)):
-            DownloadAPIUrl = UrlArg + SourceArg[DownloadSource] + TypeArg[i]
-            SubWidgetNames, DownloadUrls, FileNames, FileFormats = DownloadURLParser.DecodeDownloadJsons(DownloadAPIUrl)
+            DownloadAPIUrl = UrlArg + DownloadSource + TypeArg[i]
+            SubWidgetNames, DownloadUrls, FileNames, FileFormats = DownloadURLParser.DecodeDownloadJsons(
+                DownloadAPIUrl)
             rv.update({
                 i: dict(zip(("SubWidgetNames", "DownloadUrls", "FileNames", "FileFormats"),
                             (SubWidgetNames, DownloadUrls, FileNames, FileFormats)))
@@ -47,7 +48,9 @@ class DownloadURLParser:
         FileNames = []
         try:
             DownloadJson = get(RefreshUrl).text
-        except:
+        
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
             return -2, -2, -2, -2
         try:
             PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
@@ -84,7 +87,8 @@ class FetchDownloadURLThread(QThread):
         return self.url
 
     def run(self):
-        self.fetchSignal.emit(DownloadURLParser.ParseDownloaderAPIUrl(self.DownloadSource))
+        self.fetchSignal.emit(
+            DownloadURLParser.ParseDownloaderAPIUrl(self.DownloadSource))
 
     def getData(self):
         return self.Data

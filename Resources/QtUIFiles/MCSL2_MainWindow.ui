@@ -373,7 +373,7 @@ QPushButton:pressed
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="Blue1">
+    <widget class="PrimaryPushButton" name="OptionsWidgetIndicator">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -387,8 +387,10 @@ QPushButton:pressed
      </property>
      <property name="font">
       <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>12</pointsize>
+       <family>Segoe UI</family>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
      <property name="cursor">
@@ -398,171 +400,7 @@ QPushButton:pressed
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 1px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Blue2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>210</y>
-       <width>3</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 1px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Blue3">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>270</y>
-       <width>3</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 1px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Blue4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>330</y>
-       <width>3</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 1px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Blue5">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>390</y>
-       <width>3</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 1px;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Blue6">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>450</y>
-       <width>3</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 1px;
-}</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string/>
@@ -848,7 +686,7 @@ QPushButton:pressed
         <string>未选择服务器！</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="Start_PushButton">
+      <widget class="PrimaryPushButton" name="Start_PushButton">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -859,32 +697,17 @@ QPushButton:pressed
        </property>
        <property name="font">
         <font>
-         <family>Microsoft YaHei UI</family>
-         <pointsize>16</pointsize>
+         <family>Segoe UI</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 10px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 10px;
-    color: rgb(255, 255, 255);
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>启动服务器</string>
@@ -893,7 +716,7 @@ QPushButton:pressed
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="Config_PushButton">
+      <widget class="PushButton" name="Config_PushButton">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -904,35 +727,23 @@ QPushButton:pressed
        </property>
        <property name="font">
         <font>
-         <family>Microsoft YaHei UI</family>
-         <pointsize>14</pointsize>
+         <family>Segoe UI</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>配置</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="Choose_Server_PushButton">
+      <widget class="PushButton" name="Choose_Server_PushButton">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -943,29 +754,17 @@ QPushButton:pressed
        </property>
        <property name="font">
         <font>
-         <family>Microsoft YaHei UI</family>
-         <pointsize>14</pointsize>
+         <family>Segoe UI</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>选择</string>
@@ -1409,7 +1208,7 @@ QPushButton:pressed
        </widget>
       </widget>
       <widget class="QWidget" name="NoobCPage">
-       <widget class="QPushButton" name="Completed_Save_PushButton">
+       <widget class="PrimaryPushButton" name="Completed_Save_PushButton">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1420,32 +1219,17 @@ QPushButton:pressed
         </property>
         <property name="font">
          <font>
-          <family>Microsoft YaHei UI</family>
-          <pointsize>12</pointsize>
+          <family>Segoe UI</family>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
          </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>保存</string>
@@ -1537,7 +1321,7 @@ QPushButton:pressed
           <height>291</height>
          </rect>
         </property>
-        <widget class="QPushButton" name="Download_Core_PushButton">
+        <widget class="PrimaryPushButton" name="Download_Core_PushButton">
          <property name="geometry">
           <rect>
            <x>230</x>
@@ -1548,32 +1332,17 @@ QPushButton:pressed
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>下载核心</string>
@@ -1582,52 +1351,37 @@ QPushButton:pressed
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QPushButton" name="Download_Java_PushButton">
+        <widget class="PrimaryPushButton" name="Download_Java_PushButton">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>190</x>
            <y>70</y>
-           <width>101</width>
+           <width>61</width>
            <height>31</height>
           </rect>
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
-          <string>下载Java</string>
+          <string>下载</string>
          </property>
          <property name="flat">
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QPushButton" name="Manual_Import_Core_PushButton">
+        <widget class="PrimaryPushButton" name="Manual_Import_Core_PushButton">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -1638,32 +1392,17 @@ QPushButton:pressed
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>手动导入</string>
@@ -1887,43 +1626,28 @@ QPushButton:pressed
           <string>服务器核心：</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="Auto_Find_Java_PushButton">
+        <widget class="PrimaryPushButton" name="Auto_Find_Java_PushButton">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>100</x>
            <y>70</y>
-           <width>101</width>
+           <width>81</width>
            <height>31</height>
           </rect>
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>自动查找</string>
@@ -1970,43 +1694,61 @@ QPushButton:pressed
           <string/>
          </property>
         </widget>
-        <widget class="QPushButton" name="Founded_Java_List_PushButton">
+        <widget class="PushButton" name="Founded_Java_List_PushButton">
          <property name="geometry">
           <rect>
-           <x>240</x>
-           <y>70</y>
-           <width>101</width>
-           <height>31</height>
+           <x>260</x>
+           <y>20</y>
+           <width>71</width>
+           <height>81</height>
           </rect>
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(227, 227, 227);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Java列表</string>
+         </property>
+        </widget>
+        <widget class="PrimaryPushButton" name="Manual_Import_Java_PushButton">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>70</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>导入</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
         <zorder>Set_Core_Background</zorder>
@@ -2025,6 +1767,7 @@ QPushButton:pressed
         <zorder>Memory_Unit_Label</zorder>
         <zorder>Java_Version_Label</zorder>
         <zorder>Founded_Java_List_PushButton</zorder>
+        <zorder>Manual_Import_Java_PushButton</zorder>
        </widget>
        <widget class="QWidget" name="ConfigTip1_Widget" native="true">
         <property name="geometry">
@@ -2133,7 +1876,7 @@ QPushButton:pressed
           <height>451</height>
          </rect>
         </property>
-        <widget class="QPushButton" name="ExDownload_Core_PushButton">
+        <widget class="PrimaryPushButton" name="ExDownload_Core_PushButton">
          <property name="geometry">
           <rect>
            <x>560</x>
@@ -2144,32 +1887,17 @@ QPushButton:pressed
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>下载核心</string>
@@ -2178,52 +1906,37 @@ QPushButton:pressed
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QPushButton" name="ExDownload_Java_PushButton">
+        <widget class="PrimaryPushButton" name="ExDownload_Java_PushButton">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>190</x>
            <y>70</y>
-           <width>101</width>
+           <width>61</width>
            <height>31</height>
           </rect>
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
-          <string>下载Java</string>
+          <string>下载</string>
          </property>
          <property name="flat">
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QPushButton" name="ExManual_Import_Core_PushButton">
+        <widget class="PrimaryPushButton" name="ExManual_Import_Core_PushButton">
          <property name="geometry">
           <rect>
            <x>450</x>
@@ -2234,32 +1947,17 @@ QPushButton:pressed
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>手动导入</string>
@@ -2483,43 +2181,28 @@ QPushButton:pressed
           <string>服务器核心：</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="ExAuto_Find_Java_PushButton">
+        <widget class="PrimaryPushButton" name="ExAuto_Find_Java_PushButton">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>90</x>
            <y>70</y>
-           <width>101</width>
+           <width>91</width>
            <height>31</height>
           </rect>
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>自动查找</string>
@@ -2547,40 +2230,28 @@ QPushButton:pressed
           <string/>
          </property>
         </widget>
-        <widget class="QPushButton" name="ExFounded_Java_List_PushButton">
+        <widget class="PushButton" name="ExFounded_Java_List_PushButton">
          <property name="geometry">
           <rect>
-           <x>240</x>
+           <x>260</x>
            <y>70</y>
-           <width>101</width>
+           <width>81</width>
            <height>31</height>
           </rect>
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(227, 227, 227);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Java列表</string>
@@ -2660,7 +2331,7 @@ QPushButton:pressed
           <string>服务器名称：</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="ExCompleted_Save_PushButton">
+        <widget class="PrimaryPushButton" name="ExCompleted_Save_PushButton">
          <property name="geometry">
           <rect>
            <x>400</x>
@@ -2671,32 +2342,17 @@ QPushButton:pressed
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>12</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>保存</string>
@@ -2705,7 +2361,7 @@ QPushButton:pressed
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QComboBox" name="ExMemoryUnitComboBox">
+        <widget class="ComboBox" name="ExMemoryUnitComboBox">
          <property name="geometry">
           <rect>
            <x>240</x>
@@ -2716,80 +2372,16 @@ QPushButton:pressed
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>11</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
            <kerning>true</kerning>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QComboBox {
-    border: 1px solid rgb(238, 239, 238);
-    border-radius: 5px;
-    border-bottom: 1px solid rgb(212, 213, 212);
-    padding: 5px 31px 6px 11px;
-    color: black;
-    background-color: rgb(254, 254, 254);
-    text-align: left;
-}
-
-QComboBox:hover {
-    background-color: rgb(251, 251, 251);
-}
-
-QComboBox:pressed {
-    background-color: rgb(252, 252, 252);
-    border-bottom: 1px solid rgb(238, 239, 238);
-    color: rgba(0, 0, 0, 0.63);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: right;
-    width: 35px;
-    border-left-style: solid;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
-}
-QComboBox QAbstractItemView {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 9px;
-    background-color: rgb(249, 249, 249);
-    outline: none;
-}
-
-QComboBox QAbstractItemView::item {
-    padding-left: 0px;
-    padding-right: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
-QComboBox QAbstractItemView::item:hover {
-    background-color: rgba(0, 0, 0, 9);
-}
-
-QComboBox QAbstractItemView::item:selected {
-    background-color: rgba(0, 0, 0, 7);
-    color: black;
-}
-
-QComboBox QAbstractItemView::item:selected:active {
-    background-color: rgba(0, 0, 0, 0.06);
-    color: rgba(0, 0, 0, 0.7);
-}</string>
+          <string notr="true"/>
          </property>
-         <item>
-          <property name="text">
-           <string>M</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>G</string>
-          </property>
-         </item>
         </widget>
         <widget class="QLabel" name="ExSet_Encoding_Background">
          <property name="geometry">
@@ -2839,7 +2431,7 @@ QComboBox QAbstractItemView::item:selected:active {
           <string>发送指令编码(优先级高于全局设置）</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="ExConsoleOutputEncodingComboBox">
+        <widget class="ComboBox" name="ExConsoleOutputEncodingComboBox">
          <property name="geometry">
           <rect>
            <x>390</x>
@@ -2856,82 +2448,18 @@ QComboBox QAbstractItemView::item:selected:active {
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>11</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
            <kerning>true</kerning>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QComboBox {
-    border: 1px solid rgb(238, 239, 238);
-    border-radius: 5px;
-    border-bottom: 1px solid rgb(212, 213, 212);
-    padding: 5px 31px 6px 11px;
-    color: black;
-    background-color: rgb(254, 254, 254);
-    text-align: left;
-}
-
-QComboBox:hover {
-    background-color: rgb(251, 251, 251);
-}
-
-QComboBox:pressed {
-    background-color: rgb(252, 252, 252);
-    border-bottom: 1px solid rgb(238, 239, 238);
-    color: rgba(0, 0, 0, 0.63);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: right;
-    width: 35px;
-    border-left-style: solid;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
-}
-QComboBox QAbstractItemView {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 9px;
-    background-color: rgb(249, 249, 249);
-    outline: none;
-}
-
-QComboBox QAbstractItemView::item {
-    padding-left: 0px;
-    padding-right: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
-QComboBox QAbstractItemView::item:hover {
-    background-color: rgba(0, 0, 0, 9);
-}
-
-QComboBox QAbstractItemView::item:selected {
-    background-color: rgba(0, 0, 0, 7);
-    color: black;
-}
-
-QComboBox QAbstractItemView::item:selected:active {
-    background-color: rgba(0, 0, 0, 0.06);
-    color: rgba(0, 0, 0, 0.7);
-}</string>
+          <string notr="true"/>
          </property>
-         <item>
-          <property name="text">
-           <string>UTF-8（默认）</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GBK（乱码可尝试）</string>
-          </property>
-         </item>
         </widget>
-        <widget class="QComboBox" name="ExConsoleInputDecodingComboBox">
+        <widget class="ComboBox" name="ExConsoleInputDecodingComboBox">
          <property name="geometry">
           <rect>
            <x>390</x>
@@ -2942,94 +2470,22 @@ QComboBox QAbstractItemView::item:selected:active {
          </property>
          <property name="font">
           <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>11</pointsize>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
            <kerning>true</kerning>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QComboBox {
-    border: 1px solid rgb(238, 239, 238);
-    border-radius: 5px;
-    border-bottom: 1px solid rgb(212, 213, 212);
-    padding: 5px 31px 6px 11px;
-    color: black;
-    background-color: rgb(254, 254, 254);
-    text-align: left;
-}
-
-QComboBox:hover {
-    background-color: rgb(251, 251, 251);
-}
-
-QComboBox:pressed {
-    background-color: rgb(252, 252, 252);
-    border-bottom: 1px solid rgb(238, 239, 238);
-    color: rgba(0, 0, 0, 0.63);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: right;
-    width: 35px;
-    border-left-style: solid;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
-}
-QComboBox QAbstractItemView {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 9px;
-    background-color: rgb(249, 249, 249);
-    outline: none;
-}
-
-QComboBox QAbstractItemView::item {
-    padding-left: 0px;
-    padding-right: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
-QComboBox QAbstractItemView::item:hover {
-    background-color: rgba(0, 0, 0, 9);
-}
-
-QComboBox QAbstractItemView::item:selected {
-    background-color: rgba(0, 0, 0, 7);
-    color: black;
-}
-
-QComboBox QAbstractItemView::item:selected:active {
-    background-color: rgba(0, 0, 0, 0.06);
-    color: rgba(0, 0, 0, 0.7);
-}</string>
+          <string notr="true"/>
          </property>
-         <property name="currentIndex">
+         <property name="currentIndex" stdset="0">
           <number>0</number>
          </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-         </property>
-         <property name="frame">
+         <property name="frame" stdset="0">
           <bool>true</bool>
          </property>
-         <item>
-          <property name="text">
-           <string>与输出相同</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>UTF-8</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GBK</string>
-          </property>
-         </item>
         </widget>
         <widget class="QLabel" name="ExConsoleOutputEncoding">
          <property name="geometry">
@@ -3124,6 +2580,36 @@ QComboBox QAbstractItemView::item:selected:active {
 </string>
          </property>
         </widget>
+        <widget class="PrimaryPushButton" name="ExManual_Import_Java_PushButton">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>70</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>导入</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
         <zorder>ExJVMArg_Background</zorder>
         <zorder>ExSet_Encoding_Background</zorder>
         <zorder>ExSet_Java_Background</zorder>
@@ -3152,6 +2638,7 @@ QComboBox QAbstractItemView::item:selected:active {
         <zorder>ExConsoleOutputEncoding</zorder>
         <zorder>ExJVMArg</zorder>
         <zorder>ExJVMArgLineEdit</zorder>
+        <zorder>ExManual_Import_Java_PushButton</zorder>
        </widget>
       </widget>
      </widget>
@@ -3240,7 +2727,7 @@ QTabBar::tab:selected
        <attribute name="title">
         <string>Java</string>
        </attribute>
-       <widget class="QScrollArea" name="JavaScrollArea">
+       <widget class="SmoothScrollArea" name="JavaScrollArea">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3326,7 +2813,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <attribute name="title">
         <string>Spigot</string>
        </attribute>
-       <widget class="QScrollArea" name="SpigotScrollArea">
+       <widget class="SmoothScrollArea" name="SpigotScrollArea">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3412,7 +2899,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <attribute name="title">
         <string>Paper</string>
        </attribute>
-       <widget class="QScrollArea" name="PaperScrollArea">
+       <widget class="SmoothScrollArea" name="PaperScrollArea">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3498,7 +2985,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <attribute name="title">
         <string>BungeeCord</string>
        </attribute>
-       <widget class="QScrollArea" name="BungeeCordScrollArea">
+       <widget class="SmoothScrollArea" name="BungeeCordScrollArea">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3584,7 +3071,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <attribute name="title">
         <string>官方</string>
        </attribute>
-       <widget class="QScrollArea" name="OfficialCoreScrollArea">
+       <widget class="SmoothScrollArea" name="OfficialCoreScrollArea">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3686,21 +3173,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(227, 227, 227);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>更多</string>
@@ -3725,21 +3198,7 @@ QPushButton:pressed
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(227, 227, 227);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>下载源设置</string>
@@ -3853,7 +3312,7 @@ QPushButton:pressed
        <string>  &gt;</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Send_Command_PushButton">
+     <widget class="PrimaryPushButton" name="Send_Command_PushButton">
       <property name="geometry">
        <rect>
         <x>570</x>
@@ -3864,32 +3323,17 @@ QPushButton:pressed
       </property>
       <property name="font">
        <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
+        <family>Segoe UI</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>发送</string>
@@ -3960,7 +3404,7 @@ QPushButton:pressed
 	border-radius: 10px
 }</string>
       </property>
-      <widget class="QScrollArea" name="ToolsScrollArea">
+      <widget class="SmoothScrollArea" name="ToolsScrollArea">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -4061,27 +3505,13 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(227, 227, 227);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>插件设置</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="InstallToolsPushButton">
+     <widget class="PrimaryPushButton" name="InstallToolsPushButton">
       <property name="geometry">
        <rect>
         <x>520</x>
@@ -4092,32 +3522,17 @@ QPushButton:pressed
       </property>
       <property name="font">
        <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>10</pointsize>
+        <family>Segoe UI</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 7px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 7px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 7px;
-    color: rgb(255, 255, 255);
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>安装插件</string>
@@ -4146,7 +3561,7 @@ QPushButton:pressed
        <string>更多</string>
       </property>
      </widget>
-     <widget class="QScrollArea" name="SettingsScrollArea">
+     <widget class="SmoothScrollArea" name="SettingsScrollArea">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -4185,71 +3600,6 @@ QScrollBar::up-arrow:vertial,QScrollBar::down-arrow:vertial
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: none;
-}
-QComboBox {
-    border: 1px solid rgb(238, 239, 238);
-    border-radius: 5px;
-    border-bottom: 1px solid rgb(212, 213, 212);
-    padding: 5px 31px 6px 11px;
-    color: black;
-    background-color: rgb(254, 254, 254);
-    text-align: left;
-	font: 14px 'Microsoft YaHei UI';
-}
-
-QComboBox:hover {
-    background-color: rgb(251, 251, 251);
-}
-
-QComboBox:pressed {
-    background-color: rgb(252, 252, 252);
-    border-bottom: 1px solid rgb(238, 239, 238);
-    color: rgba(0, 0, 0, 0.63);
-}
-QComboBox::drop-down
-{
-    subcontrol-origin: padding;
-    subcontrol-position: right;
-    width: 35px;
-    border-left-style: solid;
-}
-QComboBox::down-arrow
-{
-    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);
-}
-QComboBox QAbstractItemView {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 9px;
-    background-color: rgb(249, 249, 249);
-    outline: none;
-	font: 14px 'Microsoft YaHei UI'
-}
-
-QComboBox QAbstractItemView::item {
-    margin-top: 4px;
-	min-height: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 5px;
-    border: none;
-	font: 14px 'Microsoft YaHei UI'
-}
-
-QComboBox QAbstractItemView::item:hover {
-    background-color: rgba(0, 0, 0, 9);
-	height: 27px;
-}
-
-QComboBox QAbstractItemView::item:selected {
-    background-color: rgba(0, 0, 0, 7);
-    color: black;
-	height: 27px;
-}
-
-QComboBox QAbstractItemView::item:selected:active {
-    background-color: rgba(0, 0, 0, 0.06);
-    color: rgba(0, 0, 0, 0.7);
-	height: 27px;
 }</string>
       </property>
       <property name="frameShape">
@@ -4278,7 +3628,7 @@ QComboBox QAbstractItemView::item:selected:active {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>641</width>
+         <width>640</width>
          <height>1677</height>
         </rect>
        </property>
@@ -4306,7 +3656,7 @@ QComboBox QAbstractItemView::item:selected:active {
 	background-color: rgba(247, 247, 247, 247)
 }</string>
             </property>
-            <widget class="QCheckBox" name="AutoRunLastServerSetting">
+            <widget class="CheckBox" name="AutoRunLastServerSetting">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -4317,8 +3667,8 @@ QComboBox QAbstractItemView::item:selected:active {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -4334,77 +3684,13 @@ QComboBox QAbstractItemView::item:selected:active {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>开启MCSL2时自动运行上次运行的服务器</string>
              </property>
             </widget>
-            <widget class="QCheckBox" name="AcceptAllMojangEULASetting">
+            <widget class="CheckBox" name="AcceptAllMojangEULASetting">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -4415,8 +3701,8 @@ QCheckBox::indicator:indeterminate:disabled {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -4432,71 +3718,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>同意所有新添加服务器的Mojang EULA</string>
@@ -4508,7 +3730,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </size>
              </property>
             </widget>
-            <widget class="QCheckBox" name="StopServerSettings">
+            <widget class="CheckBox" name="StopServerSettings">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -4524,71 +3746,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>关闭服务器时向服务器发送 stop 指令而不是结束进程</string>
@@ -4644,7 +3802,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <string>服务器设置</string>
               </property>
              </widget>
-             <widget class="QLabel" name="ServerSettingsWidgetBlue">
+             <widget class="PrimaryPushButton" name="ServerSettingsWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -4666,11 +3824,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -4700,7 +3854,7 @@ QCheckBox::indicator:indeterminate:disabled {
 	background-color: rgba(247, 247, 247, 247)
 }</string>
             </property>
-            <widget class="QCheckBox" name="OnlySaveGlobalServerConfigs">
+            <widget class="CheckBox" name="OnlySaveGlobalServerConfigs">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -4711,8 +3865,8 @@ QCheckBox::indicator:indeterminate:disabled {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -4728,71 +3882,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>仅保存全局服务器设置</string>
@@ -4839,7 +3929,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <string>配置页设置</string>
               </property>
              </widget>
-             <widget class="QLabel" name="ConfigPageSettingsWidgetBlue">
+             <widget class="PrimaryPushButton" name="ConfigPageSettingsWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -4861,11 +3951,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -4891,7 +3977,7 @@ QCheckBox::indicator:indeterminate:disabled {
               <string>添加服务器引导方式</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="HowToAddServerComboBox">
+            <widget class="ComboBox" name="HowToAddServerComboBox">
              <property name="geometry">
               <rect>
                <x>370</x>
@@ -4903,7 +3989,6 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="font">
               <font>
                <family>Microsoft YaHei UI</family>
-               <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -4913,21 +3998,6 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <item>
-              <property name="text">
-               <string>初始 (新手+进阶)</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>总是新手</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>总是进阶</string>
-              </property>
-             </item>
             </widget>
            </widget>
           </item>
@@ -4993,7 +4063,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <string>下载设置</string>
               </property>
              </widget>
-             <widget class="QLabel" name="DownloadSettingsWidgetBlue">
+             <widget class="PrimaryPushButton" name="DownloadSettingsWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -5015,11 +4085,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -5045,7 +4111,7 @@ QCheckBox::indicator:indeterminate:disabled {
               <string>MCSLAPI下载源选择</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="MCSLAPIDownloadSourceComboBox">
+            <widget class="ComboBox" name="MCSLAPIDownloadSourceComboBox">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -5063,7 +4129,6 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="font">
               <font>
                <family>Microsoft YaHei UI</family>
-               <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -5073,31 +4138,6 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <item>
-              <property name="text">
-               <string>国内SharePoint</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Gitee</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>luoxis云（暂不可用）</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>GHProxy</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>GitHub</string>
-              </property>
-             </item>
             </widget>
             <widget class="QLabel" name="Aria2ThreadCount">
              <property name="geometry">
@@ -5118,19 +4158,18 @@ QCheckBox::indicator:indeterminate:disabled {
               <string>Aria2引擎线程数</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="Aria2ThreadCountComboBox">
+            <widget class="ComboBox" name="Aria2ThreadCountComboBox">
              <property name="geometry">
               <rect>
                <x>490</x>
                <y>100</y>
                <width>101</width>
-               <height>35</height>
+               <height>31</height>
               </rect>
              </property>
              <property name="font">
               <font>
                <family>Microsoft YaHei UI</family>
-               <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -5140,42 +4179,14 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <property name="currentIndex">
+             <property name="currentIndex" stdset="0">
               <number>3</number>
              </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-             </property>
-             <property name="frame">
+             <property name="frame" stdset="0">
               <bool>true</bool>
              </property>
-             <item>
-              <property name="text">
-               <string>1</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>2</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>4</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>8</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>16</string>
-              </property>
-             </item>
             </widget>
-            <widget class="QCheckBox" name="AlwaysAskDownloadPath">
+            <widget class="CheckBox" name="AlwaysAskDownloadPath">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -5186,8 +4197,8 @@ QCheckBox::indicator:indeterminate:disabled {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -5203,71 +4214,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>总是询问下载保存位置</string>
@@ -5314,7 +4261,7 @@ QCheckBox::indicator:indeterminate:disabled {
               <string>下载保存位置存在同名文件处理</string>
              </property>
             </widget>
-            <widget class="QRadioButton" name="SameFileExceptionStop">
+            <widget class="RadioButton" name="SameFileExceptionStop">
              <property name="geometry">
               <rect>
                <x>510</x>
@@ -5330,90 +4277,13 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QRadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    color: black;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-    border-radius: 10px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-QRadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-QRadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-QRadioButton::indicator:checked {
-    height: 20px;
-    width: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QRadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-QRadioButton::indicator:checked {
-    height: 20px;
-    width: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>停止</string>
              </property>
             </widget>
-            <widget class="QRadioButton" name="SameFileExceptionAsk">
+            <widget class="RadioButton" name="SameFileExceptionAsk">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -5429,84 +4299,7 @@ QRadioButton::indicator:checked {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QRadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    color: black;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-    border-radius: 10px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-QRadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-QRadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-QRadioButton::indicator:checked {
-    height: 20px;
-    width: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QRadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-QRadioButton::indicator:checked {
-    height: 20px;
-    width: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>询问</string>
@@ -5515,7 +4308,7 @@ QRadioButton::indicator:checked {
               <bool>true</bool>
              </property>
             </widget>
-            <widget class="QRadioButton" name="SameFileExceptionReWrite">
+            <widget class="RadioButton" name="SameFileExceptionReWrite">
              <property name="geometry">
               <rect>
                <x>430</x>
@@ -5531,84 +4324,7 @@ QRadioButton::indicator:checked {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QRadioButton {
-    min-height: 24px;
-    max-height: 24px;
-    background-color: transparent;
-    color: black;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-    border-radius: 10px;
-    border: 2px solid #999999;
-    background-color: rgba(0, 0, 0, 5);
-    margin-right: 4px;
-}
-
-QRadioButton::indicator:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-QRadioButton::indicator:pressed {
-    border: 2px solid #bbbbbb;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(225, 224, 223),
-            stop:1 rgb(225, 224, 223));
-}
-
-QRadioButton::indicator:checked {
-    height: 20px;
-    width: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton::indicator:checked:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.6 rgb(255, 255, 255),
-            stop:0.7 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton::indicator:checked:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-
-QRadioButton:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QRadioButton::indicator:disabled {
-    border: 2px solid #bbbbbb;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-QRadioButton::indicator:checked {
-    height: 20px;
-    width: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-            stop:0 rgb(255, 255, 255),
-            stop:0.5 rgb(255, 255, 255),
-            stop:0.6 rgb(0, 120, 212),
-            stop:1 rgb(0, 120, 212));
-}
-</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>覆盖</string>
@@ -5678,7 +4394,7 @@ QRadioButton::indicator:checked {
                <string>终端设置</string>
               </property>
              </widget>
-             <widget class="QLabel" name="ConsoleSettingsWidgetBlue">
+             <widget class="PrimaryPushButton" name="ConsoleSettingsWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -5700,11 +4416,7 @@ QRadioButton::indicator:checked {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -5730,7 +4442,7 @@ QRadioButton::indicator:checked {
               <string>控制台输出编码</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="ConsoleOutputEncodingComboBox">
+            <widget class="ComboBox" name="ConsoleOutputEncodingComboBox">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -5748,7 +4460,6 @@ QRadioButton::indicator:checked {
              <property name="font">
               <font>
                <family>Microsoft YaHei UI</family>
-               <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -5758,16 +4469,6 @@ QRadioButton::indicator:checked {
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <item>
-              <property name="text">
-               <string>UTF-8（默认）</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>GBK（乱码可尝试）</string>
-              </property>
-             </item>
             </widget>
             <widget class="QLabel" name="ConsoleInputDecoding">
              <property name="geometry">
@@ -5788,7 +4489,7 @@ QRadioButton::indicator:checked {
               <string>发送指令编码</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="ConsoleInputDecodingComboBox">
+            <widget class="ComboBox" name="ConsoleInputDecodingComboBox">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -5800,7 +4501,6 @@ QRadioButton::indicator:checked {
              <property name="font">
               <font>
                <family>Microsoft YaHei UI</family>
-               <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -5810,32 +4510,14 @@ QRadioButton::indicator:checked {
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <property name="currentIndex">
+             <property name="currentIndex" stdset="0">
               <number>0</number>
              </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-             </property>
-             <property name="frame">
+             <property name="frame" stdset="0">
               <bool>true</bool>
              </property>
-             <item>
-              <property name="text">
-               <string>与输出相同</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>UTF-8</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>GBK</string>
-              </property>
-             </item>
             </widget>
-            <widget class="QCheckBox" name="EnableQuickMenu">
+            <widget class="CheckBox" name="EnableQuickMenu">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -5846,8 +4528,8 @@ QRadioButton::indicator:checked {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -5863,71 +4545,7 @@ QRadioButton::indicator:checked {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>启用快捷菜单</string>
@@ -6000,7 +4618,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <string>界面设置</string>
               </property>
              </widget>
-             <widget class="QLabel" name="UISettingsWidgetBlue">
+             <widget class="PrimaryPushButton" name="UISettingsWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -6022,11 +4640,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -6071,7 +4685,7 @@ QCheckBox::indicator:indeterminate:disabled {
               <string>主题模式</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="DarkModeComboBox">
+            <widget class="ComboBox" name="DarkModeComboBox">
              <property name="geometry">
               <rect>
                <x>470</x>
@@ -6083,7 +4697,6 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="font">
               <font>
                <family>Microsoft YaHei UI</family>
-               <pointsize>-1</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -6093,32 +4706,14 @@ QCheckBox::indicator:indeterminate:disabled {
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <property name="currentIndex">
+             <property name="currentIndex" stdset="0">
               <number>0</number>
              </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-             </property>
-             <property name="frame">
+             <property name="frame" stdset="0">
               <bool>true</bool>
              </property>
-             <item>
-              <property name="text">
-               <string>浅色</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>深色</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>跟随系统</string>
-              </property>
-             </item>
             </widget>
-            <widget class="QCheckBox" name="TitleBarInsteadOfmacOS">
+            <widget class="CheckBox" name="TitleBarInsteadOfmacOS">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -6134,71 +4729,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>使用标题栏而不是类macOS样式</string>
@@ -6216,12 +4747,12 @@ QCheckBox::indicator:indeterminate:disabled {
               <bool>false</bool>
              </property>
             </widget>
-            <widget class="QSlider" name="TransparentPercentSlider">
+            <widget class="Slider" name="TransparentPercentSlider">
              <property name="geometry">
               <rect>
                <x>370</x>
                <y>70</y>
-               <width>181</width>
+               <width>200</width>
                <height>24</height>
               </rect>
              </property>
@@ -6232,115 +4763,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider:horizontal {
-    min-height: 24px;
-}
-
-QSlider::groove:horizontal {
-    height: 4px;
-    background-color: rgba(0, 0, 0, 100);
-    border-radius: 2px;
-}
-
-QSlider::sub-page:horizontal {
-    background: rgb(0, 120, 212);
-    height: 4px;
-    border-radius: 2px;
-}
-
-QSlider::handle:horizontal {
-    border: 1px solid rgb(222, 222, 222);
-    width: 20px;
-    min-height: 24px;
-    margin: -9px 0;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-        stop:0 rgb(0, 120, 212),
-        stop:0.48 rgb(0, 120, 212),
-        stop:0.55 rgb(255, 255, 255),
-        stop:1 rgb(255, 255, 255));
-}
-
-QSlider::handle:horizontal:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-        stop:0 rgb(0, 120, 212),
-        stop:0.55 rgb(0, 120, 212),
-        stop:0.65 rgb(255, 255, 255),
-        stop:1 rgb(255, 255, 255));
-}
-
-QSlider::handle:horizontal:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-        stop:0 rgb(0, 120, 212),
-        stop:0.4 rgb(0, 120, 212),
-        stop:0.5 rgb(255, 255, 255),
-        stop:1 rgb(255, 255, 255));
-}
-
-QSlider::groove:horizontal:disabled {
-    background-color: rgba(0, 0, 0, 75);
-}
-
-QSlider::handle:horizontal:disabled {
-    background-color: #808080;
-    border: 5px solid #cccccc;
-}
-
-
-QSlider:vertical {
-    min-width: 24px;
-}
-
-QSlider::groove:vertical {
-    width: 4px;
-    background-color: rgba(0, 0, 0, 100);
-    border-radius: 2px;
-}
-
-QSlider::add-page:vertical {
-    background: rgb(0, 120, 212);
-    width: 4px;
-    border-radius: 2px;
-}
-
-QSlider::handle:vertical {
-    border: 1px solid rgb(222, 222, 222);
-    height: 20px;
-    min-width: 24px;
-    margin: 0 -9px;
-    border-radius: 11px;
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-        stop:0 rgb(0, 120, 212),
-        stop:0.48 rgb(0, 120, 212),
-        stop:0.55 rgb(255, 255, 255),
-        stop:1 rgb(255, 255, 255));
-}
-
-QSlider::handle:vertical:hover {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-        stop:0 rgb(0, 120, 212),
-        stop:0.55 rgb(0, 120, 212),
-        stop:0.65 rgb(255, 255, 255),
-        stop:1 rgb(255, 255, 255));
-}
-
-QSlider::handle:vertical:pressed {
-    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-        stop:0 rgb(0, 120, 212),
-        stop:0.4 rgb(0, 120, 212),
-        stop:0.5 rgb(255, 255, 255),
-        stop:1 rgb(255, 255, 255));
-}
-
-QSlider::groove:vertical:disabled {
-    background-color: rgba(0, 0, 0, 75);
-}
-
-QSlider::handle:vertical:disabled {
-    background-color: #808080;
-    border: 5px solid #cccccc;
-}
-</string>
+              <string notr="true"/>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -6400,7 +4823,7 @@ QSlider::handle:vertical:disabled {
 	background-color: rgba(247, 247, 247, 247)
 }</string>
             </property>
-            <widget class="QCheckBox" name="AlwaysRunAsAdministrator">
+            <widget class="CheckBox" name="AlwaysRunAsAdministrator">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -6411,8 +4834,8 @@ QSlider::handle:vertical:disabled {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -6428,71 +4851,7 @@ QSlider::handle:vertical:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>总以管理员身份运行</string>
@@ -6539,7 +4898,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <string>软件设置</string>
               </property>
              </widget>
-             <widget class="QLabel" name="SoftwareSettingsWidgetBlue">
+             <widget class="PrimaryPushButton" name="SoftwareSettingsWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -6561,18 +4920,14 @@ QCheckBox::indicator:indeterminate:disabled {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
               </property>
              </widget>
             </widget>
-            <widget class="QCheckBox" name="StartOnStartup">
+            <widget class="CheckBox" name="StartOnStartup">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -6583,8 +4938,8 @@ QCheckBox::indicator:indeterminate:disabled {
              </property>
              <property name="minimumSize">
               <size>
-               <width>28</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -6600,71 +4955,7 @@ QCheckBox::indicator:indeterminate:disabled {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    color: black;
-    spacing: 8px;
-    min-width: 28px;
-    min-height: 20px;
-}
-
-QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1px solid rgb(135, 135, 135);
-    background-color: rgb(241, 241, 241);
-}
-
-QCheckBox::indicator:hover {
-    border: 1px solid rgb(132, 132, 132);
-    background-color: rgb(232, 232, 232);
-}
-
-QCheckBox::indicator:pressed {
-    border: 1px solid rgb(184, 184, 184);
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked,
-QCheckBox::indicator:indeterminate {
-    border: 1px solid rgb(0, 120, 212);
-    background-color: rgb(0, 120, 212);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);
-}
-
-QCheckBox::indicator:indeterminate {
-    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);
-}
-
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:indeterminate:hover {
-    border: 1px solid --ThemeColorLight1;
-    background-color: --ThemeColorLight1;
-}
-
-QCheckBox::indicator:checked:pressed,
-QCheckBox::indicator:indeterminate:pressed {
-    border: 1px solid --ThemeColorLight3;
-    background-color: --ThemeColorLight3;
-}
-
-QCheckBox:disabled {
-    color: rgba(0, 0, 0, 110);
-}
-
-QCheckBox::indicator:disabled {
-    border: 1px solid #bbbbbb;
-    background-color: rgb(224, 224, 224);
-}
-
-QCheckBox::indicator:checked:disabled,
-QCheckBox::indicator:indeterminate:disabled {
-    border: 1px solid rgb(199, 199, 199);
-    background-color: rgb(199, 199, 199);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>开机自动启动</string>
@@ -6734,7 +5025,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <string>软件更新</string>
               </property>
              </widget>
-             <widget class="QLabel" name="UpdaterWidgetBlue">
+             <widget class="PrimaryPushButton" name="UpdaterWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -6756,11 +5047,7 @@ QCheckBox::indicator:indeterminate:disabled {
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -6805,7 +5092,7 @@ QCheckBox::indicator:indeterminate:disabled {
               <string>最后一次检查更新时间：</string>
              </property>
             </widget>
-            <widget class="QPushButton" name="UpdatePushButton">
+            <widget class="PrimaryPushButton" name="UpdatePushButton">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -6824,24 +5111,7 @@ QCheckBox::indicator:indeterminate:disabled {
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>检查更新</string>
@@ -6914,7 +5184,7 @@ QPushButton:pressed
                <string>关于</string>
               </property>
              </widget>
-             <widget class="QLabel" name="AboutWidgetBlue">
+             <widget class="PrimaryPushButton" name="AboutWidgetBlue">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -6936,11 +5206,7 @@ QPushButton:pressed
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px
-}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string/>
@@ -6971,7 +5237,7 @@ QPushButton:pressed
 Copyright ©落雪无痕LxHTT. All right reserved.</string>
              </property>
             </widget>
-            <widget class="QPushButton" name="OpenSourceCodePushButton">
+            <widget class="PrimaryPushButton" name="OpenSourceCodePushButton">
              <property name="geometry">
               <rect>
                <x>30</x>
@@ -6990,24 +5256,7 @@ Copyright ©落雪无痕LxHTT. All right reserved.</string>
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>打开源代码仓库</string>
@@ -7112,7 +5361,7 @@ QPushButton:pressed
               <bool>true</bool>
              </property>
             </widget>
-            <widget class="QPushButton" name="JoinQQGroup">
+            <widget class="PrimaryPushButton" name="JoinQQGroup">
              <property name="geometry">
               <rect>
                <x>160</x>
@@ -7131,24 +5380,7 @@ QPushButton:pressed
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>加入官方群聊</string>
@@ -7157,7 +5389,7 @@ QPushButton:pressed
               <bool>false</bool>
              </property>
             </widget>
-            <widget class="QPushButton" name="SystemReportPushButton">
+            <widget class="PrimaryPushButton" name="SystemReportPushButton">
              <property name="geometry">
               <rect>
                <x>290</x>
@@ -7176,24 +5408,7 @@ QPushButton:pressed
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 6px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 6px;
-    color: rgb(255, 255, 255);
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>系统报告</string>
@@ -7232,7 +5447,7 @@ QPushButton:pressed
        <string>选择服务器</string>
       </property>
      </widget>
-     <widget class="QScrollArea" name="ChooseServerScrollArea">
+     <widget class="SmoothScrollArea" name="ChooseServerScrollArea">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -7356,21 +5571,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(227, 227, 227);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>返回</string>
@@ -7379,7 +5580,7 @@ QPushButton:pressed
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QScrollArea" name="ChooseJavaScrollArea">
+     <widget class="SmoothScrollArea" name="ChooseJavaScrollArea">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -7526,7 +5727,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="DoNotUpdate_PushButton">
+     <widget class="PushButton" name="DoNotUpdate_PushButton">
       <property name="geometry">
        <rect>
         <x>340</x>
@@ -7537,35 +5738,23 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       </property>
       <property name="font">
        <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>14</pointsize>
+        <family>Segoe UI</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(247, 247, 247);
-	border-radius: 7px;
-}
-QPushButton:hover
-{
-	background-color: rgb(230, 230, 230);
-	border-radius: 7px;
-}
-QPushButton:pressed
-{
-	background-color: rgb(225, 225, 225);
-	border-radius: 7px;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>丑拒</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Update_PushButton">
+     <widget class="PrimaryPushButton" name="Update_PushButton">
       <property name="geometry">
        <rect>
         <x>450</x>
@@ -7576,32 +5765,17 @@ QPushButton:pressed
       </property>
       <property name="font">
        <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>16</pointsize>
+        <family>Segoe UI</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-	background-color: rgb(0, 120, 212);
-	border-radius: 10px;
-	color: rgb(255, 255, 255);
-}
-QPushButton:hover
-{
-    background-color: rgb(0, 110, 212);
-	border-radius: 10px;
-    color: rgb(255, 255, 255);
-}
-QPushButton:pressed
-{
-    background-color: rgb(0, 100, 212);
-	border-radius: 10px;
-    color: rgb(255, 255, 255);
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>火速更新</string>
@@ -7681,7 +5855,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
         <string>这是最新版本的说明：</string>
        </property>
       </widget>
-      <widget class="QScrollArea" name="Update_Introduction_LabelScrollAreascrollArea">
+      <widget class="SmoothScrollArea" name="Update_Introduction_LabelScrollAreascrollArea">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -7973,6 +6147,44 @@ QPushButton:pressed
    <zorder>TitleBarWidget_R</zorder>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>PushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>RadioButton</class>
+   <extends>QRadioButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>Slider</class>
+   <extends>QSlider</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SmoothScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>qfluentwidgets.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Icons/MCSL2_Icon.qrc"/>
  </resources>

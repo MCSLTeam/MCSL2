@@ -6,6 +6,8 @@ from subprocess import check_output, STDOUT, CalledProcessError
 
 from PyQt5.QtCore import QThread, pyqtSignal
 
+from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+
 if system().lower() == 'windows':
     from subprocess import SW_HIDE
 
@@ -24,7 +26,7 @@ MatchKeywords = {
 ExcludedKeywords = {
     "$", "{", "}", "__"
 }
-
+MCSLLogger = MCSL2Logger()
 
 # fmt: on
 
@@ -57,6 +59,7 @@ def GetJavaVersion(File):
         else:
             output = check_output([File, '-version'], stderr=STDOUT)
     except CalledProcessError as e:
+        MCSLLogger.ExceptionLog(e)
         print(f"获取Java信息时出错:{e.cmd} | {e.output}")
         return e
     # 从输出中提取版本信息
@@ -82,51 +85,62 @@ def FindStr(s):
 
 
 def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
-    # construct _Math function
-    if 'windows' in system().lower():
-        def Match(P, F):
-            return ospath.join(P, F).endswith(r'bin\java.exe')
-    else:
-        def Match(P, F):
-            return ospath.join(P, F).endswith(r'bin/java')
+    try:
+        # construct _Math function
+        if 'windows' in system().lower():
+            def Match(P, F):
+                return ospath.join(P, F).endswith(r'bin\java.exe')
+        else:
+            def Match(P, F):
+                return ospath.join(P, F).endswith(r'bin/java')
 
+    except Exception as e:
+        MCSLLogger.ExceptionLog(e)
     return SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
 
 
 def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
-    JavaPathList = []
-    if FuzzySearch:
-        if ospath.isfile(Path) or 'x86_64-linux-gnu' in Path:
-            return JavaPathList
-        try:
-            for File in listdir(Path):
-                try:
-                    _Path = ospath.join(Path, File)
-                    if ospath.isfile(_Path):
-                        if _Match(Path, File):
-                            v = GetJavaVersion(_Path)
-                            if not isinstance(v, CalledProcessError):
-                                JavaPathList.append(Java(_Path, v))
-                    elif FindStr(File.lower()):
-                        JavaPathList.extend(
-                            SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
-                except PermissionError:
-                    pass
-        except FileNotFoundError as e:
-            print(f'扫描路径时出错: {e}')
+    try:
+        JavaPathList = []
+        if FuzzySearch:
+            if ospath.isfile(Path) or 'x86_64-linux-gnu' in Path:
+                return JavaPathList
+            try:
+                for File in listdir(Path):
+                    try:
+                        _Path = ospath.join(Path, File)
+                        if ospath.isfile(_Path):
+                            if _Match(Path, File):
+                                v = GetJavaVersion(_Path)
+                                if not isinstance(v, CalledProcessError):
+                                    JavaPathList.append(Java(_Path, v))
+                        elif FindStr(File.lower()):
+                            JavaPathList.extend(
+                                SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
+                    except PermissionError:
+                        pass
+            except FileNotFoundError as e:
+                print(f'扫描路径时出错: {e}')
+
+    except Exception as e:
+        MCSLLogger.ExceptionLog(e)
     return JavaPathList
 
 
 def FindJava(FuzzySearch=True):
-    JavaPathList = []
-    FoundJava.clear()
-    if 'windows' in system().lower():
-        for i in range(65, 91):
-            Path = chr(i) + ":\\"
-            if ospath.exists(Path):
-                JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
-    else:
-        JavaPathList.extend(SearchFile('/usr/lib', "java", "", FuzzySearch))
+    try:
+        JavaPathList = []
+        FoundJava.clear()
+        if 'windows' in system().lower():
+            for i in range(65, 91):
+                Path = chr(i) + ":\\"
+                if ospath.exists(Path):
+                    JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
+        else:
+            JavaPathList.extend(SearchFile('/usr/lib', "java", "", FuzzySearch))
+
+    except Exception as e:
+        MCSLLogger.ExceptionLog(e)
     return JavaPathList
 
 

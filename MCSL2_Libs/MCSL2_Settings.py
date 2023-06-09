@@ -5,6 +5,7 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
 
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+MCSLLogger = MCSL2Logger()
 
 
 class MCSL2Settings:
@@ -23,109 +24,128 @@ class MCSL2Settings:
                     ReadConfig.close()
                     try:
                         self.AutoRunLastServer = self.ConfigJSON["auto_run_last_server"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.AutoRunLastServer = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.AcceptAllMojangEula = self.ConfigJSON["accept_all_mojang_eula"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.AcceptAllMojangEula = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.SendStopInsteadOfKill = self.ConfigJSON["send_stop_instead_of_kill"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.SendStopInsteadOfKill = True
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.AddServerMode = self.ConfigJSON["add_server_mode"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.AddServerMode = "Default"
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.OnlySaveGlobalServerConfig = self.ConfigJSON["only_save_global_server_config"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.OnlySaveGlobalServerConfig = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.MCSLAPIDownloadSource = self.ConfigJSON["mcslapi_download_source"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.MCSLAPIDownloadSource = "SharePoint"
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.Aria2Thread = self.ConfigJSON["aria2_thread"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.Aria2Thread = 8
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.AlwaysAskSaveDirectory = self.ConfigJSON["always_ask_save_directory"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.AlwaysAskSaveDirectory = True
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.SaveSameFileException = self.ConfigJSON["save_same_file_exception"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.SaveSameFileException = "ask"
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.EnableConsoleQuickMenu = self.ConfigJSON["enable_console_quick_menu"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.EnableConsoleQuickMenu = True
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.ConsoleOutputEncoding = self.ConfigJSON["console_output_encoding"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.ConsoleOutputEncoding = "utf-8"
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.ConsoleInputDecoding = self.ConfigJSON["console_input_decoding"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.ConsoleInputDecoding = "follow"
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.BackgroundTransparency = self.ConfigJSON["background_transparency"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.BackgroundTransparency = 55
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
-                        self.UseTitleBarInsteadOfmacOSControlling = self.ConfigJSON["use_title_bar_instead_of_macos_controlling"]
-                    except KeyError:
+                        self.UseTitleBarInsteadOfmacOSControlling = self.ConfigJSON[
+                            "use_title_bar_instead_of_macos_controlling"]
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.UseTitleBarInsteadOfmacOSControlling = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.ThemeMode = self.ConfigJSON["theme_mode"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.ThemeMode = "light"
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.StartOnStartup = self.ConfigJSON["start_on_startup"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.StartOnStartup = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.AlwaysRunAsAdministrator = self.ConfigJSON["always_run_as_administrator"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.AlwaysRunAsAdministrator = False
                         self.NeedUpdateConfigFile = 1
                         pass
                     try:
                         self.LastUpdateTime = self.ConfigJSON["last_update_time"]
-                    except KeyError:
+                    except KeyError as e:
+                        MCSLLogger.ExceptionLog(e)
                         self.LastUpdateTime = "unknown"
                         self.NeedUpdateConfigFile = 1
                     if self.NeedUpdateConfigFile == 1:
@@ -154,7 +174,7 @@ class MCSL2Settings:
                         "always_run_as_administrator": False,
                         "last_update_time": "unknown"
                     }
-                    InitConfig.write(dumps(ConfigTemplate))
+                    InitConfig.write(dumps(ConfigTemplate, indent=4))
                     InitConfig.close()
         else:
             self.AutoRunLastServer = False
@@ -177,77 +197,94 @@ class MCSL2Settings:
             self.LastUpdateTime = "unknown"
 
     def GetConfig(self, Type):
-        if Type in self.ConfigList:
-            return getattr(self, Type)
-        else:
-            return None
+        try:
+            if Type in self.ConfigList:
+                return getattr(self, Type)
+            else:
+                return None
+
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
 
     def ChangeConfig(self, Type, Arg):
-        if Type == "AutoRunLastServer":
-            self.AutoRunLastServer = Arg
-        elif Type == "AcceptAllMojangEula":
-            self.AcceptAllMojangEula = Arg
-        elif Type == "SendStopInsteadOfKill":
-            self.SendStopInsteadOfKill = Arg
-        elif Type == "AddServerMode":
-            self.AddServerMode = Arg
-        elif Type == "OnlySaveGlobalServerConfig":
-            self.OnlySaveGlobalServerConfig = Arg
-        elif Type == "MCSLAPIDownloadSource":
-            self.MCSLAPIDownloadSource = Arg
-        elif Type == "Aria2Thread":
-            self.Aria2Thread = Arg
-        elif Type == "AlwaysAskSaveDirectory":
-            self.AlwaysAskSaveDirectory = Arg
-        elif Type == "SaveSameFileException":
-            self.SaveSameFileException = Arg
-        elif Type == "EnableConsoleQuickMenu":
-            self.EnableConsoleQuickMenu = Arg
-        elif Type == "ConsoleOutputEncoding":
-            self.ConsoleOutputEncoding = Arg
-        elif Type == "ConsoleInputDecoding":
-            self.ConsoleInputDecoding = Arg
-        elif Type == "BackgroundTransparency":
-            self.BackgroundTransparency = Arg
-        elif Type == "UseTitleBarInsteadOfmacOSControlling":
-            self.UseTitleBarInsteadOfmacOSControlling = Arg
-        elif Type == "ThemeMode":
-            self.ThemeMode = Arg
-        elif Type == "StartOnStartup":
-            self.StartOnStartup = Arg
-        elif Type == "AlwaysRunAsAdministrator":
-            self.AlwaysRunAsAdministrator = Arg
-        elif Type == "LastUpdateTime":
-            self.LastUpdateTime = Arg
-        else:
-            pass
-        self.SaveConfig()
+        try:
+            if Type == "AutoRunLastServer":
+                self.AutoRunLastServer = Arg
+            elif Type == "AcceptAllMojangEula":
+                self.AcceptAllMojangEula = Arg
+            elif Type == "SendStopInsteadOfKill":
+                self.SendStopInsteadOfKill = Arg
+            elif Type == "AddServerMode":
+                self.AddServerMode = Arg
+            elif Type == "OnlySaveGlobalServerConfig":
+                self.OnlySaveGlobalServerConfig = Arg
+            elif Type == "MCSLAPIDownloadSource":
+                self.MCSLAPIDownloadSource = Arg
+            elif Type == "Aria2Thread":
+                self.Aria2Thread = Arg
+            elif Type == "AlwaysAskSaveDirectory":
+                self.AlwaysAskSaveDirectory = Arg
+            elif Type == "SaveSameFileException":
+                self.SaveSameFileException = Arg
+            elif Type == "EnableConsoleQuickMenu":
+                self.EnableConsoleQuickMenu = Arg
+            elif Type == "ConsoleOutputEncoding":
+                self.ConsoleOutputEncoding = Arg
+            elif Type == "ConsoleInputDecoding":
+                self.ConsoleInputDecoding = Arg
+            elif Type == "BackgroundTransparency":
+                self.BackgroundTransparency = Arg
+            elif Type == "UseTitleBarInsteadOfmacOSControlling":
+                self.UseTitleBarInsteadOfmacOSControlling = Arg
+            elif Type == "ThemeMode":
+                self.ThemeMode = Arg
+            elif Type == "StartOnStartup":
+                self.StartOnStartup = Arg
+            elif Type == "AlwaysRunAsAdministrator":
+                self.AlwaysRunAsAdministrator = Arg
+            elif Type == "LastUpdateTime":
+                self.LastUpdateTime = Arg
+            else:
+                pass
+            self.SaveConfig()
+
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
 
     def SaveConfig(self):
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as UpdateConfig:
-            NewConfig = {
-                "auto_run_last_server": self.AutoRunLastServer,
-                "accept_all_mojang_eula": self.AcceptAllMojangEula,
-                "send_stop_instead_of_kill": self.SendStopInsteadOfKill,
-                "add_server_mode": self.AddServerMode,
-                "only_save_global_server_config": self.OnlySaveGlobalServerConfig,
-                "mcslapi_download_source": self.MCSLAPIDownloadSource,
-                "aria2_thread": self.Aria2Thread,
-                "always_ask_save_directory": self.AlwaysAskSaveDirectory,
-                "save_same_file_exception": self.SaveSameFileException,
-                "enable_console_quick_menu": self.EnableConsoleQuickMenu,
-                "console_output_encoding": self.ConsoleOutputEncoding,
-                "console_input_decoding": self.ConsoleInputDecoding,
-                "background_transparency": self.BackgroundTransparency,
-                "use_title_bar_instead_of_macos_controlling": self.UseTitleBarInsteadOfmacOSControlling,
-                "theme_mode": self.ThemeMode,
-                "start_on_startup": self.StartOnStartup,
-                "always_run_as_administrator": self.AlwaysRunAsAdministrator,
-                "last_update_time": self.LastUpdateTime
-            }
-            UpdateConfig.write(dumps(NewConfig))
-            UpdateConfig.close()
+        try:
+            with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as UpdateConfig:
+                NewConfig = {
+                    "auto_run_last_server": self.AutoRunLastServer,
+                    "accept_all_mojang_eula": self.AcceptAllMojangEula,
+                    "send_stop_instead_of_kill": self.SendStopInsteadOfKill,
+                    "add_server_mode": self.AddServerMode,
+                    "only_save_global_server_config": self.OnlySaveGlobalServerConfig,
+                    "mcslapi_download_source": self.MCSLAPIDownloadSource,
+                    "aria2_thread": self.Aria2Thread,
+                    "always_ask_save_directory": self.AlwaysAskSaveDirectory,
+                    "save_same_file_exception": self.SaveSameFileException,
+                    "enable_console_quick_menu": self.EnableConsoleQuickMenu,
+                    "console_output_encoding": self.ConsoleOutputEncoding,
+                    "console_input_decoding": self.ConsoleInputDecoding,
+                    "background_transparency": self.BackgroundTransparency,
+                    "use_title_bar_instead_of_macos_controlling": self.UseTitleBarInsteadOfmacOSControlling,
+                    "theme_mode": self.ThemeMode,
+                    "start_on_startup": self.StartOnStartup,
+                    "always_run_as_administrator": self.AlwaysRunAsAdministrator,
+                    "last_update_time": self.LastUpdateTime
+                }
+                UpdateConfig.write(dumps(NewConfig, indent=4))
+                UpdateConfig.close()
 
-def OpenWebUrl(Url, LogFilesCount):
-    QDesktopServices.openUrl(QUrl(Url))
-    MCSL2Logger("OpenWebBrowser", MsgArg=f"链接：\n{Url}", MsgLevel=0, LogFilesCount=LogFilesCount).Log()
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
+
+
+def OpenWebUrl(Url):
+    try:
+        QDesktopServices.openUrl(QUrl(Url))
+        MCSLLogger.Log("OpenWebBrowser", MsgArg=f"链接：\n{Url}", MsgLevel=0)
+
+    except Exception as e:
+        MCSLLogger.ExceptionLog(e)

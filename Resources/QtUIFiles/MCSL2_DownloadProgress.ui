@@ -43,7 +43,7 @@
    <property name="styleSheet">
     <string notr="true">QLabel
 {
-	background-color: rgba(230, 230, 230, 15%);
+	background-color: rgba(130, 130, 130, 50%);
 	border-radius: 10px
 }</string>
    </property>
@@ -109,7 +109,7 @@
       <property name="styleSheet">
        <string notr="true">QWidget
 {
-	border-radius: 4px;
+	border-radius: 10px;
 	background-color: rgba(247, 247, 247, 247)
 }</string>
       </property>
@@ -271,12 +271,29 @@ QPushButton:pressed
          <bool>true</bool>
         </property>
        </widget>
+       <widget class="ProgressBar" name="ProgressBar">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>251</width>
+          <height>4</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ProgressBar</class>
+   <extends>QProgressBar</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

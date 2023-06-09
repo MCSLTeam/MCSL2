@@ -222,97 +222,20 @@ class Ui_MCSL2_MainWindow(object):
         self.About_Page_PushButton.setChecked(False)
         self.About_Page_PushButton.setAutoExclusive(False)
         self.About_Page_PushButton.setObjectName("About_Page_PushButton")
-        self.Blue1 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue1.setEnabled(True)
-        self.Blue1.setGeometry(QtCore.QRect(20, 150, 3, 21))
+        self.OptionsWidgetIndicator = PrimaryPushButton(self.OptionsWidget)
+        self.OptionsWidgetIndicator.setEnabled(True)
+        self.OptionsWidgetIndicator.setGeometry(QtCore.QRect(20, 150, 3, 21))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Blue1.setFont(font)
-        self.Blue1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Blue1.setAutoFillBackground(False)
-        self.Blue1.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 1px;\n"
-"}")
-        self.Blue1.setText("")
-        self.Blue1.setObjectName("Blue1")
-        self.Blue2 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue2.setGeometry(QtCore.QRect(20, 210, 3, 21))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Blue2.setFont(font)
-        self.Blue2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Blue2.setAutoFillBackground(False)
-        self.Blue2.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 1px;\n"
-"}")
-        self.Blue2.setText("")
-        self.Blue2.setObjectName("Blue2")
-        self.Blue3 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue3.setGeometry(QtCore.QRect(20, 270, 3, 21))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Blue3.setFont(font)
-        self.Blue3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Blue3.setAutoFillBackground(False)
-        self.Blue3.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 1px;\n"
-"}")
-        self.Blue3.setText("")
-        self.Blue3.setObjectName("Blue3")
-        self.Blue4 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue4.setGeometry(QtCore.QRect(20, 330, 3, 21))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Blue4.setFont(font)
-        self.Blue4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Blue4.setAutoFillBackground(False)
-        self.Blue4.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 1px;\n"
-"}")
-        self.Blue4.setText("")
-        self.Blue4.setObjectName("Blue4")
-        self.Blue5 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue5.setGeometry(QtCore.QRect(20, 390, 3, 21))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Blue5.setFont(font)
-        self.Blue5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Blue5.setAutoFillBackground(False)
-        self.Blue5.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 1px;\n"
-"}")
-        self.Blue5.setText("")
-        self.Blue5.setObjectName("Blue5")
-        self.Blue6 = QtWidgets.QLabel(self.OptionsWidget)
-        self.Blue6.setGeometry(QtCore.QRect(20, 450, 3, 21))
-        font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
-        self.Blue6.setFont(font)
-        self.Blue6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Blue6.setAutoFillBackground(False)
-        self.Blue6.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 1px;\n"
-"}")
-        self.Blue6.setText("")
-        self.Blue6.setObjectName("Blue6")
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.OptionsWidgetIndicator.setFont(font)
+        self.OptionsWidgetIndicator.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.OptionsWidgetIndicator.setAutoFillBackground(False)
+        self.OptionsWidgetIndicator.setStyleSheet("")
+        self.OptionsWidgetIndicator.setText("")
+        self.OptionsWidgetIndicator.setObjectName("OptionsWidgetIndicator")
         self.TitleBarWidget = QtWidgets.QWidget(self.OptionsWidget)
         self.TitleBarWidget.setGeometry(QtCore.QRect(20, 20, 171, 111))
         self.TitleBarWidget.setObjectName("TitleBarWidget")
@@ -432,78 +355,39 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(9)
         self.Selected_Server_Label.setFont(font)
         self.Selected_Server_Label.setObjectName("Selected_Server_Label")
-        self.Start_PushButton = QtWidgets.QPushButton(self.HomePageButtons_Widget)
+        self.Start_PushButton = PrimaryPushButton(self.HomePageButtons_Widget)
         self.Start_PushButton.setGeometry(QtCore.QRect(10, 80, 231, 61))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(16)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Start_PushButton.setFont(font)
         self.Start_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Start_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Start_PushButton.setStyleSheet("")
         self.Start_PushButton.setFlat(False)
         self.Start_PushButton.setObjectName("Start_PushButton")
-        self.Config_PushButton = QtWidgets.QPushButton(self.HomePageButtons_Widget)
+        self.Config_PushButton = PushButton(self.HomePageButtons_Widget)
         self.Config_PushButton.setGeometry(QtCore.QRect(130, 10, 111, 51))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Config_PushButton.setFont(font)
         self.Config_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Config_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.Config_PushButton.setStyleSheet("")
         self.Config_PushButton.setObjectName("Config_PushButton")
-        self.Choose_Server_PushButton = QtWidgets.QPushButton(self.HomePageButtons_Widget)
+        self.Choose_Server_PushButton = PushButton(self.HomePageButtons_Widget)
         self.Choose_Server_PushButton.setGeometry(QtCore.QRect(10, 10, 111, 51))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Choose_Server_PushButton.setFont(font)
         self.Choose_Server_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Choose_Server_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.Choose_Server_PushButton.setStyleSheet("")
         self.Choose_Server_PushButton.setObjectName("Choose_Server_PushButton")
         self.FunctionsStackedWidget.addWidget(self.HomePage)
         self.ConfigPage = QtWidgets.QWidget()
@@ -707,31 +591,16 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigModeWidget.addWidget(self.LeadCPage)
         self.NoobCPage = QtWidgets.QWidget()
         self.NoobCPage.setObjectName("NoobCPage")
-        self.Completed_Save_PushButton = QtWidgets.QPushButton(self.NoobCPage)
+        self.Completed_Save_PushButton = PrimaryPushButton(self.NoobCPage)
         self.Completed_Save_PushButton.setGeometry(QtCore.QRect(20, 330, 211, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Completed_Save_PushButton.setFont(font)
         self.Completed_Save_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Completed_Save_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Completed_Save_PushButton.setStyleSheet("")
         self.Completed_Save_PushButton.setFlat(False)
         self.Completed_Save_PushButton.setObjectName("Completed_Save_PushButton")
         self.Server_Name_Label = QtWidgets.QLabel(self.NoobCPage)
@@ -773,85 +642,40 @@ class Ui_MCSL2_MainWindow(object):
         self.Configuration_Widget = QtWidgets.QWidget(self.NoobCPage)
         self.Configuration_Widget.setGeometry(QtCore.QRect(280, 0, 351, 291))
         self.Configuration_Widget.setObjectName("Configuration_Widget")
-        self.Download_Core_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
+        self.Download_Core_PushButton = PrimaryPushButton(self.Configuration_Widget)
         self.Download_Core_PushButton.setGeometry(QtCore.QRect(230, 240, 101, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Download_Core_PushButton.setFont(font)
         self.Download_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Download_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Download_Core_PushButton.setStyleSheet("")
         self.Download_Core_PushButton.setFlat(False)
         self.Download_Core_PushButton.setObjectName("Download_Core_PushButton")
-        self.Download_Java_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
-        self.Download_Java_PushButton.setGeometry(QtCore.QRect(130, 70, 101, 31))
+        self.Download_Java_PushButton = PrimaryPushButton(self.Configuration_Widget)
+        self.Download_Java_PushButton.setGeometry(QtCore.QRect(190, 70, 71, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Download_Java_PushButton.setFont(font)
         self.Download_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Download_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Download_Java_PushButton.setStyleSheet("")
         self.Download_Java_PushButton.setFlat(False)
         self.Download_Java_PushButton.setObjectName("Download_Java_PushButton")
-        self.Manual_Import_Core_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
+        self.Manual_Import_Core_PushButton = PrimaryPushButton(self.Configuration_Widget)
         self.Manual_Import_Core_PushButton.setGeometry(QtCore.QRect(120, 240, 101, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Manual_Import_Core_PushButton.setFont(font)
         self.Manual_Import_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Manual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Manual_Import_Core_PushButton.setStyleSheet("")
         self.Manual_Import_Core_PushButton.setFlat(False)
         self.Manual_Import_Core_PushButton.setObjectName("Manual_Import_Core_PushButton")
         self.Set_Core_Background = QtWidgets.QLabel(self.Configuration_Widget)
@@ -954,31 +778,16 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.Core_Label.setFont(font)
         self.Core_Label.setObjectName("Core_Label")
-        self.Auto_Find_Java_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
-        self.Auto_Find_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 101, 31))
+        self.Auto_Find_Java_PushButton = PrimaryPushButton(self.Configuration_Widget)
+        self.Auto_Find_Java_PushButton.setGeometry(QtCore.QRect(100, 70, 81, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Auto_Find_Java_PushButton.setFont(font)
         self.Auto_Find_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Auto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Auto_Find_Java_PushButton.setStyleSheet("")
         self.Auto_Find_Java_PushButton.setFlat(False)
         self.Auto_Find_Java_PushButton.setObjectName("Auto_Find_Java_PushButton")
         self.Memory_Unit_Label = QtWidgets.QLabel(self.Configuration_Widget)
@@ -996,29 +805,29 @@ class Ui_MCSL2_MainWindow(object):
         self.Java_Version_Label.setFont(font)
         self.Java_Version_Label.setText("")
         self.Java_Version_Label.setObjectName("Java_Version_Label")
-        self.Founded_Java_List_PushButton = QtWidgets.QPushButton(self.Configuration_Widget)
-        self.Founded_Java_List_PushButton.setGeometry(QtCore.QRect(240, 70, 101, 31))
+        self.Founded_Java_List_PushButton = PushButton(self.Configuration_Widget)
+        self.Founded_Java_List_PushButton.setGeometry(QtCore.QRect(270, 70, 71, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Founded_Java_List_PushButton.setFont(font)
         self.Founded_Java_List_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Founded_Java_List_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.Founded_Java_List_PushButton.setStyleSheet("")
         self.Founded_Java_List_PushButton.setObjectName("Founded_Java_List_PushButton")
+        self.Manual_Import_Java_PushButton = PrimaryPushButton(self.Configuration_Widget)
+        self.Manual_Import_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 71, 31))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.Manual_Import_Java_PushButton.setFont(font)
+        self.Manual_Import_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Manual_Import_Java_PushButton.setStyleSheet("")
+        self.Manual_Import_Java_PushButton.setFlat(False)
+        self.Manual_Import_Java_PushButton.setObjectName("Manual_Import_Java_PushButton")
         self.Set_Core_Background.raise_()
         self.Set_Memory_Background.raise_()
         self.Set_Java_Background.raise_()
@@ -1035,6 +844,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Memory_Unit_Label.raise_()
         self.Java_Version_Label.raise_()
         self.Founded_Java_List_PushButton.raise_()
+        self.Manual_Import_Java_PushButton.raise_()
         self.ConfigTip1_Widget = QtWidgets.QWidget(self.NoobCPage)
         self.ConfigTip1_Widget.setGeometry(QtCore.QRect(0, 0, 251, 121))
         self.ConfigTip1_Widget.setStyleSheet("QWidget\n"
@@ -1082,85 +892,40 @@ class Ui_MCSL2_MainWindow(object):
         self.ExConfiguration_Widget = QtWidgets.QWidget(self.ExtendedCPage)
         self.ExConfiguration_Widget.setGeometry(QtCore.QRect(0, 0, 671, 451))
         self.ExConfiguration_Widget.setObjectName("ExConfiguration_Widget")
-        self.ExDownload_Core_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExDownload_Core_PushButton = PrimaryPushButton(self.ExConfiguration_Widget)
         self.ExDownload_Core_PushButton.setGeometry(QtCore.QRect(560, 145, 101, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.ExDownload_Core_PushButton.setFont(font)
         self.ExDownload_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.ExDownload_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.ExDownload_Core_PushButton.setStyleSheet("")
         self.ExDownload_Core_PushButton.setFlat(False)
         self.ExDownload_Core_PushButton.setObjectName("ExDownload_Core_PushButton")
-        self.ExDownload_Java_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
-        self.ExDownload_Java_PushButton.setGeometry(QtCore.QRect(130, 70, 101, 31))
+        self.ExDownload_Java_PushButton = PrimaryPushButton(self.ExConfiguration_Widget)
+        self.ExDownload_Java_PushButton.setGeometry(QtCore.QRect(190, 70, 71, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.ExDownload_Java_PushButton.setFont(font)
         self.ExDownload_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.ExDownload_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.ExDownload_Java_PushButton.setStyleSheet("")
         self.ExDownload_Java_PushButton.setFlat(False)
         self.ExDownload_Java_PushButton.setObjectName("ExDownload_Java_PushButton")
-        self.ExManual_Import_Core_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExManual_Import_Core_PushButton = PrimaryPushButton(self.ExConfiguration_Widget)
         self.ExManual_Import_Core_PushButton.setGeometry(QtCore.QRect(450, 145, 101, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.ExManual_Import_Core_PushButton.setFont(font)
         self.ExManual_Import_Core_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.ExManual_Import_Core_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.ExManual_Import_Core_PushButton.setStyleSheet("")
         self.ExManual_Import_Core_PushButton.setFlat(False)
         self.ExManual_Import_Core_PushButton.setObjectName("ExManual_Import_Core_PushButton")
         self.ExSet_Core_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1263,31 +1028,16 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.ExCore_Label.setFont(font)
         self.ExCore_Label.setObjectName("ExCore_Label")
-        self.ExAuto_Find_Java_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
-        self.ExAuto_Find_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 101, 31))
+        self.ExAuto_Find_Java_PushButton = PrimaryPushButton(self.ExConfiguration_Widget)
+        self.ExAuto_Find_Java_PushButton.setGeometry(QtCore.QRect(100, 70, 81, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.ExAuto_Find_Java_PushButton.setFont(font)
         self.ExAuto_Find_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.ExAuto_Find_Java_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.ExAuto_Find_Java_PushButton.setStyleSheet("")
         self.ExAuto_Find_Java_PushButton.setFlat(False)
         self.ExAuto_Find_Java_PushButton.setObjectName("ExAuto_Find_Java_PushButton")
         self.ExJava_Version_Label = QtWidgets.QLabel(self.ExConfiguration_Widget)
@@ -1298,28 +1048,16 @@ class Ui_MCSL2_MainWindow(object):
         self.ExJava_Version_Label.setFont(font)
         self.ExJava_Version_Label.setText("")
         self.ExJava_Version_Label.setObjectName("ExJava_Version_Label")
-        self.ExFounded_Java_List_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
-        self.ExFounded_Java_List_PushButton.setGeometry(QtCore.QRect(240, 70, 101, 31))
+        self.ExFounded_Java_List_PushButton = PushButton(self.ExConfiguration_Widget)
+        self.ExFounded_Java_List_PushButton.setGeometry(QtCore.QRect(270, 70, 71, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.ExFounded_Java_List_PushButton.setFont(font)
         self.ExFounded_Java_List_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.ExFounded_Java_List_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.ExFounded_Java_List_PushButton.setStyleSheet("")
         self.ExFounded_Java_List_PushButton.setObjectName("ExFounded_Java_List_PushButton")
         self.ExOthers_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExOthers_Background.setGeometry(QtCore.QRect(370, 0, 301, 121))
@@ -1357,100 +1095,29 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.ExServer_Name_Label.setFont(font)
         self.ExServer_Name_Label.setObjectName("ExServer_Name_Label")
-        self.ExCompleted_Save_PushButton = QtWidgets.QPushButton(self.ExConfiguration_Widget)
+        self.ExCompleted_Save_PushButton = PrimaryPushButton(self.ExConfiguration_Widget)
         self.ExCompleted_Save_PushButton.setGeometry(QtCore.QRect(400, 70, 251, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(12)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.ExCompleted_Save_PushButton.setFont(font)
         self.ExCompleted_Save_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.ExCompleted_Save_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.ExCompleted_Save_PushButton.setStyleSheet("")
         self.ExCompleted_Save_PushButton.setFlat(False)
         self.ExCompleted_Save_PushButton.setObjectName("ExCompleted_Save_PushButton")
-        self.ExMemoryUnitComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
+        self.ExMemoryUnitComboBox = ComboBox(self.ExConfiguration_Widget)
         self.ExMemoryUnitComboBox.setGeometry(QtCore.QRect(240, 145, 101, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.ExMemoryUnitComboBox.setFont(font)
-        self.ExMemoryUnitComboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding-left: 0px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"}")
+        self.ExMemoryUnitComboBox.setStyleSheet("")
         self.ExMemoryUnitComboBox.setObjectName("ExMemoryUnitComboBox")
-        self.ExMemoryUnitComboBox.addItem("")
-        self.ExMemoryUnitComboBox.addItem("")
         self.ExSet_Encoding_Background = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExSet_Encoding_Background.setGeometry(QtCore.QRect(0, 200, 671, 111))
         font = QtGui.QFont()
@@ -1472,7 +1139,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ExConsoleInputDecoding.setFont(font)
         self.ExConsoleInputDecoding.setObjectName("ExConsoleInputDecoding")
-        self.ExConsoleOutputEncodingComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
+        self.ExConsoleOutputEncodingComboBox = ComboBox(self.ExConfiguration_Widget)
         self.ExConsoleOutputEncodingComboBox.setGeometry(QtCore.QRect(390, 220, 241, 31))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1480,140 +1147,27 @@ class Ui_MCSL2_MainWindow(object):
         sizePolicy.setHeightForWidth(self.ExConsoleOutputEncodingComboBox.sizePolicy().hasHeightForWidth())
         self.ExConsoleOutputEncodingComboBox.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.ExConsoleOutputEncodingComboBox.setFont(font)
-        self.ExConsoleOutputEncodingComboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding-left: 0px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"}")
+        self.ExConsoleOutputEncodingComboBox.setStyleSheet("")
         self.ExConsoleOutputEncodingComboBox.setObjectName("ExConsoleOutputEncodingComboBox")
-        self.ExConsoleOutputEncodingComboBox.addItem("")
-        self.ExConsoleOutputEncodingComboBox.addItem("")
-        self.ExConsoleInputDecodingComboBox = QtWidgets.QComboBox(self.ExConfiguration_Widget)
+        self.ExConsoleInputDecodingComboBox = ComboBox(self.ExConfiguration_Widget)
         self.ExConsoleInputDecodingComboBox.setGeometry(QtCore.QRect(390, 260, 241, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(11)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         font.setKerning(True)
         self.ExConsoleInputDecodingComboBox.setFont(font)
-        self.ExConsoleInputDecodingComboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    padding-left: 0px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"}")
-        self.ExConsoleInputDecodingComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
-        self.ExConsoleInputDecodingComboBox.setFrame(True)
+        self.ExConsoleInputDecodingComboBox.setStyleSheet("")
+        self.ExConsoleInputDecodingComboBox.setProperty("currentIndex", 0)
+        self.ExConsoleInputDecodingComboBox.setProperty("frame", True)
         self.ExConsoleInputDecodingComboBox.setObjectName("ExConsoleInputDecodingComboBox")
-        self.ExConsoleInputDecodingComboBox.addItem("")
-        self.ExConsoleInputDecodingComboBox.addItem("")
-        self.ExConsoleInputDecodingComboBox.addItem("")
         self.ExConsoleOutputEncoding = QtWidgets.QLabel(self.ExConfiguration_Widget)
         self.ExConsoleOutputEncoding.setGeometry(QtCore.QRect(20, 223, 271, 21))
         font = QtGui.QFont()
@@ -1657,6 +1211,18 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "")
         self.ExJVMArgLineEdit.setObjectName("ExJVMArgLineEdit")
+        self.ExManual_Import_Java_PushButton = PrimaryPushButton(self.ExConfiguration_Widget)
+        self.ExManual_Import_Java_PushButton.setGeometry(QtCore.QRect(20, 70, 71, 31))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.ExManual_Import_Java_PushButton.setFont(font)
+        self.ExManual_Import_Java_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExManual_Import_Java_PushButton.setStyleSheet("")
+        self.ExManual_Import_Java_PushButton.setFlat(False)
+        self.ExManual_Import_Java_PushButton.setObjectName("ExManual_Import_Java_PushButton")
         self.ExJVMArg_Background.raise_()
         self.ExSet_Encoding_Background.raise_()
         self.ExSet_Java_Background.raise_()
@@ -1685,6 +1251,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ExConsoleOutputEncoding.raise_()
         self.ExJVMArg.raise_()
         self.ExJVMArgLineEdit.raise_()
+        self.ExManual_Import_Java_PushButton.raise_()
         self.ConfigModeWidget.addWidget(self.ExtendedCPage)
         self.FunctionsStackedWidget.addWidget(self.ConfigPage)
         self.DownloadPage = QtWidgets.QWidget()
@@ -1737,7 +1304,7 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.setObjectName("DownloadSwitcher_TabWidget")
         self.JavaTab = QtWidgets.QWidget()
         self.JavaTab.setObjectName("JavaTab")
-        self.JavaScrollArea = QtWidgets.QScrollArea(self.JavaTab)
+        self.JavaScrollArea = SmoothScrollArea(self.JavaTab)
         self.JavaScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.JavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.JavaScrollArea.setStyleSheet("QScrollArea{\n"
@@ -1782,6 +1349,7 @@ class Ui_MCSL2_MainWindow(object):
         self.JavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
         self.JavaScrollAreaWidgetContents.setObjectName("JavaScrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.JavaScrollAreaWidgetContents)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.JavaVerticalLayout = QtWidgets.QVBoxLayout()
         self.JavaVerticalLayout.setObjectName("JavaVerticalLayout")
@@ -1790,7 +1358,7 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.addTab(self.JavaTab, "")
         self.SpigotTab = QtWidgets.QWidget()
         self.SpigotTab.setObjectName("SpigotTab")
-        self.SpigotScrollArea = QtWidgets.QScrollArea(self.SpigotTab)
+        self.SpigotScrollArea = SmoothScrollArea(self.SpigotTab)
         self.SpigotScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.SpigotScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.SpigotScrollArea.setStyleSheet("QScrollArea{\n"
@@ -1835,6 +1403,7 @@ class Ui_MCSL2_MainWindow(object):
         self.SpigotScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
         self.SpigotScrollAreaWidgetContents.setObjectName("SpigotScrollAreaWidgetContents")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.SpigotScrollAreaWidgetContents)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.SpigotVerticalLayout = QtWidgets.QVBoxLayout()
         self.SpigotVerticalLayout.setObjectName("SpigotVerticalLayout")
@@ -1843,7 +1412,7 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.addTab(self.SpigotTab, "")
         self.PaperTab = QtWidgets.QWidget()
         self.PaperTab.setObjectName("PaperTab")
-        self.PaperScrollArea = QtWidgets.QScrollArea(self.PaperTab)
+        self.PaperScrollArea = SmoothScrollArea(self.PaperTab)
         self.PaperScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.PaperScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.PaperScrollArea.setStyleSheet("QScrollArea{\n"
@@ -1888,6 +1457,7 @@ class Ui_MCSL2_MainWindow(object):
         self.PaperScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
         self.PaperScrollAreaWidgetContents.setObjectName("PaperScrollAreaWidgetContents")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.PaperScrollAreaWidgetContents)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.PaperVerticalLayout = QtWidgets.QVBoxLayout()
         self.PaperVerticalLayout.setObjectName("PaperVerticalLayout")
@@ -1896,7 +1466,7 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.addTab(self.PaperTab, "")
         self.BungeeCordTab = QtWidgets.QWidget()
         self.BungeeCordTab.setObjectName("BungeeCordTab")
-        self.BungeeCordScrollArea = QtWidgets.QScrollArea(self.BungeeCordTab)
+        self.BungeeCordScrollArea = SmoothScrollArea(self.BungeeCordTab)
         self.BungeeCordScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.BungeeCordScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.BungeeCordScrollArea.setStyleSheet("QScrollArea{\n"
@@ -1941,6 +1511,7 @@ class Ui_MCSL2_MainWindow(object):
         self.BungeeCordScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
         self.BungeeCordScrollAreaWidgetContents.setObjectName("BungeeCordScrollAreaWidgetContents")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.BungeeCordScrollAreaWidgetContents)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.BCVerticalLayout = QtWidgets.QVBoxLayout()
         self.BCVerticalLayout.setObjectName("BCVerticalLayout")
@@ -1949,7 +1520,7 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSwitcher_TabWidget.addTab(self.BungeeCordTab, "")
         self.OfficialCoreTab = QtWidgets.QWidget()
         self.OfficialCoreTab.setObjectName("OfficialCoreTab")
-        self.OfficialCoreScrollArea = QtWidgets.QScrollArea(self.OfficialCoreTab)
+        self.OfficialCoreScrollArea = SmoothScrollArea(self.OfficialCoreTab)
         self.OfficialCoreScrollArea.setGeometry(QtCore.QRect(10, 10, 631, 351))
         self.OfficialCoreScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.OfficialCoreScrollArea.setStyleSheet("QScrollArea{\n"
@@ -1994,6 +1565,7 @@ class Ui_MCSL2_MainWindow(object):
         self.OfficialCoreScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 619, 351))
         self.OfficialCoreScrollAreaWidgetContents.setObjectName("OfficialCoreScrollAreaWidgetContents")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.OfficialCoreScrollAreaWidgetContents)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.OfficialCoreVerticalLayout = QtWidgets.QVBoxLayout()
         self.OfficialCoreVerticalLayout.setObjectName("OfficialCoreVerticalLayout")
@@ -2007,21 +1579,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.More_Download_PushButton.setFont(font)
         self.More_Download_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.More_Download_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.More_Download_PushButton.setStyleSheet("")
         self.More_Download_PushButton.setObjectName("More_Download_PushButton")
         self.GoToDownloadSourceChangerPushButton = QtWidgets.QPushButton(self.DownloadPage)
         self.GoToDownloadSourceChangerPushButton.setGeometry(QtCore.QRect(500, 100, 101, 41))
@@ -2030,21 +1588,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.GoToDownloadSourceChangerPushButton.setFont(font)
         self.GoToDownloadSourceChangerPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.GoToDownloadSourceChangerPushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.GoToDownloadSourceChangerPushButton.setStyleSheet("")
         self.GoToDownloadSourceChangerPushButton.setObjectName("GoToDownloadSourceChangerPushButton")
         self.CurrentDownloadSourceLabel = QtWidgets.QLabel(self.DownloadPage)
         self.CurrentDownloadSourceLabel.setGeometry(QtCore.QRect(100, 90, 281, 41))
@@ -2096,31 +1640,16 @@ class Ui_MCSL2_MainWindow(object):
 "    border-radius: 10px\n"
 "}")
         self.Command_Background.setObjectName("Command_Background")
-        self.Send_Command_PushButton = QtWidgets.QPushButton(self.ConsolePage)
+        self.Send_Command_PushButton = PrimaryPushButton(self.ConsolePage)
         self.Send_Command_PushButton.setGeometry(QtCore.QRect(570, 480, 91, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Send_Command_PushButton.setFont(font)
         self.Send_Command_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Send_Command_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Send_Command_PushButton.setStyleSheet("")
         self.Send_Command_PushButton.setFlat(False)
         self.Send_Command_PushButton.setObjectName("Send_Command_PushButton")
         self.Command_LineEdit = QtWidgets.QLineEdit(self.ConsolePage)
@@ -2155,7 +1684,7 @@ class Ui_MCSL2_MainWindow(object):
 "    border-radius: 10px\n"
 "}")
         self.ToolsBackground.setObjectName("ToolsBackground")
-        self.ToolsScrollArea = QtWidgets.QScrollArea(self.ToolsBackground)
+        self.ToolsScrollArea = SmoothScrollArea(self.ToolsBackground)
         self.ToolsScrollArea.setGeometry(QtCore.QRect(10, 10, 661, 411))
         self.ToolsScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ToolsScrollArea.setStyleSheet("QScrollArea{\n"
@@ -2200,6 +1729,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ToolsScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 649, 411))
         self.ToolsScrollAreaWidgetContents.setObjectName("ToolsScrollAreaWidgetContents")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.ToolsScrollAreaWidgetContents)
+        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.ToolsVerticalLayout = QtWidgets.QVBoxLayout()
         self.ToolsVerticalLayout.setObjectName("ToolsVerticalLayout")
@@ -2212,47 +1742,18 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.GoToChangeToolsConfigPushButton.setFont(font)
         self.GoToChangeToolsConfigPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.GoToChangeToolsConfigPushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.GoToChangeToolsConfigPushButton.setStyleSheet("")
         self.GoToChangeToolsConfigPushButton.setObjectName("GoToChangeToolsConfigPushButton")
-        self.InstallToolsPushButton = QtWidgets.QPushButton(self.ToolsPage)
+        self.InstallToolsPushButton = PrimaryPushButton(self.ToolsPage)
         self.InstallToolsPushButton.setGeometry(QtCore.QRect(520, 90, 91, 41))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(10)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.InstallToolsPushButton.setFont(font)
         self.InstallToolsPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.InstallToolsPushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 7px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 7px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 7px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.InstallToolsPushButton.setStyleSheet("")
         self.InstallToolsPushButton.setObjectName("InstallToolsPushButton")
         self.FunctionsStackedWidget.addWidget(self.ToolsPage)
         self.SettingsPage = QtWidgets.QWidget()
@@ -2266,7 +1767,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.About_Label.setFont(font)
         self.About_Label.setObjectName("About_Label")
-        self.SettingsScrollArea = QtWidgets.QScrollArea(self.SettingsPage)
+        self.SettingsScrollArea = SmoothScrollArea(self.SettingsPage)
         self.SettingsScrollArea.setGeometry(QtCore.QRect(30, 130, 641, 421))
         self.SettingsScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.SettingsScrollArea.setStyleSheet("QScrollArea{\n"
@@ -2295,71 +1796,6 @@ class Ui_MCSL2_MainWindow(object):
 "}\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "    background: none;\n"
-"}\n"
-"QComboBox {\n"
-"    border: 1px solid rgb(238, 239, 238);\n"
-"    border-radius: 5px;\n"
-"    border-bottom: 1px solid rgb(212, 213, 212);\n"
-"    padding: 5px 31px 6px 11px;\n"
-"    color: black;\n"
-"    background-color: rgb(254, 254, 254);\n"
-"    text-align: left;\n"
-"    font: 14px \'Microsoft YaHei UI\';\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"    background-color: rgb(251, 251, 251);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    border-bottom: 1px solid rgb(238, 239, 238);\n"
-"    color: rgba(0, 0, 0, 0.63);\n"
-"}\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: right;\n"
-"    width: 35px;\n"
-"    border-left-style: solid;\n"
-"}\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    border-image: url(:/MCSL2_Icon/QComboBoxDownArrow.svg);\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 1px solid rgba(0, 0, 0, 0.1);\n"
-"    border-radius: 9px;\n"
-"    background-color: rgb(249, 249, 249);\n"
-"    outline: none;\n"
-"    font: 14px \'Microsoft YaHei UI\'\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"    margin-top: 4px;\n"
-"    min-height: 30px;\n"
-"    padding-left: 10px;\n"
-"    padding-right: 10px;\n"
-"    border-radius: 5px;\n"
-"    border: none;\n"
-"    font: 14px \'Microsoft YaHei UI\'\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: rgba(0, 0, 0, 9);\n"
-"    height: 27px;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"    background-color: rgba(0, 0, 0, 7);\n"
-"    color: black;\n"
-"    height: 27px;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item:selected:active {\n"
-"    background-color: rgba(0, 0, 0, 0.06);\n"
-"    color: rgba(0, 0, 0, 0.7);\n"
-"    height: 27px;\n"
 "}")
         self.SettingsScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SettingsScrollArea.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -2373,6 +1809,7 @@ class Ui_MCSL2_MainWindow(object):
         self.SettingsScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 641, 1677))
         self.SettingsScrollAreaWidgetContents.setObjectName("SettingsScrollAreaWidgetContents")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.SettingsScrollAreaWidgetContents)
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.SettingsVerticalLayout = QtWidgets.QVBoxLayout()
         self.SettingsVerticalLayout.setObjectName("SettingsVerticalLayout")
@@ -2385,226 +1822,34 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgba(247, 247, 247, 247)\n"
 "}")
         self.ServerSettingsWidget.setObjectName("ServerSettingsWidget")
-        self.AutoRunLastServerSetting = QtWidgets.QCheckBox(self.ServerSettingsWidget)
+        self.AutoRunLastServerSetting = CheckBox(self.ServerSettingsWidget)
         self.AutoRunLastServerSetting.setGeometry(QtCore.QRect(30, 50, 410, 30))
-        self.AutoRunLastServerSetting.setMinimumSize(QtCore.QSize(28, 20))
+        self.AutoRunLastServerSetting.setMinimumSize(QtCore.QSize(0, 0))
         self.AutoRunLastServerSetting.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.AutoRunLastServerSetting.setFont(font)
-        self.AutoRunLastServerSetting.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.AutoRunLastServerSetting.setStyleSheet("")
         self.AutoRunLastServerSetting.setObjectName("AutoRunLastServerSetting")
-        self.AcceptAllMojangEULASetting = QtWidgets.QCheckBox(self.ServerSettingsWidget)
+        self.AcceptAllMojangEULASetting = CheckBox(self.ServerSettingsWidget)
         self.AcceptAllMojangEULASetting.setGeometry(QtCore.QRect(30, 80, 410, 30))
-        self.AcceptAllMojangEULASetting.setMinimumSize(QtCore.QSize(28, 20))
+        self.AcceptAllMojangEULASetting.setMinimumSize(QtCore.QSize(0, 0))
         self.AcceptAllMojangEULASetting.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.AcceptAllMojangEULASetting.setFont(font)
-        self.AcceptAllMojangEULASetting.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.AcceptAllMojangEULASetting.setStyleSheet("")
         self.AcceptAllMojangEULASetting.setIconSize(QtCore.QSize(32, 32))
         self.AcceptAllMojangEULASetting.setObjectName("AcceptAllMojangEULASetting")
-        self.StopServerSettings = QtWidgets.QCheckBox(self.ServerSettingsWidget)
+        self.StopServerSettings = CheckBox(self.ServerSettingsWidget)
         self.StopServerSettings.setGeometry(QtCore.QRect(30, 110, 410, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.StopServerSettings.setFont(font)
-        self.StopServerSettings.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.StopServerSettings.setStyleSheet("")
         self.StopServerSettings.setIconSize(QtCore.QSize(32, 32))
         self.StopServerSettings.setChecked(True)
         self.StopServerSettings.setObjectName("StopServerSettings")
@@ -2624,7 +1869,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ServerSettingsWidgetTitleLabel.setFont(font)
         self.ServerSettingsWidgetTitleLabel.setObjectName("ServerSettingsWidgetTitleLabel")
-        self.ServerSettingsWidgetBlue = QtWidgets.QLabel(self.ServerSettingsTitle)
+        self.ServerSettingsWidgetBlue = PrimaryPushButton(self.ServerSettingsTitle)
         self.ServerSettingsWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -2632,11 +1877,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ServerSettingsWidgetBlue.setFont(font)
         self.ServerSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ServerSettingsWidgetBlue.setAutoFillBackground(False)
-        self.ServerSettingsWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.ServerSettingsWidgetBlue.setStyleSheet("")
         self.ServerSettingsWidgetBlue.setText("")
         self.ServerSettingsWidgetBlue.setObjectName("ServerSettingsWidgetBlue")
         self.SettingsVerticalLayout.addWidget(self.ServerSettingsWidget)
@@ -2649,79 +1890,15 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgba(247, 247, 247, 247)\n"
 "}")
         self.ConfigPageSettingsWidget.setObjectName("ConfigPageSettingsWidget")
-        self.OnlySaveGlobalServerConfigs = QtWidgets.QCheckBox(self.ConfigPageSettingsWidget)
+        self.OnlySaveGlobalServerConfigs = CheckBox(self.ConfigPageSettingsWidget)
         self.OnlySaveGlobalServerConfigs.setGeometry(QtCore.QRect(30, 93, 410, 30))
-        self.OnlySaveGlobalServerConfigs.setMinimumSize(QtCore.QSize(28, 20))
+        self.OnlySaveGlobalServerConfigs.setMinimumSize(QtCore.QSize(0, 0))
         self.OnlySaveGlobalServerConfigs.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.OnlySaveGlobalServerConfigs.setFont(font)
-        self.OnlySaveGlobalServerConfigs.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.OnlySaveGlobalServerConfigs.setStyleSheet("")
         self.OnlySaveGlobalServerConfigs.setObjectName("OnlySaveGlobalServerConfigs")
         self.ConfigPageSettingsTitle = QtWidgets.QWidget(self.ConfigPageSettingsWidget)
         self.ConfigPageSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
@@ -2739,7 +1916,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ConfigPageSettingsWidgetTitleLabel.setFont(font)
         self.ConfigPageSettingsWidgetTitleLabel.setObjectName("ConfigPageSettingsWidgetTitleLabel")
-        self.ConfigPageSettingsWidgetBlue = QtWidgets.QLabel(self.ConfigPageSettingsTitle)
+        self.ConfigPageSettingsWidgetBlue = PrimaryPushButton(self.ConfigPageSettingsTitle)
         self.ConfigPageSettingsWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -2747,11 +1924,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConfigPageSettingsWidgetBlue.setFont(font)
         self.ConfigPageSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ConfigPageSettingsWidgetBlue.setAutoFillBackground(False)
-        self.ConfigPageSettingsWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.ConfigPageSettingsWidgetBlue.setStyleSheet("")
         self.ConfigPageSettingsWidgetBlue.setText("")
         self.ConfigPageSettingsWidgetBlue.setObjectName("ConfigPageSettingsWidgetBlue")
         self.HowToAddServer = QtWidgets.QLabel(self.ConfigPageSettingsWidget)
@@ -2761,11 +1934,10 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.HowToAddServer.setFont(font)
         self.HowToAddServer.setObjectName("HowToAddServer")
-        self.HowToAddServerComboBox = QtWidgets.QComboBox(self.ConfigPageSettingsWidget)
+        self.HowToAddServerComboBox = ComboBox(self.ConfigPageSettingsWidget)
         self.HowToAddServerComboBox.setGeometry(QtCore.QRect(370, 60, 221, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -2773,9 +1945,6 @@ class Ui_MCSL2_MainWindow(object):
         self.HowToAddServerComboBox.setFont(font)
         self.HowToAddServerComboBox.setStyleSheet("")
         self.HowToAddServerComboBox.setObjectName("HowToAddServerComboBox")
-        self.HowToAddServerComboBox.addItem("")
-        self.HowToAddServerComboBox.addItem("")
-        self.HowToAddServerComboBox.addItem("")
         self.SettingsVerticalLayout.addWidget(self.ConfigPageSettingsWidget)
         self.DownloadSettingsWidget = QtWidgets.QWidget(self.SettingsScrollAreaWidgetContents)
         self.DownloadSettingsWidget.setMinimumSize(QtCore.QSize(620, 250))
@@ -2802,7 +1971,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.DownloadSettingsWidgetTitleLabel.setFont(font)
         self.DownloadSettingsWidgetTitleLabel.setObjectName("DownloadSettingsWidgetTitleLabel")
-        self.DownloadSettingsWidgetBlue = QtWidgets.QLabel(self.DownloadSettingsTitle)
+        self.DownloadSettingsWidgetBlue = PrimaryPushButton(self.DownloadSettingsTitle)
         self.DownloadSettingsWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -2810,11 +1979,7 @@ class Ui_MCSL2_MainWindow(object):
         self.DownloadSettingsWidgetBlue.setFont(font)
         self.DownloadSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.DownloadSettingsWidgetBlue.setAutoFillBackground(False)
-        self.DownloadSettingsWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.DownloadSettingsWidgetBlue.setStyleSheet("")
         self.DownloadSettingsWidgetBlue.setText("")
         self.DownloadSettingsWidgetBlue.setObjectName("DownloadSettingsWidgetBlue")
         self.MCSLAPIDownloadSource = QtWidgets.QLabel(self.DownloadSettingsWidget)
@@ -2824,7 +1989,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.MCSLAPIDownloadSource.setFont(font)
         self.MCSLAPIDownloadSource.setObjectName("MCSLAPIDownloadSource")
-        self.MCSLAPIDownloadSourceComboBox = QtWidgets.QComboBox(self.DownloadSettingsWidget)
+        self.MCSLAPIDownloadSourceComboBox = ComboBox(self.DownloadSettingsWidget)
         self.MCSLAPIDownloadSourceComboBox.setGeometry(QtCore.QRect(350, 60, 241, 31))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -2833,7 +1998,6 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSLAPIDownloadSourceComboBox.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -2841,11 +2005,6 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSLAPIDownloadSourceComboBox.setFont(font)
         self.MCSLAPIDownloadSourceComboBox.setStyleSheet("")
         self.MCSLAPIDownloadSourceComboBox.setObjectName("MCSLAPIDownloadSourceComboBox")
-        self.MCSLAPIDownloadSourceComboBox.addItem("")
-        self.MCSLAPIDownloadSourceComboBox.addItem("")
-        self.MCSLAPIDownloadSourceComboBox.addItem("")
-        self.MCSLAPIDownloadSourceComboBox.addItem("")
-        self.MCSLAPIDownloadSourceComboBox.addItem("")
         self.Aria2ThreadCount = QtWidgets.QLabel(self.DownloadSettingsWidget)
         self.Aria2ThreadCount.setGeometry(QtCore.QRect(30, 103, 171, 21))
         font = QtGui.QFont()
@@ -2853,98 +2012,28 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.Aria2ThreadCount.setFont(font)
         self.Aria2ThreadCount.setObjectName("Aria2ThreadCount")
-        self.Aria2ThreadCountComboBox = QtWidgets.QComboBox(self.DownloadSettingsWidget)
-        self.Aria2ThreadCountComboBox.setGeometry(QtCore.QRect(490, 100, 101, 35))
+        self.Aria2ThreadCountComboBox = ComboBox(self.DownloadSettingsWidget)
+        self.Aria2ThreadCountComboBox.setGeometry(QtCore.QRect(490, 100, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         font.setKerning(True)
         self.Aria2ThreadCountComboBox.setFont(font)
         self.Aria2ThreadCountComboBox.setStyleSheet("")
-        self.Aria2ThreadCountComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
-        self.Aria2ThreadCountComboBox.setFrame(True)
+        self.Aria2ThreadCountComboBox.setProperty("currentIndex", 3)
+        self.Aria2ThreadCountComboBox.setProperty("frame", True)
         self.Aria2ThreadCountComboBox.setObjectName("Aria2ThreadCountComboBox")
-        self.Aria2ThreadCountComboBox.addItem("")
-        self.Aria2ThreadCountComboBox.addItem("")
-        self.Aria2ThreadCountComboBox.addItem("")
-        self.Aria2ThreadCountComboBox.addItem("")
-        self.Aria2ThreadCountComboBox.addItem("")
-        self.AlwaysAskDownloadPath = QtWidgets.QCheckBox(self.DownloadSettingsWidget)
+        self.AlwaysAskDownloadPath = CheckBox(self.DownloadSettingsWidget)
         self.AlwaysAskDownloadPath.setGeometry(QtCore.QRect(30, 140, 410, 30))
-        self.AlwaysAskDownloadPath.setMinimumSize(QtCore.QSize(28, 20))
+        self.AlwaysAskDownloadPath.setMinimumSize(QtCore.QSize(0, 0))
         self.AlwaysAskDownloadPath.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.AlwaysAskDownloadPath.setFont(font)
-        self.AlwaysAskDownloadPath.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.AlwaysAskDownloadPath.setStyleSheet("")
         self.AlwaysAskDownloadPath.setChecked(True)
         self.AlwaysAskDownloadPath.setObjectName("AlwaysAskDownloadPath")
         self.AlwaysAskDownloadPathTip = QtWidgets.QLabel(self.DownloadSettingsWidget)
@@ -2961,261 +2050,30 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.SameFileException.setFont(font)
         self.SameFileException.setObjectName("SameFileException")
-        self.SameFileExceptionStop = QtWidgets.QRadioButton(self.DownloadSettingsWidget)
+        self.SameFileExceptionStop = RadioButton(self.DownloadSettingsWidget)
         self.SameFileExceptionStop.setGeometry(QtCore.QRect(510, 200, 81, 24))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.SameFileExceptionStop.setFont(font)
-        self.SameFileExceptionStop.setStyleSheet("QRadioButton {\n"
-"    min-height: 24px;\n"
-"    max-height: 24px;\n"
-"    background-color: transparent;\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator {\n"
-"    width: 16px;\n"
-"    height: 16px;\n"
-"    border-radius: 10px;\n"
-"    border: 2px solid #999999;\n"
-"    background-color: rgba(0, 0, 0, 5);\n"
-"    margin-right: 4px;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:hover {\n"
-"    background-color: rgba(0, 0, 0, 0);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:pressed {\n"
-"    border: 2px solid #bbbbbb;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(225, 224, 223),\n"
-"            stop:1 rgb(225, 224, 223));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked {\n"
-"    height: 20px;\n"
-"    width: 20px;\n"
-"    border: none;\n"
-"    border-radius: 10px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:hover {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(255, 255, 255),\n"
-"            stop:0.7 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:pressed {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:disabled {\n"
-"    border: 2px solid #bbbbbb;\n"
-"    background-color: rgba(0, 0, 0, 0);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked {\n"
-"    height: 20px;\n"
-"    width: 20px;\n"
-"    border: none;\n"
-"    border-radius: 10px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"")
+        self.SameFileExceptionStop.setStyleSheet("")
         self.SameFileExceptionStop.setObjectName("SameFileExceptionStop")
-        self.SameFileExceptionAsk = QtWidgets.QRadioButton(self.DownloadSettingsWidget)
+        self.SameFileExceptionAsk = RadioButton(self.DownloadSettingsWidget)
         self.SameFileExceptionAsk.setGeometry(QtCore.QRect(350, 200, 71, 24))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.SameFileExceptionAsk.setFont(font)
-        self.SameFileExceptionAsk.setStyleSheet("QRadioButton {\n"
-"    min-height: 24px;\n"
-"    max-height: 24px;\n"
-"    background-color: transparent;\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator {\n"
-"    width: 16px;\n"
-"    height: 16px;\n"
-"    border-radius: 10px;\n"
-"    border: 2px solid #999999;\n"
-"    background-color: rgba(0, 0, 0, 5);\n"
-"    margin-right: 4px;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:hover {\n"
-"    background-color: rgba(0, 0, 0, 0);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:pressed {\n"
-"    border: 2px solid #bbbbbb;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(225, 224, 223),\n"
-"            stop:1 rgb(225, 224, 223));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked {\n"
-"    height: 20px;\n"
-"    width: 20px;\n"
-"    border: none;\n"
-"    border-radius: 10px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:hover {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(255, 255, 255),\n"
-"            stop:0.7 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:pressed {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:disabled {\n"
-"    border: 2px solid #bbbbbb;\n"
-"    background-color: rgba(0, 0, 0, 0);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked {\n"
-"    height: 20px;\n"
-"    width: 20px;\n"
-"    border: none;\n"
-"    border-radius: 10px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"")
+        self.SameFileExceptionAsk.setStyleSheet("")
         self.SameFileExceptionAsk.setChecked(True)
         self.SameFileExceptionAsk.setObjectName("SameFileExceptionAsk")
-        self.SameFileExceptionReWrite = QtWidgets.QRadioButton(self.DownloadSettingsWidget)
+        self.SameFileExceptionReWrite = RadioButton(self.DownloadSettingsWidget)
         self.SameFileExceptionReWrite.setGeometry(QtCore.QRect(430, 200, 71, 24))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.SameFileExceptionReWrite.setFont(font)
-        self.SameFileExceptionReWrite.setStyleSheet("QRadioButton {\n"
-"    min-height: 24px;\n"
-"    max-height: 24px;\n"
-"    background-color: transparent;\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator {\n"
-"    width: 16px;\n"
-"    height: 16px;\n"
-"    border-radius: 10px;\n"
-"    border: 2px solid #999999;\n"
-"    background-color: rgba(0, 0, 0, 5);\n"
-"    margin-right: 4px;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:hover {\n"
-"    background-color: rgba(0, 0, 0, 0);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:pressed {\n"
-"    border: 2px solid #bbbbbb;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(225, 224, 223),\n"
-"            stop:1 rgb(225, 224, 223));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked {\n"
-"    height: 20px;\n"
-"    width: 20px;\n"
-"    border: none;\n"
-"    border-radius: 10px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:hover {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(255, 255, 255),\n"
-"            stop:0.7 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:pressed {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"\n"
-"QRadioButton:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:disabled {\n"
-"    border: 2px solid #bbbbbb;\n"
-"    background-color: rgba(0, 0, 0, 0);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked {\n"
-"    height: 20px;\n"
-"    width: 20px;\n"
-"    border: none;\n"
-"    border-radius: 10px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"            stop:0 rgb(255, 255, 255),\n"
-"            stop:0.5 rgb(255, 255, 255),\n"
-"            stop:0.6 rgb(0, 120, 212),\n"
-"            stop:1 rgb(0, 120, 212));\n"
-"}\n"
-"")
+        self.SameFileExceptionReWrite.setStyleSheet("")
         self.SameFileExceptionReWrite.setObjectName("SameFileExceptionReWrite")
         self.SettingsVerticalLayout.addWidget(self.DownloadSettingsWidget)
         self.ConsoleSettingsWidget = QtWidgets.QWidget(self.SettingsScrollAreaWidgetContents)
@@ -3243,7 +2101,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ConsoleSettingsWidgetTitleLabel.setFont(font)
         self.ConsoleSettingsWidgetTitleLabel.setObjectName("ConsoleSettingsWidgetTitleLabel")
-        self.ConsoleSettingsWidgetBlue = QtWidgets.QLabel(self.ConsoleSettingsTitle)
+        self.ConsoleSettingsWidgetBlue = PrimaryPushButton(self.ConsoleSettingsTitle)
         self.ConsoleSettingsWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -3251,11 +2109,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ConsoleSettingsWidgetBlue.setFont(font)
         self.ConsoleSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ConsoleSettingsWidgetBlue.setAutoFillBackground(False)
-        self.ConsoleSettingsWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.ConsoleSettingsWidgetBlue.setStyleSheet("")
         self.ConsoleSettingsWidgetBlue.setText("")
         self.ConsoleSettingsWidgetBlue.setObjectName("ConsoleSettingsWidgetBlue")
         self.ConsoleOutputEncoding = QtWidgets.QLabel(self.ConsoleSettingsWidget)
@@ -3265,7 +2119,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ConsoleOutputEncoding.setFont(font)
         self.ConsoleOutputEncoding.setObjectName("ConsoleOutputEncoding")
-        self.ConsoleOutputEncodingComboBox = QtWidgets.QComboBox(self.ConsoleSettingsWidget)
+        self.ConsoleOutputEncodingComboBox = ComboBox(self.ConsoleSettingsWidget)
         self.ConsoleOutputEncodingComboBox.setGeometry(QtCore.QRect(350, 100, 241, 31))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -3274,7 +2128,6 @@ class Ui_MCSL2_MainWindow(object):
         self.ConsoleOutputEncodingComboBox.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -3282,8 +2135,6 @@ class Ui_MCSL2_MainWindow(object):
         self.ConsoleOutputEncodingComboBox.setFont(font)
         self.ConsoleOutputEncodingComboBox.setStyleSheet("")
         self.ConsoleOutputEncodingComboBox.setObjectName("ConsoleOutputEncodingComboBox")
-        self.ConsoleOutputEncodingComboBox.addItem("")
-        self.ConsoleOutputEncodingComboBox.addItem("")
         self.ConsoleInputDecoding = QtWidgets.QLabel(self.ConsoleSettingsWidget)
         self.ConsoleInputDecoding.setGeometry(QtCore.QRect(30, 143, 171, 21))
         font = QtGui.QFont()
@@ -3291,96 +2142,28 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.ConsoleInputDecoding.setFont(font)
         self.ConsoleInputDecoding.setObjectName("ConsoleInputDecoding")
-        self.ConsoleInputDecodingComboBox = QtWidgets.QComboBox(self.ConsoleSettingsWidget)
+        self.ConsoleInputDecodingComboBox = ComboBox(self.ConsoleSettingsWidget)
         self.ConsoleInputDecodingComboBox.setGeometry(QtCore.QRect(350, 140, 241, 35))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         font.setKerning(True)
         self.ConsoleInputDecodingComboBox.setFont(font)
         self.ConsoleInputDecodingComboBox.setStyleSheet("")
-        self.ConsoleInputDecodingComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
-        self.ConsoleInputDecodingComboBox.setFrame(True)
+        self.ConsoleInputDecodingComboBox.setProperty("currentIndex", 0)
+        self.ConsoleInputDecodingComboBox.setProperty("frame", True)
         self.ConsoleInputDecodingComboBox.setObjectName("ConsoleInputDecodingComboBox")
-        self.ConsoleInputDecodingComboBox.addItem("")
-        self.ConsoleInputDecodingComboBox.addItem("")
-        self.ConsoleInputDecodingComboBox.addItem("")
-        self.EnableQuickMenu = QtWidgets.QCheckBox(self.ConsoleSettingsWidget)
+        self.EnableQuickMenu = CheckBox(self.ConsoleSettingsWidget)
         self.EnableQuickMenu.setGeometry(QtCore.QRect(30, 60, 410, 30))
-        self.EnableQuickMenu.setMinimumSize(QtCore.QSize(28, 20))
+        self.EnableQuickMenu.setMinimumSize(QtCore.QSize(0, 0))
         self.EnableQuickMenu.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.EnableQuickMenu.setFont(font)
-        self.EnableQuickMenu.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.EnableQuickMenu.setStyleSheet("")
         self.EnableQuickMenu.setChecked(True)
         self.EnableQuickMenu.setObjectName("EnableQuickMenu")
         self.SettingsVerticalLayout.addWidget(self.ConsoleSettingsWidget)
@@ -3409,7 +2192,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.UISettingsWidgetTitleLabel.setFont(font)
         self.UISettingsWidgetTitleLabel.setObjectName("UISettingsWidgetTitleLabel")
-        self.UISettingsWidgetBlue = QtWidgets.QLabel(self.UISettingsTitle)
+        self.UISettingsWidgetBlue = PrimaryPushButton(self.UISettingsTitle)
         self.UISettingsWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -3417,11 +2200,7 @@ class Ui_MCSL2_MainWindow(object):
         self.UISettingsWidgetBlue.setFont(font)
         self.UISettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.UISettingsWidgetBlue.setAutoFillBackground(False)
-        self.UISettingsWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.UISettingsWidgetBlue.setStyleSheet("")
         self.UISettingsWidgetBlue.setText("")
         self.UISettingsWidgetBlue.setObjectName("UISettingsWidgetBlue")
         self.TransparentSetting = QtWidgets.QLabel(self.UISettingsWidget)
@@ -3438,213 +2217,37 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.DarkMode.setFont(font)
         self.DarkMode.setObjectName("DarkMode")
-        self.DarkModeComboBox = QtWidgets.QComboBox(self.UISettingsWidget)
+        self.DarkModeComboBox = ComboBox(self.UISettingsWidget)
         self.DarkModeComboBox.setGeometry(QtCore.QRect(470, 144, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         font.setKerning(True)
         self.DarkModeComboBox.setFont(font)
         self.DarkModeComboBox.setStyleSheet("")
-        self.DarkModeComboBox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToMinimumContentsLength)
-        self.DarkModeComboBox.setFrame(True)
+        self.DarkModeComboBox.setProperty("currentIndex", 0)
+        self.DarkModeComboBox.setProperty("frame", True)
         self.DarkModeComboBox.setObjectName("DarkModeComboBox")
-        self.DarkModeComboBox.addItem("")
-        self.DarkModeComboBox.addItem("")
-        self.DarkModeComboBox.addItem("")
-        self.TitleBarInsteadOfmacOS = QtWidgets.QCheckBox(self.UISettingsWidget)
+        self.TitleBarInsteadOfmacOS = CheckBox(self.UISettingsWidget)
         self.TitleBarInsteadOfmacOS.setGeometry(QtCore.QRect(30, 100, 261, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
         self.TitleBarInsteadOfmacOS.setFont(font)
-        self.TitleBarInsteadOfmacOS.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.TitleBarInsteadOfmacOS.setStyleSheet("")
         self.TitleBarInsteadOfmacOS.setIconSize(QtCore.QSize(32, 32))
         self.TitleBarInsteadOfmacOS.setCheckable(True)
         self.TitleBarInsteadOfmacOS.setChecked(False)
         self.TitleBarInsteadOfmacOS.setObjectName("TitleBarInsteadOfmacOS")
-        self.TransparentPercentSlider = QtWidgets.QSlider(self.UISettingsWidget)
-        self.TransparentPercentSlider.setGeometry(QtCore.QRect(370, 70, 181, 24))
+        self.TransparentPercentSlider = Slider(self.UISettingsWidget)
+        self.TransparentPercentSlider.setGeometry(QtCore.QRect(370, 70, 200, 24))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(11)
         self.TransparentPercentSlider.setFont(font)
-        self.TransparentPercentSlider.setStyleSheet("QSlider:horizontal {\n"
-"    min-height: 24px;\n"
-"}\n"
-"\n"
-"QSlider::groove:horizontal {\n"
-"    height: 4px;\n"
-"    background-color: rgba(0, 0, 0, 100);\n"
-"    border-radius: 2px;\n"
-"}\n"
-"\n"
-"QSlider::sub-page:horizontal {\n"
-"    background: rgb(0, 120, 212);\n"
-"    height: 4px;\n"
-"    border-radius: 2px;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal {\n"
-"    border: 1px solid rgb(222, 222, 222);\n"
-"    width: 20px;\n"
-"    min-height: 24px;\n"
-"    margin: -9px 0;\n"
-"    border-radius: 11px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"        stop:0 rgb(0, 120, 212),\n"
-"        stop:0.48 rgb(0, 120, 212),\n"
-"        stop:0.55 rgb(255, 255, 255),\n"
-"        stop:1 rgb(255, 255, 255));\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:hover {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"        stop:0 rgb(0, 120, 212),\n"
-"        stop:0.55 rgb(0, 120, 212),\n"
-"        stop:0.65 rgb(255, 255, 255),\n"
-"        stop:1 rgb(255, 255, 255));\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:pressed {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"        stop:0 rgb(0, 120, 212),\n"
-"        stop:0.4 rgb(0, 120, 212),\n"
-"        stop:0.5 rgb(255, 255, 255),\n"
-"        stop:1 rgb(255, 255, 255));\n"
-"}\n"
-"\n"
-"QSlider::groove:horizontal:disabled {\n"
-"    background-color: rgba(0, 0, 0, 75);\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:disabled {\n"
-"    background-color: #808080;\n"
-"    border: 5px solid #cccccc;\n"
-"}\n"
-"\n"
-"\n"
-"QSlider:vertical {\n"
-"    min-width: 24px;\n"
-"}\n"
-"\n"
-"QSlider::groove:vertical {\n"
-"    width: 4px;\n"
-"    background-color: rgba(0, 0, 0, 100);\n"
-"    border-radius: 2px;\n"
-"}\n"
-"\n"
-"QSlider::add-page:vertical {\n"
-"    background: rgb(0, 120, 212);\n"
-"    width: 4px;\n"
-"    border-radius: 2px;\n"
-"}\n"
-"\n"
-"QSlider::handle:vertical {\n"
-"    border: 1px solid rgb(222, 222, 222);\n"
-"    height: 20px;\n"
-"    min-width: 24px;\n"
-"    margin: 0 -9px;\n"
-"    border-radius: 11px;\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"        stop:0 rgb(0, 120, 212),\n"
-"        stop:0.48 rgb(0, 120, 212),\n"
-"        stop:0.55 rgb(255, 255, 255),\n"
-"        stop:1 rgb(255, 255, 255));\n"
-"}\n"
-"\n"
-"QSlider::handle:vertical:hover {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"        stop:0 rgb(0, 120, 212),\n"
-"        stop:0.55 rgb(0, 120, 212),\n"
-"        stop:0.65 rgb(255, 255, 255),\n"
-"        stop:1 rgb(255, 255, 255));\n"
-"}\n"
-"\n"
-"QSlider::handle:vertical:pressed {\n"
-"    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,\n"
-"        stop:0 rgb(0, 120, 212),\n"
-"        stop:0.4 rgb(0, 120, 212),\n"
-"        stop:0.5 rgb(255, 255, 255),\n"
-"        stop:1 rgb(255, 255, 255));\n"
-"}\n"
-"\n"
-"QSlider::groove:vertical:disabled {\n"
-"    background-color: rgba(0, 0, 0, 75);\n"
-"}\n"
-"\n"
-"QSlider::handle:vertical:disabled {\n"
-"    background-color: #808080;\n"
-"    border: 5px solid #cccccc;\n"
-"}\n"
-"")
+        self.TransparentPercentSlider.setStyleSheet("")
         self.TransparentPercentSlider.setMaximum(100)
         self.TransparentPercentSlider.setProperty("value", 55)
         self.TransparentPercentSlider.setOrientation(QtCore.Qt.Horizontal)
@@ -3668,79 +2271,15 @@ class Ui_MCSL2_MainWindow(object):
 "    background-color: rgba(247, 247, 247, 247)\n"
 "}")
         self.SoftwareSettingsWidget.setObjectName("SoftwareSettingsWidget")
-        self.AlwaysRunAsAdministrator = QtWidgets.QCheckBox(self.SoftwareSettingsWidget)
+        self.AlwaysRunAsAdministrator = CheckBox(self.SoftwareSettingsWidget)
         self.AlwaysRunAsAdministrator.setGeometry(QtCore.QRect(30, 93, 410, 30))
-        self.AlwaysRunAsAdministrator.setMinimumSize(QtCore.QSize(28, 20))
+        self.AlwaysRunAsAdministrator.setMinimumSize(QtCore.QSize(0, 0))
         self.AlwaysRunAsAdministrator.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.AlwaysRunAsAdministrator.setFont(font)
-        self.AlwaysRunAsAdministrator.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.AlwaysRunAsAdministrator.setStyleSheet("")
         self.AlwaysRunAsAdministrator.setObjectName("AlwaysRunAsAdministrator")
         self.SoftwareSettingsTitle = QtWidgets.QWidget(self.SoftwareSettingsWidget)
         self.SoftwareSettingsTitle.setGeometry(QtCore.QRect(20, 10, 120, 40))
@@ -3758,7 +2297,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.SoftwareSettingsWidgetTitleLabel.setFont(font)
         self.SoftwareSettingsWidgetTitleLabel.setObjectName("SoftwareSettingsWidgetTitleLabel")
-        self.SoftwareSettingsWidgetBlue = QtWidgets.QLabel(self.SoftwareSettingsTitle)
+        self.SoftwareSettingsWidgetBlue = PrimaryPushButton(self.SoftwareSettingsTitle)
         self.SoftwareSettingsWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -3766,86 +2305,18 @@ class Ui_MCSL2_MainWindow(object):
         self.SoftwareSettingsWidgetBlue.setFont(font)
         self.SoftwareSettingsWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.SoftwareSettingsWidgetBlue.setAutoFillBackground(False)
-        self.SoftwareSettingsWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.SoftwareSettingsWidgetBlue.setStyleSheet("")
         self.SoftwareSettingsWidgetBlue.setText("")
         self.SoftwareSettingsWidgetBlue.setObjectName("SoftwareSettingsWidgetBlue")
-        self.StartOnStartup = QtWidgets.QCheckBox(self.SoftwareSettingsWidget)
+        self.StartOnStartup = CheckBox(self.SoftwareSettingsWidget)
         self.StartOnStartup.setGeometry(QtCore.QRect(30, 60, 410, 30))
-        self.StartOnStartup.setMinimumSize(QtCore.QSize(28, 20))
+        self.StartOnStartup.setMinimumSize(QtCore.QSize(0, 0))
         self.StartOnStartup.setMaximumSize(QtCore.QSize(410, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(12)
         self.StartOnStartup.setFont(font)
-        self.StartOnStartup.setStyleSheet("QCheckBox {\n"
-"    color: black;\n"
-"    spacing: 8px;\n"
-"    min-width: 28px;\n"
-"    min-height: 20px;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"    width: 18px;\n"
-"    height: 18px;\n"
-"    border-radius: 5px;\n"
-"    border: 1px solid rgb(135, 135, 135);\n"
-"    background-color: rgb(241, 241, 241);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:hover {\n"
-"    border: 1px solid rgb(132, 132, 132);\n"
-"    background-color: rgb(232, 232, 232);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:pressed {\n"
-"    border: 1px solid rgb(184, 184, 184);\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked,\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    border: 1px solid rgb(0, 120, 212);\n"
-"    background-color: rgb(0, 120, 212);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:indeterminate {\n"
-"    image: url(:/MCSL2_Icon/QCheckBoxPartialAccept.svg);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:hover,\n"
-"QCheckBox::indicator:indeterminate:hover {\n"
-"    border: 1px solid --ThemeColorLight1;\n"
-"    background-color: --ThemeColorLight1;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:pressed,\n"
-"QCheckBox::indicator:indeterminate:pressed {\n"
-"    border: 1px solid --ThemeColorLight3;\n"
-"    background-color: --ThemeColorLight3;\n"
-"}\n"
-"\n"
-"QCheckBox:disabled {\n"
-"    color: rgba(0, 0, 0, 110);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:disabled {\n"
-"    border: 1px solid #bbbbbb;\n"
-"    background-color: rgb(224, 224, 224);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator:checked:disabled,\n"
-"QCheckBox::indicator:indeterminate:disabled {\n"
-"    border: 1px solid rgb(199, 199, 199);\n"
-"    background-color: rgb(199, 199, 199);\n"
-"}")
+        self.StartOnStartup.setStyleSheet("")
         self.StartOnStartup.setObjectName("StartOnStartup")
         self.SettingsVerticalLayout.addWidget(self.SoftwareSettingsWidget)
         self.UpdaterWidget = QtWidgets.QWidget(self.SettingsScrollAreaWidgetContents)
@@ -3873,7 +2344,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.UpdaterWidgetTitleLabel.setFont(font)
         self.UpdaterWidgetTitleLabel.setObjectName("UpdaterWidgetTitleLabel")
-        self.UpdaterWidgetBlue = QtWidgets.QLabel(self.UpdaterTitle)
+        self.UpdaterWidgetBlue = PrimaryPushButton(self.UpdaterTitle)
         self.UpdaterWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -3881,11 +2352,7 @@ class Ui_MCSL2_MainWindow(object):
         self.UpdaterWidgetBlue.setFont(font)
         self.UpdaterWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.UpdaterWidgetBlue.setAutoFillBackground(False)
-        self.UpdaterWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.UpdaterWidgetBlue.setStyleSheet("")
         self.UpdaterWidgetBlue.setText("")
         self.UpdaterWidgetBlue.setObjectName("UpdaterWidgetBlue")
         self.CurrentVersionLabel = QtWidgets.QLabel(self.UpdaterWidget)
@@ -3902,31 +2369,14 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(10)
         self.LastUpdateTime.setFont(font)
         self.LastUpdateTime.setObjectName("LastUpdateTime")
-        self.UpdatePushButton = QtWidgets.QPushButton(self.UpdaterWidget)
+        self.UpdatePushButton = PrimaryPushButton(self.UpdaterWidget)
         self.UpdatePushButton.setGeometry(QtCore.QRect(30, 110, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.UpdatePushButton.setFont(font)
         self.UpdatePushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.UpdatePushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.UpdatePushButton.setStyleSheet("")
         self.UpdatePushButton.setFlat(False)
         self.UpdatePushButton.setObjectName("UpdatePushButton")
         self.SettingsVerticalLayout.addWidget(self.UpdaterWidget)
@@ -3955,7 +2405,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(11)
         self.AboutWidgetTitleLabel.setFont(font)
         self.AboutWidgetTitleLabel.setObjectName("AboutWidgetTitleLabel")
-        self.AboutWidgetBlue = QtWidgets.QLabel(self.AboutTitle)
+        self.AboutWidgetBlue = PrimaryPushButton(self.AboutTitle)
         self.AboutWidgetBlue.setGeometry(QtCore.QRect(10, 10, 10, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
@@ -3963,11 +2413,7 @@ class Ui_MCSL2_MainWindow(object):
         self.AboutWidgetBlue.setFont(font)
         self.AboutWidgetBlue.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.AboutWidgetBlue.setAutoFillBackground(False)
-        self.AboutWidgetBlue.setStyleSheet("QLabel\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px\n"
-"}")
+        self.AboutWidgetBlue.setStyleSheet("")
         self.AboutWidgetBlue.setText("")
         self.AboutWidgetBlue.setObjectName("AboutWidgetBlue")
         self.AboutContent = QtWidgets.QLabel(self.AboutWidget)
@@ -3977,31 +2423,14 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(12)
         self.AboutContent.setFont(font)
         self.AboutContent.setObjectName("AboutContent")
-        self.OpenSourceCodePushButton = QtWidgets.QPushButton(self.AboutWidget)
+        self.OpenSourceCodePushButton = PrimaryPushButton(self.AboutWidget)
         self.OpenSourceCodePushButton.setGeometry(QtCore.QRect(30, 280, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.OpenSourceCodePushButton.setFont(font)
         self.OpenSourceCodePushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.OpenSourceCodePushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.OpenSourceCodePushButton.setStyleSheet("")
         self.OpenSourceCodePushButton.setFlat(False)
         self.OpenSourceCodePushButton.setObjectName("OpenSourceCodePushButton")
         self.MCSL2_Author_Label_1 = QtWidgets.QLabel(self.AboutWidget)
@@ -4037,58 +2466,24 @@ class Ui_MCSL2_MainWindow(object):
         self.MCSL2_Author_Avatar.setPixmap(QtGui.QPixmap(":/MCSL2_Icon/MCSL2_Author.png"))
         self.MCSL2_Author_Avatar.setScaledContents(True)
         self.MCSL2_Author_Avatar.setObjectName("MCSL2_Author_Avatar")
-        self.JoinQQGroup = QtWidgets.QPushButton(self.AboutWidget)
+        self.JoinQQGroup = PrimaryPushButton(self.AboutWidget)
         self.JoinQQGroup.setGeometry(QtCore.QRect(160, 280, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.JoinQQGroup.setFont(font)
         self.JoinQQGroup.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.JoinQQGroup.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.JoinQQGroup.setStyleSheet("")
         self.JoinQQGroup.setFlat(False)
         self.JoinQQGroup.setObjectName("JoinQQGroup")
-        self.SystemReportPushButton = QtWidgets.QPushButton(self.AboutWidget)
+        self.SystemReportPushButton = PrimaryPushButton(self.AboutWidget)
         self.SystemReportPushButton.setGeometry(QtCore.QRect(290, 280, 101, 31))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
         self.SystemReportPushButton.setFont(font)
         self.SystemReportPushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.SystemReportPushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 6px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.SystemReportPushButton.setStyleSheet("")
         self.SystemReportPushButton.setFlat(False)
         self.SystemReportPushButton.setObjectName("SystemReportPushButton")
         self.SettingsVerticalLayout.addWidget(self.AboutWidget)
@@ -4106,7 +2501,7 @@ class Ui_MCSL2_MainWindow(object):
         font.setWeight(75)
         self.Choose_Server_Label.setFont(font)
         self.Choose_Server_Label.setObjectName("Choose_Server_Label")
-        self.ChooseServerScrollArea = QtWidgets.QScrollArea(self.ChooseServerPage)
+        self.ChooseServerScrollArea = SmoothScrollArea(self.ChooseServerPage)
         self.ChooseServerScrollArea.setGeometry(QtCore.QRect(30, 140, 641, 401))
         self.ChooseServerScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseServerScrollArea.setStyleSheet("QScrollArea{\n"
@@ -4152,6 +2547,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseServerScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 401))
         self.ChooseServerScrollAreaWidgetContents.setObjectName("ChooseServerScrollAreaWidgetContents")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.ChooseServerScrollAreaWidgetContents)
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.ChooseServerScrollAreaVerticalLayout = QtWidgets.QVBoxLayout()
         self.ChooseServerScrollAreaVerticalLayout.setObjectName("ChooseServerScrollAreaVerticalLayout")
@@ -4176,24 +2572,10 @@ class Ui_MCSL2_MainWindow(object):
         font.setPointSize(14)
         self.Choose_Java_Back_PushButton.setFont(font)
         self.Choose_Java_Back_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Choose_Java_Back_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(227, 227, 227);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.Choose_Java_Back_PushButton.setStyleSheet("")
         self.Choose_Java_Back_PushButton.setFlat(False)
         self.Choose_Java_Back_PushButton.setObjectName("Choose_Java_Back_PushButton")
-        self.ChooseJavaScrollArea = QtWidgets.QScrollArea(self.ChooseJavaPage)
+        self.ChooseJavaScrollArea = SmoothScrollArea(self.ChooseJavaPage)
         self.ChooseJavaScrollArea.setGeometry(QtCore.QRect(40, 150, 641, 401))
         self.ChooseJavaScrollArea.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.ChooseJavaScrollArea.setStyleSheet("QScrollArea{\n"
@@ -4239,6 +2621,7 @@ class Ui_MCSL2_MainWindow(object):
         self.ChooseJavaScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 401))
         self.ChooseJavaScrollAreaWidgetContents.setObjectName("ChooseJavaScrollAreaWidgetContents")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.ChooseJavaScrollAreaWidgetContents)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.ChooseJavaScrollAreaVerticalLayout = QtWidgets.QVBoxLayout()
         self.ChooseJavaScrollAreaVerticalLayout.setObjectName("ChooseJavaScrollAreaVerticalLayout")
@@ -4273,54 +2656,27 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Tip1_Label.setAutoFillBackground(False)
         self.Update_Tip1_Label.setStyleSheet("")
         self.Update_Tip1_Label.setObjectName("Update_Tip1_Label")
-        self.DoNotUpdate_PushButton = QtWidgets.QPushButton(self.UpdatePage)
+        self.DoNotUpdate_PushButton = PushButton(self.UpdatePage)
         self.DoNotUpdate_PushButton.setGeometry(QtCore.QRect(340, 490, 101, 61))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(14)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.DoNotUpdate_PushButton.setFont(font)
         self.DoNotUpdate_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.DoNotUpdate_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(247, 247, 247);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(230, 230, 230);\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(225, 225, 225);\n"
-"    border-radius: 7px;\n"
-"}")
+        self.DoNotUpdate_PushButton.setStyleSheet("")
         self.DoNotUpdate_PushButton.setObjectName("DoNotUpdate_PushButton")
-        self.Update_PushButton = QtWidgets.QPushButton(self.UpdatePage)
+        self.Update_PushButton = PrimaryPushButton(self.UpdatePage)
         self.Update_PushButton.setGeometry(QtCore.QRect(450, 490, 231, 61))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(16)
+        font.setFamily("Segoe UI")
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Update_PushButton.setFont(font)
         self.Update_PushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Update_PushButton.setStyleSheet("QPushButton\n"
-"{\n"
-"    background-color: rgb(0, 120, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover\n"
-"{\n"
-"    background-color: rgb(0, 110, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    background-color: rgb(0, 100, 212);\n"
-"    border-radius: 10px;\n"
-"    color: rgb(255, 255, 255);\n"
-"}")
+        self.Update_PushButton.setStyleSheet("")
         self.Update_PushButton.setFlat(False)
         self.Update_PushButton.setObjectName("Update_PushButton")
         self.Update_Introduction_Widget = QtWidgets.QWidget(self.UpdatePage)
@@ -4370,7 +2726,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Introduction_Title_Label.setAutoFillBackground(False)
         self.Update_Introduction_Title_Label.setStyleSheet("")
         self.Update_Introduction_Title_Label.setObjectName("Update_Introduction_Title_Label")
-        self.Update_Introduction_LabelScrollAreascrollArea = QtWidgets.QScrollArea(self.Update_Introduction_Widget)
+        self.Update_Introduction_LabelScrollAreascrollArea = SmoothScrollArea(self.Update_Introduction_Widget)
         self.Update_Introduction_LabelScrollAreascrollArea.setGeometry(QtCore.QRect(20, 60, 621, 151))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -4387,6 +2743,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_Introduction_LabelScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 621, 151))
         self.Update_Introduction_LabelScrollAreaWidgetContents.setObjectName("Update_Introduction_LabelScrollAreaWidgetContents")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.Update_Introduction_LabelScrollAreaWidgetContents)
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.Update_Introduction_Label_VerticalLayout = QtWidgets.QVBoxLayout()
         self.Update_Introduction_Label_VerticalLayout.setObjectName("Update_Introduction_Label_VerticalLayout")
@@ -4513,11 +2870,7 @@ class Ui_MCSL2_MainWindow(object):
         self.retranslateUi(MCSL2_MainWindow)
         self.FunctionsStackedWidget.setCurrentIndex(0)
         self.ConfigModeWidget.setCurrentIndex(0)
-        self.ExConsoleInputDecodingComboBox.setCurrentIndex(0)
         self.DownloadSwitcher_TabWidget.setCurrentIndex(0)
-        self.Aria2ThreadCountComboBox.setCurrentIndex(3)
-        self.ConsoleInputDecodingComboBox.setCurrentIndex(0)
-        self.DarkModeComboBox.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MCSL2_MainWindow)
 
     def retranslateUi(self, MCSL2_MainWindow):
@@ -4566,6 +2919,7 @@ class Ui_MCSL2_MainWindow(object):
         self.Auto_Find_Java_PushButton.setText(_translate("MCSL2_MainWindow", "自动查找"))
         self.Memory_Unit_Label.setText(_translate("MCSL2_MainWindow", "M"))
         self.Founded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
+        self.Manual_Import_Java_PushButton.setText(_translate("MCSL2_MainWindow", "导入"))
         self.ConfigTip1_Label.setText(_translate("MCSL2_MainWindow", "一个服务器最基础的三个部件\n"
 "1.存放的文件夹路径\n"
 "2.服务器核心\n"
@@ -4584,16 +2938,10 @@ class Ui_MCSL2_MainWindow(object):
         self.ExFounded_Java_List_PushButton.setText(_translate("MCSL2_MainWindow", "Java列表"))
         self.ExServer_Name_Label.setText(_translate("MCSL2_MainWindow", "服务器名称："))
         self.ExCompleted_Save_PushButton.setText(_translate("MCSL2_MainWindow", "保存"))
-        self.ExMemoryUnitComboBox.setItemText(0, _translate("MCSL2_MainWindow", "M"))
-        self.ExMemoryUnitComboBox.setItemText(1, _translate("MCSL2_MainWindow", "G"))
         self.ExConsoleInputDecoding.setText(_translate("MCSL2_MainWindow", "发送指令编码(优先级高于全局设置）"))
-        self.ExConsoleOutputEncodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "UTF-8（默认）"))
-        self.ExConsoleOutputEncodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "GBK（乱码可尝试）"))
-        self.ExConsoleInputDecodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "与输出相同"))
-        self.ExConsoleInputDecodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "UTF-8"))
-        self.ExConsoleInputDecodingComboBox.setItemText(2, _translate("MCSL2_MainWindow", "GBK"))
         self.ExConsoleOutputEncoding.setText(_translate("MCSL2_MainWindow", "控制台输出编码(优先级高于全局设置）"))
         self.ExJVMArg.setText(_translate("MCSL2_MainWindow", "启动时的JVM参数（可不填）"))
+        self.ExManual_Import_Java_PushButton.setText(_translate("MCSL2_MainWindow", "导入"))
         self.Download_Label.setText(_translate("MCSL2_MainWindow", "下载"))
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.JavaTab), _translate("MCSL2_MainWindow", "Java"))
         self.DownloadSwitcher_TabWidget.setTabText(self.DownloadSwitcher_TabWidget.indexOf(self.SpigotTab), _translate("MCSL2_MainWindow", "Spigot"))
@@ -4617,22 +2965,9 @@ class Ui_MCSL2_MainWindow(object):
         self.OnlySaveGlobalServerConfigs.setText(_translate("MCSL2_MainWindow", "仅保存全局服务器设置"))
         self.ConfigPageSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "配置页设置"))
         self.HowToAddServer.setText(_translate("MCSL2_MainWindow", "添加服务器引导方式"))
-        self.HowToAddServerComboBox.setItemText(0, _translate("MCSL2_MainWindow", "初始 (新手+进阶)"))
-        self.HowToAddServerComboBox.setItemText(1, _translate("MCSL2_MainWindow", "总是新手"))
-        self.HowToAddServerComboBox.setItemText(2, _translate("MCSL2_MainWindow", "总是进阶"))
         self.DownloadSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "下载设置"))
         self.MCSLAPIDownloadSource.setText(_translate("MCSL2_MainWindow", "MCSLAPI下载源选择"))
-        self.MCSLAPIDownloadSourceComboBox.setItemText(0, _translate("MCSL2_MainWindow", "国内SharePoint"))
-        self.MCSLAPIDownloadSourceComboBox.setItemText(1, _translate("MCSL2_MainWindow", "Gitee"))
-        self.MCSLAPIDownloadSourceComboBox.setItemText(2, _translate("MCSL2_MainWindow", "luoxis云（暂不可用）"))
-        self.MCSLAPIDownloadSourceComboBox.setItemText(3, _translate("MCSL2_MainWindow", "GHProxy"))
-        self.MCSLAPIDownloadSourceComboBox.setItemText(4, _translate("MCSL2_MainWindow", "GitHub"))
         self.Aria2ThreadCount.setText(_translate("MCSL2_MainWindow", "Aria2引擎线程数"))
-        self.Aria2ThreadCountComboBox.setItemText(0, _translate("MCSL2_MainWindow", "1"))
-        self.Aria2ThreadCountComboBox.setItemText(1, _translate("MCSL2_MainWindow", "2"))
-        self.Aria2ThreadCountComboBox.setItemText(2, _translate("MCSL2_MainWindow", "4"))
-        self.Aria2ThreadCountComboBox.setItemText(3, _translate("MCSL2_MainWindow", "8"))
-        self.Aria2ThreadCountComboBox.setItemText(4, _translate("MCSL2_MainWindow", "16"))
         self.AlwaysAskDownloadPath.setText(_translate("MCSL2_MainWindow", "总是询问下载保存位置"))
         self.AlwaysAskDownloadPathTip.setText(_translate("MCSL2_MainWindow", "若不勾选，则会保存至MCSL2/Downloads文件夹。"))
         self.SameFileException.setText(_translate("MCSL2_MainWindow", "下载保存位置存在同名文件处理"))
@@ -4641,19 +2976,11 @@ class Ui_MCSL2_MainWindow(object):
         self.SameFileExceptionReWrite.setText(_translate("MCSL2_MainWindow", "覆盖"))
         self.ConsoleSettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "终端设置"))
         self.ConsoleOutputEncoding.setText(_translate("MCSL2_MainWindow", "控制台输出编码"))
-        self.ConsoleOutputEncodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "UTF-8（默认）"))
-        self.ConsoleOutputEncodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "GBK（乱码可尝试）"))
         self.ConsoleInputDecoding.setText(_translate("MCSL2_MainWindow", "发送指令编码"))
-        self.ConsoleInputDecodingComboBox.setItemText(0, _translate("MCSL2_MainWindow", "与输出相同"))
-        self.ConsoleInputDecodingComboBox.setItemText(1, _translate("MCSL2_MainWindow", "UTF-8"))
-        self.ConsoleInputDecodingComboBox.setItemText(2, _translate("MCSL2_MainWindow", "GBK"))
         self.EnableQuickMenu.setText(_translate("MCSL2_MainWindow", "启用快捷菜单"))
         self.UISettingsWidgetTitleLabel.setText(_translate("MCSL2_MainWindow", "界面设置"))
         self.TransparentSetting.setText(_translate("MCSL2_MainWindow", "背景透明度"))
         self.DarkMode.setText(_translate("MCSL2_MainWindow", "主题模式"))
-        self.DarkModeComboBox.setItemText(0, _translate("MCSL2_MainWindow", "浅色"))
-        self.DarkModeComboBox.setItemText(1, _translate("MCSL2_MainWindow", "深色"))
-        self.DarkModeComboBox.setItemText(2, _translate("MCSL2_MainWindow", "跟随系统"))
         self.TitleBarInsteadOfmacOS.setText(_translate("MCSL2_MainWindow", "使用标题栏而不是类macOS样式"))
         self.TransparentPercentNum.setText(_translate("MCSL2_MainWindow", "--%"))
         self.AlwaysRunAsAdministrator.setText(_translate("MCSL2_MainWindow", "总以管理员身份运行"))
@@ -4686,3 +3013,5 @@ class Ui_MCSL2_MainWindow(object):
         self.Update_PushButton.setText(_translate("MCSL2_MainWindow", "火速更新"))
         self.Update_Introduction_Title_Label.setText(_translate("MCSL2_MainWindow", "这是最新版本的说明："))
         self.MCSL2_Title_Label_R.setText(_translate("MCSL2_MainWindow", "MCSL 2"))
+from qfluentwidgets import CheckBox, ComboBox, PrimaryPushButton, PushButton, RadioButton, Slider, SmoothScrollArea
+import MCSL2_Icon_rc

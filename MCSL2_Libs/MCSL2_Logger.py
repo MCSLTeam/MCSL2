@@ -1,46 +1,66 @@
-from datetime import datetime
+from os import path as ospath
+from traceback import format_exception as FormatException
+from enum import IntEnum
+from typing import Optional
+from loguru import logger
 
-LogColor = ['\033[92m', '\033[93m', '\033[91m', '\033[1;91m']
-LogType = ['INFO', 'WARN', 'FAIL', 'ERR!']
-ColorSuffix = "\033[0m"
-HH = "\n"
 
 
 class MCSL2Logger:
-    def __init__(self, Msg, MsgArg, MsgLevel, LogFilesCount):
-        """
-        :param Msg - What you want to show.
-        :param MsgLevel
-                1 - INFO , means normal output.
-                2 - WARN , means something not recommended.
-                3 - FAIL , means the program has some trouble but has been known.
-                4 - ERR! , means the program has some trouble but unexpected.
-        """
+    FileNamePrefix: str = "Log"
+    LogDirectory: str = "MCSL2/Logs"
+    RetentionDays: int = 20
+    RotationDays: int = 5
+
+    def __init__(self):
+        global logger
+        # 定义日志文件路径和格式
+        LogFormat = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | " \
+                     "<level>{level: <8}</level> | " \
+                     "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - " \
+                     "<level>{message}</level>"
+        LogFilePath = ospath.join(self.LogDirectory, f"{self.FileNamePrefix}.log")
+
+        # 添加 RotatingFileHandler，支持自动轮转和删除过期日志文件
+        self.logger = logger
+        self.logger.add(LogFilePath,
+                   format=LogFormat,
+                   rotation=f"{self.RotationDays} days",
+                   retention=f"{self.RetentionDays} days",
+                   level="DEBUG",
+                   enqueue=True,
+                   backtrace=True,
+                   diagnose=True,
+                   compression="zip",
+                   serialize=True,
+                   catch=True,
+                   encoding="utf-8")
+
+    def Log(self, Msg: str, MsgArg: str, MsgLevel: int, exc: Optional[Exception] = None):
         if MsgArg is None:
             MsgArg = ""
         else:
             pass
         try:
-            self.Msg = getattr(LoggerMsg(), Msg) + MsgArg
+            Msg = getattr(LoggerMsg(), Msg) + MsgArg
         except AttributeError:
-            self.Msg = Msg + MsgArg
-        self.MsgLevel = MsgLevel
-        self.LogFilesCountN = int(LogFilesCount) + 1
+            Msg += MsgArg
+        if MsgLevel == 0:
+            self.logger.info(Msg)
+        elif MsgLevel == 1:
+            self.logger.warning(Msg)
+        elif MsgLevel == 2:
+            self.logger.error(Msg, exc_info=exc)
+        elif MsgLevel == 3:
+            self.logger.critical(Msg, exc_info=exc)
 
-    def Log(self):
-        Time = datetime.now().strftime('%H:%M:%S')
-        ConsoleLog = f"{Time}  [ {LogColor[self.MsgLevel]}{LogType[self.MsgLevel]}{ColorSuffix} ]  {self.Msg}"
-        FileLog = f"{Time}  [ {LogType[self.MsgLevel]} ]  {self.Msg}{HH}"
-        with open(f'MCSL2/Logs/Log{self.LogFilesCountN}.txt', 'a', encoding="utf-8") as WriteLog:
-            WriteLog.write(f"{FileLog}")
-        print(ConsoleLog)
+    def ExceptionLog(self, exc: Exception):
+        # 使用 traceback 模块将错误信息转化为字符串
+        ExceptionString = "".join(FormatException(type(exc), exc, exc.__traceback__))
 
+        # 输出到日志中
+        self.Log(Msg=ExceptionString, MsgArg=None, MsgLevel=2)
 
-def InitNewLogFile(LogFilesCount):
-    LogFilesCount += 1
-    with open(f'MCSL2/Logs/Log{LogFilesCount}.txt', 'w+', encoding="utf-8") as GenerateNewLogFile:
-        GenerateNewLogFile.write("")
-        GenerateNewLogFile.close()
 
 
 class LoggerMsg:
@@ -55,7 +75,6 @@ class LoggerMsg:
         self.MCSLExit = "程序退出"
         self.Minimize_PushButtonPressed = "Minimize_PushButton 被按下..."
         self.WindowMinimize = "程序窗口最小化"
-        self.RefreshBlue = "刷新各个Blue控件"
         self.ToHomePage = "FunctionsStackedWidget切换至HomePage"
         self.ToConfigPage = "FunctionsStackedWidget切换至ConfigPage"
         self.ToDownloadPage = "FunctionsStackedWidget切换至DownloadPage"
@@ -149,3 +168,5 @@ class LoggerMsg:
         self.InstallAria2Failed = "安装Aria2失败"
         self.StartDownload = "开始下载..."
         self.InitAria2 = "初始化Aria2..."
+        self.OpenWebBrowser = "打开浏览器"
+        self.Aria2Shutdown = "终止Aria2进程"

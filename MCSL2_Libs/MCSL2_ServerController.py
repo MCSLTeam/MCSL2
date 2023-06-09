@@ -201,12 +201,12 @@ def SaveServer(ServerName, CorePath, JavaPath, MinMemory, MaxMemory, CoreFileNam
         GlobalServerList['MCSLServerList'].append(ServerConfigDict)
         ReadGlobalServerListFile.close()
     with open(r'MCSL2/MCSL2_ServerList.json', "w", encoding='utf-8') as WriteGlobalServerListFile:
-        WriteGlobalServerListFile.write(dumps(GlobalServerList))
+        WriteGlobalServerListFile.write(dumps(GlobalServerList, indent=4))
         WriteGlobalServerListFile.close()
 
     ConfigPath = f"Servers//{ServerName}//MCSL2ServerConfig.json"
     with open(ConfigPath, "w+") as SaveConfig:
-        SaveConfig.write(str(dumps(ServerConfigDict)))
+        SaveConfig.write(str(dumps(ServerConfigDict, indent=4)))
         SaveConfig.close()
     Tip = "服务器部署完毕！"
 
