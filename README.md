@@ -1,15 +1,15 @@
-[![MCSL 2 大头图](https://s3.bmp.ovh/imgs/2023/03/21/5afb21934bd980ab.png)](https://mcsl.netlify.app)
+[![MCSL 2 大头图](https://s3.bmp.ovh/imgs/2023/03/21/5afb21934bd980ab.png)](https://www.mcsl.com.cn)
 # MCSL2   |   一个简洁全能的 Minecraft 服务器启动器
 
-<div style="text-align: right;">
+<right>
 ——由LxHTT倾心制作
-</div>
+</right>
 
 ___
 
-<div style="text-align: center;">
+<center>
 中文  |  <a href="https://github.com/LxHTT/MCSL2/blob/master/README_EN.md" target="_blank">English</a>
-</div>
+</center>
 
 ___
 [![](https://img.shields.io/github/license/LxHTT/MCSL2?style=for-the-badge "License")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
@@ -39,7 +39,7 @@ ___
 [![](https://img.shields.io/badge/nuitka-1.5.7-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
 ___
 ### 相关链接
-MCSL 2官网：[https://mcsl.netlify.app](https://mcsl.netlify.app)  
+MCSL 2官网：[https://mcsl.com.cn](https://mcsl.com.cn)  
 MCSL 2 API官网：[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
 GitHub Issue：[https://github.com/LxHTT/MCSL2/issues](https://github.com/LxHTT/MCSL2/issues)  
 QQ官方群聊：[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
@@ -49,6 +49,7 @@ ___
 
 - [Luoxis 云存储](https://www.df100.ltd) 来自于 **星姮十织**
 - [ZCloud](https://ztsin.cn/) 来自于 **Z_Tsin**  
+- [FiveCDN](https://cdn.5-5.site) 来自于**Aehxy**
 
 还有所有的贡献者们！  
 
