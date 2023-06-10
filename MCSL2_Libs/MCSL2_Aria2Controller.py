@@ -1,5 +1,5 @@
 from os import path as ospath
-from os import remove, listdir
+from os import remove, listdir, getcwd
 from platform import system
 from shutil import which, rmtree, move
 from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
@@ -15,7 +15,9 @@ from requests.exceptions import SSLError
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
+
 MCSLLogger = MCSL2Logger()
+
 
 class Aria2Controller:
     """
@@ -43,7 +45,6 @@ class Aria2Controller:
             self.CheckPlatform()
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
-        
 
     #################
     #  Check Aria2  #
@@ -107,7 +108,7 @@ class Aria2Controller:
                 isNeededTwoButtons=1, ButtonArg="安装|取消")
             if ReturnNum == 1:
                 if self.OSType == "Windows":
-                    
+
                     OpenWebUrl(
                         "https://www.github.com/LxHTT/MCSL2", )
                     # self.WinInstallAria2(mainWindow)
@@ -119,8 +120,8 @@ class Aria2Controller:
                         pass
                     else:
                         MCSLLogger.Log(Msg=
-                            "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2,
-                            )
+                                       "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2,
+                                       )
                         CallMCSL2Dialog(
                             Tip="InstallAria2Failed",
                             OtherTextArg=None,
@@ -145,7 +146,7 @@ class Aria2Controller:
                 self.Aria2Status = True
             else:
                 MCSLLogger.Log(Msg=
-                    "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=0, )
+                               "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=0, )
                 CallMCSL2Dialog(
                     Tip="InstallAria2Failed",
                     OtherTextArg=None,
@@ -177,19 +178,19 @@ class Aria2Controller:
             Aria2Thread = str(MCSL2Settings().Aria2Thread)
             with open(r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8") as Aria2ConfigFile:
                 Aria2ConfigFile.write("file-allocation=falloc\n"
-                                    "continue=true\n"
-                                    "max-concurrent-downloads=5\n"
-                                    "min-split-size=5M\n"
-                                    "split=64\n"
-                                    "disable-ipv6=false\n"
-                                    "enable-http-pipelining=false\n"
-                                    f"max-connection-per-server={Aria2Thread}\n"
-                                    "enable-rpc=true\n"
-                                    "rpc-allow-origin-all=true\n"
-                                    "rpc-listen-all=true\n"
-                                    "event-poll=select\n"
-                                    "rpc-listen-port=6800\n"
-                                    "force-save=false")
+                                      "continue=true\n"
+                                      "max-concurrent-downloads=5\n"
+                                      "min-split-size=5M\n"
+                                      "split=64\n"
+                                      "disable-ipv6=false\n"
+                                      "enable-http-pipelining=false\n"
+                                      f"max-connection-per-server={Aria2Thread}\n"
+                                      "enable-rpc=true\n"
+                                      "rpc-allow-origin-all=true\n"
+                                      "rpc-listen-all=true\n"
+                                      "event-poll=select\n"
+                                      "rpc-listen-port=6800\n"
+                                      "force-save=false")
                 Aria2ConfigFile.close()
             with open(r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8") as Aria2SessionFile:
                 Aria2SessionFile.write("")
@@ -210,7 +211,7 @@ class Aria2Controller:
             ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
             Aria2Thread = Aria2ProcessThread(
                 Aria2Program=Aria2Program, ConfigCommand=ConfigCommand, DownloadURL=DownloadURL,
-                )
+            )
             Aria2Thread.start()
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
@@ -228,8 +229,8 @@ class Aria2Controller:
             """
             if failed:
                 MCSLLogger.Log(Msg=
-                    "InstallAria2Failed", MsgArg=f"平台：{cls._osType}", MsgLevel=0,
-                    )
+                               "InstallAria2Failed", MsgArg=f"平台：{cls._osType}", MsgLevel=0,
+                               )
                 CallMCSL2Dialog(
                     Tip="InstallAria2Failed",
                     OtherTextArg=None,
@@ -334,7 +335,7 @@ class Aria2Controller:
                 "status": download.status,
                 "totalLength": download.total_length_string(),
                 "completedLength": download.completed_length_string(),
-                "files": download.files,
+                "files": [f.path for f in download.files],
                 "bar": int(download.progress),
                 "eta": download.eta_string(),
             }
@@ -343,6 +344,17 @@ class Aria2Controller:
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
         return rv
+
+    @classmethod
+    def PauseDownloadTask(cls, gid: str):
+        try:
+            """
+            Halt a download task by gid
+            * normally, this function is only used by Class:DownloadWatcher
+            """
+            print("已暂停:", cls._aria2.client.pause(gid))
+        except Exception as e:
+            MCSLLogger.ExceptionLog(e)
 
     @classmethod
     def ApplySettings(cls, Settings: dict):
@@ -378,10 +390,12 @@ class Aria2Controller:
                 Aria2Program = "aria2c"
             else:
                 Aria2Program = "aria2c"
+            path = ospath.join(getcwd(), "MCSL2", "Downloads")
             ConfigCommand = [
                 "--conf-path=MCSL2/Aria2/aria2.conf",
                 "--input-file=MCSL2/Aria2/aria2.session",
-                "--save-session=MCSL2/Aria2/aria2.session"
+                "--save-session=MCSL2/Aria2/aria2.session",
+                f"--dir={path}"
             ]
             QProcess.startDetached(Aria2Program, ConfigCommand)
             cls._aria2 = API(
@@ -395,11 +409,16 @@ class Aria2Controller:
             MCSLLogger.ExceptionLog(e)
 
     @classmethod
-    def DownloadCompletedHandler(cls, gid):
+    def DownloadCompletedHandler(cls, gid, stopFlag):
         try:
             cls._aria2: API
             download = cls._aria2.get_download(gid)
-            cls._aria2.remove([download])
+            if stopFlag:
+                cls._aria2.client.force_remove(gid)
+            else:
+                if download.status == "complete" and gid in cls._downloadTasks.keys():
+                    cls._downloadTasks.pop(gid)
+                    cls._aria2.client.remove(gid)
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
 
@@ -433,7 +452,7 @@ class NormalDownloadManager(QObject):
     def download(self):
         try:
             self.downloadThread = NormalDownloadThread(self.uri, self.savePath, self.retryCount,
-                                                    parent=self.parent())
+                                                       parent=self.parent())
 
             self.downloadThread.finished.connect(self.downloadFinish)
             self.downloadThread.start()
@@ -457,7 +476,6 @@ class NormalDownloadManager(QObject):
             MCSLLogger.ExceptionLog(e)
 
     @pyqtSlot(int)
-
     def updateProgress(self, progress):
         try:
             self.downloadProgress += progress
@@ -515,14 +533,15 @@ class NormalDownloadThread(QThread):
                         break
                     except Exception as e:
                         print(e)
-                        MCSLLogger.Log(Msg=f"DownloadError retry:{r + 1}/{self.retryCount}", MsgArg=f"\n链接：{self.uri}",
-                                    MsgLevel=0, )
+                        MCSLLogger.Log(Msg=f"DownloadError retry:{r + 1}/{self.retryCount}",
+                                       MsgArg=f"\n链接：{self.uri}",
+                                       MsgLevel=0, )
             if flag:
                 MCSLLogger.Log(Msg="DownloadCompleted", MsgArg=f"\n链接：{self.uri}", MsgLevel=0,
-                            )
+                               )
             else:
                 MCSLLogger.Log(Msg="DownloadFailed", MsgArg=f"\n链接：{self.uri}", MsgLevel=0,
-                            )
+                               )
                 self.failed = True
             self.finished.emit(self.failed)
         except Exception as e:
@@ -552,7 +571,7 @@ class Aria2ProcessThread(QThread):
             Client(host="http://localhost", port=6800))
         MCSL2_Aria2Client.add_uris(self.DownloadURL)
         MCSLLogger.Log(Msg=
-            "StartDownload", MsgArg=f"\n链接：{self.DownloadURL}", MsgLevel=0, )
+                       "StartDownload", MsgArg=f"\n链接：{self.DownloadURL}", MsgLevel=0, )
         try:
             process = Popen(
                 [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT)
@@ -569,6 +588,7 @@ class DownloadWatcher(QThread):
 
     # 每隔一段时间获取一次下载信息(self.Interval)，并发射下载信息OnDownloadInfoGet(dict)
     OnDownloadInfoGet = pyqtSignal(dict)
+    DownloadStop = pyqtSignal(bool)
 
     def __init__(self, uris: list, interval=1, parent: Optional[QObject] = None) -> None:
         try:
@@ -582,6 +602,8 @@ class DownloadWatcher(QThread):
             self._stopFlag = False
             self._interval = interval
             self._downloadStatus = Aria2Controller.GetDownloadsStatus(self._gid)
+            self._e = None
+            self._files = None
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
 
@@ -589,9 +611,9 @@ class DownloadWatcher(QThread):
         try:
 
             MCSLLogger.Log(Msg=
-                "StartDownload", MsgArg=f"\n链接：{self._uris}", MsgLevel=0, )
+                           "StartDownload", MsgArg=f"\n链接：{self._uris}", MsgLevel=0, )
             while (status := Aria2Controller.GetDownloadsStatus(self._gid))["status"] not in ["complete", "error",
-                                                                                            "removed"]:
+                                                                                              "removed"]:
                 if self._stopFlag:
                     break
                 # update download status
@@ -601,22 +623,26 @@ class DownloadWatcher(QThread):
                     Aria2Controller.GetDownloadsStatus(self._gid))
 
                 MCSLLogger.Log(Msg=
-                    "Downloading...",
-                    MsgArg=f'下载进度：{status["progress"]},下载速度：{status["speed"]},文件大小：{status["totalLength"]},eta：{status["eta"]}',
-                    MsgLevel=0)
-
+                               "Downloading...",
+                               MsgArg=f'下载进度：{status["progress"]},下载速度：{status["speed"]},文件大小：{status["totalLength"]},eta：{status["eta"]}',
+                               MsgLevel=0)
+                self._files = status.get("files", None)
                 if isinstance(self._interval, int):
                     self.sleep(self._interval)
-                else:
-                    self.msleep(min(1, int(self._interval * 1000)))
-            print("下载完成")
-            Aria2Controller.DownloadCompletedHandler(self._gid)
+                elif isinstance(self._interval, float):
+                    self.msleep(max(100, int(self._interval * 1000)))
+            if not self._stopFlag:
+                print("下载完成")
+
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
+            self._e = e
+        Aria2Controller.DownloadCompletedHandler(self._gid, self.StopOrCancel)
 
     @pyqtSlot()
     def StopWatch(self):
         try:
+            Aria2Controller.PauseDownloadTask(self._gid)
             self._stopFlag = True
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
@@ -626,12 +652,20 @@ class DownloadWatcher(QThread):
         return self._gid
 
     @property
+    def StopOrCancel(self):
+        return self._stopFlag or self._e is not None
+
+    @property
     def Interval(self):
         return self._interval
 
     @property
     def DownloadStatus(self):
         return self._downloadStatus
+
+    @property
+    def Files(self):
+        return self._files
 
     @Interval.setter
     def Interval(self, interval: float or int):

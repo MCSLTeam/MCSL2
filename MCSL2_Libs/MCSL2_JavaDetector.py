@@ -107,7 +107,6 @@ def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
                 return JavaPathList
             try:
                 for File in listdir(Path):
-                    try:
                         _Path = ospath.join(Path, File)
                         if ospath.isfile(_Path):
                             if _Match(Path, File):
@@ -117,8 +116,8 @@ def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
                         elif FindStr(File.lower()):
                             JavaPathList.extend(
                                 SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
-                    except PermissionError:
-                        pass
+            except PermissionError:
+                pass
             except FileNotFoundError as e:
                 print(f'扫描路径时出错: {e}')
 

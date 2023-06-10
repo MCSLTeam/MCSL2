@@ -116,8 +116,8 @@
       <widget class="QLabel" name="GraphWidget_DownloadProgress">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>65</y>
+         <x>17</x>
+         <y>60</y>
          <width>51</width>
          <height>51</height>
         </rect>
