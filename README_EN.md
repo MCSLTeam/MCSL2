@@ -1,16 +1,16 @@
-[![MCSL 2 Title Image](https://s3.bmp.ovh/imgs/2023/03/21/5afb21934bd980ab.png)](https://mcsl.netlify.app)
+[![MCSL 2 Title Image](https://s3.bmp.ovh/imgs/2023/03/21/5afb21934bd980ab.png)](https://mcsl.com.cn)
 
 # MCSL2 | A simple and multifunctional Minecraft server launcher
 
-<div style="text-align: right;">
+<right>
 ——Made by LxHTT
-</div>
+</right>
 
 ___
 
-<div style="text-align: center;">
+<center>
 <a href="https://github.com/LxHTT/MCSL2" target="_blank">中文</a>  |  English
-</div>
+</center>
 
 ___
 [![](https://img.shields.io/github/license/LxHTT/MCSL2?style=for-the-badge "License")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
@@ -40,7 +40,7 @@ ___
 [![](https://img.shields.io/badge/nuitka-1.5.7-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
 ___
 ### Related link
-MCSL 2 Official Website:[https://mcsl.netlify.app](https://mcsl.netlify.app)  
+MCSL 2 Official Website:[https://mcsl.com.cn](https://mcsl.com.cn)  
 MCSLAPI Official Website:[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
 GitHub Issue:[https://github.com/LxHTT/MCSL2/issues](https://github.com/LxHTT/MCSL2/issues)  
 QQ Group:[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
@@ -51,6 +51,7 @@ ___
 
 - [Luoxis Cloud](https://www.df100.ltd) from **星姮十织**
 - [ZCloud](https://ztsin.cn/) from **Z_Tsin**
+- [FiveCDN](https://cdn.5-5.site) from **Aehxy*I
 
 And all the contributors!  
 
