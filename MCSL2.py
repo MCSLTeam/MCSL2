@@ -1623,7 +1623,7 @@ if __name__ == '__main__':
     CanCreate = 0
     CoreFileName = ""
     ServerName = ""
-    Version = "2.1.3.6"
+    Version = "2.1.3.7"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \
                                   "    padding-left: 10px;\n" \
