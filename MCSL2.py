@@ -284,6 +284,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             # noinspection PyUnboundLocalVariable
             MCSLLogger.Log(Msg="ChangeConfig",
                            MsgArg=f"{Type}设置为{ComboBoxAttr[Count]}",
+                           MsgLevel=0
                            )
             MCSL2Settings().ChangeConfig(Type=Type, Arg=ComboBoxAttr[Count])
         except Exception as e:
