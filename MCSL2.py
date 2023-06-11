@@ -253,11 +253,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         try:
             if self.sender().isChecked():
                 MCSLLogger.Log(Msg=
-                               "ChangeConfig", MsgArg=f"{Type}设置为True", )
+                               "ChangeConfig", MsgArg=f"{Type}设置为True", MsgLevel=0)
                 MCSL2Settings().ChangeConfig(Type=Type, Arg=True)
             else:
                 MCSLLogger.Log(Msg=
-                               "ChangeConfig", MsgArg=f"{Type}设置为False", )
+                               "ChangeConfig", MsgArg=f"{Type}设置为False", MsgLevel=0)
                 MCSL2Settings().ChangeConfig(Type=Type, Arg=False)
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
@@ -294,6 +294,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         try:
             MCSLLogger.Log(Msg="ChangeConfig",
                            MsgArg=f"SaveSameFileException设置为{Arg}",
+                           MsgLevel=0
                            )
             MCSL2Settings().ChangeConfig(Type="SaveSameFileException", Arg=Arg)
         except Exception as e:
