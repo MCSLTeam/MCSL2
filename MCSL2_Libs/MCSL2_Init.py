@@ -14,7 +14,7 @@ def InitMCSL():
             mkdir(r"MCSL2/Logs")
             mkdir(r"MCSL2/Aria2")
             mkdir(r"MCSL2/Downloads")
-            MCSLLogger.Log("RunInitMCSLFunction", MsgArg=None, MsgLevel=0,)
+            MCSLLogger.Log("RunInitMCSLFunction", MsgArg=None, MsgLevel=0)
         # 以上是主文件夹
 
         elif not ospath.exists(r"MCSL2/Aria2"):  # 不用elif会冲突
