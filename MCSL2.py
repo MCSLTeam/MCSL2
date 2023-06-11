@@ -57,7 +57,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.setAttribute(Qt.WA_TranslucentBackground)
             self.setAutoFillBackground(True)
             self.setupUi(self)
-            MCSLLogger.Log(Msg="InitUI", MsgArg=None, MsgLevel=0,
+            MCSLLogger.Log(Msg="InitUI", MsgArg=None, MsgLevel=0
                            )
             TitleBarSetting = MCSL2Settings().GetConfig(
                 "UseTitleBarInsteadOfmacOSControlling")
@@ -84,9 +84,9 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.About_Page_PushButton.setIcon(QIcon(":/MCSL2_Icon/About.svg"))
             self.About_Page_PushButton.setIconSize(QSize(24, 24))
             MCSL2Settings()
-            MCSLLogger.Log(Msg="ReadConfig", MsgArg=None, MsgLevel=0,
+            MCSLLogger.Log(Msg="ReadConfig", MsgArg=None, MsgLevel=0
                            )
-            MCSLLogger.Log(Msg="InitFunctionsBind", MsgArg=None, MsgLevel=0,
+            MCSLLogger.Log(Msg="InitFunctionsBind", MsgArg=None, MsgLevel=0
                            )
             self.GetNotice()
             self.InitTitleBar()
@@ -230,14 +230,14 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
             self.JoinQQGroup.clicked.connect(lambda: OpenWebUrl(
                 "https://jq.qq.com/?_wv=1027&k=x2ISlviQ", ))
             # self.SystemReportPushButton.clicked.connect()
-            MCSLLogger.Log(Msg="InitAria2", MsgArg=None, MsgLevel=0,
+            MCSLLogger.Log(Msg="InitAria2", MsgArg=None, MsgLevel=0
                            )
             Aria2Controller().InitAria2Configuration()
             isAria2 = Aria2Controller().CheckAria2()
             if not isAria2:
                 Aria2Controller(
                 ).ShowNoAria2Msg(self)
-            MCSLLogger.Log(Msg="FinishStarting", MsgArg=None, MsgLevel=0,
+            MCSLLogger.Log(Msg="FinishStarting", MsgArg=None, MsgLevel=0
                            )
             self.InitDownloadProgressUI()
             DownloadSource = MCSL2Settings().MCSLAPIDownloadSource
@@ -281,7 +281,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 ComboBoxAttr = ["light", "dark", "system"]
             else:
                 pass
-            # noinspection PyUnboundLocalVariable
             MCSLLogger.Log(Msg="ChangeConfig",
                            MsgArg=f"{Type}设置为{ComboBoxAttr[Count]}",
                            MsgLevel=0
@@ -476,11 +475,11 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         try:
 
             MCSLLogger.Log(Msg="Close_ButtonPressed", MsgArg=None,
-                           MsgLevel=1, )
-            MCSLLogger.Log(Msg="MCSLExit", MsgArg=None, MsgLevel=0,
+                           MsgLevel=1)
+            MCSLLogger.Log(Msg="MCSLExit", MsgArg=None, MsgLevel=0
                            )
             Aria2Controller.Shutdown()
-            MCSLLogger.Log(Msg="Aria2Shutdown", MsgArg=None, MsgLevel=0,
+            MCSLLogger.Log(Msg="Aria2Shutdown", MsgArg=None, MsgLevel=0
                            )
             MCSLProcess.quit()
         except Exception as e:
@@ -490,8 +489,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
         try:
 
             MCSLLogger.Log(Msg="Minimize_PushButtonPressed", MsgArg=None,
-                           MsgLevel=1, )
-            MCSLLogger.Log(Msg="WindowMinimize", MsgArg=None, MsgLevel=0,
+                           MsgLevel=1)
+            MCSLLogger.Log(Msg="WindowMinimize", MsgArg=None, MsgLevel=0
                            )
             MCSLMainWindow.showMinimized()
         except Exception as e:
@@ -1552,7 +1551,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def ChooseJava(self, JavaIndex):
         try:
             global JavaPaths, JavaPath
-
             JavaPath = JavaPaths[JavaIndex].Path
             self.FunctionsStackedWidget.setCurrentIndex(1)
             self.Java_Version_Label.setText(JavaPaths[JavaIndex].Version)
@@ -1563,7 +1561,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def ChooseServer(self, ServerIndex):
         try:
             global ServerIndexNum
-
             ServerIndexNum = ServerIndex
             # noinspection PyTypeChecker
             self.Selected_Server_Label.setText(
@@ -1576,7 +1573,6 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     # The function of checking update
     def CheckUpdate(self):
         try:
-            MCSLLogger = MCSL2Logger()
             global Version
             CurrentTime = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
             self.LastUpdateTime.setText(f"最后一次检查更新时间：{CurrentTime}")
