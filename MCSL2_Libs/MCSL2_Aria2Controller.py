@@ -120,7 +120,7 @@ class Aria2Controller:
                         pass
                     else:
                         MCSLLogger.Log(Msg=
-                                       "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2,
+                                       "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2
                                        )
                         CallMCSL2Dialog(
                             Tip="InstallAria2Failed",
@@ -146,7 +146,7 @@ class Aria2Controller:
                 self.Aria2Status = True
             else:
                 MCSLLogger.Log(Msg=
-                               "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=0, )
+                               "InstallAria2Failed", MsgArg=f"平台：{self.OSType}", MsgLevel=2)
                 CallMCSL2Dialog(
                     Tip="InstallAria2Failed",
                     OtherTextArg=None,
@@ -165,7 +165,8 @@ class Aria2Controller:
             return "No"
         try:
             Popen(cmd, check=True)
-        except CalledProcessError:
+        except CalledProcessError as e:
+            MCSLLogger.ExceptionLog(e)
             return False
         return True
 
@@ -229,8 +230,7 @@ class Aria2Controller:
             """
             if failed:
                 MCSLLogger.Log(Msg=
-                               "InstallAria2Failed", MsgArg=f"平台：{cls._osType}", MsgLevel=0,
-                               )
+                               "InstallAria2Failed", MsgArg=f"平台：{cls._osType}", MsgLevel=0)
                 CallMCSL2Dialog(
                     Tip="InstallAria2Failed",
                     OtherTextArg=None,
@@ -250,13 +250,15 @@ class Aria2Controller:
             releaseInfo = requests.get(
                 url=url
             ).json()
-        except SSLError:
+        except SSLError as e:
+            MCSLLogger.ExceptionLog(e)
             print("获取Aria2仓库release失败:关闭代理后重试")
             CallMCSL2Dialog(Tip="获取Aria2仓库release失败:\n请关闭代理后重试", OtherTextArg=None, isNeededTwoButtons=0,
                             ButtonArg=None)
             return
 
         except Exception as e:
+            MCSLLogger.ExceptionLog(e)
             print(f"获取Aria2仓库release失败:{e}")
             CallMCSL2Dialog(Tip=f"获取Aria2仓库release失败:\n{e}", OtherTextArg=None, isNeededTwoButtons=0,
                             ButtonArg=None)
@@ -264,11 +266,12 @@ class Aria2Controller:
 
         try:
             winPackageInfo = [v for v in releaseInfo["assets"] if 'win-32bit' in v["name"]][0]
-        except KeyError:
+        except KeyError as e:
             # 肯定存在32bit 但是可能是因为rest api的问题导致获取失败
             message = releaseInfo.get("message", "未知错误")
             CallMCSL2Dialog(Tip=f"获取Aria2仓库release失败:\n{message}", OtherTextArg=None, isNeededTwoButtons=0,
                             ButtonArg=None)
+            MCSLLogger.ExceptionLog(e)
             print(f"获取Aria2仓库release失败:{message}")
             return
 
@@ -535,12 +538,12 @@ class NormalDownloadThread(QThread):
                         print(e)
                         MCSLLogger.Log(Msg=f"DownloadError retry:{r + 1}/{self.retryCount}",
                                        MsgArg=f"\n链接：{self.uri}",
-                                       MsgLevel=0, )
+                                       MsgLevel=1)
             if flag:
-                MCSLLogger.Log(Msg="DownloadCompleted", MsgArg=f"\n链接：{self.uri}", MsgLevel=0,
+                MCSLLogger.Log(Msg="DownloadCompleted", MsgArg=f"\n链接：{self.uri}", MsgLevel=0
                                )
             else:
-                MCSLLogger.Log(Msg="DownloadFailed", MsgArg=f"\n链接：{self.uri}", MsgLevel=0,
+                MCSLLogger.Log(Msg="DownloadFailed", MsgArg=f"\n链接：{self.uri}", MsgLevel=2
                                )
                 self.failed = True
             self.finished.emit(self.failed)
@@ -571,13 +574,13 @@ class Aria2ProcessThread(QThread):
             Client(host="http://localhost", port=6800))
         MCSL2_Aria2Client.add_uris(self.DownloadURL)
         MCSLLogger.Log(Msg=
-                       "StartDownload", MsgArg=f"\n链接：{self.DownloadURL}", MsgLevel=0, )
+                       "StartDownload", MsgArg=f"\n链接：{self.DownloadURL}", MsgLevel=0)
         try:
             process = Popen(
                 [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT)
             process.wait()
         except Exception as e:
-            print('Error:', e)
+            MCSLLogger.ExceptionLog(e)
 
 
 class DownloadWatcher(QThread):
