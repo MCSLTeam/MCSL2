@@ -233,8 +233,8 @@ jobs:
         run: |
           7z a "MCSL2-${{ matrix.mcsl2version }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
-          7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*" "./repo/Tools/Aria2/aria2c.exe" -ir!"MCSL2/Aria2"
-          7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*" "./repo/Tools/Aria2/aria2c.exe" -ir!"MCSL2/Aria2"
+          7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
+          7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.zip" "./MCSL2-macOS-x64/*"
 
       - name: Release
