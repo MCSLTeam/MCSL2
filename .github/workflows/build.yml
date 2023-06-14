@@ -113,6 +113,7 @@ jobs:
           --output-dir=build
           --assume-yes-for-download
           --enable-plugin=pyqt5
+          --include-data-dir=PyQt5/Qt5
           --macos-app-version=${{ matrix.mcsl2version }}
           --macos-app-icon=MCSL2.icns
           MCSL2.py
