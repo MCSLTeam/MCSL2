@@ -36,8 +36,9 @@ ___
 ___
 ### Used open-source project
 [![](https://img.shields.io/badge/python-3.8.0-blue.svg?style=for-the-badge "Python")](https://python.org)
-[![](https://img.shields.io/badge/pyqt5-5.15.9-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
-[![](https://img.shields.io/badge/nuitka-1.5.7-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
+[![](https://img.shields.io/badge/pyqt5-latest-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
+[![](https://img.shields.io/badge/nuitka-latest-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
+[![](https://img.shields.io/badge/qfluentwidgets-latest-green.svg?style=for-the-badge "PyQt-Fluent-Widgets")](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)  
 ___
 ### Related link
 MCSL 2 Official Website:[https://mcsl.com.cn](https://mcsl.com.cn)  
