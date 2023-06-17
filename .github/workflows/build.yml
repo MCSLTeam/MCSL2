@@ -102,12 +102,18 @@ jobs:
       - name: Install Requirements
         run: |
           python -m pip install -r requirements.txt -r requirements.dev.txt
+          
+      - name: Install create-dmg
+        run: | 
+          brew install create-dmg
 
       - name: Delete GITKEEP File
         run: |
           rm PyQt5/Qt5/.gitkeep
         
-
+      - name: Rename MCSL2 main entry code
+        run: |
+          mv MCSL2.py MCSL2App.py && sed -i '' 's/MCSL2/MCSL2App/g' MCSL2App.py
 
       - name: Build on macOS
         run: >
@@ -116,20 +122,42 @@ jobs:
           --onefile
           --macos-create-app-bundle
           --disable-console
-          --output-dir=build
+          --output-dir=MCSL2Main
           --assume-yes-for-download
           --enable-plugin=pyqt5
           --include-data-dir=PyQt5/Qt5=PyQt5/Qt5
           --macos-app-version=${{ matrix.mcsl2version }}
           --macos-app-icon=MCSL2.icns
-          MCSL2.py
+          MCSL2App.py
+          
+      - name: Fix Info.plist and Resources
+        run: | 
+          cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
+          cp -r MCSL2Main/Resources MCSL2Main/MCSL2App.app/Contents/
+          cd MCSL2Main
+
+      - name: Create DMG for macOS Version
+        run: >
+          create-dmg
+          --volname "MCSL2 Installer"
+          --volicon "MCSL2.icns"
+          --background "MCSL2_macOS_DMG_Background.jpeg"
+          --window-pos 200 110
+          --window-size 576 324
+          --text-size 12
+          --icon-size 72
+          --icon "MCSL2App.app" 200 126
+          --app-drop-link 346 126
+          --hide-extension "MCSL2App.app"
+          "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg"
+          "MCSL2App.app"
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
           path: |
-            build/*.app/**/*
+            *.dmg
 
   BuildLinuxVersion:
     strategy:
@@ -230,7 +258,6 @@ jobs:
           7z a "MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
-          7z a "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.zip" "./MCSL2-macOS-x64/*"
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -244,6 +271,6 @@ jobs:
             MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip
             MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip
             MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip
-            MCSL2-${{ matrix.mcsl2version }}-macOS-x64.zip
+            
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
