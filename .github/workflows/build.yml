@@ -135,23 +135,11 @@ jobs:
           cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
           cp -r MCSL2Main/Resources/ MCSL2Main/MCSL2App.app/Contents/
           cp MCSL2_macOS_DMG_Background.jpeg MCSL2Main/
-          cd MCSL2Main
 
       - name: Create DMG for macOS Version
-        run: >
-          sudo create-dmg
-          --volname "MCSL2 Installer"
-          --volicon "MCSL2.icns"
-          --background "MCSL2_macOS_DMG_Background.jpeg"
-          --window-pos 200 110
-          --window-size 576 324
-          --text-size 12
-          --icon-size 72
-          --icon "MCSL2App.app" 200 126
-          --app-drop-link 346 126
-          --hide-extension "MCSL2App.app"
-          "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg"
-          "MCSL2App.app"
+        run: |
+          cd MCSL2Main
+          create-dmg --volname "MCSL2 Installer" --volicon "MCSL2.icns" --background "MCSL2_macOS_DMG_Background.jpeg" --window-pos 200 110 --window-size 576 324 --text-size 12 --icon-size 72 --icon "MCSL2App.app" 200 126 --app-drop-link 346 126 --hide-extension "MCSL2App.app" "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg" "MCSL2App.app"
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
