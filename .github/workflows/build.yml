@@ -139,7 +139,7 @@ jobs:
 
       - name: Create DMG for macOS Version
         run: >
-          create-dmg
+          sudo create-dmg
           --volname "MCSL2 Installer"
           --volicon "MCSL2.icns"
           --background "MCSL2_macOS_DMG_Background.jpeg"
