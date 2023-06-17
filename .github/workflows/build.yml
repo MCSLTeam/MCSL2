@@ -45,8 +45,7 @@ jobs:
 
       - name: Build on Windows
         run: >
-          python -m nuitka 
-          --mingw64
+          python -m nuitka
           --standalone
           --enable-plugin=pyqt5
           --onefile
@@ -147,7 +146,7 @@ jobs:
         with:
           name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
           path: |
-            *.dmg
+            MCSL2Main/*.dmg
 
   BuildLinuxVersion:
     strategy:
