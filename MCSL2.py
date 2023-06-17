@@ -42,6 +42,7 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
 
     def __init__(self):
         try:
+            InitMCSL()
             self.__mousePressPos = None
             self.__mouseMovePos = None
             self.DownloadURLList: list
@@ -1620,7 +1621,7 @@ if __name__ == '__main__':
     CanCreate = 0
     CoreFileName = ""
     ServerName = ""
-    Version = "2.1.3.7"
+    Version = "2.1.3.8"
     CurrentNavigationStyleSheet = "QPushButton\n" \
                                   "{\n" \
                                   "    padding-left: 10px;\n" \
