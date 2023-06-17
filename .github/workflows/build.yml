@@ -268,11 +268,8 @@ jobs:
           draft: false
           tag_name: v${{ matrix.mcsl2version }}
           files: |
-            MCSL2-${{ matrix.mcsl2version }}-Linux-x64.zip
-            MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip
-            MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip
-            MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip
-            "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg"
+            *.zip
+            "./MCSL2-macOS-x64/*.dmg"
             
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
