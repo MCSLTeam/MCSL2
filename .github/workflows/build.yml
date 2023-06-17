@@ -45,8 +45,7 @@ jobs:
 
       - name: Build on Windows
         run: >
-          python -m nuitka 
-          --mingw64
+          python -m nuitka
           --standalone
           --enable-plugin=pyqt5
           --onefile
@@ -258,7 +257,7 @@ jobs:
           tag_name: v${{ matrix.mcsl2version }}
           files: |
             *.zip
-            "./MCSL2-macOS-x64/*.dmg"
+            ./MCSL2-macOS-x64/*.dmg
             
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
