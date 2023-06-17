@@ -135,6 +135,7 @@ jobs:
           cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
           cp -r MCSL2Main/Resources/ MCSL2Main/MCSL2App.app/Contents/
           cp MCSL2_macOS_DMG_Background.jpeg MCSL2Main/
+          cp MCSL2.icns MCSL2Main/
 
       - name: Create DMG for macOS Version
         run: |
