@@ -272,6 +272,7 @@ jobs:
             MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip
             MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip
             MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip
+            "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg"
             
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
