@@ -132,6 +132,7 @@ jobs:
       - name: Fix Info.plist and Resources
         run: | 
           cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
+          cp -r MCSL2Main/PlugIns/ MCSL2Main/MCSL2App.app/Contents/PlugIns/
           cp -r MCSL2Main/Resources/ MCSL2Main/MCSL2App.app/Contents/Resources/
           cp MCSL2_macOS_DMG_Background.jpeg MCSL2Main/
           cp MCSL2.icns MCSL2Main/
