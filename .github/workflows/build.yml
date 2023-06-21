@@ -34,13 +34,9 @@ jobs:
             requirements.txt
             requirements.dev.txt
 
-      - name: Update Pip
+      - name: Update Pip and Install Requirements
         run: |
           python -m pip install pip setuptools -U
-
-
-      - name: Install Requirements
-        run: |
           python -m pip install -r requirements.txt -r requirements.dev.txt
 
       - name: Build on Windows
@@ -94,24 +90,18 @@ jobs:
             requirements.txt
             requirements.dev.txt
 
-      - name: Update Pip
+      - name: Update Pip and Install Requirements
         run: |
           python -m pip install pip setuptools -U
-
-      - name: Install Requirements
-        run: |
           python -m pip install -r requirements.txt -r requirements.dev.txt
           
       - name: Install create-dmg
         run: | 
           brew install create-dmg
 
-      - name: Delete GITKEEP File
+      - name: Prepare for Nuitka
         run: |
           rm PyQt5/Qt5/.gitkeep
-        
-      - name: Rename MCSL2 main entry code
-        run: |
           mv MCSL2.py MCSL2App.py && sed -i '' 's/MCSL2/MCSL2App/g' MCSL2App.py
 
       - name: Build on macOS
@@ -129,15 +119,14 @@ jobs:
           --macos-app-icon=MCSL2.icns
           MCSL2App.py
           
-      - name: Fix Info.plist and Resources
+      - name: Fix Nuitka-built Ap
         run: | 
           cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
-          cp -r MCSL2Main/PlugIns/ MCSL2Main/MCSL2App.app/Contents/PlugIns/
           cp -r MCSL2Main/Resources/ MCSL2Main/MCSL2App.app/Contents/Resources/
           cp MCSL2_macOS_DMG_Background.jpeg MCSL2Main/
           cp MCSL2.icns MCSL2Main/
 
-      - name: Create DMG for macOS Version
+      - name: Create DMG
         run: |
           cd MCSL2Main
           create-dmg --volname "MCSL2 Installer" --volicon "MCSL2.icns" --background "MCSL2_macOS_DMG_Background.jpeg" --window-pos 200 110 --window-size 576 324 --text-size 12 --icon-size 72 --icon "MCSL2App.app" 200 126 --app-drop-link 346 126 --hide-extension "MCSL2App.app" "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg" "MCSL2App.app"
@@ -177,18 +166,15 @@ jobs:
             requirements.txt
             requirements.dev.txt
 
-      - name: Update Pip
+      - name: Update Pip and Install Requirements
         run: |
           python -m pip install pip setuptools -U
+          python -m pip install -r requirements.txt -r requirements.dev.txt
 
-      - name: Install Deps for Linux
+      - name: Install Dependencies for Linux
         run: |
           sudo apt-get install -y libfuse2
           sudo apt-get install -y ccache
-
-      - name: Install Project Deps
-        run: |
-          python -m pip install -r requirements.txt -r requirements.dev.txt
 
       - name: Build on Linux
         run: >
