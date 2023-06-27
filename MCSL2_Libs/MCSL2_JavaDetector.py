@@ -6,7 +6,7 @@ from subprocess import check_output, STDOUT, CalledProcessError
 
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
 
 if system().lower() == 'windows':
     from subprocess import SW_HIDE
@@ -26,7 +26,6 @@ MatchKeywords = {
 ExcludedKeywords = {
     "$", "{", "}", "__"
 }
-MCSLLogger = MCSL2Logger()
 
 # fmt: on
 
