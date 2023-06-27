@@ -2,9 +2,10 @@ from json import loads
 from typing import Dict, Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-from requests import get
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
-MCSLLogger = MCSL2Logger()
+from requests import Session
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
+Session = Session()
+Session.trust_env = False
 
 def Singleton(cls):
     Instances = {}
@@ -47,8 +48,7 @@ class DownloadURLParser:
         FileFormats = []
         FileNames = []
         try:
-            DownloadJson = get(RefreshUrl).text
-        
+            DownloadJson = Session.get(RefreshUrl).text
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
             return -2, -2, -2, -2
