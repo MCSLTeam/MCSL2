@@ -1,8 +1,10 @@
-from requests import get
+from requests import Session
+
+Session = Session()
+Session.trust_env = False
 
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
-MCSLLogger = MCSL2Logger()
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
 
 class Updater:
     def __init__(self, Version):
@@ -14,7 +16,7 @@ class Updater:
 
     def GetLatestVersionInformation(self):
         try:
-            LatestVersionInformation = get(self.CheckUpdateUrl).text.split("|")
+            LatestVersionInformation = Session.get(self.CheckUpdateUrl).text.split("|")
         
         except Exception as e:
             MCSLLogger.ExceptionLog(e)
@@ -36,7 +38,7 @@ class Updater:
         UpdateDownloadUrl = LatestVersionInformation[3]
         GetUpdateContentsUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark"
         try:
-            WhatInLatestVersion = get(GetUpdateContentsUrl).text
+            WhatInLatestVersion = Session.get(GetUpdateContentsUrl).text
             LatestVersionNumber = LatestVersionInformation[4]
             return LatestVersionNumber, WhatInLatestVersion
         except Exception as e:
@@ -47,7 +49,7 @@ class Updater:
         GetNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
         # GetTodayUserCountUrl = "http://api.2018k.cn/today?id=BCF5D58B4AE6471E98CFD5A56604560B"
         try:
-            Notice = get(GetNoticeUrl).text
+            Notice = Session.get(GetNoticeUrl).text
             return Notice
         except Exception as e:
             MCSLLogger.ExceptionLog(e)

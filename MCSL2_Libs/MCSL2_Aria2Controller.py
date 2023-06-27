@@ -6,18 +6,18 @@ from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
 from typing import Optional
 from zipfile import ZipFile
 
-import requests
+from requests import Session
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess
 from PyQt5.QtWidgets import QProgressDialog
 from aria2p import Client, API
 from requests.exceptions import SSLError
 
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
-from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
+from MCSL2_Libs.MCSL2_SettingsPage import MCSL2Settings, OpenWebUrl
 
-MCSLLogger = MCSL2Logger()
-
+Session = Session()
+Session.trust_env = False
 
 class Aria2Controller:
     """
@@ -247,7 +247,7 @@ class Aria2Controller:
 
         url = 'https://api.github.com/repos/aria2/aria2/releases/latest'
         try:
-            releaseInfo = requests.get(
+            releaseInfo = Session.get(
                 url=url
             ).json()
         except SSLError as e:
@@ -521,7 +521,7 @@ class NormalDownloadThread(QThread):
             with open(self.savePath, "wb") as f:
                 for r in range(self.retryCount):
                     try:
-                        response = requests.get(
+                        response = Session.get(
                             self.uri,
                             timeout=10,
                             stream=True
