@@ -1,16 +1,15 @@
+from inspect import getframeinfo, getmodulename, getsourcefile
 from os import path as ospath
+from sys import _getframe as SysGetFrame
 from traceback import format_exception as FormatException
-from enum import IntEnum
 from typing import Optional
 from loguru import logger
-
-
 
 class MCSL2Logger:
     FileNamePrefix: str = "Log"
     LogDirectory: str = "MCSL2/Logs"
-    RetentionDays: int = 20
-    RotationDays: int = 5
+    RetentionDays: int = 10
+    RotationDays: int = 1
 
     def __init__(self):
         global logger
@@ -37,6 +36,13 @@ class MCSL2Logger:
                    encoding="utf-8")
 
     def Log(self, Msg: str, MsgArg: str, MsgLevel: int, exc: Optional[Exception] = None):
+        Sender = SysGetFrame(1)
+        SenderFrameLineNo = getframeinfo(Sender).lineno
+        SenderSourceFile = getsourcefile(Sender)[len(ospath.abspath('.'))+1:].replace(".py", "")
+        if SenderSourceFile == None:
+            SenderSourceFile = getmodulename(f"{SenderSourceFile}.py")
+        if SenderSourceFile == "MCSL2":
+            SenderSourceFile = "__main__"
         if MsgArg is None:
             MsgArg = ""
         else:
@@ -45,6 +51,7 @@ class MCSL2Logger:
             Msg = getattr(LoggerMsg(), Msg) + MsgArg
         except AttributeError:
             Msg += MsgArg
+        Msg = f"{SenderSourceFile}:{SenderFrameLineNo} - " + Msg
         if MsgLevel == 0:
             self.logger.info(Msg)
         elif MsgLevel == 1:
@@ -57,10 +64,15 @@ class MCSL2Logger:
     def ExceptionLog(self, exc: Exception):
         # 使用 traceback 模块将错误信息转化为字符串
         ExceptionString = "".join(FormatException(type(exc), exc, exc.__traceback__))
-
-        # 输出到日志中
-        self.Log(Msg=ExceptionString, MsgArg=None, MsgLevel=2)
-
+        Sender = SysGetFrame(1)
+        SenderFrameLineNo = getframeinfo(Sender).lineno
+        SenderSourceFile = getsourcefile(Sender)[len(ospath.abspath('.'))+1:].replace(".py", "")
+        if SenderSourceFile == None:
+            SenderSourceFile = getmodulename(f"{SenderSourceFile}.py")
+        if SenderSourceFile == "MCSL2":
+            SenderSourceFile = "__main__"
+        ExceptionString = f"{SenderSourceFile}:{SenderFrameLineNo} - " + ExceptionString
+        self.logger.error(ExceptionString, exc_info=exc)
 
 
 class LoggerMsg:
@@ -170,3 +182,5 @@ class LoggerMsg:
         self.InitAria2 = "初始化Aria2..."
         self.OpenWebBrowser = "打开浏览器"
         self.Aria2Shutdown = "终止Aria2进程"
+
+MCSLLogger = MCSL2Logger()
