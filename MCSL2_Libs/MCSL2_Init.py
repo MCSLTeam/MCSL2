@@ -1,8 +1,7 @@
 from json import dumps
 from os import mkdir, path as ospath
 
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
-MCSLLogger = MCSL2Logger()
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
 
 # 各位开发者请注意，这块是屎山if集中地 --- LxHTT
 def InitMCSL():
