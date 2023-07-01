@@ -14,7 +14,7 @@ from requests.exceptions import SSLError
 
 from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_Logger import MCSLLogger
-from MCSL2_Libs.MCSL2_SettingsPage import MCSL2Settings, OpenWebUrl
+from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 
 Session = Session()
 Session.trust_env = False
