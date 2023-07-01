@@ -4,8 +4,7 @@ from os import path as ospath
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
 
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
-MCSLLogger = MCSL2Logger()
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
 
 
 class MCSL2Settings:

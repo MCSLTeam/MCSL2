@@ -1,8 +1,7 @@
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt, QSize
 from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QSpacerItem, QSizePolicy, QHBoxLayout, QWidget, QGridLayout
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
-MCSLLogger = MCSL2Logger()
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
 
 class Ui_MCSL2_Dialog(object):
     def setupUi(self, MCSL2_Dialog):

@@ -1,7 +1,6 @@
 from datetime import datetime
 from json import dump
 from os import getcwd, environ, remove, system as os_system, path as ospath
-from pathlib import WindowsPath
 from platform import system
 from subprocess import CalledProcessError
 from sys import argv, exit
@@ -12,7 +11,7 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsDropShadowEffect,
-    QMainWindow, QListView,
+    QMainWindow,
     QGridLayout
 )
 
@@ -23,7 +22,7 @@ from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
 from MCSL2_Libs.MCSL2_DownloadURLParser import FetchDownloadURLThreadFactory
 from MCSL2_Libs.MCSL2_Init import InitMCSL
 from MCSL2_Libs.MCSL2_JavaDetector import GetJavaVersion, Java
-from MCSL2_Libs.MCSL2_Logger import MCSL2Logger
+from MCSL2_Libs.MCSL2_Logger import MCSLLogger
 from MCSL2_Libs.MCSL2_MainWindow import *  # noqa: F403
 from MCSL2_Libs.MCSL2_ServerController import (
     CheckAvailableSaveServer,
@@ -34,7 +33,6 @@ from MCSL2_Libs.MCSL2_ServerController import (
 from MCSL2_Libs.MCSL2_Settings import MCSL2Settings, OpenWebUrl
 from MCSL2_Libs.MCSL2_Updater import Updater
 
-MCSLLogger = MCSL2Logger()
 
 
 # Initialize MainWindow
