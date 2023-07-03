@@ -2,14 +2,10 @@ from os import listdir
 from os import path as ospath
 from platform import system
 from re import search
-from subprocess import check_output, STDOUT, CalledProcessError
 
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, QProcess
 
 from MCSL2_Libs.MCSL2_Logger import MCSLLogger
-
-if system().lower() == 'windows':
-    from subprocess import SW_HIDE
 
 FoundJava = []
 isNeedFuzzySearch = True
@@ -51,16 +47,11 @@ class Java:
 
 
 def GetJavaVersion(File):
-    # 运行java.exe并捕获输出
-    try:
-        if 'windows' in system().lower():
-            output = check_output([File, '-version'], stderr=STDOUT, creationflags=SW_HIDE)
-        else:
-            output = check_output([File, '-version'], stderr=STDOUT)
-    except CalledProcessError as e:
-        MCSLLogger.ExceptionLog(e)
-        print(f"获取Java信息时出错:{e.cmd} | {e.output}")
-        return e
+    process = QProcess()
+    process.startDetached(File, ['-version'])
+    process.waitForFinished()
+    output = process.readAllStandardOutput()
+
     # 从输出中提取版本信息
     version_pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
     version_match = search(version_pattern, output.decode('utf-8'))
@@ -70,7 +61,8 @@ def GetJavaVersion(File):
         version = '.'.join(filter(None, version_match.groups()))
         return version
     else:
-        return "Failed to retrieve Java version information."
+        # "Failed to retrieve Java version information."
+        return ""
 
 
 def FindStr(s):
@@ -83,7 +75,7 @@ def FindStr(s):
     return False
 
 
-def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
+def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     try:
         # construct _Math function
         if 'windows' in system().lower():
@@ -92,40 +84,51 @@ def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch):
         else:
             def Match(P, F):
                 return ospath.join(P, F).endswith(r'bin/java')
-
+        processes = SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
+        rv = []
+        for process in processes:
+            process.waitForFinished()
+            if match := _Match(process.readAllStandardError().data().decode('utf-8')):
+                rv.append(Java(process.program(), match))
+        return rv
     except Exception as e:
         MCSLLogger.ExceptionLog(e)
-    return SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
 
 
 def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     try:
-        JavaPathList = []
+        processes = []
         if FuzzySearch:
             if ospath.isfile(Path) or 'x86_64-linux-gnu' in Path:
-                return JavaPathList
+                return processes
             try:
                 for File in listdir(Path):
-                        _Path = ospath.join(Path, File)
-                        if ospath.isfile(_Path):
-                            if _Match(Path, File):
-                                v = GetJavaVersion(_Path)
-                                if not isinstance(v, CalledProcessError):
-                                    JavaPathList.append(Java(_Path, v))
-                        elif FindStr(File.lower()):
-                            JavaPathList.extend(
-                                SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
+                    _Path = ospath.join(Path, File)
+                    if ospath.isfile(_Path):
+                        if _Match(Path, File):
+                            # async
+                            process = QProcess()
+                            process.start(_Path, ['-version'])
+                            processes.append(process)
+                    elif FindStr(File.lower()):
+                        processes.extend(
+                            SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
             except PermissionError:
                 pass
             except FileNotFoundError as e:
                 print(f'扫描路径时出错: {e}')
-
+        return processes
     except Exception as e:
         MCSLLogger.ExceptionLog(e)
-    return JavaPathList
 
 
 def FindJava(FuzzySearch=True):
+    def JavaVersionMatcher(s):
+        pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
+        match = search(pattern, s)
+        match = '.'.join(filter(None, match.groups()))
+        return match
+
     try:
         JavaPathList = []
         FoundJava.clear()
@@ -133,13 +136,12 @@ def FindJava(FuzzySearch=True):
             for i in range(65, 91):
                 Path = chr(i) + ":\\"
                 if ospath.exists(Path):
-                    JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch))
+                    JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch, JavaVersionMatcher))
         else:
-            JavaPathList.extend(SearchFile('/usr/lib', "java", "", FuzzySearch))
-
+            JavaPathList.extend(SearchFile('/usr/lib', "java", "", FuzzySearch, JavaVersionMatcher))
+        return JavaPathList
     except Exception as e:
         MCSLLogger.ExceptionLog(e)
-    return JavaPathList
 
 
 class JavaFindWorkThread(QThread):

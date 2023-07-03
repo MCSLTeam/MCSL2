@@ -2,7 +2,6 @@ from datetime import datetime
 from json import dump
 from os import getcwd, environ, remove, system as os_system, path as ospath
 from platform import system
-from subprocess import CalledProcessError
 from sys import argv, exit
 from qfluentwidgets import ProgressBar, IndeterminateProgressBar
 from PyQt5.QtCore import pyqtSlot
@@ -666,14 +665,13 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
                 self, "选择java.exe程序", getcwd(), "java.exe"
             )
             if JavaPathSysList[0] != "":
-                v = GetJavaVersion(JavaPathSysList[0])
-                if not isinstance(v, CalledProcessError):
+                if v := GetJavaVersion(JavaPathSysList[0]):
                     JavaPaths.append(Java(JavaPathSysList[0], v))
                     MCSLLogger.Log(Msg="ChooseJavaOK", MsgArg=f"\nJava路径：{JavaPathSysList[0]}\nJava版本：{v}",
                                    MsgLevel=0)
                 else:
                     MCSLLogger.Log(Msg="ChooseJavaInvalid", MsgArg=None, MsgLevel=2)
-                    CallMCSL2Dialog("ConfigPageQFileDialogInvalidJava", OtherTextArg=f"{v.output}",
+                    CallMCSL2Dialog("ConfigPageQFileDialogInvalidJava", OtherTextArg=f"无效的Java路径：{JavaPathSysList[0]}",
                                     isNeededTwoButtons=0,
                                     ButtonArg=None)
             else:
