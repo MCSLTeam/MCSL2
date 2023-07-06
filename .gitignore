@@ -1,0 +1,16 @@
+VirtualEnvironment/**
+venv/**
+poetry.lock
+.idea/**
+.vs/**
+.vscode/**
+Tools/OfflineBuild/**
+Tools/qView.exe
+Tools/ParseOneDriveLink/ParseOneDriveLink.exe
+Servers/**
+MCSL2/**
+pdm.lock
+pdm.toml
+__pycache__/**
+MCSL2Lib/__pycache__/**
+tmp.py
