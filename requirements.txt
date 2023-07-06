@@ -1,0 +1,6 @@
+PyQt5==5.15.9
+pyqt5-tools==5.15.9.3.3
+requests>=2.28.2
+aria2p
+PyQt-Fluent-Widgets[full]
+loguru
