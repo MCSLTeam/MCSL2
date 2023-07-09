@@ -1,3 +1,4 @@
+# DO NOT TRY THIS
 # from importlib import import_module
 # naviPage = import_module("MCSL2Lib.windowInterface")
 
@@ -13,4 +14,3 @@ def switchToConfigurePage():
 
 def switchToDownloadPage():
     naviPage.Window().switchTo(naviPage.Window().downloadInterface)
-    # naviPage.Window().switchTo(naviPage.Window().downloadInterface)
