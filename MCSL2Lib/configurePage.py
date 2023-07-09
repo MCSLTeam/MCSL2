@@ -26,7 +26,6 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.variables import scrollAreaViewportQss
-from MCSL2Lib import navigationController
 
 class _ConfigurePage(QWidget):
     def __init__(self):
@@ -944,7 +943,6 @@ class _ConfigurePage(QWidget):
 
         # # 简易模式绑定
         self.noobBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
-        self.noobDownloadJavaPrimaryPushBtn.clicked.connect(navigationController.switchToDownloadPage)
         # self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect()
         # self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect()
         # self.noobJavaListPushBtn.clicked.connect()
