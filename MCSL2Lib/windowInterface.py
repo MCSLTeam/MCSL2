@@ -3,8 +3,8 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 
 from qfluentwidgets import (
-    NavigationBar, 
-    NavigationItemPosition, 
+    NavigationBar,
+    NavigationItemPosition,
     isDarkTheme,
     FluentIcon as FIF,
     Theme,
@@ -19,6 +19,7 @@ from MCSL2Lib.downloadPage import _DownloadPage
 from MCSL2Lib.homePage import _HomePage
 from MCSL2Lib.variables import MCSL2Version
 from MCSL2Lib.icons import *  # noqa: F401
+
 
 # 标题栏
 class CustomTitleBar(TitleBar):
@@ -66,6 +67,7 @@ class CustomTitleBar(TitleBar):
 
     def resizeEvent(self, e):
         pass
+
 
 # 窗口
 class Window(FramelessWindow):
