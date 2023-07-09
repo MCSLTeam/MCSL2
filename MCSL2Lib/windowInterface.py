@@ -12,6 +12,7 @@ from qfluentwidgets import (
     setThemeColor
 )
 from qframelesswindow import FramelessWindow, TitleBar
+from MCSL2Lib.consolePage import _ConsolePage
 
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.configurePage import _ConfigurePage
@@ -76,7 +77,7 @@ class Window(FramelessWindow):
         super().__init__()
         self.setTitleBar(CustomTitleBar(self))
 
-        setTheme(Theme.DARK)
+        setTheme(Theme.AUTO)
 
         setThemeColor('#0078d4')
 
@@ -88,9 +89,18 @@ class Window(FramelessWindow):
         HomePage = _HomePage()
         ConfigurePage = _ConfigurePage()
         DownloadPage = _DownloadPage()
+        ConsolePage = _ConsolePage()
+        
         self.homeInterface = HomePage
         self.configureInterface = ConfigurePage
         self.downloadInterface = DownloadPage
+        self.consoleInterface = ConsolePage
+
+        # 定义无法直接设置的跳转
+        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
 
         # 初始化布局
         self.initLayout()
@@ -115,7 +125,7 @@ class Window(FramelessWindow):
                              '主页', selectedIcon=FIF.HOME_FILL)
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, '新建')
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, '下载')
-        # self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, '终端')
+        self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, '终端')
         # self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
         # self.addSubInterface(self.settingsInterface,
         #                      FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
@@ -124,7 +134,7 @@ class Window(FramelessWindow):
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
 
     def initWindow(self):
-        self.resize(765, 620)
+        self.resize(900, 700)
         self.setWindowIcon(QIcon(':/MCSL2_Icon/MCSL2_Icon.png'))
         self.setWindowTitle(f'MCSL {MCSL2Version}')
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
