@@ -8,6 +8,7 @@ from MCSL2Lib.networkController import Session
 class _HomePage(QWidget):
 
     def __init__(self):
+        
         super().__init__()
 
         # 全局GridLayout
