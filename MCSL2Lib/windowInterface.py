@@ -18,6 +18,8 @@ from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.configurePage import _ConfigurePage
 from MCSL2Lib.downloadPage import _DownloadPage
 from MCSL2Lib.homePage import _HomePage
+from MCSL2Lib.pluginPage import _PluginPage
+from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.variables import MCSL2Version
 from MCSL2Lib.icons import *  # noqa: F401
 
@@ -90,17 +92,22 @@ class Window(FramelessWindow):
         ConfigurePage = _ConfigurePage()
         DownloadPage = _DownloadPage()
         ConsolePage = _ConsolePage()
+        PluginPage = _PluginPage()
+        SettingsPage = _SettingsPage()
         
         self.homeInterface = HomePage
         self.configureInterface = ConfigurePage
         self.downloadInterface = DownloadPage
         self.consoleInterface = ConsolePage
+        self.pluginsInterface = PluginPage
+        self.settingsInterface = SettingsPage
 
-        # 定义无法直接设置的跳转
+        # 定义无法直接设置的Qt信号槽
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.settingsInterface.chooseThemeColorBtn.colorChanged.connect(setThemeColor)
 
         # 初始化布局
         self.initLayout()
@@ -126,9 +133,9 @@ class Window(FramelessWindow):
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, '新建')
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, '下载')
         self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, '终端')
-        # self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
-        # self.addSubInterface(self.settingsInterface,
-        #                      FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
+        self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
+        self.addSubInterface(self.settingsInterface,
+                             FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
 
         self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
