@@ -16,12 +16,15 @@ from qfluentwidgets import (
     ProgressRing,
     StrongBodyLabel,
     TitleLabel,
-    TransparentPushButton
+    TransparentPushButton,
+    FluentIcon as FIF
 )
 
 class _ConsolePage(QWidget):
     def __init__(self):
+        
         super().__init__()
+
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -85,7 +88,7 @@ class _ConsolePage(QWidget):
         self.gridLayout_2 = QGridLayout(self.titleLimitWidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
 
-        self.sendCommandButton = PrimaryToolButton(self.titleLimitWidget)
+        self.sendCommandButton = PrimaryToolButton(FIF.SEND, self.titleLimitWidget)
         self.sendCommandButton.setText("")
         self.sendCommandButton.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.sendCommandButton.setObjectName("sendCommandButton")
@@ -183,7 +186,7 @@ class _ConsolePage(QWidget):
         self.verticalLayout.addWidget(self.killServer)
         self.gridLayout.addWidget(self.quickMenu, 3, 4, 1, 1)
 
-        self.setObjectName("DownloadInterface")
+        self.setObjectName("ConsoleInterface")
 
         self.serverMemLabel.setText("内存占用：")
         self.serverCPULabel.setText("CPU占用：")
@@ -191,6 +194,7 @@ class _ConsolePage(QWidget):
         self.titleLabel.setText("终端")
         self.quickMenuTitleLabel.setText("快捷菜单：")
         self.gameMode.setText("游戏模式")
+        self.gameMode.addItems(["生存", "创造", "冒险"])
         self.whiteList.setText("白名单")
         self.op.setText("管理员")
         self.kickPlayers.setText("踢人")
@@ -198,3 +202,5 @@ class _ConsolePage(QWidget):
         self.saveServer.setText("保存存档")
         self.exitServer.setText("关闭服务器")
         self.killServer.setText("强制关闭")
+        self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送")
+        # self.serverOutput.setPlaceholderText("请先开启服务器！\n不开服务器没有日志的喂")
