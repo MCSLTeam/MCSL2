@@ -15,9 +15,12 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.variables import scrollAreaViewportQss
 
+
 class _DownloadPage(QWidget):
     def __init__(self):
+
         super().__init__()
+
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
