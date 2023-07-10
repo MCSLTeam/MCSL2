@@ -571,7 +571,7 @@
                </spacer>
               </item>
               <item row="1" column="1">
-               <widget class="LineEdit" name="NoobMinMemLineEdit">
+               <widget class="LineEdit" name="noobMinMemLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -855,7 +855,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>594</width>
+            <width>456</width>
             <height>734</height>
            </rect>
           </property>
@@ -1408,8 +1408,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>611</width>
-            <height>355</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout_4">

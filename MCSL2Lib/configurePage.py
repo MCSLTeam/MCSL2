@@ -29,7 +29,9 @@ from MCSL2Lib.variables import scrollAreaViewportQss
 
 class _ConfigurePage(QWidget):
     def __init__(self):
+        
         super().__init__()
+
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -302,16 +304,16 @@ class _ConfigurePage(QWidget):
 
         spacerItem5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_4.addItem(spacerItem5, 1, 5, 1, 1)
-        self.NoobMinMemLineEdit = LineEdit(self.noobSetMemWidget)
+        self.noobMinMemLineEdit = LineEdit(self.noobSetMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NoobMinMemLineEdit.sizePolicy().hasHeightForWidth())
-        self.NoobMinMemLineEdit.setSizePolicy(sizePolicy)
-        self.NoobMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.NoobMinMemLineEdit.setObjectName("NoobMinMemLineEdit")
+        sizePolicy.setHeightForWidth(self.noobMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        self.noobMinMemLineEdit.setSizePolicy(sizePolicy)
+        self.noobMinMemLineEdit.setMinimumSize(QSize(0, 30))
+        self.noobMinMemLineEdit.setObjectName("noobMinMemLineEdit")
 
-        self.gridLayout_4.addWidget(self.NoobMinMemLineEdit, 1, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.noobMinMemLineEdit, 1, 1, 1, 1)
         self.noobMemUnitLabel = SubtitleLabel(self.noobSetMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -914,6 +916,9 @@ class _ConfigurePage(QWidget):
         self.noobServerNameSubtitleLabel.setText("服务器名称：")
         self.noobSaveServerPrimaryPushBtn.setText("保存！")
         self.noobSubtitleLabel.setText("简易模式")
+        self.noobMinMemLineEdit.setPlaceholderText("整数")
+        self.noobMaxMemLineEdit.setPlaceholderText("整数")
+        self.noobServerNameLineEdit.setPlaceholderText("不能包含非法字符")
 
         # 进阶模式
         self.extendedSubtitleLabel.setText("进阶模式")
@@ -935,6 +940,15 @@ class _ConfigurePage(QWidget):
         self.extendedServerNameSubtitleLabel.setText("服务器名称：")
         self.extendedSaveServerPrimaryPushBtn.setText("保存！")
         self.importSubtitleLabel.setText("导入")
+        self.extendedMinMemLineEdit.setPlaceholderText("整数")
+        self.extendedMaxMemLineEdit.setPlaceholderText("整数")
+        self.extendedServerNameLineEdit.setPlaceholderText("不能包含非法字符")
+        self.extendedOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
+        self.extendedInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
+        self.extendedMemUnitComboBox.addItems(["M", "G"])
+        self.extendedMemUnitComboBox.setCurrentIndex(0)
 
         # 引导页绑定
         self.noobNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
