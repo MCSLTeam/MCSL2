@@ -36,3 +36,4 @@ class StackedWidget(QFrame):
 
     def setCurrentIndex(self, index, popOut=False):
         self.setCurrentWidget(self.view.widget(index), popOut)
+
