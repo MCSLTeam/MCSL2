@@ -3,11 +3,15 @@ from platform import system
 from sys import argv as SystemArgv
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
+from MCSL2Lib.initProgram import initializeMCSL2
 
 from MCSL2Lib.windowInterface import Window
 
 
 if __name__ == '__main__':
+
+    # 初始化
+    initializeMCSL2()
 
     # 高DPI适配
     QApplication.setHighDpiScaleFactorRoundingPolicy(
