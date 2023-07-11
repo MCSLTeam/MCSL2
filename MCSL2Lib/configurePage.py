@@ -1,5 +1,7 @@
+from json import dump
+from os import getcwd, remove, path as ospath
 from PyQt5.QtGui import QCursor
-from PyQt5.QtCore import Qt, QSize, QRect
+from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtWidgets import (
     QGridLayout,
     QWidget,
@@ -8,7 +10,8 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QStackedWidget,
     QHBoxLayout,
-    QFrame
+    QFrame,
+    QFileDialog
 )
 
 from qfluentwidgets import (
@@ -22,15 +25,30 @@ from qfluentwidgets import (
     SubtitleLabel,
     TitleLabel,
     TransparentToolButton,
-    FluentIcon as FIF
+    FluentIcon as FIF,
+    InfoBar,
+    InfoBarPosition
 )
 
 from MCSL2Lib.variables import scrollAreaViewportQss
+from MCSL2Lib import javaDetector
+
 
 class _ConfigurePage(QWidget):
+
     def __init__(self):
         
         super().__init__()
+
+        self.JavaVersion: str
+        self.javaPath = []
+        self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
+        self.javaFindWorkThreadFactory.FuzzySearch = True
+        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
+        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
+        self.javaFindWorkThreadFactory.Create().start()
+        self.MinMem: int
+        self.MaxMem: int
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -957,8 +975,8 @@ class _ConfigurePage(QWidget):
 
         # # 简易模式绑定
         self.noobBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
-        # self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect()
-        # self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect()
+        self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
+        self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.AutoDetectJava)
         # self.noobJavaListPushBtn.clicked.connect()
         # self.noobManuallyAddCorePrimaryPushBtn.clicked.connect()
         # self.noobDownloadCorePrimaryPushBtn.clicked.connect()
@@ -966,8 +984,8 @@ class _ConfigurePage(QWidget):
 
         # # 进阶模式绑定
         self.extendedBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
-        # self.extendedDownloadJavaPrimaryPushBtn.clicked.connect()
-        # self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect()
+        self.extendedDownloadJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
+        self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.AutoDetectJava)
         # self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect()
         # self.extendedJavaListPushBtn.clicked.connect()
         # self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect()
@@ -988,3 +1006,82 @@ class _ConfigurePage(QWidget):
     def newServerStackedWidgetNavigateToGuide(self):
         self.newServerStackedWidget.setCurrentIndex(0)
 
+    def addJavaManually(self):
+        tmpJava = str(QFileDialog.getOpenFileName(self, "选择java.exe程序", getcwd(), "java.exe")[0])
+        if tmpJava != "":
+            if v := javaDetector.GetJavaVersion(tmpJava):
+                self.javaPath.append(javaDetector.Java(tmpJava, v))
+                InfoBar.success(
+                    title='已添加',
+                    content=f"Java路径：{tmpJava}\n版本：{v}\n已选中此Java。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self
+                    )
+                self.javaPath.append(tmpJava)
+            else:
+                InfoBar.error(
+                    title='添加失败',
+                    content="此Java无效！",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self
+                    )
+        else:
+            InfoBar.warning(
+                    title='未添加',
+                    content="你并没有选择Java。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self
+                    )
+
+    
+    def AutoDetectJava(self):
+        # 防止同时多次运行worker线程
+        self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(False)
+        self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(False)
+        self.javaFindWorkThreadFactory.Create().start()
+
+    @pyqtSlot(list)
+    def JavaDetectFinished(self, _JavaPaths: list):
+
+        # 向前兼容
+        if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+            remove("MCSL2/AutoDetectJavaHistory.txt")
+
+        with open("MCSL2/AutoDetectJavaHistory.json", 'w+', encoding='utf-8') as SaveFoundedJava:
+            self.javaPath = list({p[:-1] for p in SaveFoundedJava.readlines()
+                                  }.union(set(self.javaPath)).union(set(_JavaPaths)))
+            self.javaPath.sort(key=lambda x: x.Version, reverse=False)
+            JavaPathList = [{"Path": e.Path, "Version": e.Version}
+                            for e in self.javaPath]
+            print(JavaPathList)
+            # 获取新发现的Java路径,或者用户选择的Java路径
+            dump({"java": JavaPathList}, SaveFoundedJava,
+                    sort_keys=True, indent=4, ensure_ascii=False)
+
+    @pyqtSlot(int)
+    def OnJavaFindWorkThreadFinished(self, sequenceNumber):
+
+        # 如果不是第一次运行worker线程
+        if sequenceNumber > 1:
+            InfoBar.success(
+            title='查找完毕',
+            content=f"一共搜索到了{len(self.javaPath)}个Java。\n请单击“Java列表”按钮查看、选择。",
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self
+            )
+
+        # 释放AutoDetectJava中禁用的按钮
+        self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
+        self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
