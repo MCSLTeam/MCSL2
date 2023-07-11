@@ -9,17 +9,17 @@
 ___
 
 <center>
-<a href="https://github.com/LxHTT/MCSL2" target="_blank">中文</a>  |  English
+<a href="https://github.com/MCSLTeam/MCSL2" target="_blank">中文</a>  |  English
 </center>
 
 ___
-[![](https://img.shields.io/github/license/LxHTT/MCSL2?style=for-the-badge "License")](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
-[![](https://img.shields.io/github/stars/LxHTT/MCSL2?style=for-the-badge "Star")](https://github.com/LxHTT/MCSL2/stargazers)
-[![](https://img.shields.io/github/forks/LxHTT/MCSL2?style=for-the-badge "Fork")](https://github.com/LxHTT/MCSL2/forks)
-[![](https://img.shields.io/github/actions/workflow/status/LxHTT/MCSL2/build.yml?label=Build&style=for-the-badge "Actions")](https://github.com/LxHTT/MCSL2/actions)  
-[![](https://img.shields.io/github/downloads/LxHTT/MCSL2/total?style=for-the-badge "Downloads")](https://github.com/LxHTT/MCSL2/releases)
-[![](https://img.shields.io/github/v/tag/LxHTT/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/LxHTT/MCSL2/releases/latest)
-[![](https://img.shields.io/github/issues/LxHTT/MCSL2?style=for-the-badge "Issues")](https://github.com/LxHTT/MCSL2/issues)  
+[![](https://img.shields.io/github/license/MCSLTeam/MCSL2?style=for-the-badge "License")](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
+[![](https://img.shields.io/github/stars/MCSLTeam/MCSL2?style=for-the-badge "Star")](https://github.com/MCSLTeam/MCSL2/stargazers)
+[![](https://img.shields.io/github/forks/MCSLTeam/MCSL2?style=for-the-badge "Fork")](https://github.com/MCSLTeam/MCSL2/forks)
+[![](https://img.shields.io/github/actions/workflow/status/MCSLTeam/MCSL2/build.yml?label=Build&style=for-the-badge "Actions")](https://github.com/MCSLTeam/MCSL2/actions)  
+[![](https://img.shields.io/github/downloads/MCSLTeam/MCSL2/total?style=for-the-badge "Downloads")](https://github.com/MCSLTeam/MCSL2/releases)
+[![](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
+[![](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
 [![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.netlify.app)
 [![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtz.dl%40qq.com-%2357728B?style=for-the-badge)](mailto:lxhtz.dl@qq.com)  
 ![](https://repobeats.axiom.co/api/embed/869c25f269efec38ff69088fca0dc7aba2de63bf.svg "Repo Analysis")
@@ -29,7 +29,7 @@ ___
 
  - **💻 Simple and beautiful interface**: Written with Qt5 framework, collocate with QSS，powered by rounded corners（
  - **🎞️ Multiple servers can be managed**: With a MCSL2, the servers are all yours!
- - **⏬ All-in-One download service**: Powered by MCSLAPI, with the Aria2 download engine, speed fly!
+ - **⏬ All-in-One download service**: Powered by FastMirror、MCSLAPI, with the Aria2 download engine, speed fly!
  - **⚡ Quickly configure a server**: A few options to quickly configure a new server!
  - **✅ Automatic find Java**: Tired of manually flipping through directories? Automatically find Java can help you solve it!
  - **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful!
@@ -42,11 +42,11 @@ ___
 ___
 ### Related link
 MCSL 2 Official Website:[https://mcsl.com.cn](https://mcsl.com.cn)  
-MCSLAPI Official Website:[https://mcslapi.netlify.app](https://mcslapi.netlify.app/)  
-GitHub Issue:[https://github.com/LxHTT/MCSL2/issues](https://github.com/LxHTT/MCSL2/issues)  
+MCSLAPI Official Website:[https://mcsl.com.cn/MCSLAPIGuide](https://mcsl.com.cn/MCSLAPIGuide)  
+GitHub Issue:[https://github.com/MCSLTeam/MCSL2/issues](https://github.com/MCSLTeam/MCSL2/issues)  
 QQ Group:[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
 LxHTT's Email:[mailto:lxhtz.dl@qq.com](mailto:lxhtz.dl@qq.com)  
-GNU General Public License v3.0:[https://github.com/LxHTT/MCSL2/blob/master/LICENSE](https://github.com/LxHTT/MCSL2/blob/master/LICENSE)
+GNU General Public License v3.0:[https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
 ___
 ### Special Thanks
 
@@ -56,7 +56,7 @@ ___
 
 And all the contributors!  
 
-<a href="https://github.com/LxHTT/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=LxHTT/MCSL2&anon=1&max=100000000"></a>
+<a href="https://github.com/MCSLTeam/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=MCSLTeam/MCSL2&anon=1&max=100000000"></a>
 
 ___
 ## Development document
@@ -64,7 +64,7 @@ ___
 This project was developed based on Python 3.8.0.
 ### 1. Clone this repository
 ```commandline
-git clone https://github.com/LxHTT/MCSL2.git
+git clone https://github.com/MCSLTeam/MCSL2.git
 ```
 ### 2. Install the requirements
 ```commandline
