@@ -137,7 +137,7 @@ class _DownloadPage(QWidget):
         self.setObjectName("DownloadInterface")
 
         self.titleLabel.setText("下载")
-        self.subTitleLabel.setText("由FastMirror提供支持。")
+        self.subTitleLabel.setText("Aria2引擎高速驱动！")
         self.coreListSubtitleLabel.setText("核心列表")
         self.versionSubtitleLabel.setText("游戏版本")
         self.buildSubtitleLabel.setText("构建列表")
