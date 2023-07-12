@@ -18,7 +18,6 @@ if __name__ == '__main__':
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-
     QApplication.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 
     # 适配Linux特殊情况
