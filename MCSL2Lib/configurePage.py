@@ -1007,20 +1007,34 @@ class _ConfigurePage(QWidget):
         self.newServerStackedWidget.setCurrentIndex(0)
 
     def addJavaManually(self):
-        tmpJava = str(QFileDialog.getOpenFileName(self, "选择java.exe程序", getcwd(), "java.exe")[0])
-        if tmpJava != "":
-            if v := javaDetector.GetJavaVersion(tmpJava):
-                self.javaPath.append(javaDetector.Java(tmpJava, v))
-                InfoBar.success(
-                    title='已添加',
-                    content=f"Java路径：{tmpJava}\n版本：{v}\n已选中此Java。",
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self
-                    )
-                self.javaPath.append(tmpJava)
+        tmpJavaPath = str(QFileDialog.getOpenFileName(self, "选择java.exe程序", getcwd(), "java.exe")[0])
+        if tmpJavaPath != "":
+            tmpJavaPath = tmpJavaPath.replace("/", "\\")
+            if v := javaDetector.GetJavaVersion(tmpJavaPath):
+                tmpNewJavaPath = self.javaPath
+                if javaDetector.Java(tmpJavaPath, v) not in tmpNewJavaPath:
+                    tmpNewJavaPath.append(d)
+                    InfoBar.success(
+                        title='已添加',
+                        content=f"Java路径：{tmpJavaPath}\n版本：{v}\n已选中此Java。",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+                else:
+                    InfoBar.warning(
+                        title='未添加',
+                        content="此Java已被添加过。",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+                self.javaPath.clear()
+                self.javaPath = tmpNewJavaPath
             else:
                 InfoBar.error(
                     title='添加失败',
@@ -1057,12 +1071,20 @@ class _ConfigurePage(QWidget):
             remove("MCSL2/AutoDetectJavaHistory.txt")
 
         with open("MCSL2/AutoDetectJavaHistory.json", 'w+', encoding='utf-8') as SaveFoundedJava:
+            tmpNewJavaPath = self.javaPath
             self.javaPath = list({p[:-1] for p in SaveFoundedJava.readlines()
                                   }.union(set(self.javaPath)).union(set(_JavaPaths)))
             self.javaPath.sort(key=lambda x: x.Version, reverse=False)
+            for d in self.javaPath:
+                if d not in tmpNewJavaPath:
+                    tmpNewJavaPath.append(d)
+                else:
+                    pass
+            self.javaPath.clear()
+            self.javaPath = tmpNewJavaPath
+                
             JavaPathList = [{"Path": e.Path, "Version": e.Version}
                             for e in self.javaPath]
-            print(JavaPathList)
             # 获取新发现的Java路径,或者用户选择的Java路径
             dump({"java": JavaPathList}, SaveFoundedJava,
                     sort_keys=True, indent=4, ensure_ascii=False)
