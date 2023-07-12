@@ -142,7 +142,7 @@ class Window(FramelessWindow):
 
     def initWindow(self):
         self.resize(900, 700)
-        self.setWindowIcon(QIcon(':/MCSL2_Icon/MCSL2_Icon.png'))
+        self.setWindowIcon(QIcon(':/build-InIcons/MCSL2.png'))
         self.setWindowTitle(f'MCSL {MCSL2Version}')
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 

@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="build-InIcons">
+    <file>MCSL2.png</file>
+    <file>Java.svg</file>
+    <file>Spigot.svg</file>
+    <file>Paper.png</file>
+    <file>Grass.png</file>
+    <file>Glass.png</file>
+    <file>CraftingTable.png</file>
+    <file>CommandBlock.png</file>
+    <file>Cloth.png</file>
+    <file>Anvil.png</file>
+  </qresource>
+</RCC>
