@@ -92,7 +92,7 @@ class FetchDownloadURLThread(QThread):
 
 @Singleton
 class FetchDownloadURLThreadFactory:
-    singletonThread: Dict[FetchDownloadURLThread] = {}
+    singletonThread: FetchDownloadURLThread = {}
 
     @classmethod
     def create(cls,
