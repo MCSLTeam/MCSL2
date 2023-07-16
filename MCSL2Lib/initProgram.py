@@ -54,7 +54,7 @@ def initializeMCSL2():
             }
             InitConfig.write(dumps(ConfigTemplate, indent=4))
             InitConfig.close()
-    if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
+    if ospath.getsize(r"./MCSL2/MCSL2_Config.json") == 0:
         remove(r"./MCSL2/MCSL2_Config.json")
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as FixConfig:
             ConfigTemplate = {
