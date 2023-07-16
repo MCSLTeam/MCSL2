@@ -202,7 +202,7 @@ class _DownloadPage(QWidget):
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
         
-        self.downloadStackedWidget.setCurrentWidget(self.downloadWithMCSLAPI)
+        self.downloadStackedWidget.setCurrentWidget(self.downloadWithFastMirror)
         
         self.setObjectName("DownloadInterface")
 
