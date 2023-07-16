@@ -1,6 +1,6 @@
 
 from json import dumps
-from os import mkdir, path as ospath
+from os import mkdir, path as ospath ,remove
 
 # 各位开发者请注意，这块是屎山if集中地 --- LxHTT
 def initializeMCSL2():
@@ -54,6 +54,30 @@ def initializeMCSL2():
             }
             InitConfig.write(dumps(ConfigTemplate, indent=4))
             InitConfig.close()
+    if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
+        remove(r"./MCSL2/MCSL2_Config.json")
+        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as FixConfig:
+            ConfigTemplate = {
+                "autoRunLastServer": False,
+                "acceptAllMojangEula": False,
+                "sendStopInsteadOfKill": True,
+                "newServerType": "Default",
+                "onlySaveGlobalServerConfig": False,
+                "downloadSource": "FastMirror",
+                "alwaysAskSaveDirectory": False,
+                "aria2Thread": 8,
+                "saveSameFileException": "ask",
+                "outputDeEncoding": "utf-8",
+                "inputDeEncoding": "follow",
+                "quickMenu": True,
+                "theme": "auto",
+                "themeColor": "#0078d4",
+                "alwaysRunAsAdministrator": False,
+                "startOnStartup": False,
+                "checkUpdateOnStart": False
+            }
+            FixConfig.write(dumps(ConfigTemplate, indent=4))
+            FixConfig.close()
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as InitServerList:
             ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
