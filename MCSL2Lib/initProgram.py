@@ -48,8 +48,8 @@ def initializeMCSL2():
                 "quickMenu": True,
                 "theme": "auto",
                 "themeColor": "#0078d4",
-                "startOnStartup": False,
                 "alwaysRunAsAdministrator": False,
+                "startOnStartup": False,
                 "checkUpdateOnStart": False
             }
             InitConfig.write(dumps(ConfigTemplate, indent=4))
