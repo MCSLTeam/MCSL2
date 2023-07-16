@@ -1,7 +1,6 @@
 from qfluentwidgets import PrimaryPushButton, PushButton, StrongBodyLabel, TitleLabel
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QGridLayout, QWidget, QVBoxLayout, QSpacerItem, QSizePolicy
-from traceback import format_exception as FormatException
 from MCSL2Lib.networkController import Session
 
 
@@ -79,5 +78,4 @@ class _HomePage(QWidget):
             Notice = f"公告: {Session.get(GetNoticeUrl).text}"
             return Notice
         except Exception as e:
-            ExceptionString = "".join(FormatException(type(e), e, e.__traceback__))
-            return f"{ExceptionString}网络连接失败，无法获取公告。"
+            return "网络连接失败，无法获取公告。"
