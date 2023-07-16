@@ -1,12 +1,14 @@
 from json import dumps, loads
 from typing import Union
+from MCSL2Lib.networkController import Session
 from PyQt5.QtCore import (
     QSize,
     Qt,
     QRect,
-    pyqtSignal
+    pyqtSignal,
+    QUrl
 )
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QDesktopServices
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -33,7 +35,10 @@ from qfluentwidgets import (
     SwitchButton,
     TitleLabel,
     ColorPickerButton,
-    PushButton
+    PushButton,
+    MessageBox,
+    InfoBarPosition,
+    InfoBar
 )
 from MCSL2Lib.variables import scrollAreaViewportQss, MCSL2Version
 
@@ -964,7 +969,6 @@ class _SettingsPage(QWidget):
         self.currentVerTitle.setText("当前版本：")
         self.currentVerLabel.setText(MCSL2Version)
         self.checkUpdateBtn.setText("检查更新")
-        self.checkUpdateBtn.clicked.connect(self.refreshSettingsInterface)
         self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
         self.checkUpdateOnStartSwitchBtn.setText("已关闭")
         self.checkUpdateOnStartSwitchBtn.setOnText("已开启")
@@ -1000,6 +1004,12 @@ class _SettingsPage(QWidget):
         self.themeComboBox.setCurrentIndex(0)
         self.saveSettingsBtnWidget.setVisible(False)
         
+        self.checkUpdateBtn.clicked.connect(self.checkUpdate)
+        
+        self.joinQQGroup.clicked.connect(lambda: self.openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ"))
+        self.openOfficialWeb.clicked.connect(lambda: self.openWebUrl("https://mcsl.com.cn"))
+        self.openSourceCodeRepo.clicked.connect(lambda: self.openWebUrl("https://www.github.com/MCSLTeam/MCSL2"))
+
         self.settingsChanged.connect(self.saveSettingsBtnWidget.setVisible)
         self.saveBtn.clicked.connect(self.saveSettings)
         self.giveUpBtn.clicked.connect(self.giveUpSettings)
@@ -1099,3 +1109,55 @@ class _SettingsPage(QWidget):
 
         # updateSettings
         self.checkUpdateOnStartSwitchBtn.setChecked(self.fileSettings['checkUpdateOnStart'])
+
+    def openWebUrl(Url):
+        QDesktopServices.openUrl(QUrl(Url))
+
+    def checkUpdate(self):
+        '''
+        返回：
+        1.是否需要更新
+            1为需要
+            0为不需要
+            -1出错
+        2.新版更新链接
+        3.新版更新介绍
+        '''
+        try:
+            latestVerInfo = Session.get(f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={MCSL2Version}").text.split("|")
+
+            if latestVerInfo[0] == "true":  # 需要更新
+                title = f'有新版本：{latestVerInfo[4]}'
+                content = f"""{Session.get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
+                w = MessageBox(title, content, self)
+                w.contentLabel.setTextFormat(Qt.MarkdownText)
+                w.yesButton.setText("更新")
+                w.cancelButton.setText("关闭")
+                if w.exec(): #确定， latestVerInfo[3]为下载链接
+                    pass
+                else: # 取消
+                    pass
+
+            elif latestVerInfo[0] == "false":  # 已是最新版
+                InfoBar.success(
+                    title='无需更新',
+                    content="已是最新版本",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP_RIGHT,
+                    # position='Custom',   # NOTE: use custom info bar manager
+                    duration=2500,
+                    parent=self
+                )
+            
+        except Exception as e:
+            InfoBar.error(
+                    title='检查更新失败',
+                    content="尝试自己检查一下网络？",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP_RIGHT,
+                    # position='Custom',   # NOTE: use custom info bar manager
+                    duration=2500,
+                    parent=self
+                )
