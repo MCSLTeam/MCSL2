@@ -98,6 +98,10 @@ class Window(FramelessWindow):
         self.pluginsInterface = PluginPage
         self.settingsInterface = SettingsPage
 
+        # 设置主题
+        setTheme(Theme.AUTO)
+        setThemeColor(str(self.settingsInterface.fileSettings['themeColor']))
+        
         # 定义无法直接设置的Qt信号槽
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
@@ -105,9 +109,6 @@ class Window(FramelessWindow):
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.settingsInterface.chooseThemeColorBtn.colorChanged.connect(setThemeColor)
 
-        # 设置主题
-        setTheme(Theme.AUTO)
-        setThemeColor(str(self.settingsInterface.fileSettings['themeColor']))
         
         # 初始化布局
         self.initLayout()

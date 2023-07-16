@@ -56,7 +56,6 @@ class _SettingsPage(QWidget):
         self.themeList = ["auto", "dark", "light"]
         
         self.readSettings()
-        print(self.fileSettings['themeColor'])
 
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -965,6 +964,7 @@ class _SettingsPage(QWidget):
         self.currentVerTitle.setText("当前版本：")
         self.currentVerLabel.setText(MCSL2Version)
         self.checkUpdateBtn.setText("检查更新")
+        self.checkUpdateBtn.clicked.connect(self.refreshSettingsInterface)
         self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
         self.checkUpdateOnStartSwitchBtn.setText("已关闭")
         self.checkUpdateOnStartSwitchBtn.setOnText("已开启")
