@@ -79,10 +79,6 @@ class Window(FramelessWindow):
         super().__init__()
         self.setTitleBar(CustomTitleBar(self))
 
-        setTheme(Theme.AUTO)
-
-        setThemeColor('#0078d4')
-
         self.hBoxLayout = QHBoxLayout(self)
         self.navigationBar = NavigationBar(self)
         self.stackWidget = StackedWidget(self)
@@ -109,12 +105,17 @@ class Window(FramelessWindow):
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.settingsInterface.chooseThemeColorBtn.colorChanged.connect(setThemeColor)
 
+        # 设置主题
+        setTheme(Theme.AUTO)
+        setThemeColor(str(self.settingsInterface.fileSettings['themeColor']))
+        
         # 初始化布局
         self.initLayout()
 
         # 初始化导航栏
         self.initNavigation()
 
+        # 初始化窗口
         self.initWindow()
 
     def switchTo(self, widget):

@@ -55,6 +55,9 @@ class _SettingsPage(QWidget):
         self.inputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.themeList = ["auto", "dark", "light"]
         
+        self.readSettings()
+        print(self.fileSettings['themeColor'])
+
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
 
@@ -701,7 +704,7 @@ class _SettingsPage(QWidget):
         self.horizontalLayout_14.addWidget(self.themeColorTitle)
         spacerItem21 = QSpacerItem(449, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem21)
-        self.chooseThemeColorBtn = ColorPickerButton(QColor("#0078d4"), "主题颜色", self.themeColor, enableAlpha=False)
+        self.chooseThemeColorBtn = ColorPickerButton(QColor(str(self.fileSettings['themeColor'])), "主题颜色", self.themeColor, enableAlpha=False)
         self.chooseThemeColorBtn.setObjectName("chooseThemeColorBtn")
 
         self.horizontalLayout_14.addWidget(self.chooseThemeColorBtn)
@@ -1025,14 +1028,13 @@ class _SettingsPage(QWidget):
 
         # softwareSettings
         self.themeComboBox.currentIndexChanged.connect(lambda: self.changeSettings("theme", self.themeList[self.themeComboBox.currentIndex()]))
-        self.chooseThemeColorBtn.colorChanged.connect(lambda: self.changeSettings("themeColor", str(self.chooseThemeColorBtn.color)))
+        self.chooseThemeColorBtn.colorChanged.connect(lambda: self.changeSettings("themeColor", str(self.chooseThemeColorBtn.color.name())))
         self.alwaysRunAsAdministratorSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("alwaysRunAsAdministrator", self.alwaysRunAsAdministratorSwitchBtn.isChecked()))
         self.startOnStartupSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("startOnStartup", self.startOnStartupSwitchBtn.isChecked()))
 
         # updateSettings
         self.checkUpdateOnStartSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("checkUpdateOnStart", self.checkUpdateOnStartSwitchBtn.isChecked()))
 
-        self.readSettings()
         self.refreshSettingsInterface()
 
     def readSettings(self):
@@ -1047,14 +1049,10 @@ class _SettingsPage(QWidget):
 
     def changeSettings(self, Setting: str, Status: Union[bool, str, int]):
         self.unSavedSettings.update({Setting: Status})
-        print("UUU", self.unSavedSettings)
         self.settingsChanged.emit(True)
     
     def giveUpSettings(self):
         self.refreshSettingsInterface()
-        print("FFF", self.fileSettings)
-        print("\n")
-        print("UUU", self.unSavedSettings)
         self.unSavedSettings = self.fileSettings
         self.settingsChanged.emit(False)
         
