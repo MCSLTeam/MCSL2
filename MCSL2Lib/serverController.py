@@ -6,9 +6,6 @@ from typing import List, Optional
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
-from MCSL2_Libs.MCSL2_Dialog import CallMCSL2Dialog
-from MCSL2_Libs.MCSL2_Settings import MCSL2Settings
-
 
 def CheckAvailableSaveServer(ChkVal):
     if ChkVal[0] == 1:
