@@ -984,8 +984,8 @@ class _ConfigurePage(QWidget):
 
         # # 进阶模式绑定
         self.extendedBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
-        self.extendedDownloadJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
-        self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.AutoDetectJava)
+        self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
+        self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.AutoDetectJava)
         # self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect()
         # self.extendedJavaListPushBtn.clicked.connect()
         # self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect()
