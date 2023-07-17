@@ -60,7 +60,7 @@ class _SettingsPage(QWidget):
         self.inputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.themeList = ["auto", "dark", "light"]
         
-        self.readSettings()
+        self.readSettings(firstLoad=True)
 
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -1047,20 +1047,31 @@ class _SettingsPage(QWidget):
 
         self.refreshSettingsInterface()
 
-    def readSettings(self):
+    def readSettings(self, firstLoad):
         if ospath.exists(r"./MCSL2/MCSL2_Config.json"):
             if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
                 with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as readConfig:
                     # 从文件读取的配置
                     self.fileSettings = loads(readConfig.read())
                     # 多声明一份给修改设置的时候用
-                    self.unSavedSettings = self.fileSettings
+                    if firstLoad:
+                        self.unSavedSettings = self.fileSettings
+                    else:
+                        pass
                     readConfig.close()
 
     def changeSettings(self, Setting: str, Status: Union[bool, str, int]):
         self.unSavedSettings.update({Setting: Status})
-        self.settingsChanged.emit(True) if self.unSavedSettings != self.fileSettings else self.settingsChanged.emit(False)
-
+        if self.unSavedSettings[Setting] != self.fileSettings[Setting]:
+            print("changed.")
+            print(self.unSavedSettings)
+            print(self.fileSettings)
+            self.settingsChanged.emit(True)
+        else:
+            print("canceled.")
+            print(self.unSavedSettings)
+            print(self.fileSettings)
+            self.settingsChanged.emit(False)
     
     def giveUpSettings(self):
         self.refreshSettingsInterface()
@@ -1070,7 +1081,6 @@ class _SettingsPage(QWidget):
         
     def saveSettings(self):
         self.fileSettings.update(self.unSavedSettings)
-        self.unSavedSettings = self.fileSettings
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
             writeConfig.write(dumps(self.fileSettings, indent=4))
             writeConfig.close()
@@ -1079,7 +1089,7 @@ class _SettingsPage(QWidget):
 
     def refreshSettingsInterface(self):
 
-        self.readSettings()
+        self.readSettings(firstLoad=False)
         
         # serverSettings
         self.autoRunLastServerSwitchBtn.setChecked(self.fileSettings['autoRunLastServer'])
