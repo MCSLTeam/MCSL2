@@ -65,17 +65,17 @@ class _HomePage(QWidget):
         self.startServerBtn.setText("启动服务器：")
         self.selectServerBtn.setText("选择")
         self.titleLabel.setText("主页")
-        self.NoticeLabel.setText(self.GetNotice())
+        self.NoticeLabel.setText(self.getNotice())
         self.setObjectName("homeInterface")
 
         # self.newServerBtn.clicked.connect()
         # self.startServerBtn.clicked.connect()
         # self.selectServerBtn.clicked.connect()
 
-    def GetNotice(self):
-        GetNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
+    def getNotice(self):
+        getNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
         try:
-            Notice = f"公告: {Session.get(GetNoticeUrl).text}"
-            return Notice
+            notice = f"公告: {Session.get(getNoticeUrl).text}"
+            return notice
         except Exception as e:
             return "网络连接失败，无法获取公告。"
