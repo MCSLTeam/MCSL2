@@ -1059,7 +1059,8 @@ class _SettingsPage(QWidget):
 
     def changeSettings(self, Setting: str, Status: Union[bool, str, int]):
         self.unSavedSettings.update({Setting: Status})
-        self.settingsChanged.emit(True)
+        self.settingsChanged.emit(True) if self.unSavedSettings != self.fileSettings else self.settingsChanged.emit(False)
+
     
     def giveUpSettings(self):
         self.refreshSettingsInterface()
