@@ -9,7 +9,9 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     Theme,
     setTheme,
-    setThemeColor
+    setThemeColor,
+    InfoBar,
+    InfoBarPosition
 )
 from qframelesswindow import FramelessWindow, TitleBar
 from MCSL2Lib.consolePage import _ConsolePage
@@ -104,11 +106,36 @@ class Window(FramelessWindow):
         
         # 定义无法直接设置的Qt信号槽
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
-        self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1))
+        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: InfoBar.info(
+                                                                                                       title='切换到MCSLAPI',
+                                                                                                       content="因为FastMirror没有Java啊 (",
+                                                                                                       orient=Qt.Horizontal,
+                                                                                                       isClosable=True,
+                                                                                                       position=InfoBarPosition.TOP,
+                                                                                                       duration=3000,
+                                                                                                       parent=self
+                                                                                                      ))
+        
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1))
+        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: InfoBar.info(
+                                                                                                       title='切换到MCSLAPI',
+                                                                                                       content="因为FastMirror没有Java啊 (",
+                                                                                                       orient=Qt.Horizontal,
+                                                                                                       isClosable=True,
+                                                                                                       position=InfoBarPosition.TOP,
+                                                                                                       duration=3000,
+                                                                                                       parent=self
+                                                                                                      ))
+        
+        self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
-        self.settingsInterface.chooseThemeColorBtn.colorChanged.connect(setThemeColor)
+        self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
 
+
+        self.settingsInterface.chooseThemeColorBtn.colorChanged.connect(setThemeColor)
         
         # 初始化布局
         self.initLayout()
