@@ -1110,7 +1110,7 @@ class _SettingsPage(QWidget):
         # updateSettings
         self.checkUpdateOnStartSwitchBtn.setChecked(self.fileSettings['checkUpdateOnStart'])
 
-    def openWebUrl(Url):
+    def openWebUrl(self, Url):
         QDesktopServices.openUrl(QUrl(Url))
 
     def checkUpdate(self):
