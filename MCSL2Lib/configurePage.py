@@ -984,7 +984,7 @@ class _ConfigurePage(QWidget):
 
         # # 进阶模式绑定
         self.extendedBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
-        self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
+        self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect()
         # self.extendedJavaListPushBtn.clicked.connect()
@@ -1056,7 +1056,6 @@ class _ConfigurePage(QWidget):
                     parent=self
                     )
 
-    
     def autoDetectJava(self):
         # 防止同时多次运行worker线程
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(False)
@@ -1101,3 +1100,5 @@ class _ConfigurePage(QWidget):
 
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
         self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
+
+    # def addCoreManually(self):
