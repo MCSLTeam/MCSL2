@@ -44,8 +44,8 @@ class _ConfigurePage(QWidget):
         self.javaPath = []
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.FuzzySearch = True
-        self.javaFindWorkThreadFactory.SignalConnect = self.JavaDetectFinished
-        self.javaFindWorkThreadFactory.FinishSignalConnect = self.OnJavaFindWorkThreadFinished
+        self.javaFindWorkThreadFactory.SignalConnect = self.autoDetectJavaFinished
+        self.javaFindWorkThreadFactory.FinishSignalConnect = self.onJavaFindWorkThreadFinished
         self.javaFindWorkThreadFactory.Create().start()
         self.MinMem: int
         self.MaxMem: int
@@ -976,7 +976,7 @@ class _ConfigurePage(QWidget):
         # # 简易模式绑定
         self.noobBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
-        self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.AutoDetectJava)
+        self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.noobJavaListPushBtn.clicked.connect()
         # self.noobManuallyAddCorePrimaryPushBtn.clicked.connect()
         # self.noobDownloadCorePrimaryPushBtn.clicked.connect()
@@ -985,7 +985,7 @@ class _ConfigurePage(QWidget):
         # # 进阶模式绑定
         self.extendedBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
-        self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.AutoDetectJava)
+        self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect()
         # self.extendedJavaListPushBtn.clicked.connect()
         # self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect()
@@ -1013,7 +1013,7 @@ class _ConfigurePage(QWidget):
             if v := javaDetector.GetJavaVersion(tmpJavaPath):
                 tmpNewJavaPath = self.javaPath
                 if javaDetector.Java(tmpJavaPath, v) not in tmpNewJavaPath:
-                    tmpNewJavaPath.append(d)
+                    tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
                     InfoBar.success(
                         title='已添加',
                         content=f"Java路径：{tmpJavaPath}\n版本：{v}\n已选中此Java。",
@@ -1057,16 +1057,14 @@ class _ConfigurePage(QWidget):
                     )
 
     
-    def AutoDetectJava(self):
+    def autoDetectJava(self):
         # 防止同时多次运行worker线程
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(False)
         self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(False)
         self.javaFindWorkThreadFactory.Create().start()
 
     @pyqtSlot(list)
-    def JavaDetectFinished(self, _JavaPaths: list):
-
-        # 向前兼容
+    def autoDetectJavaFinished(self, _JavaPaths: list):
         if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
             remove("MCSL2/AutoDetectJavaHistory.txt")
 
@@ -1085,14 +1083,11 @@ class _ConfigurePage(QWidget):
                 
             JavaPathList = [{"Path": e.Path, "Version": e.Version}
                             for e in self.javaPath]
-            # 获取新发现的Java路径,或者用户选择的Java路径
             dump({"java": JavaPathList}, SaveFoundedJava,
                     sort_keys=True, indent=4, ensure_ascii=False)
 
     @pyqtSlot(int)
-    def OnJavaFindWorkThreadFinished(self, sequenceNumber):
-
-        # 如果不是第一次运行worker线程
+    def onJavaFindWorkThreadFinished(self, sequenceNumber):
         if sequenceNumber > 1:
             InfoBar.success(
             title='查找完毕',
@@ -1104,6 +1099,5 @@ class _ConfigurePage(QWidget):
             parent=self
             )
 
-        # 释放AutoDetectJava中禁用的按钮
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
         self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
