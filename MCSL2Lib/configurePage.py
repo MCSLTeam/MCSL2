@@ -40,15 +40,17 @@ class _ConfigurePage(QWidget):
         
         super().__init__()
 
-        self.JavaVersion: str
+        self.javaVersion: str
         self.javaPath = []
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.FuzzySearch = True
         self.javaFindWorkThreadFactory.SignalConnect = self.autoDetectJavaFinished
         self.javaFindWorkThreadFactory.FinishSignalConnect = self.onJavaFindWorkThreadFinished
         self.javaFindWorkThreadFactory.Create().start()
-        self.MinMem: int
-        self.MaxMem: int
+        self.minMem: int
+        self.maxMem: int
+        self.corePath: str
+        self.coreFileName: str
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -978,7 +980,7 @@ class _ConfigurePage(QWidget):
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.noobJavaListPushBtn.clicked.connect()
-        # self.noobManuallyAddCorePrimaryPushBtn.clicked.connect()
+        self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
         # self.noobDownloadCorePrimaryPushBtn.clicked.connect()
         # self.noobSaveServerPrimaryPushBtn.clicked.connect()
 
@@ -986,9 +988,9 @@ class _ConfigurePage(QWidget):
         self.extendedBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
         self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
-        # self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect()
+        self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.extendedJavaListPushBtn.clicked.connect()
-        # self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect()
+        self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
         # self.extendedDownloadCorePrimaryPushBtn.clicked.connect()
         # self.extendedSaveServerPrimaryPushBtn.clicked.connect()
 
@@ -1101,4 +1103,27 @@ class _ConfigurePage(QWidget):
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
         self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
 
-    # def addCoreManually(self):
+    def addCoreManually(self):
+        tmpCorePath = str(QFileDialog.getOpenFileName(self, "选择*.jar文件", getcwd(), "*.jar")[0]).replace("/", "\\")
+        if tmpCorePath != "":
+            self.corePath = tmpCorePath
+            self.coreFileName = tmpCorePath.split("\\")[-1]
+            InfoBar.success(
+                        title='已添加',
+                        content=f"核心文件名：{self.coreFileName}",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+        else:
+            InfoBar.warning(
+                    title='未添加',
+                    content="你并没有选择服务器核心。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self
+                    )
