@@ -27,7 +27,8 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF,
     InfoBar,
-    InfoBarPosition
+    InfoBarPosition,
+    MessageBox
 )
 
 from MCSL2Lib.variables import scrollAreaViewportQss
@@ -40,7 +41,6 @@ class _ConfigurePage(QWidget):
         
         super().__init__()
 
-        self.javaVersion: str
         self.javaPath = []
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.FuzzySearch = True
@@ -49,8 +49,18 @@ class _ConfigurePage(QWidget):
         self.javaFindWorkThreadFactory.Create().start()
         self.minMem: int
         self.maxMem: int
-        self.corePath: str
-        self.coreFileName: str
+        self.corePath = ""
+        self.coreFileName = ""
+        self.selectedJavaPath = ""
+        self.selectedJavaVersion = ""
+        self.memUnit = ""
+        self.consoleOutputDeEncoding: str
+        self.consoleInputDeEncoding: str
+        self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.memUnitList = ["M", "G"]
+        self.jvmArg = [str]
+        self.serverName: str
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -956,7 +966,8 @@ class _ConfigurePage(QWidget):
         self.extendedDeEncodingSubtitleLabel.setText("编码设置：")
         self.extendedOutputDeEncodingLabel.setText("控制台输出编码（优先级高于全局设置）")
         self.extendedInputDeEncodingLabel.setText("指令输入编码（优先级高于全局设置）")
-        self.extendedJVMArgSubtitleLabel.setText("JVM参数（可选，一行一个）：")
+        self.extendedJVMArgSubtitleLabel.setText("JVM参数：")
+        self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
         self.extendedServerNameSubtitleLabel.setText("服务器名称：")
         self.extendedSaveServerPrimaryPushBtn.setText("保存！")
         self.importSubtitleLabel.setText("导入")
@@ -981,18 +992,15 @@ class _ConfigurePage(QWidget):
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.noobJavaListPushBtn.clicked.connect()
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
-        # self.noobDownloadCorePrimaryPushBtn.clicked.connect()
-        # self.noobSaveServerPrimaryPushBtn.clicked.connect()
+        self.noobSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # # 进阶模式绑定
         self.extendedBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
         self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
-        self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         # self.extendedJavaListPushBtn.clicked.connect()
         self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
-        # self.extendedDownloadCorePrimaryPushBtn.clicked.connect()
-        # self.extendedSaveServerPrimaryPushBtn.clicked.connect()
+        self.extendedSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # # 导入法绑定
         self.importBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
@@ -1018,7 +1026,7 @@ class _ConfigurePage(QWidget):
                     tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
                     InfoBar.success(
                         title='已添加',
-                        content=f"Java路径：{tmpJavaPath}\n版本：{v}\n已选中此Java。",
+                        content=f"Java路径：{tmpJavaPath}\n版本：{v}\n已选中此Java。\n但你还需要继续到Java列表中选取。",
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
@@ -1028,11 +1036,11 @@ class _ConfigurePage(QWidget):
                 else:
                     InfoBar.warning(
                         title='未添加',
-                        content="此Java已被添加过。",
+                        content="此Java已被添加过，也有可能是自动查找Java时已经搜索到了。请检查Java列表。",
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
-                        duration=3000,
+                        duration=4848,
                         parent=self
                         )
                 self.javaPath.clear()
@@ -1127,3 +1135,152 @@ class _ConfigurePage(QWidget):
                     duration=3000,
                     parent=self
                     )
+    
+    def finishNewServer(self):
+        # 定义
+        currentNewServerType = self.newServerStackedWidget.currentIndex()
+        # 检查
+        javaResult = self.checkJavaSet()
+        memResult = self.checkMemSet(currentNewServerType)
+        coreResult = self.checkCoreSet()
+        serverNameResult = self.checkServerNameSet(currentNewServerType)
+        consoleDeEncodingResult = self.checkDeEncodingSet(currentNewServerType)
+        jvmArgResult = self.checkJVMArgSet(currentNewServerType)
+        memUnitResult = self.checkMemUnitSet(currentNewServerType)
+        totalResultMsg = f"{javaResult[0]}\n{memResult[0]}\n{memUnitResult[0]}\n{coreResult[0]}\n{serverNameResult[0]}\n{consoleDeEncodingResult[0]}\n{jvmArgResult[0]}"
+        totalResultIndicator = [javaResult[1], memResult[1], memUnitResult[1], coreResult[1], serverNameResult[1], consoleDeEncodingResult[1], jvmArgResult[1]]
+        # 错了多少
+        errCount = 0
+        for indicator in totalResultIndicator:
+            if indicator == 1:
+                errCount += 1
+            else:
+                pass
+        # 如果出错
+        if errCount != 0:
+            title = f'创建服务器失败！有{errCount}个问题。'
+            content = f"{totalResultMsg}\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
+            w = MessageBox(title, content, self)
+            w.yesButton.setText("好的")
+            w.cancelButton.setParent(None)
+            w.exec()
+        else:
+            title = f'请再次检查你设置的参数是否有误：'
+            totalJVMArg = ""
+            for arg in self.jvmArg:
+                totalJVMArg += f"{str(arg)} "
+            content = f"{totalResultMsg}\n----------------------------\nJava：{self.selectedJavaPath}\nJava版本：{self.selectedJavaVersion}\n内存：{self.minMem}~{self.maxMem}{self.memUnit}\n服务器核心：{self.corePath}\n服务器核心文件名：{self.coreFileName}\n输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(self.consoleOutputDeEncoding.index(self.consoleOutputDeEncodingList))}\n输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(self.consoleInputDeEncoding.index(self.consoleInputDeEncodingList))}\nJVM参数：{totalJVMArg}\n服务器名称：{self.serverName}"
+            w = MessageBox(title, content, self)
+            w.yesButton.setText("无误，添加")
+            w.cancelButton.setText("我再看看")
+            w.exec()
+
+    def checkJavaSet(self):
+        '''检查Java设置'''
+        if self.selectedJavaPath != "":
+            return "Java检查: 正常", 0
+        else:
+            return "Java检查: 出错，缺失", 1
+
+    def checkMemSet(self, currentNewServerType):
+        '''检查内存设置'''
+        minMemLineEditItems = [None, self.noobMinMemLineEdit, self.extendedMinMemLineEdit]
+        maxMemLineEditItems = [None, self.noobMaxMemLineEdit, self.noobMaxMemLineEdit]
+
+        # 是否为空
+        if (
+            minMemLineEditItems[currentNewServerType].text() != ""
+            and maxMemLineEditItems[currentNewServerType].text() != ""
+        ):
+            # 是否是数字
+            if (
+                minMemLineEditItems[currentNewServerType].text().isdigit()
+                and maxMemLineEditItems[currentNewServerType].text().isdigit()
+            ):
+                # 是否为整数
+                if (
+                    int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                    and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                ):
+                    # 设!
+                    self.minMem = int(minMemLineEditItems[currentNewServerType].text())
+                    self.maxMem = int(maxMemLineEditItems[currentNewServerType].text())
+                    return "内存检查: 正常", 0
+                else:
+                    return "内存检查: 出错, 不为整数", 1
+            else:
+                return "内存检查: 出错, 不为数字", 1
+        else:
+            return "内存检查: 出错, 内容为空", 1
+
+    def checkCoreSet(self):
+        '''检查核心设置'''
+        if (self.corePath != ""
+            and self.coreFileName != ""
+            ):
+            return "核心检查: 正常", 0
+        else:
+            return "核心检查: 出错，缺失", 1
+        
+    def checkServerNameSet(self, currentNewServerType):
+        errText = "服务器名称检查: 出错"
+        isError: int
+        illegalServerNameList = ["aux", "com1", "com2", "prn", "con", "lpt1", "lpt2", "nul"]
+        illegalServerCharacterList = ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]
+        serverNameLineEditItems = [None, self.noobServerNameLineEdit, self.extendedServerNameLineEdit]
+        for eachIllegalServerName in illegalServerNameList:
+            if serverNameLineEditItems[currentNewServerType].text() != eachIllegalServerName:
+                isError = 0
+            else:
+                errText += "，名称与操作系统冲突"
+                isError = 1
+                break
+        for eachIllegalServerCharacter in illegalServerCharacterList:
+            if not eachIllegalServerCharacter in serverNameLineEditItems[currentNewServerType].text():
+                isError = 0
+            else:
+                errText += "，名称含有不合法字符"
+                isError = 1
+                break
+        if serverNameLineEditItems[currentNewServerType].text() == "":
+            errText += "，未填写"
+            isError = 1
+        if isError == 1:
+            return errText, isError
+        else:
+            self.serverName = serverNameLineEditItems[currentNewServerType].text()
+            return "服务器名称检查: 正常", isError
+        
+    def checkDeEncodingSet(self, currentNewServerType):
+        # Noob
+        if currentNewServerType == 1:
+            self.consoleOutputDeEncoding = self.consoleOutputDeEncodingList[0]
+            self.consoleInputDeEncoding = self.consoleInputDeEncodingList[0]
+            return "编码检查：正常（自动处理）", 0
+        # Extended
+        elif currentNewServerType == 2:
+            self.consoleOutputDeEncoding = self.consoleOutputDeEncodingList[self.extendedOutputDeEncodingComboBox.currentIndex()]
+            self.consoleInputDeEncoding = self.consoleInputDeEncodingList[self.extendedInputDeEncodingComboBox.currentIndex()]
+            return "编码检查：正常（手动设置）", 0
+
+    def checkJVMArgSet(self, currentNewServerType):
+        if currentNewServerType == 2:
+            # 有写
+            if self.JVMArgPlainTextEdit.document() != "":
+                self.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
+                return "JVM参数检查：正常（手动设置）", 0
+            # 没写
+            else:
+                self.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
+                return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
+        elif currentNewServerType == 1:
+            self.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
+            return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
+        
+    def checkMemUnitSet(self, currentNewServerType):
+        if currentNewServerType == 1:
+            self.memUnit = self.memUnitList[0]
+            return "JVM内存堆单位检查：正常（自动设置）", 0
+        elif currentNewServerType == 2:
+            self.memUnit = self.memUnitList[self.extendedMemUnitComboBox.currentIndex()]
+            return "JVM内存堆单位检查：正常（手动设置）", 0
