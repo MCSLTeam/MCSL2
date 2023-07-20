@@ -1223,6 +1223,7 @@ class _ConfigurePage(QWidget):
             return "核心检查: 出错，缺失", 1
         
     def checkServerNameSet(self, currentNewServerType):
+        '''检查服务器名称设置'''
         errText = "服务器名称检查: 出错"
         isError: int
         illegalServerNameList = ["aux", "com1", "com2", "prn", "con", "lpt1", "lpt2", "nul"]
@@ -1252,6 +1253,7 @@ class _ConfigurePage(QWidget):
             return "服务器名称检查: 正常", isError
         
     def checkDeEncodingSet(self, currentNewServerType):
+        '''检查编码设置'''
         # Noob
         if currentNewServerType == 1:
             self.consoleOutputDeEncoding = self.consoleOutputDeEncodingList[0]
@@ -1264,6 +1266,7 @@ class _ConfigurePage(QWidget):
             return "编码检查：正常（手动设置）", 0
 
     def checkJVMArgSet(self, currentNewServerType):
+        '''检查JVM参数设置'''
         if currentNewServerType == 2:
             # 有写
             if self.JVMArgPlainTextEdit.document() != "":
@@ -1278,6 +1281,7 @@ class _ConfigurePage(QWidget):
             return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         
     def checkMemUnitSet(self, currentNewServerType):
+        '''检查JVM内存堆单位设置'''
         if currentNewServerType == 1:
             self.memUnit = self.memUnitList[0]
             return "JVM内存堆单位检查：正常（自动设置）", 0
