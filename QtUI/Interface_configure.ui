@@ -855,7 +855,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>456</width>
+            <width>594</width>
             <height>734</height>
            </rect>
           </property>
@@ -1247,12 +1247,16 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>JVM参数（可选，一行一个）：</string>
+                 <string>JVM参数：</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="PlainTextEdit" name="JVMArgPlainTextEdit"/>
+               <widget class="PlainTextEdit" name="JVMArgPlainTextEdit">
+                <property name="placeholderText">
+                 <string>可选，用一个空格分组</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
