@@ -24,7 +24,7 @@ from MCSL2Lib.pluginPage import _PluginPage
 from MCSL2Lib.selectJavaPage import _SelectJavaPage
 from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.variables import MCSL2Version
-from MCSL2Lib.icons import *  # noqa: F401
+from MCSL2Lib import icons as _   # noqa: F401
 
 
 # 标题栏
@@ -201,4 +201,8 @@ class Window(FramelessWindow):
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
         self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
+        self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
         self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
+        self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
+        self.selectJavaPage.setJavaVer.connect(lambda: self.configureInterface.setJavaVer(JavaVer=self.selectJavaPage.setJavaVer))
+        self.selectJavaPage.setJavaPath.connect(lambda: self.configureInterface.setJavaPath(JavaPath=self.selectJavaPage.setJavaPath))
