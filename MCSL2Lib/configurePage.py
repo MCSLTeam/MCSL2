@@ -1291,7 +1291,7 @@ class _ConfigurePage(QWidget):
         
     def setJavaPath(self, selectedJavaPath):
         self.selectedJavaPath = selectedJavaPath
-        print(selectedJavaPath)
     def setJavaVer(self, selectedJavaVer):
         self.selectedJavaVersion = selectedJavaVer
-        print(selectedJavaVer)
+        javaVersionLabelItems = [None, self.noobJavaInfoLabel, self.extendedJavaInfoLabel]
+        javaVersionLabelItems[self.newServerStackedWidget.currentIndex()].setText(f"已选择，版本{selectedJavaVer}")
