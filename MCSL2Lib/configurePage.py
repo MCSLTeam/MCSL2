@@ -1076,8 +1076,10 @@ class _ConfigurePage(QWidget):
     def autoDetectJavaFinished(self, _JavaPaths: list):
         if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
             remove("MCSL2/AutoDetectJavaHistory.txt")
+        if ospath.exists("MCSL2/AutoDetectJavaHistory.json"):
+            remove("MCSL2/AutoDetectJavaHistory.json")
 
-        with open("MCSL2/AutoDetectJavaHistory.json", 'w+', encoding='utf-8') as SaveFoundedJava:
+        with open("MCSL2/MCSL2_DetectedJava.json", 'w+', encoding='utf-8') as SaveFoundedJava:
             tmpNewJavaPath = self.javaPath
             self.javaPath = list({p[:-1] for p in SaveFoundedJava.readlines()
                                   }.union(set(self.javaPath)).union(set(_JavaPaths)))
