@@ -708,10 +708,10 @@ class _SettingsPage(QWidget):
         self.horizontalLayout_14.addWidget(self.themeColorTitle)
         spacerItem21 = QSpacerItem(449, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem21)
-        self.chooseThemeColorBtn = ColorPickerButton(QColor(str(self.fileSettings['themeColor'])), "主题颜色", self.themeColor, enableAlpha=False)
-        self.chooseThemeColorBtn.setObjectName("chooseThemeColorBtn")
+        self.selectThemeColorBtn = ColorPickerButton(QColor(str(self.fileSettings['themeColor'])), "主题颜色", self.themeColor, enableAlpha=False)
+        self.selectThemeColorBtn.setObjectName("selectThemeColorBtn")
 
-        self.horizontalLayout_14.addWidget(self.chooseThemeColorBtn)
+        self.horizontalLayout_14.addWidget(self.selectThemeColorBtn)
         self.gridLayout_13.addWidget(self.themeColor, 3, 0, 1, 4)
         self.alwaysRunAsAdministrator = QWidget(self.softwareSettings)
         self.alwaysRunAsAdministrator.setObjectName("alwaysRunAsAdministrator")
@@ -961,7 +961,7 @@ class _SettingsPage(QWidget):
         self.softwareSettingsTitle.setText("软件设置")
         self.themeTitle.setText("主题")
         self.themeColorTitle.setText("主题颜色")
-        self.chooseThemeColorBtn.setText("选取颜色")
+        self.selectThemeColorBtn.setText("选取颜色")
         self.alwaysRunAsAdministratorTitle.setText("总是以管理员身份运行")
         self.alwaysRunAsAdministratorSwitchBtn.setText("已关闭")
         self.alwaysRunAsAdministratorSwitchBtn.setOnText("已开启")
@@ -1038,7 +1038,7 @@ class _SettingsPage(QWidget):
 
         # softwareSettings
         self.themeComboBox.currentIndexChanged.connect(lambda: self.changeSettings("theme", self.themeList[self.themeComboBox.currentIndex()]))
-        self.chooseThemeColorBtn.colorChanged.connect(lambda: self.changeSettings("themeColor", str(self.chooseThemeColorBtn.color.name())))
+        self.selectThemeColorBtn.colorChanged.connect(lambda: self.changeSettings("themeColor", str(self.selectThemeColorBtn.color.name())))
         self.alwaysRunAsAdministratorSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("alwaysRunAsAdministrator", self.alwaysRunAsAdministratorSwitchBtn.isChecked()))
         self.startOnStartupSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("startOnStartup", self.startOnStartupSwitchBtn.isChecked()))
 
@@ -1106,7 +1106,7 @@ class _SettingsPage(QWidget):
 
         # softwareSettings
         self.themeComboBox.setCurrentIndex(self.themeList.index(self.fileSettings['theme']))
-        self.chooseThemeColorBtn.setColor(self.fileSettings['themeColor'])
+        self.selectThemeColorBtn.setColor(self.fileSettings['themeColor'])
         self.alwaysRunAsAdministratorSwitchBtn.setChecked(self.fileSettings['alwaysRunAsAdministrator'])
         self.startOnStartupSwitchBtn.setChecked(self.fileSettings['startOnStartup'])
 

@@ -1230,7 +1230,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="PrimaryPushButton" name="chooseThemeColorBtn">
+              <widget class="PrimaryPushButton" name="selectThemeColorBtn">
                <property name="text">
                 <string>选取颜色</string>
                </property>

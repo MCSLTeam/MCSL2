@@ -203,4 +203,4 @@ class Window(FramelessWindow):
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
 
 
-        self.settingsInterface.chooseThemeColorBtn.colorChanged.connect(setThemeColor)
+        self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
