@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>JavaInterface</class>
- <widget class="QFrame" name="JavaInterface">
+ <class>selectJavaInterface</class>
+ <widget class="QFrame" name="selectJavaInterface">
   <property name="geometry">
    <rect>
     <x>0</x>
