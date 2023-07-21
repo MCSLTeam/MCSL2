@@ -907,9 +907,7 @@ class _ConfigurePage(QWidget):
         self.setObjectName("ConfigureInterface")
 
         self.noobNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.noobNewServerScrollArea.setStyleSheet("QScrollArea {background-color: transparent; border: none;}")
         self.extendedNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.extendedNewServerScrollArea.setStyleSheet("QScrollArea {background-color: transparent; border: none;}")
 
         # 引导页
         self.titleLabel.setText("新建服务器")
