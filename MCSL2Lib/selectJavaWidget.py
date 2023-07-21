@@ -14,7 +14,7 @@ from qfluentwidgets import (
     LineEdit,
     PixmapLabel,
     PrimaryPushButton,
-    StrongBodyLabel,
+    BodyLabel,
     TextEdit
 )
 
@@ -60,7 +60,7 @@ class singleJavaManager(CardWidget):
         self.javaVerWidget.setObjectName("javaVerWidget")
         self.horizontalLayout = QHBoxLayout(self.javaVerWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.javaVerTitle = StrongBodyLabel(self.javaVerWidget)
+        self.javaVerTitle = BodyLabel(self.javaVerWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -84,7 +84,7 @@ class singleJavaManager(CardWidget):
         self.gridLayout_2 = QGridLayout(self.javaPathWidget)
         self.gridLayout_2.setSizeConstraint(QLayout.SetMaximumSize)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.javaPathTitle = StrongBodyLabel(self.javaPathWidget)
+        self.javaPathTitle = BodyLabel(self.javaPathWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
