@@ -14,15 +14,16 @@ from qfluentwidgets import (
     InfoBarPosition
 )
 from qframelesswindow import FramelessWindow, TitleBar
-from MCSL2Lib.consolePage import _ConsolePage
 
 from MCSL2Lib.interfaceController import StackedWidget
+from MCSL2Lib.homePage import _HomePage
 from MCSL2Lib.configurePage import _ConfigurePage
 from MCSL2Lib.downloadPage import _DownloadPage
-from MCSL2Lib.homePage import _HomePage
+from MCSL2Lib.consolePage import _ConsolePage
 from MCSL2Lib.pluginPage import _PluginPage
-from MCSL2Lib.selectJavaPage import _SelectJavaPage
 from MCSL2Lib.settingsPage import _SettingsPage
+from MCSL2Lib.selectJavaPage import _SelectJavaPage
+from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib.variables import MCSL2Version
 from MCSL2Lib import icons as _   # noqa: F401
 
@@ -206,4 +207,3 @@ class Window(FramelessWindow):
         self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
         self.selectJavaPage.setJavaVer.connect(self.configureInterface.setJavaVer)
         self.selectJavaPage.setJavaPath.connect(self.configureInterface.setJavaPath)
-        self.selectJavaPage.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
