@@ -21,6 +21,7 @@ from MCSL2Lib.configurePage import _ConfigurePage
 from MCSL2Lib.downloadPage import _DownloadPage
 from MCSL2Lib.homePage import _HomePage
 from MCSL2Lib.pluginPage import _PluginPage
+from MCSL2Lib.selectJavaPage import _SelectJavaPage
 from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.variables import MCSL2Version
 from MCSL2Lib.icons import *  # noqa: F401
@@ -86,19 +87,15 @@ class Window(FramelessWindow):
         self.stackWidget = StackedWidget(self)
 
         # 定义子页面
-        HomePage = _HomePage()
-        ConfigurePage = _ConfigurePage()
-        DownloadPage = _DownloadPage()
-        ConsolePage = _ConsolePage()
-        PluginPage = _PluginPage()
-        SettingsPage = _SettingsPage()
-        
-        self.homeInterface = HomePage
-        self.configureInterface = ConfigurePage
-        self.downloadInterface = DownloadPage
-        self.consoleInterface = ConsolePage
-        self.pluginsInterface = PluginPage
-        self.settingsInterface = SettingsPage
+        self.homeInterface = _HomePage()
+        self.configureInterface = _ConfigurePage()
+        self.downloadInterface = _DownloadPage()
+        self.consoleInterface = _ConsolePage()
+        self.pluginsInterface = _PluginPage()
+        self.settingsInterface = _SettingsPage()
+
+        # 定义隐藏的子页面
+        self.selectJavaPage = _SelectJavaPage()
 
         # 设置主题
         setTheme(Theme.AUTO)
@@ -135,6 +132,8 @@ class Window(FramelessWindow):
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
         self.addSubInterface(self.settingsInterface,
                              FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
+        
+        self.stackWidget.addWidget(self.selectJavaPage)
 
         self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
@@ -183,8 +182,7 @@ class Window(FramelessWindow):
                                                                                                        position=InfoBarPosition.TOP,
                                                                                                        duration=3000,
                                                                                                        parent=self
-                                                                                                      ))
-        
+                                                                                                      ))     
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1))
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(lambda: InfoBar.info(
@@ -196,11 +194,11 @@ class Window(FramelessWindow):
                                                                                                        duration=3000,
                                                                                                        parent=self
                                                                                                       ))
-        
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
-
-
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
+        self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
+        self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
+        self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
