@@ -1291,6 +1291,7 @@ class _ConfigurePage(QWidget):
         
     def setJavaPath(self, selectedJavaPath):
         self.selectedJavaPath = selectedJavaPath
+
     def setJavaVer(self, selectedJavaVer):
         self.selectedJavaVersion = selectedJavaVer
         javaVersionLabelItems = [None, self.noobJavaInfoLabel, self.extendedJavaInfoLabel]
