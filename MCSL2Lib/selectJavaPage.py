@@ -12,7 +12,9 @@ from qfluentwidgets import (
     StrongBodyLabel,
     TitleLabel,
     TransparentToolButton,
-    FluentIcon as FIF
+    FluentIcon as FIF,
+    InfoBar,
+    InfoBarPosition
 )
 from MCSL2Lib.variables import scrollAreaViewportQss
 from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
@@ -94,6 +96,16 @@ class _SelectJavaPage(QWidget):
             self.tmpSingleJavaWidget = singleSelectJavaWidget()
             self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(f"finishSelectJavaBtn{str(i)}")
             self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.scrollAreaProcessor(JavaPath))
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: InfoBar.success(
+                                                                                              title='已选择',
+                                                                                              content="请点击左上方按钮返回，继续配置服务器。",
+                                                                                              orient=Qt.Horizontal,
+                                                                                              isClosable=True,
+                                                                                              position=InfoBarPosition.TOP,
+                                                                                              duration=3000,
+                                                                                              parent=self
+                                                                                              ))
+
             self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].Path))
             self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].Version))
             self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
