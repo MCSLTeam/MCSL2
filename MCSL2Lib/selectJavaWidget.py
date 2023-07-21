@@ -19,7 +19,7 @@ from qfluentwidgets import (
 )
 
 
-class singleJavaManager(CardWidget):
+class singleSelectJavaWidget(CardWidget):
     def __init__(self):
 
         super().__init__()

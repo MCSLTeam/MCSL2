@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>singleJavaManager</class>
- <widget class="CardWidget" name="singleJavaManager">
+ <class>singleSelectJavaWidget</class>
+ <widget class="CardWidget" name="singleSelectJavaWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

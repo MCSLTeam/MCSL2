@@ -15,7 +15,7 @@ from qfluentwidgets import (
     FluentIcon as FIF
 )
 from MCSL2Lib.variables import scrollAreaViewportQss
-from MCSL2Lib.selectJavaWidget import singleJavaManager
+from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib import icons as _   # noqa: F401
 
 class _SelectJavaPage(QWidget):
@@ -91,7 +91,7 @@ class _SelectJavaPage(QWidget):
             self.javaItemVerticalLayout.itemAt(i).widget().setParent(None)
         # 添加新的
         for i in range(len(JavaPath)):
-            self.tmpSingleJavaWidget = singleJavaManager()
+            self.tmpSingleJavaWidget = singleSelectJavaWidget()
             self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(f"finishSelectJavaBtn{str(i)}")
             self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.scrollAreaProcessor(JavaPath))
             self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].Path))
