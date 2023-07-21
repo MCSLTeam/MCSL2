@@ -33,7 +33,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="3" rowspan="3">
-    <widget class="PrimaryPushButton" name="PrimaryPushButton">
+    <widget class="PrimaryPushButton" name="finishSelectJavaBtn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
        <horstretch>0</horstretch>
