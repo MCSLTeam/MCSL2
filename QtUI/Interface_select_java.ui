@@ -85,7 +85,11 @@
            <height>469</height>
           </rect>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout"/>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QVBoxLayout" name="javaItemVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
