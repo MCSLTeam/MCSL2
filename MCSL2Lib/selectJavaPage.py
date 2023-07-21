@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtCore import Qt, QRect, pyqtSignal
 from PyQt5.QtWidgets import (
     QWidget,
     QSizePolicy,
@@ -15,9 +15,14 @@ from qfluentwidgets import (
     FluentIcon as FIF
 )
 from MCSL2Lib.variables import scrollAreaViewportQss
-
+from MCSL2Lib.selectJavaWidget import singleJavaManager
+from MCSL2Lib import icons as _   # noqa: F401
 
 class _SelectJavaPage(QWidget):
+
+    setJavaVer = pyqtSignal(str)
+    setJavaPath = pyqtSignal(str)
+
     def __init__(self):
 
         super().__init__()
@@ -64,6 +69,9 @@ class _SelectJavaPage(QWidget):
         self.verticalLayout = QVBoxLayout(self.javaScrollAreaWidgetContents)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.javaItemVerticalLayout = QVBoxLayout()
+        self.javaItemVerticalLayout.setObjectName("javaItemVerticalLayout")
+        self.verticalLayout.addLayout(self.javaItemVerticalLayout)
         self.javaSmoothScrollArea.setWidget(self.javaScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.javaSmoothScrollArea, 2, 0, 1, 2)
         self.backBtn = TransparentToolButton(FIF.PAGE_LEFT, self.titleLimitWidget)
@@ -76,3 +84,22 @@ class _SelectJavaPage(QWidget):
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.javaSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+
+    def refreshPage(self, JavaPath):
+        # 删除旧的
+        for i in reversed(range(self.javaItemVerticalLayout.count())):
+            self.javaItemVerticalLayout.itemAt(i).widget().setParent(None)
+        # 添加新的
+        for i in range(len(JavaPath)):
+            self.tmpSingleJavaWidget = singleJavaManager()
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(f"finishSelectJavaBtn{str(i)}")
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.scrollAreaProcessor(JavaPath))
+            self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].Path))
+            self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].Version))
+            self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
+
+    # 判断第几个
+    def scrollAreaProcessor(self, JavaPath):
+        index = int(str(self.sender().objectName()).split("Btn")[1])
+        self.setJavaPath.emit(str(JavaPath[index].Path))
+        self.setJavaVer.emit(str(JavaPath[index].Version))
