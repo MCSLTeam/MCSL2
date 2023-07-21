@@ -1288,11 +1288,10 @@ class _ConfigurePage(QWidget):
         elif currentNewServerType == 2:
             self.memUnit = self.memUnitList[self.extendedMemUnitComboBox.currentIndex()]
             return "JVM内存堆单位检查：正常（手动设置）", 0
-    
-    @pyqtSlot()
-    def setJavaPath(self, JavaPath):
-        self.selectedJavaPath = JavaPath
-
-    @pyqtSlot()
-    def setJavaVer(self, JavaVer):
-        self.selectedJavaVersion = JavaVer
+        
+    def setJavaPath(self, selectedJavaPath):
+        self.selectedJavaPath = selectedJavaPath
+        print(selectedJavaPath)
+    def setJavaVer(self, selectedJavaVer):
+        self.selectedJavaVersion = selectedJavaVer
+        print(selectedJavaVer)

@@ -204,5 +204,5 @@ class Window(FramelessWindow):
         self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
         self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
         self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
-        self.selectJavaPage.setJavaVer.connect(lambda: self.configureInterface.setJavaVer(JavaVer=self.selectJavaPage.setJavaVer))
-        self.selectJavaPage.setJavaPath.connect(lambda: self.configureInterface.setJavaPath(JavaPath=self.selectJavaPage.setJavaPath))
+        self.selectJavaPage.setJavaVer.connect(self.configureInterface.setJavaVer)
+        self.selectJavaPage.setJavaPath.connect(self.configureInterface.setJavaPath)
