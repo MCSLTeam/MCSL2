@@ -1099,13 +1099,13 @@ class _ConfigurePage(QWidget):
     def onJavaFindWorkThreadFinished(self, sequenceNumber):
         if sequenceNumber > 1:
             InfoBar.success(
-            title='查找完毕',
-            content=f"一共搜索到了{len(self.javaPath)}个Java。\n请单击“Java列表”按钮查看、选择。",
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP,
-            duration=3000,
-            parent=self
+                title='查找完毕',
+                content=f"一共搜索到了{len(self.javaPath)}个Java。\n请单击“Java列表”按钮查看、选择。",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self
             )
 
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
