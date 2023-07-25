@@ -20,9 +20,9 @@ body:
       - You can obtain the system report on the Settings page.
       - 如果你所用的MCSL2版本不支持系统报告，请按以下格式填写：
       - ---NO SYSTEM REPORT---
-      - System: Windows/macOS/Linux x64/x86/arm/arm64
-      - MCSL2: v2.1.4.0 (For example)
-      - PyQt5: v5.19.9 (For example) (Optional)
+      - 系统：Windows/macOS/Linux x64/x86/arm/arm64
+      - MCSL2：v2.1.4.0 (For example)
+      - PyQt5：v5.19.9 (For example) (Optional)
   validations:
     required: true
 - type: dropdown
