@@ -2,15 +2,6 @@ name: "BUG 反馈 | Bug Report"
 description: "issue模板"
 title: "BUG | (在这里给issue命名 | Name the issue here)"
 body:
-- type: dropdown
-  id: type
-  attributes:
-    label: "反馈类型"
-    multiple: true
-    options:
-      - "程序错误 | BUG"
-  validations:
-    required: true
 - type: textarea
   id: system_report
   attributes:
@@ -66,5 +57,3 @@ id: "attachment"
 attributes:
   label: "附件(可选) | Attachment (Optional)"
   placeholder: "先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。\nClick on the text box and then drag the file directly into the text box to upload."
-validations:
-  required: false
