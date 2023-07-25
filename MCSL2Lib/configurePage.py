@@ -1,4 +1,4 @@
-from json import dump
+from json import dump, loads, dumps
 from os import getcwd, remove, path as ospath
 from PyQt5.QtGui import QCursor
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
@@ -33,6 +33,9 @@ from qfluentwidgets import (
 
 from MCSL2Lib.variables import scrollAreaViewportQss
 from MCSL2Lib import javaDetector
+from MCSL2Lib.settingsController import _settingsController
+
+settingsController = _settingsController()
 
 
 class _ConfigurePage(QWidget):
@@ -59,7 +62,7 @@ class _ConfigurePage(QWidget):
         self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
-        self.jvmArg = [str]
+        self.jvmArg = ""
         self.serverName: str
 
         self.gridLayout = QGridLayout(self)
@@ -1270,14 +1273,14 @@ class _ConfigurePage(QWidget):
         if currentNewServerType == 2:
             # 有写
             if self.JVMArgPlainTextEdit.document() != "":
-                self.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
+                self.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
             else:
-                self.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
+                self.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
                 return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         elif currentNewServerType == 1:
-            self.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
+            self.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
             return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         
     def checkMemUnitSet(self, currentNewServerType):
@@ -1296,3 +1299,75 @@ class _ConfigurePage(QWidget):
         self.selectedJavaVersion = selectedJavaVer
         javaVersionLabelItems = [None, self.noobJavaInfoLabel, self.extendedJavaInfoLabel]
         javaVersionLabelItems[self.newServerStackedWidget.currentIndex()].setText(f"已选择，版本{selectedJavaVer}")
+
+    def saveNewServer(self):
+        exit0Msg = f"添加服务器\"{self.serverName}\"成功！"
+        exit1Msg = f"添加服务器\"{self.serverName}\"失败！"
+        exitCode = 0
+        serverConfig = {
+            "name": self.serverName,
+            "core_file_name": self.coreFileName,
+            "java_path": self.selectedJavaPath,
+            "min_memory": self.minMem,
+            "max_memory": self.maxMem,
+            "memory_unit": self.memUnit,
+            "jvm_arg": self.jvmArg
+        }
+
+        # 全局配置
+        try:
+            with open(r'MCSL2/MCSL2_ServerList.json', "r+", encoding='utf-8') as globalServerListFile:
+                globalServerList = loads(globalServerListFile.read())
+                #添加新的
+                globalServerList['MCSLServerList'].append(serverConfig)
+                globalServerListFile.write(dumps(globalServerList, indent=4))
+                globalServerListFile.close()
+            exitCode = 0
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+        
+        # 写入单独配置
+        try:
+            if not settingsController.fileSettings['onlySaveGlobalServerConfig']:
+                with open(f"Servers//{self.serverName}//MCSL2ServerConfig.json", "r+", encoding='utf-8') as globalServerListFile:
+                    globalServerList = loads(globalServerListFile.read())
+                    #添加新的
+                    globalServerList['MCSLServerList'].append(serverConfig)
+                    globalServerListFile.write(dumps(globalServerList, indent=4))
+                    globalServerListFile.close()
+            else:
+                InfoBar.info(
+                        title='提示',
+                        content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+            exitCode = 0
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+        
+        if exitCode == 0:
+            InfoBar.success(
+                        title='成功',
+                        content=exit0Msg,
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+        else:
+            InfoBar.error(
+                        title='失败',
+                        content=exit1Msg,
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
