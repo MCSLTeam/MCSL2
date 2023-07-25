@@ -7,7 +7,7 @@ body:
   id: system_report
   attributes:
     label: "MCSL2 系统报告"
-    description: "你可以在“设置”页获取系统报告。
+    description: "你可以在“设置”页获取系统报告。"
   validations:
     required: true
 
