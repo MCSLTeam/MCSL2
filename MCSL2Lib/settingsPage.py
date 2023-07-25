@@ -41,7 +41,9 @@ from qfluentwidgets import (
     InfoBar
 )
 from MCSL2Lib.variables import scrollAreaViewportQss, MCSL2Version
+from MCSL2Lib.settingsController import _settingsController
 
+settingsController = _settingsController()
 
 class _SettingsPage(QWidget):
         
@@ -51,16 +53,12 @@ class _SettingsPage(QWidget):
         
         super().__init__()
         
-        self.fileSettings = {}
-        self.unSavedSettings = {}
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
         self.downloadSourceList = ["FastMirror", "MCSLAPI"]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
         self.outputDeEncodingList = ["utf-8", "gbk"]
         self.inputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.themeList = ["auto", "dark", "light"]
-        
-        self.readSettings(firstLoad=True)
 
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -708,7 +706,7 @@ class _SettingsPage(QWidget):
         self.horizontalLayout_14.addWidget(self.themeColorTitle)
         spacerItem21 = QSpacerItem(449, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem21)
-        self.selectThemeColorBtn = ColorPickerButton(QColor(str(self.fileSettings['themeColor'])), "主题颜色", self.themeColor, enableAlpha=False)
+        self.selectThemeColorBtn = ColorPickerButton(QColor(str(settingsController.fileSettings['themeColor'])), "主题颜色", self.themeColor, enableAlpha=False)
         self.selectThemeColorBtn.setObjectName("selectThemeColorBtn")
 
         self.horizontalLayout_14.addWidget(self.selectThemeColorBtn)
@@ -1048,33 +1046,21 @@ class _SettingsPage(QWidget):
         self.refreshSettingsInterface()
 
     def readSettings(self, firstLoad):
-        if ospath.exists(r"./MCSL2/MCSL2_Config.json"):
-            if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
-                with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as readConfig:
-                    # 从文件读取的配置
-                    self.fileSettings = loads(readConfig.read())
-                    # 多声明一份给修改设置的时候用
-                    if firstLoad:
-                        self.unSavedSettings = self.fileSettings
-                    else:
-                        pass
-                    readConfig.close()
+        settingsController._readSettings(firstLoad)
 
     def changeSettings(self, Setting: str, Status: Union[bool, str, int]):
-        self.unSavedSettings.update({Setting: Status})
-        self.settingsChanged.emit(self.unSavedSettings != self.fileSettings)
+        settingsController.unSavedSettings.update({Setting: Status})
+        self.settingsChanged.emit(settingsController.unSavedSettings != settingsController.fileSettings)
 
-    
     def giveUpSettings(self):
         self.refreshSettingsInterface()
-        self.unSavedSettings = self.fileSettings
+        settingsController.unSavedSettings = settingsController.fileSettings
         self.settingsChanged.emit(False)
         
-        
     def saveSettings(self):
-        self.fileSettings.update(self.unSavedSettings)
+        settingsController.fileSettings.update(settingsController.unSavedSettings)
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
-            writeConfig.write(dumps(self.fileSettings, indent=4))
+            writeConfig.write(dumps(settingsController.fileSettings, indent=4))
             writeConfig.close()
         self.refreshSettingsInterface()
         self.settingsChanged.emit(False)
@@ -1084,34 +1070,34 @@ class _SettingsPage(QWidget):
         self.readSettings(firstLoad=False)
         
         # serverSettings
-        self.autoRunLastServerSwitchBtn.setChecked(self.fileSettings['autoRunLastServer'])
-        self.acceptAllMojangEulaSwitchBtn.setChecked(self.fileSettings['acceptAllMojangEula'])
-        self.sendStopInsteadOfKillSwitchBtn.setChecked(self.fileSettings['sendStopInsteadOfKill'])
+        self.autoRunLastServerSwitchBtn.setChecked(settingsController.fileSettings['autoRunLastServer'])
+        self.acceptAllMojangEulaSwitchBtn.setChecked(settingsController.fileSettings['acceptAllMojangEula'])
+        self.sendStopInsteadOfKillSwitchBtn.setChecked(settingsController.fileSettings['sendStopInsteadOfKill'])
 
         # configureSettings
-        self.newServerTypeComboBox.setCurrentIndex(self.newServerTypeList.index(self.fileSettings['newServerType']))
-        self.onlySaveGlobalServerConfigSwitchBtn.setChecked(self.fileSettings['onlySaveGlobalServerConfig'])
+        self.newServerTypeComboBox.setCurrentIndex(self.newServerTypeList.index(settingsController.fileSettings['newServerType']))
+        self.onlySaveGlobalServerConfigSwitchBtn.setChecked(settingsController.fileSettings['onlySaveGlobalServerConfig'])
 
         # downloadSettings
-        self.downloadSourceComboBox.setCurrentIndex(self.downloadSourceList.index(self.fileSettings['downloadSource']))
-        self.alwaysAskSaveDirectoryCheckBox.setChecked(self.fileSettings['alwaysAskSaveDirectory'])
-        self.aria2ThreadSlider.setValue(self.fileSettings['aria2Thread'])
+        self.downloadSourceComboBox.setCurrentIndex(self.downloadSourceList.index(settingsController.fileSettings['downloadSource']))
+        self.alwaysAskSaveDirectoryCheckBox.setChecked(settingsController.fileSettings['alwaysAskSaveDirectory'])
+        self.aria2ThreadSlider.setValue(settingsController.fileSettings['aria2Thread'])
         self.saveSameFileExceptionRadioBtnList = [self.saveSameFileExceptionToAsk, self.saveSameFileExceptionToOverwrite, self.saveSameFileExceptionToStop]
-        self.saveSameFileExceptionRadioBtnList[self.saveSameFileExceptionList.index(self.fileSettings['saveSameFileException'])].setChecked(True)
+        self.saveSameFileExceptionRadioBtnList[self.saveSameFileExceptionList.index(settingsController.fileSettings['saveSameFileException'])].setChecked(True)
 
         # consoleSettings
-        self.outputDeEncodingComboBox.setCurrentIndex(self.outputDeEncodingList.index(self.fileSettings['outputDeEncoding']))
-        self.inputDeEncodingComboBox.setCurrentIndex(self.inputDeEncodingList.index(self.fileSettings['inputDeEncoding']))
-        self.quickMenuSwitchBtn.setChecked(self.fileSettings['quickMenu'])
+        self.outputDeEncodingComboBox.setCurrentIndex(self.outputDeEncodingList.index(settingsController.fileSettings['outputDeEncoding']))
+        self.inputDeEncodingComboBox.setCurrentIndex(self.inputDeEncodingList.index(settingsController.fileSettings['inputDeEncoding']))
+        self.quickMenuSwitchBtn.setChecked(settingsController.fileSettings['quickMenu'])
 
         # softwareSettings
-        self.themeComboBox.setCurrentIndex(self.themeList.index(self.fileSettings['theme']))
-        self.selectThemeColorBtn.setColor(self.fileSettings['themeColor'])
-        self.alwaysRunAsAdministratorSwitchBtn.setChecked(self.fileSettings['alwaysRunAsAdministrator'])
-        self.startOnStartupSwitchBtn.setChecked(self.fileSettings['startOnStartup'])
+        self.themeComboBox.setCurrentIndex(self.themeList.index(settingsController.fileSettings['theme']))
+        self.selectThemeColorBtn.setColor(settingsController.fileSettings['themeColor'])
+        self.alwaysRunAsAdministratorSwitchBtn.setChecked(settingsController.fileSettings['alwaysRunAsAdministrator'])
+        self.startOnStartupSwitchBtn.setChecked(settingsController.fileSettings['startOnStartup'])
 
         # updateSettings
-        self.checkUpdateOnStartSwitchBtn.setChecked(self.fileSettings['checkUpdateOnStart'])
+        self.checkUpdateOnStartSwitchBtn.setChecked(settingsController.fileSettings['checkUpdateOnStart'])
 
     def openWebUrl(self, Url):
         QDesktopServices.openUrl(QUrl(Url))
