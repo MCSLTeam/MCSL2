@@ -43,8 +43,6 @@ def SaveServer(ServerName, CorePath, JavaPath, MinMemory, MaxMemory, CoreFileNam
         SaveConfig.close()
     Tip = "服务器部署完毕！"
 
-    CallMCSL2Dialog(Tip, OtherTextArg=None,
-                    isNeededTwoButtons=0, ButtonArg=None)
 
 
 def ReadGlobalServerConfig():
