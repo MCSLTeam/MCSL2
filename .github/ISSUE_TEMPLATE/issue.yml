@@ -1,8 +1,7 @@
 name: Issue Form
 description: issue模板
 title: "(在这里给issue命名 | Name the issue here)"
-body:    
-
+body:
   - type: dropdown
     id: type
     attributes:
@@ -14,7 +13,6 @@ body:
         - 提出疑问 | Ask a question
     validations:
       required: true
-        
   - type: textarea
     id: system_report
     attributes:
@@ -29,7 +27,6 @@ body:
         - PyQt5: v5.19.9 (For example) (Optional)
     validations:
       required: true
-    
   - type: dropdown
     id: aspects
     attributes:
@@ -47,7 +44,6 @@ body:
         - MCSL2更新 | Updating MCSL2
     validations:
       required: true
-        
   - type: textarea
     id: description
     attributes:
@@ -57,7 +53,6 @@ body:
         - Explain your problem, trouble, suggestion, etc.
     validations:
       required: true
-      
   - type: checkboxes
     id: check
     attributes:
@@ -68,9 +63,8 @@ body:
       options:
         - label: 我确保我的Issue没有和别人的重复 | I make sure my Issue is not the same as someone else's
           required: true
-  
   - type: textarea
-  id: "yml-4"
+  id: "attachment"
   attributes:
     label: 附件(可选) | Attachment (Optional)
     placeholder: "先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。\nClick on the text box and then drag the file directly into the text box to upload."
