@@ -1,6 +1,7 @@
 name: "BUG 反馈"
 description: "issue模板"
 title: "BUG | (在这里给issue命名"
+label: 
 body:
 
 - type: textarea
@@ -37,6 +38,12 @@ body:
   validations:
     required: true
 
+- type: textarea
+  id: "attachment"
+  attributes:
+    label: "附件(可选)"
+    placeholder: "先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。"
+
 - type: checkboxes
   id: check
   attributes:
@@ -45,9 +52,3 @@ body:
     options:
       - label: "我确保我的Issue没有和别人的重复"
         required: true
-
-- type: textarea
-  id: "attachment"
-  attributes:
-    label: "附件(可选)"
-    placeholder: "先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。"
