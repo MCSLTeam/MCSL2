@@ -1,6 +1,6 @@
 name: BUG 反馈 | Bug Report
 description: issue模板
-title: "(在这里给issue命名 | Name the issue here)"
+title: "BUG | (在这里给issue命名 | Name the issue here)"
 body:
 - type: dropdown
   id: type
