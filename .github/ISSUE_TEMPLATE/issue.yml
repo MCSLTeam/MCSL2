@@ -23,10 +23,10 @@ body:
         - 你可以在“设置”页获取系统报告。
         - You can obtain the system report on the Settings page.
         - 如果你所用的MCSL2版本不支持系统报告，请按以下格式填写：
-        > ---NO SYSTEM REPORT---
-        > System: Windows/macOS/Linux x64/x86/arm/arm64
-        > MCSL2: v2.1.4.0 (For example)
-        > PyQt5: v5.19.9 (For example) (Optional)
+        - ---NO SYSTEM REPORT---
+        - System: Windows/macOS/Linux x64/x86/arm/arm64
+        - MCSL2: v2.1.4.0 (For example)
+        - PyQt5: v5.19.9 (For example) (Optional)
     validations:
       required: true
     
@@ -68,3 +68,11 @@ body:
       options:
         - label: 我确保我的Issue没有和别人的重复 | I make sure my Issue is not the same as someone else's
           required: true
+  
+  - type: textarea
+  id: "yml-4"
+  attributes:
+    label: 附件(可选) | Attachment (Optional)
+    placeholder: "先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。\nClick on the text box and then drag the file directly into the text box to upload."
+  validations:
+    required: false
