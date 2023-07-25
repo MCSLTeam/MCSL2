@@ -1,5 +1,5 @@
 from qfluentwidgets import PrimaryPushButton, PushButton, StrongBodyLabel, TitleLabel
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal
 from PyQt5.QtWidgets import QGridLayout, QWidget, QVBoxLayout, QSpacerItem, QSizePolicy
 from MCSL2Lib.networkController import Session
 
@@ -65,17 +65,30 @@ class _HomePage(QWidget):
         self.startServerBtn.setText("启动服务器：")
         self.selectServerBtn.setText("选择")
         self.titleLabel.setText("主页")
-        self.NoticeLabel.setText(self.getNotice())
+        self.NoticeLabel.setText("获取公告中...")
         self.setObjectName("homeInterface")
-
+        
         # self.newServerBtn.clicked.connect()
         # self.startServerBtn.clicked.connect()
         # self.selectServerBtn.clicked.connect()
 
-    def getNotice(self):
+        self.thread = getNoticeThread(self)
+        self.thread.notice.connect(self.NoticeLabel.setText)
+        self.thread.start()
+
+# 使用多线程防止拖慢启动速度
+class getNoticeThread(QThread):
+
+    notice = pyqtSignal(str)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("NoticeThread")
+
+    def run(self):
         getNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
         try:
             notice = f"公告: {Session.get(getNoticeUrl).text}"
-            return notice
+            self.notice.emit(notice)
         except Exception as e:
-            return "网络连接失败，无法获取公告。"
+            self.notice.emit("网络连接失败，无法获取公告。")
