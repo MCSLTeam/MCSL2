@@ -26,7 +26,9 @@ from MCSL2Lib.selectJavaPage import _SelectJavaPage
 from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib.variables import MCSL2Version
 from MCSL2Lib import icons as _   # noqa: F401
+from MCSL2Lib.settingsController import _settingsController
 
+settingsController = _settingsController()
 
 # 标题栏
 class CustomTitleBar(TitleBar):
@@ -83,6 +85,9 @@ class Window(FramelessWindow):
         super().__init__()
         self.setTitleBar(CustomTitleBar(self))
 
+        # 读取程序设置，不放在第一位就会爆炸！
+        settingsController._readSettings(firstLoad=True)
+
         self.hBoxLayout = QHBoxLayout(self)
         self.navigationBar = NavigationBar(self)
         self.stackWidget = StackedWidget(self)
@@ -100,7 +105,7 @@ class Window(FramelessWindow):
 
         # 设置主题
         setTheme(Theme.AUTO)
-        setThemeColor(str(self.settingsInterface.fileSettings['themeColor']))
+        setThemeColor(str(settingsController.fileSettings['themeColor']))
         
         # 定义无法直接设置的Qt信号槽
         self.initLJQtSlot()
