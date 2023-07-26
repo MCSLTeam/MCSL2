@@ -1212,7 +1212,7 @@ class _ConfigurePage(QWidget):
     def checkMemSet(self, currentNewServerType):
         '''检查内存设置'''
         minMemLineEditItems = [None, self.noobMinMemLineEdit, self.extendedMinMemLineEdit]
-        maxMemLineEditItems = [None, self.noobMaxMemLineEdit, self.noobMaxMemLineEdit]
+        maxMemLineEditItems = [None, self.noobMaxMemLineEdit, self.extendedMaxMemLineEdit]
 
         # 是否为空
         if (
