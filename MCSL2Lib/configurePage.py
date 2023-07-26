@@ -1198,6 +1198,7 @@ class _ConfigurePage(QWidget):
                       f"服务器名称：{self.serverName}"
             w = MessageBox(title, content, self)
             w.yesButton.setText("无误，添加")
+            w.yesButton.clicked.connect(self.saveNewServer)
             w.cancelButton.setText("我再看看")
             w.exec()
 
@@ -1228,10 +1229,16 @@ class _ConfigurePage(QWidget):
                     int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
                     and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
                 ):
-                    # 设!
-                    self.minMem = int(minMemLineEditItems[currentNewServerType].text())
-                    self.maxMem = int(maxMemLineEditItems[currentNewServerType].text())
-                    return "内存检查: 正常", 0
+                    # 是否为整数
+                    if int(minMemLineEditItems[currentNewServerType].text()) <= int(maxMemLineEditItems[currentNewServerType].text()):
+
+                        # 设!
+                        self.minMem = int(minMemLineEditItems[currentNewServerType].text())
+                        self.maxMem = int(maxMemLineEditItems[currentNewServerType].text())
+                        return "内存检查: 正常", 0
+                    
+                    else:
+                        return "内存检查: 出错, 最小内存必须小于等于最大内存", 1
                 else:
                     return "内存检查: 出错, 不为整数", 1
             else:

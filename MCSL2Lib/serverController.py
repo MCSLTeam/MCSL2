@@ -7,43 +7,6 @@ from typing import List, Optional
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 
-def SaveServer(ServerName, CorePath, JavaPath, MinMemory, MaxMemory, CoreFileName, AddServerType):
-    global GlobalServerList
-    MemoryUnits = ["M", "G"]
-    MemoryUnit = None
-    if AddServerType == "noob":
-        MemoryUnit = MemoryUnits[0]
-    elif AddServerType == "extended_m":
-        MemoryUnit = MemoryUnits[0]
-    elif AddServerType == "extended_g":
-        MemoryUnit = MemoryUnits[1]
-    ServerFolderPath = "./Servers/" + ServerName
-    mkdir(ServerFolderPath)
-    copy(CorePath, ServerFolderPath)
-    ServerConfigDict = {
-        "name": str(ServerName),
-        "core_file_name": str(CoreFileName),
-        "java_path": str(JavaPath),
-        "min_memory": int(MinMemory),
-        "max_memory": int(MaxMemory),
-        "memory_unit": str(MemoryUnit),
-        "jvm_arg": ""
-    }
-    with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as ReadGlobalServerListFile:
-        GlobalServerList = loads(ReadGlobalServerListFile.read())
-        GlobalServerList['MCSLServerList'].append(ServerConfigDict)
-        ReadGlobalServerListFile.close()
-    with open(r'MCSL2/MCSL2_ServerList.json', "w", encoding='utf-8') as WriteGlobalServerListFile:
-        WriteGlobalServerListFile.write(dumps(GlobalServerList, indent=4))
-        WriteGlobalServerListFile.close()
-
-    ConfigPath = f"Servers//{ServerName}//MCSL2ServerConfig.json"
-    with open(ConfigPath, "w+") as SaveConfig:
-        SaveConfig.write(str(dumps(ServerConfigDict, indent=4)))
-        SaveConfig.close()
-    Tip = "服务器部署完毕！"
-
-
 
 def ReadGlobalServerConfig():
     with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as ReadGlobalServerConfigFile:
