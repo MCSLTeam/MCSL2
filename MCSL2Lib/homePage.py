@@ -1,6 +1,12 @@
-from qfluentwidgets import PrimaryPushButton, PushButton, StrongBodyLabel, TitleLabel
+from qfluentwidgets import (
+    PrimaryPushButton,
+    PushButton,
+    StrongBodyLabel,
+    TitleLabel,
+    IndeterminateProgressRing
+)
 from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal
-from PyQt5.QtWidgets import QGridLayout, QWidget, QVBoxLayout, QSpacerItem, QSizePolicy
+from PyQt5.QtWidgets import QGridLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 from MCSL2Lib.networkController import Session
 
 
@@ -10,62 +16,106 @@ class _HomePage(QWidget):
         
         super().__init__()
 
-        # 全局GridLayout
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setWindowTitle("")
         self.gridLayout = QGridLayout(self)
-
+        self.gridLayout.setObjectName("gridLayout")
         self.titleLimitWidget = QWidget(self)
-
-        self.verticalLayout = QVBoxLayout(self.titleLimitWidget)
-
-        # 标题
+        self.titleLimitWidget.setObjectName("titleLimitWidget")
+        self.gridLayout_3 = QGridLayout(self.titleLimitWidget)
+        self.gridLayout_3.setObjectName("gridLayout_3")
         self.titleLabel = TitleLabel(self.titleLimitWidget)
-
-        self.verticalLayout.addWidget(self.titleLabel)
-
-        # 公告
-        self.NoticeLabel = StrongBodyLabel(self.titleLimitWidget)
-        self.NoticeLabel.setTextFormat(Qt.MarkdownText)
-
-        self.verticalLayout.addWidget(self.NoticeLabel)
-
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.titleLabel.sizePolicy().hasHeightForWidth())
+        self.titleLabel.setSizePolicy(sizePolicy)
+        self.titleLabel.setObjectName("titleLabel")
+        self.gridLayout_3.addWidget(self.titleLabel, 0, 0, 1, 1)
+        self.noticeWidget = QWidget(self.titleLimitWidget)
+        self.noticeWidget.setObjectName("noticeWidget")
+        self.horizontalLayout = QHBoxLayout(self.noticeWidget)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.subTitleLabel = StrongBodyLabel(self.noticeWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        self.subTitleLabel.setSizePolicy(sizePolicy)
+        self.subTitleLabel.setTextFormat(Qt.MarkdownText)
+        self.subTitleLabel.setObjectName("subTitleLabel")
+        self.horizontalLayout.addWidget(self.subTitleLabel)
+        self.IndeterminateProgressRing = IndeterminateProgressRing(self.noticeWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.IndeterminateProgressRing.sizePolicy().hasHeightForWidth())
+        self.IndeterminateProgressRing.setSizePolicy(sizePolicy)
+        self.IndeterminateProgressRing.setMinimumSize(QSize(20, 20))
+        self.IndeterminateProgressRing.setMaximumSize(QSize(20, 20))
+        self.IndeterminateProgressRing.setObjectName("IndeterminateProgressRing")
+        self.horizontalLayout.addWidget(self.IndeterminateProgressRing)
+        self.gridLayout_3.addWidget(self.noticeWidget, 1, 0, 1, 1)
+        spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem, 0, 1, 2, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 1, 1)
-
         self.home_btnWidget = QWidget(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.home_btnWidget.sizePolicy().hasHeightForWidth())
+        self.home_btnWidget.setSizePolicy(sizePolicy)
         self.home_btnWidget.setMinimumSize(QSize(244, 140))
         self.home_btnWidget.setMaximumSize(QSize(244, 140))
-
-        self.btnWidgetGridLayout = QGridLayout(self.home_btnWidget)
-
+        self.home_btnWidget.setObjectName("home_btnWidget")
+        self.gridLayout_2 = QGridLayout(self.home_btnWidget)
+        self.gridLayout_2.setObjectName("gridLayout_2")
         self.newServerBtn = PushButton(self.home_btnWidget)
-
-        self.btnWidgetGridLayout.addWidget(self.newServerBtn, 0, 2, 1, 1)
-
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.newServerBtn.sizePolicy().hasHeightForWidth())
+        self.newServerBtn.setSizePolicy(sizePolicy)
+        self.newServerBtn.setFocusPolicy(Qt.NoFocus)
+        self.newServerBtn.setObjectName("newServerBtn")
+        self.gridLayout_2.addWidget(self.newServerBtn, 0, 2, 1, 1)
         self.startServerBtn = PrimaryPushButton(self.home_btnWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(2)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.startServerBtn.sizePolicy().hasHeightForWidth())
+        self.startServerBtn.setSizePolicy(sizePolicy)
         self.startServerBtn.setMinimumSize(QSize(0, 70))
-        self.btnWidgetGridLayout.addWidget(self.startServerBtn, 1, 1, 1, 2)
-
+        self.startServerBtn.setFocusPolicy(Qt.NoFocus)
+        self.startServerBtn.setObjectName("startServerBtn")
+        self.gridLayout_2.addWidget(self.startServerBtn, 1, 1, 1, 2)
         self.selectServerBtn = PushButton(self.home_btnWidget)
-        self.btnWidgetGridLayout.addWidget(self.selectServerBtn, 0, 1, 1, 1)
-
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.selectServerBtn.sizePolicy().hasHeightForWidth())
+        self.selectServerBtn.setSizePolicy(sizePolicy)
+        self.selectServerBtn.setFocusPolicy(Qt.NoFocus)
+        self.selectServerBtn.setObjectName("selectServerBtn")
+        self.gridLayout_2.addWidget(self.selectServerBtn, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.home_btnWidget, 4, 3, 1, 1)
-        spacerItem = QSpacerItem(
-            400, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem, 4, 2, 1, 1)
-        spacerItem1 = QSpacerItem(
-            10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem1, 1, 0, 1, 1)
-        spacerItem2 = QSpacerItem(
-            20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.gridLayout.addItem(spacerItem2, 0, 2, 1, 1)
-        spacerItem3 = QSpacerItem(
-            20, 300, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem3, 3, 2, 1, 1)
-
+        spacerItem1 = QSpacerItem(400, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 4, 2, 1, 1)
+        spacerItem2 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem2, 1, 0, 1, 1)
+        spacerItem3 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.gridLayout.addItem(spacerItem3, 0, 2, 1, 1)
+        spacerItem4 = QSpacerItem(20, 300, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem4, 3, 2, 1, 1)
         self.newServerBtn.setText("新建")
         self.startServerBtn.setText("启动服务器：")
         self.selectServerBtn.setText("选择")
         self.titleLabel.setText("主页")
-        self.NoticeLabel.setText("获取公告中...")
+        self.subTitleLabel.setText("获取公告中...")
         self.setObjectName("homeInterface")
         
         # self.newServerBtn.clicked.connect()
@@ -73,13 +123,15 @@ class _HomePage(QWidget):
         # self.selectServerBtn.clicked.connect()
 
         self.thread = getNoticeThread(self)
-        self.thread.notice.connect(self.NoticeLabel.setText)
+        self.thread.notice.connect(self.subTitleLabel.setText)
+        self.thread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
         self.thread.start()
 
 # 使用多线程防止拖慢启动速度
 class getNoticeThread(QThread):
 
     notice = pyqtSignal(str)
+    ringVisible = pyqtSignal(bool)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -92,3 +144,4 @@ class getNoticeThread(QThread):
             self.notice.emit(notice)
         except Exception as e:
             self.notice.emit("网络连接失败，无法获取公告。")
+        self.ringVisible.emit(False)
