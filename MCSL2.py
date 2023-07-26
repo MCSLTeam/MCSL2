@@ -1,12 +1,11 @@
 from os import environ
 from platform import system
 from sys import argv as SystemArgv
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication
 from MCSL2Lib.initProgram import initializeMCSL2
-
+from qfluentwidgets import FluentTranslator
 from MCSL2Lib.windowInterface import Window
-
 
 if __name__ == '__main__':
 
@@ -33,6 +32,8 @@ if __name__ == '__main__':
 
     # 启动
     app = QApplication(SystemArgv)
+    translator = FluentTranslator(QLocale())
+    app.installTranslator(translator)
     w = Window()
     w.show()
     app.exec_()
