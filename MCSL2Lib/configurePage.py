@@ -1150,8 +1150,22 @@ class _ConfigurePage(QWidget):
         consoleDeEncodingResult = self.checkDeEncodingSet(currentNewServerType)
         jvmArgResult = self.checkJVMArgSet(currentNewServerType)
         memUnitResult = self.checkMemUnitSet(currentNewServerType)
-        totalResultMsg = f"{javaResult[0]}\n{memResult[0]}\n{memUnitResult[0]}\n{coreResult[0]}\n{serverNameResult[0]}\n{consoleDeEncodingResult[0]}\n{jvmArgResult[0]}"
-        totalResultIndicator = [javaResult[1], memResult[1], memUnitResult[1], coreResult[1], serverNameResult[1], consoleDeEncodingResult[1], jvmArgResult[1]]
+        totalResultMsg = f"{javaResult[0]}\n" \
+                         f"{memResult[0]}\n" \
+                         f"{memUnitResult[0]}\n" \
+                         f"{coreResult[0]}\n" \
+                         f"{serverNameResult[0]}\n" \
+                         f"{consoleDeEncodingResult[0]}\n" \
+                         f"{jvmArgResult[0]}"
+        totalResultIndicator = [
+            javaResult[1],
+            memResult[1],
+            memUnitResult[1],
+            coreResult[1],
+            serverNameResult[1],
+            consoleDeEncodingResult[1],
+            jvmArgResult[1]
+        ]
         # 错了多少
         errCount = 0
         for indicator in totalResultIndicator:
@@ -1168,11 +1182,20 @@ class _ConfigurePage(QWidget):
             w.cancelButton.setParent(None)
             w.exec()
         else:
+            totalJVMArg = self.jvmArg.replace(' ', '\n')
             title = f'请再次检查你设置的参数是否有误：'
-            totalJVMArg = ""
-            for arg in self.jvmArg:
-                totalJVMArg += f"{str(arg)} "
-            content = f"{totalResultMsg}\n----------------------------\nJava：{self.selectedJavaPath}\nJava版本：{self.selectedJavaVersion}\n内存：{self.minMem}~{self.maxMem}{self.memUnit}\n服务器核心：{self.corePath}\n服务器核心文件名：{self.coreFileName}\n输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(self.consoleOutputDeEncoding.index(self.consoleOutputDeEncodingList))}\n输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(self.consoleInputDeEncoding.index(self.consoleInputDeEncodingList))}\nJVM参数：{totalJVMArg}\n服务器名称：{self.serverName}"
+            content = f"{totalResultMsg}\n" \
+                      f"----------------------------\n" \
+                      f"Java：{self.selectedJavaPath}\n" \
+                      f"Java版本：{self.selectedJavaVersion}\n" \
+                      f"内存：{str(self.minMem)}{self.memUnit}~{str(self.maxMem)}{self.memUnit}\n" \
+                      f"服务器核心：{self.corePath}\n" \
+                      f"服务器核心文件名：{self.coreFileName}\n" \
+                      f"输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(self.consoleOutputDeEncodingList.index(self.consoleOutputDeEncoding))}\n" \
+                      f"输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(self.consoleInputDeEncodingList.index(self.consoleInputDeEncoding))}\n" \
+                      f"JVM参数：\n" \
+                      f"    {totalJVMArg}\n" \
+                      f"服务器名称：{self.serverName}"
             w = MessageBox(title, content, self)
             w.yesButton.setText("无误，添加")
             w.cancelButton.setText("我再看看")
@@ -1229,16 +1252,16 @@ class _ConfigurePage(QWidget):
         '''检查服务器名称设置'''
         errText = "服务器名称检查: 出错"
         isError: int
-        illegalServerNameList = ["aux", "com1", "com2", "prn", "con", "lpt1", "lpt2", "nul"]
         illegalServerCharacterList = ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]
         serverNameLineEditItems = [None, self.noobServerNameLineEdit, self.extendedServerNameLineEdit]
-        for eachIllegalServerName in illegalServerNameList:
-            if serverNameLineEditItems[currentNewServerType].text() != eachIllegalServerName:
-                isError = 0
-            else:
+        illegalServerNameList = ["aux", "com1", "com2", "prn", "con", "lpt1", "lpt2", "nul"]
+        for i in range(len(illegalServerNameList)):
+            if serverNameLineEditItems[currentNewServerType].text() == illegalServerNameList[i]:
                 errText += "，名称与操作系统冲突"
                 isError = 1
                 break
+            else:
+                isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
             if not eachIllegalServerCharacter in serverNameLineEditItems[currentNewServerType].text():
                 isError = 0
