@@ -1256,7 +1256,7 @@ class _ConfigurePage(QWidget):
         serverNameLineEditItems = [None, self.noobServerNameLineEdit, self.extendedServerNameLineEdit]
         illegalServerNameList = ["aux", "com1", "com2", "prn", "con", "lpt1", "lpt2", "nul"]
         for i in range(len(illegalServerNameList)):
-            if serverNameLineEditItems[currentNewServerType].text() == illegalServerNameList[i]:
+            if illegalServerNameList[i] == serverNameLineEditItems[currentNewServerType].text():
                 errText += "，名称与操作系统冲突"
                 isError = 1
                 break
@@ -1264,7 +1264,7 @@ class _ConfigurePage(QWidget):
                 isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
             if not eachIllegalServerCharacter in serverNameLineEditItems[currentNewServerType].text():
-                isError = 0
+                pass
             else:
                 errText += "，名称含有不合法字符"
                 isError = 1
