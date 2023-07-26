@@ -1,5 +1,6 @@
 from json import dump, loads, dumps
-from os import getcwd, remove, path as ospath
+from os import getcwd, mkdir, remove, path as ospath
+from shutil import copy
 from PyQt5.QtGui import QCursor
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtWidgets import (
@@ -1344,14 +1345,17 @@ class _ConfigurePage(QWidget):
             "jvm_arg": self.jvmArg
         }
 
-        # 全局配置
+        # 写入全局配置
         try:
-            with open(r'MCSL2/MCSL2_ServerList.json', "r+", encoding='utf-8') as globalServerListFile:
+            with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerListFile:
+                # old
                 globalServerList = loads(globalServerListFile.read())
+                globalServerListFile.close()
+
+            with open(r'MCSL2/MCSL2_ServerList.json', "w+", encoding='utf-8') as newGlobalServerListFile:
                 #添加新的
                 globalServerList['MCSLServerList'].append(serverConfig)
-                globalServerListFile.write(dumps(globalServerList, indent=4))
-                globalServerListFile.close()
+                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
             exitCode = 0
         except Exception as e:
             exitCode = 1
@@ -1360,12 +1364,10 @@ class _ConfigurePage(QWidget):
         # 写入单独配置
         try:
             if not settingsController.fileSettings['onlySaveGlobalServerConfig']:
-                with open(f"Servers//{self.serverName}//MCSL2ServerConfig.json", "r+", encoding='utf-8') as globalServerListFile:
-                    globalServerList = loads(globalServerListFile.read())
-                    #添加新的
-                    globalServerList['MCSLServerList'].append(serverConfig)
-                    globalServerListFile.write(dumps(globalServerList, indent=4))
-                    globalServerListFile.close()
+                mkdir(f"Servers//{self.serverName}")
+                with open(f"Servers//{self.serverName}//MCSL2ServerConfig.json", "w+", encoding='utf-8') as serverListFile:
+                    serverListFile.write(dumps(serverConfig, indent=4))
+                    serverListFile.close()
             else:
                 InfoBar.info(
                         title='提示',
@@ -1381,6 +1383,13 @@ class _ConfigurePage(QWidget):
             exitCode = 1
             exit1Msg += f"\n{e}"
         
+        # 复制核心
+        try:
+            copy(self.corePath, f"Servers//{self.serverName}//{self.coreFileName}")
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+
         if exitCode == 0:
             InfoBar.success(
                         title='成功',
