@@ -18,12 +18,12 @@ from qframelesswindow import FramelessWindow, TitleBar
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.homePage import _HomePage
 from MCSL2Lib.configurePage import _ConfigurePage
+from MCSL2Lib.serverManagerPage import _ServerManagerPage
 from MCSL2Lib.downloadPage import _DownloadPage
 from MCSL2Lib.consolePage import _ConsolePage
 from MCSL2Lib.pluginPage import _PluginPage
 from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.selectJavaPage import _SelectJavaPage
-from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib.variables import MCSL2Version
 from MCSL2Lib import icons as _   # noqa: F401
 from MCSL2Lib.settingsController import _settingsController
@@ -95,6 +95,7 @@ class Window(FramelessWindow):
         # 定义子页面
         self.homeInterface = _HomePage()
         self.configureInterface = _ConfigurePage()
+        self.serverManagerInterface = _ServerManagerPage()
         self.downloadInterface = _DownloadPage()
         self.consoleInterface = _ConsolePage()
         self.pluginsInterface = _PluginPage()
@@ -133,6 +134,7 @@ class Window(FramelessWindow):
         self.addSubInterface(self.homeInterface, FIF.HOME,
                              '主页', selectedIcon=FIF.HOME_FILL)
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, '新建')
+        self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, '管理')
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, '下载')
         self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, '终端')
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
