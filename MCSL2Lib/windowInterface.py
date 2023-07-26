@@ -145,15 +145,15 @@ class Window(FramelessWindow):
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
 
     def initWindow(self):
-        self.resize(900, 700)
         self.setWindowIcon(QIcon(':/build-InIcons/MCSL2.png'))
         self.setWindowTitle(f'MCSL {MCSL2Version}')
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
+        self.resize(w//2, h//2)
         self.move(w//2 - self.width()//2, h//2 - self.height()//2)
-
+    
         self.setQss()
 
     def addSubInterface(self, interface, icon, text: str, position=NavigationItemPosition.TOP, selectedIcon=None):
