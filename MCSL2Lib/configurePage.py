@@ -1027,7 +1027,7 @@ class _ConfigurePage(QWidget):
                     tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
                     InfoBar.success(
                         title='已添加',
-                        content=f"Java路径：{tmpJavaPath}\n版本：{v}\n已选中此Java。\n但你还需要继续到Java列表中选取。",
+                        content=f"Java路径：{tmpJavaPath}\n版本：{v}\n但你还需要继续到Java列表中选取。",
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
