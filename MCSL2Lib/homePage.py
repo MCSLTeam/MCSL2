@@ -118,7 +118,6 @@ class _HomePage(QWidget):
         self.subTitleLabel.setText("获取公告中...")
         self.setObjectName("homeInterface")
         
-        # self.newServerBtn.clicked.connect()
         # self.startServerBtn.clicked.connect()
         # self.selectServerBtn.clicked.connect()
 
