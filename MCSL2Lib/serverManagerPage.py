@@ -6,8 +6,11 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QSpacerItem
 )
-from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtCore import Qt, QRect, QSize
+from PyQt5.QtGui import QPixmap
 from qfluentwidgets import SmoothScrollArea, StrongBodyLabel, TitleLabel
+from MCSL2Lib.serverController import readGlobalServerConfig
+from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.variables import scrollAreaViewportQss
 
 class _ServerManagerPage(QWidget):
@@ -71,3 +74,34 @@ class _ServerManagerPage(QWidget):
 
         self.serversSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.serversSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+
+    
+
+    def refreshServers(self):
+        
+        # 先把旧的清空
+        for i in reversed(range(self.verticalLayout.count())):
+                self.verticalLayout.itemAt(
+                    i).widget().setParent(None)
+                
+        # 读取全局设置
+        globalConfig = readGlobalServerConfig()
+
+        # 添加新的
+        for i in range(len(globalConfig)):
+            self.tmpSingleServerWidget = singleServerManager()
+            self.tmpSingleServerWidget.mem.setText(f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}")
+            self.tmpSingleServerWidget.coreFileName.setText(f"{globalConfig[i]['core_file_name']}")
+            self.tmpSingleServerWidget.javaPath.setText(f"{globalConfig[i]['java_path']}")
+            self.tmpSingleServerWidget.serverName.setText(f"{globalConfig[i]['name']}")
+            self.tmpSingleServerWidget.Icon.setPixmap(QPixmap(':/build-InIcons/Grass.png'))
+            self.tmpSingleServerWidget.Icon.setFixedSize(QSize(60, 60))
+            self.verticalLayout.addWidget(self.tmpSingleServerWidget)
+
+    # # 判断第几个
+    # def scrollAreaProcessor(self, JavaPath):
+    #     index = int(str(self.sender().objectName()).split("Btn")[1])
+    #     selectedJavaPath = str(JavaPath[index].Path)
+    #     selectedJavaVer = str(str(JavaPath[index].Version))
+    #     self.setJavaPath.emit(selectedJavaPath)
+    #     self.setJavaVer.emit(selectedJavaVer)
