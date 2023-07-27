@@ -30,6 +30,7 @@ class _SelectJavaPage(QWidget):
         super().__init__()
 
         self.setObjectName("selectJavaInterface")
+
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -38,12 +39,15 @@ class _SelectJavaPage(QWidget):
         self.setWindowTitle("")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
+
         spacerItem = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
         self.titleLimitWidget = QWidget(self)
         self.titleLimitWidget.setObjectName("titleLimitWidget")
+
         self.gridLayout_2 = QGridLayout(self.titleLimitWidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
+
         self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -52,6 +56,7 @@ class _SelectJavaPage(QWidget):
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
+
         self.gridLayout_2.addWidget(self.subTitleLabel, 1, 1, 1, 1)
         self.titleLabel = TitleLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -60,24 +65,30 @@ class _SelectJavaPage(QWidget):
         sizePolicy.setHeightForWidth(self.titleLabel.sizePolicy().hasHeightForWidth())
         self.titleLabel.setSizePolicy(sizePolicy)
         self.titleLabel.setObjectName("titleLabel")
+
         self.gridLayout_2.addWidget(self.titleLabel, 0, 1, 1, 1)
         self.javaSmoothScrollArea = SmoothScrollArea(self.titleLimitWidget)
         self.javaSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.javaSmoothScrollArea.setWidgetResizable(True)
         self.javaSmoothScrollArea.setObjectName("javaSmoothScrollArea")
+
         self.javaScrollAreaWidgetContents = QWidget()
         self.javaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 658, 469))
         self.javaScrollAreaWidgetContents.setObjectName("javaScrollAreaWidgetContents")
+
         self.verticalLayout = QVBoxLayout(self.javaScrollAreaWidgetContents)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
+
         self.javaItemVerticalLayout = QVBoxLayout()
         self.javaItemVerticalLayout.setObjectName("javaItemVerticalLayout")
+
         self.verticalLayout.addLayout(self.javaItemVerticalLayout)
         self.javaSmoothScrollArea.setWidget(self.javaScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.javaSmoothScrollArea, 2, 0, 1, 2)
         self.backBtn = TransparentToolButton(FIF.PAGE_LEFT, self.titleLimitWidget)
         self.backBtn.setObjectName("backBtn")
+        
         self.gridLayout_2.addWidget(self.backBtn, 0, 0, 2, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
