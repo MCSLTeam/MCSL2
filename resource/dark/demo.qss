@@ -56,3 +56,47 @@ SmoothScrollArea {
     background-color: transparent;
     border: none;
 }
+
+TitleLabel,
+SubtitleLabel,
+StrongBodyLabel,
+BodyLabel {
+    color: white;
+}
+
+PrimaryPushButton,
+PrimaryToolButton,
+ToggleButton:checked,
+ToggleToolButton:checked {
+    color: white;
+    background-color: --ThemeColorPrimary;
+    border: 1px solid --ThemeColorLight1;
+    border-bottom: 1px solid --ThemeColorDark1;
+}
+
+PrimaryPushButton:hover,
+PrimaryToolButton:hover,
+ToggleButton:checked:hover,
+ToggleToolButton:checked:hover {
+    background-color: --ThemeColorLight1;
+    border: 1px solid --ThemeColorLight2;
+    border-bottom: 1px solid --ThemeColorDark1;
+}
+
+PrimaryPushButton:pressed,
+PrimaryToolButton:pressed,
+ToggleButton:checked:pressed,
+ToggleToolButton:checked:pressed {
+    color: rgba(255, 255, 255, 0.63);
+    background-color: --ThemeColorLight3;
+    border: 1px solid --ThemeColorLight3;
+}
+
+PrimaryPushButton:disabled,
+PrimaryToolButton:disabled,
+ToggleButton:checked:disabled,
+ToggleToolButton:checked:disabled {
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgb(205, 205, 205);
+    border: 1px solid rgb(205, 205, 205);
+}
