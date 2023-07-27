@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QSpacerItem
 )
-from PyQt5.QtCore import Qt, QRect, QSize
+from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot
 from PyQt5.QtGui import QPixmap
 from qfluentwidgets import SmoothScrollArea, StrongBodyLabel, TitleLabel
 from MCSL2Lib.serverController import readGlobalServerConfig
@@ -75,7 +75,12 @@ class _ServerManagerPage(QWidget):
         self.serversSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.serversSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
 
-    
+    @pyqtSlot(int)
+    def onPageChangedRefresh(self, currentChanged):
+        if currentChanged == 2:
+            self.refreshServers()
+        else:
+            pass
 
     def refreshServers(self):
         
