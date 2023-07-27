@@ -99,10 +99,10 @@ class Window(FramelessWindow):
         self.consoleInterface = _ConsolePage()
         self.pluginsInterface = _PluginPage()
         self.settingsInterface = _SettingsPage()
+        self.serverManagerInterface = _ServerManagerPage()
 
         # 定义隐藏的子页面
         self.selectJavaPage = _SelectJavaPage()
-        self.serverManagerInterface = _ServerManagerPage()
 
         # 设置主题
         configThemeList = ["auto", "dark", "light"]
@@ -136,6 +136,7 @@ class Window(FramelessWindow):
         self.addSubInterface(self.homeInterface, FIF.HOME,
                              '主页', selectedIcon=FIF.HOME_FILL)
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, '新建')
+        self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, '管理')
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, '下载')
         self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, '终端')
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
@@ -143,7 +144,6 @@ class Window(FramelessWindow):
                              FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
         
         self.stackWidget.addWidget(self.selectJavaPage)
-        self.stackWidget.addWidget(self.serverManagerInterface)
 
         self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
@@ -219,3 +219,4 @@ class Window(FramelessWindow):
         self.homeInterface.newServerBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.homeInterface.selectServerBtn.clicked.connect(lambda: self.switchTo(self.serverManagerInterface))
         self.homeInterface.selectServerBtn.clicked.connect(self.serverManagerInterface.refreshServers)
+        self.stackWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
