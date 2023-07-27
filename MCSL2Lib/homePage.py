@@ -121,13 +121,13 @@ class _HomePage(QWidget):
         # self.startServerBtn.clicked.connect()
         # self.selectServerBtn.clicked.connect()
 
-        self.thread = getNoticeThread(self)
+        self.thread = GetNoticeThread(self)
         self.thread.notice.connect(self.subTitleLabel.setText)
         self.thread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
         self.thread.start()
 
 # 使用多线程防止拖慢启动速度
-class getNoticeThread(QThread):
+class GetNoticeThread(QThread):
 
     notice = pyqtSignal(str)
     ringVisible = pyqtSignal(bool)
