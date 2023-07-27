@@ -74,7 +74,7 @@
    <item row="2" column="2">
     <widget class="QStackedWidget" name="newServerStackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="guideNewServerPage">
       <layout class="QVBoxLayout" name="guideNewServerVerticalLayout">
@@ -391,7 +391,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-98</y>
             <width>594</width>
             <height>453</height>
            </rect>
@@ -653,7 +653,20 @@
               </sizepolicy>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="1" column="3">
+              <item row="0" column="1">
+               <widget class="SubtitleLabel" name="noobCoreSubtitleLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>核心：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
                <spacer name="noobCoreSpacer">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -665,25 +678,6 @@
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item row="1" column="2">
-               <widget class="PrimaryPushButton" name="noobDownloadCorePrimaryPushBtn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>90</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>下载核心</string>
-                </property>
-               </widget>
               </item>
               <item row="1" column="1">
                <widget class="PrimaryPushButton" name="noobManuallyAddCorePrimaryPushBtn">
@@ -701,19 +695,6 @@
                 </property>
                 <property name="text">
                  <string>手动导入</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="SubtitleLabel" name="noobCoreSubtitleLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>核心：</string>
                 </property>
                </widget>
               </item>
@@ -749,6 +730,9 @@
                   <width>0</width>
                   <height>30</height>
                  </size>
+                </property>
+                <property name="placeholderText">
+                 <string>不能包含非法字符</string>
                 </property>
                </widget>
               </item>
@@ -854,7 +838,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-379</y>
             <width>594</width>
             <height>734</height>
            </rect>
@@ -1291,6 +1275,9 @@
                   <height>30</height>
                  </size>
                 </property>
+                <property name="placeholderText">
+                 <string>不能包含非法字符</string>
+                </property>
                </widget>
               </item>
               <item>
@@ -1412,8 +1399,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>39</width>
+            <height>18</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout_4">
