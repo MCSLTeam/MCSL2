@@ -7,14 +7,12 @@ from typing import List, Optional
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 
-
-def ReadGlobalServerConfig():
-    with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as ReadGlobalServerConfigFile:
-        GlobalServerList = loads(ReadGlobalServerConfigFile.read())[
+def readGlobalServerConfig():
+    with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerConfigFile:
+        globalServerList = loads(globalServerConfigFile.read())[
             'MCSLServerList']
-        ServerCount = len(GlobalServerList)
-        ReadGlobalServerConfigFile.close()
-    return ServerCount, GlobalServerList
+        globalServerConfigFile.close()
+    return globalServerList
 
 
 class Server:
