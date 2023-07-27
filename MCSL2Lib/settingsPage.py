@@ -1,4 +1,5 @@
-from json import dumps, loads
+from datetime import datetime
+from json import dumps
 from typing import Union
 from MCSL2Lib.networkController import Session
 from PyQt5.QtCore import (
@@ -6,7 +7,9 @@ from PyQt5.QtCore import (
     Qt,
     QRect,
     pyqtSignal,
-    QUrl
+    QUrl,
+    QThread,
+    pyqtSlot
 )
 from PyQt5.QtGui import QColor, QDesktopServices
 from PyQt5.QtWidgets import (
@@ -20,7 +23,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSlider
 )
-from os import path as ospath
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
@@ -42,6 +44,15 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.variables import scrollAreaViewportQss, MCSL2Version
 from MCSL2Lib.settingsController import _settingsController
+from platform import (
+    system as systemType,
+    architecture as systemArchitecture,
+    version as systemVersion,
+    release as systemRelease
+)
+from os import getpid
+from psutil import Process
+from pyperclip import copy
 
 settingsController = _settingsController()
 
@@ -1007,6 +1018,7 @@ class _SettingsPage(QWidget):
         self.joinQQGroup.clicked.connect(lambda: self.openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ"))
         self.openOfficialWeb.clicked.connect(lambda: self.openWebUrl("https://mcsl.com.cn"))
         self.openSourceCodeRepo.clicked.connect(lambda: self.openWebUrl("https://www.github.com/MCSLTeam/MCSL2"))
+        self.generateSysReport.clicked.connect(self.generateSystemReport)
 
         self.settingsChanged.connect(self.saveSettingsBtnWidget.setVisible)
         self.saveBtn.clicked.connect(self.saveSettings)
@@ -1112,41 +1124,121 @@ class _SettingsPage(QWidget):
         2.新版更新链接
         3.新版更新介绍
         '''
-        try:
-            latestVerInfo = Session.get(f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={MCSL2Version}").text.split("|")
+        self.checkUpdateBtn.setEnabled(False) # 防止爆炸
+        InfoBar.info(
+                title='开始检查更新...',
+                content="",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=1500,
+                parent=self
+            )
+        self.thread_checkUpdate = CheckUpdateThread(self)
+        self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
+        self.thread_checkUpdate.start()
+    
+    @pyqtSlot(list)
+    def showUpdateMsg(self, latestVerInfo):
+        if latestVerInfo[0] == "true":  # 需要更新
+            title = f'有新版本：{latestVerInfo[4]}'
+            w = MessageBox(title, "更新介绍加载中...", self)
+            w.contentLabel.setTextFormat(Qt.MarkdownText)
+            w.yesButton.setText("更新")
+            w.cancelButton.setText("关闭")
+            self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
+            self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
+            self.thread_fetchUpdateIntro.start()
+            if w.exec(): #确定， latestVerInfo[3]为下载链接
+                pass
+            else: # 取消
+                pass
 
-            if latestVerInfo[0] == "true":  # 需要更新
-                title = f'有新版本：{latestVerInfo[4]}'
-                content = f"""{Session.get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
-                w = MessageBox(title, content, self)
-                w.contentLabel.setTextFormat(Qt.MarkdownText)
-                w.yesButton.setText("更新")
-                w.cancelButton.setText("关闭")
-                if w.exec(): #确定， latestVerInfo[3]为下载链接
-                    pass
-                else: # 取消
-                    pass
-
-            elif latestVerInfo[0] == "false":  # 已是最新版
-                InfoBar.success(
-                    title='无需更新',
-                    content="已是最新版本",
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP_RIGHT,
-                    # position='Custom',   # NOTE: use custom info bar manager
-                    duration=2500,
-                    parent=self
-                )
-            
-        except Exception as e:
+        elif latestVerInfo[0] == "false":  # 已是最新版
+            InfoBar.success(
+                title='无需更新',
+                content="已是最新版本",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2500,
+                parent=self
+            )
+        else:
             InfoBar.error(
                     title='检查更新失败',
                     content="尝试自己检查一下网络？",
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP_RIGHT,
-                    # position='Custom',   # NOTE: use custom info bar manager
                     duration=2500,
                     parent=self
                 )
+        
+        self.checkUpdateBtn.setEnabled(True)
+
+    def generateSystemReport(self):
+        InfoBar.info(
+                title='开始生成系统报告...',
+                content="",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=1500,
+                parent=self
+            )
+        report = f"MCSL2系统报告：\n" \
+                 f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n" \
+                 f"MCSL2版本：{MCSL2Version}\n" \
+                 f"操作系统：{systemType()}{systemRelease()} {systemVersion()}\n" \
+                 f"架构：{systemArchitecture()[0]}\n" \
+                 f"内存占用：{str(Process(getpid()).memory_full_info().uss / 1024 / 1024)}MB"
+        
+        title = "MC Server Launcher 2系统报告"
+        w = MessageBox(title, f"{report}\n----------------------------\n点击复制按钮以复制到剪贴板。", self)
+        w.yesButton.setText("复制")
+        w.cancelButton.setText("关闭")
+        if w.exec(): #确定
+            copy(report)
+            InfoBar.success(
+                title='成功',
+                content="已复制到剪贴板",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2500,
+                parent=self
+            )
+        else: # 取消
+            pass
+    
+# 使用多线程防止假死
+class CheckUpdateThread(QThread):
+
+    isUpdate = pyqtSignal(list)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("CheckUpdateThread")
+
+    def run(self):
+        try:
+            latestVerInfo = Session.get(f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={MCSL2Version}").text.split("|")
+            self.isUpdate.emit(latestVerInfo)
+        except Exception as e:
+            self.isUpdate.emit(["Failed"])
+
+class FetchUpdateIntroThread(QThread):
+
+    content = pyqtSignal(str)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("FetchUpdateIntroThread")
+
+    def run(self):
+        try:
+            intro = f"""{Session.get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
+            self.content.emit(intro)
+        except Exception as e:
+            self.content.emit(["奇怪，怎么获取信息失败了？\n检查一下网络，或者反馈给开发者？"])
