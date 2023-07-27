@@ -74,7 +74,7 @@
    <item row="2" column="2">
     <widget class="QStackedWidget" name="newServerStackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="guideNewServerPage">
       <layout class="QVBoxLayout" name="guideNewServerVerticalLayout">
@@ -391,7 +391,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-98</y>
+            <y>0</y>
             <width>594</width>
             <height>453</height>
            </rect>
@@ -838,8 +838,8 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-379</y>
-            <width>594</width>
+            <y>0</y>
+            <width>456</width>
             <height>734</height>
            </rect>
           </property>
@@ -1399,8 +1399,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>39</width>
-            <height>18</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout_4">
