@@ -95,7 +95,6 @@ class Window(FramelessWindow):
         # 定义子页面
         self.homeInterface = _HomePage()
         self.configureInterface = _ConfigurePage()
-        self.serverManagerInterface = _ServerManagerPage()
         self.downloadInterface = _DownloadPage()
         self.consoleInterface = _ConsolePage()
         self.pluginsInterface = _PluginPage()
@@ -103,9 +102,12 @@ class Window(FramelessWindow):
 
         # 定义隐藏的子页面
         self.selectJavaPage = _SelectJavaPage()
+        self.serverManagerInterface = _ServerManagerPage()
 
         # 设置主题
-        setTheme(Theme.AUTO)
+        configThemeList = ["auto", "dark", "light"]
+        qfluentwidgetsThemeList = [Theme.AUTO, Theme.DARK, Theme.LIGHT]
+        setTheme(qfluentwidgetsThemeList[configThemeList.index(settingsController.fileSettings["theme"])])
         setThemeColor(str(settingsController.fileSettings['themeColor']))
         
         # 定义无法直接设置的Qt信号槽
@@ -134,7 +136,6 @@ class Window(FramelessWindow):
         self.addSubInterface(self.homeInterface, FIF.HOME,
                              '主页', selectedIcon=FIF.HOME_FILL)
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, '新建')
-        self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, '管理')
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, '下载')
         self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, '终端')
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, '插件')
@@ -142,6 +143,7 @@ class Window(FramelessWindow):
                              FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
         
         self.stackWidget.addWidget(self.selectJavaPage)
+        self.stackWidget.addWidget(self.serverManagerInterface)
 
         self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
@@ -203,9 +205,9 @@ class Window(FramelessWindow):
                                                                                                        parent=self
                                                                                                       ))
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
-        self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
+        self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(settingsController.fileSettings['downloadSource'])))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
-        self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(self.settingsInterface.fileSettings['downloadSource'])))
+        self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(settingsController.fileSettings['downloadSource'])))
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
         self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
@@ -215,3 +217,5 @@ class Window(FramelessWindow):
         self.selectJavaPage.setJavaVer.connect(self.configureInterface.setJavaVer)
         self.selectJavaPage.setJavaPath.connect(self.configureInterface.setJavaPath)
         self.homeInterface.newServerBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
+        self.homeInterface.selectServerBtn.clicked.connect(lambda: self.switchTo(self.serverManagerInterface))
+        self.homeInterface.selectServerBtn.clicked.connect(self.serverManagerInterface.refreshServers)
