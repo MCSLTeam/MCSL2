@@ -45,7 +45,7 @@ class _ConfigurePage(QWidget):
         
         super().__init__()
 
-        self.javaPath = []
+        self.javaPath: list = []
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.FuzzySearch = True
         self.javaFindWorkThreadFactory.SignalConnect = self.autoDetectJavaFinished
@@ -53,18 +53,18 @@ class _ConfigurePage(QWidget):
         self.javaFindWorkThreadFactory.Create().start()
         self.minMem: int
         self.maxMem: int
-        self.corePath = ""
-        self.coreFileName = ""
-        self.selectedJavaPath = ""
-        self.selectedJavaVersion = ""
-        self.memUnit = ""
-        self.consoleOutputDeEncoding: str
-        self.consoleInputDeEncoding: str
+        self.corePath: str = ""
+        self.coreFileName: str = ""
+        self.selectedJavaPath: str = ""
+        self.selectedJavaVersion: str = ""
+        self.memUnit: str = ""
+        self.consoleOutputDeEncoding: str = "follow"
+        self.consoleInputDeEncoding: str = "follow"
         self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
-        self.jvmArg = ""
-        self.serverName: str
+        self.jvmArg: str = ""
+        self.serverName: str = ""
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -1342,7 +1342,8 @@ class _ConfigurePage(QWidget):
             "min_memory": self.minMem,
             "max_memory": self.maxMem,
             "memory_unit": self.memUnit,
-            "jvm_arg": self.jvmArg
+            "jvm_arg": self.jvmArg,
+            "icon": "Grass.png"
         }
 
         # 写入全局配置
