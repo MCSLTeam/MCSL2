@@ -17,7 +17,7 @@ from qfluentwidgets import (
     Pivot
 )
 from MCSL2Lib.MCSLAPI import fetchMCSLAPIDownloadURLThreadFactory
-from MCSL2Lib.variables import scrollAreaViewportQss
+from MCSL2Lib.variables import _globalMCSL2Variables
 
 
 class _DownloadPage(QWidget):
@@ -213,9 +213,9 @@ class _DownloadPage(QWidget):
         self.buildSubtitleLabel.setText("构建列表")
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.coreListSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
-        self.versionSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
-        self.buildScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.coreListSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.versionSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.buildScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIJava",
             text="Java环境",

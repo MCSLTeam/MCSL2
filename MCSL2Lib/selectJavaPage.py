@@ -16,7 +16,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition
 )
-from MCSL2Lib.variables import scrollAreaViewportQss
+from MCSL2Lib.variables import _globalMCSL2Variables
 from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib import icons as _   # noqa: F401
 
@@ -96,7 +96,7 @@ class _SelectJavaPage(QWidget):
         self.subTitleLabel.setText("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。")
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.javaSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.javaSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
 
     def refreshPage(self, JavaPath):
         # 删除旧的

@@ -42,7 +42,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar
 )
-from MCSL2Lib.variables import scrollAreaViewportQss, MCSL2Version
+from MCSL2Lib.variables import _globalMCSL2Variables
 from MCSL2Lib.settingsController import _settingsController
 from platform import (
     system as systemType,
@@ -976,7 +976,7 @@ class _SettingsPage(QWidget):
         self.alwaysRunAsAdministratorSwitchBtn.setOnText("已开启")
         self.alwaysRunAsAdministratorSwitchBtn.setOffText("已关闭")
         self.currentVerTitle.setText("当前版本：")
-        self.currentVerLabel.setText(MCSL2Version)
+        self.currentVerLabel.setText(_globalMCSL2Variables.MCSL2Version)
         self.checkUpdateBtn.setText("检查更新")
         self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
         self.checkUpdateOnStartSwitchBtn.setText("已关闭")
@@ -996,7 +996,7 @@ class _SettingsPage(QWidget):
                                  "")
         self.aboutTitle.setText("关于")
         self.aria2ThreadSlider.setValue(8)
-        self.settingsSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.settingsSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
         self.newServerTypeComboBox.addItems(["初始（简易+进阶+导入）", "简易模式", "进阶模式", "导入"])
         self.newServerTypeComboBox.setCurrentIndex(0)
         self.downloadSourceComboBox.addItems(["FastMirror", "MCSLAPI"])
@@ -1189,7 +1189,7 @@ class _SettingsPage(QWidget):
             )
         report = f"MCSL2系统报告：\n" \
                  f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n" \
-                 f"MCSL2版本：{MCSL2Version}\n" \
+                 f"MCSL2版本：{_globalMCSL2Variables.MCSL2Version}\n" \
                  f"操作系统：{systemType()}{systemRelease()} {systemVersion()}\n" \
                  f"架构：{systemArchitecture()[0]}\n" \
                  f"内存占用：{str(Process(getpid()).memory_full_info().uss / 1024 / 1024)}MB"
@@ -1223,7 +1223,7 @@ class CheckUpdateThread(QThread):
 
     def run(self):
         try:
-            latestVerInfo = Session.get(f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={MCSL2Version}").text.split("|")
+            latestVerInfo = Session.get(f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={_globalMCSL2Variables.MCSL2Version}").text.split("|")
             self.isUpdate.emit(latestVerInfo)
         except Exception as e:
             self.isUpdate.emit(["Failed"])

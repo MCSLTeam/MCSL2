@@ -24,7 +24,7 @@ from MCSL2Lib.consolePage import _ConsolePage
 from MCSL2Lib.pluginPage import _PluginPage
 from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.selectJavaPage import _SelectJavaPage
-from MCSL2Lib.variables import MCSL2Version
+from MCSL2Lib.variables import _globalMCSL2Variables
 from MCSL2Lib import icons as _   # noqa: F401
 from MCSL2Lib.settingsController import _settingsController
 
@@ -150,7 +150,7 @@ class Window(FramelessWindow):
 
     def initWindow(self):
         self.setWindowIcon(QIcon(':/build-InIcons/MCSL2.png'))
-        self.setWindowTitle(f'MCSL {MCSL2Version}')
+        self.setWindowTitle(f'MCSL {_globalMCSL2Variables.MCSL2Version}')
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
         desktop = QApplication.desktop().availableGeometry()

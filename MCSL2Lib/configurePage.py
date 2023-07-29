@@ -32,12 +32,12 @@ from qfluentwidgets import (
     MessageBox
 )
 
-from MCSL2Lib.variables import scrollAreaViewportQss
-from MCSL2Lib import javaDetector
+from MCSL2Lib.variables import _globalMCSL2Variables, _configureNewServerVariables
 from MCSL2Lib.settingsController import _settingsController
+from MCSL2Lib import javaDetector
 
 settingsController = _settingsController()
-
+configureNewServerVariables = _configureNewServerVariables()
 
 class _ConfigurePage(QWidget):
 
@@ -45,26 +45,11 @@ class _ConfigurePage(QWidget):
         
         super().__init__()
 
-        self.javaPath: list = []
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.FuzzySearch = True
         self.javaFindWorkThreadFactory.SignalConnect = self.autoDetectJavaFinished
         self.javaFindWorkThreadFactory.FinishSignalConnect = self.onJavaFindWorkThreadFinished
         self.javaFindWorkThreadFactory.Create().start()
-        self.minMem: int
-        self.maxMem: int
-        self.corePath: str = ""
-        self.coreFileName: str = ""
-        self.selectedJavaPath: str = ""
-        self.selectedJavaVersion: str = ""
-        self.memUnit: str = ""
-        self.consoleOutputDeEncoding: str = "follow"
-        self.consoleInputDeEncoding: str = "follow"
-        self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.memUnitList = ["M", "G"]
-        self.jvmArg: str = ""
-        self.serverName: str = ""
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -1007,9 +992,9 @@ class _ConfigurePage(QWidget):
         # # 导入法绑定
         self.importBackToGuidePushButton.clicked.connect(self.newServerStackedWidgetNavigateToGuide)
 
-        self.noobNewServerScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
-        self.extendedNewServerScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
-        self.importNewServerScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.noobNewServerScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.extendedNewServerScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.importNewServerScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
 
     def newServerStackedWidgetNavigation(self):
         naviList = ["PlaceHolder", self.noobNewServerBtn, self.extendedNewServerBtn, self.importNewServerBtn]
@@ -1023,7 +1008,7 @@ class _ConfigurePage(QWidget):
         if tmpJavaPath != "":
             tmpJavaPath = tmpJavaPath.replace("/", "\\")
             if v := javaDetector.GetJavaVersion(tmpJavaPath):
-                tmpNewJavaPath = self.javaPath
+                tmpNewJavaPath = configureNewServerVariables.javaPath
                 if javaDetector.Java(tmpJavaPath, v) not in tmpNewJavaPath:
                     tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
                     InfoBar.success(
@@ -1045,8 +1030,8 @@ class _ConfigurePage(QWidget):
                         duration=4848,
                         parent=self
                         )
-                self.javaPath.clear()
-                self.javaPath = tmpNewJavaPath
+                configureNewServerVariables.javaPath.clear()
+                configureNewServerVariables.javaPath = tmpNewJavaPath
             else:
                 InfoBar.error(
                     title='添加失败',
@@ -1082,20 +1067,20 @@ class _ConfigurePage(QWidget):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
         with open("MCSL2/MCSL2_DetectedJava.json", 'w+', encoding='utf-8') as SaveFoundedJava:
-            tmpNewJavaPath = self.javaPath
-            self.javaPath = list({p[:-1] for p in SaveFoundedJava.readlines()
-                                  }.union(set(self.javaPath)).union(set(_JavaPaths)))
-            self.javaPath.sort(key=lambda x: x.Version, reverse=False)
-            for d in self.javaPath:
+            tmpNewJavaPath = configureNewServerVariables.javaPath
+            configureNewServerVariables.javaPath = list({p[:-1] for p in SaveFoundedJava.readlines()
+                                  }.union(set(configureNewServerVariables.javaPath)).union(set(_JavaPaths)))
+            configureNewServerVariables.javaPath.sort(key=lambda x: x.Version, reverse=False)
+            for d in configureNewServerVariables.javaPath:
                 if d not in tmpNewJavaPath:
                     tmpNewJavaPath.append(d)
                 else:
                     pass
-            self.javaPath.clear()
-            self.javaPath = tmpNewJavaPath
+            configureNewServerVariables.javaPath.clear()
+            configureNewServerVariables.javaPath = tmpNewJavaPath
                 
             JavaPathList = [{"Path": e.Path, "Version": e.Version}
-                            for e in self.javaPath]
+                            for e in configureNewServerVariables.javaPath]
             dump({"java": JavaPathList}, SaveFoundedJava,
                     sort_keys=True, indent=4, ensure_ascii=False)
 
@@ -1104,7 +1089,7 @@ class _ConfigurePage(QWidget):
         if sequenceNumber > 1:
             InfoBar.success(
                 title='查找完毕',
-                content=f"一共搜索到了{len(self.javaPath)}个Java。\n请单击“Java列表”按钮查看、选择。",
+                content=f"一共搜索到了{len(configureNewServerVariables.javaPath)}个Java。\n请单击“Java列表”按钮查看、选择。",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1118,11 +1103,11 @@ class _ConfigurePage(QWidget):
     def addCoreManually(self):
         tmpCorePath = str(QFileDialog.getOpenFileName(self, "选择*.jar文件", getcwd(), "*.jar")[0]).replace("/", "\\")
         if tmpCorePath != "":
-            self.corePath = tmpCorePath
-            self.coreFileName = tmpCorePath.split("\\")[-1]
+            configureNewServerVariables.corePath = tmpCorePath
+            configureNewServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
             InfoBar.success(
                         title='已添加',
-                        content=f"核心文件名：{self.coreFileName}",
+                        content=f"核心文件名：{configureNewServerVariables.coreFileName}",
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
@@ -1183,20 +1168,20 @@ class _ConfigurePage(QWidget):
             w.cancelButton.setParent(None)
             w.exec()
         else:
-            totalJVMArg = self.jvmArg.replace(' ', '\n')
+            totalJVMArg = configureNewServerVariables.jvmArg.replace(' ', '\n')
             title = f'请再次检查你设置的参数是否有误：'
             content = f"{totalResultMsg}\n" \
                       f"----------------------------\n" \
-                      f"Java：{self.selectedJavaPath}\n" \
-                      f"Java版本：{self.selectedJavaVersion}\n" \
-                      f"内存：{str(self.minMem)}{self.memUnit}~{str(self.maxMem)}{self.memUnit}\n" \
-                      f"服务器核心：{self.corePath}\n" \
-                      f"服务器核心文件名：{self.coreFileName}\n" \
-                      f"输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(self.consoleOutputDeEncodingList.index(self.consoleOutputDeEncoding))}\n" \
-                      f"输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(self.consoleInputDeEncodingList.index(self.consoleInputDeEncoding))}\n" \
+                      f"Java：{configureNewServerVariables.selectedJavaPath}\n" \
+                      f"Java版本：{configureNewServerVariables.selectedJavaVersion}\n" \
+                      f"内存：{str(configureNewServerVariables.minMem)}{configureNewServerVariables.memUnit}~{str(configureNewServerVariables.maxMem)}{configureNewServerVariables.memUnit}\n" \
+                      f"服务器核心：{configureNewServerVariables.corePath}\n" \
+                      f"服务器核心文件名：{configureNewServerVariables.coreFileName}\n" \
+                      f"输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(configureNewServerVariables.consoleOutputDeEncodingList.index(configureNewServerVariables.consoleOutputDeEncoding))}\n" \
+                      f"输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(configureNewServerVariables.consoleInputDeEncodingList.index(configureNewServerVariables.consoleInputDeEncoding))}\n" \
                       f"JVM参数：\n" \
                       f"    {totalJVMArg}\n" \
-                      f"服务器名称：{self.serverName}"
+                      f"服务器名称：{configureNewServerVariables.serverName}"
             w = MessageBox(title, content, self)
             w.yesButton.setText("无误，添加")
             w.yesButton.clicked.connect(self.saveNewServer)
@@ -1205,7 +1190,7 @@ class _ConfigurePage(QWidget):
 
     def checkJavaSet(self):
         '''检查Java设置'''
-        if self.selectedJavaPath != "":
+        if configureNewServerVariables.selectedJavaPath != "":
             return "Java检查: 正常", 0
         else:
             return "Java检查: 出错，缺失", 1
@@ -1234,8 +1219,8 @@ class _ConfigurePage(QWidget):
                     if int(minMemLineEditItems[currentNewServerType].text()) <= int(maxMemLineEditItems[currentNewServerType].text()):
 
                         # 设!
-                        self.minMem = int(minMemLineEditItems[currentNewServerType].text())
-                        self.maxMem = int(maxMemLineEditItems[currentNewServerType].text())
+                        configureNewServerVariables.minMem = int(minMemLineEditItems[currentNewServerType].text())
+                        configureNewServerVariables.maxMem = int(maxMemLineEditItems[currentNewServerType].text())
                         return "内存检查: 正常", 0
                     
                     else:
@@ -1249,8 +1234,8 @@ class _ConfigurePage(QWidget):
 
     def checkCoreSet(self):
         '''检查核心设置'''
-        if (self.corePath != ""
-            and self.coreFileName != ""
+        if (configureNewServerVariables.corePath != ""
+            and configureNewServerVariables.coreFileName != ""
             ):
             return "核心检查: 正常", 0
         else:
@@ -1283,20 +1268,20 @@ class _ConfigurePage(QWidget):
         if isError == 1:
             return errText, isError
         else:
-            self.serverName = serverNameLineEditItems[currentNewServerType].text()
+            configureNewServerVariables.serverName = serverNameLineEditItems[currentNewServerType].text()
             return "服务器名称检查: 正常", isError
         
     def checkDeEncodingSet(self, currentNewServerType):
         '''检查编码设置'''
         # Noob
         if currentNewServerType == 1:
-            self.consoleOutputDeEncoding = self.consoleOutputDeEncodingList[0]
-            self.consoleInputDeEncoding = self.consoleInputDeEncodingList[0]
+            configureNewServerVariables.consoleOutputDeEncoding = configureNewServerVariables.consoleOutputDeEncodingList[0]
+            configureNewServerVariables.consoleInputDeEncoding = configureNewServerVariables.consoleInputDeEncodingList[0]
             return "编码检查：正常（自动处理）", 0
         # Extended
         elif currentNewServerType == 2:
-            self.consoleOutputDeEncoding = self.consoleOutputDeEncodingList[self.extendedOutputDeEncodingComboBox.currentIndex()]
-            self.consoleInputDeEncoding = self.consoleInputDeEncodingList[self.extendedInputDeEncodingComboBox.currentIndex()]
+            configureNewServerVariables.consoleOutputDeEncoding = configureNewServerVariables.consoleOutputDeEncodingList[self.extendedOutputDeEncodingComboBox.currentIndex()]
+            configureNewServerVariables.consoleInputDeEncoding = configureNewServerVariables.consoleInputDeEncodingList[self.extendedInputDeEncodingComboBox.currentIndex()]
             return "编码检查：正常（手动设置）", 0
 
     def checkJVMArgSet(self, currentNewServerType):
@@ -1304,47 +1289,47 @@ class _ConfigurePage(QWidget):
         if currentNewServerType == 2:
             # 有写
             if self.JVMArgPlainTextEdit.document() != "":
-                self.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
+                configureNewServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
             else:
-                self.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
+                configureNewServerVariables.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
                 return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         elif currentNewServerType == 1:
-            self.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
+            configureNewServerVariables.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
             return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         
     def checkMemUnitSet(self, currentNewServerType):
         '''检查JVM内存堆单位设置'''
         if currentNewServerType == 1:
-            self.memUnit = self.memUnitList[0]
+            configureNewServerVariables.memUnit = configureNewServerVariables.memUnitList[0]
             return "JVM内存堆单位检查：正常（自动设置）", 0
         elif currentNewServerType == 2:
-            self.memUnit = self.memUnitList[self.extendedMemUnitComboBox.currentIndex()]
+            configureNewServerVariables.memUnit = configureNewServerVariables.memUnitList[self.extendedMemUnitComboBox.currentIndex()]
             return "JVM内存堆单位检查：正常（手动设置）", 0
         
     def setJavaPath(self, selectedJavaPath):
-        self.selectedJavaPath = selectedJavaPath
+        configureNewServerVariables.selectedJavaPath = selectedJavaPath
 
     def setJavaVer(self, selectedJavaVer):
-        self.selectedJavaVersion = selectedJavaVer
+        configureNewServerVariables.selectedJavaVersion = selectedJavaVer
         javaVersionLabelItems = [None, self.noobJavaInfoLabel, self.extendedJavaInfoLabel]
         javaVersionLabelItems[self.newServerStackedWidget.currentIndex()].setText(f"已选择，版本{selectedJavaVer}")
 
     def saveNewServer(self):
-        exit0Msg = f"添加服务器\"{self.serverName}\"成功！"
-        exit1Msg = f"添加服务器\"{self.serverName}\"失败！"
+        exit0Msg = f"添加服务器\"{configureNewServerVariables.serverName}\"成功！"
+        exit1Msg = f"添加服务器\"{configureNewServerVariables.serverName}\"失败！"
         exitCode = 0
         serverConfig = {
-            "name": self.serverName,
-            "core_file_name": self.coreFileName,
-            "java_path": self.selectedJavaPath,
-            "min_memory": self.minMem,
-            "max_memory": self.maxMem,
-            "memory_unit": self.memUnit,
-            "jvm_arg": self.jvmArg,
-            "output_decoding": self.consoleOutputDeEncoding,
-            "input_encoding": self.consoleInputDeEncoding,
+            "name": configureNewServerVariables.serverName,
+            "core_file_name": configureNewServerVariables.coreFileName,
+            "java_path": configureNewServerVariables.selectedJavaPath,
+            "min_memory": configureNewServerVariables.minMem,
+            "max_memory": configureNewServerVariables.maxMem,
+            "memory_unit": configureNewServerVariables.memUnit,
+            "jvm_arg": configureNewServerVariables.jvmArg,
+            "output_decoding": configureNewServerVariables.consoleOutputDeEncoding,
+            "input_encoding": configureNewServerVariables.consoleInputDeEncoding,
             "icon": "Grass.png"
         }
 
@@ -1367,8 +1352,8 @@ class _ConfigurePage(QWidget):
         # 写入单独配置
         try:
             if not settingsController.fileSettings['onlySaveGlobalServerConfig']:
-                mkdir(f"Servers//{self.serverName}")
-                with open(f"Servers//{self.serverName}//MCSL2ServerConfig.json", "w+", encoding='utf-8') as serverListFile:
+                mkdir(f"Servers//{configureNewServerVariables.serverName}")
+                with open(f"Servers//{configureNewServerVariables.serverName}//MCSL2ServerConfig.json", "w+", encoding='utf-8') as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
                     serverListFile.close()
             else:
@@ -1388,7 +1373,7 @@ class _ConfigurePage(QWidget):
         
         # 复制核心
         try:
-            copy(self.corePath, f"Servers//{self.serverName}//{self.coreFileName}")
+            copy(configureNewServerVariables.corePath, f"Servers//{configureNewServerVariables.serverName}//{configureNewServerVariables.coreFileName}")
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"

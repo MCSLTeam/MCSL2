@@ -41,7 +41,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.serverController import readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
-from MCSL2Lib.variables import scrollAreaViewportQss
+from MCSL2Lib.variables import _globalMCSL2Variables
 from json import loads, dumps
 from shutil import rmtree
 
@@ -508,9 +508,9 @@ class _ServerManagerPage(QWidget):
         self.editSaveServerPrimaryPushBtn.setText("保存！")
         self.editServerBackPushBtn.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
         self.serversSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.serversSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.serversSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
         self.editServerScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.editServerScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.editServerScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
