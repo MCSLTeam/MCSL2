@@ -20,3 +20,8 @@ class _configureNewServerVariables:
 class _globalMCSL2Variables:
     MCSL2Version = "2.1.4.0"
     scrollAreaViewportQss = "background-color: transparent;"
+
+class _downloadVariables:
+
+    def __init__(self):
+        self.MCSLAPIDownloadUrlDict = {}

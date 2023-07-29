@@ -26,7 +26,6 @@ class _DownloadPage(QWidget):
         super().__init__()
 
         self.fetchDownloadURLThreadFactory = fetchMCSLAPIDownloadURLThreadFactory()
-        self.MCSLAPIDownloadUrlDict = {}
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
