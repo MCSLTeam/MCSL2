@@ -1,7 +1,11 @@
 PyQt5==5.15.9
 pyqt5-tools==5.15.9.3.3
 requests>=2.28.2
-aria2p
+aria2p==0.11.3
 PyQt-Fluent-Widgets[full]
-psutil
-pyperclip
+psutil==5.9.5
+pyperclip==1.8.2
+imageio>=2.31.1
+zstandard>=0.21.0
+ordered-set>=4.1.0
+Nuitka>=1.7.7

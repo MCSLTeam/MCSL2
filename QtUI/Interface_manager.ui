@@ -111,7 +111,7 @@
                <x>0</x>
                <y>0</y>
                <width>640</width>
-               <height>451</height>
+               <height>452</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout"/>
@@ -142,7 +142,7 @@
                <x>0</x>
                <y>0</y>
                <width>623</width>
-               <height>879</height>
+               <height>871</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout_2">
@@ -257,7 +257,7 @@
                   </widget>
                  </item>
                  <item row="2" column="0" rowspan="2">
-                  <widget class="TextEdit" name="TextEdit"/>
+                  <widget class="TextEdit" name="editJavaTextEdit"/>
                  </item>
                 </layout>
                </widget>
@@ -390,7 +390,7 @@
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="LineEdit" name="LineEdit"/>
+                  <widget class="LineEdit" name="coreLineEdit"/>
                  </item>
                  <item row="1" column="2">
                   <widget class="PrimaryPushButton" name="noobManuallyAddCorePrimaryPushBtn">
@@ -504,8 +504,18 @@
               </item>
               <item>
                <widget class="QWidget" name="editSetServerIconWidget" native="true">
-                <layout class="QVBoxLayout" name="verticalLayout_4">
-                 <item>
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="2" column="0" colspan="4">
+                  <widget class="BodyLabel" name="tipLabel">
+                   <property name="text">
+                    <string>提示：此处设置的是服务器在MCSL2中显示的图标，不能代表服务器MOTD的图标。</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="ComboBox" name="editServerIcon"/>
+                 </item>
+                 <item row="0" column="0">
                   <widget class="SubtitleLabel" name="editServerIconSubtitleLabel">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -518,15 +528,8 @@
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="BodyLabel" name="tipLabel">
-                   <property name="text">
-                    <string>提示：此处设置的是服务器在MCSL2中显示的图标，不能代表服务器MOTD的图标。</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="DropDownPushButton" name="editServerIcon">
+                 <item row="4" column="2">
+                  <widget class="PixmapLabel" name="editServerPixmapLabel">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -535,20 +538,33 @@
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>90</width>
+                     <width>60</width>
                      <height>60</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>90</width>
+                     <width>60</width>
                      <height>60</height>
                     </size>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                   </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>10</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -694,11 +710,6 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
-   <class>DropDownPushButton</class>
-   <extends>PushButton</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
    <class>ToolButton</class>
    <extends>QToolButton</extends>
    <header>qfluentwidgets</header>
@@ -706,6 +717,11 @@
   <customwidget>
    <class>TransparentToolButton</class>
    <extends>ToolButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PixmapLabel</class>
+   <extends>QLabel</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>

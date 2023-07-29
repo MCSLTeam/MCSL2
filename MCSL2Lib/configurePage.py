@@ -1343,6 +1343,8 @@ class _ConfigurePage(QWidget):
             "max_memory": self.maxMem,
             "memory_unit": self.memUnit,
             "jvm_arg": self.jvmArg,
+            "output_decoding": self.consoleOutputDeEncoding,
+            "input_encoding": self.consoleInputDeEncoding,
             "icon": "Grass.png"
         }
 

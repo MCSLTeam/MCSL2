@@ -20,7 +20,7 @@ from PyQt5.QtGui import QPixmap, QCursor
 from qfluentwidgets import (
     BodyLabel,
     ComboBox,
-    DropDownPushButton,
+    PixmapLabel,
     LineEdit,
     PlainTextEdit,
     PrimaryPushButton,
@@ -35,7 +35,9 @@ from qfluentwidgets import (
     MessageBox,
     isDarkTheme,
     InfoBar,
-    InfoBarPosition
+    InfoBarPosition,
+    Action,
+    RoundMenu
 )
 from MCSL2Lib.serverController import readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
@@ -129,7 +131,7 @@ class _ServerManagerPage(QWidget):
         self.editServerScrollArea.setObjectName("editServerScrollArea")
 
         self.editServerScrollAreaContents = QWidget()
-        self.editServerScrollAreaContents.setGeometry(QRect(0, 0, 623, 879))
+        self.editServerScrollAreaContents.setGeometry(QRect(0, -427, 623, 871))
         self.editServerScrollAreaContents.setObjectName("editServerScrollAreaContents")
 
         self.noobNewServerScrollAreaVerticalLayout_2 = QVBoxLayout(self.editServerScrollAreaContents)
@@ -200,10 +202,10 @@ class _ServerManagerPage(QWidget):
         self.editDownloadJavaPrimaryPushBtn.setObjectName("editDownloadJavaPrimaryPushBtn")
 
         self.gridLayout_6.addWidget(self.editDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.TextEdit = TextEdit(self.editSetJavaWidget)
-        self.TextEdit.setObjectName("TextEdit")
+        self.editJavaTextEdit = TextEdit(self.editSetJavaWidget)
+        self.editJavaTextEdit.setObjectName("editJavaTextEdit")
 
-        self.gridLayout_6.addWidget(self.TextEdit, 2, 0, 2, 1)
+        self.gridLayout_6.addWidget(self.editJavaTextEdit, 2, 0, 2, 1)
         self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetJavaWidget)
         self.editSetMemWidget = QWidget(self.editServerScrollAreaContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -227,7 +229,6 @@ class _ServerManagerPage(QWidget):
         self.gridLayout_7.addWidget(self.editToSymbol, 1, 2, 1, 1)
         self.editMemUnitComboBox = ComboBox(self.editSetMemWidget)
         self.editMemUnitComboBox.setObjectName("editMemUnitComboBox")
-
         self.gridLayout_7.addWidget(self.editMemUnitComboBox, 1, 4, 1, 1)
         self.editMaxMemLineEdit = LineEdit(self.editSetMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -291,10 +292,10 @@ class _ServerManagerPage(QWidget):
         self.editCoreSubtitleLabel.setObjectName("editCoreSubtitleLabel")
 
         self.gridLayout_8.addWidget(self.editCoreSubtitleLabel, 0, 1, 1, 1)
-        self.LineEdit = LineEdit(self.editSetCoreWidget)
-        self.LineEdit.setObjectName("LineEdit")
+        self.coreLineEdit = LineEdit(self.editSetCoreWidget)
+        self.coreLineEdit.setObjectName("coreLineEdit")
 
-        self.gridLayout_8.addWidget(self.LineEdit, 1, 1, 1, 1)
+        self.gridLayout_8.addWidget(self.coreLineEdit, 1, 1, 1, 1)
         self.noobManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.editSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -377,9 +378,17 @@ class _ServerManagerPage(QWidget):
         self.editSetServerIconWidget = QWidget(self.editServerScrollAreaContents)
         self.editSetServerIconWidget.setObjectName("editSetServerIconWidget")
 
-        self.verticalLayout_4 = QVBoxLayout(self.editSetServerIconWidget)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.gridLayout_4 = QGridLayout(self.editSetServerIconWidget)
+        self.gridLayout_4.setObjectName("gridLayout_4")
 
+        self.tipLabel = BodyLabel(self.editSetServerIconWidget)
+        self.tipLabel.setObjectName("tipLabel")
+
+        self.gridLayout_4.addWidget(self.tipLabel, 2, 0, 1, 4)
+        self.editServerIcon = ComboBox(self.editSetServerIconWidget)
+        self.editServerIcon.setObjectName("editServerIcon")
+
+        self.gridLayout_4.addWidget(self.editServerIcon, 4, 0, 1, 1)
         self.editServerIconSubtitleLabel = SubtitleLabel(self.editSetServerIconWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -388,23 +397,20 @@ class _ServerManagerPage(QWidget):
         self.editServerIconSubtitleLabel.setSizePolicy(sizePolicy)
         self.editServerIconSubtitleLabel.setObjectName("editServerIconSubtitleLabel")
 
-        self.verticalLayout_4.addWidget(self.editServerIconSubtitleLabel)
-        self.tipLabel = BodyLabel(self.editSetServerIconWidget)
-        self.tipLabel.setObjectName("tipLabel")
 
-        self.verticalLayout_4.addWidget(self.tipLabel)
-        self.editServerIcon = DropDownPushButton(self.editSetServerIconWidget)
+        self.gridLayout_4.addWidget(self.editServerIconSubtitleLabel, 0, 0, 1, 1)
+        self.editServerPixmapLabel = PixmapLabel(self.editSetServerIconWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editServerIcon.sizePolicy().hasHeightForWidth())
-        self.editServerIcon.setSizePolicy(sizePolicy)
-        self.editServerIcon.setMinimumSize(QSize(90, 60))
-        self.editServerIcon.setMaximumSize(QSize(90, 60))
-        self.editServerIcon.setText("")
-        self.editServerIcon.setObjectName("editServerIcon")
+        sizePolicy.setHeightForWidth(self.editServerPixmapLabel.sizePolicy().hasHeightForWidth())
+        self.editServerPixmapLabel.setSizePolicy(sizePolicy)
+        self.editServerPixmapLabel.setObjectName("editServerPixmapLabel")
 
-        self.verticalLayout_4.addWidget(self.editServerIcon)
+
+        self.gridLayout_4.addWidget(self.editServerPixmapLabel, 4, 2, 1, 1)
+        spacerItem3 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem3, 4, 1, 1, 1)
         self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetServerIconWidget)
         self.editSetServerNameWidget = QWidget(self.editServerScrollAreaContents)
         self.editSetServerNameWidget.setObjectName("editSetServerNameWidget")
@@ -442,8 +448,8 @@ class _ServerManagerPage(QWidget):
 
         self.verticalLayout_5.addWidget(self.editSaveServerPrimaryPushBtn)
         self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetServerNameWidget)
-        spacerItem3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.noobNewServerScrollAreaVerticalLayout_2.addItem(spacerItem3)
+        spacerItem4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.noobNewServerScrollAreaVerticalLayout_2.addItem(spacerItem4)
         self.editServerScrollArea.setWidget(self.editServerScrollAreaContents)
         self.gridLayout_3.addWidget(self.editServerScrollArea, 1, 0, 1, 1)
         self.editServerTitleWidget = QWidget(self.editServerPage)
@@ -468,10 +474,9 @@ class _ServerManagerPage(QWidget):
         sizePolicy.setHeightForWidth(self.editServerSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.editServerSubtitleLabel.setSizePolicy(sizePolicy)
         self.editServerSubtitleLabel.setObjectName("editServerSubtitleLabel")
-
         self.horizontalLayout_4.addWidget(self.editServerSubtitleLabel)
-        spacerItem4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem4)
+        spacerItem5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem5)
         self.gridLayout_3.addWidget(self.editServerTitleWidget, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.editServerPage)
         self.gridLayout_2.addWidget(self.stackedWidget, 3, 0, 1, 1)
@@ -501,9 +506,11 @@ class _ServerManagerPage(QWidget):
         self.editServerNameSubtitleLabel.setText("服务器名称：")
         self.editServerNameLineEdit.setPlaceholderText("不能包含非法字符")
         self.editSaveServerPrimaryPushBtn.setText("保存！")
-
+        self.editServerBackPushBtn.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
         self.serversSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.serversSmoothScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
+        self.editServerScrollArea.setAttribute(Qt.WA_StyledBackground)
+        self.editServerScrollArea.viewport().setStyleSheet(scrollAreaViewportQss)
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
@@ -550,7 +557,7 @@ class _ServerManagerPage(QWidget):
         if type == "select":
             pass
         elif type == "edit":
-            pass
+            self.initEditServerInterface(index=index)
         elif type == "delete":
             self.deleteServer_Step1(index=index)
     
@@ -676,7 +683,7 @@ class _ServerManagerPage(QWidget):
                         parent=self
                         )
 
-        self.thread = DeleteServerThread(self, index=index, delServerName=delServerName)
+        self.thread = DeleteServerThread(index=index, delServerName=delServerName)
         self.thread.killWarning.connect(i.setParent)
         self.thread.exit1Msg.connect(self.deleteServer_Step4)
         self.thread.start()
@@ -703,15 +710,94 @@ class _ServerManagerPage(QWidget):
                             duration=2000,
                             parent=self
                             )
+        self.refreshServers()
+
+    def initEditServerInterface(self, index):
+        globalConfig: list = readGlobalServerConfig()
+        self.stackedWidget.setCurrentIndex(1)
+        
+        consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
+        consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
+        memUnitList = ["M", "G"]
+        self.editServerSubtitleLabel.setText(f"编辑服务器-{globalConfig[index]['name']}")
+        self.editJavaTextEdit.setText(globalConfig[index]['java_path'])
+        self.editMinMemLineEdit.setText(str(globalConfig[index]['min_memory']))
+        self.editMaxMemLineEdit.setText(str(globalConfig[index]['max_memory']))
+        self.editJavaTextEdit.setPlaceholderText("写错了就启动不了了（悲")
+        self.editMinMemLineEdit.setPlaceholderText("整数")
+        self.editMaxMemLineEdit.setPlaceholderText("整数")
+        self.editServerNameLineEdit.setPlaceholderText("不能包含非法字符")
+
+        self.editOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.editInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.editMemUnitComboBox.addItems(["M", "G"])
+
+        self.editOutputDeEncodingComboBox.setCurrentIndex(consoleOutputDeEncodingList.index(globalConfig[index]['output_decoding']))
+        self.editInputDeEncodingComboBox.setCurrentIndex(consoleInputDeEncodingList.index(globalConfig[index]['input_encoding']))
+        self.editMemUnitComboBox.setCurrentIndex(memUnitList.index(globalConfig[index]['memory_unit']))
+        self.coreLineEdit.setText(globalConfig[index]['core_file_name'])
+        self.coreLineEdit.setEnabled(False)
+        self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
+        self.JVMArgPlainTextEdit.setPlainText(globalConfig[index]['jvm_arg'])
+        self.editServerNameLineEdit.setText(globalConfig[index]['name'])
+        iconsList = [
+            "铁砧",
+            "布料",
+            "圆石",
+            "命令方块",
+            "工作台",
+            "鸡蛋",
+            "玻璃",
+            "金块",
+            "草方块",
+            "草径",
+            "Java",
+            "MCSL2",
+            "Paper核心",
+            "红石块",
+            "关闭的红石灯",
+            "打开的红石灯",
+            "Spigot核心"
+        ]
+        self.editServerIcon.addItems(iconsList)
+        iconsDict = {
+            "铁砧": "Anvil.png",
+            "布料": "Cloth.png",
+            "圆石": "CobbleStone.png",
+            "命令方块": "CommandBlock.png",
+            "工作台": "CraftingTable.png",
+            "鸡蛋": "Egg.png",
+            "玻璃": "Glass.png",
+            "金块": "GoldBlock.png",
+            "草方块": "Grass.png",
+            "草径": "GrassPath.png",
+            "Java": "JavaSpigot.svg",
+            "MCSL2": "MCSL2.png",
+            "Paper核心": "Paper.png",
+            "红石块": "RedstoneBlock.png",
+            "关闭的红石灯": "RedstoneLampOff.png",
+            "打开的红石灯": "RedstoneLampOn.png",
+            "Spigot核心": "Spigot.svg"
+        }
+        self.editServerPixmapLabel.setPixmap(QPixmap(f":/build-InIcons/{globalConfig[index]['icon']}"))
+        print(iconsDict.get(globalConfig[index]['icon']))
+        # self.editServerIcon.setCurrentIndex(iconsList.index())
+        self.editServerIcon.currentIndexChanged.connect(lambda: self.changeIcon(iconsDict))
+        self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
+
+    def changeIcon(self, iconsDict):
+        self.editServerPixmapLabel.setPixmap(QPixmap(f":/build-InIcons/{iconsDict[self.editServerIcon.text()]}"))
+        self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
 # 使用多线程防止假死
 class DeleteServerThread(QThread):
 
-    killWarning = pyqtSignal()
+    killWarning = pyqtSignal(type(None))
     exitCode = pyqtSignal(int)
     exit1Msg = pyqtSignal(str)
 
-    def __init__(self, index, delServerName):
+    def __init__(self, index, delServerName, parent=None):
+        super().__init__(parent)
         self.index = index
         self.delServerName = delServerName
         self.setObjectName("DeleteServerThread")

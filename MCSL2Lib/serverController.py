@@ -14,12 +14,14 @@ def readGlobalServerConfig():
         globalServerConfigFile.close()
     return globalServerList
 
+#用以确定开启哪个服务器
+# class _ServerHelper:
+    # def __init__(self, )
 
 class Server:
     def __init__(self):
         self.Process: Optional[QProcess] = None
         self.LastOutputSize = 0
-
 
 class ServerHandler(QObject):
     # 当服务器输出日志时发出的信号(发送一个字符串)
@@ -112,7 +114,6 @@ class ServerHandler(QObject):
 
     def IsServerRunning(self):
         return self.Server.Process.state() == QProcess.Running
-
 
 class ServerLauncher:
     def __init__(self):
