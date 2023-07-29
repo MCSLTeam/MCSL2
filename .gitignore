@@ -6,11 +6,12 @@ poetry.lock
 .vscode/**
 Tools/OfflineBuild/**
 Tools/qView.exe
+Tools/Aria2/aria2c.exe
 Tools/ParseOneDriveLink/ParseOneDriveLink.exe
 Servers/**
 MCSL2/**
 pdm.lock
 pdm.toml
 __pycache__/**
-MCSL2_Libs/__pycache__/**
+MCSL2Lib/__pycache__/**
 tmp.py
