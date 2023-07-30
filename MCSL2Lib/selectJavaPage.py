@@ -12,9 +12,7 @@ from qfluentwidgets import (
     StrongBodyLabel,
     TitleLabel,
     TransparentToolButton,
-    FluentIcon as FIF,
-    InfoBar,
-    InfoBarPosition
+    FluentIcon as FIF
 )
 from MCSL2Lib.variables import _globalMCSL2Variables
 from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
