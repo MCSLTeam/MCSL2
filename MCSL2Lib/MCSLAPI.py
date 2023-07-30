@@ -5,15 +5,7 @@ from PyQt5.QtCore import pyqtSignal, QThread
 
 from MCSL2Lib.networkController import Session
 
-def Singleton(cls):
-    Instances = {}
-
-    def GetInstance(*args, **kwargs):
-        if cls not in Instances:
-            Instances[cls] = cls(*args, **kwargs)
-        return Instances[cls]
-
-    return GetInstance
+from MCSL2Lib.variables import Singleton
 
 
 class MCSLAPIDownloadURLParser:
