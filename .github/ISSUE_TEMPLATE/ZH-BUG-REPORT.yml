@@ -1,7 +1,7 @@
 name: "BUG 反馈"
-description: "issue模板"
-title: "BUG | (在这里给issue命名"
-label: 
+description: "适用于中文的Bug反馈模板"
+title: "BUG | (在这里给Issue命名)"
+labels: [· 程序Bug]
 body:
 
 - type: textarea

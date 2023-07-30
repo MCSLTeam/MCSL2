@@ -1,0 +1,54 @@
+name: "BUG Report"
+description: "Bug Report Template for English users"
+title: "BUG | (NAME THIS ISSUE HERE)"
+labels: [· 程序Bug]
+body:
+
+- type: textarea
+  id: system_report
+  attributes:
+    label: "MCSL2 System Report"
+    description: "You can get the system report on the settings page of MCSL2."
+  validations:
+    required: true
+
+- type: dropdown
+  id: aspects
+  attributes:
+    label: "Where are you having problems?"
+    multiple: true
+    options:
+      - "MCSL2: Home Page"
+      - "MCSL2: Start a Minecraft Server"
+      - "MCSL2: Build a new Minecraft Server"
+      - "MCSL2: Download"
+      - "MCSL2: Console Page"
+      - "MCSL2: Plugins"
+      - "MCSL2: Settings"
+      - "MCSL2: Run or close MCSL2"
+      - "MCSL2: Update"
+  validations:
+    required: true
+
+- type: textarea
+  id: description
+  attributes:
+    label: "Description"
+    description: "Explain your problem, trouble, suggestion, etc."
+  validations:
+    required: true
+
+- type: textarea
+  id: "attachment"
+  attributes:
+    label: "Attachment(Optional)"
+    placeholder: "Click on the textarea first, and then drag and drop the file directly into the textarea to upload."
+
+- type: checkboxes
+  id: check
+  attributes:
+    label: "Verify"
+    description: "Please read [Issues](https://github.com/MCSLTeam/MCSL2/issues) to see if there is the issue of duplicate items with you."
+    options:
+      - label: "I make sure my issue is not the same as someone else's"
+        required: true

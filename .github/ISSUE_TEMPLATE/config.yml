@@ -2,5 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: 功能建议 | Feature Suggestion
     url: https://github.com/MCSLTeam/MCSL2/discussions/new?category=%E5%8A%9F%E8%83%BD%E5%BB%BA%E8%AE%AE
+    about: 建议新功能等。  |  Suggest new features, etc.
   - name: 提问 | Ask a question
     url: https://github.com/MCSLTeam/MCSL2/discussions/new?category=%E6%8F%90%E9%97%AE%E5%8C%BA%E5%9F%9F
+    about: 我不想提交反馈，只是想问一些问题。  |  I don't want to submit feedback, just ask some questions.
