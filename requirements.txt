@@ -9,3 +9,4 @@ imageio>=2.31.1
 zstandard>=0.21.0
 ordered-set>=4.1.0
 Nuitka>=1.7.7
+pyqt5-stubs
