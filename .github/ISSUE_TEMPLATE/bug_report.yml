@@ -1,5 +1,5 @@
 name: "BUG 反馈"
-description: "issue模板"
+description: "Bug反馈模板"
 title: "BUG | (在这里给issue命名"
 labels: [· 程序Bug]
 body:
