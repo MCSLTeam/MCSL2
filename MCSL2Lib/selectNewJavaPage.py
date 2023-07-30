@@ -20,7 +20,6 @@ from MCSL2Lib import icons as _   # noqa: F401
 
 class _SelectNewJavaPage(QWidget):
 
-    setJavaVer = pyqtSignal(str)
     setJavaPath = pyqtSignal(str)
 
     def __init__(self):
@@ -114,6 +113,4 @@ class _SelectNewJavaPage(QWidget):
     def scrollAreaProcessor(self, JavaPath):
         index = int(str(self.sender().objectName()).split("Btn")[1])
         selectedJavaPath = str(JavaPath[index].Path)
-        selectedJavaVer = str(str(JavaPath[index].Version))
         self.setJavaPath.emit(selectedJavaPath)
-        self.setJavaVer.emit(selectedJavaVer)

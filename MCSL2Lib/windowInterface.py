@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
-
+from typing import Optional
 from qfluentwidgets import (
     NavigationBar,
     NavigationItemPosition,
@@ -24,11 +24,14 @@ from MCSL2Lib.consolePage import _ConsolePage
 from MCSL2Lib.pluginPage import _PluginPage
 from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.selectJavaPage import _SelectJavaPage
-from MCSL2Lib.variables import _globalMCSL2Variables
+from MCSL2Lib.selectNewJavaPage import _SelectNewJavaPage
+from MCSL2Lib.variables import _configureServerVariables, _editServerVariables, _globalMCSL2Variables
 from MCSL2Lib import icons as _   # noqa: F401
 from MCSL2Lib.settingsController import _settingsController
 
 settingsController = _settingsController()
+configureServerVariables = _configureServerVariables()
+editServerVariables = _editServerVariables()
 
 # 标题栏
 class CustomTitleBar(TitleBar):
@@ -103,6 +106,7 @@ class Window(FramelessWindow):
 
         # 定义隐藏的子页面
         self.selectJavaPage = _SelectJavaPage()
+        self.selectNewJavaPage = _SelectNewJavaPage()  # 草泥马摆烂偷懒！！！好好好！！！CV大法嘎嘎好！
 
         # 设置主题
         configThemeList = ["auto", "dark", "light"]
@@ -122,8 +126,11 @@ class Window(FramelessWindow):
         # 初始化窗口
         self.initWindow()
 
-    def switchTo(self, widget):
-        self.stackWidget.setCurrentWidget(widget)
+    def switchTo(self, widget, isEditingServer: Optional[int] = 0):
+        if isEditingServer:
+            self.stackWidget.setCurrentWidget(self.serverManagerInterface)
+        else:
+            self.stackWidget.setCurrentWidget(widget)
 
     def initLayout(self):
         self.hBoxLayout.setSpacing(0)
@@ -144,6 +151,7 @@ class Window(FramelessWindow):
                              FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
         
         self.stackWidget.addWidget(self.selectJavaPage)
+        self.stackWidget.addWidget(self.selectNewJavaPage)
 
         self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
@@ -211,12 +219,29 @@ class Window(FramelessWindow):
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
         self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
-        self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
+        self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(configureServerVariables.javaPath))
         self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
-        self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(self.configureInterface.javaPath))
+        self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(configureServerVariables.javaPath))
         self.selectJavaPage.setJavaVer.connect(self.configureInterface.setJavaVer)
         self.selectJavaPage.setJavaPath.connect(self.configureInterface.setJavaPath)
         self.homeInterface.newServerBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.homeInterface.selectServerBtn.clicked.connect(lambda: self.switchTo(self.serverManagerInterface))
         self.homeInterface.selectServerBtn.clicked.connect(self.serverManagerInterface.refreshServers)
         self.stackWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
+        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1))
+        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(lambda: InfoBar.info(
+                                                                                                       title='切换到MCSLAPI',
+                                                                                                       content="因为FastMirror没有Java啊 (",
+                                                                                                       orient=Qt.Horizontal,
+                                                                                                       isClosable=True,
+                                                                                                       position=InfoBarPosition.TOP,
+                                                                                                       duration=3000,
+                                                                                                       parent=self
+                                                                                                      ))
+        self.serverManagerInterface.editJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectNewJavaPage))
+        self.serverManagerInterface.editJavaListPushBtn.clicked.connect(lambda: self.selectNewJavaPage.refreshPage(editServerVariables.javaPath))
+        self.serverManagerInterface.editDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
+        self.serverManagerInterface.editDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(settingsController.fileSettings['downloadSource'])))
+        self.selectNewJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.serverManagerInterface))
+        self.selectNewJavaPage.setJavaPath.connect(self.serverManagerInterface.setJavaPath)

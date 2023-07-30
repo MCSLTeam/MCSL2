@@ -3,7 +3,7 @@ from os import mkdir
 from os.path import realpath
 from shutil import copy
 from typing import List, Optional
-
+from MCSL2Lib.variables import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 
@@ -14,9 +14,21 @@ def readGlobalServerConfig():
         globalServerConfigFile.close()
     return globalServerList
 
-#用以确定开启哪个服务器
-# class _ServerHelper:
-    # def __init__(self, )
+# 用以确定开启哪个服务器
+@Singleton
+class _ServerHelper:
+
+    serverIndexChanged = pyqtSignal(int)
+
+    def __init__(self, index):
+        self.index = index
+        
+
+
+
+
+
+
 
 class Server:
     def __init__(self):
