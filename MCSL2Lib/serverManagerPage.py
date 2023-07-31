@@ -527,50 +527,55 @@ class _ServerManagerPage(QWidget):
         self.editSaveServerPrimaryPushBtn.clicked.connect(self.finishEditServer)
 
     def goBack(self):
-        w = MessageBox(parent=self, title="是否要退出此页面?", content="任何没有保存的修改都会消失！你确定要这么做吗？")
-        w.yesButton.setText("取消")
-        w.cancelButton.setText("退出")
-        if isDarkTheme:
-            w.cancelButton.setStyleSheet("PushButton {\n"
-                                        "    color: black;\n"
-                                        "    background: rgba(255, 255, 255, 0.7);\n"
-                                        "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                                        "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                                        "    border-radius: 5px;\n"
-                                        "    /* font: 14px \'Segoe UI\', \'Microsoft YaHei\'; */\n"
-                                        "    padding: 5px 12px 6px 12px;\n"
-                                        "    outline: none;\n"
-                                        "}\n"
-                                        "QPushButton {\n"
-                                        "    background-color: rgba(255, 117, 117, 30%);\n"
-                                        "    color: rgb(245, 0, 0)\n"
-                                        "}\n"
-                                        "QPushButton:hover {\n"
-                                        "    background-color: rgba(255, 122, 122, 50%);\n"
-                                        "    color: rgb(245, 0, 0)\n"
-                                        "}")
+        # 没改就直接退出
+        if self.checkDuplicateConfig():
+            self.stackedWidget.setCurrentIndex(0)
+        # 改了得确认
         else:
-            w.cancelButton.setStyleSheet("PushButton {\n"
-                                        "    color: black;\n"
-                                        "    background: rgba(255, 255, 255, 0.7);\n"
-                                        "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                                        "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                                        "    border-radius: 5px;\n"
-                                        "    /* font: 14px \'Segoe UI\', \'Microsoft YaHei\'; */\n"
-                                        "    padding: 5px 12px 6px 12px;\n"
-                                        "    outline: none;\n"
-                                        "}\n"
-                                        "QPushButton {\n"
-                                        "    background-color: rgba(255, 117, 117, 30%);\n"
-                                        "    color: rgb(255, 0, 0)\n"
-                                        "}\n"
-                                        "QPushButton:hover {\n"
-                                        "    background-color: rgba(255, 122, 122, 50%);\n"
-                                        "    color: rgb(255, 0, 0)\n"
-                                        "}")
-        w.cancelButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
-        w.cancelButton.clicked.connect(self.refreshServers)
-        w.exec()
+            w = MessageBox(parent=self, title="是否要退出此页面?", content="任何没有保存的修改都会消失！你确定要这么做吗？")
+            w.yesButton.setText("取消")
+            w.cancelButton.setText("退出")
+            if isDarkTheme:
+                w.cancelButton.setStyleSheet("PushButton {\n"
+                                            "    color: black;\n"
+                                            "    background: rgba(255, 255, 255, 0.7);\n"
+                                            "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
+                                            "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
+                                            "    border-radius: 5px;\n"
+                                            "    /* font: 14px \'Segoe UI\', \'Microsoft YaHei\'; */\n"
+                                            "    padding: 5px 12px 6px 12px;\n"
+                                            "    outline: none;\n"
+                                            "}\n"
+                                            "QPushButton {\n"
+                                            "    background-color: rgba(255, 117, 117, 30%);\n"
+                                            "    color: rgb(245, 0, 0)\n"
+                                            "}\n"
+                                            "QPushButton:hover {\n"
+                                            "    background-color: rgba(255, 122, 122, 50%);\n"
+                                            "    color: rgb(245, 0, 0)\n"
+                                            "}")
+            else:
+                w.cancelButton.setStyleSheet("PushButton {\n"
+                                            "    color: black;\n"
+                                            "    background: rgba(255, 255, 255, 0.7);\n"
+                                            "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
+                                            "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
+                                            "    border-radius: 5px;\n"
+                                            "    /* font: 14px \'Segoe UI\', \'Microsoft YaHei\'; */\n"
+                                            "    padding: 5px 12px 6px 12px;\n"
+                                            "    outline: none;\n"
+                                            "}\n"
+                                            "QPushButton {\n"
+                                            "    background-color: rgba(255, 117, 117, 30%);\n"
+                                            "    color: rgb(255, 0, 0)\n"
+                                            "}\n"
+                                            "QPushButton:hover {\n"
+                                            "    background-color: rgba(255, 122, 122, 50%);\n"
+                                            "    color: rgb(255, 0, 0)\n"
+                                            "}")
+            w.cancelButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
+            w.cancelButton.clicked.connect(self.refreshServers)
+            w.exec()
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
@@ -811,7 +816,7 @@ class _ServerManagerPage(QWidget):
         self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
         self.JVMArgPlainTextEdit.setPlainText(globalConfig[index]['jvm_arg'])
         self.editServerNameLineEdit.setText(globalConfig[index]['name'])
-        iconsList = [
+        self.iconsList = [
             "铁砧",
             "布料",
             "圆石",
@@ -830,8 +835,8 @@ class _ServerManagerPage(QWidget):
             "打开的红石灯",
             "Spigot核心"
         ]
-        self.editServerIcon.addItems(iconsList)
-        iconsFileNameList = [
+        self.editServerIcon.addItems(self.iconsList)
+        self.iconsFileNameList = [
             "Anvil.png",
             "Cloth.png",
             "CobbleStone.png",
@@ -851,8 +856,8 @@ class _ServerManagerPage(QWidget):
             "Spigot.svg"
         ]
         self.editServerPixmapLabel.setPixmap(QPixmap(f":/build-InIcons/{globalConfig[index]['icon']}"))
-        self.editServerIcon.setCurrentIndex(iconsFileNameList.index(globalConfig[index]['icon']))
-        self.editServerIcon.currentIndexChanged.connect(lambda: self.changeIcon(iconsFileNameList, iconIndex=self.editServerIcon.currentIndex()))
+        self.editServerIcon.setCurrentIndex(self.iconsFileNameList.index(globalConfig[index]['icon']))
+        self.editServerIcon.currentIndexChanged.connect(lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex()))
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
         
         '''初始化变量'''
@@ -867,8 +872,8 @@ class _ServerManagerPage(QWidget):
         editServerVariables.oldConsoleInputDeEncoding = editServerVariables.consoleInputDeEncoding = globalConfig[index]['input_encoding']
         editServerVariables.oldIcon = editServerVariables.icon = globalConfig[index]['icon']
 
-    def changeIcon(self, iconsFileNameList, iconIndex):
-        self.editServerPixmapLabel.setPixmap(QPixmap(f":/build-InIcons/{iconsFileNameList[iconIndex]}"))
+    def changeIcon(self, iconIndex):
+        self.editServerPixmapLabel.setPixmap(QPixmap(f":/build-InIcons/{self.iconsFileNameList[iconIndex]}"))
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
     def replaceJavaManually(self):
@@ -1080,79 +1085,97 @@ class _ServerManagerPage(QWidget):
         '''检查JVM参数设置'''
         if self.JVMArgPlainTextEdit.document() != "":
             editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
-            return "JVM参数检查：正常（手动设置）", 0
+            return "JVM参数检查：正常", 0
+        if self.JVMArgPlainTextEdit.document() != "":
+            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
+            return "JVM参数检查：正常", 0
         
     def checkMemUnitSet(self):
         '''检查JVM内存堆单位设置'''
         editServerVariables.memUnit = editServerVariables.memUnitList[self.editMemUnitComboBox.currentIndex()]
-        return "JVM内存堆单位检查：正常（手动设置）", 0
-            
+        return "JVM内存堆单位检查：正常", 0
+    
+    def checkIconSet(self):
+        '''检查图标设置'''
+        editServerVariables.icon = self.iconsFileNameList[self.editServerIcon.currentIndex()]
+        return "图标检查：正常", 0
+
     def setJavaPath(self, selectedJavaPath):
         editServerVariables.selectedJavaPath = selectedJavaPath
         self.editJavaTextEdit.setText(selectedJavaPath)
 
     def finishEditServer(self):
-        # 检查
-        javaResult = self.checkJavaSet()
-        memResult = self.checkMemSet()
-        coreResult = self.checkCoreSet()
-        serverNameResult = self.checkServerNameSet()
-        consoleDeEncodingResult = self.checkDeEncodingSet()
-        jvmArgResult = self.checkJVMArgSet()
-        memUnitResult = self.checkMemUnitSet()
-        totalResultMsg = f"{javaResult[0]}\n" \
-                         f"{memResult[0]}\n" \
-                         f"{memUnitResult[0]}\n" \
-                         f"{coreResult[0]}\n" \
-                         f"{serverNameResult[0]}\n" \
-                         f"{consoleDeEncodingResult[0]}\n" \
-                         f"{jvmArgResult[0]}"
-        totalResultIndicator = [
-            javaResult[1],
-            memResult[1],
-            memUnitResult[1],
-            coreResult[1],
-            serverNameResult[1],
-            consoleDeEncodingResult[1],
-            jvmArgResult[1]
-        ]
-        # 错了多少
-        errCount = 0
-        for indicator in totalResultIndicator:
-            if indicator == 1:
-                errCount += 1
-            else:
-                pass
-        # 如果出错
-        if errCount != 0:
-            title = f'创建服务器失败！有{errCount}个问题。'
-            content = f"{totalResultMsg}\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
-            w = MessageBox(title, content, self)
-            w.yesButton.setText("好的")
+        dupCode = self.checkDuplicateConfig()
+        # 重复不保存
+        if dupCode:
+            w = MessageBox(title="失败", content="都没改就不需要保存了，退出即可", parent=self)
+            w.yesButton.setText("好好好")
             w.cancelButton.setParent(None)
             w.exec()
         else:
-            totalJVMArg = editServerVariables.jvmArg.replace(' ', '\n')
-            title = f'请再次检查你设置的参数是否有误：'
-            content = f"{totalResultMsg}\n" \
-                      f"----------------------------\n" \
-                      f"Java：{editServerVariables.selectedJavaPath}\n" \
-                      f"内存：{str(editServerVariables.minMem)}{editServerVariables.memUnit}~{str(editServerVariables.maxMem)}{editServerVariables.memUnit}\n" \
-                      f"服务器核心：{editServerVariables.corePath}\n" \
-                      f"服务器核心文件名：{editServerVariables.coreFileName}\n" \
-                      f"输出编码设置：{self.editOutputDeEncodingComboBox.itemText(editServerVariables.consoleOutputDeEncodingList.index(editServerVariables.consoleOutputDeEncoding))}\n" \
-                      f"输入编码设置：{self.editInputDeEncodingComboBox.itemText(editServerVariables.consoleInputDeEncodingList.index(editServerVariables.consoleInputDeEncoding))}\n" \
-                      f"JVM参数：\n" \
-                      f"    {totalJVMArg}\n" \
-                      f"服务器名称：{editServerVariables.serverName}"
-            w = MessageBox(title, content, self)
-            w.yesButton.setText("无误，覆盖")
-            w.yesButton.clicked.connect(self._saveEditedServer)
-            w.cancelButton.setText("我再看看")
-            w.exec()
+            # 检查
+            javaResult = self.checkJavaSet()
+            memResult = self.checkMemSet()
+            coreResult = self.checkCoreSet()
+            serverNameResult = self.checkServerNameSet()
+            consoleDeEncodingResult = self.checkDeEncodingSet()
+            jvmArgResult = self.checkJVMArgSet()
+            memUnitResult = self.checkMemUnitSet()
+            iconResult = self.checkIconSet()
+            totalResultMsg = f"{javaResult[0]}\n" \
+                            f"{memResult[0]}\n" \
+                            f"{memUnitResult[0]}\n" \
+                            f"{coreResult[0]}\n" \
+                            f"{serverNameResult[0]}\n" \
+                            f"{consoleDeEncodingResult[0]}\n" \
+                            f"{jvmArgResult[0]}" \
+                            f"{iconResult[0]}"
+            totalResultIndicator = [
+                javaResult[1],
+                memResult[1],
+                memUnitResult[1],
+                coreResult[1],
+                serverNameResult[1],
+                consoleDeEncodingResult[1],
+                jvmArgResult[1],
+                iconResult[1]
+            ]
+            # 错了多少
+            errCount = 0
+            for indicator in totalResultIndicator:
+                if indicator == 1:
+                    errCount += 1
+                else:
+                    pass
+            # 如果出错
+            if errCount != 0:
+                title = f'创建服务器失败！有{errCount}个问题。'
+                content = f"{totalResultMsg}\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
+                w = MessageBox(title, content, self)
+                w.yesButton.setText("好的")
+                w.cancelButton.setParent(None)
+                w.exec()
+            else:
+                totalJVMArg = editServerVariables.jvmArg.replace(' ', '\n')
+                title = f'请再次检查你设置的参数是否有误：'
+                content = f"{totalResultMsg}\n" \
+                        f"----------------------------\n" \
+                        f"Java：{editServerVariables.selectedJavaPath}\n" \
+                        f"内存：{str(editServerVariables.minMem)}{editServerVariables.memUnit}~{str(editServerVariables.maxMem)}{editServerVariables.memUnit}\n" \
+                        f"服务器核心：{editServerVariables.corePath}\n" \
+                        f"服务器核心文件名：{editServerVariables.coreFileName}\n" \
+                        f"输出编码设置：{self.editOutputDeEncodingComboBox.itemText(editServerVariables.consoleOutputDeEncodingList.index(editServerVariables.consoleOutputDeEncoding))}\n" \
+                        f"输入编码设置：{self.editInputDeEncodingComboBox.itemText(editServerVariables.consoleInputDeEncodingList.index(editServerVariables.consoleInputDeEncoding))}\n" \
+                        f"JVM参数：\n" \
+                        f"    {totalJVMArg}\n" \
+                        f"服务器名称：{editServerVariables.serverName}"
+                w = MessageBox(title, content, self)
+                w.yesButton.setText("无误，覆盖")
+                w.yesButton.clicked.connect(self._saveEditedServer)
+                w.cancelButton.setText("我再看看")
+                w.exec()
 
     def _saveEditedServer(self):
-        dupCode = self.checkDuplicateConfig()
         exit0Msg = f"修改服务器\"{editServerVariables.serverName}\"成功！"
         exit1Msg = f"修改服务器\"{editServerVariables.serverName}\"失败！"
         exitCode = 0
@@ -1166,96 +1189,100 @@ class _ServerManagerPage(QWidget):
             "jvm_arg": editServerVariables.jvmArg,
             "output_decoding": editServerVariables.consoleOutputDeEncoding,
             "input_encoding": editServerVariables.consoleInputDeEncoding,
-            "icon": "Grass.png"
+            "icon": editServerVariables.icon
         }
 
-        # 重复不保存
-        if dupCode:
-            w = MessageBox(title="失败", content="都没改就别保存了", parent=self)
-            w.yesButton.setText("好好好")
-            w.cancelButton.setParent(None)
-            w.exec()
-        else:
-            # 复制核心
-            try:
-                if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
-                    copy(editServerVariables.corePath, f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}")
-                    w2 = MessageBox(title="提示", content="是否需要删除旧的服务器核心？", parent=self)
-                    w2.yesButton.setText("是的")
-                    w2.cancelButton.setText("不用")
-                    w2.yesButton.clicked.connect(remove(f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"))
-                    w2.exec()
-            except Exception as e:
-                exitCode = 1
-                exit1Msg += f"\n{e}"
-            
-            # 改名
-            try:
-                if editServerVariables.serverName != editServerVariables.oldServerName:
-                    rename(f"Servers//{editServerVariables.oldServerName}//", f"Servers//{editServerVariables.serverName}//")
-            except Exception as e:
-                exitCode = 1
-                exit1Msg += f"\n{e}"
+        # 复制核心
+        try:
+            if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
+                copy(editServerVariables.corePath, f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}")
+                w2 = MessageBox(title="提示", content="是否需要删除旧的服务器核心？", parent=self)
+                w2.yesButton.setText("是的")
+                w2.cancelButton.setText("不用")
+                w2.yesButton.clicked.connect(remove(f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"))
+                w2.exec()
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+        
+        # 改名
+        try:
+            if editServerVariables.serverName != editServerVariables.oldServerName:
+                rename(f"Servers//{editServerVariables.oldServerName}//", f"Servers//{editServerVariables.serverName}//")
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
 
-            # 写入全局配置
-            try:
-                with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerListFile:
-                    # old
-                    globalServerList = loads(globalServerListFile.read())
-                    globalServerListFile.close()
+        # 写入全局配置
+        try:
+            with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerListFile:
+                # old
+                globalServerList = loads(globalServerListFile.read())
+                globalServerListFile.close()
 
-                with open(r'MCSL2/MCSL2_ServerList.json', "w+", encoding='utf-8') as newGlobalServerListFile:
-                    #添加新的
-                    globalServerList['MCSLServerList'].pop(self.serverIndex)
-                    globalServerList['MCSLServerList'].insert(0, serverConfig)
-                    newGlobalServerListFile.write(dumps(globalServerList, indent=4))
-                exitCode = 0
-            except Exception as e:
-                exitCode = 1
-                exit1Msg += f"\n{e}"
-            
-            # 写入单独配置
-            try:
-                if not settingsController.fileSettings['onlySaveGlobalServerConfig']:
-                    with open(f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json", "w+", encoding='utf-8') as serverListFile:
-                        serverListFile.write(dumps(serverConfig, indent=4))
-                        serverListFile.close()
-                else:
-                    InfoBar.info(
-                            title='提示',
-                            content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
-                            orient=Qt.Horizontal,
-                            isClosable=True,
-                            position=InfoBarPosition.TOP,
-                            duration=3000,
-                            parent=self
-                            )
-                exitCode = 0
-            except Exception as e:
-                exitCode = 1
-                exit1Msg += f"\n{e}"
-
-            if exitCode == 0:
-                InfoBar.success(
-                            title='成功',
-                            content=exit0Msg,
-                            orient=Qt.Horizontal,
-                            isClosable=True,
-                            position=InfoBarPosition.TOP,
-                            duration=3000,
-                            parent=self
-                            )
+            with open(r'MCSL2/MCSL2_ServerList.json', "w+", encoding='utf-8') as newGlobalServerListFile:
+                #添加新的
+                globalServerList['MCSLServerList'].pop(self.serverIndex)
+                globalServerList['MCSLServerList'].insert(0, serverConfig)
+                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+            exitCode = 0
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+        
+        # 写入单独配置
+        try:
+            if not settingsController.fileSettings['onlySaveGlobalServerConfig']:
+                with open(f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json", "w+", encoding='utf-8') as serverListFile:
+                    serverListFile.write(dumps(serverConfig, indent=4))
+                    serverListFile.close()
             else:
-                InfoBar.error(
-                            title='失败',
-                            content=exit1Msg,
-                            orient=Qt.Horizontal,
-                            isClosable=True,
-                            position=InfoBarPosition.TOP,
-                            duration=3000,
-                            parent=self
-                            )
+                InfoBar.info(
+                        title='提示',
+                        content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+            exitCode = 0
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+
+        if exitCode == 0:
+            InfoBar.success(
+                        title='成功',
+                        content=exit0Msg,
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
+        else:
+            InfoBar.error(
+                        title='失败',
+                        content=exit1Msg,
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self
+                        )
         self.refreshServers()
+        '''更新变量'''
+        editServerVariables.oldMinMem = editServerVariables.minMem
+        editServerVariables.oldMaxMem = editServerVariables.maxMem
+        editServerVariables.oldCoreFileName = editServerVariables.coreFileName
+        editServerVariables.oldSelectedJavaPath = editServerVariables.selectedJavaPath
+        editServerVariables.oldMemUnit = editServerVariables.memUnit
+        editServerVariables.oldJVMArg = editServerVariables.jvmArg
+        editServerVariables.oldServerName = editServerVariables.serverName
+        editServerVariables.oldConsoleOutputDeEncoding = editServerVariables.consoleOutputDeEncoding
+        editServerVariables.oldConsoleInputDeEncoding = editServerVariables.consoleInputDeEncoding
+        editServerVariables.oldIcon = editServerVariables.icon
         
     def checkDuplicateConfig(self):
         # 没错，就是答辩if
