@@ -873,6 +873,7 @@ class _ServerManagerPage(QWidget):
         editServerVariables.oldIcon = editServerVariables.icon = globalConfig[index]['icon']
 
     def changeIcon(self, iconIndex):
+        editServerVariables.icon = self.iconsFileNameList[iconIndex]
         self.editServerPixmapLabel.setPixmap(QPixmap(f":/build-InIcons/{self.iconsFileNameList[iconIndex]}"))
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
@@ -1301,7 +1302,7 @@ class _ServerManagerPage(QWidget):
             return 1
         else:
             return 0
-        
+
 # 使用多线程防止假死
 class DeleteServerThread(QThread):
 
