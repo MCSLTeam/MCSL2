@@ -211,3 +211,5 @@ class singleServerManager(CardWidget):
         self.selectBtn.setText("选择")
         self.editBtn.setText("编辑")
         self.deleteBtn.setText("删除")
+        
+        self.serverName.setWordWrap(True)
