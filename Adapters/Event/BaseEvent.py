@@ -25,7 +25,17 @@ class BaseHandler(metaclass=ABCMeta):
 class BaseEvent(metaclass=ABCMeta):
     def __init__(self):
         self.eventType: str = None
-        self.handlers: List = []
+        self.handlers: List[BaseHandler] = []
+
+    '''
+            if func is not None and not callable(func):
+            return
+        tmpHandle
+        self.handlers.append()
+    '''
+    @abstractmethod
+    def registerHandle(self,func,priority: int):
+        pass
 
     @abstractmethod
     async def HandleEvent(self):
