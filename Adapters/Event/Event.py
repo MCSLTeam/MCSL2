@@ -1,6 +1,4 @@
-from abc import ABC
 from typing import List
-
 from Adapters.Event.BaseEvent import BaseHandler, BaseEvent
 
 

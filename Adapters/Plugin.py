@@ -47,7 +47,6 @@ class PluginLoader(BasePluginLoader):
 
 class PluginManager(BasePluginManager):
     def __init__(self):
-        self.is_disabled_all: bool = False
         self.pluginDict: {str, Plugin} = {}
         self.threadPool: List[Thread] = []
 
