@@ -4,16 +4,16 @@ from typing import List
 class BasePlugin(metaclass=ABCMeta):
 
     def __init__(self):
-        self.plugin_name: str = ""
+        self.pluginName: str = ""
         self.version: str = ""
         self.description: str = []
         self.author: List[str] = []
-        self.author_email: List[str] = []
-        self.is_enabled: bool = False
-        self.is_loaded: bool = False
-        self.load_func = None
-        self.enable_func = None
-        self.disable_func = None
+        self.authorEmail: List[str] = []
+        self.isEnabled: bool = False
+        self.isLoaded: bool = False
+        self.fn_Load = None
+        self.fn_Enable = None
+        self.fn_Disable = None
 
     @abstractmethod
     def register_loadFunc(self, load_fn):
@@ -31,20 +31,20 @@ class BasePlugin(metaclass=ABCMeta):
 class BasePluginLoader:
     @classmethod
     @abstractmethod
-    def load(cls, plugin_name: str):
+    def load(cls, pluginName: str):
         pass
 
 
 class BasePluginManager(metaclass=ABCMeta):
 
     @abstractmethod
-    def disable(self, plugin: BasePlugin):
+    def disablePlugin(self, plugin: BasePlugin):
         pass
 
     @abstractmethod
-    def load(self, plugin: BasePlugin):
+    def loadPlugin(self, plugin: BasePlugin):
         pass
 
     @abstractmethod
-    def enable(self, plugin: BasePlugin):
+    def enablePlugin(self, plugin: BasePlugin):
         pass

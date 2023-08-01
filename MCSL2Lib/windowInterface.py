@@ -134,12 +134,12 @@ class Window(FramelessWindow):
         serverHelper.loadAtLaunch()
 
         # 初始化插件系统
-        self.initPlugin()
+        self.initPluginSystem()
 
-    def initPlugin(self):
+    def initPluginSystem(self):
         pluginManager: PluginManager = pluginVariables.pluginManager
-        pluginManager.load_all()
-        pluginManager.show(self.pluginsInterface.gridLayout_3)
+        pluginManager.loadAllPlugins()
+        pluginManager.initSinglePluginsWidget(self.pluginsInterface.gridLayout_3)
 
     def switchTo(self, widget, isEditingServer: Optional[int] = 0):
         if isEditingServer:

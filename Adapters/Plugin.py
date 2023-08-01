@@ -1,52 +1,46 @@
 from __future__ import annotations
-
-import json
-import threading
+from json import loads
+# import threading
 from threading import Thread
 from typing import List
-
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from qfluentwidgets import SmoothScrollArea
-
+from PyQt5.QtWidgets import QVBoxLayout
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
-
-import os
-
+from os import walk, getcwd
 from MCSL2Lib.pluginWidget import singlePluginWidget
 
 
 class Plugin(BasePlugin):
     def __init__(self):
         super().__init__()
-        self._plugin_type: str = "common"
+        self._pluginType: str = "common"
 
-    def register_loadFunc(self, load_fn):
-        self.load_func = load_fn
+    def register_loadFunc(self, fn_Load):
+        self.LOAD = fn_Load
 
-    def register_enableFunc(self, enable_fn):
-        self.enable_func = enable_fn
+    def register_enableFunc(self, fn_Enable):
+        self.ENABLE = fn_Enable
 
-    def register_disableFunc(self, disable_fn):
-        self.disable_func = disable_fn
+    def register_disableFunc(self, fn_Disable):
+        self.DISABLE = fn_Disable
 
 
 class PluginLoader(BasePluginLoader):
     @classmethod
     def load(cls, pluginName: str) -> Plugin | None:
-        imported_plugin: Plugin = __import__(f"plugin.{pluginName}.{pluginName}", fromlist=[pluginName])
-        imported_plugin = imported_plugin.__getattribute__("test")
+        importedPlugin: Plugin = __import__(f"Plugins.{pluginName}.{pluginName}", fromlist=[pluginName])
+        importedPlugin = importedPlugin.__getattribute__("test")
         try:
-            imported_plugin.plugin_name = pluginName
-            with open(f"plugin//{pluginName}//config.json", 'r',encoding="utf-8") as f:
-                imported_config = json.loads(f.read())
-            imported_plugin.version = imported_config["version"]
-            imported_plugin.description = imported_config["description"]
-            imported_plugin.author = imported_config["author"]
-            imported_plugin.author_email = imported_config["author_email"]
+            importedPlugin.pluginName = pluginName
+            with open(f"Plugins//{pluginName}//config.json", 'r',encoding="utf-8") as f:
+                importedPluginConfig = loads(f.read())
+            importedPlugin.version = importedPluginConfig["version"]
+            importedPlugin.description = importedPluginConfig["description"]
+            importedPlugin.author = importedPluginConfig["author"]
+            importedPlugin.authorEmail = importedPluginConfig["author_email"]
         except:
             raise Warning("读取配置错误", pluginName)
-        if imported_plugin.__class__.__name__ == Plugin.__name__:
-            return imported_plugin
+        if importedPlugin.__class__.__name__ == Plugin.__name__:
+            return importedPlugin
         else:
             return None
 
@@ -55,55 +49,61 @@ class PluginManager(BasePluginManager):
     def __init__(self):
         self.is_disabled_all: bool = False
         self.pluginDict: {str, Plugin} = {}
-        self.thread_pool: List[Thread] = []
+        self.threadPool: List[Thread] = []
 
-    def disable(self, plugin_name: str) -> (bool, str):
-        plugin: Plugin = self.pluginDict.pop(plugin_name, default=None)
+    def disablePlugin(self, pluginName: str) -> (bool, str):
+        '''禁用插件'''
+        plugin: Plugin = self.pluginDict.pop(pluginName, default=None)
         if plugin is None:
             return False
-        if plugin.disable_func is not None:
-            plugin.disable_func()
+        if plugin.DISABLE is not None:
+            plugin.DISABLE()
 
-    def load(self, plugin_name: str):
-        plugin: Plugin = PluginLoader.load(plugin_name)
+    def enablePlugin(self, pluginName: str):
+        '''启用插件但不加载'''
+        plugin: Plugin = self.pluginDict.get(pluginName, default=None)
+        if plugin is None:
+            return False
+        if plugin.ENABLE is not None:
+            plugin.ENABLE()
+
+    def loadPlugin(self, pluginName: str):
+        '''加载插件'''
+        plugin: Plugin = PluginLoader.load(pluginName)
         if plugin is None:
             return
         else:
-            if plugin.load_func is not None:
-                plugin.load_func()
-            self.pluginDict[plugin_name] = plugin
+            if plugin.LOAD is not None:
+                plugin.LOAD()
+            self.pluginDict[pluginName] = plugin
 
-    def enable(self, plugin_name: str):
-        plugin: Plugin = self.pluginDict.get(plugin_name, default=None)
-        if plugin is None:
-            return False
-        if plugin.enable_func is not None:
-            plugin.enable_func()
-
-    def load_all(self):
-        path = os.getcwd() + "//plugin"
-        path_list = next(os.walk(path))[1]
-        for pluginName in path_list:
-            self.load(pluginName)
+    def loadAllPlugins(self):
+        '''加载所有插件'''
+        path = getcwd() + "//Plugins"
+        pathList = next(walk(path))[1]
+        for pluginName in pathList:
+            self.loadPlugin(pluginName)
         print(self.pluginDict)
 
-    def enable_all(self):
-        for plugin_name in self.pluginDict.keys():
-            plugin: Plugin = self.pluginDict.get(plugin_name)
-            if plugin.enable_func is not None:
+    def enableAllPlugins(self):
+        '''启用所有插件但不加载'''
+        for pluginName in self.pluginDict.keys():
+            plugin: Plugin = self.pluginDict.get(pluginName)
+            if plugin.ENABLE is not None:
                 try:
-                    self.enable(plugin_name)
+                    self.enablePlugin(pluginName)
                 except:
                     continue
 
-    def disable_all(self):
+    def disableAllPlugins(self):
+        '''禁用所有插件'''
         self.is_disabled_all = True
 
-    def show(self,gridLayout_3:QVBoxLayout):
+    def initSinglePluginsWidget(self,gridLayout_3:QVBoxLayout):
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
-            plugin_widget = singlePluginWidget()
-            plugin_widget.pluginName.setText(plugin.plugin_name)
-            plugin_widget.pluginMoreInfo.setText(plugin.description)
-            gridLayout_3.addWidget(plugin_widget)
+            pluginWidget = singlePluginWidget()
+            pluginWidget.pluginName.setText(plugin.pluginName)
+            pluginWidget.pluginMoreInfo.setText(plugin.description)
+            gridLayout_3.addWidget(pluginWidget)
 
