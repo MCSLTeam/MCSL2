@@ -3,7 +3,7 @@
 # MCSL2 | A simple and multifunctional Minecraft server launcher
 
 <right>
-——Made by LxHTT
+——Made by MCSL Team
 </right>
 
 ___

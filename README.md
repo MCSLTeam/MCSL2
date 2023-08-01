@@ -2,7 +2,7 @@
 # MCSL2   |   一个简洁全能的 Minecraft 服务器启动器
 
 <right>
-——由LxHTT倾心制作
+——由MCSL Team倾心制作
 </right>
 
 ___
