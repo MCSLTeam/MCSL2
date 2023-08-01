@@ -621,12 +621,8 @@ class MCSL2MainWindow(QMainWindow, Ui_MCSL2_MainWindow):
     def StartMCServerHelper(self):
         try:
             global GlobalServerList, ServerIndexNum
-            MCSLLogger.Log(Msg="Start_PushButtonPressed", MsgArg=None, MsgLevel=0)
-            MCSLLogger.Log(Msg="TryToGetGlobalServerList", MsgArg=None, MsgLevel=0)
             GlobalServerList = ReadGlobalServerConfig()[1]
             if str(GlobalServerList) == "[]":
-                MCSLLogger.Log(Msg="NoServerCanBeFound", MsgArg=None, MsgLevel=1)
-                MCSLLogger.Log(Msg="ShowDialog", MsgArg="AskMode", MsgLevel=0)
                 ReturnNum = CallMCSL2Dialog(
                     Tip="ServerControllerNoServerCanBeFound",
                     OtherTextArg=None,
