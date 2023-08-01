@@ -28,7 +28,7 @@ class PluginLoader(BasePluginLoader):
     @classmethod
     def load(cls, pluginName: str) -> Plugin | None:
         importedPlugin: Plugin = __import__(f"Plugins.{pluginName}.{pluginName}", fromlist=[pluginName])
-        importedPlugin = importedPlugin.__getattribute__("test")
+        importedPlugin = importedPlugin.__getattribute__(pluginName)
         try:
             importedPlugin.pluginName = pluginName
             with open(f"Plugins//{pluginName}//config.json", 'r',encoding="utf-8") as f:
@@ -78,7 +78,7 @@ class PluginManager(BasePluginManager):
 
     def loadAllPlugins(self):
         '''加载所有插件'''
-        path = getcwd() + "//Plugins"
+        path = getcwd() + "\\Plugins"
         try:
             pathList = next(walk(path))[1]
             for pluginName in pathList:
