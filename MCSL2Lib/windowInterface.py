@@ -28,7 +28,9 @@ from MCSL2Lib.selectNewJavaPage import _SelectNewJavaPage
 from MCSL2Lib.variables import _configureServerVariables, _editServerVariables, _globalMCSL2Variables
 from MCSL2Lib import icons as _   # noqa: F401
 from MCSL2Lib.settingsController import _settingsController
+from MCSL2Lib.serverController import _ServerHelper
 
+serverHelper = _ServerHelper()
 settingsController = _settingsController()
 configureServerVariables = _configureServerVariables()
 editServerVariables = _editServerVariables()
@@ -190,6 +192,7 @@ class Window(FramelessWindow):
         self.navigationBar.setCurrentItem(widget.objectName())
 
     def initLJQtSlot(self):
+        # 新建服务器
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1))
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(lambda: InfoBar.info(
@@ -216,7 +219,6 @@ class Window(FramelessWindow):
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(settingsController.fileSettings['downloadSource'])))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(self.settingsInterface.downloadSourceList.index(settingsController.fileSettings['downloadSource'])))
-        self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
         self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.switchTo(self.selectJavaPage))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(configureServerVariables.javaPath))
@@ -224,9 +226,19 @@ class Window(FramelessWindow):
         self.configureInterface.extendedJavaListPushBtn.clicked.connect(lambda: self.selectJavaPage.refreshPage(configureServerVariables.javaPath))
         self.selectJavaPage.setJavaVer.connect(self.configureInterface.setJavaVer)
         self.selectJavaPage.setJavaPath.connect(self.configureInterface.setJavaPath)
+
+        # 主页
         self.homeInterface.newServerBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.homeInterface.selectServerBtn.clicked.connect(lambda: self.switchTo(self.serverManagerInterface))
         self.homeInterface.selectServerBtn.clicked.connect(self.serverManagerInterface.refreshServers)
+        serverHelper.serverName.connect(self.homeInterface.afterSelectedServer)
+        serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
+        
+
+        # 设置
+        self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
+
+        # 管理服务器
         self.stackWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.switchTo(self.downloadInterface))
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1))
