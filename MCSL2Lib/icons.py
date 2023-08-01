@@ -1,8 +1,4 @@
-from PyQt5.QtCore import (
-    qVersion,
-    qRegisterResourceData,
-    qUnregisterResourceData
-)
+from PyQt5.QtCore import qVersion, qRegisterResourceData, qUnregisterResourceData
 
 qt_resource_data = b"\
 \x00\x00\x04\x37\
@@ -16584,7 +16580,7 @@ qt_resource_struct_v2 = b"\
 \x00\x00\x01\x89\xa1\xd1\x62\x25\
 "
 
-qt_version = [int(v) for v in qVersion().split('.')]
+qt_version = [int(v) for v in qVersion().split(".")]
 if qt_version < [5, 8, 0]:
     rcc_version = 1
     qt_resource_struct = qt_resource_struct_v1
@@ -16592,10 +16588,17 @@ else:
     rcc_version = 2
     qt_resource_struct = qt_resource_struct_v2
 
+
 def qInitResources():
-    qRegisterResourceData(rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data)
+    qRegisterResourceData(
+        rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data
+    )
+
 
 def qCleanupResources():
-    qUnregisterResourceData(rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data)
+    qUnregisterResourceData(
+        rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data
+    )
+
 
 qInitResources()

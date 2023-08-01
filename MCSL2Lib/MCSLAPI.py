@@ -9,10 +9,12 @@ from MCSL2Lib.variables import Singleton
 
 
 class MCSLAPIDownloadURLParser:
+    """URL设定器"""
+
     def __init__(self):
         pass
 
-    def ParseDownloaderAPIUrl():
+    def parseDownloaderAPIUrl():
         UrlArg = "http://mcsl_api.df100.ltd/json"
         TypeArg = [
             "/JavaDownloadInfo.json",
@@ -24,12 +26,32 @@ class MCSLAPIDownloadURLParser:
         rv = {}
         for i in range(len(TypeArg)):
             DownloadAPIUrl = UrlArg + TypeArg[i]
-            downloadFileTitles, downloadFileURLs, downloadFileNames, downloadFileFormats = MCSLAPIDownloadURLParser.DecodeDownloadJsons(
-                DownloadAPIUrl)
-            rv.update({
-                i: dict(zip(("downloadFileTitles", "downloadFileURLs", "downloadFileNames", "downloadFileFormats"),
-                            (downloadFileTitles, downloadFileURLs, downloadFileNames, downloadFileFormats)))
-            })
+            (
+                downloadFileTitles,
+                downloadFileURLs,
+                downloadFileNames,
+                downloadFileFormats,
+            ) = MCSLAPIDownloadURLParser.DecodeDownloadJsons(DownloadAPIUrl)
+            rv.update(
+                {
+                    i: dict(
+                        zip(
+                            (
+                                "downloadFileTitles",
+                                "downloadFileURLs",
+                                "downloadFileNames",
+                                "downloadFileFormats",
+                            ),
+                            (
+                                downloadFileTitles,
+                                downloadFileURLs,
+                                downloadFileNames,
+                                downloadFileFormats,
+                            ),
+                        )
+                    )
+                }
+            )
         return rv
 
     def DecodeDownloadJsons(RefreshUrl):
@@ -52,16 +74,22 @@ class MCSLAPIDownloadURLParser:
                 downloadFileFormats.insert(0, downloadFileFormat)
                 downloadFileName = i["filename"]
                 downloadFileNames.insert(0, downloadFileName)
-            return downloadFileTitles, downloadFileURLs, downloadFileNames, downloadFileFormats
+            return (
+                downloadFileTitles,
+                downloadFileURLs,
+                downloadFileNames,
+                downloadFileFormats,
+            )
         except:
             return -1, -1, -1, -1
 
 
-class fetchMCSLAPIDownloadURLThread(QThread):
+class FetchMCSLAPIDownloadURLThread(QThread):
     """
     用于获取网页内容的线程
     结束时发射fetchSignal信号，参数为url和data组成的元组
     """
+
     fetchSignal = pyqtSignal(dict)
 
     def __init__(self, FinishSlot: Callable = ...):
@@ -75,29 +103,24 @@ class fetchMCSLAPIDownloadURLThread(QThread):
         return self.url
 
     def run(self):
-        self.fetchSignal.emit(
-            MCSLAPIDownloadURLParser.ParseDownloaderAPIUrl())
+        self.fetchSignal.emit(MCSLAPIDownloadURLParser.parseDownloaderAPIUrl())
 
     def getData(self):
         return self.Data
 
 
 @Singleton
-class fetchMCSLAPIDownloadURLThreadFactory:
-    singletonThread: fetchMCSLAPIDownloadURLThread = {}
+class FetchMCSLAPIDownloadURLThreadFactory:
+    singletonThread: FetchMCSLAPIDownloadURLThread = {}
 
     @classmethod
-    def create(cls,
-               _singleton=False,
-               finishSlot=...) -> fetchMCSLAPIDownloadURLThread:
-
+    def create(cls, _singleton=False, finishSlot=...) -> FetchMCSLAPIDownloadURLThread:
         if _singleton:
-
             if cls.singletonThread.isRunning():
                 return cls.singletonThread
             else:
-                thread = fetchMCSLAPIDownloadURLThread(finishSlot)
+                thread = FetchMCSLAPIDownloadURLThread(finishSlot)
                 cls.singletonThread = thread
                 return thread
         else:
-            return fetchMCSLAPIDownloadURLThread(finishSlot)
+            return FetchMCSLAPIDownloadURLThread(finishSlot)

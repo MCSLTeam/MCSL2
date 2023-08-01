@@ -3,11 +3,11 @@ from PyQt5.QtCore import pyqtSignal, QEasingCurve
 from PyQt5.QtWidgets import QFrame, QHBoxLayout
 from qfluentwidgets import PopUpAniStackedWidget
 
-from MCSL2Lib import icons as _   # noqa: F401
+from MCSL2Lib import icons as _  # noqa: F401
 
 
 class StackedWidget(QFrame):
-    """ Stacked widget """
+    """子页面实现，理论上此处不需要开发者再次手动调用"""
 
     currentChanged = pyqtSignal(int)
 
@@ -31,9 +31,7 @@ class StackedWidget(QFrame):
         if not popOut:
             self.view.setCurrentWidget(widget, duration=300)
         else:
-            self.view.setCurrentWidget(
-                widget, True, False, 200, QEasingCurve.InQuad)
+            self.view.setCurrentWidget(widget, True, False, 200, QEasingCurve.InQuad)
 
     def setCurrentIndex(self, index, popOut=False):
         self.setCurrentWidget(self.view.widget(index), popOut)
-

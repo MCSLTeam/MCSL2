@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
     QFrame,
     QGridLayout,
     QVBoxLayout,
-    QSpacerItem
+    QSpacerItem,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
@@ -14,18 +14,23 @@ from qfluentwidgets import (
     SubtitleLabel,
     TitleLabel,
     PopUpAniStackedWidget,
-    Pivot
+    Pivot,
 )
-from MCSL2Lib.MCSLAPI import fetchMCSLAPIDownloadURLThreadFactory
-from MCSL2Lib.variables import _globalMCSL2Variables
+from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
+from MCSL2Lib.variables import GlobalMCSL2Variables, DownloadVariables
+
+downloadVariables = DownloadVariables()
 
 
-class _DownloadPage(QWidget):
+class DownloadPage(QWidget):
+    """下载页"""
+
     def __init__(self):
-
         super().__init__()
 
-        self.fetchDownloadURLThreadFactory = fetchMCSLAPIDownloadURLThreadFactory()
+        self.MCSLAPIDownloadUrlDict = {}
+
+        self.fetchDownloadURLThreadFactory = FetchMCSLAPIDownloadURLThreadFactory()
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -50,7 +55,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -73,7 +80,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreListSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.coreListSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.coreListSubtitleLabel.setSizePolicy(sizePolicy)
         self.coreListSubtitleLabel.setObjectName("coreListSubtitleLabel")
 
@@ -82,7 +91,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.versionSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.versionSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.versionSubtitleLabel.setSizePolicy(sizePolicy)
         self.versionSubtitleLabel.setObjectName("versionSubtitleLabel")
 
@@ -91,7 +102,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.buildSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.buildSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.buildSubtitleLabel.setSizePolicy(sizePolicy)
         self.buildSubtitleLabel.setObjectName("buildSubtitleLabel")
 
@@ -100,7 +113,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth()
+        )
         self.coreListSmoothScrollArea.setSizePolicy(sizePolicy)
         self.coreListSmoothScrollArea.setMinimumSize(QSize(200, 0))
         self.coreListSmoothScrollArea.setMaximumSize(QSize(200, 16777215))
@@ -111,7 +126,9 @@ class _DownloadPage(QWidget):
 
         self.coreListScrollAreaWidgetContents = QWidget()
         self.coreListScrollAreaWidgetContents.setGeometry(QRect(0, 0, 200, 30))
-        self.coreListScrollAreaWidgetContents.setObjectName("coreListScrollAreaWidgetContents")
+        self.coreListScrollAreaWidgetContents.setObjectName(
+            "coreListScrollAreaWidgetContents"
+        )
 
         self.coreListSmoothScrollArea.setWidget(self.coreListScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.coreListSmoothScrollArea, 1, 0, 1, 1)
@@ -119,7 +136,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth()
+        )
         self.versionSmoothScrollArea.setSizePolicy(sizePolicy)
         self.versionSmoothScrollArea.setMinimumSize(QSize(160, 0))
         self.versionSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
@@ -130,7 +149,9 @@ class _DownloadPage(QWidget):
 
         self.versionScrollAreaWidgetContents = QWidget()
         self.versionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 160, 30))
-        self.versionScrollAreaWidgetContents.setObjectName("versionScrollAreaWidgetContents")
+        self.versionScrollAreaWidgetContents.setObjectName(
+            "versionScrollAreaWidgetContents"
+        )
 
         self.versionSmoothScrollArea.setWidget(self.versionScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.versionSmoothScrollArea, 1, 1, 1, 1)
@@ -144,7 +165,9 @@ class _DownloadPage(QWidget):
 
         self.buildScrollAreaWidgetContents = QWidget()
         self.buildScrollAreaWidgetContents.setGeometry(QRect(0, 0, 304, 30))
-        self.buildScrollAreaWidgetContents.setObjectName("buildScrollAreaWidgetContents")
+        self.buildScrollAreaWidgetContents.setObjectName(
+            "buildScrollAreaWidgetContents"
+        )
 
         self.buildScrollArea.setWidget(self.buildScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.buildScrollArea, 1, 2, 1, 1)
@@ -173,7 +196,9 @@ class _DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIStackedWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLAPIStackedWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLAPIStackedWidget.setSizePolicy(sizePolicy)
         self.MCSLAPIStackedWidget.setObjectName("MCSLAPIStackedWidget")
 
@@ -200,9 +225,9 @@ class _DownloadPage(QWidget):
         self.gridLayout_3.addWidget(self.MCSLAPIStackedWidget, 1, 0, 1, 2)
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
-        
+
         self.downloadStackedWidget.setCurrentWidget(self.downloadWithFastMirror)
-        
+
         self.setObjectName("DownloadInterface")
 
         self.titleLabel.setText("下载")
@@ -212,46 +237,66 @@ class _DownloadPage(QWidget):
         self.buildSubtitleLabel.setText("构建列表")
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.coreListSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
-        self.versionSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
-        self.buildScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.coreListSmoothScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
+        self.versionSmoothScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
+        self.buildScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIJava",
             text="Java环境",
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIJava)
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
+                self.MCSLAPIJava
+            ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPISpigot",
             text="Spigot核心",
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPISpigot)
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
+                self.MCSLAPISpigot
+            ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIPaper",
             text="Paper核心",
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIPaper)
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
+                self.MCSLAPIPaper
+            ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIBungeeCord",
             text="BungeeCord代理",
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIBungeeCord)
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
+                self.MCSLAPIBungeeCord
+            ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIOfficialCore",
             text="Vanilla核心",
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIOfficialCore)
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
+                self.MCSLAPIOfficialCore
+            ),
         )
         self.MCSLAPIPivot.setCurrentItem("MCSLAPIJava")
 
     def getMCSLAPI(self):
-        workThread = self.fetchDownloadURLThreadFactory.create(_singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict)
+        """请求MCSLAPI"""
+        workThread = self.fetchDownloadURLThreadFactory.create(
+            _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict
+        )
         if workThread.isRunning():
             return
         else:
             workThread.start()
-    
+
     @pyqtSlot(dict)
     def updateMCSLAPIDownloadUrlDict(self, _downloadUrlDict: dict):
-        self.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
+        """更新获取MCSLAPI结果"""
+        downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
         self.getMCSLAPI()
 
     # @staticmethod

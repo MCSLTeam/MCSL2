@@ -7,16 +7,16 @@ from MCSL2Lib.settingsController import _settingsController
 settingsController = _settingsController()
 
 def readGlobalServerConfig():
+    '''读取全局服务器配置'''
     with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())[
             'MCSLServerList']
         globalServerConfigFile.close()
     return globalServerList
 
-# 用以确定开启哪个服务器
 @Singleton
 class _ServerHelper(QObject):
-    
+    '''用以确定开启哪个服务器'''
     serverName = pyqtSignal(str)
     backToHomePage = pyqtSignal(int)
     startBtnStat = pyqtSignal(bool)
@@ -25,6 +25,7 @@ class _ServerHelper(QObject):
         super().__init__()
 
     def loadAtLaunch(self):
+        '''读取上次启动的服务器'''
         lastServerName = settingsController.fileSettings['lastServer']
         if lastServerName != "":
             self.serverName.emit(lastServerName)
@@ -33,6 +34,7 @@ class _ServerHelper(QObject):
             self.startBtnStat.emit(False)
 
     def selectedServer(self, index):
+        '''选择了服务器'''
         self.serverName.emit(readGlobalServerConfig()[index]['name'])
         self.backToHomePage.emit(0)
         self.startBtnStat.emit(True)
@@ -43,12 +45,16 @@ class _ServerHelper(QObject):
             writeConfig.write(dumps(settingsController.fileSettings, indent=4))
             writeConfig.close()
 
+
 class Server:
+    '''服务器进程'''
     def __init__(self):
         self.Process: Optional[QProcess] = None
         self.LastOutputSize = 0
 
 class ServerHandler(QObject):
+    '''服务器进程操控器'''
+
     # 当服务器输出日志时发出的信号(发送一个字符串)
     ServerLogOutput = pyqtSignal(str)
 

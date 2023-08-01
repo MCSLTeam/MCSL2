@@ -14,11 +14,12 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF
 )
-from MCSL2Lib.variables import _globalMCSL2Variables
+from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib import icons as _   # noqa: F401
 
-class _SelectNewJavaPage(QWidget):
+class SelectNewJavaPage(QWidget):
+    """适用于修改服务器时的选择Java页面"""
 
     setJavaPath = pyqtSignal(str)
 
@@ -93,9 +94,11 @@ class _SelectNewJavaPage(QWidget):
         self.subTitleLabel.setText("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。")
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.javaSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.javaSmoothScrollArea.viewport().setStyleSheet(GlobalMCSL2Variables.scrollAreaViewportQss)
 
     def refreshPage(self, JavaPath):
+        """刷新Java列表"""
+
         # 删除旧的
         for i in reversed(range(self.javaItemVerticalLayout.count())):
             self.javaItemVerticalLayout.itemAt(i).widget().setParent(None)
@@ -105,12 +108,12 @@ class _SelectNewJavaPage(QWidget):
             self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(f"finishSelectJavaBtn{str(i)}")
             self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.scrollAreaProcessor(JavaPath))
             self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.backBtn.click())
-            self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].Path))
-            self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].Version))
+            self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].path))
+            self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].version))
             self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
 
-    # 判断第几个
     def scrollAreaProcessor(self, JavaPath):
+        """判断索引"""
         index = int(str(self.sender().objectName()).split("Btn")[1])
-        selectedJavaPath = str(JavaPath[index].Path)
+        selectedJavaPath = str(JavaPath[index].path)
         self.setJavaPath.emit(selectedJavaPath)

@@ -2,6 +2,7 @@ from Adapters.Plugin import PluginManager
 
 
 def Singleton(cls):
+    """单例化装饰器"""
     Instances = {}
 
     def GetInstance(*args, **kwargs):
@@ -11,9 +12,11 @@ def Singleton(cls):
 
     return GetInstance
 
+
 @Singleton
-class _configureServerVariables:
-    
+class ConfigureServerVariables:
+    """新建服务器所需变量"""
+
     def __init__(self):
         self.javaPath: list = []
         self.minMem: int
@@ -30,7 +33,7 @@ class _configureServerVariables:
         self.memUnitList = ["M", "G"]
         self.jvmArg: str = ""
         self.serverName: str = ""
-        
+
     def resetToDefault(self):
         self.javaPath: list = []
         self.minMem: int
@@ -49,9 +52,11 @@ class _configureServerVariables:
         self.serverName: str = ""
         self.icon: str = ""
 
+
 @Singleton
-class _editServerVariables:
-    
+class EditServerVariables:
+    """修改服务器所需变量"""
+
     def __init__(self):
         self.javaPath: list = []
         self.corePath: str = ""
@@ -67,7 +72,7 @@ class _editServerVariables:
         self.oldConsoleOutputDeEncoding: str = "follow"
         self.oldConsoleInputDeEncoding: str = "follow"
         self.oldIcon: str = "Grass.png"
-        
+
         self.minMem: int
         self.maxMem: int
         self.coreFileName: str = ""
@@ -98,7 +103,7 @@ class _editServerVariables:
         self.oldConsoleOutputDeEncoding: str = "follow"
         self.oldConsoleInputDeEncoding: str = "follow"
         self.oldIcon: str = "Grass.png"
-        
+
         self.minMem: int
         self.maxMem: int
         self.corePath: str = ""
@@ -116,17 +121,25 @@ class _editServerVariables:
         self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
 
+
 @Singleton
-class _PluginVariables:
+class PluginVariables:
+    """插件系统所需变量"""
+
     def __init__(self):
         self.pluginManager: PluginManager = PluginManager()
 
-class _globalMCSL2Variables:
+
+class GlobalMCSL2Variables:
+    """需要被全局使用的变量"""
+
     MCSL2Version = "2.1.4.0"
     scrollAreaViewportQss = "background-color: transparent;"
 
+
 @Singleton
-class _downloadVariables:
+class DownloadVariables:
+    """下载页需要的变量"""
 
     def __init__(self):
         self.MCSLAPIDownloadUrlDict = {}

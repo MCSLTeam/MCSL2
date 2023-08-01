@@ -1,9 +1,12 @@
-
 from json import dumps
-from os import mkdir, path as ospath ,remove
+from os import mkdir, path as ospath, remove
 
-# 各位开发者请注意，这块是屎山if集中地 --- LxHTT
+
 def initializeMCSL2():
+    """
+    初始化程序
+    各位开发者请注意，这块是屎山if集中地 --- LxHTT
+    """
 
     # 最外层文件夹
     if not ospath.exists(r"Servers"):
@@ -16,7 +19,7 @@ def initializeMCSL2():
         mkdir(r"MCSL2/Logs")
         mkdir(r"MCSL2/Aria2")
         mkdir(r"MCSL2/Downloads")
-    
+
     # 如果有MCSL2目录，是否有Aria2目录
     elif not ospath.exists(r"MCSL2/Aria2"):
         mkdir(r"MCSL2/Aria2")
@@ -45,7 +48,7 @@ def initializeMCSL2():
                 "alwaysRunAsAdministrator": False,
                 "startOnStartup": False,
                 "checkUpdateOnStart": False,
-                "lastServer": ""
+                "lastServer": "",
             }
             InitConfig.write(dumps(ConfigTemplate, indent=4))
             InitConfig.close()
@@ -70,12 +73,14 @@ def initializeMCSL2():
                 "alwaysRunAsAdministrator": False,
                 "startOnStartup": False,
                 "checkUpdateOnStart": False,
-                "lastServer": ""
+                "lastServer": "",
             }
             FixConfig.write(dumps(ConfigTemplate, indent=4))
             FixConfig.close()
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
-        with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as InitServerList:
+        with open(
+            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+        ) as InitServerList:
             ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             InitServerList.write(ServerListTemplate)
             InitServerList.close()

@@ -1,11 +1,5 @@
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import (
-    QWidget,
-    QSizePolicy,
-    QGridLayout,
-    QSpacerItem,
-    QVBoxLayout
-)
+from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QSpacerItem, QVBoxLayout
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
@@ -14,14 +8,14 @@ from qfluentwidgets import (
     PushButton,
     StrongBodyLabel,
     SubtitleLabel,
-    isDarkTheme
+    isDarkTheme,
 )
 
 
-
 class singleServerManager(CardWidget):
-    def __init__(self):
+    """单独的服务器管理Widget模板"""
 
+    def __init__(self):
         super().__init__()
 
         self.setObjectName("singleServerManager")
@@ -44,7 +38,9 @@ class singleServerManager(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverInfoWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverInfoWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverInfoWidget.setSizePolicy(sizePolicy)
         self.serverInfoWidget.setMinimumSize(QSize(100, 70))
         self.serverInfoWidget.setObjectName("serverInfoWidget")
@@ -56,7 +52,9 @@ class singleServerManager(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreFileNameTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.coreFileNameTitle.sizePolicy().hasHeightForWidth()
+        )
         self.coreFileNameTitle.setSizePolicy(sizePolicy)
         self.coreFileNameTitle.setObjectName("coreFileNameTitle")
 
@@ -92,7 +90,9 @@ class singleServerManager(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPathTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPathTitle.sizePolicy().hasHeightForWidth()
+        )
         self.javaPathTitle.setSizePolicy(sizePolicy)
         self.javaPathTitle.setObjectName("javaPathTitle")
 
@@ -128,43 +128,47 @@ class singleServerManager(CardWidget):
         self.verticalLayout.addWidget(self.editBtn)
         self.deleteBtn = PushButton(self.btnWidget)
         if isDarkTheme:
-            self.deleteBtn.setStyleSheet("PushButton {\n"
-                                        "    color: black;\n"
-                                        "    background: rgba(255, 255, 255, 0.7);\n"
-                                        "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                                        "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                                        "    border-radius: 5px;\n"
-                                        "    /* font: 14px \'Segoe UI\', \'Microsoft YaHei\'; */\n"
-                                        "    padding: 5px 12px 6px 12px;\n"
-                                        "    outline: none;\n"
-                                        "}\n"
-                                        "QPushButton {\n"
-                                        "    background-color: rgba(255, 117, 117, 30%);\n"
-                                        "    color: rgb(245, 0, 0)\n"
-                                        "}\n"
-                                        "QPushButton:hover {\n"
-                                        "    background-color: rgba(255, 122, 122, 50%);\n"
-                                        "    color: rgb(245, 0, 0)\n"
-                                        "}")
+            self.deleteBtn.setStyleSheet(
+                "PushButton {\n"
+                "    color: black;\n"
+                "    background: rgba(255, 255, 255, 0.7);\n"
+                "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
+                "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
+                "    border-radius: 5px;\n"
+                "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
+                "    padding: 5px 12px 6px 12px;\n"
+                "    outline: none;\n"
+                "}\n"
+                "QPushButton {\n"
+                "    background-color: rgba(255, 117, 117, 30%);\n"
+                "    color: rgb(245, 0, 0)\n"
+                "}\n"
+                "QPushButton:hover {\n"
+                "    background-color: rgba(255, 122, 122, 50%);\n"
+                "    color: rgb(245, 0, 0)\n"
+                "}"
+            )
         else:
-            self.deleteBtn.setStyleSheet("PushButton {\n"
-                                        "    color: black;\n"
-                                        "    background: rgba(255, 255, 255, 0.7);\n"
-                                        "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                                        "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                                        "    border-radius: 5px;\n"
-                                        "    /* font: 14px \'Segoe UI\', \'Microsoft YaHei\'; */\n"
-                                        "    padding: 5px 12px 6px 12px;\n"
-                                        "    outline: none;\n"
-                                        "}\n"
-                                        "QPushButton {\n"
-                                        "    background-color: rgba(255, 117, 117, 30%);\n"
-                                        "    color: rgb(255, 0, 0)\n"
-                                        "}\n"
-                                        "QPushButton:hover {\n"
-                                        "    background-color: rgba(255, 122, 122, 50%);\n"
-                                        "    color: rgb(255, 0, 0)\n"
-                                        "}")
+            self.deleteBtn.setStyleSheet(
+                "PushButton {\n"
+                "    color: black;\n"
+                "    background: rgba(255, 255, 255, 0.7);\n"
+                "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
+                "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
+                "    border-radius: 5px;\n"
+                "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
+                "    padding: 5px 12px 6px 12px;\n"
+                "    outline: none;\n"
+                "}\n"
+                "QPushButton {\n"
+                "    background-color: rgba(255, 117, 117, 30%);\n"
+                "    color: rgb(255, 0, 0)\n"
+                "}\n"
+                "QPushButton:hover {\n"
+                "    background-color: rgba(255, 122, 122, 50%);\n"
+                "    color: rgb(255, 0, 0)\n"
+                "}"
+            )
 
         self.verticalLayout.addWidget(self.deleteBtn)
         self.gridLayout.addWidget(self.btnWidget, 1, 12, 6, 1)
@@ -179,6 +183,7 @@ class singleServerManager(CardWidget):
         sizePolicy.setHeightForWidth(self.serverName.sizePolicy().hasHeightForWidth())
         self.serverName.setSizePolicy(sizePolicy)
         self.serverName.setObjectName("serverName")
+
         self.gridLayout.addWidget(self.serverName, 1, 8, 1, 1)
         self.widget = QWidget(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -200,7 +205,7 @@ class singleServerManager(CardWidget):
         self.Icon.setSizePolicy(sizePolicy)
         self.Icon.setStyleSheet("")
         self.Icon.setObjectName("Icon")
-        
+
         self.gridLayout_3.addWidget(self.Icon, 0, 0, 1, 1)
         self.gridLayout.addWidget(self.widget, 1, 1, 2, 1)
 
@@ -210,5 +215,5 @@ class singleServerManager(CardWidget):
         self.selectBtn.setText("选择")
         self.editBtn.setText("编辑")
         self.deleteBtn.setText("删除")
-        
+
         self.serverName.setWordWrap(True)

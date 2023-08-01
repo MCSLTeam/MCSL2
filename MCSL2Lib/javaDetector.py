@@ -6,7 +6,7 @@ from re import search
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
 
 
-FoundJava = []
+foundJava = []
 isNeedFuzzySearch = True
 # fmt: off
 MatchKeywords = {
@@ -18,23 +18,23 @@ MatchKeywords = {
     '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
     '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清'
 }
-ExcludedKeywords = {
+excludedKeywords = {
     "$", "{", "}", "__"
 }
 
-# fmt: on
 
+# fmt: on
 class Java:
     def __init__(self, path, ver):
         self._path = path
         self._version = ver
 
     @property
-    def Path(self):
+    def path(self):
         return self._path
 
     @property
-    def Version(self):
+    def version(self):
         return self._version
 
     def __hash__(self):
@@ -45,26 +45,32 @@ class Java:
             return self._path == other._path and self._version == other._version
 
 
-def GetJavaVersion(File):
+def getJavaVersion(File):
+    """
+    获取Java版本，三端通用\n
+    有人问，为什么不Win32API读取文件：无法跨平台\n
+    有人问，为什么不读取Java安装目录下的release文件：万一没有呢\n
+    急死我了。 --LxHTT
+    """
     process = QProcess()
-    process.start(File, ['-version'])
+    process.start(File, ["-version"])
     process.waitForFinished()
-    output = process.readAllStandardError().data().decode('utf-8')
-    
+    output = process.readAllStandardError().data().decode("utf-8")
+
     # 从输出中提取版本信息
-    version_pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
+    version_pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
     version_match = search(version_pattern, output)
 
     # 输出版本信息
     if version_match:
-        version = '.'.join(filter(None, version_match.groups()))
+        version = ".".join(filter(None, version_match.groups()))
         return version
     else:
         return ""
 
 
-def FindStr(s):
-    for _s in ExcludedKeywords:
+def findStr(s):
+    for _s in excludedKeywords:
         if _s in s:
             return False
     for _s in MatchKeywords:
@@ -73,64 +79,74 @@ def FindStr(s):
     return False
 
 
-def SearchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
+def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     # construct _Math function
-    if 'windows' in system().lower():
+    if "windows" in system().lower():
+
         def Match(P, F):
-            return ospath.join(P, F).endswith(r'bin\java.exe')
+            return ospath.join(P, F).endswith(r"bin\java.exe")
+
     else:
+
         def Match(P, F):
-            return ospath.join(P, F).endswith(r'bin/java')
-    processes = SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
+            return ospath.join(P, F).endswith(r"bin/java")
+
+    processes = searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
     rv = []
     for process in processes:
         process.waitForFinished()
-        if match := _Match(process.readAllStandardError().data().decode('utf-8')):
+        if match := _Match(process.readAllStandardError().data().decode("utf-8")):
             rv.append(Java(process.program(), match))
     return rv
 
 
+def searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
+    processes = []
+    if FuzzySearch:
+        if ospath.isfile(Path) or "x86_64-linux-gnu" in Path:
+            return processes
+        try:
+            for File in listdir(Path):
+                _Path = ospath.join(Path, File)
+                if ospath.isfile(_Path):
+                    if _Match(Path, File):
+                        process = QProcess()
+                        process.start(_Path, ["-version"])
+                        processes.append(process)
+                elif findStr(File.lower()):
+                    processes.extend(
+                        searchingFile(
+                            _Path, FileKeyword, FileExtended, FuzzySearch, _Match
+                        )
+                    )
+        except PermissionError:
+            pass
+        except FileNotFoundError as e:
+            print(f"扫描路径时出错: {e}")
+    return processes
 
-def SearchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
-        processes = []
-        if FuzzySearch:
-            if ospath.isfile(Path) or 'x86_64-linux-gnu' in Path:
-                return processes
-            try:
-                for File in listdir(Path):
-                    _Path = ospath.join(Path, File)
-                    if ospath.isfile(_Path):
-                        if _Match(Path, File):
-                            process = QProcess()
-                            process.start(_Path, ['-version'])
-                            processes.append(process)
-                    elif FindStr(File.lower()):
-                        processes.extend(
-                            SearchingFile(_Path, FileKeyword, FileExtended, FuzzySearch, _Match))
-            except PermissionError:
-                pass
-            except FileNotFoundError as e:
-                print(f'扫描路径时出错: {e}')
-        return processes
 
-def FindJava(FuzzySearch=True):
+def detectJava(FuzzySearch=True):
     def JavaVersionMatcher(s):
-        pattern = r'(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?'
+        pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
         match = search(pattern, s)
-        match = '.'.join(filter(None, match.groups()))
+        match = ".".join(filter(None, match.groups()))
         return match
 
     JavaPathList = []
-    FoundJava.clear()
-    if 'windows' in system().lower():
+    foundJava.clear()
+    if "windows" in system().lower():
         for i in range(65, 91):
             Path = chr(i) + ":\\"
             if ospath.exists(Path):
-                JavaPathList.extend(SearchFile(Path, "java", "exe", FuzzySearch, JavaVersionMatcher))
+                JavaPathList.extend(
+                    searchFile(Path, "java", "exe", FuzzySearch, JavaVersionMatcher)
+                )
     else:
-        JavaPathList.extend(SearchFile('/usr/lib', "java", "", FuzzySearch, JavaVersionMatcher))
+        JavaPathList.extend(
+            searchFile("/usr/lib", "java", "", FuzzySearch, JavaVersionMatcher)
+        )
     return JavaPathList
-
 
 
 class JavaFindWorkThread(QThread):
@@ -143,15 +159,15 @@ class JavaFindWorkThread(QThread):
         self._sequenceNumber = 0
 
     @property
-    def SequenceNumber(self):
+    def sequenceNumber(self):
         return self._sequenceNumber
 
-    @SequenceNumber.setter
-    def SequenceNumber(self, value):
+    @sequenceNumber.setter
+    def sequenceNumber(self, value):
         self._sequenceNumber = value
 
     def run(self):
-        self.foundJavaSignal.emit(FindJava(self._fuzzy))
+        self.foundJavaSignal.emit(detectJava(self._fuzzy))
         self.finishSignal.emit(self._sequenceNumber)
 
 
@@ -165,34 +181,34 @@ class JavaFindWorkThreadFactory:
         self._thread = None
 
     @property
-    def FuzzySearch(self):
+    def fuzzySearch(self):
         return self._fuzzy
 
-    @FuzzySearch.setter
-    def FuzzySearch(self, value):
+    @fuzzySearch.setter
+    def fuzzySearch(self, value):
         self._fuzzy = value
 
     @property
-    def SignalConnect(self):
+    def signalConnect(self):
         return self._connect
 
-    @SignalConnect.setter
-    def SignalConnect(self, value):
+    @signalConnect.setter
+    def signalConnect(self, value):
         self._connect = value
 
     @property
-    def FinishSignalConnect(self):
+    def finishSignalConnect(self):
         return self._finishConnect
 
-    @FinishSignalConnect.setter
-    def FinishSignalConnect(self, value):
+    @finishSignalConnect.setter
+    def finishSignalConnect(self, value):
         self._finishConnect = value
 
-    def Create(self):
+    def create(self):
         self._instanceCounter += 1
         thread = JavaFindWorkThread(self._fuzzy, self._parent)
         thread.foundJavaSignal.connect(self._connect)
-        thread.SequenceNumber = self._instanceCounter
+        thread.sequenceNumber = self._instanceCounter
         thread.finishSignal.connect(self._finishConnect)
         self._thread = thread
         return thread

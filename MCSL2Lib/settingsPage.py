@@ -2,15 +2,7 @@ from datetime import datetime
 from json import dumps
 from typing import Union
 from MCSL2Lib.networkController import Session
-from PyQt5.QtCore import (
-    QSize,
-    Qt,
-    QRect,
-    pyqtSignal,
-    QUrl,
-    QThread,
-    pyqtSlot
-)
+from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QUrl, QThread, pyqtSlot
 from PyQt5.QtGui import QColor, QDesktopServices
 from PyQt5.QtWidgets import (
     QWidget,
@@ -21,7 +13,7 @@ from PyQt5.QtWidgets import (
     QAbstractScrollArea,
     QHBoxLayout,
     QVBoxLayout,
-    QSlider
+    QSlider,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -40,15 +32,15 @@ from qfluentwidgets import (
     PushButton,
     MessageBox,
     InfoBarPosition,
-    InfoBar
+    InfoBar,
 )
-from MCSL2Lib.variables import _globalMCSL2Variables
+from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.settingsController import _settingsController
 from platform import (
     system as systemType,
     architecture as systemArchitecture,
     version as systemVersion,
-    release as systemRelease
+    release as systemRelease,
 )
 from os import getpid
 from psutil import Process
@@ -56,14 +48,15 @@ from pyperclip import copy
 
 settingsController = _settingsController()
 
-class _SettingsPage(QWidget):
-        
+
+class SettingsPage(QWidget):
+    """设置页"""
+
     settingsChanged = pyqtSignal(bool)
 
     def __init__(self):
-        
         super().__init__()
-        
+
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
         self.downloadSourceList = ["FastMirror", "MCSLAPI"]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
@@ -97,7 +90,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -107,7 +102,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.saveSettingsBtnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.saveSettingsBtnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.saveSettingsBtnWidget.setSizePolicy(sizePolicy)
         self.saveSettingsBtnWidget.setObjectName("saveSettingsBtnWidget")
 
@@ -128,18 +125,24 @@ class _SettingsPage(QWidget):
         self.settingsSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.settingsSmoothScrollArea.setFrameShadow(QFrame.Plain)
         self.settingsSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.settingsSmoothScrollArea.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.settingsSmoothScrollArea.setSizeAdjustPolicy(
+            QAbstractScrollArea.AdjustToContents
+        )
         self.settingsSmoothScrollArea.setWidgetResizable(True)
         self.settingsSmoothScrollArea.setObjectName("settingsSmoothScrollArea")
-        
+
         self.settingsScrollAreaWidgetContents = QWidget()
         self.settingsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 653, 1505))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.settingsScrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.settingsScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
+        )
         self.settingsScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.settingsScrollAreaWidgetContents.setObjectName("settingsScrollAreaWidgetContents")
+        self.settingsScrollAreaWidgetContents.setObjectName(
+            "settingsScrollAreaWidgetContents"
+        )
 
         self.verticalLayout = QVBoxLayout(self.settingsScrollAreaWidgetContents)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -149,7 +152,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverSettings.sizePolicy().hasHeightForWidth()
+        )
         self.serverSettings.setSizePolicy(sizePolicy)
         self.serverSettings.setMinimumSize(QSize(630, 200))
         self.serverSettings.setMaximumSize(QSize(16777215, 200))
@@ -162,7 +167,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoRunLastServer.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoRunLastServer.sizePolicy().hasHeightForWidth()
+        )
         self.autoRunLastServer.setSizePolicy(sizePolicy)
         self.autoRunLastServer.setObjectName("autoRunLastServer")
 
@@ -173,7 +180,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoRunLastServerTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoRunLastServerTitle.sizePolicy().hasHeightForWidth()
+        )
         self.autoRunLastServerTitle.setSizePolicy(sizePolicy)
         self.autoRunLastServerTitle.setObjectName("autoRunLastServerTitle")
 
@@ -184,7 +193,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoRunLastServerSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoRunLastServerSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.autoRunLastServerSwitchBtn.setSizePolicy(sizePolicy)
         self.autoRunLastServerSwitchBtn.setChecked(False)
         self.autoRunLastServerSwitchBtn.setObjectName("autoRunLastServerSwitchBtn")
@@ -199,7 +210,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.acceptAllMojangEula.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.acceptAllMojangEula.sizePolicy().hasHeightForWidth()
+        )
         self.acceptAllMojangEula.setSizePolicy(sizePolicy)
         self.acceptAllMojangEula.setObjectName("acceptAllMojangEula")
 
@@ -210,7 +223,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.acceptAllMojangEulaTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.acceptAllMojangEulaTitle.sizePolicy().hasHeightForWidth()
+        )
         self.acceptAllMojangEulaTitle.setSizePolicy(sizePolicy)
         self.acceptAllMojangEulaTitle.setObjectName("acceptAllMojangEulaTitle")
 
@@ -221,7 +236,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.acceptAllMojangEulaSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.acceptAllMojangEulaSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.acceptAllMojangEulaSwitchBtn.setSizePolicy(sizePolicy)
         self.acceptAllMojangEulaSwitchBtn.setObjectName("acceptAllMojangEulaSwitchBtn")
 
@@ -239,7 +256,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKillTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.sendStopInsteadOfKillTitle.sizePolicy().hasHeightForWidth()
+        )
         self.sendStopInsteadOfKillTitle.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKillTitle.setObjectName("sendStopInsteadOfKillTitle")
 
@@ -250,10 +269,14 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKillSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.sendStopInsteadOfKillSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.sendStopInsteadOfKillSwitchBtn.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKillSwitchBtn.setChecked(True)
-        self.sendStopInsteadOfKillSwitchBtn.setObjectName("sendStopInsteadOfKillSwitchBtn")
+        self.sendStopInsteadOfKillSwitchBtn.setObjectName(
+            "sendStopInsteadOfKillSwitchBtn"
+        )
 
         self.horizontalLayout_8.addWidget(self.sendStopInsteadOfKillSwitchBtn)
         self.gridLayout_7.addWidget(self.sendStopInsteadOfKill, 3, 0, 1, 4)
@@ -269,7 +292,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.configureSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.configureSettings.sizePolicy().hasHeightForWidth()
+        )
         self.configureSettings.setSizePolicy(sizePolicy)
         self.configureSettings.setMinimumSize(QSize(630, 150))
         self.configureSettings.setMaximumSize(QSize(16777215, 150))
@@ -282,31 +307,45 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.onlySaveGlobalServerConfig.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.onlySaveGlobalServerConfig.sizePolicy().hasHeightForWidth()
+        )
         self.onlySaveGlobalServerConfig.setSizePolicy(sizePolicy)
         self.onlySaveGlobalServerConfig.setObjectName("onlySaveGlobalServerConfig")
 
         self.horizontalLayout_63 = QHBoxLayout(self.onlySaveGlobalServerConfig)
         self.horizontalLayout_63.setObjectName("horizontalLayout_63")
 
-        self.onlySaveGlobalServerConfigTitle = BodyLabel(self.onlySaveGlobalServerConfig)
+        self.onlySaveGlobalServerConfigTitle = BodyLabel(
+            self.onlySaveGlobalServerConfig
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.onlySaveGlobalServerConfigTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.onlySaveGlobalServerConfigTitle.sizePolicy().hasHeightForWidth()
+        )
         self.onlySaveGlobalServerConfigTitle.setSizePolicy(sizePolicy)
-        self.onlySaveGlobalServerConfigTitle.setObjectName("onlySaveGlobalServerConfigTitle")
+        self.onlySaveGlobalServerConfigTitle.setObjectName(
+            "onlySaveGlobalServerConfigTitle"
+        )
 
         self.horizontalLayout_63.addWidget(self.onlySaveGlobalServerConfigTitle)
         spacerItem6 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_63.addItem(spacerItem6)
-        self.onlySaveGlobalServerConfigSwitchBtn = SwitchButton(self.onlySaveGlobalServerConfig)
+        self.onlySaveGlobalServerConfigSwitchBtn = SwitchButton(
+            self.onlySaveGlobalServerConfig
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.onlySaveGlobalServerConfigSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.onlySaveGlobalServerConfigSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.onlySaveGlobalServerConfigSwitchBtn.setSizePolicy(sizePolicy)
-        self.onlySaveGlobalServerConfigSwitchBtn.setObjectName("onlySaveGlobalServerConfigSwitchBtn")
+        self.onlySaveGlobalServerConfigSwitchBtn.setObjectName(
+            "onlySaveGlobalServerConfigSwitchBtn"
+        )
 
         self.horizontalLayout_63.addWidget(self.onlySaveGlobalServerConfigSwitchBtn)
         self.gridLayout_15.addWidget(self.onlySaveGlobalServerConfig, 3, 0, 1, 4)
@@ -327,7 +366,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.newServerType.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.newServerType.sizePolicy().hasHeightForWidth()
+        )
         self.newServerType.setSizePolicy(sizePolicy)
         self.newServerType.setObjectName("newServerType")
 
@@ -338,7 +379,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.newServerTypeTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.newServerTypeTitle.sizePolicy().hasHeightForWidth()
+        )
         self.newServerTypeTitle.setSizePolicy(sizePolicy)
         self.newServerTypeTitle.setObjectName("newServerTypeTitle")
 
@@ -355,7 +398,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadSettings.sizePolicy().hasHeightForWidth()
+        )
         self.downloadSettings.setSizePolicy(sizePolicy)
         self.downloadSettings.setMinimumSize(QSize(630, 245))
         self.downloadSettings.setMaximumSize(QSize(16777215, 245))
@@ -372,7 +417,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.alwaysAskSaveDirectory.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.alwaysAskSaveDirectory.sizePolicy().hasHeightForWidth()
+        )
         self.alwaysAskSaveDirectory.setSizePolicy(sizePolicy)
         self.alwaysAskSaveDirectory.setMinimumSize(QSize(0, 60))
         self.alwaysAskSaveDirectory.setMaximumSize(QSize(16777215, 60))
@@ -388,7 +435,9 @@ class _SettingsPage(QWidget):
 
         self.gridLayout_14.addWidget(self.alwaysAskSaveDirectoryInfo, 1, 0, 1, 1)
         self.alwaysAskSaveDirectoryCheckBox = CheckBox(self.alwaysAskSaveDirectory)
-        self.alwaysAskSaveDirectoryCheckBox.setObjectName("alwaysAskSaveDirectoryCheckBox")
+        self.alwaysAskSaveDirectoryCheckBox.setObjectName(
+            "alwaysAskSaveDirectoryCheckBox"
+        )
 
         self.gridLayout_14.addWidget(self.alwaysAskSaveDirectoryCheckBox, 0, 0, 1, 1)
         self.gridLayout_10.addWidget(self.alwaysAskSaveDirectory, 2, 0, 1, 4)
@@ -407,7 +456,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aria2ThreadTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aria2ThreadTitle.sizePolicy().hasHeightForWidth()
+        )
         self.aria2ThreadTitle.setSizePolicy(sizePolicy)
         self.aria2ThreadTitle.setObjectName("aria2ThreadTitle")
 
@@ -418,7 +469,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aria2ThreadSlider.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aria2ThreadSlider.sizePolicy().hasHeightForWidth()
+        )
         self.aria2ThreadSlider.setSizePolicy(sizePolicy)
         self.aria2ThreadSlider.setMaximumSize(QSize(16777215, 24))
         self.aria2ThreadSlider.setFocusPolicy(Qt.NoFocus)
@@ -448,7 +501,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.saveSameFileExceptionTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.saveSameFileExceptionTitle.sizePolicy().hasHeightForWidth()
+        )
         self.saveSameFileExceptionTitle.setSizePolicy(sizePolicy)
         self.saveSameFileExceptionTitle.setObjectName("saveSameFileExceptionTitle")
 
@@ -461,7 +516,9 @@ class _SettingsPage(QWidget):
 
         self.horizontalLayout_4.addWidget(self.saveSameFileExceptionToAsk)
         self.saveSameFileExceptionToOverwrite = RadioButton(self.saveSameFileException)
-        self.saveSameFileExceptionToOverwrite.setObjectName("saveSameFileExceptionToOverwrite")
+        self.saveSameFileExceptionToOverwrite.setObjectName(
+            "saveSameFileExceptionToOverwrite"
+        )
 
         self.horizontalLayout_4.addWidget(self.saveSameFileExceptionToOverwrite)
         self.saveSameFileExceptionToStop = RadioButton(self.saveSameFileException)
@@ -473,7 +530,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadSource.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadSource.sizePolicy().hasHeightForWidth()
+        )
         self.downloadSource.setSizePolicy(sizePolicy)
         self.downloadSource.setObjectName("downloadSource")
 
@@ -484,7 +543,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadSourceTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadSourceTitle.sizePolicy().hasHeightForWidth()
+        )
         self.downloadSourceTitle.setSizePolicy(sizePolicy)
         self.downloadSourceTitle.setObjectName("downloadSourceTitle")
 
@@ -510,7 +571,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.consoleSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.consoleSettings.sizePolicy().hasHeightForWidth()
+        )
         self.consoleSettings.setSizePolicy(sizePolicy)
         self.consoleSettings.setMinimumSize(QSize(630, 200))
         self.consoleSettings.setMaximumSize(QSize(16777215, 200))
@@ -536,7 +599,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.quickMenuTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.quickMenuTitle.sizePolicy().hasHeightForWidth()
+        )
         self.quickMenuTitle.setSizePolicy(sizePolicy)
         self.quickMenuTitle.setObjectName("quickMenuTitle")
 
@@ -547,7 +612,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.quickMenuSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.quickMenuSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.quickMenuSwitchBtn.setSizePolicy(sizePolicy)
         self.quickMenuSwitchBtn.setChecked(True)
         self.quickMenuSwitchBtn.setObjectName("quickMenuSwitchBtn")
@@ -575,7 +642,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.inputDeEncodingTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.inputDeEncodingTitle.sizePolicy().hasHeightForWidth()
+        )
         self.inputDeEncodingTitle.setSizePolicy(sizePolicy)
         self.inputDeEncodingTitle.setObjectName("inputDeEncodingTitle")
 
@@ -591,7 +660,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.outputDeEncoding.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.outputDeEncoding.sizePolicy().hasHeightForWidth()
+        )
         self.outputDeEncoding.setSizePolicy(sizePolicy)
         self.outputDeEncoding.setObjectName("outputDeEncoding")
 
@@ -602,7 +673,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.outputDeEncodingTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.outputDeEncodingTitle.sizePolicy().hasHeightForWidth()
+        )
         self.outputDeEncodingTitle.setSizePolicy(sizePolicy)
         self.outputDeEncodingTitle.setObjectName("outputDeEncodingTitle")
 
@@ -619,7 +692,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.softwareSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.softwareSettings.sizePolicy().hasHeightForWidth()
+        )
         self.softwareSettings.setSizePolicy(sizePolicy)
         self.softwareSettings.setMinimumSize(QSize(630, 250))
         self.softwareSettings.setMaximumSize(QSize(16777215, 250))
@@ -634,7 +709,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.startOnStartup.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.startOnStartup.sizePolicy().hasHeightForWidth()
+        )
         self.startOnStartup.setSizePolicy(sizePolicy)
         self.startOnStartup.setObjectName("startOnStartup")
 
@@ -645,7 +722,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.startOnStartupTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.startOnStartupTitle.sizePolicy().hasHeightForWidth()
+        )
         self.startOnStartupTitle.setSizePolicy(sizePolicy)
         self.startOnStartupTitle.setObjectName("startOnStartupTitle")
 
@@ -656,7 +735,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.startOnStartupSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.startOnStartupSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.startOnStartupSwitchBtn.setSizePolicy(sizePolicy)
         self.startOnStartupSwitchBtn.setObjectName("startOnStartupSwitchBtn")
 
@@ -710,14 +791,21 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.themeColorTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.themeColorTitle.sizePolicy().hasHeightForWidth()
+        )
         self.themeColorTitle.setSizePolicy(sizePolicy)
         self.themeColorTitle.setObjectName("themeColorTitle")
 
         self.horizontalLayout_14.addWidget(self.themeColorTitle)
         spacerItem21 = QSpacerItem(449, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem21)
-        self.selectThemeColorBtn = ColorPickerButton(QColor(str(settingsController.fileSettings['themeColor'])), "主题颜色", self.themeColor, enableAlpha=False)
+        self.selectThemeColorBtn = ColorPickerButton(
+            QColor(str(settingsController.fileSettings["themeColor"])),
+            "主题颜色",
+            self.themeColor,
+            enableAlpha=False,
+        )
         self.selectThemeColorBtn.setObjectName("selectThemeColorBtn")
 
         self.horizontalLayout_14.addWidget(self.selectThemeColorBtn)
@@ -732,20 +820,30 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.alwaysRunAsAdministratorTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.alwaysRunAsAdministratorTitle.sizePolicy().hasHeightForWidth()
+        )
         self.alwaysRunAsAdministratorTitle.setSizePolicy(sizePolicy)
-        self.alwaysRunAsAdministratorTitle.setObjectName("alwaysRunAsAdministratorTitle")
+        self.alwaysRunAsAdministratorTitle.setObjectName(
+            "alwaysRunAsAdministratorTitle"
+        )
 
         self.horizontalLayout_15.addWidget(self.alwaysRunAsAdministratorTitle)
         spacerItem22 = QSpacerItem(355, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_15.addItem(spacerItem22)
-        self.alwaysRunAsAdministratorSwitchBtn = SwitchButton(self.alwaysRunAsAdministrator)
+        self.alwaysRunAsAdministratorSwitchBtn = SwitchButton(
+            self.alwaysRunAsAdministrator
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.alwaysRunAsAdministratorSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.alwaysRunAsAdministratorSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.alwaysRunAsAdministratorSwitchBtn.setSizePolicy(sizePolicy)
-        self.alwaysRunAsAdministratorSwitchBtn.setObjectName("alwaysRunAsAdministratorSwitchBtn")
+        self.alwaysRunAsAdministratorSwitchBtn.setObjectName(
+            "alwaysRunAsAdministratorSwitchBtn"
+        )
 
         self.horizontalLayout_15.addWidget(self.alwaysRunAsAdministratorSwitchBtn)
         self.gridLayout_13.addWidget(self.alwaysRunAsAdministrator, 4, 1, 1, 3)
@@ -754,7 +852,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.updateSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.updateSettings.sizePolicy().hasHeightForWidth()
+        )
         self.updateSettings.setSizePolicy(sizePolicy)
         self.updateSettings.setMinimumSize(QSize(630, 150))
         self.updateSettings.setMaximumSize(QSize(16777215, 150))
@@ -778,7 +878,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.currentVerTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.currentVerTitle.sizePolicy().hasHeightForWidth()
+        )
         self.currentVerTitle.setSizePolicy(sizePolicy)
         self.currentVerTitle.setObjectName("currentVerTitle")
 
@@ -787,7 +889,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.currentVerLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.currentVerLabel.sizePolicy().hasHeightForWidth()
+        )
         self.currentVerLabel.setSizePolicy(sizePolicy)
         self.currentVerLabel.setObjectName("currentVerLabel")
 
@@ -803,7 +907,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.checkUpdateOnStart.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.checkUpdateOnStart.sizePolicy().hasHeightForWidth()
+        )
         self.checkUpdateOnStart.setSizePolicy(sizePolicy)
         self.checkUpdateOnStart.setObjectName("checkUpdateOnStart")
 
@@ -820,7 +926,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.checkUpdateOnStartSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.checkUpdateOnStartSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.checkUpdateOnStartSwitchBtn.setSizePolicy(sizePolicy)
         self.checkUpdateOnStartSwitchBtn.setObjectName("checkUpdateOnStartSwitchBtn")
 
@@ -859,7 +967,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aboutContentWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aboutContentWidget.sizePolicy().hasHeightForWidth()
+        )
         self.aboutContentWidget.setSizePolicy(sizePolicy)
         self.aboutContentWidget.setObjectName("aboutContentWidget")
 
@@ -870,7 +980,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openSourceCodeRepo.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openSourceCodeRepo.sizePolicy().hasHeightForWidth()
+        )
         self.openSourceCodeRepo.setSizePolicy(sizePolicy)
         self.openSourceCodeRepo.setObjectName("openSourceCodeRepo")
 
@@ -879,10 +991,12 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.generateSysReport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.generateSysReport.sizePolicy().hasHeightForWidth()
+        )
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
-        
+
         self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
         self.joinQQGroup = HyperlinkButton(self.aboutContentWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -899,7 +1013,9 @@ class _SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openOfficialWeb.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openOfficialWeb.sizePolicy().hasHeightForWidth()
+        )
         self.openOfficialWeb.setSizePolicy(sizePolicy)
         self.openOfficialWeb.setObjectName("openOfficialWeb")
 
@@ -976,7 +1092,7 @@ class _SettingsPage(QWidget):
         self.alwaysRunAsAdministratorSwitchBtn.setOnText("已开启")
         self.alwaysRunAsAdministratorSwitchBtn.setOffText("已关闭")
         self.currentVerTitle.setText("当前版本：")
-        self.currentVerLabel.setText(_globalMCSL2Variables.MCSL2Version)
+        self.currentVerLabel.setText(GlobalMCSL2Variables.MCSL2Version)
         self.checkUpdateBtn.setText("检查更新")
         self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
         self.checkUpdateOnStartSwitchBtn.setText("已关闭")
@@ -987,22 +1103,28 @@ class _SettingsPage(QWidget):
         self.generateSysReport.setText("系统报告")
         self.joinQQGroup.setText("加入官方群聊")
         self.openOfficialWeb.setText("打开官网")
-        self.aboutContent.setText("MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
-                                 "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
-                                 "但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n"
-                                 "明显辨识度。\n"
-                                 "\n"
-                                 "Copyright ©MCSL Team. All right reserved.\n"
-                                 "")
+        self.aboutContent.setText(
+            "MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
+            "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
+            "但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n"
+            "明显辨识度。\n"
+            "\n"
+            "Copyright ©MCSL Team. All right reserved.\n"
+            ""
+        )
         self.aboutTitle.setText("关于")
         self.aria2ThreadSlider.setValue(8)
-        self.settingsSmoothScrollArea.viewport().setStyleSheet(_globalMCSL2Variables.scrollAreaViewportQss)
+        self.settingsSmoothScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
         self.newServerTypeComboBox.addItems(["初始（简易+进阶+导入）", "简易模式", "进阶模式", "导入"])
         self.newServerTypeComboBox.setCurrentIndex(0)
         self.downloadSourceComboBox.addItems(["FastMirror", "MCSLAPI"])
         self.downloadSourceComboBox.setCurrentIndex(0)
         self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
-        self.aria2ThreadSlider.valueChanged.connect(lambda: self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value())))
+        self.aria2ThreadSlider.valueChanged.connect(
+            lambda: self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
+        )
         self.outputDeEncodingComboBox.addItems(["UTF-8", "GBK"])
         self.outputDeEncodingComboBox.setCurrentIndex(0)
         self.inputDeEncodingComboBox.addItems(["跟随控制台输出", "UTF-8", "GBK"])
@@ -1012,12 +1134,18 @@ class _SettingsPage(QWidget):
         self.giveUpBtn.setText("放弃")
         self.themeComboBox.setCurrentIndex(0)
         self.saveSettingsBtnWidget.setVisible(False)
-        
+
         self.checkUpdateBtn.clicked.connect(self.checkUpdate)
-        
-        self.joinQQGroup.clicked.connect(lambda: self.openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ"))
-        self.openOfficialWeb.clicked.connect(lambda: self.openWebUrl("https://mcsl.com.cn"))
-        self.openSourceCodeRepo.clicked.connect(lambda: self.openWebUrl("https://www.github.com/MCSLTeam/MCSL2"))
+
+        self.joinQQGroup.clicked.connect(
+            lambda: self.openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ")
+        )
+        self.openOfficialWeb.clicked.connect(
+            lambda: self.openWebUrl("https://mcsl.com.cn")
+        )
+        self.openSourceCodeRepo.clicked.connect(
+            lambda: self.openWebUrl("https://www.github.com/MCSLTeam/MCSL2")
+        )
         self.generateSysReport.clicked.connect(self.generateSystemReport)
 
         self.settingsChanged.connect(self.saveSettingsBtnWidget.setVisible)
@@ -1025,51 +1153,144 @@ class _SettingsPage(QWidget):
         self.giveUpBtn.clicked.connect(self.giveUpSettings)
 
         # serverSettings
-        self.autoRunLastServerSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("autoRunLastServer", self.autoRunLastServerSwitchBtn.isChecked()))
-        self.acceptAllMojangEulaSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("acceptAllMojangEula", self.acceptAllMojangEulaSwitchBtn.isChecked()))
-        self.sendStopInsteadOfKillSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("sendStopInsteadOfKill", self.sendStopInsteadOfKillSwitchBtn.isChecked()))
+        self.autoRunLastServerSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "autoRunLastServer", self.autoRunLastServerSwitchBtn.isChecked()
+            )
+        )
+        self.acceptAllMojangEulaSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "acceptAllMojangEula", self.acceptAllMojangEulaSwitchBtn.isChecked()
+            )
+        )
+        self.sendStopInsteadOfKillSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "sendStopInsteadOfKill", self.sendStopInsteadOfKillSwitchBtn.isChecked()
+            )
+        )
 
         # configureSettings
-        self.newServerTypeComboBox.currentIndexChanged.connect(lambda: self.changeSettings("newServerType", self.newServerTypeList[self.newServerTypeComboBox.currentIndex()]))
-        self.onlySaveGlobalServerConfigSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("onlySaveGlobalServerConfig", self.onlySaveGlobalServerConfigSwitchBtn.isChecked()))
+        self.newServerTypeComboBox.currentIndexChanged.connect(
+            lambda: self.changeSettings(
+                "newServerType",
+                self.newServerTypeList[self.newServerTypeComboBox.currentIndex()],
+            )
+        )
+        self.onlySaveGlobalServerConfigSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "onlySaveGlobalServerConfig",
+                self.onlySaveGlobalServerConfigSwitchBtn.isChecked(),
+            )
+        )
 
         # downloadSettings
-        self.downloadSourceComboBox.currentIndexChanged.connect(lambda: self.changeSettings("downloadSource", self.downloadSourceList[self.downloadSourceComboBox.currentIndex()]))
-        self.alwaysAskSaveDirectoryCheckBox.clicked.connect(lambda: self.changeSettings("alwaysAskSaveDirectory", self.alwaysAskSaveDirectoryCheckBox.isChecked()))
-        self.aria2ThreadSlider.valueChanged.connect(lambda: self.changeSettings("aria2Thread", self.aria2ThreadSlider.value()))
-        self.saveSameFileExceptionToAsk.clicked.connect(lambda: self.changeSettings("saveSameFileException", self.saveSameFileExceptionList[0]))
-        self.saveSameFileExceptionToOverwrite.clicked.connect(lambda: self.changeSettings("saveSameFileException", self.saveSameFileExceptionList[1]))
-        self.saveSameFileExceptionToStop.clicked.connect(lambda: self.changeSettings("saveSameFileException", self.saveSameFileExceptionList[2]))
+        self.downloadSourceComboBox.currentIndexChanged.connect(
+            lambda: self.changeSettings(
+                "downloadSource",
+                self.downloadSourceList[self.downloadSourceComboBox.currentIndex()],
+            )
+        )
+        self.alwaysAskSaveDirectoryCheckBox.clicked.connect(
+            lambda: self.changeSettings(
+                "alwaysAskSaveDirectory",
+                self.alwaysAskSaveDirectoryCheckBox.isChecked(),
+            )
+        )
+        self.aria2ThreadSlider.valueChanged.connect(
+            lambda: self.changeSettings("aria2Thread", self.aria2ThreadSlider.value())
+        )
+        self.saveSameFileExceptionToAsk.clicked.connect(
+            lambda: self.changeSettings(
+                "saveSameFileException", self.saveSameFileExceptionList[0]
+            )
+        )
+        self.saveSameFileExceptionToOverwrite.clicked.connect(
+            lambda: self.changeSettings(
+                "saveSameFileException", self.saveSameFileExceptionList[1]
+            )
+        )
+        self.saveSameFileExceptionToStop.clicked.connect(
+            lambda: self.changeSettings(
+                "saveSameFileException", self.saveSameFileExceptionList[2]
+            )
+        )
 
         # consoleSettings
-        self.outputDeEncodingComboBox.currentIndexChanged.connect(lambda: self.changeSettings("outputDeEncoding", self.outputDeEncodingList[self.outputDeEncodingComboBox.currentIndex()]))
-        self.inputDeEncodingComboBox.currentIndexChanged.connect(lambda: self.changeSettings("inputDeEncoding", self.inputDeEncodingList[self.inputDeEncodingComboBox.currentIndex()]))
-        self.quickMenuSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("quickMenu", self.quickMenuSwitchBtn.isChecked()))
+        self.outputDeEncodingComboBox.currentIndexChanged.connect(
+            lambda: self.changeSettings(
+                "outputDeEncoding",
+                self.outputDeEncodingList[self.outputDeEncodingComboBox.currentIndex()],
+            )
+        )
+        self.inputDeEncodingComboBox.currentIndexChanged.connect(
+            lambda: self.changeSettings(
+                "inputDeEncoding",
+                self.inputDeEncodingList[self.inputDeEncodingComboBox.currentIndex()],
+            )
+        )
+        self.quickMenuSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "quickMenu", self.quickMenuSwitchBtn.isChecked()
+            )
+        )
 
         # softwareSettings
-        self.themeComboBox.currentIndexChanged.connect(lambda: self.changeSettings("theme", self.themeList[self.themeComboBox.currentIndex()]))
-        self.selectThemeColorBtn.colorChanged.connect(lambda: self.changeSettings("themeColor", str(self.selectThemeColorBtn.color.name())))
-        self.alwaysRunAsAdministratorSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("alwaysRunAsAdministrator", self.alwaysRunAsAdministratorSwitchBtn.isChecked()))
-        self.startOnStartupSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("startOnStartup", self.startOnStartupSwitchBtn.isChecked()))
+        self.themeComboBox.currentIndexChanged.connect(
+            lambda: self.changeSettings(
+                "theme", self.themeList[self.themeComboBox.currentIndex()]
+            )
+        )
+        self.selectThemeColorBtn.colorChanged.connect(
+            lambda: self.changeSettings(
+                "themeColor", str(self.selectThemeColorBtn.color.name())
+            )
+        )
+        self.alwaysRunAsAdministratorSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "alwaysRunAsAdministrator",
+                self.alwaysRunAsAdministratorSwitchBtn.isChecked(),
+            )
+        )
+        self.startOnStartupSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "startOnStartup", self.startOnStartupSwitchBtn.isChecked()
+            )
+        )
 
         # updateSettings
-        self.checkUpdateOnStartSwitchBtn.checkedChanged.connect(lambda: self.changeSettings("checkUpdateOnStart", self.checkUpdateOnStartSwitchBtn.isChecked()))
+        self.checkUpdateOnStartSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "checkUpdateOnStart", self.checkUpdateOnStartSwitchBtn.isChecked()
+            )
+        )
 
         self.refreshSettingsInterface()
 
     def readSettings(self, firstLoad):
+        """
+        (此处为了保证拓展性而移植)\n
+        重新将文件中的配置强制覆盖到程序中，不管是否保存了
+        """
         settingsController._readSettings(firstLoad)
 
     def changeSettings(self, Setting: str, Status: Union[bool, str, int]):
+        """
+        更改设置触发器。\n
+        会将更改后的设置临时保存但不写入文件
+        """
         settingsController.unSavedSettings.update({Setting: Status})
-        self.settingsChanged.emit(settingsController.unSavedSettings != settingsController.fileSettings)
+        self.settingsChanged.emit(
+            settingsController.unSavedSettings != settingsController.fileSettings
+        )
 
     def giveUpSettings(self):
+        """放弃所有未保存的设置"""
         self.refreshSettingsInterface()
         settingsController.unSavedSettings = settingsController.fileSettings
         self.settingsChanged.emit(False)
-        
+
     def saveSettings(self):
+        """保存设置"""
         settingsController.fileSettings.update(settingsController.unSavedSettings)
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
             writeConfig.write(dumps(settingsController.fileSettings, indent=4))
@@ -1078,70 +1299,115 @@ class _SettingsPage(QWidget):
         self.settingsChanged.emit(False)
 
     def refreshSettingsInterface(self):
-
+        """刷新设置页"""
         self.readSettings(firstLoad=False)
-        
+
         # serverSettings
-        self.autoRunLastServerSwitchBtn.setChecked(settingsController.fileSettings['autoRunLastServer'])
-        self.acceptAllMojangEulaSwitchBtn.setChecked(settingsController.fileSettings['acceptAllMojangEula'])
-        self.sendStopInsteadOfKillSwitchBtn.setChecked(settingsController.fileSettings['sendStopInsteadOfKill'])
+        self.autoRunLastServerSwitchBtn.setChecked(
+            settingsController.fileSettings["autoRunLastServer"]
+        )
+        self.acceptAllMojangEulaSwitchBtn.setChecked(
+            settingsController.fileSettings["acceptAllMojangEula"]
+        )
+        self.sendStopInsteadOfKillSwitchBtn.setChecked(
+            settingsController.fileSettings["sendStopInsteadOfKill"]
+        )
 
         # configureSettings
-        self.newServerTypeComboBox.setCurrentIndex(self.newServerTypeList.index(settingsController.fileSettings['newServerType']))
-        self.onlySaveGlobalServerConfigSwitchBtn.setChecked(settingsController.fileSettings['onlySaveGlobalServerConfig'])
+        self.newServerTypeComboBox.setCurrentIndex(
+            self.newServerTypeList.index(
+                settingsController.fileSettings["newServerType"]
+            )
+        )
+        self.onlySaveGlobalServerConfigSwitchBtn.setChecked(
+            settingsController.fileSettings["onlySaveGlobalServerConfig"]
+        )
 
         # downloadSettings
-        self.downloadSourceComboBox.setCurrentIndex(self.downloadSourceList.index(settingsController.fileSettings['downloadSource']))
-        self.alwaysAskSaveDirectoryCheckBox.setChecked(settingsController.fileSettings['alwaysAskSaveDirectory'])
-        self.aria2ThreadSlider.setValue(settingsController.fileSettings['aria2Thread'])
-        self.saveSameFileExceptionRadioBtnList = [self.saveSameFileExceptionToAsk, self.saveSameFileExceptionToOverwrite, self.saveSameFileExceptionToStop]
-        self.saveSameFileExceptionRadioBtnList[self.saveSameFileExceptionList.index(settingsController.fileSettings['saveSameFileException'])].setChecked(True)
+        self.downloadSourceComboBox.setCurrentIndex(
+            self.downloadSourceList.index(
+                settingsController.fileSettings["downloadSource"]
+            )
+        )
+        self.alwaysAskSaveDirectoryCheckBox.setChecked(
+            settingsController.fileSettings["alwaysAskSaveDirectory"]
+        )
+        self.aria2ThreadSlider.setValue(settingsController.fileSettings["aria2Thread"])
+        self.saveSameFileExceptionRadioBtnList = [
+            self.saveSameFileExceptionToAsk,
+            self.saveSameFileExceptionToOverwrite,
+            self.saveSameFileExceptionToStop,
+        ]
+        self.saveSameFileExceptionRadioBtnList[
+            self.saveSameFileExceptionList.index(
+                settingsController.fileSettings["saveSameFileException"]
+            )
+        ].setChecked(True)
 
         # consoleSettings
-        self.outputDeEncodingComboBox.setCurrentIndex(self.outputDeEncodingList.index(settingsController.fileSettings['outputDeEncoding']))
-        self.inputDeEncodingComboBox.setCurrentIndex(self.inputDeEncodingList.index(settingsController.fileSettings['inputDeEncoding']))
-        self.quickMenuSwitchBtn.setChecked(settingsController.fileSettings['quickMenu'])
+        self.outputDeEncodingComboBox.setCurrentIndex(
+            self.outputDeEncodingList.index(
+                settingsController.fileSettings["outputDeEncoding"]
+            )
+        )
+        self.inputDeEncodingComboBox.setCurrentIndex(
+            self.inputDeEncodingList.index(
+                settingsController.fileSettings["inputDeEncoding"]
+            )
+        )
+        self.quickMenuSwitchBtn.setChecked(settingsController.fileSettings["quickMenu"])
 
         # softwareSettings
-        self.themeComboBox.setCurrentIndex(self.themeList.index(settingsController.fileSettings['theme']))
-        self.selectThemeColorBtn.setColor(settingsController.fileSettings['themeColor'])
-        self.alwaysRunAsAdministratorSwitchBtn.setChecked(settingsController.fileSettings['alwaysRunAsAdministrator'])
-        self.startOnStartupSwitchBtn.setChecked(settingsController.fileSettings['startOnStartup'])
+        self.themeComboBox.setCurrentIndex(
+            self.themeList.index(settingsController.fileSettings["theme"])
+        )
+        self.selectThemeColorBtn.setColor(settingsController.fileSettings["themeColor"])
+        self.alwaysRunAsAdministratorSwitchBtn.setChecked(
+            settingsController.fileSettings["alwaysRunAsAdministrator"]
+        )
+        self.startOnStartupSwitchBtn.setChecked(
+            settingsController.fileSettings["startOnStartup"]
+        )
 
         # updateSettings
-        self.checkUpdateOnStartSwitchBtn.setChecked(settingsController.fileSettings['checkUpdateOnStart'])
+        self.checkUpdateOnStartSwitchBtn.setChecked(
+            settingsController.fileSettings["checkUpdateOnStart"]
+        )
 
     def openWebUrl(self, Url):
+        """打开网址"""
         QDesktopServices.openUrl(QUrl(Url))
 
     def checkUpdate(self):
-        '''
-        返回：
-        1.是否需要更新
-            1为需要
-            0为不需要
-            -1出错
-        2.新版更新链接
-        3.新版更新介绍
-        '''
-        self.checkUpdateBtn.setEnabled(False) # 防止爆炸
+        """
+        检查更新触发器\n
+        返回：\n
+        1.是否需要更新\n
+            1为需要\n
+            0为不需要\n
+            -1出错\n
+        2.新版更新链接\n
+        3.新版更新介绍\n
+        """
+        self.checkUpdateBtn.setEnabled(False)  # 防止爆炸
         InfoBar.info(
-                title='开始检查更新...',
-                content="",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=1500,
-                parent=self
-            )
+            title="开始检查更新...",
+            content="",
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=1500,
+            parent=self,
+        )
         self.thread_checkUpdate = CheckUpdateThread(self)
         self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
         self.thread_checkUpdate.start()
-    
+
     @pyqtSlot(list)
     def showUpdateMsg(self, latestVerInfo):
+        """如果需要更新，显示弹窗；不需要则弹出提示"""
         if latestVerInfo[0] == "true":  # 需要更新
-            title = f'有新版本：{latestVerInfo[4]}'
+            title = f"有新版本：{latestVerInfo[4]}"
             w = MessageBox(title, "更新介绍加载中...", self)
             w.contentLabel.setTextFormat(Qt.MarkdownText)
             w.yesButton.setText("更新")
@@ -1149,71 +1415,80 @@ class _SettingsPage(QWidget):
             self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
             self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
             self.thread_fetchUpdateIntro.start()
-            if w.exec(): #确定， latestVerInfo[3]为下载链接
+            if w.exec():  # 确定， latestVerInfo[3]为下载链接
                 pass
-            else: # 取消
+            else:  # 取消
                 pass
 
         elif latestVerInfo[0] == "false":  # 已是最新版
             InfoBar.success(
-                title='无需更新',
+                title="无需更新",
                 content="已是最新版本",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
                 duration=2500,
-                parent=self
+                parent=self,
             )
         else:
             InfoBar.error(
-                    title='检查更新失败',
-                    content="尝试自己检查一下网络？",
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP_RIGHT,
-                    duration=2500,
-                    parent=self
-                )
-        
-        self.checkUpdateBtn.setEnabled(True)
-
-    def generateSystemReport(self):
-        InfoBar.info(
-                title='开始生成系统报告...',
-                content="",
+                title="检查更新失败",
+                content="尝试自己检查一下网络？",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
-                duration=1500,
-                parent=self
+                duration=2500,
+                parent=self,
             )
-        report = f"MCSL2系统报告：\n" \
-                 f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n" \
-                 f"MCSL2版本：{_globalMCSL2Variables.MCSL2Version}\n" \
-                 f"操作系统：{systemType()}{systemRelease()} {systemVersion()}\n" \
-                 f"架构：{systemArchitecture()[0]}\n" \
-                 f"内存占用：{str(Process(getpid()).memory_full_info().uss / 1024 / 1024)}MB"
-        
+
+        self.checkUpdateBtn.setEnabled(True)
+
+    def generateSystemReport(self):
+        """创建系统报告"""
+        InfoBar.info(
+            title="开始生成系统报告...",
+            content="",
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=1500,
+            parent=self,
+        )
+        report = (
+            f"MCSL2系统报告：\n"
+            f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n"
+            f"MCSL2版本：{GlobalMCSL2Variables.MCSL2Version}\n"
+            f"操作系统：{systemType()}{systemRelease()} {systemVersion()}\n"
+            f"架构：{systemArchitecture()[0]}\n"
+            f"内存占用：{str(Process(getpid()).memory_full_info().uss / 1024 / 1024)}MB"
+        )
+
         title = "MC Server Launcher 2系统报告"
-        w = MessageBox(title, f"{report}\n----------------------------\n点击复制按钮以复制到剪贴板。", self)
+        w = MessageBox(
+            title, f"{report}\n----------------------------\n点击复制按钮以复制到剪贴板。", self
+        )
         w.yesButton.setText("复制")
         w.cancelButton.setText("关闭")
-        if w.exec(): #确定
+        if w.exec():  # 确定
             copy(report)
             InfoBar.success(
-                title='成功',
+                title="成功",
                 content="已复制到剪贴板",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
                 duration=2500,
-                parent=self
+                parent=self,
             )
-        else: # 取消
+        else:  # 取消
             pass
-    
-# 使用多线程防止假死
+
+
 class CheckUpdateThread(QThread):
+    """
+    检查更新的网络连接线程\n
+    使用多线程防止假死
+    """
 
     isUpdate = pyqtSignal(list)
 
@@ -1223,12 +1498,19 @@ class CheckUpdateThread(QThread):
 
     def run(self):
         try:
-            latestVerInfo = Session.get(f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={_globalMCSL2Variables.MCSL2Version}").text.split("|")
+            latestVerInfo = Session.get(
+                f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={GlobalMCSL2Variables.MCSL2Version}"
+            ).text.split("|")
             self.isUpdate.emit(latestVerInfo)
         except Exception as e:
             self.isUpdate.emit(["Failed"])
 
+
 class FetchUpdateIntroThread(QThread):
+    """
+    获取更新介绍的网络连接线程\n
+    使用多线程防止假死
+    """
 
     content = pyqtSignal(str)
 

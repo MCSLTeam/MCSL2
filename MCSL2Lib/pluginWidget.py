@@ -1,10 +1,4 @@
-from PyQt5.QtWidgets import (
-    QWidget,
-    QSizePolicy,
-    QVBoxLayout,
-    QHBoxLayout,
-    QSpacerItem
-)
+from PyQt5.QtWidgets import QWidget, QSizePolicy, QVBoxLayout, QHBoxLayout, QSpacerItem
 from PyQt5.QtCore import QSize
 
 from qfluentwidgets import (
@@ -13,13 +7,14 @@ from qfluentwidgets import (
     PixmapLabel,
     StrongBodyLabel,
     SwitchButton,
-    TransparentToolButton
+    TransparentToolButton,
 )
 
 
 class singlePluginWidget(CardWidget):
-    def __init__(self):
+    """单独的插件Widget模板"""
 
+    def __init__(self):
         super().__init__()
 
         self.setObjectName("singlePluginWidget")
@@ -52,7 +47,9 @@ class singlePluginWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pluginInfoWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.pluginInfoWidget.sizePolicy().hasHeightForWidth()
+        )
         self.pluginInfoWidget.setSizePolicy(sizePolicy)
         self.pluginInfoWidget.setMinimumSize(QSize(0, 75))
         self.pluginInfoWidget.setMaximumSize(QSize(16777215, 75))
@@ -74,7 +71,9 @@ class singlePluginWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pluginMoreInfo.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.pluginMoreInfo.sizePolicy().hasHeightForWidth()
+        )
         self.pluginMoreInfo.setSizePolicy(sizePolicy)
         self.pluginMoreInfo.setObjectName("pluginMoreInfo")
 

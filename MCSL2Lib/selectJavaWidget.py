@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
     QFrame,
     QLayout,
     QHBoxLayout,
-    QSpacerItem
+    QSpacerItem,
 )
 from qfluentwidgets import (
     CardWidget,
@@ -15,15 +15,16 @@ from qfluentwidgets import (
     PixmapLabel,
     PrimaryPushButton,
     BodyLabel,
-    TextEdit
+    TextEdit,
 )
 
 
 class singleSelectJavaWidget(CardWidget):
-    def __init__(self):
+    """单独的选择Java的Widget模板"""
 
+    def __init__(self):
         super().__init__()
-        
+
         self.setMinimumSize(QSize(640, 160))
         self.setMaximumSize(QSize(16777215, 16777215))
 
@@ -34,18 +35,21 @@ class singleSelectJavaWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.finishSelectJavaBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.finishSelectJavaBtn.sizePolicy().hasHeightForWidth()
+        )
         self.finishSelectJavaBtn.setSizePolicy(sizePolicy)
         self.finishSelectJavaBtn.setMinimumSize(QSize(0, 50))
         self.finishSelectJavaBtn.setMaximumSize(QSize(16777215, 16777215))
-        # self.finishSelectJavaBtn.setObjectName("finishSelectJavaBtn") 到别的地方写
 
         self.gridLayout.addWidget(self.finishSelectJavaBtn, 0, 3, 3, 1)
         self.javaPixmapLabel = PixmapLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPixmapLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPixmapLabel.sizePolicy().hasHeightForWidth()
+        )
         self.javaPixmapLabel.setSizePolicy(sizePolicy)
         self.javaPixmapLabel.setObjectName("javaPixmapLabel")
 
@@ -56,7 +60,9 @@ class singleSelectJavaWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaVerWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaVerWidget.sizePolicy().hasHeightForWidth()
+        )
         self.javaVerWidget.setSizePolicy(sizePolicy)
         self.javaVerWidget.setMinimumSize(QSize(480, 50))
         self.javaVerWidget.setMaximumSize(QSize(16777215, 50))
@@ -84,7 +90,9 @@ class singleSelectJavaWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPathWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPathWidget.sizePolicy().hasHeightForWidth()
+        )
         self.javaPathWidget.setSizePolicy(sizePolicy)
         self.javaPathWidget.setMinimumSize(QSize(480, 82))
         self.javaPathWidget.setObjectName("javaPathWidget")
@@ -97,7 +105,9 @@ class singleSelectJavaWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPathTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPathTitle.sizePolicy().hasHeightForWidth()
+        )
         self.javaPathTitle.setSizePolicy(sizePolicy)
         self.javaPathTitle.setObjectName("javaPathTitle")
 
@@ -115,11 +125,11 @@ class singleSelectJavaWidget(CardWidget):
         self.javaPath.setFrameShadow(QFrame.Sunken)
         self.javaPath.setReadOnly(True)
         self.javaPath.setObjectName("javaPath")
-        
+
         self.gridLayout_2.addWidget(self.javaPath, 1, 1, 2, 1)
         self.gridLayout.addWidget(self.javaPathWidget, 1, 2, 1, 1)
         self.finishSelectJavaBtn.setText("选择")
         self.javaVerTitle.setText("Java版本:")
         self.javaPathTitle.setText("Java路径:")
-        self.javaPixmapLabel.setPixmap(QPixmap(':/build-InIcons/Java.svg'))
+        self.javaPixmapLabel.setPixmap(QPixmap(":/build-InIcons/Java.svg"))
         self.javaPixmapLabel.setFixedSize(QSize(50, 50))

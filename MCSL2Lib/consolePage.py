@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QSizePolicy,
-    QFrame
+    QFrame,
 )
 from qfluentwidgets import (
     CardWidget,
@@ -17,12 +17,14 @@ from qfluentwidgets import (
     StrongBodyLabel,
     TitleLabel,
     TransparentPushButton,
-    FluentIcon as FIF
+    FluentIcon as FIF,
 )
 
-class _ConsolePage(QWidget):
+
+class ConsolePage(QWidget):
+    """终端页"""
+
     def __init__(self):
-        
         super().__init__()
 
         self.gridLayout = QGridLayout(self)
@@ -32,7 +34,9 @@ class _ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverMemCardWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverMemCardWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverMemCardWidget.setSizePolicy(sizePolicy)
         self.serverMemCardWidget.setMinimumSize(QSize(130, 120))
         self.serverMemCardWidget.setMaximumSize(QSize(130, 120))
@@ -60,7 +64,9 @@ class _ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverCPUCardWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverCPUCardWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverCPUCardWidget.setSizePolicy(sizePolicy)
         self.serverCPUCardWidget.setMinimumSize(QSize(130, 120))
         self.serverCPUCardWidget.setMaximumSize(QSize(130, 120))
@@ -98,7 +104,9 @@ class _ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")

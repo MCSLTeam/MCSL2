@@ -11,10 +11,11 @@ class _settingsController:
             return cls._judge
 
     def __init__(self):
-        self.fileSettings = {}
-        self.unSavedSettings = {}
+        self.fileSettings = {} # 文件中的原始配置
+        self.unSavedSettings = {} # 更改后的配置
 
     def _readSettings(self, firstLoad):
+        '''重新将文件中的配置强制覆盖到程序中，不管是否保存了'''
         if ospath.exists(r"./MCSL2/MCSL2_Config.json"):
             if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
                 with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as readConfig:
