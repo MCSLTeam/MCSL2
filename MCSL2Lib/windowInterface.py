@@ -130,6 +130,10 @@ class Window(FramelessWindow):
         # 初始化窗口
         self.initWindow()
 
+        # 读取上次启动的服务器
+        serverHelper.loadAtLaunch()
+
+        # 初始化插件系统
         self.initPlugin()
 
     def initPlugin(self):

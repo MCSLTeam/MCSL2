@@ -50,7 +50,8 @@ def initializeMCSL2():
                 "themeColor": "#0078d4",
                 "alwaysRunAsAdministrator": False,
                 "startOnStartup": False,
-                "checkUpdateOnStart": False
+                "checkUpdateOnStart": False,
+                "lastServer": ""
             }
             InitConfig.write(dumps(ConfigTemplate, indent=4))
             InitConfig.close()
