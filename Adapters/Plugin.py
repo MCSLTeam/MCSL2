@@ -1,17 +1,10 @@
 from __future__ import annotations
-
 import json
-import threading
 from threading import Thread
 from typing import List
-
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from qfluentwidgets import SmoothScrollArea
-
+from PyQt5.QtWidgets import QVBoxLayout
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
-
 import os
-
 from MCSL2Lib.pluginWidget import singlePluginWidget
 
 

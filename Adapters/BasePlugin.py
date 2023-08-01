@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
+
 class BasePlugin(metaclass=ABCMeta):
 
     def __init__(self):
