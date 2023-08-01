@@ -5,7 +5,7 @@ from qfluentwidgets import (
     TitleLabel,
     IndeterminateProgressRing
 )
-from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal
+from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import QGridLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 from MCSL2Lib.networkController import Session
 
@@ -117,14 +117,16 @@ class _HomePage(QWidget):
         self.titleLabel.setText("主页")
         self.subTitleLabel.setText("获取公告中...")
         self.setObjectName("homeInterface")
-        
-        # self.startServerBtn.clicked.connect()
-        # self.selectServerBtn.clicked.connect()
+        self.startServerBtn.setEnabled(False)
 
         self.thread = GetNoticeThread(self)
         self.thread.notice.connect(self.subTitleLabel.setText)
         self.thread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
         self.thread.start()
+
+    @pyqtSlot
+    def afterSelectedServer(self, serverName):
+        self.startServerBtn.setText(f"启动服务器：{serverName}")
 
 # 使用多线程防止拖慢启动速度
 class GetNoticeThread(QThread):
