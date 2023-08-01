@@ -12,9 +12,9 @@ class BasePlugin(metaclass=ABCMeta):
         self.authorEmail: List[str] = []
         self.isEnabled: bool = False
         self.isLoaded: bool = False
-        self.fn_Load = None
-        self.fn_Enable = None
-        self.fn_Disable = None
+        self.LOAD = None
+        self.ENABLE = None
+        self.DISABLE = None
 
     @abstractmethod
     def register_loadFunc(self, load_fn):
