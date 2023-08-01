@@ -33,7 +33,6 @@ class singleServerManager(CardWidget):
         self.setSizePolicy(sizePolicy)
         self.setMinimumSize(QSize(640, 200))
         self.setMaximumSize(QSize(16777215, 16777215))
-        self.setWindowTitle("")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
