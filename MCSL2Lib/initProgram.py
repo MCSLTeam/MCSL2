@@ -5,30 +5,24 @@ from os import mkdir, path as ospath ,remove
 # 各位开发者请注意，这块是屎山if集中地 --- LxHTT
 def initializeMCSL2():
 
+    # 最外层文件夹
     if not ospath.exists(r"Servers"):
         mkdir(r"./Servers")
+    if not ospath.exists(r"Plugins"):
+        mkdir(r"./Plugins")
     if not ospath.exists(r"MCSL2"):
+        # 如果没有，如下文件夹肯定也没有
         mkdir(r"MCSL2")
         mkdir(r"MCSL2/Logs")
         mkdir(r"MCSL2/Aria2")
         mkdir(r"MCSL2/Downloads")
-    # 以上是主文件夹
-
-    elif not ospath.exists(r"MCSL2/Aria2"):  # 不用elif会冲突
+    
+    # 如果有MCSL2目录，是否有Aria2目录
+    elif not ospath.exists(r"MCSL2/Aria2"):
         mkdir(r"MCSL2/Aria2")
-        if not ospath.exists(r"MCSL2/Logs"):
-            mkdir(r"MCSL2/Logs")
+        # 如果有Aria2目录，是否有Downloads目录
         if not ospath.exists(r"MCSL2/Downloads"):
             mkdir(r"MCSL2/Downloads")
-            pass
-    elif not ospath.exists(r"MCSL2/Logs"):  # 不用elif会冲突
-        mkdir(r"MCSL2/Logs")
-        if not ospath.exists(r"MCSL2/Downloads"):
-            mkdir(r"MCSL2/Downloads")
-            pass
-    elif not ospath.exists(r"MCSL2/Downloads"):  # 不用elif会冲突
-        mkdir(r"MCSL2/Downloads")
-        pass
     else:
         pass
     if not ospath.exists(r"./MCSL2/MCSL2_Config.json"):
@@ -75,7 +69,8 @@ def initializeMCSL2():
                 "themeColor": "#0078d4",
                 "alwaysRunAsAdministrator": False,
                 "startOnStartup": False,
-                "checkUpdateOnStart": False
+                "checkUpdateOnStart": False,
+                "lastServer": ""
             }
             FixConfig.write(dumps(ConfigTemplate, indent=4))
             FixConfig.close()

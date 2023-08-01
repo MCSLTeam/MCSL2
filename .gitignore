@@ -14,4 +14,5 @@ pdm.lock
 pdm.toml
 __pycache__/**
 MCSL2Lib/__pycache__/**
+Adapters/__pycache__/**
 tmp.py
