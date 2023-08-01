@@ -10,6 +10,7 @@ class BasePlugin(metaclass=ABCMeta):
         self.description: str = []
         self.author: List[str] = []
         self.authorEmail: List[str] = []
+        self.icon: str = None
         self.isEnabled: bool = False
         self.isLoaded: bool = False
         self.LOAD = None

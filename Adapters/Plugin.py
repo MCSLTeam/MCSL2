@@ -3,6 +3,8 @@ from json import loads
 # import threading
 from threading import Thread
 from typing import List
+
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QVBoxLayout
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from os import walk, getcwd
@@ -105,7 +107,13 @@ class PluginManager(BasePluginManager):
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             pluginWidget = singlePluginWidget()
-            pluginWidget.pluginName.setText(plugin.pluginName)
+            pluginWidget.pluginName.setText(f"{plugin.pluginName} {plugin.version}  By {plugin.author}")
             pluginWidget.pluginMoreInfo.setText(plugin.description)
+            if plugin.icon is None:
+                pluginWidget.pluginIcon.setPixmap(QPixmap(":/build-InIcons/MCSL2.png"))
+                pluginWidget.pluginIcon.setFixedSize(50,50)
+            else:
+                pluginWidget.pluginIcon.setPixmap(QPixmap(f":/Plugins/{pluginName}/{plugin.icon}"))
+                pluginWidget.pluginIcon.setFixedSize(50, 50)
             gridLayout_3.addWidget(pluginWidget)
 
