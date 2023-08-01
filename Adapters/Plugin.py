@@ -110,7 +110,7 @@ class PluginManager(BasePluginManager):
             pluginWidget.pluginName.setText(f"{plugin.pluginName} {plugin.version}  By {plugin.author}")
             pluginWidget.pluginMoreInfo.setText(plugin.description)
             if plugin.icon is None:
-                pluginWidget.pluginIcon.setPixmap(QPixmap(":/build-InIcons/MCSL2.png"))
+                pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50,50)
             else:
                 pluginWidget.pluginIcon.setPixmap(QPixmap(f":/Plugins/{pluginName}/{plugin.icon}"))

@@ -1,3 +1,19 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+'''
+Settings page.
+'''
+
 from datetime import datetime
 from json import dumps
 from typing import Union
@@ -35,7 +51,7 @@ from qfluentwidgets import (
     InfoBar,
 )
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from MCSL2Lib.settingsController import _settingsController
+from MCSL2Lib.settingsController import SettingsController
 from platform import (
     system as systemType,
     architecture as systemArchitecture,
@@ -46,7 +62,7 @@ from os import getpid
 from psutil import Process
 from pyperclip import copy
 
-settingsController = _settingsController()
+settingsController = SettingsController()
 
 
 class SettingsPage(QWidget):

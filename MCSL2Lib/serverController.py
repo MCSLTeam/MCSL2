@@ -1,10 +1,26 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+'''
+Communicate with Minecraft servers.
+'''
+
 from json import dumps, loads
 from os.path import realpath
 from typing import List, Optional
 from MCSL2Lib.variables import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
-from MCSL2Lib.settingsController import _settingsController
-settingsController = _settingsController()
+from MCSL2Lib.settingsController import SettingsController
+settingsController = SettingsController()
 
 def readGlobalServerConfig():
     '''读取全局服务器配置'''

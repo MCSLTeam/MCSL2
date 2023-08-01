@@ -1,3 +1,19 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+"""
+Configure new server page.
+"""
+
 from json import dump, loads, dumps
 from os import getcwd, mkdir, remove, path as ospath
 from shutil import copy
@@ -33,10 +49,10 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.variables import GlobalMCSL2Variables, ConfigureServerVariables
-from MCSL2Lib.settingsController import _settingsController
+from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib import javaDetector
 
-settingsController = _settingsController()
+settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 
 

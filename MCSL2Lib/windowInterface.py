@@ -1,3 +1,19 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+'''
+The main window of MCSL2.
+'''
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
@@ -33,10 +49,10 @@ from MCSL2Lib.variables import (
     PluginVariables,
 )
 from MCSL2Lib import icons as _  # noqa: F401
-from MCSL2Lib.settingsController import _settingsController
+from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.serverController import _ServerHelper
 
-settingsController = _settingsController()
+settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = _ServerHelper()
@@ -185,7 +201,7 @@ class Window(FramelessWindow):
 
     def initWindow(self):
         """初始化窗口"""
-        self.setWindowIcon(QIcon(":/build-InIcons/MCSL2.png"))
+        self.setWindowIcon(QIcon(":/built-InIcons/MCSL2.png"))
         self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 

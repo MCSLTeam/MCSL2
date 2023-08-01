@@ -1,3 +1,19 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+'''
+Manage exist Minecraft servers.
+'''
+
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QFrame,
@@ -33,7 +49,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.serverController import _ServerHelper, readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
-from MCSL2Lib.settingsController import _settingsController
+from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 from MCSL2Lib import javaDetector
 from json import dump, loads, dumps
@@ -41,7 +57,7 @@ from shutil import copy, rmtree
 from os import getcwd, rename, path as ospath, remove
 
 editServerVariables = EditServerVariables()
-settingsController = _settingsController()
+settingsController = SettingsController()
 
 
 class ServerManagerPage(QWidget):
@@ -700,7 +716,7 @@ class ServerManagerPage(QWidget):
             )
             self.tmpSingleServerWidget.serverName.setText(f"{globalConfig[i]['name']}")
             self.tmpSingleServerWidget.Icon.setPixmap(
-                QPixmap(f":/build-InIcons/{globalConfig[i]['icon']}")
+                QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}")
             )
             self.tmpSingleServerWidget.Icon.setFixedSize(QSize(60, 60))
 
@@ -982,7 +998,7 @@ class ServerManagerPage(QWidget):
             "Spigot.svg",
         ]
         self.editServerPixmapLabel.setPixmap(
-            QPixmap(f":/build-InIcons/{globalConfig[index]['icon']}")
+            QPixmap(f":/built-InIcons/{globalConfig[index]['icon']}")
         )
         self.editServerIcon.setCurrentIndex(
             self.iconsFileNameList.index(globalConfig[index]["icon"])
@@ -1028,7 +1044,7 @@ class ServerManagerPage(QWidget):
         """改图标用"""
         editServerVariables.icon = self.iconsFileNameList[iconIndex]
         self.editServerPixmapLabel.setPixmap(
-            QPixmap(f":/build-InIcons/{self.iconsFileNameList[iconIndex]}")
+            QPixmap(f":/built-InIcons/{self.iconsFileNameList[iconIndex]}")
         )
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
