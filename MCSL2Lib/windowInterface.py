@@ -15,6 +15,7 @@ from qfluentwidgets import (
 )
 from qframelesswindow import FramelessWindow, TitleBar
 
+from Adapters.Plugin import PluginManager
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.homePage import _HomePage
 from MCSL2Lib.configurePage import _ConfigurePage
@@ -25,7 +26,7 @@ from MCSL2Lib.pluginPage import _PluginPage
 from MCSL2Lib.settingsPage import _SettingsPage
 from MCSL2Lib.selectJavaPage import _SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import _SelectNewJavaPage
-from MCSL2Lib.variables import _configureServerVariables, _editServerVariables, _globalMCSL2Variables
+from MCSL2Lib.variables import _configureServerVariables, _editServerVariables, _globalMCSL2Variables, _PluginVariables
 from MCSL2Lib import icons as _   # noqa: F401
 from MCSL2Lib.settingsController import _settingsController
 from MCSL2Lib.serverController import _ServerHelper
@@ -34,6 +35,7 @@ settingsController = _settingsController()
 configureServerVariables = _configureServerVariables()
 editServerVariables = _editServerVariables()
 serverHelper = _ServerHelper()
+pluginVariables = _PluginVariables()
 
 # 标题栏
 class CustomTitleBar(TitleBar):
@@ -127,6 +129,13 @@ class Window(FramelessWindow):
 
         # 初始化窗口
         self.initWindow()
+
+        self.initPlugin()
+
+    def initPlugin(self):
+        pluginManager: PluginManager = pluginVariables.pluginManager
+        pluginManager.load_all()
+        pluginManager.show(self.pluginsInterface.gridLayout_3)
 
     def switchTo(self, widget, isEditingServer: Optional[int] = 0):
         if isEditingServer:

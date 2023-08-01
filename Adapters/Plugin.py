@@ -5,7 +5,7 @@ import threading
 from threading import Thread
 from typing import List
 
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from qfluentwidgets import SmoothScrollArea
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
@@ -40,7 +40,7 @@ class PluginLoader(BasePluginLoader):
             with open(f"plugin//{pluginName}//config.json", 'r',encoding="utf-8") as f:
                 imported_config = json.loads(f.read())
             imported_plugin.version = imported_config["version"]
-            imported_plugin.label = imported_config["label"]
+            imported_plugin.description = imported_config["description"]
             imported_plugin.author = imported_config["author"]
             imported_plugin.author_email = imported_config["author_email"]
         except:
@@ -53,6 +53,7 @@ class PluginLoader(BasePluginLoader):
 
 class PluginManager(BasePluginManager):
     def __init__(self):
+        self.is_disabled_all: bool = False
         self.pluginDict: {str, Plugin} = {}
         self.thread_pool: List[Thread] = []
 
@@ -96,13 +97,13 @@ class PluginManager(BasePluginManager):
                     continue
 
     def disable_all(self):
-        for thread in self.thread_pool:
-            thread._stop()
+        self.is_disabled_all = True
 
-    def show(self,widget:QWidget):
+    def show(self,gridLayout_3:QVBoxLayout):
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             plugin_widget = singlePluginWidget()
             plugin_widget.pluginName.setText(plugin.plugin_name)
-            plugin_widget.setParent(widget)
+            plugin_widget.pluginMoreInfo.setText(plugin.description)
+            gridLayout_3.addWidget(plugin_widget)
 

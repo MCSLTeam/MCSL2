@@ -1,3 +1,6 @@
+from Adapters.Plugin import PluginManager
+
+
 def Singleton(cls):
     Instances = {}
 
@@ -112,6 +115,11 @@ class _editServerVariables:
         self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
+
+@Singleton
+class _PluginVariables:
+    def __init__(self):
+        self.pluginManager: PluginManager = PluginManager()
 
 class _globalMCSL2Variables:
     MCSL2Version = "2.1.4.0"

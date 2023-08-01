@@ -6,7 +6,7 @@ class BasePlugin(metaclass=ABCMeta):
     def __init__(self):
         self.plugin_name: str = ""
         self.version: str = ""
-        self.label: List[str] = []
+        self.description: str = []
         self.author: List[str] = []
         self.author_email: List[str] = []
         self.is_enabled: bool = False
