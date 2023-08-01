@@ -1,21 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-
-class BasePluginFn:
-    @classmethod
-    def load(cls):
-        print("load")
-
-    @classmethod
-    def enable(cls):
-        print("enable")
-
-    @classmethod
-    def disable(cls):
-        print("disable")
-
-
 class BasePlugin(metaclass=ABCMeta):
 
     def __init__(self):
@@ -45,8 +30,9 @@ class BasePlugin(metaclass=ABCMeta):
 
 class BasePluginLoader:
     @classmethod
+    @abstractmethod
     def load(cls, plugin_name: str):
-        cls.load(plugin_name)
+        pass
 
 
 class BasePluginManager(metaclass=ABCMeta):
