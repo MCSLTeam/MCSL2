@@ -1,8 +1,10 @@
-from json import loads
+from json import dumps, loads
 from os.path import realpath
 from typing import List, Optional
 from MCSL2Lib.variables import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
+from MCSL2Lib.settingsController import _settingsController
+settingsController = _settingsController()
 
 def readGlobalServerConfig():
     with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerConfigFile:
@@ -14,9 +16,7 @@ def readGlobalServerConfig():
 # 用以确定开启哪个服务器
 @Singleton
 class _ServerHelper(QObject):
-
-    # serverIndexChanged = pyqtSignal(int)
-
+    
     serverName = pyqtSignal(str)
     backToHomePage = pyqtSignal(int)
     startBtnStat = pyqtSignal(bool)
@@ -24,15 +24,24 @@ class _ServerHelper(QObject):
     def __init__(self):
         super().__init__()
 
+    def loadAtLaunch(self):
+        lastServerName = settingsController.fileSettings['lastServer']
+        if lastServerName != "":
+            self.serverName.emit(lastServerName)
+            self.startBtnStat.emit(True)
+        else:
+            self.startBtnStat.emit(False)
+
     def selectedServer(self, index):
         self.serverName.emit(readGlobalServerConfig()[index]['name'])
         self.backToHomePage.emit(0)
         self.startBtnStat.emit(True)
-
-
-
-
-
+        # 防止和设置页冲突导致设置无效，得这样写
+        settingsController.unSavedSettings.update({"lastServer": readGlobalServerConfig()[index]['name']})
+        settingsController.fileSettings.update(settingsController.unSavedSettings)
+        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
+            writeConfig.write(dumps(settingsController.fileSettings, indent=4))
+            writeConfig.close()
 
 class Server:
     def __init__(self):

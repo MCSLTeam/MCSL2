@@ -128,6 +128,9 @@ class Window(FramelessWindow):
         # 初始化窗口
         self.initWindow()
 
+        # 读取上次启动的服务器
+        serverHelper.loadAtLaunch()
+
     def switchTo(self, widget, isEditingServer: Optional[int] = 0):
         if isEditingServer:
             self.stackWidget.setCurrentWidget(self.serverManagerInterface)
