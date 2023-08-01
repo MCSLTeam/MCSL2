@@ -17,20 +17,21 @@ from qfluentwidgets import (
 )
 
 
-class singlePluginInterface(CardWidget):
+class singlePluginWidget(CardWidget):
     def __init__(self):
 
         super().__init__()
 
-        self.setObjectName("singlePluginInterface")
+        self.setObjectName("singlePluginWidget")
 
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(0, 100))
+        self.setMinimumSize(QSize(524, 100))
         self.setMaximumSize(QSize(16777215, 100))
+        self.setWindowTitle("")
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
 

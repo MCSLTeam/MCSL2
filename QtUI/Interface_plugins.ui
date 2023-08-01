@@ -123,6 +123,9 @@
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
@@ -135,6 +138,11 @@
            <height>470</height>
           </rect>
          </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="pluginsVerticalLayout"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
