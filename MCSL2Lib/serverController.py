@@ -1,11 +1,8 @@
-from json import loads, dumps
-from os import mkdir
+from json import loads
 from os.path import realpath
-from shutil import copy
 from typing import List, Optional
 from MCSL2Lib.variables import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
-
 
 def readGlobalServerConfig():
     with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerConfigFile:
@@ -18,12 +15,15 @@ def readGlobalServerConfig():
 @Singleton
 class _ServerHelper:
 
-    serverIndexChanged = pyqtSignal(int)
+    # serverIndexChanged = pyqtSignal(int)
+
+    serverName = pyqtSignal(str)
+    backToHomePage = pyqtSignal(int)
 
     def __init__(self, index):
         self.index = index
-        
-
+        self.serverName.emit(readGlobalServerConfig()[index]['name'])
+        self.backToHomePage.emit()
 
 
 
