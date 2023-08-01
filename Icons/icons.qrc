@@ -1,5 +1,5 @@
 <RCC>
-  <qresource prefix="build-InIcons">
+  <qresource prefix="built-InIcons">
     <file>Anvil.png</file>
     <file>Cloth.png</file>
     <file>CobbleStone.png</file>
