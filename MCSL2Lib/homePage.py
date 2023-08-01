@@ -124,7 +124,7 @@ class _HomePage(QWidget):
         self.thread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
         self.thread.start()
 
-    @pyqtSlot
+    @pyqtSlot(str)
     def afterSelectedServer(self, serverName):
         self.startServerBtn.setText(f"启动服务器：{serverName}")
 

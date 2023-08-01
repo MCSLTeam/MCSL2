@@ -30,10 +30,10 @@ from MCSL2Lib import icons as _   # noqa: F401
 from MCSL2Lib.settingsController import _settingsController
 from MCSL2Lib.serverController import _ServerHelper
 
-serverHelper = _ServerHelper()
 settingsController = _settingsController()
 configureServerVariables = _configureServerVariables()
 editServerVariables = _editServerVariables()
+serverHelper = _ServerHelper()
 
 # 标题栏
 class CustomTitleBar(TitleBar):
@@ -233,7 +233,7 @@ class Window(FramelessWindow):
         self.homeInterface.selectServerBtn.clicked.connect(self.serverManagerInterface.refreshServers)
         serverHelper.serverName.connect(self.homeInterface.afterSelectedServer)
         serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
-        
+        serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)
 
         # 设置
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)

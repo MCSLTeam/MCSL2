@@ -13,17 +13,21 @@ def readGlobalServerConfig():
 
 # 用以确定开启哪个服务器
 @Singleton
-class _ServerHelper:
+class _ServerHelper(QObject):
 
     # serverIndexChanged = pyqtSignal(int)
 
     serverName = pyqtSignal(str)
     backToHomePage = pyqtSignal(int)
+    startBtnStat = pyqtSignal(bool)
 
-    def __init__(self, index):
-        self.index = index
+    def __init__(self):
+        super().__init__()
+
+    def selectedServer(self, index):
         self.serverName.emit(readGlobalServerConfig()[index]['name'])
-        self.backToHomePage.emit()
+        self.backToHomePage.emit(0)
+        self.startBtnStat.emit(True)
 
 
 
