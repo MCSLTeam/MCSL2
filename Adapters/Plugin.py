@@ -65,7 +65,7 @@ class PluginManager(BasePluginManager):
             plugin.DISABLE()
 
     def enablePlugin(self, pluginName: str):
-        '''启用插件但不加载'''
+        '''启用插件'''
         plugin: Plugin = self.pluginDict.get(pluginName, default=None)
         if plugin is None:
             return False
@@ -73,7 +73,7 @@ class PluginManager(BasePluginManager):
             plugin.ENABLE()
 
     def loadPlugin(self, pluginName: str):
-        '''加载插件'''
+        '''加载插件但不启用'''
         plugin: Plugin = PluginLoader.load(pluginName)
         if plugin is None:
             return
@@ -83,7 +83,7 @@ class PluginManager(BasePluginManager):
             self.pluginDict[pluginName] = plugin
 
     def loadAllPlugins(self):
-        '''加载所有插件'''
+        '''加载所有插件但不启用'''
         path = getcwd() + "\\Plugins"
         pathList = next(walk(path))[1]
         for pluginName in pathList:
@@ -95,7 +95,7 @@ class PluginManager(BasePluginManager):
 
 
     def enableAllPlugins(self):
-        '''启用所有插件但不加载'''
+        '''启用所有插件'''
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             if plugin.ENABLE is not None:
