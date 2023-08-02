@@ -34,11 +34,15 @@ class PluginLoader(BasePluginLoader):
         try:
             importedPlugin.pluginName = pluginName
             with open(f"Plugins//{pluginName}//config.json", 'r',encoding="utf-8") as f:
-                importedPluginConfig = loads(f.read())
-            importedPlugin.version = importedPluginConfig["version"]
-            importedPlugin.description = importedPluginConfig["description"]
-            importedPlugin.author = importedPluginConfig["author"]
-            importedPlugin.authorEmail = importedPluginConfig["author_email"]
+                importedPluginConfig: dict = loads(f.read())
+            importedPlugin.version = importedPluginConfig.get("version")
+            importedPlugin.description = importedPluginConfig.get("description")
+            importedPlugin.author = importedPluginConfig.get("author")
+            importedPlugin.authorEmail = importedPluginConfig.get("author_email")
+            if "icon" in importedPluginConfig:
+                importedPlugin.icon = importedPluginConfig.get("icon")
+
+
         except:
             raise Warning("读取配置错误", pluginName)
         if importedPlugin.__class__.__name__ == Plugin.__name__:
@@ -113,7 +117,7 @@ class PluginManager(BasePluginManager):
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50,50)
             else:
-                pluginWidget.pluginIcon.setPixmap(QPixmap(f":/Plugins/{pluginName}/{plugin.icon}"))
+                pluginWidget.pluginIcon.setPixmap(QPixmap(f":/Plugins//{pluginName}//{plugin.icon}"))
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
             gridLayout_3.addWidget(pluginWidget)
 
