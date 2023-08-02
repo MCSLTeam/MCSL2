@@ -20,7 +20,7 @@ ___
 [![](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
 [![](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
 [![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.netlify.app)
-[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtz.dl%40qq.com-%2357728B?style=for-the-badge)](mailto:lxhtz.dl@qq.com)  
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtz.dl%40mcsl.com.cn-%2357728B?style=for-the-badge)](mailto:lxhtz.dl@mcsl.com.cn)  
 ___
 ### 他能干什么？  
 ~~可以帮助你非常方便的开启一个Java版Minecraft服务器。（废话文学~~
@@ -47,9 +47,12 @@ GPLv3开源协议：[https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE](http
 ___
 ### 鸣谢
 
-- [Luoxis 云存储](https://www.df100.ltd) 来自于 **星姮十织**
-- [ZCloud](https://ztsin.cn/) 来自于 **Z_Tsin**  
-- [FiveCDN](https://cdn.5-5.site) 来自于**Aehxy**
+ - 维度前端: https://www.df100.ltd  
+ - ZCloud: https://ztsin.cn/  
+ - Xiexilin: https://xiexilin.com/  
+ - FiveCDN公益加速: https://cdn.5-5.site  
+ - WB-Block: https://wb-block.top  
+ - FENG IDC: https://fengidc.cn
 
 还有所有的贡献者们！  
 

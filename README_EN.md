@@ -21,7 +21,7 @@ ___
 [![](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
 [![](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
 [![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.netlify.app)
-[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtz.dl%40qq.com-%2357728B?style=for-the-badge)](mailto:lxhtz.dl@qq.com)  
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40mcsl.com.cn-%2357728B?style=for-the-badge)](mailto:lxhtt@mcsl.com.cn)  
 ___
 ### What can MCSL2 do? 
 ~~Can help you very easily open a Minecraft: Java Edition game server.~~ XD
@@ -44,14 +44,16 @@ MCSL 2 Official Website:[https://mcsl.com.cn](https://mcsl.com.cn)
 MCSLAPI Official Website:[https://mcsl.com.cn/MCSLAPIGuide](https://mcsl.com.cn/MCSLAPIGuide)  
 GitHub Issue:[https://github.com/MCSLTeam/MCSL2/issues](https://github.com/MCSLTeam/MCSL2/issues)  
 QQ Group:[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
-LxHTT's Email:[mailto:lxhtz.dl@qq.com](mailto:lxhtz.dl@qq.com)  
 GNU General Public License v3.0:[https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
 ___
 ### Special Thanks
 
-- [Luoxis Cloud](https://www.df100.ltd) from **星姮十织**
-- [ZCloud](https://ztsin.cn/) from **Z_Tsin**
-- [FiveCDN](https://cdn.5-5.site) from **Aehxy*I
+ - 维度前端: https://www.df100.ltd  
+ - ZCloud: https://ztsin.cn/  
+ - Xiexilin: https://xiexilin.com/  
+ - FiveCDN公益加速: https://cdn.5-5.site  
+ - WB-Block: https://wb-block.top  
+ - FENG IDC: https://fengidc.cn
 
 And all the contributors!  
 
