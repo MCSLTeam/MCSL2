@@ -117,7 +117,10 @@ class PluginManager(BasePluginManager):
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50,50)
             else:
-                pluginWidget.pluginIcon.setPixmap(QPixmap(f":/Plugins//{pluginName}//{plugin.icon}"))
+                import os
+                url = os.path.dirname(os.path.abspath(__file__))  # 文件夹
+                url = os.path.abspath(os.path.join(url, ".."))
+                pluginWidget.pluginIcon.setPixmap(QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}"))
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
             gridLayout_3.addWidget(pluginWidget)
 
