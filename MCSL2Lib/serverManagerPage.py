@@ -1247,14 +1247,24 @@ class ServerManagerPage(QWidget):
         illegalServerCharacterList = ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]
         illegalServerNameList = [
             "aux",
-            "com1",
-            "com2",
             "prn",
             "con",
             "lpt1",
             "lpt2",
             "nul",
+            'com0',
+            'com1',
+            'com2',
+            'com3',
+            'com4',
+            'com5',
+            'com6',
+            'com7',
+            'com8',
+            'com9'
         ]
+
+        #实际上Windows系统中文件名限制还包括com0以及com3-9, 因此此类别并不完全符合
         for i in range(len(illegalServerNameList)):
             if illegalServerNameList[i] == self.editServerNameLineEdit.text():
                 errText += "，名称与操作系统冲突"
