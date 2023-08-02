@@ -142,7 +142,7 @@ class SelectJavaPage(QWidget):
     def scrollAreaProcessor(self, JavaPath):
         """判断索引"""
         index = int(str(self.sender().objectName()).split("Btn")[1])
-        selectedJavaPath = str(JavaPath[index].psath)
+        selectedJavaPath = str(JavaPath[index].path)
         selectedJavaVer = str(str(JavaPath[index].version))
         self.setJavaPath.emit(selectedJavaPath)
         self.setJavaVer.emit(selectedJavaVer)
