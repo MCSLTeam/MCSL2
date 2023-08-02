@@ -20,7 +20,7 @@ ___
 [![](https://img.shields.io/github/downloads/MCSLTeam/MCSL2/total?style=for-the-badge "Downloads")](https://github.com/MCSLTeam/MCSL2/releases)
 [![](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
 [![](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
-[![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.netlify.app)
+[![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.com.cn)
 [![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40mcsl.com.cn-%2357728B?style=for-the-badge)](mailto:lxhtt@mcsl.com.cn)  
 ___
 ### What can MCSL2 do? 
@@ -53,7 +53,6 @@ ___
  - Xiexilin: https://xiexilin.com/  
  - FiveCDN公益加速: https://cdn.5-5.site  
  - WB-Block: https://wb-block.top  
- - FENG IDC: https://fengidc.cn
 
 And all the contributors!  
 
