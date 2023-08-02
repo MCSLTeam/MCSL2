@@ -1503,14 +1503,23 @@ class ConfigurePage(QWidget):
         ]
         illegalServerNameList = [
             "aux",
-            "com1",
-            "com2",
             "prn",
             "con",
             "lpt1",
             "lpt2",
             "nul",
+            'com0',
+            'com1',
+            'com2',
+            'com3',
+            'com4',
+            'com5',
+            'com6',
+            'com7',
+            'com8',
+            'com9'
         ]
+
         for i in range(len(illegalServerNameList)):
             if (
                 illegalServerNameList[i]
