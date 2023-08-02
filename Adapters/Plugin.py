@@ -1,5 +1,6 @@
 from __future__ import annotations
 from json import loads
+
 # import threading
 from threading import Thread
 from typing import List
@@ -29,11 +30,15 @@ class Plugin(BasePlugin):
 class PluginLoader(BasePluginLoader):
     @classmethod
     def load(cls, pluginName: str) -> Plugin | None:
-        importedPlugin: Plugin = __import__(f"Plugins.{pluginName}.{pluginName}", fromlist=[pluginName])
+        importedPlugin: Plugin = __import__(
+            f"Plugins.{pluginName}.{pluginName}", fromlist=[pluginName]
+        )
         importedPlugin = importedPlugin.__getattribute__(pluginName)
         try:
             importedPlugin.pluginName = pluginName
-            with open(f"Plugins//{pluginName}//config.json", 'r', encoding="utf-8") as f:
+            with open(
+                f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
+            ) as f:
                 importedPluginConfig: dict = loads(f.read())
             importedPlugin.version = importedPluginConfig.get("version")
             importedPlugin.description = importedPluginConfig.get("description")
@@ -41,7 +46,6 @@ class PluginLoader(BasePluginLoader):
             importedPlugin.authorEmail = importedPluginConfig.get("author_email")
             if "icon" in importedPluginConfig:
                 importedPlugin.icon = importedPluginConfig.get("icon")
-
 
         except:
             raise Warning("读取配置错误", pluginName)
@@ -57,7 +61,7 @@ class PluginManager(BasePluginManager):
         self.threadPool: List[Thread] = []
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
-        '''禁用插件'''
+        """禁用插件"""
         plugin: Plugin = self.pluginDict.pop(pluginName)
         if plugin is None:
             return False
@@ -71,7 +75,7 @@ class PluginManager(BasePluginManager):
             self.disablePlugin(pluginName)
 
     def enablePlugin(self, pluginName: str):
-        '''启用插件'''
+        """启用插件"""
         plugin: Plugin = self.pluginDict.get(pluginName)
         if plugin is None:
             return False
@@ -79,7 +83,7 @@ class PluginManager(BasePluginManager):
             plugin.ENABLE()
 
     def loadPlugin(self, pluginName: str):
-        '''加载插件但不启用'''
+        """加载插件但不启用"""
         plugin: Plugin = PluginLoader.load(pluginName)
         if plugin is None:
             return
@@ -89,7 +93,7 @@ class PluginManager(BasePluginManager):
             self.pluginDict[pluginName] = plugin
 
     def loadAllPlugins(self):
-        '''加载所有插件但不启用'''
+        """加载所有插件但不启用"""
         path = getcwd() + "\\Plugins"
         pathList = next(walk(path))[1]
         for pluginName in pathList:
@@ -99,9 +103,8 @@ class PluginManager(BasePluginManager):
                 raise Warning("加载插件错误")
         print(self.pluginDict)
 
-
     def enableAllPlugins(self):
-        '''启用所有插件'''
+        """启用所有插件"""
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             if plugin.ENABLE is not None:
@@ -111,26 +114,35 @@ class PluginManager(BasePluginManager):
                     continue
 
     def disableAllPlugins(self):
-        '''禁用所有插件'''
+        """禁用所有插件"""
         self.is_disabled_all = True
 
     def initSinglePluginsWidget(self, gridLayout_3: QVBoxLayout):
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             pluginWidget = singlePluginWidget()
-            pluginWidget.pluginName.setText(f"{plugin.pluginName}  版本：{plugin.version}  作者： {plugin.author}")
+            pluginWidget.pluginName.setText(
+                f"{plugin.pluginName}  版本：{plugin.version}  作者： {plugin.author}"
+            )
             pluginWidget.pluginMoreInfo.setText(f"注释：{plugin.description}")
             if plugin.icon is None:
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
             else:
                 import os
+
                 url = os.path.dirname(os.path.abspath(__file__))  # 文件夹
                 url = os.path.abspath(os.path.join(url, ".."))
-                pluginWidget.pluginIcon.setPixmap(QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}"))
+                pluginWidget.pluginIcon.setPixmap(
+                    QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
+                )
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
 
             # 设置槽函数
-            pluginWidget.SwitchButton.checkedChanged.connect(lambda: self.decideEnableOrDisable(pluginName, switchBtnStatus=pluginWidget.SwitchButton.isChecked()))
+            pluginWidget.SwitchButton.checkedChanged.connect(
+                lambda: self.decideEnableOrDisable(
+                    pluginName, switchBtnStatus=pluginWidget.SwitchButton.isChecked()
+                )
+            )
 
             gridLayout_3.addWidget(pluginWidget)

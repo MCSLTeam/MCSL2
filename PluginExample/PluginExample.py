@@ -10,28 +10,38 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 An example for MCSL2's plugin.
-'''
+"""
 
 # 提示：声明Plugin()时，声明的变量名称需与文件夹名、config.json的plugin_name键的值相同！
 
-#实现一个Plugin类
+# 实现一个Plugin类
 from Adapters.Plugin import Plugin
 
-PluginExample = Plugin() 
+PluginExample = Plugin()
+
+
 def load():
     """写你的代码"""
     print("load")
-#注册加载代码
-PluginExample.register_loadFunc(load)
+
+
 def enable():
     """写你的代码"""
     print("enable")
-#注册应用代码
-PluginExample.register_enableFunc(enable)
+
+
 def disable():
     """写你的代码"""
     print("disable")
-#注册应用代码
+
+
+# 注册加载代码
+PluginExample.register_loadFunc(load)
+
+# 注册应用代码
+PluginExample.register_enableFunc(enable)
+
+# 注册应用代码
 PluginExample.register_disableFunc(disable)
