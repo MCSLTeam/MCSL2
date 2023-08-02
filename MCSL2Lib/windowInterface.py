@@ -164,12 +164,9 @@ class Window(FramelessWindow):
         pluginManager.loadAllPlugins()
         pluginManager.initSinglePluginsWidget(self.pluginsInterface.gridLayout_3)
 
-    def switchTo(self, widget, isEditingServer: Optional[int] = 0):
+    def switchTo(self, widget):
         """换页"""
-        if isEditingServer:
-            self.stackWidget.setCurrentWidget(self.serverManagerInterface)
-        else:
-            self.stackWidget.setCurrentWidget(widget)
+        self.stackWidget.setCurrentWidget(widget)
 
     def initLayout(self):
         """初始化布局"""
