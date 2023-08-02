@@ -47,7 +47,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
 )
-from MCSL2Lib.serverController import _ServerHelper, readGlobalServerConfig
+from MCSL2Lib.serverController import ServerHelper, readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
@@ -740,7 +740,7 @@ class ServerManagerPage(QWidget):
         type = str(self.sender().objectName()).split("Btn")[0]
         index = int(str(self.sender().objectName()).split("Btn")[1])
         if type == "select":
-            _ServerHelper().selectedServer(index=index)
+            ServerHelper().selectedServer(index=index)
         elif type == "edit":
             self.initEditServerInterface(index=index)
         elif type == "delete":

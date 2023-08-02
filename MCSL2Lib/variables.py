@@ -15,19 +15,8 @@ These are the built-in variables of MCSL2.
 '''
 
 from Adapters.Plugin import PluginManager
-
-
-def Singleton(cls):
-    """单例化装饰器"""
-    Instances = {}
-
-    def GetInstance(*args, **kwargs):
-        if cls not in Instances:
-            Instances[cls] = cls(*args, **kwargs)
-        return Instances[cls]
-
-    return GetInstance
-
+from MCSL2Lib.serverController import readGlobalServerConfig
+from MCSL2Lib.singleton import Singleton
 
 @Singleton
 class ConfigureServerVariables:
@@ -159,3 +148,13 @@ class DownloadVariables:
 
     def __init__(self):
         self.MCSLAPIDownloadUrlDict = {}
+
+@Singleton
+class ServerVariables:
+    '''需要开启的服务器的变量'''
+    def __init__(self, index: int):
+        serverConfig: dict = readGlobalServerConfig()[index]
+        self.serverName = serverConfig['name']
+        self.coreFileName = serverConfig['core_file_name']
+        self.javaPath = serverConfig['java_path']
+        self.minMem = serverConfig['min_memory']

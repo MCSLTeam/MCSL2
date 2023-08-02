@@ -50,12 +50,12 @@ from MCSL2Lib.variables import (
 )
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.serverController import _ServerHelper
+from MCSL2Lib.serverController import ServerHelper
 
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
-serverHelper = _ServerHelper()
+serverHelper = ServerHelper()
 pluginVariables = PluginVariables()
 
 
