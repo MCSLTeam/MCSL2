@@ -1,0 +1,9 @@
+{
+    "plugin_name": "PluginExample",
+    "version": "0.0.0",
+    "description": "插件示例",
+    "icon": "Cloth.png",
+    "author": "MCSL Team",
+    "author_email": "mail@example.com",
+    "on_new_thread": false
+  }
