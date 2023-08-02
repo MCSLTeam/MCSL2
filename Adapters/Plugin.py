@@ -58,15 +58,21 @@ class PluginManager(BasePluginManager):
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         '''禁用插件'''
-        plugin: Plugin = self.pluginDict.pop(pluginName, default=None)
+        plugin: Plugin = self.pluginDict.pop(pluginName)
         if plugin is None:
             return False
         if plugin.DISABLE is not None:
             plugin.DISABLE()
 
+    def decideEnableOrDisable(self, pluginName: str, switchBtnStatus: bool):
+        if switchBtnStatus:
+            self.enablePlugin(pluginName)
+        else:
+            self.disablePlugin(pluginName)
+
     def enablePlugin(self, pluginName: str):
         '''启用插件'''
-        plugin: Plugin = self.pluginDict.get(pluginName, default=None)
+        plugin: Plugin = self.pluginDict.get(pluginName)
         if plugin is None:
             return False
         if plugin.ENABLE is not None:
@@ -112,8 +118,8 @@ class PluginManager(BasePluginManager):
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             pluginWidget = singlePluginWidget()
-            pluginWidget.pluginName.setText(f"{plugin.pluginName} {plugin.version}  By {plugin.author}")
-            pluginWidget.pluginMoreInfo.setText(plugin.description)
+            pluginWidget.pluginName.setText(f"{plugin.pluginName}  版本：{plugin.version}  作者： {plugin.author}")
+            pluginWidget.pluginMoreInfo.setText(f"注释：{plugin.description}")
             if plugin.icon is None:
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
@@ -125,6 +131,6 @@ class PluginManager(BasePluginManager):
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
 
             # 设置槽函数
-            pluginWidget.SwitchButton.checkedChanged.connect(lambda: self.enablePlugin(pluginName))
+            pluginWidget.SwitchButton.checkedChanged.connect(lambda: self.decideEnableOrDisable(pluginName, switchBtnStatus=pluginWidget.SwitchButton.isChecked()))
 
             gridLayout_3.addWidget(pluginWidget)
