@@ -17,7 +17,9 @@ These are the built-in variables of MCSL2.
 from Adapters.Plugin import PluginManager
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.settingsController import SettingsController
 
+settingsController = SettingsController()
 
 @Singleton
 class ConfigureServerVariables:
@@ -155,7 +157,19 @@ class DownloadVariables:
 class ServerVariables:
     """需要开启的服务器的变量"""
 
-    def __init__(self, index: int):
+    def __init__(self):
+        self.serverName: str = ""
+        self.coreFileName: str = ""
+        self.javaPath: str = ""
+        self.minMem: int = 0
+        self.maxMem: int = 0
+        self.memUnit: str = "M"
+        self.jvmArg: str = "-Dlog4j2.formatMsgNoLookups=true"
+        self.outputDecoding: str = "utf-8"
+        self.inputEncoding: str = "utf-8"
+        # self.icon = serverConfig['icon']  不需要。
+
+    def initialize(self, index: int):
         serverConfig: dict = readGlobalServerConfig()[index]
         self.serverName = serverConfig["name"]
         self.coreFileName = serverConfig["core_file_name"]
@@ -166,4 +180,12 @@ class ServerVariables:
         self.jvmArg = serverConfig["jvm_arg"]
         self.outputDecoding = serverConfig["output_decoding"]
         self.inputEncoding = serverConfig["input_encoding"]
-        # self.icon = serverConfig['icon']  不需要。
+        self.translateCoding()
+    
+    def translateCoding(self):
+        if self.outputDecoding == "follow":
+            self.outputDecoding = settingsController['outputDeEncoding']
+        if self.inputEncoding == "follow":  # 跟随全局
+            self.inputEncoding = settingsController['inputDeEncoding']
+            if self.inputEncoding == "follow":  # 跟随输出
+                self.inputEncoding = self.outputDecoding

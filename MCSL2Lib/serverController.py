@@ -62,7 +62,7 @@ class ServerHelper(QObject):
 
     def loadServerConfig(self, index):
         """将选定的服务器的配置加载到变量中"""
-        ServerVariables(index=index)
+        ServerVariables.initialize(index=index)
 
     def selectedServer(self, index):
         """选择了服务器"""
@@ -141,7 +141,7 @@ class ServerHandler(QObject):
             NewOutput = (
                 memoryview(NewData)[self.Server.LastOutputSize : DataSize]
                 .tobytes()
-                .decode(MCSL2Settings.ConsoleOutputEncoding)
+                .decode(ServerVariables)
             )
             self.serverLogOutput.emit(NewOutput)
             self.Server.LastOutputSize = DataSize
