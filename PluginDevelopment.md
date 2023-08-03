@@ -6,6 +6,7 @@
 ## 2. 插件的基本实现
 #### 下边是一个最简单的Plugin，不过别着急，看完之后我们还要配置文件
 ```python
+from Adapters.Plugin import Plugin
 #实现一个Plugin类
 test = Plugin() 
 def load():
@@ -25,7 +26,7 @@ def disable():
 test.register_disableFunc(disable)
 ```
 #### MCSL2的 配置文件 使用美观性和易上手性中比较中间的语法 json ，下图是一个较为简单是配置文件，如果想深入了解请 <a href="https://github.com//MCSLTeam//MCSL2">点击这里</a>
-#### <font color='#e14242'> 注意！！！ plugin_name 必须与Plugin类所在的py文件名字相同，并且Plugin类的名字也要是 plugin_name </font>
+#### <font color='#e14242'> 注意！！！ plugin_name 必须与Plugin类所在的py文件名字相同，并且Plugin类的名字也要是 plugin_name </font>`config.json`
 ```json
 {
   //插件名字 
