@@ -36,7 +36,10 @@ from qfluentwidgets import (
     FluentIcon as FIF,
 )
 
+from MCSL2Lib.singleton import Singleton
 
+
+@Singleton
 class ConsolePage(QWidget):
     """终端页"""
 

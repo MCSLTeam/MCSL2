@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Manage exist Minecraft servers.
-'''
+"""
 
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -50,6 +50,7 @@ from qfluentwidgets import (
 from MCSL2Lib.serverController import ServerHelper, readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 from MCSL2Lib import javaDetector
 from json import dump, loads, dumps
@@ -60,6 +61,7 @@ editServerVariables = EditServerVariables()
 settingsController = SettingsController()
 
 
+@Singleton
 class ServerManagerPage(QWidget):
     """服务器管理页"""
 
@@ -1252,19 +1254,19 @@ class ServerManagerPage(QWidget):
             "lpt1",
             "lpt2",
             "nul",
-            'com0',
-            'com1',
-            'com2',
-            'com3',
-            'com4',
-            'com5',
-            'com6',
-            'com7',
-            'com8',
-            'com9'
+            "com0",
+            "com1",
+            "com2",
+            "com3",
+            "com4",
+            "com5",
+            "com6",
+            "com7",
+            "com8",
+            "com9",
         ]
 
-        #实际上Windows系统中文件名限制还包括com0以及com3-9, 因此此类别并不完全符合
+        # 实际上Windows系统中文件名限制还包括com0以及com3-9, 因此此类别并不完全符合
         for i in range(len(illegalServerNameList)):
             if illegalServerNameList[i] == self.editServerNameLineEdit.text():
                 errText += "，名称与操作系统冲突"

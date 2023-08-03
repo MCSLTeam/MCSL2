@@ -47,6 +47,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     MessageBox,
 )
+from MCSL2Lib.singleton import Singleton
 
 from MCSL2Lib.variables import GlobalMCSL2Variables, ConfigureServerVariables
 from MCSL2Lib.settingsController import SettingsController
@@ -56,6 +57,7 @@ settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 
 
+@Singleton
 class ConfigurePage(QWidget):
     """新建服务器页"""
 
@@ -1508,16 +1510,16 @@ class ConfigurePage(QWidget):
             "lpt1",
             "lpt2",
             "nul",
-            'com0',
-            'com1',
-            'com2',
-            'com3',
-            'com4',
-            'com5',
-            'com6',
-            'com7',
-            'com8',
-            'com9'
+            "com0",
+            "com1",
+            "com2",
+            "com3",
+            "com4",
+            "com5",
+            "com6",
+            "com7",
+            "com8",
+            "com9",
         ]
 
         for i in range(len(illegalServerNameList)):

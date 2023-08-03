@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Plugin page.
-'''
+"""
 
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtWidgets import (
@@ -30,9 +30,11 @@ from qfluentwidgets import (
     StrongBodyLabel,
     TitleLabel,
 )
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
+@Singleton
 class PluginPage(QWidget):
     """插件页"""
 

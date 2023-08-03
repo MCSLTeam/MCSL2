@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Select Java page, for modifying exist Minecraft servers.
-'''
+"""
 
 from PyQt5.QtCore import Qt, QRect, pyqtSignal
 from PyQt5.QtWidgets import (
@@ -21,26 +21,28 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QSpacerItem,
     QFrame,
-    QVBoxLayout
+    QVBoxLayout,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
     StrongBodyLabel,
     TitleLabel,
     TransparentToolButton,
-    FluentIcon as FIF
+    FluentIcon as FIF,
 )
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
-from MCSL2Lib import icons as _   # noqa: F401
+from MCSL2Lib import icons as _  # noqa: F401
 
+
+@Singleton
 class SelectNewJavaPage(QWidget):
     """适用于修改服务器时的选择Java页面"""
 
     setJavaPath = pyqtSignal(str)
 
     def __init__(self):
-
         super().__init__()
 
         self.setObjectName("selectJavaInterface")
@@ -66,7 +68,9 @@ class SelectNewJavaPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -102,7 +106,7 @@ class SelectNewJavaPage(QWidget):
         self.gridLayout_2.addWidget(self.javaSmoothScrollArea, 2, 0, 1, 2)
         self.backBtn = TransparentToolButton(FIF.PAGE_LEFT, self.titleLimitWidget)
         self.backBtn.setObjectName("backBtn")
-        
+
         self.gridLayout_2.addWidget(self.backBtn, 0, 0, 2, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -110,7 +114,9 @@ class SelectNewJavaPage(QWidget):
         self.subTitleLabel.setText("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。")
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.javaSmoothScrollArea.viewport().setStyleSheet(GlobalMCSL2Variables.scrollAreaViewportQss)
+        self.javaSmoothScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
 
     def refreshPage(self, JavaPath):
         """刷新Java列表"""
@@ -121,9 +127,15 @@ class SelectNewJavaPage(QWidget):
         # 添加新的
         for i in range(len(JavaPath)):
             self.tmpSingleJavaWidget = singleSelectJavaWidget()
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(f"finishSelectJavaBtn{str(i)}")
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.scrollAreaProcessor(JavaPath))
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.backBtn.click())
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(
+                f"finishSelectJavaBtn{str(i)}"
+            )
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(
+                lambda: self.scrollAreaProcessor(JavaPath)
+            )
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(
+                lambda: self.backBtn.click()
+            )
             self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].path))
             self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].version))
             self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)

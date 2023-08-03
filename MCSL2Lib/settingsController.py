@@ -10,31 +10,29 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Settings controller, for editing MCSL2's configurations.
-'''
+"""
 
 from os import path as ospath
 from json import loads
 
-class SettingsController:
-    _judge = None
-    def __new__(cls):
-        if cls._judge==None:
-            cls._judge=object.__new__(cls)
-            return  cls._judge
-        else:
-            return cls._judge
+from MCSL2Lib.singleton import Singleton
 
+
+@Singleton
+class SettingsController:
     def __init__(self):
-        self.fileSettings = {} # 文件中的原始配置
-        self.unSavedSettings = {} # 更改后的配置
+        self.fileSettings = {}  # 文件中的原始配置
+        self.unSavedSettings = {}  # 更改后的配置
 
     def _readSettings(self, firstLoad):
-        '''重新将文件中的配置强制覆盖到程序中，不管是否保存了'''
+        """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
         if ospath.exists(r"./MCSL2/MCSL2_Config.json"):
             if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
-                with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as readConfig:
+                with open(
+                    r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8"
+                ) as readConfig:
                     # 从文件读取的配置
                     self.fileSettings = loads(readConfig.read())
                     # 多声明一份给修改设置的时候用

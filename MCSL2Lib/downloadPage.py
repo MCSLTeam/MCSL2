@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Download page with FastMirror and MCSLAPI.
-'''
+"""
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
@@ -33,11 +33,13 @@ from qfluentwidgets import (
     Pivot,
 )
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, DownloadVariables
 
 downloadVariables = DownloadVariables()
 
 
+@Singleton
 class DownloadPage(QWidget):
     """下载页"""
 

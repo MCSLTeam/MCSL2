@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 The main window of MCSL2.
-'''
+"""
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
@@ -42,6 +42,7 @@ from MCSL2Lib.pluginPage import PluginPage
 from MCSL2Lib.settingsPage import SettingsPage
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
@@ -109,6 +110,7 @@ class CustomTitleBar(TitleBar):
         pass
 
 
+@Singleton
 class Window(FramelessWindow):
     """程序主窗口"""
 

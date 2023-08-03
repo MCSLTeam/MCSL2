@@ -10,17 +10,19 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 A stackeed widget controller.
-'''
+"""
 
 from PyQt5.QtCore import pyqtSignal, QEasingCurve
 from PyQt5.QtWidgets import QFrame, QHBoxLayout
 from qfluentwidgets import PopUpAniStackedWidget
 
-from MCSL2Lib import icons as _  # noqa: F401
+from MCSL2Lib import icons as _
+from MCSL2Lib.singleton import Singleton  # noqa: F401
 
 
+@Singleton
 class StackedWidget(QFrame):
     """子页面实现，理论上此处不需要开发者再次手动调用"""
 

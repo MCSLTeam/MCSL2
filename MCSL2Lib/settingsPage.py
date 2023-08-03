@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Settings page.
-'''
+"""
 
 from datetime import datetime
 from json import dumps
@@ -50,6 +50,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.settingsController import SettingsController
 from platform import (
@@ -65,6 +66,7 @@ from pyperclip import copy
 settingsController = SettingsController()
 
 
+@Singleton
 class SettingsPage(QWidget):
     """设置页"""
 
