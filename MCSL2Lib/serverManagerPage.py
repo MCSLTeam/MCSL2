@@ -47,7 +47,8 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
 )
-from MCSL2Lib.serverController import ServerHelper, readGlobalServerConfig
+from MCSL2Lib.serverController import ServerHelper
+from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton

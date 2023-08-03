@@ -10,12 +10,23 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
-Initialize function.
-'''
+"""
+These are the built-in functions of MCSL2. They are just for solving the circular import.
+"""
 
-from json import dumps
+
+from json import loads, dumps
 from os import mkdir, path as ospath, remove
+
+
+def readGlobalServerConfig() -> list:
+    """读取全局服务器配置, 返回的是一个list"""
+    with open(
+        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+    ) as globalServerConfigFile:
+        globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
+        globalServerConfigFile.close()
+    return globalServerList
 
 
 def initializeMCSL2():

@@ -10,13 +10,14 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 These are the built-in variables of MCSL2.
-'''
+"""
 
 from Adapters.Plugin import PluginManager
-from MCSL2Lib.serverController import readGlobalServerConfig
+from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
+
 
 @Singleton
 class ConfigureServerVariables:
@@ -149,12 +150,20 @@ class DownloadVariables:
     def __init__(self):
         self.MCSLAPIDownloadUrlDict = {}
 
+
 @Singleton
 class ServerVariables:
-    '''需要开启的服务器的变量'''
+    """需要开启的服务器的变量"""
+
     def __init__(self, index: int):
         serverConfig: dict = readGlobalServerConfig()[index]
-        self.serverName = serverConfig['name']
-        self.coreFileName = serverConfig['core_file_name']
-        self.javaPath = serverConfig['java_path']
-        self.minMem = serverConfig['min_memory']
+        self.serverName = serverConfig["name"]
+        self.coreFileName = serverConfig["core_file_name"]
+        self.javaPath = serverConfig["java_path"]
+        self.minMem = serverConfig["min_memory"]
+        self.maxMem = serverConfig["max_memory"]
+        self.memUnit = serverConfig["memory_unit"]
+        self.jvmArg = serverConfig["jvm_arg"]
+        self.outputDecoding = serverConfig["output_decoding"]
+        self.inputEncoding = serverConfig["input_encoding"]
+        # self.icon = serverConfig['icon']  不需要。
