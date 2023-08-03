@@ -24,7 +24,7 @@ from MCSL2Lib.variables import ServerVariables
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
 
 settingsController = SettingsController()
-
+serverVariables = ServerVariables()
 
 @Singleton
 class ServerHelper(QObject):
@@ -62,7 +62,7 @@ class ServerHelper(QObject):
 
     def loadServerConfig(self, index):
         """将选定的服务器的配置加载到变量中"""
-        ServerVariables.initialize(index=index)
+        serverVariables.initialize(index=index)
 
     def selectedServer(self, index):
         """选择了服务器"""
@@ -141,7 +141,7 @@ class ServerHandler(QObject):
             NewOutput = (
                 memoryview(NewData)[self.Server.LastOutputSize : DataSize]
                 .tobytes()
-                .decode(ServerVariables)
+                .decode(serverVariables.outputDecoding)
             )
             self.serverLogOutput.emit(NewOutput)
             self.Server.LastOutputSize = DataSize
@@ -156,7 +156,7 @@ class ServerHandler(QObject):
         """
         停止服务器
         """
-        if MCSL2Settings.SendStopInsteadOfKill == True:
+        if settingsController.fileSettings['sendStopInsteadOfKill'] == True:
             self.Server.serverProcess.write(b"stop\n")
         else:
             self.haltServer()
@@ -182,42 +182,42 @@ class ServerHandler(QObject):
         用户向服务器发送命令
         """
         self.Server.serverProcess.write(
-            f"{Command}\n".encode(MCSL2Settings.ConsoleInputDecoding)
+            f"{Command}\n".encode(serverVariables.inputEncoding)
         )
 
     def isServerRunning(self):
         return self.Server.serverProcess.state() == QProcess.Running
 
 
-class ServerLauncher:
-    """
-    启动服务器的调用部分。
-    """
+# class ServerLauncher:
+#     """
+#     启动服务器的调用部分。
+#     """
 
-    def __init__(self):
-        pass
+#     def __init__(self):
+#         pass
 
-    def checkEulaAcceptStatus(self, CoreFolder):
-        try:
-            with open(f"{CoreFolder}/eula.txt", "r", encoding="utf-8") as Eula:
-                EulaText = str(Eula.read())
-                print(EulaText)
-                if "eula=true" in EulaText:
-                    return True
-                else:
-                    return False
-        except:
-            return False
+#     def checkEulaAcceptStatus(self, CoreFolder):
+#         try:
+#             with open(f"{CoreFolder}/eula.txt", "r", encoding="utf-8") as Eula:
+#                 EulaText = str(Eula.read())
+#                 print(EulaText)
+#                 if "eula=true" in EulaText:
+#                     return True
+#                 else:
+#                     return False
+#         except:
+#             return False
 
-    def acceptEula(self, CoreFolder):
-        with open(f"{CoreFolder}/eula.txt", "w+", encoding="utf-8") as AcceptEula:
-            AcceptEula.write("eula=true")
-            AcceptEula.close()
+#     def acceptEula(self, CoreFolder):
+#         with open(f"{CoreFolder}/eula.txt", "w+", encoding="utf-8") as AcceptEula:
+#             AcceptEula.write("eula=true")
+#             AcceptEula.close()
 
-    def launch(self, LaunchArg):
-        print(self.JavaPath)
-        ServerHandler(
-            processArgs=LaunchArg,
-            javaPath=self.JavaPath,
-            workingDirectory=str(realpath(f"{self.CoreFolder}")),
-        ).startServer()
+#     def launch(self, LaunchArg):
+#         print(self.JavaPath)
+#         ServerHandler(
+#             processArgs=LaunchArg,
+#             javaPath=self.JavaPath,
+#             workingDirectory=str(realpath(f"{self.CoreFolder}")),
+#         ).startServer()
