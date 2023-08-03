@@ -10,29 +10,26 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 Communicate with Minecraft servers.
-'''
+"""
 
-from json import dumps, loads
+from json import dumps
 from os.path import realpath
 from typing import List, Optional
 from MCSL2Lib.singleton import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.variables import ServerVariables
+from MCSL2Lib.publicFunctions import readGlobalServerConfig
+
 settingsController = SettingsController()
 
-def readGlobalServerConfig():
-    '''读取全局服务器配置'''
-    with open(r'MCSL2/MCSL2_ServerList.json', "r", encoding='utf-8') as globalServerConfigFile:
-        globalServerList = loads(globalServerConfigFile.read())[
-            'MCSLServerList']
-        globalServerConfigFile.close()
-    return globalServerList
 
 @Singleton
 class ServerHelper(QObject):
-    '''用以确定开启哪个服务器'''
+    """用以确定开启哪个服务器"""
+
     serverName = pyqtSignal(str)
     backToHomePage = pyqtSignal(int)
     startBtnStat = pyqtSignal(bool)
@@ -41,21 +38,42 @@ class ServerHelper(QObject):
         super().__init__()
 
     def loadAtLaunch(self):
-        '''读取上次启动的服务器'''
-        lastServerName = settingsController.fileSettings['lastServer']
+        """
+        读取上次启动的服务器，同时操作获取index。\n
+        本方法按理来说不需要被再次调用，一次即可。
+        """
+        # 不应该在这里直接启用启动服务器按钮，应先获取index补全服务器配置。
+        lastServerName = settingsController.fileSettings["lastServer"]
         if lastServerName != "":
-            self.serverName.emit(lastServerName)
-            self.startBtnStat.emit(True)
+            # 不加try小心服务器删了又得boom
+            try:
+                globalServerList = readGlobalServerConfig()
+                # index = [d.get("lastServer") for d in globalServerList].index(lastServerName)
+                index = [
+                    index
+                    for index, item in enumerate(globalServerList)
+                    if item["lastServer"] == lastServerName
+                ][0]
+                self.loadServerConfig(index=index)
+            except Exception:
+                self.startBtnStat.emit(False)
         else:
             self.startBtnStat.emit(False)
 
+    def loadServerConfig(self, index):
+        """将选定的服务器的配置加载到变量中"""
+        ServerVariables(index=index)
+
     def selectedServer(self, index):
-        '''选择了服务器'''
-        self.serverName.emit(readGlobalServerConfig()[index]['name'])
+        """选择了服务器"""
+        self.loadServerConfig(index=index)
+        self.serverName.emit(readGlobalServerConfig()[index]["name"])
         self.backToHomePage.emit(0)
         self.startBtnStat.emit(True)
-        # 防止和设置页冲突导致设置无效，得这样写
-        settingsController.unSavedSettings.update({"lastServer": readGlobalServerConfig()[index]['name']})
+        # 防止和设置页冲突导致设置无效，得这样写，立刻保存变量以及文件
+        settingsController.unSavedSettings.update(
+            {"lastServer": readGlobalServerConfig()[index]["name"]}
+        )
         settingsController.fileSettings.update(settingsController.unSavedSettings)
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
             writeConfig.write(dumps(settingsController.fileSettings, indent=4))
@@ -63,13 +81,15 @@ class ServerHelper(QObject):
 
 
 class Server:
-    '''服务器进程'''
+    """服务器进程"""
+
     def __init__(self):
         self.serverProcess: Optional[QProcess] = None
         self.LastOutputSize = 0
 
+
 class ServerHandler(QObject):
-    '''服务器进程操控器'''
+    """服务器进程操控器"""
 
     # 当服务器输出日志时发出的信号(发送一个字符串)
     serverLogOutput = pyqtSignal(str)
@@ -92,7 +112,6 @@ class ServerHandler(QObject):
         self.workingDirectory = workingDirectory
         self.Server = self.getServerProcess()
 
-
     def getServerProcess(self) -> Server:
         """
         获取一个服务器进程，但是并没有运行，只是创建了一个QProcess对象
@@ -103,9 +122,11 @@ class ServerHandler(QObject):
         server.serverProcess.setArguments(self.processArgs)
         server.serverProcess.setWorkingDirectory(self.workingDirectory)
         server.serverProcess.readyReadStandardOutput.connect(
-            self.serverLogOutputHandler)
+            self.serverLogOutputHandler
+        )
         server.serverProcess.finished.connect(
-            lambda: self.serverClosed.emit(server.serverProcess.exitCode()))
+            lambda: self.serverClosed.emit(server.serverProcess.exitCode())
+        )
 
         return server
 
@@ -117,8 +138,11 @@ class ServerHandler(QObject):
         DataSize = NewData.size()
         if DataSize > self.Server.LastOutputSize:
             # 截取新的输出,由于data可能会达到MB级别，所以使用memoryview来对付QByteArray
-            NewOutput = memoryview(NewData)[self.Server.LastOutputSize:DataSize].tobytes(
-            ).decode(MCSL2Settings.ConsoleOutputEncoding)
+            NewOutput = (
+                memoryview(NewData)[self.Server.LastOutputSize : DataSize]
+                .tobytes()
+                .decode(MCSL2Settings.ConsoleOutputEncoding)
+            )
             self.serverLogOutput.emit(NewOutput)
             self.Server.LastOutputSize = DataSize
 
@@ -157,64 +181,21 @@ class ServerHandler(QObject):
         """
         用户向服务器发送命令
         """
-        self.Server.serverProcess.write(f"{Command}\n".encode(
-            MCSL2Settings.ConsoleInputDecoding))
+        self.Server.serverProcess.write(
+            f"{Command}\n".encode(MCSL2Settings.ConsoleInputDecoding)
+        )
 
     def isServerRunning(self):
         return self.Server.serverProcess.state() == QProcess.Running
 
+
 class ServerLauncher:
+    """
+    启动服务器的调用部分。
+    """
+
     def __init__(self):
-        self.GetMonitor = None
-        self.Monitor = None
-        self.MaxMemory = None
-        self.MinMemory = None
-        self.MemoryUnit = None
-        self.ServerName = None
-        self.JavaPath = None
-        self.CoreName = None
-        self.CoreFolder = None
-        self.JVMArg = None
-        self.EnableJVMArg = False
-
-    def getGlobalServerConfig(self, ServerIndexNum):
-        with open(r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8") as ReadGlobalConfig:
-            GlobalJson = loads(ReadGlobalConfig.read())
-            ServerConfig = GlobalJson['MCSLServerList'][int(ServerIndexNum)]
-            self.ServerName = ServerConfig['name']
-            self.CoreName = ServerConfig['core_file_name']
-            self.CoreFolder = realpath(f"./Servers/{self.ServerName}/")
-            self.MinMemory = ServerConfig['min_memory']
-            self.MaxMemory = ServerConfig['max_memory']
-            self.MemoryUnit = ServerConfig['memory_unit']
-            self.JavaPath = ServerConfig['java_path']
-            if ServerConfig['jvm_arg'] != "":
-                self.EnableJVMArg = True
-                self.JVMArg = ServerConfig['jvm_arg']
-            else:
-                self.EnableJVMArg = False
-            ReadGlobalConfig.close()
-        self.setLaunchCommand()
-
-    def setLaunchCommand(self):
-        if self.EnableJVMArg == True:
-            LaunchArg = [f"-Xms{self.MinMemory}{self.MemoryUnit}", f"-Xmx{self.MaxMemory}{self.MemoryUnit}",
-                         f"{self.JVMArg}", "-jar", f"{self.CoreFolder}\\{self.CoreName}"]
-        else:
-            LaunchArg = [f"-Xms{self.MinMemory}{self.MemoryUnit}",
-                         f"-Xmx{self.MaxMemory}{self.MemoryUnit}", "-jar", f"{self.CoreFolder}\\{self.CoreName}"]
-        if self.checkEulaAcceptStatus(self.CoreFolder) == True:
-            self.launch(LaunchArg)
-        else:
-            ReturnStatus = CallMCSL2Dialog(
-                Tip="ServerControllerNoAcceptedMojangEula",
-                OtherTextArg=None,
-                isNeededTwoButtons=1, ButtonArg="确定|取消")
-            if ReturnStatus == 1:
-                self.acceptEula(self.CoreFolder)
-                self.launch(LaunchArg)
-            else:
-                pass
+        pass
 
     def checkEulaAcceptStatus(self, CoreFolder):
         try:
@@ -235,5 +216,8 @@ class ServerLauncher:
 
     def launch(self, LaunchArg):
         print(self.JavaPath)
-        ServerHandler(processArgs=LaunchArg, javaPath=self.JavaPath,
-                      workingDirectory=str(realpath(f"{self.CoreFolder}"))).startServer()
+        ServerHandler(
+            processArgs=LaunchArg,
+            javaPath=self.JavaPath,
+            workingDirectory=str(realpath(f"{self.CoreFolder}")),
+        ).startServer()
