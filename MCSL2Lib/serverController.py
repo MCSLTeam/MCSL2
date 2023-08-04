@@ -248,7 +248,6 @@ class ServerLauncher:
         for i in range(len(serverVariables.jvmArg)):
             if serverVariables.jvmArg[i] != "" and serverVariables.jvmArg[i] != "-Dlog4j2.formatMsgNoLookups=true":
                 self.jvmArg.insert(2, serverVariables.jvmArg[i])
-        print(self.jvmArg)
 
     def launch(self):
         """启动进程"""
