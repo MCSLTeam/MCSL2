@@ -43,7 +43,6 @@ class ConfigureServerVariables:
         self.serverName: str = ""
 
     def resetToDefault(self):
-        self.javaPath: list = []
         self.minMem: int
         self.maxMem: int
         self.corePath: str = ""
@@ -97,8 +96,6 @@ class EditServerVariables:
         self.memUnitList = ["M", "G"]
 
     def resetToDefault(self):
-        self.javaPath: list = []
-
         self.oldMinMem: int
         self.oldMaxMem: int
         self.oldCorePath: str = ""
