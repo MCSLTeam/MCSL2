@@ -35,7 +35,7 @@ def initializeMCSL2():
     初始化程序
     """
 
-    folders = ["Servers", "Plugins", "MCSL2", "MCSL2/Logs", "MCSL2/Aria2", "MCSL2/Downloads"]
+    folders = ["Servers", "Plugins", "MCSL2", "MCSL2/Aria2", "MCSL2/Downloads"]
     for folder in folders:
         if not ospath.exists(folder):
             makedirs(folder)
