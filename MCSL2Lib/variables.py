@@ -181,8 +181,8 @@ class ServerVariables:
     
     def translateCoding(self):
         if self.outputDecoding == "follow":
-            self.outputDecoding = settingsController['outputDeEncoding']
+            self.outputDecoding = settingsController.fileSettings['outputDeEncoding']
         if self.inputEncoding == "follow":  # 跟随全局
-            self.inputEncoding = settingsController['inputDeEncoding']
+            self.inputEncoding = settingsController.fileSettings['inputDeEncoding']
             if self.inputEncoding == "follow":  # 跟随输出
                 self.inputEncoding = self.outputDecoding
