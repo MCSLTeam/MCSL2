@@ -18,8 +18,8 @@ from datetime import datetime
 from json import dumps
 from typing import Union
 from MCSL2Lib.networkController import Session
-from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QUrl, QThread, pyqtSlot
-from PyQt5.QtGui import QColor, QDesktopServices
+from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QThread, pyqtSlot
+from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -50,6 +50,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
+from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.settingsController import SettingsController
@@ -1156,13 +1157,13 @@ class SettingsPage(QWidget):
         self.checkUpdateBtn.clicked.connect(self.checkUpdate)
 
         self.joinQQGroup.clicked.connect(
-            lambda: self.openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ")
+            lambda: openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ")
         )
         self.openOfficialWeb.clicked.connect(
-            lambda: self.openWebUrl("https://mcsl.com.cn")
+            lambda: openWebUrl("https://mcsl.com.cn")
         )
         self.openSourceCodeRepo.clicked.connect(
-            lambda: self.openWebUrl("https://www.github.com/MCSLTeam/MCSL2")
+            lambda: openWebUrl("https://www.github.com/MCSLTeam/MCSL2")
         )
         self.generateSysReport.clicked.connect(self.generateSystemReport)
 
@@ -1392,9 +1393,7 @@ class SettingsPage(QWidget):
             settingsController.fileSettings["checkUpdateOnStart"]
         )
 
-    def openWebUrl(self, Url):
-        """打开网址"""
-        QDesktopServices.openUrl(QUrl(Url))
+
 
     def checkUpdate(self):
         """

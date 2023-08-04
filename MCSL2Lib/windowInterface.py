@@ -17,7 +17,6 @@ The main window of MCSL2.
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
-from typing import Optional
 from qfluentwidgets import (
     NavigationBar,
     NavigationItemPosition,
@@ -28,6 +27,8 @@ from qfluentwidgets import (
     setThemeColor,
     InfoBar,
     InfoBarPosition,
+    MessageBox,
+    HyperlinkButton,
 )
 from qframelesswindow import FramelessWindow, TitleBar
 
@@ -51,7 +52,8 @@ from MCSL2Lib.variables import (
 )
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.serverController import ServerHelper
+from MCSL2Lib.serverController import MojangEula, ServerHandler, ServerHelper, ServerLauncher
+from MCSL2Lib.publicFunctions import openWebUrl
 
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
@@ -330,6 +332,7 @@ class Window(FramelessWindow):
         serverHelper.serverName.connect(self.homeInterface.afterSelectedServer)
         serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
         serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)
+        self.homeInterface.startServerBtn.clicked.connect(self.startServer)
 
         # 设置
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
@@ -377,3 +380,28 @@ class Window(FramelessWindow):
         self.selectNewJavaPage.setJavaPath.connect(
             self.serverManagerInterface.setJavaPath
         )
+
+        # 终端
+        ServerHandler().serverLogOutput.connect(self.consoleInterface.serverOutput.appendPlainText)
+        self.consoleInterface.sendCommandButton.clicked.connect(lambda: ServerHandler().sendCommand(command=self.consoleInterface.commandLineEdit.text()))
+
+    def startServer(self):
+        """总函数，直接放这里得了"""
+        firstTry = ServerLauncher().startServer()
+        if not firstTry:
+            w = MessageBox(
+                title="提示",
+                content="你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。",
+                parent=self,
+            )
+            w.yesButton.setText("同意")
+            w.yesButton.clicked.connect(lambda: MojangEula().acceptEula())
+            w.cancelButton.setText("拒绝")
+            eulaBtn = HyperlinkButton()
+            eulaBtn.setText("Eula")
+            eulaBtn.clicked.connect(lambda: openWebUrl(MojangEula().eulaURL))
+            w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
+            w.exec()
+        else:
+            ServerLauncher().startServer()
+            self.switchTo(self.consoleInterface)

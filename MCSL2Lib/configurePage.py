@@ -1583,14 +1583,14 @@ class ConfigurePage(QWidget):
         if currentNewServerType == 2:
             # 有写
             if self.JVMArgPlainTextEdit.document() != "":
-                configureServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
+                configureServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
             else:
-                configureServerVariables.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
+                configureServerVariables.jvmArg.append("-Dlog4j2.formatMsgNoLookups=true")
                 return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         elif currentNewServerType == 1:
-            configureServerVariables.jvmArg = "-Dlog4j2.formatMsgNoLookups=true"
+            configureServerVariables.jvmArg.append("-Dlog4j2.formatMsgNoLookups=true")
             return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
 
     def checkMemUnitSet(self, currentNewServerType):
@@ -1666,7 +1666,7 @@ class ConfigurePage(QWidget):
             w.cancelButton.setParent(None)
             w.exec()
         else:
-            totalJVMArg = configureServerVariables.jvmArg.replace(" ", "\n")
+            totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
             title = f"请再次检查你设置的参数是否有误："
             content = (
                 f"{totalResultMsg}\n"

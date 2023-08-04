@@ -959,7 +959,7 @@ class ServerManagerPage(QWidget):
         self.coreLineEdit.setText(globalConfig[index]["core_file_name"])
         self.coreLineEdit.setEnabled(False)
         self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.JVMArgPlainTextEdit.setPlainText(globalConfig[index]["jvm_arg"])
+        self.JVMArgPlainTextEdit.setPlainText(" ".join(editServerVariables.jvmArg))
         self.editServerNameLineEdit.setText(globalConfig[index]["name"])
         self.iconsList = [
             "铁砧",
@@ -1308,10 +1308,7 @@ class ServerManagerPage(QWidget):
     def checkJVMArgSet(self):
         """检查JVM参数设置"""
         if self.JVMArgPlainTextEdit.document() != "":
-            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
-            return "JVM参数检查：正常", 0
-        if self.JVMArgPlainTextEdit.document() != "":
-            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText()
+            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
             return "JVM参数检查：正常", 0
 
     def checkMemUnitSet(self):
@@ -1388,7 +1385,7 @@ class ServerManagerPage(QWidget):
                 w.cancelButton.setParent(None)
                 w.exec()
             else:
-                totalJVMArg = editServerVariables.jvmArg.replace(" ", "\n")
+                totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
                 title = f"请再次检查你设置的参数是否有误："
                 content = (
                     f"{totalResultMsg}\n"

@@ -39,7 +39,7 @@ class ConfigureServerVariables:
         self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
-        self.jvmArg: str = ""
+        self.jvmArg: list[str] = [""]
         self.serverName: str = ""
 
     def resetToDefault(self):
@@ -55,7 +55,7 @@ class ConfigureServerVariables:
         self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
-        self.jvmArg: str = ""
+        self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.icon: str = ""
 
@@ -74,7 +74,7 @@ class EditServerVariables:
         self.oldCoreFileName: str = ""
         self.oldSelectedJavaPath: str = ""
         self.oldMemUnit: str = ""
-        self.oldJVMArg: str = ""
+        self.oldJVMArg: list[str] = [""]
         self.oldServerName: str = ""
         self.oldConsoleOutputDeEncoding: str = "follow"
         self.oldConsoleInputDeEncoding: str = "follow"
@@ -85,7 +85,7 @@ class EditServerVariables:
         self.coreFileName: str = ""
         self.selectedJavaPath: str = ""
         self.memUnit: str = ""
-        self.jvmArg: str = ""
+        self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
@@ -103,7 +103,7 @@ class EditServerVariables:
         self.oldSelectedJavaPath: str = ""
         self.oldSelectedJavaVersion: str = ""
         self.oldSemUnit: str = ""
-        self.oldJVMArg: str = ""
+        self.oldJVMArg: list[str] = [""]
         self.oldServerName: str = ""
         self.oldConsoleOutputDeEncoding: str = "follow"
         self.oldConsoleInputDeEncoding: str = "follow"
@@ -116,7 +116,7 @@ class EditServerVariables:
         self.selectedJavaPath: str = ""
         self.selectedJavaVersion: str = ""
         self.memUnit: str = ""
-        self.jvmArg: str = ""
+        self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
@@ -161,7 +161,7 @@ class ServerVariables:
         self.minMem: int = 0
         self.maxMem: int = 0
         self.memUnit: str = "M"
-        self.jvmArg: str = "-Dlog4j2.formatMsgNoLookups=true"
+        self.jvmArg: list[str] = [""]
         self.outputDecoding: str = "utf-8"
         self.inputEncoding: str = "utf-8"
         # self.icon = serverConfig['icon']  不需要。
