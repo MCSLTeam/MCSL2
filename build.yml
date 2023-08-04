@@ -5,7 +5,7 @@ on: [push, workflow_dispatch]
 permissions: write-all
 
 jobs:
-  BuildWindowsVersion:
+  Windows:
     strategy:
       fail-fast: false
 
@@ -15,8 +15,9 @@ jobs:
         architecture:
           - x64
           - x86
+          - arm64
         mcsl2version: 
-          - 2.1.3.8
+          - 2.1.4.0
 
     runs-on: ${{ matrix.os }}
 
@@ -32,28 +33,33 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            requirements.dev.txt
 
       - name: Update Pip and Install Requirements
         run: |
           python -m pip install pip setuptools -U
-          python -m pip install -r requirements.txt -r requirements.dev.txt
+          python -m pip install -r requirements.txt
 
       - name: Build on Windows
         run: >
           python -m nuitka
           --standalone
+          --mingw64
           --enable-plugin=pyqt5
-          --onefile
           --output-dir=build
           --assume-yes-for-downloads
-          --windows-disable-console
           --windows-icon-from-ico=MCSL2.ico
-          --windows-company-name="LxHTT"
+          --windows-company-name="MCSLTeam"
+          --disable-console
           --windows-product-name="MCSL 2"
           --windows-file-version=${{ matrix.mcsl2version }}
           --windows-product-version=${{ matrix.mcsl2version }}
           --windows-file-description="MC Server Launcher 2"
+          --include-data-dir=resource/dark=resource/dark
+          --include-data-dir=resource/light=resource/light
+          --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
+          --follow-import-to=Adapters
+          --follow-import-to=MCSL2Lib
+          --lto=no
           MCSL2.py
 
       - name: Upload Artifacts
@@ -61,9 +67,9 @@ jobs:
         with:
           name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
           path: |
-            build/*.exe
+            build/**/*
 
-  BuildmacOSVersion:
+  macOS:
     strategy:
       fail-fast: false
 
@@ -72,8 +78,9 @@ jobs:
           - macos-latest
         architecture:
           - x64
+          - arm64
         mcsl2version: 
-          - 2.1.3.8
+          - 2.1.4.0
 
     runs-on: ${{ matrix.os }}
 
@@ -88,12 +95,11 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            requirements.dev.txt
 
       - name: Update Pip and Install Requirements
         run: |
           python -m pip install pip setuptools -U
-          python -m pip install -r requirements.txt -r requirements.dev.txt
+          python -m pip install -r requirements.txt
           
       - name: Install create-dmg
         run: | 
@@ -107,19 +113,26 @@ jobs:
       - name: Build on macOS
         run: >
           python -m nuitka
+          --enable-plugin=pyqt5
+          --assume-yes-for-downloads
+          --macos-app-icon=MCSL2.icns
+          --disable-console
+          --include-data-dir=resource/dark=resource/dark
+          --include-data-dir=resource/light=resource/light
+          --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
+          --follow-import-to=Adapters
+          --follow-import-to=MCSL2Lib
+          --lto=no
           --standalone
           --onefile
           --macos-create-app-bundle
-          --disable-console
           --output-dir=MCSL2Main
-          --assume-yes-for-download
           --enable-plugin=pyqt5
           --include-data-dir=PyQt5/Qt5=PyQt5/Qt5
           --macos-app-version=${{ matrix.mcsl2version }}
-          --macos-app-icon=MCSL2.icns
           MCSL2App.py
           
-      - name: Fix Nuitka-built Ap
+      - name: Fix Nuitka-built App
         run: | 
           cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
           cp -r MCSL2Main/Resources/ MCSL2Main/MCSL2App.app/Contents/Resources/
@@ -138,7 +151,7 @@ jobs:
           path: |
             MCSL2Main/*.dmg
 
-  BuildLinuxVersion:
+  Linux:
     strategy:
       fail-fast: false
 
@@ -148,8 +161,9 @@ jobs:
         architecture:
           - x64
           - x86
+          - arm64
         mcsl2version: 
-          - 2.1.3.8
+          - 2.1.4.0
 
     runs-on: ${{ matrix.os }}
 
@@ -164,12 +178,11 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            requirements.dev.txt
 
       - name: Update Pip and Install Requirements
         run: |
           python -m pip install pip setuptools -U
-          python -m pip install -r requirements.txt -r requirements.dev.txt
+          python -m pip install -r requirements.txt
 
       - name: Install Dependencies for Linux
         run: |
@@ -179,13 +192,20 @@ jobs:
       - name: Build on Linux
         run: >
           python -m nuitka
-          --standalone
+          --mingw64
           --enable-plugin=pyqt5
+          --assume-yes-for-downloads
+          --disable-console
+          --include-data-dir=resource/dark=resource/dark
+          --include-data-dir=resource/light=resource/light
+          --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
+          --follow-import-to=Adapters
+          --follow-import-to=MCSL2Lib
+          --lto=no
           --onefile
           --output-dir=build
-          --assume-yes-for-downloads
           --linux-icon=MCSL2.ico
-          --company-name="LxHTT"
+          --company-name="MCSL Team"
           --product-name="MCSL 2"
           --file-version=${{ matrix.mcsl2version }}
           --product-version=${{ matrix.mcsl2version }}
@@ -199,18 +219,18 @@ jobs:
           path: |
             build/*.bin
 
-  CreateRelease:
+  Release:
     runs-on: ubuntu-latest
 
     needs:
-      - BuildWindowsVersion
-      - BuildmacOSVersion
-      - BuildLinuxVersion
+      - Windows
+      - macOS
+      - Linux
     
     strategy:
       matrix:
         mcsl2version: 
-          - 2.1.3.8
+          - 2.1.4.0
 
     steps:
 
@@ -231,8 +251,6 @@ jobs:
           
       - name: Compress Artifacts
         run: |
-          7z a "MCSL2-${{ matrix.mcsl2version }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
-          7z a "MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
 
@@ -245,6 +263,8 @@ jobs:
           tag_name: v${{ matrix.mcsl2version }}
           files: |
             *.zip
+            ./MCSL2-Linux-x64/*
+            ./MCSL2-Linux-x86/*
             ./MCSL2-macOS-x64/*.dmg
             
         env:
