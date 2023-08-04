@@ -14,9 +14,10 @@
 These are the built-in functions of MCSL2. They are just for solving the circular import.
 """
 
-
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import QUrl
 from json import loads, dumps
-from os import mkdir, path as ospath, remove
+from os import makedirs, path as ospath, remove
 
 
 def readGlobalServerConfig() -> list:
@@ -32,32 +33,16 @@ def readGlobalServerConfig() -> list:
 def initializeMCSL2():
     """
     初始化程序
-    各位开发者请注意，这块是屎山if集中地 --- LxHTT
     """
 
-    # 最外层文件夹
-    if not ospath.exists(r"Servers"):
-        mkdir(r"./Servers")
-    if not ospath.exists(r"Plugins"):
-        mkdir(r"./Plugins")
-    if not ospath.exists(r"MCSL2"):
-        # 如果没有，如下文件夹肯定也没有
-        mkdir(r"MCSL2")
-        mkdir(r"MCSL2/Logs")
-        mkdir(r"MCSL2/Aria2")
-        mkdir(r"MCSL2/Downloads")
+    folders = ["Servers", "Plugins", "MCSL2", "MCSL2/Logs", "MCSL2/Aria2", "MCSL2/Downloads"]
+    for folder in folders:
+        if not ospath.exists(folder):
+            makedirs(folder)
 
-    # 如果有MCSL2目录，是否有Aria2目录
-    elif not ospath.exists(r"MCSL2/Aria2"):
-        mkdir(r"MCSL2/Aria2")
-        # 如果有Aria2目录，是否有Downloads目录
-        if not ospath.exists(r"MCSL2/Downloads"):
-            mkdir(r"MCSL2/Downloads")
-    else:
-        pass
-    if not ospath.exists(r"./MCSL2/MCSL2_Config.json"):
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as InitConfig:
-            ConfigTemplate = {
+    if ospath.getsize(r"./MCSL2/MCSL2_Config.json") == 0 or not ospath.exists(r"./MCSL2/MCSL2_Config.json"):
+        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
+            configTemplate = {
                 "autoRunLastServer": False,
                 "acceptAllMojangEula": False,
                 "sendStopInsteadOfKill": True,
@@ -77,37 +62,17 @@ def initializeMCSL2():
                 "checkUpdateOnStart": False,
                 "lastServer": "",
             }
-            InitConfig.write(dumps(ConfigTemplate, indent=4))
-            InitConfig.close()
-    if ospath.getsize(r"./MCSL2/MCSL2_Config.json") == 0:
-        remove(r"./MCSL2/MCSL2_Config.json")
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as FixConfig:
-            ConfigTemplate = {
-                "autoRunLastServer": False,
-                "acceptAllMojangEula": False,
-                "sendStopInsteadOfKill": True,
-                "newServerType": "Default",
-                "onlySaveGlobalServerConfig": False,
-                "downloadSource": "FastMirror",
-                "alwaysAskSaveDirectory": False,
-                "aria2Thread": 8,
-                "saveSameFileException": "ask",
-                "outputDeEncoding": "utf-8",
-                "inputDeEncoding": "follow",
-                "quickMenu": True,
-                "theme": "auto",
-                "themeColor": "#0078d4",
-                "alwaysRunAsAdministrator": False,
-                "startOnStartup": False,
-                "checkUpdateOnStart": False,
-                "lastServer": "",
-            }
-            FixConfig.write(dumps(ConfigTemplate, indent=4))
-            FixConfig.close()
+            config.write(dumps(configTemplate, indent=4))
+            config.close()
+    
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
             r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-        ) as InitServerList:
-            ServerListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
-            InitServerList.write(ServerListTemplate)
-            InitServerList.close()
+        ) as serverList:
+            serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
+            serverList.write(serverListTemplate)
+            serverList.close()
+
+def openWebUrl(Url):
+    """打开网址"""
+    QDesktopServices.openUrl(QUrl(Url))
