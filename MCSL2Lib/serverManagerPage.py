@@ -935,7 +935,6 @@ class ServerManagerPage(QWidget):
     #    编辑服务器    #
     ##################
     def initEditServerInterface(self, index):
-        print("init")
         """初始化编辑服务器界面"""
         globalConfig: list = readGlobalServerConfig()
         self.stackedWidget.setCurrentIndex(1)
