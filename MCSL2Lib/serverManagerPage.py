@@ -959,7 +959,7 @@ class ServerManagerPage(QWidget):
         self.coreLineEdit.setText(globalConfig[index]["core_file_name"])
         self.coreLineEdit.setEnabled(False)
         self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.JVMArgPlainTextEdit.setPlainText(" ".join(editServerVariables.jvmArg))
+        self.JVMArgPlainTextEdit.setPlainText(" ".join(editServerVariables.oldJVMArg))
         self.editServerNameLineEdit.setText(globalConfig[index]["name"])
         self.iconsList = [
             "铁砧",
@@ -1027,7 +1027,7 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldMemUnit = editServerVariables.memUnit = globalConfig[
             index
         ]["memory_unit"]
-        editServerVariables.oldJVMArg = editServerVariables.jvmArg = globalConfig[
+        editServerVariables.oldJVMArg = editServerVariables.oldJVMArg = globalConfig[
             index
         ]["jvm_arg"]
         editServerVariables.oldServerName = (
@@ -1308,7 +1308,7 @@ class ServerManagerPage(QWidget):
     def checkJVMArgSet(self):
         """检查JVM参数设置"""
         if self.JVMArgPlainTextEdit.document() != "":
-            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
+            editServerVariables.oldJVMArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
             return "JVM参数检查：正常", 0
 
     def checkMemUnitSet(self):
@@ -1385,7 +1385,7 @@ class ServerManagerPage(QWidget):
                 w.cancelButton.setParent(None)
                 w.exec()
             else:
-                totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
+                totalJVMArg: str = "\n".join(editServerVariables.oldJVMArg)
                 title = f"请再次检查你设置的参数是否有误："
                 content = (
                     f"{totalResultMsg}\n"
@@ -1418,7 +1418,7 @@ class ServerManagerPage(QWidget):
             "min_memory": editServerVariables.minMem,
             "max_memory": editServerVariables.maxMem,
             "memory_unit": editServerVariables.memUnit,
-            "jvm_arg": editServerVariables.jvmArg,
+            "jvm_arg": editServerVariables.oldJVMArg,
             "output_decoding": editServerVariables.consoleOutputDeEncoding,
             "input_encoding": editServerVariables.consoleInputDeEncoding,
             "icon": editServerVariables.icon,
@@ -1528,7 +1528,7 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldCoreFileName = editServerVariables.coreFileName
         editServerVariables.oldSelectedJavaPath = editServerVariables.selectedJavaPath
         editServerVariables.oldMemUnit = editServerVariables.memUnit
-        editServerVariables.oldJVMArg = editServerVariables.jvmArg
+        editServerVariables.oldJVMArg = editServerVariables.oldJVMArg
         editServerVariables.oldServerName = editServerVariables.serverName
         editServerVariables.oldConsoleOutputDeEncoding = (
             editServerVariables.consoleOutputDeEncoding
@@ -1550,7 +1550,7 @@ class ServerManagerPage(QWidget):
             and editServerVariables.oldSelectedJavaPath
             == editServerVariables.selectedJavaPath
             and editServerVariables.oldMemUnit == editServerVariables.memUnit
-            and editServerVariables.oldJVMArg == editServerVariables.jvmArg
+            and editServerVariables.oldJVMArg == editServerVariables.oldJVMArg
             and editServerVariables.oldServerName == editServerVariables.serverName
             and editServerVariables.oldConsoleOutputDeEncoding
             == editServerVariables.consoleOutputDeEncoding
