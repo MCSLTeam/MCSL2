@@ -1772,7 +1772,21 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
-            configureServerVariables.resetToDefault()
+            if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
+                configureServerVariables.resetToDefault()
+                if self.newServerStackedWidget.currentIndex() == 1:
+                    self.noobJavaInfoLabel.setText("[选择的Java的信息]")
+                    self.noobMinMemLineEdit.setText("")
+                    self.noobMaxMemLineEdit.setText("")
+                    self.noobServerNameLineEdit.setText("")
+                elif self.newServerStackedWidget.currentIndex() == 2:
+                    self.extendedJavaInfoLabel.setText("[选择的Java的信息]")
+                    self.extendedMinMemLineEdit.setText("")
+                    self.extendedMaxMemLineEdit.setText("")
+                    self.extendedServerNameLineEdit.setText("")
+                    self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
+                    self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
+                    self.JVMArgPlainTextEdit.setPlainText("")
         else:
             InfoBar.error(
                 title="失败",

@@ -52,7 +52,12 @@ from MCSL2Lib.variables import (
 )
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.serverController import MojangEula, ServerHandler, ServerHelper, ServerLauncher
+from MCSL2Lib.serverController import (
+    MojangEula,
+    ServerHandler,
+    ServerHelper,
+    ServerLauncher,
+)
 from MCSL2Lib.publicFunctions import openWebUrl
 
 settingsController = SettingsController()
@@ -382,16 +387,26 @@ class Window(FramelessWindow):
         )
 
         # 终端
-        ServerHandler().serverLogOutput.connect(self.consoleInterface.serverOutput.appendPlainText)
-        self.consoleInterface.sendCommandButton.clicked.connect(lambda: ServerHandler().sendCommand(command=self.consoleInterface.commandLineEdit.text()))
+        ServerHandler().serverLogOutput.connect(
+            self.consoleInterface.serverOutput.appendPlainText
+        )
+        self.consoleInterface.sendCommandButton.clicked.connect(
+            lambda: self.sendCommand(
+                command=self.consoleInterface.commandLineEdit.text()
+            )
+        )
+        if settingsController.fileSettings["clearConsoleWhenStopServer"]:
+            ServerHandler().AServer.serverProcess.finished.connect(
+                lambda: self.consoleInterface.serverOutput.setPlainText("")
+            )
 
     def startServer(self):
-        """总函数，直接放这里得了"""
+        """启动服务器总函数，直接放这里得了"""
         firstTry = ServerLauncher().startServer()
         if not firstTry:
             w = MessageBox(
                 title="提示",
-                content="你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。",
+                content="你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，请尝试再次开启服务器",
                 parent=self,
             )
             w.yesButton.setText("同意")
@@ -403,5 +418,19 @@ class Window(FramelessWindow):
             w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
             w.exec()
         else:
-            ServerLauncher().startServer()
             self.switchTo(self.consoleInterface)
+            self.consoleInterface.serverOutput.setPlainText("")
+
+    def sendCommand(self, command):
+        if ServerHandler().isServerRunning():
+            ServerHandler().sendCommand(command=command)
+            self.consoleInterface.commandLineEdit.clear()
+        else:
+            w = MessageBox(
+                title="失败",
+                content="服务器并未开启，请先开启服务器。",
+                parent=self,
+            )
+            w.yesButton.setText("好")
+            w.cancelButton.setParent(None)
+            w.exec()

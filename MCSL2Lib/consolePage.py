@@ -230,7 +230,7 @@ class ConsolePage(QWidget):
         self.exitServer.setText("关闭服务器")
         self.killServer.setText("强制关闭")
         self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送")
-        self.serverOutput.setPlaceholderText("请先开启服务器！\n不开服务器没有日志的喂")
+        self.serverOutput.setPlaceholderText("请先开启服务器！不开服务器没有日志的喂")
         self.sendCommandButton.setEnabled(False)
         self.commandLineEdit.textChanged.connect(self.enableSendCommandBtn)
 

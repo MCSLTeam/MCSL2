@@ -151,7 +151,7 @@ class SettingsPage(QWidget):
         self.settingsSmoothScrollArea.setObjectName("settingsSmoothScrollArea")
 
         self.settingsScrollAreaWidgetContents = QWidget()
-        self.settingsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 653, 1505))
+        self.settingsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 653, 1625))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -315,65 +315,67 @@ class SettingsPage(QWidget):
             self.configureSettings.sizePolicy().hasHeightForWidth()
         )
         self.configureSettings.setSizePolicy(sizePolicy)
-        self.configureSettings.setMinimumSize(QSize(630, 150))
-        self.configureSettings.setMaximumSize(QSize(16777215, 150))
+        self.configureSettings.setMinimumSize(QSize(630, 210))
+        self.configureSettings.setMaximumSize(QSize(16777215, 210))
         self.configureSettings.setObjectName("configureSettings")
 
         self.gridLayout_15 = QGridLayout(self.configureSettings)
         self.gridLayout_15.setObjectName("gridLayout_15")
 
-        self.onlySaveGlobalServerConfig = QWidget(self.configureSettings)
+        self.clearAllNewServerConfigInProgram = QWidget(self.configureSettings)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.onlySaveGlobalServerConfig.sizePolicy().hasHeightForWidth()
+            self.clearAllNewServerConfigInProgram.sizePolicy().hasHeightForWidth()
         )
-        self.onlySaveGlobalServerConfig.setSizePolicy(sizePolicy)
-        self.onlySaveGlobalServerConfig.setObjectName("onlySaveGlobalServerConfig")
+        self.clearAllNewServerConfigInProgram.setSizePolicy(sizePolicy)
+        self.clearAllNewServerConfigInProgram.setObjectName(
+            "clearAllNewServerConfigInProgram"
+        )
 
-        self.horizontalLayout_63 = QHBoxLayout(self.onlySaveGlobalServerConfig)
-        self.horizontalLayout_63.setObjectName("horizontalLayout_63")
+        self.horizontalLayout_65 = QHBoxLayout(self.clearAllNewServerConfigInProgram)
+        self.horizontalLayout_65.setObjectName("horizontalLayout_65")
 
-        self.onlySaveGlobalServerConfigTitle = BodyLabel(
-            self.onlySaveGlobalServerConfig
+        self.clearAllNewServerConfigInProgramTitle = BodyLabel(
+            self.clearAllNewServerConfigInProgram
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.onlySaveGlobalServerConfigTitle.sizePolicy().hasHeightForWidth()
+            self.clearAllNewServerConfigInProgramTitle.sizePolicy().hasHeightForWidth()
         )
-        self.onlySaveGlobalServerConfigTitle.setSizePolicy(sizePolicy)
-        self.onlySaveGlobalServerConfigTitle.setObjectName(
-            "onlySaveGlobalServerConfigTitle"
+        self.clearAllNewServerConfigInProgramTitle.setSizePolicy(sizePolicy)
+        self.clearAllNewServerConfigInProgramTitle.setObjectName(
+            "clearAllNewServerConfigInProgramTitle"
         )
 
-        self.horizontalLayout_63.addWidget(self.onlySaveGlobalServerConfigTitle)
+        self.horizontalLayout_65.addWidget(self.clearAllNewServerConfigInProgramTitle)
         spacerItem6 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_63.addItem(spacerItem6)
-        self.onlySaveGlobalServerConfigSwitchBtn = SwitchButton(
-            self.onlySaveGlobalServerConfig
+        self.horizontalLayout_65.addItem(spacerItem6)
+        self.clearAllNewServerConfigInProgramSwitchBtn = SwitchButton(
+            self.clearAllNewServerConfigInProgram
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.onlySaveGlobalServerConfigSwitchBtn.sizePolicy().hasHeightForWidth()
+            self.clearAllNewServerConfigInProgramSwitchBtn.sizePolicy().hasHeightForWidth()
         )
-        self.onlySaveGlobalServerConfigSwitchBtn.setSizePolicy(sizePolicy)
-        self.onlySaveGlobalServerConfigSwitchBtn.setObjectName(
-            "onlySaveGlobalServerConfigSwitchBtn"
+        self.clearAllNewServerConfigInProgramSwitchBtn.setSizePolicy(sizePolicy)
+        self.clearAllNewServerConfigInProgramSwitchBtn.setObjectName(
+            "clearAllNewServerConfigInProgramSwitchBtn"
         )
 
-        self.horizontalLayout_63.addWidget(self.onlySaveGlobalServerConfigSwitchBtn)
-        self.gridLayout_15.addWidget(self.onlySaveGlobalServerConfig, 3, 0, 1, 4)
+        self.horizontalLayout_65.addWidget(
+            self.clearAllNewServerConfigInProgramSwitchBtn
+        )
+        self.gridLayout_15.addWidget(self.clearAllNewServerConfigInProgram, 3, 0, 1, 4)
         self.configureSettingsTitle = StrongBodyLabel(self.configureSettings)
         self.configureSettingsTitle.setObjectName("configureSettingsTitle")
 
         self.gridLayout_15.addWidget(self.configureSettingsTitle, 0, 2, 1, 1)
-        spacerItem7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_15.addItem(spacerItem7, 0, 3, 1, 1)
         self.configureSettingsIndicator = PrimaryPushButton(self.configureSettings)
         self.configureSettingsIndicator.setMinimumSize(QSize(3, 20))
         self.configureSettingsIndicator.setMaximumSize(QSize(3, 20))
@@ -381,6 +383,8 @@ class SettingsPage(QWidget):
         self.configureSettingsIndicator.setObjectName("configureSettingsIndicator")
 
         self.gridLayout_15.addWidget(self.configureSettingsIndicator, 0, 1, 1, 1)
+        spacerItem7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_15.addItem(spacerItem7, 0, 3, 1, 1)
         self.newServerType = QWidget(self.configureSettings)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -411,7 +415,53 @@ class SettingsPage(QWidget):
         self.newServerTypeComboBox.setObjectName("newServerTypeComboBox")
 
         self.horizontalLayout_64.addWidget(self.newServerTypeComboBox)
-        self.gridLayout_15.addWidget(self.newServerType, 2, 0, 1, 4)
+        self.gridLayout_15.addWidget(self.newServerType, 1, 0, 1, 4)
+        self.onlySaveGlobalServerConfig = QWidget(self.configureSettings)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.onlySaveGlobalServerConfig.sizePolicy().hasHeightForWidth()
+        )
+        self.onlySaveGlobalServerConfig.setSizePolicy(sizePolicy)
+        self.onlySaveGlobalServerConfig.setObjectName("onlySaveGlobalServerConfig")
+
+        self.horizontalLayout_63 = QHBoxLayout(self.onlySaveGlobalServerConfig)
+        self.horizontalLayout_63.setObjectName("horizontalLayout_63")
+
+        self.onlySaveGlobalServerConfigTitle = BodyLabel(
+            self.onlySaveGlobalServerConfig
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.onlySaveGlobalServerConfigTitle.sizePolicy().hasHeightForWidth()
+        )
+        self.onlySaveGlobalServerConfigTitle.setSizePolicy(sizePolicy)
+        self.onlySaveGlobalServerConfigTitle.setObjectName(
+            "onlySaveGlobalServerConfigTitle"
+        )
+
+        self.horizontalLayout_63.addWidget(self.onlySaveGlobalServerConfigTitle)
+        spacerItem9 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_63.addItem(spacerItem9)
+        self.onlySaveGlobalServerConfigSwitchBtn = SwitchButton(
+            self.onlySaveGlobalServerConfig
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.onlySaveGlobalServerConfigSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.onlySaveGlobalServerConfigSwitchBtn.setSizePolicy(sizePolicy)
+        self.onlySaveGlobalServerConfigSwitchBtn.setObjectName(
+            "onlySaveGlobalServerConfigSwitchBtn"
+        )
+
+        self.horizontalLayout_63.addWidget(self.onlySaveGlobalServerConfigSwitchBtn)
+        self.gridLayout_15.addWidget(self.onlySaveGlobalServerConfig, 2, 0, 1, 4)
         self.verticalLayout.addWidget(self.configureSettings)
         self.downloadSettings = CardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -447,8 +497,8 @@ class SettingsPage(QWidget):
         self.gridLayout_14 = QGridLayout(self.alwaysAskSaveDirectory)
         self.gridLayout_14.setObjectName("gridLayout_14")
 
-        spacerItem9 = QSpacerItem(317, 39, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_14.addItem(spacerItem9, 0, 1, 2, 1)
+        spacerItem10 = QSpacerItem(317, 39, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_14.addItem(spacerItem10, 0, 1, 2, 1)
         self.alwaysAskSaveDirectoryInfo = BodyLabel(self.alwaysAskSaveDirectory)
         self.alwaysAskSaveDirectoryInfo.setObjectName("alwaysAskSaveDirectoryInfo")
 
@@ -482,8 +532,8 @@ class SettingsPage(QWidget):
         self.aria2ThreadTitle.setObjectName("aria2ThreadTitle")
 
         self.horizontalLayout_55.addWidget(self.aria2ThreadTitle)
-        spacerItem10 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_55.addItem(spacerItem10)
+        spacerItem11 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_55.addItem(spacerItem11)
         self.aria2ThreadSlider = Slider(self.aria2Thread)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -527,8 +577,8 @@ class SettingsPage(QWidget):
         self.saveSameFileExceptionTitle.setObjectName("saveSameFileExceptionTitle")
 
         self.horizontalLayout_4.addWidget(self.saveSameFileExceptionTitle)
-        spacerItem11 = QSpacerItem(235, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem11)
+        spacerItem12 = QSpacerItem(235, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem12)
         self.saveSameFileExceptionToAsk = RadioButton(self.saveSameFileException)
         self.saveSameFileExceptionToAsk.setChecked(True)
         self.saveSameFileExceptionToAsk.setObjectName("saveSameFileExceptionToAsk")
@@ -569,8 +619,8 @@ class SettingsPage(QWidget):
         self.downloadSourceTitle.setObjectName("downloadSourceTitle")
 
         self.horizontalLayout_56.addWidget(self.downloadSourceTitle)
-        spacerItem12 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_56.addItem(spacerItem12)
+        spacerItem13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_56.addItem(spacerItem13)
         self.downloadSourceComboBox = ComboBox(self.downloadSource)
         self.downloadSourceComboBox.setObjectName("downloadSourceComboBox")
 
@@ -583,8 +633,8 @@ class SettingsPage(QWidget):
         self.downloadSettingsIndicator.setObjectName("downloadSettingsIndicator")
 
         self.gridLayout_10.addWidget(self.downloadSettingsIndicator, 0, 1, 1, 1)
-        spacerItem13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_10.addItem(spacerItem13, 0, 3, 1, 1)
+        spacerItem14 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_10.addItem(spacerItem14, 0, 3, 1, 1)
         self.verticalLayout.addWidget(self.downloadSettings)
         self.consoleSettings = CardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -594,59 +644,13 @@ class SettingsPage(QWidget):
             self.consoleSettings.sizePolicy().hasHeightForWidth()
         )
         self.consoleSettings.setSizePolicy(sizePolicy)
-        self.consoleSettings.setMinimumSize(QSize(630, 200))
-        self.consoleSettings.setMaximumSize(QSize(16777215, 200))
+        self.consoleSettings.setMinimumSize(QSize(630, 260))
+        self.consoleSettings.setMaximumSize(QSize(16777215, 260))
         self.consoleSettings.setObjectName("consoleSettings")
 
         self.gridLayout_9 = QGridLayout(self.consoleSettings)
         self.gridLayout_9.setObjectName("gridLayout_9")
 
-        spacerItem14 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_9.addItem(spacerItem14, 0, 3, 1, 1)
-        self.quickMenu = QWidget(self.consoleSettings)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.quickMenu.sizePolicy().hasHeightForWidth())
-        self.quickMenu.setSizePolicy(sizePolicy)
-        self.quickMenu.setObjectName("quickMenu")
-
-        self.horizontalLayout_53 = QHBoxLayout(self.quickMenu)
-        self.horizontalLayout_53.setObjectName("horizontalLayout_53")
-
-        self.quickMenuTitle = BodyLabel(self.quickMenu)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.quickMenuTitle.sizePolicy().hasHeightForWidth()
-        )
-        self.quickMenuTitle.setSizePolicy(sizePolicy)
-        self.quickMenuTitle.setObjectName("quickMenuTitle")
-
-        self.horizontalLayout_53.addWidget(self.quickMenuTitle)
-        spacerItem15 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_53.addItem(spacerItem15)
-        self.quickMenuSwitchBtn = SwitchButton(self.quickMenu)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.quickMenuSwitchBtn.sizePolicy().hasHeightForWidth()
-        )
-        self.quickMenuSwitchBtn.setSizePolicy(sizePolicy)
-        self.quickMenuSwitchBtn.setChecked(True)
-        self.quickMenuSwitchBtn.setObjectName("quickMenuSwitchBtn")
-
-        self.horizontalLayout_53.addWidget(self.quickMenuSwitchBtn)
-        self.gridLayout_9.addWidget(self.quickMenu, 4, 0, 1, 4)
-        self.consoleSettingsIndicator = PrimaryPushButton(self.consoleSettings)
-        self.consoleSettingsIndicator.setMinimumSize(QSize(3, 20))
-        self.consoleSettingsIndicator.setMaximumSize(QSize(3, 20))
-        self.consoleSettingsIndicator.setText("")
-        self.consoleSettingsIndicator.setObjectName("consoleSettingsIndicator")
-
-        self.gridLayout_9.addWidget(self.consoleSettingsIndicator, 0, 1, 1, 1)
         self.consoleSettingsTitle = StrongBodyLabel(self.consoleSettings)
         self.consoleSettingsTitle.setObjectName("consoleSettingsTitle")
 
@@ -668,8 +672,8 @@ class SettingsPage(QWidget):
         self.inputDeEncodingTitle.setObjectName("inputDeEncodingTitle")
 
         self.horizontalLayout_5.addWidget(self.inputDeEncodingTitle)
-        spacerItem16 = QSpacerItem(272, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem16)
+        spacerItem15 = QSpacerItem(272, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem15)
         self.inputDeEncodingComboBox = ComboBox(self.inputDeEncoding)
         self.inputDeEncodingComboBox.setObjectName("inputDeEncodingComboBox")
 
@@ -699,13 +703,106 @@ class SettingsPage(QWidget):
         self.outputDeEncodingTitle.setObjectName("outputDeEncodingTitle")
 
         self.horizontalLayout_54.addWidget(self.outputDeEncodingTitle)
-        spacerItem17 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_54.addItem(spacerItem17)
+        spacerItem16 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_54.addItem(spacerItem16)
         self.outputDeEncodingComboBox = ComboBox(self.outputDeEncoding)
         self.outputDeEncodingComboBox.setObjectName("outputDeEncodingComboBox")
 
         self.horizontalLayout_54.addWidget(self.outputDeEncodingComboBox)
         self.gridLayout_9.addWidget(self.outputDeEncoding, 1, 0, 1, 4)
+        spacerItem17 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_9.addItem(spacerItem17, 0, 3, 1, 1)
+        self.quickMenu = QWidget(self.consoleSettings)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.quickMenu.sizePolicy().hasHeightForWidth())
+        self.quickMenu.setSizePolicy(sizePolicy)
+        self.quickMenu.setObjectName("quickMenu")
+
+        self.horizontalLayout_53 = QHBoxLayout(self.quickMenu)
+        self.horizontalLayout_53.setObjectName("horizontalLayout_53")
+
+        self.quickMenuTitle = BodyLabel(self.quickMenu)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.quickMenuTitle.sizePolicy().hasHeightForWidth()
+        )
+        self.quickMenuTitle.setSizePolicy(sizePolicy)
+        self.quickMenuTitle.setObjectName("quickMenuTitle")
+
+        self.horizontalLayout_53.addWidget(self.quickMenuTitle)
+        spacerItem18 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_53.addItem(spacerItem18)
+        self.quickMenuSwitchBtn = SwitchButton(self.quickMenu)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.quickMenuSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.quickMenuSwitchBtn.setSizePolicy(sizePolicy)
+        self.quickMenuSwitchBtn.setChecked(True)
+        self.quickMenuSwitchBtn.setObjectName("quickMenuSwitchBtn")
+
+        self.horizontalLayout_53.addWidget(self.quickMenuSwitchBtn)
+        self.gridLayout_9.addWidget(self.quickMenu, 4, 0, 1, 4)
+        self.consoleSettingsIndicator = PrimaryPushButton(self.consoleSettings)
+        self.consoleSettingsIndicator.setMinimumSize(QSize(3, 20))
+        self.consoleSettingsIndicator.setMaximumSize(QSize(3, 20))
+        self.consoleSettingsIndicator.setText("")
+        self.consoleSettingsIndicator.setObjectName("consoleSettingsIndicator")
+
+        self.gridLayout_9.addWidget(self.consoleSettingsIndicator, 0, 1, 1, 1)
+        self.clearConsoleWhenStopServer = QWidget(self.consoleSettings)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.clearConsoleWhenStopServer.sizePolicy().hasHeightForWidth()
+        )
+        self.clearConsoleWhenStopServer.setSizePolicy(sizePolicy)
+        self.clearConsoleWhenStopServer.setObjectName("clearConsoleWhenStopServer")
+
+        self.horizontalLayout_57 = QHBoxLayout(self.clearConsoleWhenStopServer)
+        self.horizontalLayout_57.setObjectName("horizontalLayout_57")
+
+        self.clearConsoleWhenStopServerTitle = BodyLabel(
+            self.clearConsoleWhenStopServer
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.clearConsoleWhenStopServerTitle.sizePolicy().hasHeightForWidth()
+        )
+        self.clearConsoleWhenStopServerTitle.setSizePolicy(sizePolicy)
+        self.clearConsoleWhenStopServerTitle.setObjectName(
+            "clearConsoleWhenStopServerTitle"
+        )
+
+        self.horizontalLayout_57.addWidget(self.clearConsoleWhenStopServerTitle)
+        spacerItem19 = QSpacerItem(321, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_57.addItem(spacerItem19)
+        self.clearConsoleWhenStopServerSwitchBtn = SwitchButton(
+            self.clearConsoleWhenStopServer
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.clearConsoleWhenStopServerSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.clearConsoleWhenStopServerSwitchBtn.setSizePolicy(sizePolicy)
+        self.clearConsoleWhenStopServerSwitchBtn.setChecked(False)
+        self.clearConsoleWhenStopServerSwitchBtn.setObjectName(
+            "clearConsoleWhenStopServerSwitchBtn"
+        )
+
+        self.horizontalLayout_57.addWidget(self.clearConsoleWhenStopServerSwitchBtn)
+        self.gridLayout_9.addWidget(self.clearConsoleWhenStopServer, 5, 0, 1, 4)
         self.verticalLayout.addWidget(self.consoleSettings)
         self.softwareSettings = CardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -1153,15 +1250,21 @@ class SettingsPage(QWidget):
         self.giveUpBtn.setText("放弃")
         self.themeComboBox.setCurrentIndex(0)
         self.saveSettingsBtnWidget.setVisible(False)
+        self.clearAllNewServerConfigInProgramTitle.setText("*(强迫症)新建服务器后立刻清空相关设置项")
+        self.clearAllNewServerConfigInProgramSwitchBtn.setText("已关闭")
+        self.clearAllNewServerConfigInProgramSwitchBtn.setOnText("已开启")
+        self.clearAllNewServerConfigInProgramSwitchBtn.setOffText("已关闭")
+        self.clearConsoleWhenStopServerTitle.setText("*(强迫症)关闭服务器后立刻清空终端")
+        self.clearConsoleWhenStopServerSwitchBtn.setText("已关闭")
+        self.clearConsoleWhenStopServerSwitchBtn.setOnText("已开启")
+        self.clearConsoleWhenStopServerSwitchBtn.setOffText("已关闭")
 
         self.checkUpdateBtn.clicked.connect(self.checkUpdate)
 
         self.joinQQGroup.clicked.connect(
             lambda: openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ")
         )
-        self.openOfficialWeb.clicked.connect(
-            lambda: openWebUrl("https://mcsl.com.cn")
-        )
+        self.openOfficialWeb.clicked.connect(lambda: openWebUrl("https://mcsl.com.cn"))
         self.openSourceCodeRepo.clicked.connect(
             lambda: openWebUrl("https://www.github.com/MCSLTeam/MCSL2")
         )
@@ -1199,6 +1302,12 @@ class SettingsPage(QWidget):
             lambda: self.changeSettings(
                 "onlySaveGlobalServerConfig",
                 self.onlySaveGlobalServerConfigSwitchBtn.isChecked(),
+            )
+        )
+        self.clearAllNewServerConfigInProgramSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "clearAllNewServerConfigInProgram",
+                self.clearAllNewServerConfigInProgramSwitchBtn.isChecked(),
             )
         )
 
@@ -1250,6 +1359,17 @@ class SettingsPage(QWidget):
         self.quickMenuSwitchBtn.checkedChanged.connect(
             lambda: self.changeSettings(
                 "quickMenu", self.quickMenuSwitchBtn.isChecked()
+            )
+        )
+        self.quickMenuSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "quickMenu", self.quickMenuSwitchBtn.isChecked()
+            )
+        )
+        self.clearConsoleWhenStopServerSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "clearConsoleWhenStopServer",
+                self.clearConsoleWhenStopServerSwitchBtn.isChecked(),
             )
         )
 
@@ -1341,6 +1461,9 @@ class SettingsPage(QWidget):
         self.onlySaveGlobalServerConfigSwitchBtn.setChecked(
             settingsController.fileSettings["onlySaveGlobalServerConfig"]
         )
+        self.clearAllNewServerConfigInProgramSwitchBtn.setChecked(
+            settingsController.fileSettings["clearAllNewServerConfigInProgram"]
+        )
 
         # downloadSettings
         self.downloadSourceComboBox.setCurrentIndex(
@@ -1375,6 +1498,9 @@ class SettingsPage(QWidget):
             )
         )
         self.quickMenuSwitchBtn.setChecked(settingsController.fileSettings["quickMenu"])
+        self.clearConsoleWhenStopServerSwitchBtn.setChecked(
+            settingsController.fileSettings["clearConsoleWhenStopServer"]
+        )
 
         # softwareSettings
         self.themeComboBox.setCurrentIndex(
@@ -1392,8 +1518,6 @@ class SettingsPage(QWidget):
         self.checkUpdateOnStartSwitchBtn.setChecked(
             settingsController.fileSettings["checkUpdateOnStart"]
         )
-
-
 
     def checkUpdate(self):
         """

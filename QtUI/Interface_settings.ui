@@ -136,7 +136,7 @@
         <x>0</x>
         <y>0</y>
         <width>653</width>
-        <height>1505</height>
+        <height>1625</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -394,17 +394,154 @@
          <property name="minimumSize">
           <size>
            <width>630</width>
-           <height>150</height>
+           <height>210</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>150</height>
+           <height>210</height>
           </size>
          </property>
          <layout class="QGridLayout" name="gridLayout_15">
           <item row="3" column="0" colspan="4">
+           <widget class="QWidget" name="clearAllNewServerConfigInProgram" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_65">
+             <item>
+              <widget class="BodyLabel" name="clearAllNewServerConfigInProgramTitle">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>*(强迫症)新建服务器后立刻清空相关设置项</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="clearAllNewServerConfigInProgramSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>321</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="SwitchButton" name="clearAllNewServerConfigInProgramSwitchBtn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>已关闭</string>
+               </property>
+               <property name="onText">
+                <string>已开启</string>
+               </property>
+               <property name="offText">
+                <string>已关闭</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="StrongBodyLabel" name="configureSettingsTitle">
+            <property name="text">
+             <string>新建服务器设置</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="PrimaryPushButton" name="configureSettingsIndicator">
+            <property name="minimumSize">
+             <size>
+              <width>3</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>3</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <spacer name="configureSettingsSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" colspan="4">
+           <widget class="QWidget" name="newServerType" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_64">
+             <item>
+              <widget class="BodyLabel" name="newServerTypeTitle">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>新建服务器引导方式</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="newServerTypeSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="ComboBox" name="newServerTypeComboBox"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="4">
            <widget class="QWidget" name="onlySaveGlobalServerConfig" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -457,86 +594,6 @@
                 <string>已关闭</string>
                </property>
               </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="StrongBodyLabel" name="configureSettingsTitle">
-            <property name="text">
-             <string>新建服务器设置</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <spacer name="configureSettingsSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="1">
-           <widget class="PrimaryPushButton" name="configureSettingsIndicator">
-            <property name="minimumSize">
-             <size>
-              <width>3</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>3</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="4">
-           <widget class="QWidget" name="newServerType" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_64">
-             <item>
-              <widget class="BodyLabel" name="newServerTypeTitle">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>新建服务器引导方式</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="newServerTypeSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="ComboBox" name="newServerTypeComboBox"/>
              </item>
             </layout>
            </widget>
@@ -854,16 +911,99 @@
          <property name="minimumSize">
           <size>
            <width>630</width>
-           <height>200</height>
+           <height>260</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>200</height>
+           <height>260</height>
           </size>
          </property>
          <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="2">
+           <widget class="StrongBodyLabel" name="consoleSettingsTitle">
+            <property name="text">
+             <string>终端设置</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="4">
+           <widget class="QWidget" name="inputDeEncoding" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="BodyLabel" name="inputDeEncodingTitle">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>指令输入编码（优先级低于服务器配置设置）</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="inputDeEncodingSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>272</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="ComboBox" name="inputDeEncodingComboBox"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="4">
+           <widget class="QWidget" name="outputDeEncoding" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_54">
+             <item>
+              <widget class="BodyLabel" name="outputDeEncodingTitle">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>控制台输出编码（优先级低于服务器配置设置）</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="outputDeEncodingSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="ComboBox" name="outputDeEncodingComboBox"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
           <item row="0" column="3">
            <spacer name="consoleSettingsSpacer">
             <property name="orientation">
@@ -956,59 +1096,17 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="StrongBodyLabel" name="consoleSettingsTitle">
-            <property name="text">
-             <string>终端设置</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="4">
-           <widget class="QWidget" name="inputDeEncoding" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <item>
-              <widget class="BodyLabel" name="inputDeEncodingTitle">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>指令输入编码（优先级低于服务器配置设置）</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="inputDeEncodingSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>272</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="ComboBox" name="inputDeEncodingComboBox"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="4">
-           <widget class="QWidget" name="outputDeEncoding" native="true">
+          <item row="5" column="0" colspan="4">
+           <widget class="QWidget" name="clearConsoleWhenStopServer" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_54">
+            <layout class="QHBoxLayout" name="horizontalLayout_57">
              <item>
-              <widget class="BodyLabel" name="outputDeEncodingTitle">
+              <widget class="BodyLabel" name="clearConsoleWhenStopServerTitle">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1016,25 +1114,44 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>控制台输出编码（优先级低于服务器配置设置）</string>
+                <string>*(强迫症)关闭服务器后立刻清空终端</string>
                </property>
               </widget>
              </item>
              <item>
-              <spacer name="outputDeEncodingSpacer">
+              <spacer name="clearConsoleWhenStopServerSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
+                 <width>321</width>
                  <height>20</height>
                 </size>
                </property>
               </spacer>
              </item>
              <item>
-              <widget class="ComboBox" name="outputDeEncodingComboBox"/>
+              <widget class="SwitchButton" name="clearConsoleWhenStopServerSwitchBtn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>已关闭</string>
+               </property>
+               <property name="onText">
+                <string>已开启</string>
+               </property>
+               <property name="offText">
+                <string>已关闭</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
