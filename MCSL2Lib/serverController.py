@@ -246,7 +246,7 @@ class ServerLauncher:
             "nogui"
         ]
         for i in range(len(serverVariables.jvmArg)):
-            if serverVariables.jvmArg[i] != "" and serverVariables.jvmArg[i] != "-Dlog4j2.formatMsgNoLookups=true":
+            if serverVariables.jvmArg[i] != "":
                 self.jvmArg.insert(2, serverVariables.jvmArg[i])
 
     def launch(self):
