@@ -1697,7 +1697,7 @@ class ConfigurePage(QWidget):
         for arg in configureServerVariables.jvmArg:
             print(arg)
             if arg == "" or arg == " ":
-                configureServerVariables.jvmArg.pop(editServerVariables.jvmArg.index(arg))
+                configureServerVariables.jvmArg.pop(configureServerVariables.jvmArg.index(arg))
 
         serverConfig = {
             "name": configureServerVariables.serverName,
