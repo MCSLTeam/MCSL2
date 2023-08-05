@@ -232,7 +232,6 @@ class ConsolePage(QWidget):
         self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送")
         self.serverOutput.setPlaceholderText("请先开启服务器！不开服务器没有日志的喂")
         self.sendCommandButton.setEnabled(False)
-        self.commandLineEdit.textChanged.connect(self.enableSendCommandBtn)
-
-    def enableSendCommandBtn(self):
-        self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
+        self.commandLineEdit.textChanged.connect(
+            lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
+        )
