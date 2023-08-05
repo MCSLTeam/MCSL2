@@ -1411,6 +1411,12 @@ class ServerManagerPage(QWidget):
         exit0Msg = f'修改服务器"{editServerVariables.serverName}"成功！'
         exit1Msg = f'修改服务器"{editServerVariables.serverName}"失败！'
         exitCode = 0
+
+        # 检查JVM参数防止意外无法启动服务器
+        for arg in editServerVariables.jvmArg:
+            if arg == "" or arg == " ":
+                editServerVariables.jvmArg.pop(arg)
+
         serverConfig = {
             "name": editServerVariables.serverName,
             "core_file_name": editServerVariables.coreFileName,
@@ -1418,7 +1424,7 @@ class ServerManagerPage(QWidget):
             "min_memory": editServerVariables.minMem,
             "max_memory": editServerVariables.maxMem,
             "memory_unit": editServerVariables.memUnit,
-            "jvm_arg": editServerVariables.oldJVMArg,
+            "jvm_arg": editServerVariables.jvmArg,
             "output_decoding": editServerVariables.consoleOutputDeEncoding,
             "input_encoding": editServerVariables.consoleInputDeEncoding,
             "icon": editServerVariables.icon,
