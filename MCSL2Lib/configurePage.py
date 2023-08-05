@@ -1693,6 +1693,12 @@ class ConfigurePage(QWidget):
         exit0Msg = f'添加服务器"{configureServerVariables.serverName}"成功！'
         exit1Msg = f'添加服务器"{configureServerVariables.serverName}"失败！'
         exitCode = 0
+
+        # 检查JVM参数防止意外无法启动服务器
+        for arg in configureServerVariables.jvmArg:
+            if arg == "" or arg == " ":
+                configureServerVariables.jvmArg.pop(arg)
+
         serverConfig = {
             "name": configureServerVariables.serverName,
             "core_file_name": configureServerVariables.coreFileName,

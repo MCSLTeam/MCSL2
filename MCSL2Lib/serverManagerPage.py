@@ -1009,6 +1009,7 @@ class ServerManagerPage(QWidget):
         self.editServerIcon.currentIndexChanged.connect(
             lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
         )
+        self.editServerIcon.setMaxVisibleItems(5)
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
         """初始化变量"""
