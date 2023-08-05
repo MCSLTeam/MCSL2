@@ -250,7 +250,7 @@ class ConsolePage(QWidget):
     def colorConsoleText(self, serverOutput):
         fmt = QTextCharFormat()
         greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "提示"]
-        yellowText = [
+        orangeText = [
             "WARN",
             "Warning",
             "warn",
@@ -287,7 +287,7 @@ class ConsolePage(QWidget):
         for keyword in greenText:
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[0]))
-        for keyword in yellowText:
+        for keyword in orangeText:
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[1]))
         for keyword in redText:
