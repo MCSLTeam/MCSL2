@@ -15,6 +15,7 @@ Minecraft server console page.
 """
 
 from PyQt5.QtCore import QSize, Qt, pyqtSlot
+from PyQt5.QtGui import QTextCharFormat, QColor, QBrush
 from PyQt5.QtWidgets import (
     QSpacerItem,
     QGridLayout,
@@ -139,7 +140,6 @@ class ConsolePage(QWidget):
         self.serverOutput.setFrameShape(QFrame.NoFrame)
         self.serverOutput.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.serverOutput.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.serverOutput.setReadOnly(True)
         self.serverOutput.setPlainText("")
         self.serverOutput.setObjectName("serverOutput")
 
@@ -239,9 +239,64 @@ class ConsolePage(QWidget):
     @pyqtSlot(float)
     def setMemView(self, memPercent):
         self.serverMemLabel.setText(f"内存：{round(memPercent*100, 2)}%")
-        self.serverMemProgressRing.setVal(round(memPercent*100, 2))
+        self.serverMemProgressRing.setVal(round(memPercent * 100, 2))
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
         self.serverCPULabel.setText(f"CPU：{round(cpuPercent, 2)}%")
         self.serverCPUProgressRing.setVal(round(cpuPercent, 2))
+
+    @pyqtSlot(str)
+    def colorConsoleText(self, serverOutput):
+        fmt = QTextCharFormat()
+        greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "提示"]
+        yellowText = [
+            "WARN",
+            "Warning",
+            "warn",
+            "alert",
+            "ALERT",
+            "Alert",
+            "CAUTION",
+            "Caution",
+            "警告",
+        ]
+        redText = [
+            "ERR",
+            "err",
+            "Err",
+            "Fatal",
+            "FATAL",
+            "Critical",
+            "Danger",
+            "DANGER",
+            "错",
+            "at java",
+            "at net",
+            "at oolloo",
+            "Caused by",
+            "at sun",
+        ]
+        blueText = ["DEBUG", "Debug", "debug", "调试", "TEST", "Test", "Unknown command"]
+        color = [
+            QColor(52, 185, 96),
+            QColor(196, 139, 33),
+            QColor(214, 39, 21),
+            QColor(22, 122, 232),
+        ]
+        for keyword in greenText:
+            if keyword in serverOutput:
+                fmt.setForeground(QBrush(color[0]))
+        for keyword in yellowText:
+            if keyword in serverOutput:
+                fmt.setForeground(QBrush(color[1]))
+        for keyword in redText:
+            if keyword in serverOutput:
+                fmt.setForeground(QBrush(color[2]))
+        for keyword in blueText:
+            if keyword in serverOutput:
+                fmt.setForeground(QBrush(color[3]))
+        self.serverOutput.mergeCurrentCharFormat(fmt)
+        serverOutput = serverOutput[:-1]
+        self.serverOutput.appendPlainText(serverOutput)
+        self.serverOutput.setReadOnly(True)

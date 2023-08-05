@@ -391,7 +391,7 @@ class Window(FramelessWindow):
 
         # 终端
         ServerHandler().serverLogOutput.connect(
-            self.consoleInterface.serverOutput.appendPlainText
+            self.consoleInterface.colorConsoleText
         )
         self.consoleInterface.sendCommandButton.clicked.connect(
             lambda: self.sendCommand(
@@ -426,7 +426,9 @@ class Window(FramelessWindow):
             self.serverMemThread = MinecraftServerResMonitorThread(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)
-            ServerHandler().serverClosed.connect(lambda: self.serverMemThread.terminate())
+            ServerHandler().serverClosed.connect(
+                lambda: self.serverMemThread.terminate()
+            )
             self.serverMemThread.start()
 
     def sendCommand(self, command):
