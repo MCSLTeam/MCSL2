@@ -101,7 +101,6 @@ class ServerHandler(QObject):
         self.partialData: str = b""
         self.Server = self.getServerProcess()
         self.serverLogOutput.connect(print)
-        self.serverClosed.connect(print)
 
     def getServerProcess(self) -> Server:
         """
