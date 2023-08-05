@@ -1237,17 +1237,16 @@ class ConfigurePage(QWidget):
         self.extendedNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
         self.importNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
 
-        # # 简易模式绑定
+        # 简易模式绑定
         self.noobBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
-        # self.noobJavaListPushBtn.clicked.connect()
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
         self.noobSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
-        # # 进阶模式绑定
+        # 进阶模式绑定
         self.extendedBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
@@ -1256,7 +1255,7 @@ class ConfigurePage(QWidget):
         self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
         self.extendedSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
-        # # 导入法绑定
+        # 导入法绑定
         self.importBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
@@ -1696,8 +1695,9 @@ class ConfigurePage(QWidget):
 
         # 检查JVM参数防止意外无法启动服务器
         for arg in configureServerVariables.jvmArg:
+            print(arg)
             if arg == "" or arg == " ":
-                configureServerVariables.jvmArg.pop(arg)
+                configureServerVariables.jvmArg.pop(editServerVariables.jvmArg.index(arg))
 
         serverConfig = {
             "name": configureServerVariables.serverName,

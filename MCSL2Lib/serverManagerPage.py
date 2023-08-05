@@ -624,6 +624,16 @@ class ServerManagerPage(QWidget):
         self.editServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+        
+        self.editJavaTextEdit.setPlaceholderText("写错了就启动不了了（悲")
+        self.editMinMemLineEdit.setPlaceholderText("整数")
+        self.editMaxMemLineEdit.setPlaceholderText("整数")
+        self.editServerNameLineEdit.setPlaceholderText("不能包含非法字符")
+        self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
+        self.editOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.editInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.editMemUnitComboBox.addItems(["M", "G"])
+
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
         self.editAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.replaceCoreManually)
@@ -925,6 +935,7 @@ class ServerManagerPage(QWidget):
     #    编辑服务器    #
     ##################
     def initEditServerInterface(self, index):
+        print("init")
         """初始化编辑服务器界面"""
         globalConfig: list = readGlobalServerConfig()
         self.stackedWidget.setCurrentIndex(1)
@@ -938,15 +949,6 @@ class ServerManagerPage(QWidget):
         self.editJavaTextEdit.setText(globalConfig[index]["java_path"])
         self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
-        self.editJavaTextEdit.setPlaceholderText("写错了就启动不了了（悲")
-        self.editMinMemLineEdit.setPlaceholderText("整数")
-        self.editMaxMemLineEdit.setPlaceholderText("整数")
-        self.editServerNameLineEdit.setPlaceholderText("不能包含非法字符")
-
-        self.editOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
-        self.editInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
-        self.editMemUnitComboBox.addItems(["M", "G"])
-
         self.editOutputDeEncodingComboBox.setCurrentIndex(
             consoleOutputDeEncodingList.index(globalConfig[index]["output_decoding"])
         )
@@ -958,8 +960,11 @@ class ServerManagerPage(QWidget):
         )
         self.coreLineEdit.setText(globalConfig[index]["core_file_name"])
         self.coreLineEdit.setEnabled(False)
-        self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.JVMArgPlainTextEdit.setPlainText(" ".join(editServerVariables.oldJVMArg))
+        totalJVMArg = ""
+        for arg in editServerVariables.oldJVMArg:
+            totalJVMArg += f"{arg} "
+        totalJVMArg = totalJVMArg.strip()
+        self.JVMArgPlainTextEdit.setPlainText(totalJVMArg)
         self.editServerNameLineEdit.setText(globalConfig[index]["name"])
         self.iconsList = [
             "铁砧",
@@ -1416,7 +1421,7 @@ class ServerManagerPage(QWidget):
         # 检查JVM参数防止意外无法启动服务器
         for arg in editServerVariables.jvmArg:
             if arg == "" or arg == " ":
-                editServerVariables.jvmArg.pop(arg)
+                editServerVariables.jvmArg.pop(editServerVariables.jvmArg.index(arg))
 
         serverConfig = {
             "name": editServerVariables.serverName,
