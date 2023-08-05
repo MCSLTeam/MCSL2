@@ -14,10 +14,9 @@
 The main window of MCSL2.
 """
 
-from PyQt5.QtCore import pyqtSignal, Qt, QThread, QTimer
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
-from psutil import NoSuchProcess, Process
 from qfluentwidgets import (
     NavigationBar,
     NavigationItemPosition,
@@ -55,6 +54,7 @@ from MCSL2Lib.variables import (
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.serverController import (
+    MinecraftServerResMonitorThread,
     MojangEula,
     ServerHandler,
     ServerHelper,
@@ -442,42 +442,3 @@ class Window(FramelessWindow):
             w.yesButton.setText("好")
             w.cancelButton.setParent(None)
             w.exec()
-
-
-class MinecraftServerResMonitorThread(QThread):
-    """
-    获取服务器资源占用的线程
-    """
-    memPercent = pyqtSignal(float)
-    cpuPercent = pyqtSignal(float)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName("MinecraftServerResMonitorThread")
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.getServerMem)
-        self.timer.timeout.connect(self.getServerCPU)
-        self.timer.start(1000)  # 每隔1秒获取一次
-
-    def getServerMem(self):
-        divisionNumList = {"G": 1024, "M": 1048576}
-        divisionNum = divisionNumList[serverVariables.memUnit]
-        maxMem = serverVariables.maxMem
-        try:
-            if ServerHandler().isServerRunning():
-                serverMem = Process(ServerHandler().AServer.serverProcess.processId()).memory_full_info().uss / divisionNum
-                self.memPercent.emit(float("{:.4f}".format(serverMem / maxMem)))
-            else:
-                self.memPercent.emit(0.0000)
-        except NoSuchProcess:
-            pass
-
-    def getServerCPU(self):
-        try:
-            if ServerHandler().isServerRunning():
-                serverCPU = Process(ServerHandler().AServer.serverProcess.processId()).cpu_percent(interval=0.1)
-                self.cpuPercent.emit(float("{:.4f}".format(serverCPU / 10)))
-            else:
-                self.cpuPercent.emit(0.0000)
-        except NoSuchProcess:
-            pass

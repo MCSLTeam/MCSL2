@@ -18,8 +18,10 @@ from datetime import datetime
 from json import dumps
 from os.path import realpath
 from typing import List, Optional
+
+from psutil import NoSuchProcess, Process
 from MCSL2Lib.singleton import Singleton
-from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread
+from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.variables import ServerVariables
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
@@ -281,3 +283,42 @@ class readLastServerConfigThread(QThread):
                 ServerHelper().startBtnStat.emit(False)
         else:
             ServerHelper().startBtnStat.emit(False)
+
+
+class MinecraftServerResMonitorThread(QThread):
+    """
+    获取服务器资源占用的线程
+    """
+    memPercent = pyqtSignal(float)
+    cpuPercent = pyqtSignal(float)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("MinecraftServerResMonitorThread")
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.getServerMem)
+        self.timer.timeout.connect(self.getServerCPU)
+        self.timer.start(1000)  # 每隔1秒获取一次
+
+    def getServerMem(self):
+        divisionNumList = {"G": 1024, "M": 1048576}
+        divisionNum = divisionNumList[serverVariables.memUnit]
+        maxMem = serverVariables.maxMem
+        try:
+            if ServerHandler().isServerRunning():
+                serverMem = Process(ServerHandler().AServer.serverProcess.processId()).memory_full_info().uss / divisionNum
+                self.memPercent.emit(float("{:.4f}".format(serverMem / maxMem)))
+            else:
+                self.memPercent.emit(0.0000)
+        except NoSuchProcess:
+            pass
+
+    def getServerCPU(self):
+        try:
+            if ServerHandler().isServerRunning():
+                serverCPU = Process(ServerHandler().AServer.serverProcess.processId()).cpu_percent(interval=0.01)
+                self.cpuPercent.emit(float("{:.4f}".format(serverCPU / 10)))
+            else:
+                self.cpuPercent.emit(0.0000)
+        except NoSuchProcess:
+            pass
