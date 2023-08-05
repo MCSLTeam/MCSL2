@@ -14,7 +14,7 @@
 Minecraft server console page.
 """
 
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize, Qt, pyqtSlot
 from PyQt5.QtWidgets import (
     QSpacerItem,
     QGridLayout,
@@ -215,8 +215,8 @@ class ConsolePage(QWidget):
 
         self.setObjectName("ConsoleInterface")
 
-        self.serverMemLabel.setText("内存占用：")
-        self.serverCPULabel.setText("CPU占用：")
+        self.serverMemLabel.setText("内存：")
+        self.serverCPULabel.setText("CPU：")
         self.subTitleLabel.setText("直观地观察你的服务器的输出，资源占用等。")
         self.titleLabel.setText("终端")
         self.quickMenuTitleLabel.setText("快捷菜单：")
@@ -235,3 +235,13 @@ class ConsolePage(QWidget):
         self.commandLineEdit.textChanged.connect(
             lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
         )
+
+    @pyqtSlot(float)
+    def setMemView(self, memPercent):
+        self.serverMemLabel.setText(f"内存：{round(memPercent*100, 2)}%")
+        self.serverMemProgressRing.setVal(round(memPercent*100, 2))
+
+    @pyqtSlot(float)
+    def setCPUView(self, cpuPercent):
+        self.serverCPULabel.setText(f"CPU：{round(cpuPercent, 2)}%")
+        self.serverCPUProgressRing.setVal(round(cpuPercent, 2))

@@ -90,9 +90,7 @@ class ServerHandler(QObject):
 
     def __init__(self):
         """
-        初始化一个服务器处理器\n
-        javaPath: Java路径\n
-        processArgs: 服务器参数,列表形式，形如["-jar","server.jar","nogui","-Xms1G","-Xmx1G"]\n
+        初始化一个服务器处理器
         """
         super().__init__()
         self.javaPath: str = ""
@@ -130,12 +128,14 @@ class ServerHandler(QObject):
         self.partialData = lines.pop()  # The last element might be incomplete, so keep it in the buffer
 
         for line in lines:
-            newOutput = line.decode(serverVariables.outputDecoding)
+            newOutput = line.decode(serverVariables.outputDecoding, errors='ignore')
             self.serverLogOutput.emit(newOutput)
 
     def startServer(self, javaPath: str, processArgs: List[str], workingDirectory: str):
         """
-        运行服务器
+        运行服务器\n
+        javaPath: Java路径\n
+        processArgs: 服务器参数,列表形式，形如["-jar","server.jar","nogui","-Xms1G","-Xmx1G"]\n
         """
         self.javaPath = javaPath
         self.processArgs = processArgs

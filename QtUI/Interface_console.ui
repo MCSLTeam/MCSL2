@@ -60,7 +60,7 @@
       <item row="0" column="0">
        <widget class="StrongBodyLabel" name="serverMemLabel">
         <property name="text">
-         <string>内存占用：</string>
+         <string>内存：</string>
         </property>
        </widget>
       </item>
@@ -139,7 +139,7 @@
       <item row="0" column="0">
        <widget class="StrongBodyLabel" name="serverCPULabel">
         <property name="text">
-         <string>CPU占用：</string>
+         <string>CPU：</string>
         </property>
        </widget>
       </item>
