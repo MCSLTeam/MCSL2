@@ -173,6 +173,11 @@ class Window(FramelessWindow):
         # 注册快捷键
         self.consoleInterface.installEventFilter(self)
 
+    def closeEvent(self, a0) -> None:
+        if ServerHandler().isServerRunning():
+            ServerHandler().stopServer()
+        super().closeEvent(a0)
+
     def initPluginSystem(self):
         """初始化插件系统"""
         pluginManager: PluginManager = PluginManager()
@@ -396,6 +401,16 @@ class Window(FramelessWindow):
 
         # 终端
         ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
+        self.consoleInterface.sendCommandButton.clicked.connect(
+            lambda: self.sendCommand(
+                command=self.consoleInterface.commandLineEdit.text()
+            )
+        )
+        self.consoleInterface.commandLineEdit.returnPressed.connect(
+            lambda: self.sendCommand(
+                command=self.consoleInterface.commandLineEdit.text()
+            )
+        )
         if settingsController.fileSettings["clearConsoleWhenStopServer"]:
             ServerHandler().AServer.serverProcess.finished.connect(
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
@@ -429,12 +444,13 @@ class Window(FramelessWindow):
             )
             self.serverMemThread.start()
 
-
-
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
-                if self.stackWidget.view.currentIndex() == 4 and self.consoleInterface.commandLineEdit:
+                if (
+                    self.stackWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
+                ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
         return super().eventFilter(a0, a1)
