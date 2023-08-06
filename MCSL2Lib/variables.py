@@ -14,7 +14,6 @@
 These are the built-in variables of MCSL2.
 """
 
-from Adapters.Plugin import PluginManager
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.settingsController import SettingsController
@@ -132,7 +131,8 @@ class PluginVariables:
     """插件系统所需变量"""
 
     def __init__(self):
-        self.pluginManager: PluginManager = PluginManager()
+        self.pluginSwitchBtnList: list = []
+        self.pluginNameList: list = []
 
 
 class GlobalMCSL2Variables:

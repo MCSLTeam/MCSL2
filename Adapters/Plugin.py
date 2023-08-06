@@ -10,6 +10,9 @@ from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from os import walk, getcwd, path as ospath
 from MCSL2Lib.pluginWidget import singlePluginWidget
+from MCSL2Lib.variables import PluginVariables
+
+pluginVariables = PluginVariables()
 
 
 class Plugin(BasePlugin):
@@ -28,6 +31,8 @@ class Plugin(BasePlugin):
 
 
 class PluginLoader(BasePluginLoader):
+    """插件加载器"""
+
     @classmethod
     def load(cls, pluginName: str) -> Plugin | None:
         importedPlugin: Plugin = __import__(
@@ -56,6 +61,8 @@ class PluginLoader(BasePluginLoader):
 
 
 class PluginManager(BasePluginManager):
+    """插件管理器"""
+
     def __init__(self):
         self.pluginDict: {str, Plugin} = {}
         self.threadPool: List[Thread] = []
@@ -74,10 +81,11 @@ class PluginManager(BasePluginManager):
         return True, plugin.pluginName
 
     def decideEnableOrDisable(self, pluginName: str, switchBtnStatus: bool):
-        if switchBtnStatus:
-            self.enablePlugin(pluginName)
-        else:
-            self.disablePlugin(pluginName)
+        print([pluginName, switchBtnStatus])
+        # if switchBtnStatus:
+        #     self.enablePlugin(pluginName)
+        # else:
+        #     self.disablePlugin(pluginName)
 
     def enablePlugin(self, pluginName: str):
         """启用插件"""
@@ -128,36 +136,44 @@ class PluginManager(BasePluginManager):
         self.is_disabled_all = True
 
     def initSinglePluginsWidget(self, pluginsVerticalLayout: QVBoxLayout):
-        '''初始化插件页Widget'''
+        """初始化插件页Widget"""
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             pluginWidget = singlePluginWidget()
-            pluginWidget.pluginName.setText(
-                f"{plugin.pluginName}  版本：{plugin.version}  作者： {plugin.author}"
-            )
-            pluginWidget.pluginMoreInfo.setText(f"注释：{plugin.description}")
+
+            # 设置信息
+            pluginWidget.pluginName.setText(f"{plugin.pluginName}")
+            pluginWidget.pluginVer.setText(f"版本:   {plugin.version}")
+            pluginWidget.pluginAuthor.setText(f"作者:   {plugin.author}")
+            pluginWidget.pluginTip.setText(f"注释:   {plugin.description}")
+
+            # 设置图标
             if plugin.icon is None:
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
-                pluginWidget.pluginIcon.setFixedSize(50, 50)
             elif plugin.icon[0] == ":":
                 pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
-                pluginWidget.pluginIcon.setFixedSize(50, 50)
             else:
                 url = ospath.dirname(ospath.abspath(__file__))  # 文件夹
                 url = ospath.abspath(ospath.join(url, ".."))
                 pluginWidget.pluginIcon.setPixmap(
                     QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
                 )
-                pluginWidget.pluginIcon.setFixedSize(50, 50)
+            pluginWidget.pluginIcon.setFixedSize(60, 60)
 
+            pluginWidget.SwitchButton.setObjectName(f"switchBtn_{pluginName}")
+            pluginVariables.pluginSwitchBtnList.append(pluginWidget.SwitchButton)
+            
             # 设置槽函数
             pluginWidget.SwitchButton.checkedChanged.connect(
                 lambda: self.decideEnableOrDisable(
-                    pluginName, switchBtnStatus=pluginWidget.SwitchButton.isChecked()
+                    pluginName=pluginWidget.SwitchButton.objectName(),
+                    switchBtnStatus=pluginWidget.SwitchButton.isChecked(),
                 )
             )
 
             pluginsVerticalLayout.addWidget(pluginWidget)
 
-        serversScrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        serversScrollAreaSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+        )
         pluginsVerticalLayout.addItem(serversScrollAreaSpacer)

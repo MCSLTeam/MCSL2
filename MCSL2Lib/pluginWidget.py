@@ -24,6 +24,7 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SwitchButton,
     TransparentToolButton,
+    FluentIcon as FIF
 )
 
 
@@ -40,13 +41,13 @@ class singlePluginWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(524, 100))
-        self.setMaximumSize(QSize(16777215, 100))
+        self.setMinimumSize(QSize(524, 150))
+        self.setMaximumSize(QSize(16777215, 150))
         self.setWindowTitle("")
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
 
-        spacerItem = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        spacerItem = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.pluginIcon = PixmapLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -54,21 +55,22 @@ class singlePluginWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pluginIcon.sizePolicy().hasHeightForWidth())
         self.pluginIcon.setSizePolicy(sizePolicy)
-        self.pluginIcon.setMinimumSize(QSize(50, 50))
-        self.pluginIcon.setMaximumSize(QSize(50, 50))
+        self.pluginIcon.setMinimumSize(QSize(60, 60))
+        self.pluginIcon.setMaximumSize(QSize(60, 60))
         self.pluginIcon.setObjectName("pluginIcon")
-
+        
+        
         self.horizontalLayout.addWidget(self.pluginIcon)
+        spacerItem1 = QSpacerItem(15, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.pluginInfoWidget = QWidget(self)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pluginInfoWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.pluginInfoWidget.sizePolicy().hasHeightForWidth())
         self.pluginInfoWidget.setSizePolicy(sizePolicy)
-        self.pluginInfoWidget.setMinimumSize(QSize(0, 75))
-        self.pluginInfoWidget.setMaximumSize(QSize(16777215, 75))
+        self.pluginInfoWidget.setMinimumSize(QSize(0, 120))
+        self.pluginInfoWidget.setMaximumSize(QSize(16777215, 120))
         self.pluginInfoWidget.setObjectName("pluginInfoWidget")
 
         self.verticalLayout = QVBoxLayout(self.pluginInfoWidget)
@@ -83,34 +85,51 @@ class singlePluginWidget(CardWidget):
         self.pluginName.setObjectName("pluginName")
 
         self.verticalLayout.addWidget(self.pluginName)
-        self.pluginMoreInfo = BodyLabel(self.pluginInfoWidget)
+        self.pluginVer = BodyLabel(self.pluginInfoWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pluginMoreInfo.sizePolicy().hasHeightForWidth()
-        )
-        self.pluginMoreInfo.setSizePolicy(sizePolicy)
-        self.pluginMoreInfo.setObjectName("pluginMoreInfo")
+        sizePolicy.setHeightForWidth(self.pluginVer.sizePolicy().hasHeightForWidth())
+        self.pluginVer.setSizePolicy(sizePolicy)
+        self.pluginVer.setObjectName("pluginVer")
 
-        self.verticalLayout.addWidget(self.pluginMoreInfo)
+        self.verticalLayout.addWidget(self.pluginVer)
+        self.pluginAuthor = BodyLabel(self.pluginInfoWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pluginAuthor.sizePolicy().hasHeightForWidth())
+        self.pluginAuthor.setSizePolicy(sizePolicy)
+        self.pluginAuthor.setObjectName("pluginAuthor")
+
+        self.verticalLayout.addWidget(self.pluginAuthor)
+        self.pluginTip = BodyLabel(self.pluginInfoWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pluginTip.sizePolicy().hasHeightForWidth())
+        self.pluginTip.setSizePolicy(sizePolicy)
+        self.pluginTip.setObjectName("pluginTip")
+
+        self.verticalLayout.addWidget(self.pluginTip)
         self.horizontalLayout.addWidget(self.pluginInfoWidget)
         self.SwitchButton = SwitchButton(self)
-        self.SwitchButton.setChecked(False)
-        self.SwitchButton.setObjectName("SwitchButton")
+        # self.SwitchButton.setChecked(False)
+        # self.SwitchButton.setObjectName("SwitchButton")
 
         self.horizontalLayout.addWidget(self.SwitchButton)
-        self.shareButton = TransparentToolButton(self)
+        self.shareButton = TransparentToolButton(FIF.SHARE, self)
         self.shareButton.setObjectName("shareButton")
 
         self.horizontalLayout.addWidget(self.shareButton)
-        self.deleteIcon = TransparentToolButton(self)
+        self.deleteIcon = TransparentToolButton(FIF.DELETE, self)
         self.deleteIcon.setObjectName("deleteIcon")
 
         self.horizontalLayout.addWidget(self.deleteIcon)
-
+        
         # self.pluginName.setText("[插件名称]")
-        # self.pluginMoreInfo.setText("[插件详细信息]")
-        self.SwitchButton.setText("已禁用")
+        # self.pluginVer.setText("[插件版本]")
+        # self.pluginAuthor.setText("[插件作者]")
+        # self.pluginTip.setText("[插件注释]")
         self.SwitchButton.setOnText("已启用")
         self.SwitchButton.setOffText("已禁用")
