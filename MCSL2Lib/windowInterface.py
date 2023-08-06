@@ -174,7 +174,7 @@ class Window(FramelessWindow):
         """初始化插件系统"""
         pluginManager: PluginManager = pluginVariables.pluginManager
         pluginManager.loadAllPlugins()
-        pluginManager.initSinglePluginsWidget(self.pluginsInterface.gridLayout_3)
+        pluginManager.initSinglePluginsWidget(self.pluginsInterface.pluginsVerticalLayout)
 
     def switchTo(self, widget):
         """换页"""

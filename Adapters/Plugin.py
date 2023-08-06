@@ -6,7 +6,7 @@ from threading import Thread
 from typing import List
 
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from os import walk, getcwd, path as ospath
 from MCSL2Lib.pluginWidget import singlePluginWidget
@@ -127,7 +127,7 @@ class PluginManager(BasePluginManager):
         """禁用所有插件"""
         self.is_disabled_all = True
 
-    def initSinglePluginsWidget(self, gridLayout_3: QVBoxLayout):
+    def initSinglePluginsWidget(self, pluginsVerticalLayout: QVBoxLayout):
         '''初始化插件页Widget'''
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
@@ -157,4 +157,7 @@ class PluginManager(BasePluginManager):
                 )
             )
 
-            gridLayout_3.addWidget(pluginWidget)
+            pluginsVerticalLayout.addWidget(pluginWidget)
+
+        serversScrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        pluginsVerticalLayout.addItem(serversScrollAreaSpacer)

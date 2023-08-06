@@ -134,7 +134,7 @@ class ServerManagerPage(QWidget):
         self.serversSmoothScrollArea.setObjectName("serversSmoothScrollArea")
 
         self.serversScrollAreaWidgetContents = QWidget()
-        self.serversScrollAreaWidgetContents.setGeometry(QRect(0, 0, 640, 451))
+        self.serversScrollAreaWidgetContents.setGeometry(QRect(0, 0, 640, 452))
         self.serversScrollAreaWidgetContents.setObjectName(
             "serversScrollAreaWidgetContents"
         )
@@ -624,7 +624,7 @@ class ServerManagerPage(QWidget):
         self.editServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
-        
+
         self.editJavaTextEdit.setPlaceholderText("写错了就启动不了了（悲")
         self.editMinMemLineEdit.setPlaceholderText("整数")
         self.editMaxMemLineEdit.setPlaceholderText("整数")
@@ -638,6 +638,9 @@ class ServerManagerPage(QWidget):
         self.editAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.replaceCoreManually)
         self.editSaveServerPrimaryPushBtn.clicked.connect(self.finishEditServer)
+
+        self.serversScrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalLayout.addItem(self.serversScrollAreaSpacer)
 
     def goBack(self):
         # 没改就直接退出
@@ -708,10 +711,11 @@ class ServerManagerPage(QWidget):
 
     def refreshServers(self):
         """刷新服务器列表主逻辑"""
-        # 先把旧的清空
+        # 先把旧的清空，但是必须先删除Spacer
+        self.verticalLayout.removeItem(self.serversScrollAreaSpacer)
+
         for i in reversed(range(self.verticalLayout.count())):
             self.verticalLayout.itemAt(i).widget().setParent(None)
-
         # 读取全局设置
         globalConfig = readGlobalServerConfig()
 
@@ -747,6 +751,9 @@ class ServerManagerPage(QWidget):
             self.tmpSingleServerWidget.editBtn.setObjectName(f"editBtn{str(i)}")
             self.tmpSingleServerWidget.deleteBtn.setObjectName(f"deleteBtn{str(i)}")
             self.verticalLayout.addWidget(self.tmpSingleServerWidget)
+
+        # 重新设置布局
+        self.verticalLayout.addItem(self.serversScrollAreaSpacer)
 
     # 判断第几个
     def scrollAreaProcessor(self):
@@ -1313,7 +1320,9 @@ class ServerManagerPage(QWidget):
     def checkJVMArgSet(self):
         """检查JVM参数设置"""
         if self.JVMArgPlainTextEdit.document() != "":
-            editServerVariables.oldJVMArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
+            editServerVariables.oldJVMArg = (
+                self.JVMArgPlainTextEdit.toPlainText().split(" ")
+            )
             return "JVM参数检查：正常", 0
 
     def checkMemUnitSet(self):
