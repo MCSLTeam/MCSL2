@@ -134,9 +134,7 @@ class SelectJavaPage(QWidget):
             self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(
                 lambda: self.scrollAreaProcessor(JavaPath)
             )
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(
-                lambda: self.backBtn.click()
-            )
+            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(lambda: self.backBtn.click)
             self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].path))
             self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].version))
             self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
