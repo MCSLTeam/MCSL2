@@ -8,7 +8,7 @@ from typing import List
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QVBoxLayout
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
-from os import walk, getcwd
+from os import walk, getcwd, path as ospath
 from MCSL2Lib.pluginWidget import singlePluginWidget
 
 
@@ -139,10 +139,9 @@ class PluginManager(BasePluginManager):
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
             else:
-                import os
 
-                url = os.path.dirname(os.path.abspath(__file__))  # 文件夹
-                url = os.path.abspath(os.path.join(url, ".."))
+                url = ospath.dirname(os.path.abspath(__file__))  # 文件夹
+                url = ospath.abspath(os.path.join(url, ".."))
                 pluginWidget.pluginIcon.setPixmap(
                     QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
                 )
