@@ -62,11 +62,16 @@ class PluginManager(BasePluginManager):
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         """禁用插件"""
-        plugin: Plugin = self.pluginDict.pop(pluginName)
+        plugin: Plugin = self.pluginDict.get(pluginName)
+        plugin.isEnabled = False
         if plugin is None:
-            return False
+            return False,None
         if plugin.DISABLE is not None:
-            plugin.DISABLE()
+            try:
+                plugin.DISABLE()
+            except:
+                return False,plugin.pluginName
+        return True,plugin.pluginName
 
     def decideEnableOrDisable(self, pluginName: str, switchBtnStatus: bool):
         if switchBtnStatus:
@@ -80,11 +85,16 @@ class PluginManager(BasePluginManager):
         if plugin is None:
             return False
         if plugin.ENABLE is not None:
-            plugin.ENABLE()
+            try:
+                plugin.isEnabled = True
+                plugin.ENABLE()
+            except:
+                raise Warning("未完全卸载", plugin.pluginName)
 
     def loadPlugin(self, pluginName: str):
         """加载插件但不启用"""
         plugin: Plugin = PluginLoader.load(pluginName)
+        plugin.isLoaded = True
         if plugin is None:
             return
         else:
