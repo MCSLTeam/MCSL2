@@ -244,9 +244,13 @@ class ServerLauncher:
             f"{serverVariables.coreFileName}",
             "nogui"
         ]
-        for i in range(len(serverVariables.jvmArg)):
-            if serverVariables.jvmArg[i] != "":
-                self.jvmArg.insert(2, serverVariables.jvmArg[i])
+        if isinstance(serverVariables.jvmArg, list):
+            for arg in serverVariables.jvmArg:
+                if arg:
+                    self.jvmArg.insert(2, arg)
+        else:
+            if serverVariables.jvmArg:
+                self.jvmArg.insert(2, serverVariables.jvmArg)
 
     def launch(self):
         """启动进程"""
@@ -305,7 +309,8 @@ class MinecraftServerResMonitorThread(QThread):
         maxMem = serverVariables.maxMem
         try:
             if ServerHandler().isServerRunning():
-                serverMem = Process(ServerHandler().AServer.serverProcess.processId()).memory_full_info().uss / divisionNum
+                serverMem = Process(
+                    ServerHandler().AServer.serverProcess.processId()).memory_full_info().uss / divisionNum
                 self.memPercent.emit(float("{:.4f}".format(serverMem / maxMem)))
             else:
                 self.memPercent.emit(0.0000)
