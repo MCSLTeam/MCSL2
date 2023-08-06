@@ -5,7 +5,7 @@ from json import loads
 from threading import Thread
 from typing import List
 
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from os import walk, getcwd, path as ospath
@@ -65,13 +65,13 @@ class PluginManager(BasePluginManager):
         plugin: Plugin = self.pluginDict.get(pluginName)
         plugin.isEnabled = False
         if plugin is None:
-            return False,None
+            return False, None
         if plugin.DISABLE is not None:
             try:
                 plugin.DISABLE()
             except:
-                return False,plugin.pluginName
-        return True,plugin.pluginName
+                return False, plugin.pluginName
+        return True, plugin.pluginName
 
     def decideEnableOrDisable(self, pluginName: str, switchBtnStatus: bool):
         if switchBtnStatus:
@@ -128,6 +128,7 @@ class PluginManager(BasePluginManager):
         self.is_disabled_all = True
 
     def initSinglePluginsWidget(self, gridLayout_3: QVBoxLayout):
+        '''初始化插件页Widget'''
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
             pluginWidget = singlePluginWidget()
@@ -138,10 +139,12 @@ class PluginManager(BasePluginManager):
             if plugin.icon is None:
                 pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
                 pluginWidget.pluginIcon.setFixedSize(50, 50)
+            elif plugin.icon[0] == ":":
+                pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
+                pluginWidget.pluginIcon.setFixedSize(50, 50)
             else:
-
-                url = ospath.dirname(os.path.abspath(__file__))  # 文件夹
-                url = ospath.abspath(os.path.join(url, ".."))
+                url = ospath.dirname(ospath.abspath(__file__))  # 文件夹
+                url = ospath.abspath(ospath.join(url, ".."))
                 pluginWidget.pluginIcon.setPixmap(
                     QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
                 )
