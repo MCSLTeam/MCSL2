@@ -11,6 +11,7 @@ from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from os import walk, getcwd, path as ospath
 from MCSL2Lib.pluginWidget import singlePluginWidget
 from MCSL2Lib.variables import PluginVariables
+from MCSL2Lib.variables import Singleton
 
 pluginVariables = PluginVariables()
 
@@ -139,39 +140,39 @@ class PluginManager(BasePluginManager):
         """初始化插件页Widget"""
         for pluginName in self.pluginDict.keys():
             plugin: Plugin = self.pluginDict.get(pluginName)
-            pluginWidget = singlePluginWidget()
+            self.pluginWidget = singlePluginWidget()
 
             # 设置信息
-            pluginWidget.pluginName.setText(f"{plugin.pluginName}")
-            pluginWidget.pluginVer.setText(f"版本:   {plugin.version}")
-            pluginWidget.pluginAuthor.setText(f"作者:   {plugin.author}")
-            pluginWidget.pluginTip.setText(f"注释:   {plugin.description}")
+            self.pluginWidget.pluginName.setText(f"{plugin.pluginName}")
+            self.pluginWidget.pluginVer.setText(f"版本:   {plugin.version}")
+            self.pluginWidget.pluginAuthor.setText(f"作者:   {plugin.author}")
+            self.pluginWidget.pluginTip.setText(f"注释:   {plugin.description}")
 
             # 设置图标
             if plugin.icon is None:
-                pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
+                self.pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
             elif plugin.icon[0] == ":":
-                pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
+                self.pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
             else:
                 url = ospath.dirname(ospath.abspath(__file__))  # 文件夹
                 url = ospath.abspath(ospath.join(url, ".."))
-                pluginWidget.pluginIcon.setPixmap(
+                self.pluginWidget.pluginIcon.setPixmap(
                     QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
                 )
-            pluginWidget.pluginIcon.setFixedSize(60, 60)
+            self.pluginWidget.pluginIcon.setFixedSize(60, 60)
+            ASwitchBtn = self.pluginWidget.SwitchButton
+            ASwitchBtn.setObjectName(f"switchBtn_{pluginName}")
+            pluginVariables.pluginSwitchBtnDict.update({pluginName: ASwitchBtn})
 
-            pluginWidget.SwitchButton.setObjectName(f"switchBtn_{pluginName}")
-            pluginVariables.pluginSwitchBtnList.append(pluginWidget.SwitchButton)
-            
-            # 设置槽函数
-            pluginWidget.SwitchButton.checkedChanged.connect(
-                lambda: self.decideEnableOrDisable(
-                    pluginName=pluginWidget.SwitchButton.objectName(),
-                    switchBtnStatus=pluginWidget.SwitchButton.isChecked(),
-                )
-            )
+            # # 设置槽函数
+            # ASwitchBtn.checkedChanged.connect(
+            #     lambda: self.decideEnableOrDisable(
+            #         pluginName=ASwitchBtn.objectName(),
+            #         switchBtnStatus=ASwitchBtn.isChecked(),
+            #     )
+            # )
 
-            pluginsVerticalLayout.addWidget(pluginWidget)
+            pluginsVerticalLayout.addWidget(self.pluginWidget)
 
         serversScrollAreaSpacer = QSpacerItem(
             20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding

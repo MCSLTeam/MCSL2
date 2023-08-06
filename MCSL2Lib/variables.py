@@ -131,8 +131,7 @@ class PluginVariables:
     """插件系统所需变量"""
 
     def __init__(self):
-        self.pluginSwitchBtnList: list = []
-        self.pluginNameList: list = []
+        self.pluginSwitchBtnDict = {}
 
 
 class GlobalMCSL2Variables:
