@@ -170,6 +170,13 @@ class Window(FramelessWindow):
 
         self.initPluginSystem()
 
+    def closeEvent(self, a0) -> None:
+
+        if ServerHandler().isServerRunning():
+            print("正在关闭服务器...")
+            ServerHandler().stopServer()
+        super().closeEvent(a0)
+
     def initPluginSystem(self):
         """初始化插件系统"""
         pluginManager: PluginManager = PluginManager()
@@ -222,12 +229,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-        self,
-        interface,
-        icon,
-        text: str,
-        position=NavigationItemPosition.TOP,
-        selectedIcon=None,
+            self,
+            interface,
+            icon,
+            text: str,
+            position=NavigationItemPosition.TOP,
+            selectedIcon=None,
     ):
         """添加子页面"""
         self.stackWidget.addWidget(interface)
@@ -394,6 +401,11 @@ class Window(FramelessWindow):
             self.consoleInterface.colorConsoleText
         )
         self.consoleInterface.sendCommandButton.clicked.connect(
+            lambda: self.sendCommand(
+                command=self.consoleInterface.commandLineEdit.text()
+            )
+        )
+        self.consoleInterface.commandLineEdit.returnPressed.connect(
             lambda: self.sendCommand(
                 command=self.consoleInterface.commandLineEdit.text()
             )

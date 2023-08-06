@@ -99,8 +99,9 @@ class ServerHandler(QObject):
         self.processArgs = [""]
         self.workingDirectory: str = ""
         self.partialData: str = b""
-        self.Server = self.getServerProcess()
+        self.AServer = None
         self.serverLogOutput.connect(print)
+        self.Server = self.getServerProcess()
 
     def getServerProcess(self) -> Server:
         """
@@ -150,6 +151,7 @@ class ServerHandler(QObject):
         """
         if settingsController.fileSettings["sendStopInsteadOfKill"] == True:
             self.Server.serverProcess.write(b"stop\n")
+            self.Server.serverProcess.waitForFinished()
         else:
             self.haltServer()
 
@@ -178,6 +180,8 @@ class ServerHandler(QObject):
         )
 
     def isServerRunning(self):
+        if self.Server.serverProcess is None:
+            return False
         return self.Server.serverProcess.state() == QProcess.Running
 
 
