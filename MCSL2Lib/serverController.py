@@ -111,12 +111,14 @@ class ServerHandler(QObject):
         self.AServer.serverProcess.setProgram(self.javaPath)
         self.AServer.serverProcess.setArguments(self.processArgs)
         self.AServer.serverProcess.setWorkingDirectory(self.workingDirectory)
+        self.AServer.serverProcess.started.connect(lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
         self.AServer.serverProcess.readyReadStandardOutput.connect(
             self.serverLogOutputHandler
         )
         self.AServer.serverProcess.finished.connect(
             lambda: self.serverClosed.emit(self.AServer.serverProcess.exitCode())
         )
+        self.AServer.serverProcess.finished.connect(lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器已关闭！"))
         return self.AServer
 
     def serverLogOutputHandler(self):

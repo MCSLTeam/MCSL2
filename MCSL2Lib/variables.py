@@ -35,8 +35,7 @@ class ConfigureServerVariables:
         self.memUnit: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
-        self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
@@ -51,9 +50,6 @@ class ConfigureServerVariables:
         self.memUnit: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
-        self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.icon: str = ""
@@ -90,9 +86,27 @@ class EditServerVariables:
         self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
 
-        self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "gbk"]
         self.memUnitList = ["M", "G"]
+        self.iconsFileNameList = [
+            "Anvil.png",
+            "Cloth.png",
+            "CobbleStone.png",
+            "CommandBlock.png",
+            "CraftingTable.png",
+            "Egg.png",
+            "Glass.png",
+            "GoldBlock.png",
+            "Grass.png",
+            "GrassPath.png",
+            "Java.svg",
+            "MCSL2.png",
+            "Paper.png",
+            "RedstoneBlock.png",
+            "RedstoneLampOff.png",
+            "RedstoneLampOn.png",
+            "Spigot.svg",
+        ]
 
     def resetToDefault(self):
         self.oldMinMem: int
@@ -120,10 +134,6 @@ class EditServerVariables:
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
-
-        self.consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.memUnitList = ["M", "G"]
 
 
 @Singleton
