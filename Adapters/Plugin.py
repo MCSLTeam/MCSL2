@@ -164,13 +164,13 @@ class PluginManager(BasePluginManager):
             ASwitchBtn.setObjectName(f"switchBtn_{pluginName}")
             pluginVariables.pluginSwitchBtnDict.update({pluginName: ASwitchBtn})
 
-            # # 设置槽函数
-            # ASwitchBtn.checkedChanged.connect(
-            #     lambda: self.decideEnableOrDisable(
-            #         pluginName=ASwitchBtn.objectName(),
-            #         switchBtnStatus=ASwitchBtn.isChecked(),
-            #     )
-            # )
+            # 设置槽函数
+            ASwitchBtn.checkedChanged.connect(
+                lambda: self.decideEnableOrDisable(
+                    pluginName=ASwitchBtn.objectName(),
+                    switchBtnStatus=ASwitchBtn.isChecked(),
+                )
+            )
 
             pluginsVerticalLayout.addWidget(self.pluginWidget)
 
