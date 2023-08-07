@@ -30,6 +30,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QVBoxLayout,
     QSlider,
+    QApplication
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -62,7 +63,6 @@ from platform import (
 )
 from os import getpid
 from psutil import Process
-from pyperclip import copy
 
 settingsController = SettingsController()
 
@@ -1611,7 +1611,7 @@ class SettingsPage(QWidget):
         w.yesButton.setText("复制")
         w.cancelButton.setText("关闭")
         if w.exec():  # 确定
-            copy(report)
+            QApplication.clipboard().setText(report)
             InfoBar.success(
                 title="成功",
                 content="已复制到剪贴板",
