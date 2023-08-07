@@ -319,19 +319,6 @@
        </widget>
       </item>
       <item>
-       <widget class="ComboBox" name="gameMode">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>游戏模式</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="ComboBox" name="difficulty">
         <property name="minimumSize">
          <size>
@@ -341,6 +328,19 @@
         </property>
         <property name="text">
          <string>游戏难度</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TransparentPushButton" name="gamemode">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>游戏模式</string>
         </property>
        </widget>
       </item>

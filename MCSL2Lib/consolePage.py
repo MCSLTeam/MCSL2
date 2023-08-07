@@ -187,16 +187,16 @@ class ConsolePage(QWidget):
         self.quickMenuTitleLabel.setObjectName("quickMenuTitleLabel")
 
         self.verticalLayout.addWidget(self.quickMenuTitleLabel)
-        self.gameMode = ComboBox(self.quickMenu)
-        self.gameMode.setMinimumSize(QSize(0, 30))
-        self.gameMode.setObjectName("gameMode")
-
-        self.verticalLayout.addWidget(self.gameMode)
         self.difficulty = ComboBox(self.quickMenu)
         self.difficulty.setMinimumSize(QSize(0, 30))
         self.difficulty.setObjectName("difficulty")
 
         self.verticalLayout.addWidget(self.difficulty)
+        self.gamemode = TransparentPushButton(self.quickMenu)
+        self.gamemode.setMinimumSize(QSize(0, 30))
+        self.gamemode.setObjectName("gamemode")
+
+        self.verticalLayout.addWidget(self.gamemode)
         self.whiteList = TransparentPushButton(self.quickMenu)
         self.whiteList.setMinimumSize(QSize(0, 30))
         self.whiteList.setObjectName("whiteList")
@@ -236,13 +236,13 @@ class ConsolePage(QWidget):
 
         self.setObjectName("ConsoleInterface")
 
-        self.serverMemLabel.setText("内存：")
-        self.serverCPULabel.setText("CPU：")
+        self.serverMemLabel.setText("内存： NaN")
+        self.serverCPULabel.setText("CPU： NaN")
         self.subTitleLabel.setText("直观地观察你的服务器的输出，资源占用等。")
         self.titleLabel.setText("终端")
         self.quickMenuTitleLabel.setText("快捷菜单：")
-        self.gameMode.addItems(["生存", "创造", "冒险", "旁观"])
         self.difficulty.addItems(["和平", "简单", "普通", "困难"])
+        self.gamemode.setText("游戏模式")
         self.whiteList.setText("白名单")
         self.op.setText("管理员")
         self.kickPlayers.setText("踢人")
@@ -273,7 +273,7 @@ class ConsolePage(QWidget):
                 command=self.commandLineEdit.text()
             )
         )
-        # self.gameMode.currentIndexChanged.connect(self.quickMenu_GameMode)
+        # self.gameMode.clicked.connect(self.quickMenu_GameMode)
         # self.difficulty.currentIndexChanged.connect(self.quickMenu_Difficulty)
         # self.whiteList.clicked.connect(self.quickMenu_WhiteList)
         # self.op.clicked.connect(self.quickMenu_op)
@@ -388,3 +388,10 @@ class ConsolePage(QWidget):
             w.yesButton.setText("好")
             w.cancelButton.setParent(None)
             w.exec()
+
+    def quickMenu_op(self):
+        '''快捷菜单-服务器管理员'''
+        w = MessageBox("服务器管理员", "添加或删除管理员", self)
+        w.yesButton.setText("好的")
+        w.cancelButton.setParent(None)
+        w.exec()
