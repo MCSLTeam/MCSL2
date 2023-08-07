@@ -13,7 +13,6 @@
 """
 Main entry.
 """
-
 from os import environ
 from platform import system
 from sys import argv as SystemArgv

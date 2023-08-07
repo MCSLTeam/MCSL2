@@ -13,8 +13,10 @@
 """
 The main window of MCSL2.
 """
+import sys
+from traceback import format_exception
 
-from PyQt5.QtCore import QEvent, QObject, Qt
+from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
@@ -28,7 +30,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     MessageBox,
-    HyperlinkButton,
+    HyperlinkButton
 )
 from qframelesswindow import FramelessWindow, TitleBar
 
@@ -120,12 +122,23 @@ class CustomTitleBar(TitleBar):
         pass
 
 
+class CloseServerThread(QThread):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+
+    def run(self):
+        ServerHandler().stopServer()
+
+
 @Singleton
 class Window(FramelessWindow):
     """程序主窗口"""
 
     def __init__(self):
         super().__init__()
+        self.oldHook = sys.excepthook
+        sys.excepthook = self.catchExceptions
+
         self.setTitleBar(CustomTitleBar(self))
 
         # 读取程序设置，不放在第一位就会爆炸！
@@ -172,11 +185,48 @@ class Window(FramelessWindow):
 
         # 注册快捷键
         self.consoleInterface.installEventFilter(self)
-
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
-            ServerHandler().stopServer()
-        super().closeEvent(a0)
+
+            box1 = MessageBox("关闭服务器", "服务器正在运行，是否关闭?", parent=self)
+            box1.setModal(False)
+            box1.yesButton.setText("退出并关闭")
+            if box1.exec_() == 0:
+                a0.ignore()
+                return
+            box1.close()
+            box1.destroy()
+            print("正在关闭服务器...")
+            box = MessageBox("关闭服务器", "正在安全关闭服务器...", parent=self)
+            box.setModal(False)
+            box.yesButton.setText("强行停止")
+            # 创建关闭服务器的子线程
+            closeServerThread = CloseServerThread()
+            closeServerThread.finished.connect(lambda: {box.close()})
+            closeServerThread.start()
+
+            box.yesSignal.connect(ServerHandler().haltServer)
+            box.cancelSignal.connect(a0.ignore)
+            box.yesButton.setEnabled(False)
+            QTimer.singleShot(3000, lambda: box.yesButton.setEnabled(True))
+            box.exec_()
+            print("服务器已关闭")
+
+    def catchExceptions(self, ty, value, _traceback):
+        """
+            全局捕获异常，并弹窗显示
+        :param ty: 异常的类型
+        :param value: 异常的对象
+        :param _traceback: 异常的traceback
+        """
+        tracebackFormat = format_exception(ty, value, _traceback)
+        tracebackString = "".join(tracebackFormat)
+        box = MessageBox("程序出现异常", tracebackString, parent=self)
+        box.yesButton.setText("确认并复制到剪切板")
+        if box.exec() == 1:
+            QApplication.clipboard().setText(tracebackString)
+            print(QApplication.clipboard().text())
+        self.oldHook(ty, value, _traceback)
 
     def initPluginSystem(self):
         """初始化插件系统"""

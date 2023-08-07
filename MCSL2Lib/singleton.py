@@ -1,3 +1,4 @@
+
 def Singleton(cls):
     """单例化装饰器"""
     Instances = {}
