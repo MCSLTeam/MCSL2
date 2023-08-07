@@ -16,7 +16,7 @@ The main window of MCSL2.
 import sys
 from traceback import format_exception
 
-from PyQt5.QtCore import Qt, QThread, QTimer
+from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
@@ -183,6 +183,8 @@ class Window(FramelessWindow):
 
         self.initPluginSystem()
 
+        # 注册快捷键
+        self.consoleInterface.installEventFilter(self)
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
 
@@ -230,7 +232,9 @@ class Window(FramelessWindow):
         """初始化插件系统"""
         pluginManager: PluginManager = PluginManager()
         pluginManager.loadAllPlugins()
-        pluginManager.initSinglePluginsWidget(self.pluginsInterface.pluginsVerticalLayout)
+        pluginManager.initSinglePluginsWidget(
+            self.pluginsInterface.pluginsVerticalLayout
+        )
 
     def switchTo(self, widget):
         """换页"""
@@ -278,12 +282,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-            self,
-            interface,
-            icon,
-            text: str,
-            position=NavigationItemPosition.TOP,
-            selectedIcon=None,
+        self,
+        interface,
+        icon,
+        text: str,
+        position=NavigationItemPosition.TOP,
+        selectedIcon=None,
     ):
         """添加子页面"""
         self.stackWidget.addWidget(interface)
@@ -446,9 +450,7 @@ class Window(FramelessWindow):
         )
 
         # 终端
-        ServerHandler().serverLogOutput.connect(
-            self.consoleInterface.colorConsoleText
-        )
+        ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
         self.consoleInterface.sendCommandButton.clicked.connect(
             lambda: self.sendCommand(
                 command=self.consoleInterface.commandLineEdit.text()
@@ -492,16 +494,13 @@ class Window(FramelessWindow):
             )
             self.serverMemThread.start()
 
-    def sendCommand(self, command):
-        if ServerHandler().isServerRunning():
-            ServerHandler().sendCommand(command=command)
-            self.consoleInterface.commandLineEdit.clear()
-        else:
-            w = MessageBox(
-                title="失败",
-                content="服务器并未开启，请先开启服务器。",
-                parent=self,
-            )
-            w.yesButton.setText("好")
-            w.cancelButton.setParent(None)
-            w.exec()
+    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
+        if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
+            if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
+                if (
+                    self.stackWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
+                ):
+                    self.consoleInterface.sendCommandButton.click()
+                    return True
+        return super().eventFilter(a0, a1)

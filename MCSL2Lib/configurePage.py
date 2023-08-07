@@ -1557,21 +1557,21 @@ class ConfigurePage(QWidget):
         # Noob
         if currentNewServerType == 1:
             configureServerVariables.consoleOutputDeEncoding = (
-                configureServerVariables.consoleOutputDeEncodingList[0]
+                configureServerVariables.consoleDeEncodingList[0]
             )
             configureServerVariables.consoleInputDeEncoding = (
-                configureServerVariables.consoleInputDeEncodingList[0]
+                configureServerVariables.consoleDeEncodingList[0]
             )
             return "编码检查：正常（自动处理）", 0
         # Extended
         elif currentNewServerType == 2:
             configureServerVariables.consoleOutputDeEncoding = (
-                configureServerVariables.consoleOutputDeEncodingList[
+                configureServerVariables.consoleDeEncodingList[
                     self.extendedOutputDeEncodingComboBox.currentIndex()
                 ]
             )
             configureServerVariables.consoleInputDeEncoding = (
-                configureServerVariables.consoleInputDeEncodingList[
+                configureServerVariables.consoleDeEncodingList[
                     self.extendedInputDeEncodingComboBox.currentIndex()
                 ]
             )
@@ -1675,8 +1675,8 @@ class ConfigurePage(QWidget):
                 f"内存：{str(configureServerVariables.minMem)}{configureServerVariables.memUnit}~{str(configureServerVariables.maxMem)}{configureServerVariables.memUnit}\n"
                 f"服务器核心：{configureServerVariables.corePath}\n"
                 f"服务器核心文件名：{configureServerVariables.coreFileName}\n"
-                f"输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(configureServerVariables.consoleOutputDeEncodingList.index(configureServerVariables.consoleOutputDeEncoding))}\n"
-                f"输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(configureServerVariables.consoleInputDeEncodingList.index(configureServerVariables.consoleInputDeEncoding))}\n"
+                f"输出编码设置：{self.extendedOutputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleOutputDeEncoding))}\n"
+                f"输入编码设置：{self.extendedInputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleInputDeEncoding))}\n"
                 f"JVM参数：\n"
                 f"    {totalJVMArg}\n"
                 f"服务器名称：{configureServerVariables.serverName}"

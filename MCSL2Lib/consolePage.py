@@ -35,7 +35,9 @@ from qfluentwidgets import (
     TitleLabel,
     TransparentPushButton,
     FluentIcon as FIF,
+    MessageBox,
 )
+from MCSL2Lib.serverController import ServerHandler
 
 from MCSL2Lib.singleton import Singleton
 
@@ -160,7 +162,7 @@ class ConsolePage(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.quickMenu.sizePolicy().hasHeightForWidth())
         self.quickMenu.setSizePolicy(sizePolicy)
-        self.quickMenu.setMinimumSize(QSize(100, 300))
+        self.quickMenu.setMinimumSize(QSize(100, 340))
         self.quickMenu.setMaximumSize(QSize(130, 16777215))
         self.quickMenu.setObjectName("quickMenu")
 
@@ -176,6 +178,11 @@ class ConsolePage(QWidget):
         self.gameMode.setObjectName("gameMode")
 
         self.verticalLayout.addWidget(self.gameMode)
+        self.difficulty = ComboBox(self.quickMenu)
+        self.difficulty.setMinimumSize(QSize(0, 30))
+        self.difficulty.setObjectName("difficulty")
+
+        self.verticalLayout.addWidget(self.difficulty)
         self.whiteList = TransparentPushButton(self.quickMenu)
         self.whiteList.setMinimumSize(QSize(0, 30))
         self.whiteList.setObjectName("whiteList")
@@ -221,7 +228,8 @@ class ConsolePage(QWidget):
         self.titleLabel.setText("终端")
         self.quickMenuTitleLabel.setText("快捷菜单：")
         self.gameMode.setText("游戏模式")
-        self.gameMode.addItems(["生存", "创造", "冒险"])
+        self.gameMode.addItems(["生存", "创造", "冒险", "旁观"])
+        self.difficulty.addItems(["和平", "简单", "普通", "困难"])
         self.whiteList.setText("白名单")
         self.op.setText("管理员")
         self.kickPlayers.setText("踢人")
@@ -229,12 +237,32 @@ class ConsolePage(QWidget):
         self.saveServer.setText("保存存档")
         self.exitServer.setText("关闭服务器")
         self.killServer.setText("强制关闭")
-        self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送")
+        self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送，不需要加/")
         self.serverOutput.setPlaceholderText("请先开启服务器！不开服务器没有日志的喂")
         self.sendCommandButton.setEnabled(False)
         self.commandLineEdit.textChanged.connect(
             lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
         )
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.sendCommandButton.clicked.connect(
+            lambda: self.sendCommand(
+                command=self.commandLineEdit.text()
+            )
+        )
+        # self.gameMode.currentIndexChanged.connect(self.quickMenu_GameMode)
+        # self.difficulty.currentIndexChanged.connect(self.quickMenu_Difficulty)
+        # self.whiteList.clicked.connect(self.quickMenu_WhiteList)
+        # self.op.clicked.connect(self.quickMenu_op)
+        # self.banPlayers.clicked.connect(self.quickMenu_BanPlayers)
+        # self.saveServer.clicked.connect(self.quickMenu_SaveServer)
+        # self.exitServer.clicked.connect(self.quickMenu_ExitServer)
+        # self.killServer.clicked.connect(self.quickMenu_KillServer)
 
     @pyqtSlot(float)
     def setMemView(self, memPercent):
@@ -277,7 +305,16 @@ class ConsolePage(QWidget):
             "Caused by",
             "at sun",
         ]
-        blueText = ["DEBUG", "Debug", "debug", "调试", "TEST", "Test", "Unknown command"]
+        blueText = [
+            "DEBUG",
+            "Debug",
+            "debug",
+            "调试",
+            "TEST",
+            "Test",
+            "Unknown command",
+            "MCSL2",
+        ]
         color = [
             QColor(52, 185, 96),
             QColor(196, 139, 33),
@@ -298,5 +335,38 @@ class ConsolePage(QWidget):
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
         serverOutput = serverOutput[:-1]
+        if "Loading libraries, please wait..." in serverOutput:
+            serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
         self.serverOutput.appendPlainText(serverOutput)
         self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        self.serverOutput.setReadOnly(True)
+        if " INFO]: Done" in serverOutput:
+            fmt.setForeground(QBrush(color[3]))
+            self.serverOutput.mergeCurrentCharFormat(fmt)
+            self.serverOutput.appendPlainText("[MCSL2 | 提示]：服务器启动完毕！")
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+
+    def sendCommand(self, command):
+        if ServerHandler().isServerRunning():
+            ServerHandler().sendCommand(command=command)
+            self.commandLineEdit.clear()
+        else:
+            w = MessageBox(
+                title="失败",
+                content="服务器并未开启，请先开启服务器。",
+                parent=self,
+            )
+            w.yesButton.setText("好")
+            w.cancelButton.setParent(None)
+            w.exec()

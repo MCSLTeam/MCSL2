@@ -636,16 +636,38 @@ class ServerManagerPage(QWidget):
 
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
         self.editAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
-        self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.replaceCoreManually)
         self.editSaveServerPrimaryPushBtn.clicked.connect(self.finishEditServer)
-
+        self.coreLineEdit.setEnabled(False)
+        self.iconsList = [
+            "铁砧",
+            "布料",
+            "圆石",
+            "命令方块",
+            "工作台",
+            "鸡蛋",
+            "玻璃",
+            "金块",
+            "草方块",
+            "草径",
+            "Java",
+            "MCSL2",
+            "Paper核心",
+            "红石块",
+            "关闭的红石灯",
+            "打开的红石灯",
+            "Spigot核心",
+        ]
+        self.editServerIcon.addItems(self.iconsList)
+        self.editServerIcon.setMaxVisibleItems(5)
         self.serversScrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.verticalLayout.addItem(self.serversScrollAreaSpacer)
+
 
     def goBack(self):
         # 没改就直接退出
         if self.checkDuplicateConfig():
             self.stackedWidget.setCurrentIndex(0)
+            self.disconnectEditServerSlot()
         # 改了得确认
         else:
             w = MessageBox(
@@ -698,6 +720,7 @@ class ServerManagerPage(QWidget):
             w.cancelButton.clicked.connect(
                 lambda: self.stackedWidget.setCurrentIndex(0)
             )
+            w.cancelButton.clicked.connect(self.disconnectEditServerSlot())
             w.cancelButton.clicked.connect(self.refreshServers)
             w.exec()
 
@@ -947,80 +970,34 @@ class ServerManagerPage(QWidget):
         self.stackedWidget.setCurrentIndex(1)
         self.javaFindWorkThreadFactory.create().start()
         self.serverIndex = index
-
-        consoleOutputDeEncodingList = ["follow", "utf-8", "gbk"]
-        consoleInputDeEncodingList = ["follow", "utf-8", "gbk"]
-        memUnitList = ["M", "G"]
+        # 自动填充旧配置。在下方初始化变量之前不应调用任何的editServerVariables的属性
         self.editServerSubtitleLabel.setText(f"编辑服务器-{globalConfig[index]['name']}")
         self.editJavaTextEdit.setText(globalConfig[index]["java_path"])
         self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
         self.editOutputDeEncodingComboBox.setCurrentIndex(
-            consoleOutputDeEncodingList.index(globalConfig[index]["output_decoding"])
+            editServerVariables.consoleDeEncodingList.index(globalConfig[index]["output_decoding"])
         )
         self.editInputDeEncodingComboBox.setCurrentIndex(
-            consoleInputDeEncodingList.index(globalConfig[index]["input_encoding"])
+            editServerVariables.consoleDeEncodingList.index(globalConfig[index]["input_encoding"])
         )
         self.editMemUnitComboBox.setCurrentIndex(
-            memUnitList.index(globalConfig[index]["memory_unit"])
+            editServerVariables.memUnitList.index(globalConfig[index]["memory_unit"])
         )
         self.coreLineEdit.setText(globalConfig[index]["core_file_name"])
-        self.coreLineEdit.setEnabled(False)
         totalJVMArg = ""
-        for arg in editServerVariables.oldJVMArg:
+        for arg in globalConfig[index]["jvm_arg"]:
             totalJVMArg += f"{arg} "
         totalJVMArg = totalJVMArg.strip()
         self.JVMArgPlainTextEdit.setPlainText(totalJVMArg)
         self.editServerNameLineEdit.setText(globalConfig[index]["name"])
-        self.iconsList = [
-            "铁砧",
-            "布料",
-            "圆石",
-            "命令方块",
-            "工作台",
-            "鸡蛋",
-            "玻璃",
-            "金块",
-            "草方块",
-            "草径",
-            "Java",
-            "MCSL2",
-            "Paper核心",
-            "红石块",
-            "关闭的红石灯",
-            "打开的红石灯",
-            "Spigot核心",
-        ]
-        self.editServerIcon.addItems(self.iconsList)
-        self.iconsFileNameList = [
-            "Anvil.png",
-            "Cloth.png",
-            "CobbleStone.png",
-            "CommandBlock.png",
-            "CraftingTable.png",
-            "Egg.png",
-            "Glass.png",
-            "GoldBlock.png",
-            "Grass.png",
-            "GrassPath.png",
-            "Java.svg",
-            "MCSL2.png",
-            "Paper.png",
-            "RedstoneBlock.png",
-            "RedstoneLampOff.png",
-            "RedstoneLampOn.png",
-            "Spigot.svg",
-        ]
+
         self.editServerPixmapLabel.setPixmap(
             QPixmap(f":/built-InIcons/{globalConfig[index]['icon']}")
         )
         self.editServerIcon.setCurrentIndex(
-            self.iconsFileNameList.index(globalConfig[index]["icon"])
+            editServerVariables.iconsFileNameList.index(globalConfig[index]["icon"])
         )
-        self.editServerIcon.currentIndexChanged.connect(
-            lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
-        )
-        self.editServerIcon.setMaxVisibleItems(5)
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
         """初始化变量"""
@@ -1054,14 +1031,92 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldIcon = editServerVariables.icon = globalConfig[index][
             "icon"
         ]
+        # 初始化QtSlot
+        self.connectEditServerSlot()
+
+    def connectEditServerSlot(self):
+        print("c")
+        self.editJavaTextEdit.textChanged.connect(self.changeJavaPath)
+        self.editMinMemLineEdit.textChanged.connect(self.changeMinMem)
+        self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
+        self.editMemUnitComboBox.currentIndexChanged.connect(self.changeMemUnit)
+        self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.changeCore)
+        self.editOutputDeEncodingComboBox.currentIndexChanged.connect(self.changeOutputDeEncoding)
+        self.editInputDeEncodingComboBox.currentIndexChanged.connect(self.changeInputDeEncoding)
+        self.editServerIcon.currentIndexChanged.connect(
+            lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
+        )
+        self.editServerNameLineEdit.textChanged.connect(self.changeServerName)
+    
+    def disconnectEditServerSlot(self):
+        print("d")
+        self.editJavaTextEdit.textChanged.disconnect()
+        self.editMinMemLineEdit.textChanged.disconnect()
+        self.editMaxMemLineEdit.textChanged.disconnect()
+        self.editMemUnitComboBox.currentIndexChanged.disconnect()
+        self.editManuallyAddCorePrimaryPushBtn.clicked.disconnect()
+        self.editOutputDeEncodingComboBox.currentIndexChanged.disconnect()
+        self.editInputDeEncodingComboBox.currentIndexChanged.disconnect()
+        self.editServerIcon.currentIndexChanged.disconnect()
+        self.editServerNameLineEdit.textChanged.disconnect()
 
     def changeIcon(self, iconIndex):
         """改图标用"""
-        editServerVariables.icon = self.iconsFileNameList[iconIndex]
+        editServerVariables.icon = editServerVariables.iconsFileNameList[iconIndex]
         self.editServerPixmapLabel.setPixmap(
-            QPixmap(f":/built-InIcons/{self.iconsFileNameList[iconIndex]}")
+            QPixmap(f":/built-InIcons/{editServerVariables.iconsFileNameList[iconIndex]}")
         )
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
+
+    def changeJavaPath(self):
+        editServerVariables.selectedJavaPath = self.editJavaTextEdit.toPlainText()
+
+    def changeMinMem(self):
+        editServerVariables.minMem = self.editMinMemLineEdit.text()
+
+    def changeMaxMem(self):
+        editServerVariables.maxMem = self.editMaxMemLineEdit.text()
+
+    def changeMemUnit(self):
+        editServerVariables.memUnit = self.editMemUnitComboBox.currentText()
+    
+    def changeCore(self):
+        """手动更换服务器核心"""
+        tmpCorePath = str(
+            QFileDialog.getOpenFileName(self, "选择*.jar文件", getcwd(), "*.jar")[0]
+        ).replace("/", "\\")
+        if tmpCorePath != "":
+            editServerVariables.corePath = tmpCorePath
+            editServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
+            InfoBar.success(
+                title="已修改，但未保存",
+                content=f"核心文件名：{editServerVariables.coreFileName}",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            self.coreLineEdit.setText(editServerVariables.coreFileName)
+        else:
+            InfoBar.warning(
+                title="未修改",
+                content="你并没有选择服务器核心。",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+    def changeOutputDeEncoding(self):
+        editServerVariables.consoleOutputDeEncoding = editServerVariables.consoleDeEncodingList[self.editOutputDeEncodingComboBox.currentIndex()]
+    
+    def changeInputDeEncoding(self):
+        editServerVariables.consoleInputDeEncoding = editServerVariables.consoleDeEncodingList[self.editInputDeEncodingComboBox.currentIndex()]
+
+    def changeServerName(self):
+        editServerVariables.serverName = self.editServerNameLineEdit.text()
 
     def replaceJavaManually(self):
         """手动导入Java"""
@@ -1176,35 +1231,6 @@ class ServerManagerPage(QWidget):
 
         self.editAutoDetectJavaPrimaryPushBtn.setEnabled(True)
 
-    def replaceCoreManually(self):
-        """手动更换服务器核心"""
-        tmpCorePath = str(
-            QFileDialog.getOpenFileName(self, "选择*.jar文件", getcwd(), "*.jar")[0]
-        ).replace("/", "\\")
-        if tmpCorePath != "":
-            editServerVariables.corePath = tmpCorePath
-            editServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
-            InfoBar.success(
-                title="已修改，但未保存",
-                content=f"核心文件名：{editServerVariables.coreFileName}",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-            self.coreLineEdit.setText(editServerVariables.coreFileName)
-        else:
-            InfoBar.warning(
-                title="未修改",
-                content="你并没有选择服务器核心。",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-
     def checkJavaSet(self):
         """检查Java设置"""
         if editServerVariables.selectedJavaPath != "":
@@ -1303,40 +1329,18 @@ class ServerManagerPage(QWidget):
             editServerVariables.serverName = self.editServerNameLineEdit.text()
             return "服务器名称检查: 正常", isError
 
-    def checkDeEncodingSet(self):
-        """检查编码设置"""
-        editServerVariables.consoleOutputDeEncoding = (
-            editServerVariables.consoleOutputDeEncodingList[
-                self.editOutputDeEncodingComboBox.currentIndex()
-            ]
-        )
-        editServerVariables.consoleInputDeEncoding = (
-            editServerVariables.consoleInputDeEncodingList[
-                self.editInputDeEncodingComboBox.currentIndex()
-            ]
-        )
-        return "编码检查：正常", 0
-
     def checkJVMArgSet(self):
-        """检查JVM参数设置"""
+        """检查JVM参数设置，同时设置"""
         if self.JVMArgPlainTextEdit.document() != "":
-            editServerVariables.oldJVMArg = (
-                self.JVMArgPlainTextEdit.toPlainText().split(" ")
-            )
+            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
             return "JVM参数检查：正常", 0
 
     def checkMemUnitSet(self):
         """检查JVM内存堆单位设置"""
-        editServerVariables.memUnit = editServerVariables.memUnitList[
-            self.editMemUnitComboBox.currentIndex()
-        ]
         return "JVM内存堆单位检查：正常", 0
 
     def checkIconSet(self):
         """检查图标设置"""
-        editServerVariables.icon = self.iconsFileNameList[
-            self.editServerIcon.currentIndex()
-        ]
         return "图标检查：正常", 0
 
     def setJavaPath(self, selectedJavaPath):
@@ -1359,7 +1363,6 @@ class ServerManagerPage(QWidget):
             memResult = self.checkMemSet()
             coreResult = self.checkCoreSet()
             serverNameResult = self.checkServerNameSet()
-            consoleDeEncodingResult = self.checkDeEncodingSet()
             jvmArgResult = self.checkJVMArgSet()
             memUnitResult = self.checkMemUnitSet()
             iconResult = self.checkIconSet()
@@ -1369,7 +1372,6 @@ class ServerManagerPage(QWidget):
                 f"{memUnitResult[0]}\n"
                 f"{coreResult[0]}\n"
                 f"{serverNameResult[0]}\n"
-                f"{consoleDeEncodingResult[0]}\n"
                 f"{jvmArgResult[0]}"
                 f"{iconResult[0]}"
             )
@@ -1379,7 +1381,6 @@ class ServerManagerPage(QWidget):
                 memUnitResult[1],
                 coreResult[1],
                 serverNameResult[1],
-                consoleDeEncodingResult[1],
                 jvmArgResult[1],
                 iconResult[1],
             ]
@@ -1408,8 +1409,8 @@ class ServerManagerPage(QWidget):
                     f"内存：{str(editServerVariables.minMem)}{editServerVariables.memUnit}~{str(editServerVariables.maxMem)}{editServerVariables.memUnit}\n"
                     f"服务器核心：{editServerVariables.corePath}\n"
                     f"服务器核心文件名：{editServerVariables.coreFileName}\n"
-                    f"输出编码设置：{self.editOutputDeEncodingComboBox.itemText(editServerVariables.consoleOutputDeEncodingList.index(editServerVariables.consoleOutputDeEncoding))}\n"
-                    f"输入编码设置：{self.editInputDeEncodingComboBox.itemText(editServerVariables.consoleInputDeEncodingList.index(editServerVariables.consoleInputDeEncoding))}\n"
+                    f"输出编码设置：{self.editOutputDeEncodingComboBox.itemText(editServerVariables.consoleDeEncodingList.index(editServerVariables.consoleOutputDeEncoding))}\n"
+                    f"输入编码设置：{self.editInputDeEncodingComboBox.itemText(editServerVariables.consoleDeEncodingList.index(editServerVariables.consoleInputDeEncoding))}\n"
                     f"JVM参数：\n"
                     f"    {totalJVMArg}\n"
                     f"服务器名称：{editServerVariables.serverName}"
