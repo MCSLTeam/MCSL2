@@ -149,7 +149,7 @@ class ServerHandler(QObject):
         """
         停止服务器
         """
-        if settingsController.fileSettings["sendStopInsteadOfKill"] == True:
+        if settingsController.fileSettings["sendStopInsteadOfKill"]:
             self.Server.serverProcess.write(b"stop\n")
             self.Server.serverProcess.waitForFinished()
         else:
