@@ -452,12 +452,12 @@ class Window(FramelessWindow):
         # 终端
         ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
         self.consoleInterface.sendCommandButton.clicked.connect(
-            lambda: self.sendCommand(
+            lambda: self.consoleInterface.sendCommand(
                 command=self.consoleInterface.commandLineEdit.text()
             )
         )
         self.consoleInterface.commandLineEdit.returnPressed.connect(
-            lambda: self.sendCommand(
+            lambda: self.consoleInterface.sendCommand(
                 command=self.consoleInterface.commandLineEdit.text()
             )
         )
