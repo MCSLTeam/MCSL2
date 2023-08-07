@@ -720,7 +720,7 @@ class ServerManagerPage(QWidget):
             w.cancelButton.clicked.connect(
                 lambda: self.stackedWidget.setCurrentIndex(0)
             )
-            w.cancelButton.clicked.connect(self.disconnectEditServerSlot())
+            w.cancelButton.clicked.connect(self.disconnectEditServerSlot)
             w.cancelButton.clicked.connect(self.refreshServers)
             w.exec()
 
@@ -1035,7 +1035,6 @@ class ServerManagerPage(QWidget):
         self.connectEditServerSlot()
 
     def connectEditServerSlot(self):
-        print("c")
         self.editJavaTextEdit.textChanged.connect(self.changeJavaPath)
         self.editMinMemLineEdit.textChanged.connect(self.changeMinMem)
         self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
@@ -1049,7 +1048,6 @@ class ServerManagerPage(QWidget):
         self.editServerNameLineEdit.textChanged.connect(self.changeServerName)
     
     def disconnectEditServerSlot(self):
-        print("d")
         self.editJavaTextEdit.textChanged.disconnect()
         self.editMinMemLineEdit.textChanged.disconnect()
         self.editMaxMemLineEdit.textChanged.disconnect()
@@ -1331,9 +1329,12 @@ class ServerManagerPage(QWidget):
 
     def checkJVMArgSet(self):
         """检查JVM参数设置，同时设置"""
-        if self.JVMArgPlainTextEdit.document() != "":
+        if self.JVMArgPlainTextEdit.toPlainText() != "":
             editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
             return "JVM参数检查：正常", 0
+        else:
+            editServerVariables.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
+            return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
 
     def checkMemUnitSet(self):
         """检查JVM内存堆单位设置"""
@@ -1350,6 +1351,7 @@ class ServerManagerPage(QWidget):
 
     def finishEditServer(self):
         """完成修改服务器的检查触发器"""
+        jvmArgResult = self.checkJVMArgSet()
         dupCode = self.checkDuplicateConfig()
         # 重复不保存
         if dupCode:
@@ -1372,7 +1374,7 @@ class ServerManagerPage(QWidget):
                 f"{memUnitResult[0]}\n"
                 f"{coreResult[0]}\n"
                 f"{serverNameResult[0]}\n"
-                f"{jvmArgResult[0]}"
+                f"{jvmArgResult[0]}\n"
                 f"{iconResult[0]}"
             )
             totalResultIndicator = [
@@ -1400,7 +1402,7 @@ class ServerManagerPage(QWidget):
                 w.cancelButton.setParent(None)
                 w.exec()
             else:
-                totalJVMArg: str = "\n".join(editServerVariables.oldJVMArg)
+                totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
                 title = f"请再次检查你设置的参数是否有误："
                 content = (
                     f"{totalResultMsg}\n"
@@ -1571,7 +1573,7 @@ class ServerManagerPage(QWidget):
             and editServerVariables.oldSelectedJavaPath
             == editServerVariables.selectedJavaPath
             and editServerVariables.oldMemUnit == editServerVariables.memUnit
-            and editServerVariables.oldJVMArg == editServerVariables.oldJVMArg
+            and editServerVariables.oldJVMArg == editServerVariables.jvmArg
             and editServerVariables.oldServerName == editServerVariables.serverName
             and editServerVariables.oldConsoleOutputDeEncoding
             == editServerVariables.consoleOutputDeEncoding

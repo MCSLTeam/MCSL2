@@ -1581,7 +1581,7 @@ class ConfigurePage(QWidget):
         """检查JVM参数设置"""
         if currentNewServerType == 2:
             # 有写
-            if self.JVMArgPlainTextEdit.document() != "":
+            if self.JVMArgPlainTextEdit.toPlainText() != "":
                 configureServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
