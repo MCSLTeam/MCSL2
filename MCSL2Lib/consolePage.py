@@ -119,7 +119,7 @@ class ConsolePage(QWidget):
         sizePolicy.setHeightForWidth(self.serverCPULabel.sizePolicy().hasHeightForWidth())
         self.serverCPULabel.setSizePolicy(sizePolicy)
         self.serverCPULabel.setObjectName("serverCPULabel")
-        
+
         self.gridLayout_4.addWidget(self.serverCPULabel, 0, 0, 1, 3)
         self.gridLayout.addWidget(self.serverCPUCardWidget, 2, 4, 1, 1)
         spacerItem6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
@@ -264,6 +264,11 @@ class ConsolePage(QWidget):
         self.serverOutput.setReadOnly(True)
         self.serverOutput.setReadOnly(True)
         self.sendCommandButton.clicked.connect(
+            lambda: self.sendCommand(
+                command=self.commandLineEdit.text()
+            )
+        )
+        self.commandLineEdit.returnPressed.connect(
             lambda: self.sendCommand(
                 command=self.commandLineEdit.text()
             )
