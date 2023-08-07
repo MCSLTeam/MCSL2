@@ -1683,7 +1683,7 @@ class ConfigurePage(QWidget):
             )
             w = MessageBox(title, content, self)
             w.yesButton.setText("无误，添加")
-            w.yesButton.clicked.connect(self.saveNewServer)
+            w.yesSignal.connect(self.saveNewServer)
             w.cancelButton.setText("我再看看")
             w.exec()
 

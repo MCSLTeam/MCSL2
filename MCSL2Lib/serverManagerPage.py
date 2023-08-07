@@ -842,7 +842,7 @@ class ServerManagerPage(QWidget):
                 "    color: rgb(255, 0, 0)\n"
                 "}"
             )
-        w.cancelButton.clicked.connect(lambda: self.deleteServer_Step2(index=index))
+        w.cancelSignal.connect(lambda: self.deleteServer_Step2(index=index))
         w.exec()
 
     def deleteServer_Step2(self, index):
@@ -907,7 +907,7 @@ class ServerManagerPage(QWidget):
         )
         confirmLineEdit.setPlaceholderText(f"在此输入\"{globalConfig[index]['name']}\"")
         self.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
-        w2.cancelButton.clicked.connect(lambda: self.deleteServer_Step3(index=index))
+        w2.cancelSignal.connect(lambda: self.deleteServer_Step3(index=index))
         w2.textLayout.addWidget(confirmLineEdit)
         w2.exec()
 
@@ -1419,7 +1419,7 @@ class ServerManagerPage(QWidget):
                 )
                 w = MessageBox(title, content, self)
                 w.yesButton.setText("无误，覆盖")
-                w.yesButton.clicked.connect(self.saveEditedServer)
+                w.yesSignal.connect(self.saveEditedServer)
                 w.cancelButton.setText("我再看看")
                 w.exec()
 
@@ -1457,7 +1457,7 @@ class ServerManagerPage(QWidget):
                 w2 = MessageBox(title="提示", content="是否需要删除旧的服务器核心？", parent=self)
                 w2.yesButton.setText("是的")
                 w2.cancelButton.setText("不用")
-                w2.yesButton.clicked.connect(
+                w2.yesSignal.connect(
                     remove(
                         f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
                     )

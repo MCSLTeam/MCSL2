@@ -196,7 +196,6 @@ class Window(FramelessWindow):
                 return
             box1.close()
             box1.destroy()
-            print("正在关闭服务器...")
             box = MessageBox("关闭服务器", "正在安全关闭服务器...", parent=self)
             box.setModal(False)
             box.yesButton.setText("强行停止")
@@ -465,7 +464,7 @@ class Window(FramelessWindow):
                 parent=self,
             )
             w.yesButton.setText("同意")
-            w.yesButton.clicked.connect(lambda: MojangEula().acceptEula())
+            w.yesSignal.connect(lambda: MojangEula().acceptEula())
             w.cancelButton.setText("拒绝")
             eulaBtn = HyperlinkButton()
             eulaBtn.setText("Eula")

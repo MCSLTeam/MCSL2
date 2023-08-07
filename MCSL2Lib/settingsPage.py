@@ -1556,10 +1556,8 @@ class SettingsPage(QWidget):
             self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
             self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
             self.thread_fetchUpdateIntro.start()
-            if w.exec():  # 确定， latestVerInfo[3]为下载链接
-                pass
-            else:  # 取消
-                pass
+            # w.yesSignal.connect()  # 确定， latestVerInfo[3]为下载链接
+            w.exec()
 
         elif latestVerInfo[0] == "false":  # 已是最新版
             InfoBar.success(
@@ -1610,19 +1608,17 @@ class SettingsPage(QWidget):
         )
         w.yesButton.setText("复制")
         w.cancelButton.setText("关闭")
-        if w.exec():  # 确定
-            QApplication.clipboard().setText(report)
-            InfoBar.success(
-                title="成功",
-                content="已复制到剪贴板",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=2500,
-                parent=self,
-            )
-        else:  # 取消
-            pass
+        w.yesSignal.connect(lambda: QApplication.clipboard().setText(report))
+        w.yesSignal.connect(lambda: InfoBar.success(
+                                                    title="成功",
+                                                    content="已复制到剪贴板",
+                                                    orient=Qt.Horizontal,
+                                                    isClosable=True,
+                                                    position=InfoBarPosition.TOP_RIGHT,
+                                                    duration=2500,
+                                                    parent=self,
+                                                    )
+                            )
 
 
 class CheckUpdateThread(QThread):
