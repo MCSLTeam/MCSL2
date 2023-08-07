@@ -908,7 +908,7 @@ class ServerManagerPage(QWidget):
         confirmLineEdit.setPlaceholderText(f"在此输入\"{globalConfig[index]['name']}\"")
         self.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
         w2.cancelButton.clicked.connect(lambda: self.deleteServer_Step3(index=index))
-        w2.vBoxLayout.addWidget(confirmLineEdit)
+        w2.textLayout.addWidget(confirmLineEdit)
         w2.exec()
 
     def deleteServer_Step3(self, index):
