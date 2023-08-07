@@ -210,7 +210,6 @@ class Window(FramelessWindow):
             box.yesButton.setEnabled(False)
             QTimer.singleShot(3000, lambda: box.yesButton.setEnabled(True))
             box.exec_()
-            print("服务器已关闭")
 
     def catchExceptions(self, ty, value, _traceback):
         """
