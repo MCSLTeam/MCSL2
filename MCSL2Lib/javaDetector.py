@@ -146,9 +146,11 @@ def detectJava(FuzzySearch=True):
     def JavaVersionMatcher(s):
         pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
         match = search(pattern, s)
-        match = ".".join(filter(None, match.groups()))
+        if match is not None:
+            match = ".".join(filter(None, match.groups()))
+        else:
+            match = "unknown"
         return match
-
     JavaPathList = []
     foundJava.clear()
     if "windows" in system().lower():
