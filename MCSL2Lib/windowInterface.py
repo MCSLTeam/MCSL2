@@ -16,7 +16,7 @@ The main window of MCSL2.
 import sys
 from traceback import format_exception
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer
+from PyQt5.QtCore import QEvent, QObject, Qt, QThread
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
@@ -127,7 +127,21 @@ class CloseServerThread(QThread):
         super().__init__(parent=parent)
 
     def run(self):
-        ServerHandler().stopServer()
+        try:
+            ServerHandler().stopServer()
+        finally:
+            pass
+
+
+class ExitAndCloseServerMsgBox(MessageBox):
+    def __init__(self, title: str, content: str, *args, **kwargs):
+        super().__init__(title, content, *args, **kwargs)
+        self.closeThread = CloseServerThread(self.parent())
+        self.closeThread.finished.connect(self.close)
+
+    def exec(self) -> int:
+        self.closeThread.start()
+        return super().exec()
 
 
 @Singleton
@@ -185,30 +199,33 @@ class Window(FramelessWindow):
 
         # 注册快捷键
         self.consoleInterface.installEventFilter(self)
+
+        # # 定义提示窗口
+        # self.serverCloseConfirmMsgBox = MessageBox("关闭服务器", "服务器正在运行，是否关闭?", parent=self)
+        # self.serverCloseConfirmMsgBox.setModal(False)
+        # self.serverCloseConfirmMsgBox.yesButton.setText("退出并关闭")
+        #
+        # self.exitAndCloseServerMsgBox = ExitAndCloseServerMsgBox("关闭服务器", "正在安全关闭服务器...", parent=self)
+        # self.exitAndCloseServerMsgBox.setModal(False)
+        # self.exitAndCloseServerMsgBox.yesButton.setText("强行停止")
+        # self.exitAndCloseServerMsgBox.cancelButton.hide()
+        # self.exitAndCloseServerMsgBox.yesSignal.connect(ServerHandler().haltServer)
+
     def closeEvent(self, a0) -> None:
+        print("closeEvent enter")
         if ServerHandler().isServerRunning():
 
-            box1 = MessageBox("关闭服务器", "服务器正在运行，是否关闭?", parent=self)
-            box1.setModal(False)
-            box1.yesButton.setText("退出并关闭")
-            if box1.exec_() == 0:
+            # if self.serverCloseConfirmMsgBox.exec() == 0:
+            #     a0.ignore()
+            #     return
+            # self.exitAndCloseServerMsgBox.exec()
+            box = MessageBox("进程退出", "服务器正在运行，退出前请关闭服务器", parent=self)
+            box.yesButton.setText("关闭并退出")
+            if box.exec() == 0:
                 a0.ignore()
                 return
-            box1.close()
-            box1.destroy()
-            box = MessageBox("关闭服务器", "正在安全关闭服务器...", parent=self)
-            box.setModal(False)
-            box.yesButton.setText("强行停止")
-            # 创建关闭服务器的子线程
-            closeServerThread = CloseServerThread()
-            closeServerThread.finished.connect(lambda: {box.close()})
-            closeServerThread.start()
-
-            box.yesSignal.connect(ServerHandler().haltServer)
-            box.cancelSignal.connect(a0.ignore)
-            box.yesButton.setEnabled(False)
-            QTimer.singleShot(3000, lambda: box.yesButton.setEnabled(True))
-            box.exec_()
+            ServerHandler().stopServer()
+            a0.accept()
 
     def catchExceptions(self, ty, value, _traceback):
         """
@@ -280,12 +297,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-        self,
-        interface,
-        icon,
-        text: str,
-        position=NavigationItemPosition.TOP,
-        selectedIcon=None,
+            self,
+            interface,
+            icon,
+            text: str,
+            position=NavigationItemPosition.TOP,
+            selectedIcon=None,
     ):
         """添加子页面"""
         self.stackWidget.addWidget(interface)
@@ -486,8 +503,8 @@ class Window(FramelessWindow):
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                    self.stackWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
