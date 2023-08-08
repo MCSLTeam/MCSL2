@@ -140,6 +140,12 @@ class singleSelectJavaWidget(CardWidget):
         self.javaPath.setFrameShape(QFrame.StyledPanel)
         self.javaPath.setFrameShadow(QFrame.Sunken)
         self.javaPath.setReadOnly(True)
+        self.javaPath.setReadOnly(True)
+        self.javaPath.setReadOnly(True)
+        self.javaPath.setReadOnly(True)
+        self.javaPath.setReadOnly(True)
+        self.javaPath.setReadOnly(True)
+        self.javaPath.setReadOnly(True)
         self.javaPath.setObjectName("javaPath")
 
         self.gridLayout_2.addWidget(self.javaPath, 1, 1, 2, 1)

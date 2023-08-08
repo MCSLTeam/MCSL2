@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
@@ -36,6 +37,8 @@ from qfluentwidgets import (
     TransparentPushButton,
     FluentIcon as FIF,
     MessageBox,
+    InfoBar,
+    InfoBarPosition
 )
 from MCSL2Lib.serverController import ServerHandler
 
@@ -355,6 +358,15 @@ class ConsolePage(QWidget):
         serverOutput = serverOutput[:-1]
         if "Loading libraries, please wait..." in serverOutput:
             serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
+            InfoBar.info(
+                        title="提示",
+                        content="服务器正在启动，请稍后...",
+                        orient=Qt.Horizontal,
+                        isClosable=False,
+                        position=InfoBarPosition.TOP,
+                        duration=2222,
+                        parent=self,
+                    )
         self.serverOutput.appendPlainText(serverOutput)
         self.serverOutput.setReadOnly(True)
         self.serverOutput.setReadOnly(True)
@@ -374,6 +386,35 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
+            InfoBar.success(
+                        title="提示",
+                        content="服务器启动完毕！",
+                        orient=Qt.Horizontal,
+                        isClosable=False,
+                        position=InfoBarPosition.TOP,
+                        duration=2222,
+                        parent=self,
+                    )
+        if "�" in serverOutput:
+            fmt.setForeground(QBrush(color[1]))
+            self.serverOutput.mergeCurrentCharFormat(fmt)
+            self.serverOutput.appendPlainText("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            self.serverOutput.setReadOnly(True)
+            InfoBar.warning(
+                        title="警告",
+                        content="服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。\n请尝试更换编码。",
+                        orient=Qt.Horizontal,
+                        isClosable=False,
+                        position=InfoBarPosition.TOP,
+                        duration=2222,
+                        parent=self,
+                    )
 
     def sendCommand(self, command):
         if ServerHandler().isServerRunning():
