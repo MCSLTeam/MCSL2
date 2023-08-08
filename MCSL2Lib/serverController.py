@@ -332,3 +332,10 @@ class MinecraftServerResMonitorThread(QThread):
                 self.cpuPercent.emit(0.0000)
         except NoSuchProcess:
             pass
+
+    def __del__(self):
+        self.timer.stop()
+        self.timer.deleteLater()
+        self.quit()
+        self.wait()
+

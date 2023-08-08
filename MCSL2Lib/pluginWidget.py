@@ -15,7 +15,7 @@ A single widget template of plugin.
 '''
 
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QVBoxLayout, QHBoxLayout, QSpacerItem
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, pyqtSignal
 
 from qfluentwidgets import (
     BodyLabel,
@@ -26,6 +26,17 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF
 )
+
+
+class PluginSwitchButton(SwitchButton):
+    selfCheckedChanged = pyqtSignal(SwitchButton, bool)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.checkedChanged.connect(self.onCheckedChanged)
+
+    def onCheckedChanged(self, checked):
+        self.selfCheckedChanged.emit(self, checked)
 
 
 class singlePluginWidget(CardWidget):
@@ -58,8 +69,7 @@ class singlePluginWidget(CardWidget):
         self.pluginIcon.setMinimumSize(QSize(60, 60))
         self.pluginIcon.setMaximumSize(QSize(60, 60))
         self.pluginIcon.setObjectName("pluginIcon")
-        
-        
+
         self.horizontalLayout.addWidget(self.pluginIcon)
         spacerItem1 = QSpacerItem(15, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
@@ -113,7 +123,7 @@ class singlePluginWidget(CardWidget):
 
         self.verticalLayout.addWidget(self.pluginTip)
         self.horizontalLayout.addWidget(self.pluginInfoWidget)
-        self.SwitchButton = SwitchButton(self)
+        self.SwitchButton = PluginSwitchButton(self)
         # self.SwitchButton.setChecked(False)
         # self.SwitchButton.setObjectName("SwitchButton")
 
@@ -126,7 +136,7 @@ class singlePluginWidget(CardWidget):
         self.deleteIcon.setObjectName("deleteIcon")
 
         self.horizontalLayout.addWidget(self.deleteIcon)
-        
+
         # self.pluginName.setText("[插件名称]")
         # self.pluginVer.setText("[插件版本]")
         # self.pluginAuthor.setText("[插件作者]")
