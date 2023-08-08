@@ -43,7 +43,7 @@ class PluginLoader(BasePluginLoader):
         try:
             importedPlugin.pluginName = pluginName
             with open(
-                f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
+                    f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
             ) as f:
                 importedPluginConfig: dict = loads(f.read())
             importedPlugin.version = importedPluginConfig.get("version")
@@ -165,10 +165,10 @@ class PluginManager(BasePluginManager):
             pluginVariables.pluginSwitchBtnDict.update({pluginName: ASwitchBtn})
 
             # 设置槽函数
-            ASwitchBtn.checkedChanged.connect(
-                lambda: self.decideEnableOrDisable(
-                    pluginName=ASwitchBtn.objectName(),
-                    switchBtnStatus=ASwitchBtn.isChecked(),
+            ASwitchBtn.selfCheckedChanged.connect(
+                lambda instance, checked: self.decideEnableOrDisable(
+                    pluginName=instance.objectName(),
+                    switchBtnStatus=checked,
                 )
             )
 
