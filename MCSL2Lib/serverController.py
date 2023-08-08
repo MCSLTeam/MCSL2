@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
@@ -132,7 +133,7 @@ class ServerHandler(QObject):
         self.partialData = lines.pop()  # The last element might be incomplete, so keep it in the buffer
 
         for line in lines:
-            newOutput = line.decode(serverVariables.outputDecoding, errors='ignore')
+            newOutput = line.decode(serverVariables.outputDecoding, errors='replace')
             self.serverLogOutput.emit(newOutput)
 
     def startServer(self, javaPath: str, processArgs: List[str], workingDirectory: str):
