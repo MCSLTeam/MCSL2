@@ -16,7 +16,7 @@ The main window of MCSL2.
 import sys
 from traceback import format_exception
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QThread
+from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
@@ -35,16 +35,26 @@ from qfluentwidgets import (
 from qframelesswindow import FramelessWindow, TitleBar
 
 from Adapters.Plugin import PluginManager
-from MCSL2Lib.interfaceController import StackedWidget
-from MCSL2Lib.homePage import HomePage
+from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.configurePage import ConfigurePage
-from MCSL2Lib.serverManagerPage import ServerManagerPage
-from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.consolePage import ConsolePage
+from MCSL2Lib.downloadPage import DownloadPage
+from MCSL2Lib.homePage import HomePage
+from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
-from MCSL2Lib.settingsPage import SettingsPage
+from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
+from MCSL2Lib.serverController import (
+    MinecraftServerResMonitorThread,
+    MojangEula,
+    ServerHandler,
+    ServerHelper,
+    ServerLauncher,
+)
+from MCSL2Lib.serverManagerPage import ServerManagerPage
+from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.settingsPage import SettingsPage
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
@@ -53,16 +63,6 @@ from MCSL2Lib.variables import (
     PluginVariables,
     ServerVariables,
 )
-from MCSL2Lib import icons as _  # noqa: F401
-from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.serverController import (
-    MinecraftServerResMonitorThread,
-    MojangEula,
-    ServerHandler,
-    ServerHelper,
-    ServerLauncher,
-)
-from MCSL2Lib.publicFunctions import openWebUrl
 
 serverVariables = ServerVariables()
 settingsController = SettingsController()
@@ -128,7 +128,7 @@ class CloseServerThread(QThread):
 
     def run(self):
         try:
-            ServerHandler().stopServer()
+            pass
         finally:
             pass
 
@@ -196,36 +196,47 @@ class Window(FramelessWindow):
         serverHelper.loadAtLaunch()
 
         self.initPluginSystem()
-
         # 注册快捷键
         self.consoleInterface.installEventFilter(self)
 
-        # # 定义提示窗口
-        # self.serverCloseConfirmMsgBox = MessageBox("关闭服务器", "服务器正在运行，是否关闭?", parent=self)
-        # self.serverCloseConfirmMsgBox.setModal(False)
-        # self.serverCloseConfirmMsgBox.yesButton.setText("退出并关闭")
-        #
-        # self.exitAndCloseServerMsgBox = ExitAndCloseServerMsgBox("关闭服务器", "正在安全关闭服务器...", parent=self)
-        # self.exitAndCloseServerMsgBox.setModal(False)
-        # self.exitAndCloseServerMsgBox.yesButton.setText("强行停止")
-        # self.exitAndCloseServerMsgBox.cancelButton.hide()
-        # self.exitAndCloseServerMsgBox.yesSignal.connect(ServerHandler().haltServer)
+        self.exitingMsgBox = MessageBox(
+            "正在关闭", "正在关闭服务器,稍后将退出", parent=self
+        )
+        # 安全退出控件
+        self.exitingMsgBox.setModal(True)
+        self.exitingMsgBox.cancelButton.hide()
+        self.exitingMsgBox.yesButton.setText("强制退出")
+        self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
+        self.exitingMsgBox.yesButton.setEnabled(False)
+        self.exitingMsgBox.hide()
+        self.quitTimer = QTimer(self)
+        self.quitTimer.setInterval(3000)
+        self.quitTimer.timeout.connect(lambda: self.exitingMsgBox.yesButton.setEnabled(True))
 
     def closeEvent(self, a0) -> None:
         print("closeEvent enter")
         if ServerHandler().isServerRunning():
-
-            # if self.serverCloseConfirmMsgBox.exec() == 0:
-            #     a0.ignore()
-            #     return
-            # self.exitAndCloseServerMsgBox.exec()
             box = MessageBox("进程退出", "服务器正在运行，退出前请关闭服务器", parent=self)
-            box.yesButton.setText("关闭并退出")
-            if box.exec() == 0:
+            box.yesButton.setText("取消")
+            box.cancelButton.setText("关闭并退出")
+            if box.exec() == 1:
                 a0.ignore()
                 return
-            ServerHandler().stopServer()
-            a0.accept()
+
+            self.serverMemThread.quit()
+            process = ServerHandler().Server.serverProcess
+            process.finished.connect(self.close)
+            process.write(b"stop\n")
+            self.exitingMsgBox.show()
+            self.quitTimer.start()
+
+            a0.ignore()
+            return
+        a0.accept()
+
+    def onForceExit(self):
+        process = ServerHandler().Server.serverProcess
+        process.kill()
 
     def catchExceptions(self, ty, value, _traceback):
         """
