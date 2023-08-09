@@ -15,7 +15,7 @@
 Minecraft server console page.
 """
 
-from PyQt5.QtCore import QSize, Qt, pyqtSlot
+from PyQt5.QtCore import QSize, Qt, pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QTextCharFormat, QColor, QBrush
 from PyQt5.QtWidgets import (
     QSpacerItem,
@@ -38,20 +38,26 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     MessageBox,
     InfoBar,
-    InfoBarPosition
+    InfoBarPosition,
 )
 from MCSL2Lib.serverController import ServerHandler
 
 from MCSL2Lib.singleton import Singleton
+
+from MCSL2Lib.playersControllerMainWidget import playersController
 
 
 @Singleton
 class ConsolePage(QWidget):
     """终端页"""
 
+    playersControllerBtnEnabled = pyqtSignal(bool)
+
     def __init__(self):
         super().__init__()
 
+        self.playersList = []
+        self.playersControllerBtnEnabled.emit(False)
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -59,7 +65,9 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverMemCardWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverMemCardWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverMemCardWidget.setSizePolicy(sizePolicy)
         self.serverMemCardWidget.setMinimumSize(QSize(130, 120))
         self.serverMemCardWidget.setMaximumSize(QSize(130, 120))
@@ -82,7 +90,9 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverMemLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverMemLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverMemLabel.setSizePolicy(sizePolicy)
         self.serverMemLabel.setObjectName("serverMemLabel")
 
@@ -96,7 +106,9 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverCPUCardWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverCPUCardWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverCPUCardWidget.setSizePolicy(sizePolicy)
         self.serverCPUCardWidget.setMinimumSize(QSize(130, 120))
         self.serverCPUCardWidget.setMaximumSize(QSize(130, 120))
@@ -119,7 +131,9 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverCPULabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverCPULabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverCPULabel.setSizePolicy(sizePolicy)
         self.serverCPULabel.setObjectName("serverCPULabel")
 
@@ -267,19 +281,15 @@ class ConsolePage(QWidget):
         self.serverOutput.setReadOnly(True)
         self.serverOutput.setReadOnly(True)
         self.sendCommandButton.clicked.connect(
-            lambda: self.sendCommand(
-                command=self.commandLineEdit.text()
-            )
+            lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
         self.commandLineEdit.returnPressed.connect(
-            lambda: self.sendCommand(
-                command=self.commandLineEdit.text()
-            )
+            lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
         # self.gameMode.clicked.connect(self.quickMenu_GameMode)
         # self.difficulty.currentIndexChanged.connect(self.quickMenu_Difficulty)
         # self.whiteList.clicked.connect(self.quickMenu_WhiteList)
-        # self.op.clicked.connect(self.quickMenu_op)
+        self.op.clicked.connect(self.initQuickMenu_op)
         # self.banPlayers.clicked.connect(self.quickMenu_BanPlayers)
         # self.saveServer.clicked.connect(self.quickMenu_SaveServer)
         # self.exitServer.clicked.connect(self.quickMenu_ExitServer)
@@ -357,16 +367,17 @@ class ConsolePage(QWidget):
         self.serverOutput.mergeCurrentCharFormat(fmt)
         serverOutput = serverOutput[:-1]
         if "Loading libraries, please wait..." in serverOutput:
+            self.playersList.clear()
             serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
             InfoBar.info(
-                        title="提示",
-                        content="服务器正在启动，请稍后...",
-                        orient=Qt.Horizontal,
-                        isClosable=False,
-                        position=InfoBarPosition.TOP,
-                        duration=2222,
-                        parent=self,
-                    )
+                title="提示",
+                content="服务器正在启动，请稍后...",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.TOP,
+                duration=2222,
+                parent=self,
+            )
         self.serverOutput.appendPlainText(serverOutput)
         self.serverOutput.setReadOnly(True)
         self.serverOutput.setReadOnly(True)
@@ -387,18 +398,20 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             InfoBar.success(
-                        title="提示",
-                        content="服务器启动完毕！",
-                        orient=Qt.Horizontal,
-                        isClosable=False,
-                        position=InfoBarPosition.TOP,
-                        duration=2222,
-                        parent=self,
-                    )
+                title="提示",
+                content="服务器启动完毕！",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.TOP,
+                duration=2222,
+                parent=self,
+            )
         if "�" in serverOutput:
             fmt.setForeground(QBrush(color[1]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
-            self.serverOutput.appendPlainText("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")
+            self.serverOutput.appendPlainText(
+                "[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。"
+            )
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
@@ -407,14 +420,25 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             InfoBar.warning(
-                        title="警告",
-                        content="服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。\n请尝试更换编码。",
-                        orient=Qt.Horizontal,
-                        isClosable=False,
-                        position=InfoBarPosition.TOP,
-                        duration=2222,
-                        parent=self,
-                    )
+                title="警告",
+                content="服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。\n请尝试更换编码。",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.TOP,
+                duration=2222,
+                parent=self,
+            )
+        if "logged in with entity id" in serverOutput or " left the game" in serverOutput:
+            self.recordPlayers(serverOutput)
+
+    def recordPlayers(self, serverOutput: str):
+        if "logged in with entity id" in serverOutput:
+            self.playersList.append(serverOutput.split("INFO]: ")[1].split("[/")[0])
+        elif " left the game" in serverOutput:
+            try:
+                self.playersList.pop(serverOutput.split("INFO]: ")[1].split(" left the game")[0])
+            except Exception:
+                pass
 
     def sendCommand(self, command):
         if ServerHandler().isServerRunning():
@@ -430,9 +454,43 @@ class ConsolePage(QWidget):
             w.cancelButton.setParent(None)
             w.exec()
 
-    def quickMenu_op(self):
-        '''快捷菜单-服务器管理员'''
+    def lineEditChecker(self, text):
+        if text != "":
+            self.playersControllerBtnEnabled.emit(True)
+        else:
+            self.playersControllerBtnEnabled.emit(False)
+
+    def getKnownServerPlayers(self) -> str:
+        players = "无玩家加入"
+        if len(self.playersList):
+            players = ""
+            for player in self.playersList:
+                players += f"{player}\n"
+        else:
+            pass
+        return players
+
+    def initQuickMenu_op(self):
+        """快捷菜单-服务器管理员"""
+        opWidget = playersController()
+        opWidget.mode.addItems(["添加", "删除"])
+        opWidget.mode.setCurrentIndex(0)
+        opWidget.who.textChanged.connect(
+            lambda: self.lineEditChecker(text=opWidget.who.text())
+        )
+        opWidget.playersTip.setText(self.getKnownServerPlayers())
         w = MessageBox("服务器管理员", "添加或删除管理员", self)
-        w.yesButton.setText("好的")
-        w.cancelButton.setParent(None)
+        w.yesButton.setText("确定")
+        w.cancelButton.setText("取消")
+        w.textLayout.addWidget(opWidget.playersControllerMainWidget)
+        self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+        w.yesSignal.connect(
+            lambda: self.runQuickMenu_op(
+                mode=opWidget.mode.currentIndex(), player=opWidget.who.text()
+            )
+        )
         w.exec()
+
+    def runQuickMenu_op(self, mode: int, player: str):
+        commandPrefixList = ["op", "deop"]
+        ServerHandler().sendCommand(command=f"{commandPrefixList[mode]} {player}")
