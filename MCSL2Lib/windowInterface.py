@@ -46,7 +46,7 @@ from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (
-    MinecraftServerResMonitorThread,
+    MinecraftServerResMonitorUtil,
     MojangEula,
     ServerHandler,
     ServerHelper,
@@ -203,7 +203,6 @@ class Window(FramelessWindow):
             "正在关闭", "正在关闭服务器,稍后将退出", parent=self
         )
         # 安全退出控件
-        self.exitingMsgBox.setModal(True)
         self.exitingMsgBox.cancelButton.hide()
         self.exitingMsgBox.yesButton.setText("强制退出")
         self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
@@ -223,7 +222,6 @@ class Window(FramelessWindow):
                 a0.ignore()
                 return
 
-            self.serverMemThread.quit()
             process = ServerHandler().Server.serverProcess
             process.finished.connect(self.close)
             process.write(b"stop\n")
@@ -502,13 +500,10 @@ class Window(FramelessWindow):
         else:
             self.switchTo(self.consoleInterface)
             self.consoleInterface.serverOutput.setPlainText("")
-            self.serverMemThread = MinecraftServerResMonitorThread(self)
+            self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)
-            ServerHandler().serverClosed.connect(
-                lambda: self.serverMemThread.terminate()
-            )
-            self.serverMemThread.start()
+            ServerHandler().serverClosed.connect(self.serverMemThread.onServerClosedHandler)
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:

@@ -242,11 +242,13 @@ class ConsolePage(QWidget):
         self.exitServer = TransparentPushButton(self.quickMenu)
         self.exitServer.setMinimumSize(QSize(0, 30))
         self.exitServer.setObjectName("exitServer")
+        self.exitServer.clicked.connect(self.onExitServerClickedHandler)
 
         self.verticalLayout.addWidget(self.exitServer)
         self.killServer = TransparentPushButton(self.quickMenu)
         self.killServer.setMinimumSize(QSize(0, 30))
         self.killServer.setObjectName("killServer")
+        self.killServer.clicked.connect(self.onKillServerClickedHandler)
 
         self.verticalLayout.addWidget(self.killServer)
         self.gridLayout.addWidget(self.quickMenu, 3, 4, 1, 1)
@@ -295,9 +297,32 @@ class ConsolePage(QWidget):
         # self.exitServer.clicked.connect(self.quickMenu_ExitServer)
         # self.killServer.clicked.connect(self.quickMenu_KillServer)
 
+    def onExitServerClickedHandler(self):
+
+        if ServerHandler().isServerRunning():
+            box = MessageBox("关闭服务器", "你确定要关闭服务器吗？", self)
+            box.setModal(True)
+            if box.exec():
+                ServerHandler().stopServer()
+        else:
+            box = MessageBox("关闭服务器", "服务器未开启", self)
+            box.setModal(True)
+            box.cancelButton.hide()
+            box.exec()
+
+    def onKillServerClickedHandler(self):
+        if ServerHandler().isServerRunning():
+            box = MessageBox("强制关闭服务器", "你确定要强制关闭服务器吗？", self)
+            if box.exec():
+                ServerHandler().haltServer()
+        else:
+            box = MessageBox("关闭服务器", "服务器未开启", self)
+            box.cancelButton.hide()
+            box.exec()
+
     @pyqtSlot(float)
     def setMemView(self, memPercent):
-        self.serverMemLabel.setText(f"内存：{round(memPercent*100, 2)}%")
+        self.serverMemLabel.setText(f"内存：{round(memPercent * 100, 2)}%")
         self.serverMemProgressRing.setVal(round(memPercent * 100, 2))
 
     @pyqtSlot(float)

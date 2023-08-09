@@ -22,7 +22,7 @@ from typing import List, Optional
 
 from psutil import NoSuchProcess, Process
 from MCSL2Lib.singleton import Singleton
-from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer
+from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlot
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.variables import ServerVariables
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
@@ -113,7 +113,8 @@ class ServerHandler(QObject):
         self.AServer.serverProcess.setProgram(self.javaPath)
         self.AServer.serverProcess.setArguments(self.processArgs)
         self.AServer.serverProcess.setWorkingDirectory(self.workingDirectory)
-        self.AServer.serverProcess.started.connect(lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
+        self.AServer.serverProcess.started.connect(
+            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
         self.AServer.serverProcess.readyReadStandardOutput.connect(
             self.serverLogOutputHandler
         )
@@ -152,11 +153,12 @@ class ServerHandler(QObject):
         """
         停止服务器
         """
-        if settingsController.fileSettings["sendStopInsteadOfKill"]:
-            self.Server.serverProcess.write(b"stop\n")
-            self.Server.serverProcess.waitForFinished()
-        else:
-            self.haltServer()
+        if self.isServerRunning():
+            if settingsController.fileSettings["sendStopInsteadOfKill"]:
+                self.Server.serverProcess.write(b"stop\n")
+                # self.Server.serverProcess.waitForFinished()
+            else:
+                self.haltServer()
 
     def restartServer(self):
         """
@@ -171,8 +173,9 @@ class ServerHandler(QObject):
         """
         强制停止服务器
         """
-        self.Server.serverProcess.kill()
-        self.Server.serverProcess.waitForFinished()
+        if self.isServerRunning():
+            self.Server.serverProcess.kill()
+            self.Server.serverProcess.waitForFinished()
 
     def sendCommand(self, command: str):
         """
@@ -295,7 +298,7 @@ class readLastServerConfigThread(QThread):
             ServerHelper().startBtnStat.emit(False)
 
 
-class MinecraftServerResMonitorThread(QThread):
+class MinecraftServerResMonitorUtil(QObject):
     """
     获取服务器资源占用的线程
     """
@@ -334,9 +337,9 @@ class MinecraftServerResMonitorThread(QThread):
         except NoSuchProcess:
             pass
 
-    def __del__(self):
+    @pyqtSlot(int)
+    def onServerClosedHandler(self, _):
+        self.cpuPercent.emit(0.0)
+        self.memPercent.emit(0.0)
         self.timer.stop()
-        self.timer.deleteLater()
-        self.quit()
-        self.wait()
 
