@@ -174,6 +174,7 @@ class ServerVariables:
         self.outputDecoding: str = "utf-8"
         self.inputEncoding: str = "utf-8"
         # self.icon = serverConfig['icon']  不需要。
+        self.serverProperties = {}
 
     def initialize(self, index: int):
         serverConfig: dict = readGlobalServerConfig()[index]

@@ -113,14 +113,18 @@ class ServerHandler(QObject):
         self.AServer.serverProcess.setProgram(self.javaPath)
         self.AServer.serverProcess.setArguments(self.processArgs)
         self.AServer.serverProcess.setWorkingDirectory(self.workingDirectory)
-        self.AServer.serverProcess.started.connect(lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
+        self.AServer.serverProcess.started.connect(
+            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后...")
+        )
         self.AServer.serverProcess.readyReadStandardOutput.connect(
             self.serverLogOutputHandler
         )
         self.AServer.serverProcess.finished.connect(
             lambda: self.serverClosed.emit(self.AServer.serverProcess.exitCode())
         )
-        self.AServer.serverProcess.finished.connect(lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器已关闭！"))
+        self.AServer.serverProcess.finished.connect(
+            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器已关闭！")
+        )
         return self.AServer
 
     def serverLogOutputHandler(self):
@@ -130,10 +134,12 @@ class ServerHandler(QObject):
         newData = self.Server.serverProcess.readAllStandardOutput().data()
         self.partialData += newData  # Append the incoming data to the buffer
         lines = self.partialData.split(b"\n")  # Split the buffer into lines
-        self.partialData = lines.pop()  # The last element might be incomplete, so keep it in the buffer
+        self.partialData = (
+            lines.pop()
+        )  # The last element might be incomplete, so keep it in the buffer
 
         for line in lines:
-            newOutput = line.decode(serverVariables.outputDecoding, errors='replace')
+            newOutput = line.decode(serverVariables.outputDecoding, errors="replace")
             self.serverLogOutput.emit(newOutput)
 
     def startServer(self, javaPath: str, processArgs: List[str], workingDirectory: str):
@@ -200,12 +206,17 @@ class MojangEula:
         """检查Eula"""
         try:
             with open(f"{self.serverDir}/eula.txt", "r", encoding="utf-8") as Eula:
-                EulaText = str(Eula.read()).replace("\n", "")
+                EulaText = Eula.readlines()
                 Eula.close()
-            if "eula=true" in EulaText:
-                return True
-            else:
-                return False
+            for line in EulaText:
+                line = line.strip()
+                if line.startswith("eula"):
+                    if "true" in line:
+                        return True
+                    else:
+                        return False
+                else:
+                    continue
         except FileNotFoundError:
             return False
 
@@ -249,7 +260,7 @@ class ServerLauncher:
             f"-Xmx{serverVariables.maxMem}{serverVariables.memUnit}",
             "-jar",
             f"{serverVariables.coreFileName}",
-            "nogui"
+            "nogui",
         ]
         if isinstance(serverVariables.jvmArg, list):
             for arg in serverVariables.jvmArg:
@@ -299,6 +310,7 @@ class MinecraftServerResMonitorThread(QThread):
     """
     获取服务器资源占用的线程
     """
+
     memPercent = pyqtSignal(float)
     cpuPercent = pyqtSignal(float)
 
@@ -316,8 +328,12 @@ class MinecraftServerResMonitorThread(QThread):
         maxMem = serverVariables.maxMem
         try:
             if ServerHandler().isServerRunning():
-                serverMem = Process(
-                    ServerHandler().AServer.serverProcess.processId()).memory_full_info().uss / divisionNum
+                serverMem = (
+                    Process(ServerHandler().AServer.serverProcess.processId())
+                    .memory_full_info()
+                    .uss
+                    / divisionNum
+                )
                 self.memPercent.emit(float("{:.4f}".format(serverMem / maxMem)))
             else:
                 self.memPercent.emit(0.0000)
@@ -327,7 +343,9 @@ class MinecraftServerResMonitorThread(QThread):
     def getServerCPU(self):
         try:
             if ServerHandler().isServerRunning():
-                serverCPU = Process(ServerHandler().AServer.serverProcess.processId()).cpu_percent(interval=0.01)
+                serverCPU = Process(
+                    ServerHandler().AServer.serverProcess.processId()
+                ).cpu_percent(interval=0.01)
                 self.cpuPercent.emit(float("{:.4f}".format(serverCPU / 10)))
             else:
                 self.cpuPercent.emit(0.0000)
@@ -340,3 +358,16 @@ class MinecraftServerResMonitorThread(QThread):
         self.quit()
         self.wait()
 
+
+def readServerProperties():
+    serverVariables.serverProperties.clear()
+    try:
+        with open(f"./Servers/{serverVariables.serverName}/server.properties", "r") as serverPropertiesFile:
+            lines = serverPropertiesFile.readlines()
+            for line in lines:
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    key, value = line.split("=", 1)
+                    serverVariables.serverProperties[key.strip()] = value.strip()
+    except FileNotFoundError:
+        serverVariables.serverProperties.update({"msg": "File not found"})

@@ -40,11 +40,14 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
 )
-from MCSL2Lib.serverController import ServerHandler
+from MCSL2Lib.serverController import ServerHandler, readServerProperties
 
 from MCSL2Lib.singleton import Singleton
 
 from MCSL2Lib.playersControllerMainWidget import playersController
+from MCSL2Lib.variables import ServerVariables
+
+serverVariables = ServerVariables()
 
 
 @Singleton
@@ -263,7 +266,7 @@ class ConsolePage(QWidget):
         self.whiteList.setText("白名单")
         self.op.setText("管理员")
         self.kickPlayers.setText("踢人")
-        self.banPlayers.setText("封禁")
+        self.banPlayers.setText("封禁/解封")
         self.saveServer.setText("保存存档")
         self.exitServer.setText("关闭服务器")
         self.killServer.setText("强制关闭")
@@ -286,14 +289,15 @@ class ConsolePage(QWidget):
         self.commandLineEdit.returnPressed.connect(
             lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
-        # self.gameMode.clicked.connect(self.quickMenu_GameMode)
-        # self.difficulty.currentIndexChanged.connect(self.quickMenu_Difficulty)
-        # self.whiteList.clicked.connect(self.quickMenu_WhiteList)
-        self.op.clicked.connect(self.initQuickMenu_op)
-        # self.banPlayers.clicked.connect(self.quickMenu_BanPlayers)
-        # self.saveServer.clicked.connect(self.quickMenu_SaveServer)
-        # self.exitServer.clicked.connect(self.quickMenu_ExitServer)
-        # self.killServer.clicked.connect(self.quickMenu_KillServer)
+        self.gamemode.clicked.connect(self.initQuickMenu_GameMode)
+        self.difficulty.currentIndexChanged.connect(self.runQuickMenu_Difficulty)
+        self.whiteList.clicked.connect(self.initQuickMenu_WhiteList)
+        self.op.clicked.connect(self.initQuickMenu_Operator)
+        self.kickPlayers.clicked.connect(self.initQuickMenu_Kick)
+        self.banPlayers.clicked.connect(self.initQuickMenu_BanOrPardon)
+        self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
+        self.exitServer.clicked.connect(lambda: self.sendCommand("stop"))
+        self.killServer.clicked.connect(self.runQuickMenu_KillServer)
 
     @pyqtSlot(float)
     def setMemView(self, memPercent):
@@ -406,6 +410,8 @@ class ConsolePage(QWidget):
                 duration=2222,
                 parent=self,
             )
+            readServerProperties()
+            self.initQuickMenu_Difficulty()
         if "�" in serverOutput:
             fmt.setForeground(QBrush(color[1]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
@@ -428,7 +434,10 @@ class ConsolePage(QWidget):
                 duration=2222,
                 parent=self,
             )
-        if "logged in with entity id" in serverOutput or " left the game" in serverOutput:
+        if (
+            "logged in with entity id" in serverOutput
+            or " left the game" in serverOutput
+        ):
             self.recordPlayers(serverOutput)
 
     def recordPlayers(self, serverOutput: str):
@@ -436,14 +445,30 @@ class ConsolePage(QWidget):
             self.playersList.append(serverOutput.split("INFO]: ")[1].split("[/")[0])
         elif " left the game" in serverOutput:
             try:
-                self.playersList.pop(serverOutput.split("INFO]: ")[1].split(" left the game")[0])
+                self.playersList.pop(
+                    serverOutput.split("INFO]: ")[1].split(" left the game")[0]
+                )
             except Exception:
                 pass
 
+    def showServerNotOpenMsg(self):
+        """弹出服务器未开启提示"""
+        w = MessageBox(
+            title="失败",
+            content="服务器并未开启，请先开启服务器。",
+            parent=self,
+        )
+        w.yesButton.setText("好")
+        w.cancelButton.setParent(None)
+        w.exec()
+
     def sendCommand(self, command):
         if ServerHandler().isServerRunning():
-            ServerHandler().sendCommand(command=command)
-            self.commandLineEdit.clear()
+            if command != "":
+                ServerHandler().sendCommand(command=command)
+                self.commandLineEdit.clear()
+            else:
+                pass
         else:
             w = MessageBox(
                 title="失败",
@@ -470,27 +495,184 @@ class ConsolePage(QWidget):
             pass
         return players
 
-    def initQuickMenu_op(self):
-        """快捷菜单-服务器管理员"""
-        opWidget = playersController()
-        opWidget.mode.addItems(["添加", "删除"])
-        opWidget.mode.setCurrentIndex(0)
-        opWidget.who.textChanged.connect(
-            lambda: self.lineEditChecker(text=opWidget.who.text())
-        )
-        opWidget.playersTip.setText(self.getKnownServerPlayers())
-        w = MessageBox("服务器管理员", "添加或删除管理员", self)
-        w.yesButton.setText("确定")
-        w.cancelButton.setText("取消")
-        w.textLayout.addWidget(opWidget.playersControllerMainWidget)
-        self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
-        w.yesSignal.connect(
-            lambda: self.runQuickMenu_op(
-                mode=opWidget.mode.currentIndex(), player=opWidget.who.text()
-            )
-        )
-        w.exec()
+    def initQuickMenu_Difficulty(self):
+        """快捷菜单-服务器游戏难度"""
+        if ServerHandler().isServerRunning():
+            try:
+                self.difficulty.setCurrentIndex(
+                    int(serverVariables.serverProperties["difficulty"])
+                )
+            except:
+                pass
+        else:
+            self.showServerNotOpenMsg()
 
-    def runQuickMenu_op(self, mode: int, player: str):
+    def runQuickMenu_Difficulty(self):
+        self.sendCommand(f"difficulty {self.difficulty.currentIndex()}")
+
+    def initQuickMenu_GameMode(self):
+        """快捷菜单-游戏模式"""
+        if ServerHandler().isServerRunning():
+            gamemodeWidget = playersController()
+            gamemodeWidget.mode.addItems(["生存", "创造", "冒险", "旁观"])
+            gamemodeWidget.mode.setCurrentIndex(0)
+            gamemodeWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=gamemodeWidget.who.text())
+            )
+            gamemodeWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox("服务器游戏模式", "设置服务器游戏模式", self)
+            w.yesButton.setText("确定")
+            w.cancelButton.setText("取消")
+            w.textLayout.addWidget(gamemodeWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_GameMode(
+                    difficulty=gamemodeWidget.mode.currentIndex(),
+                    player=gamemodeWidget.who.text(),
+                )
+            )
+            w.exec()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_GameMode(self, difficulty: int, player: str):
+        gameModeList = ["survival", "creative", "adventure", "spectator"]
+        ServerHandler().sendCommand(command=f"{gameModeList[difficulty]} {player}")
+
+    def initQuickMenu_WhiteList(self):
+        """快捷菜单-白名单"""
+        if ServerHandler().isServerRunning():
+            whiteListWidget = playersController()
+            whiteListWidget.mode.addItems(["添加(add)", "删除(remove)"])
+            whiteListWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=whiteListWidget.who.text())
+            )
+            whiteListWidget.playersTip.setText(self.getKnownServerPlayers())
+            content = (
+                "请确保服务器的白名单功能处于启用状态。\n"
+                "启用：/whitelist on\n"
+                "关闭：/whitelist off\n"
+                "列出当前白名单：/whitelist list\n"
+                "重新加载白名单：/whitelist reload"
+            )
+            w = MessageBox("白名单", content, self)
+            w.yesButton.setText("确定")
+            w.cancelButton.setText("取消")
+            w.textLayout.addWidget(whiteListWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_WhiteList(
+                    mode=whiteListWidget.mode.currentIndex(),
+                    player=whiteListWidget.who.text(),
+                )
+            )
+            w.exec()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_WhiteList(self, mode: int, player: str):
+        whiteListMode = ["add", "remove"]
+        ServerHandler().sendCommand(command=f"whitelist {whiteListMode[mode]} {player}")
+
+    def initQuickMenu_Operator(self):
+        """快捷菜单-服务器管理员"""
+        if ServerHandler().isServerRunning():
+            opWidget = playersController()
+            opWidget.mode.addItems(["添加", "删除"])
+            opWidget.mode.setCurrentIndex(0)
+            opWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=opWidget.who.text())
+            )
+            opWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox("服务器管理员", "添加或删除管理员", self)
+            w.yesButton.setText("确定")
+            w.cancelButton.setText("取消")
+            w.textLayout.addWidget(opWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_Operator(
+                    mode=opWidget.mode.currentIndex(), player=opWidget.who.text()
+                )
+            )
+            w.exec()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_Operator(self, mode: int, player: str):
         commandPrefixList = ["op", "deop"]
         ServerHandler().sendCommand(command=f"{commandPrefixList[mode]} {player}")
+
+    def initQuickMenu_Kick(self):
+        """快捷菜单-踢人"""
+        if ServerHandler().isServerRunning():
+            kickWidget = playersController()
+            kickWidget.mode.setParent(None)
+            kickWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=kickWidget.who.text())
+            )
+            kickWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox("踢出玩家", "踢出服务器中的玩家", self)
+            w.yesButton.setText("确定")
+            w.cancelButton.setText("取消")
+            w.textLayout.addWidget(kickWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_GameMode(player=kickWidget.who.text())
+            )
+            w.exec()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_Kick(self, player: str):
+        ServerHandler().sendCommand(command=f"kick {player}")
+
+    def initQuickMenu_BanOrPardon(self):
+        """快捷菜单-封禁或解禁玩家"""
+        if ServerHandler().isServerRunning():
+            banOrPardonWidget = playersController()
+            banOrPardonWidget.mode.addItems(["封禁", "解禁"])
+            banOrPardonWidget.mode.setCurrentIndex(0)
+            banOrPardonWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=banOrPardonWidget.who.text())
+            )
+            banOrPardonWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox("封禁或解禁玩家", "ban/pardon", self)
+            w.yesButton.setText("确定")
+            w.cancelButton.setText("取消")
+            w.textLayout.addWidget(banOrPardonWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_BanOrPardon(
+                    mode=banOrPardonWidget.mode.currentIndex(),
+                    player=banOrPardonWidget.who.text(),
+                )
+            )
+            w.exec()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_BanOrPardon(self, mode: int, player: str):
+        commandPrefixList = ["ban", "pardon"]
+        ServerHandler().sendCommand(command=f"{commandPrefixList[mode]} {player}")
+
+    def runQuickMenu_KillServer(self):
+        """快捷菜单-强制关闭服务器"""
+        if ServerHandler().isServerRunning():
+            w = MessageBox("强制关闭服务器", "确定要强制关闭服务器吗？\n有可能导致数据丢失！\n请确保存档已经保存！", self)
+            w.yesButton.setText("算了")
+            w.cancelButton.setText("强制关闭")
+            w.cancelSignal.connect(lambda: ServerHandler().haltServer())
+            w.cancelSignal.connect(
+                lambda: InfoBar.warning(
+                    title="警告",
+                    content="正在结束服务器...",
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.TOP,
+                    duration=800,
+                    parent=self,
+                )
+            )
+            w.exec()
+        else:
+            self.showServerNotOpenMsg()
