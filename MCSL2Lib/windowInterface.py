@@ -214,7 +214,6 @@ class Window(FramelessWindow):
         self.quitTimer.timeout.connect(lambda: self.exitingMsgBox.yesButton.setEnabled(True))
 
     def closeEvent(self, a0) -> None:
-        print("closeEvent enter")
         if ServerHandler().isServerRunning():
             box = MessageBox("进程退出", "服务器正在运行，退出前请关闭服务器", parent=self)
             box.yesButton.setText("取消")
@@ -251,7 +250,6 @@ class Window(FramelessWindow):
         box.yesButton.setText("确认并复制到剪切板")
         if box.exec() == 1:
             QApplication.clipboard().setText(tracebackString)
-            print(QApplication.clipboard().text())
         self.oldHook(ty, value, _traceback)
 
     def initPluginSystem(self):
