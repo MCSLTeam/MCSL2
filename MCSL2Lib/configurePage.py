@@ -1695,7 +1695,6 @@ class ConfigurePage(QWidget):
 
         # 检查JVM参数防止意外无法启动服务器
         for arg in configureServerVariables.jvmArg:
-            print(arg)
             if arg == "" or arg == " ":
                 configureServerVariables.jvmArg.pop(configureServerVariables.jvmArg.index(arg))
 
