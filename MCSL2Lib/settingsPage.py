@@ -1619,6 +1619,7 @@ class SettingsPage(QWidget):
                                                     parent=self,
                                                     )
                             )
+        w.exec()
 
 
 class CheckUpdateThread(QThread):
