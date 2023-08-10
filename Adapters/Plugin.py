@@ -82,11 +82,11 @@ class PluginManager(BasePluginManager):
         return True, plugin.pluginName
 
     def decideEnableOrDisable(self, pluginName: str, switchBtnStatus: bool):
-        print([pluginName, switchBtnStatus])
-        # if switchBtnStatus:
-        #     self.enablePlugin(pluginName)
-        # else:
-        #     self.disablePlugin(pluginName)
+        pluginName = pluginName.replace("switchBtn_", "")
+        if switchBtnStatus:
+            self.enablePlugin(pluginName)
+        else:
+            self.disablePlugin(pluginName)
 
     def enablePlugin(self, pluginName: str):
         """启用插件"""
@@ -120,7 +120,6 @@ class PluginManager(BasePluginManager):
                 self.loadPlugin(pluginName)
             except Exception as e:
                 raise Warning("加载插件错误")
-        print(self.pluginDict)
 
     def enableAllPlugins(self):
         """启用所有插件"""
