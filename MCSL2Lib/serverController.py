@@ -24,7 +24,7 @@ from psutil import NoSuchProcess, Process
 from MCSL2Lib.singleton import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer
 from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.variables import ServerVariables
+from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
 
 settingsController = SettingsController()

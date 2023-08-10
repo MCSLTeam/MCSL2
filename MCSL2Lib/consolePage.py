@@ -24,6 +24,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy,
     QFrame,
+    QCompleter
 )
 from qfluentwidgets import (
     CardWidget,
@@ -45,7 +46,7 @@ from MCSL2Lib.serverController import ServerHandler, readServerProperties
 from MCSL2Lib.singleton import Singleton
 
 from MCSL2Lib.playersControllerMainWidget import playersController
-from MCSL2Lib.variables import ServerVariables
+from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
 
 serverVariables = ServerVariables()
 
@@ -298,6 +299,10 @@ class ConsolePage(QWidget):
         self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
         self.exitServer.clicked.connect(lambda: self.sendCommand("stop"))
         self.killServer.clicked.connect(self.runQuickMenu_KillServer)
+        intellisense = QCompleter(GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit)
+        intellisense.setCaseSensitivity(Qt.CaseInsensitive)
+        self.commandLineEdit.setCompleter(intellisense)
+        self.commandLineEdit.setClearButtonEnabled(True)
 
     @pyqtSlot(float)
     def setMemView(self, memPercent):
@@ -467,6 +472,8 @@ class ConsolePage(QWidget):
             if command != "":
                 ServerHandler().sendCommand(command=command)
                 self.commandLineEdit.clear()
+                GlobalMCSL2Variables.userCommandHistory.append(command)
+                GlobalMCSL2Variables.upT = 0
             else:
                 pass
         else:

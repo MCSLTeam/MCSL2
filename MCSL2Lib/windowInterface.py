@@ -30,7 +30,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     MessageBox,
-    HyperlinkButton
+    HyperlinkButton,
 )
 from qframelesswindow import FramelessWindow, TitleBar
 
@@ -199,9 +199,7 @@ class Window(FramelessWindow):
         # 注册快捷键
         self.consoleInterface.installEventFilter(self)
 
-        self.exitingMsgBox = MessageBox(
-            "正在关闭", "正在关闭服务器,稍后将退出", parent=self
-        )
+        self.exitingMsgBox = MessageBox("正在关闭", "正在关闭服务器,稍后将退出", parent=self)
         # 安全退出控件
         self.exitingMsgBox.setModal(True)
         self.exitingMsgBox.cancelButton.hide()
@@ -211,7 +209,9 @@ class Window(FramelessWindow):
         self.exitingMsgBox.hide()
         self.quitTimer = QTimer(self)
         self.quitTimer.setInterval(3000)
-        self.quitTimer.timeout.connect(lambda: self.exitingMsgBox.yesButton.setEnabled(True))
+        self.quitTimer.timeout.connect(
+            lambda: self.exitingMsgBox.yesButton.setEnabled(True)
+        )
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
@@ -306,12 +306,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-            self,
-            interface,
-            icon,
-            text: str,
-            position=NavigationItemPosition.TOP,
-            selectedIcon=None,
+        self,
+        interface,
+        icon,
+        text: str,
+        position=NavigationItemPosition.TOP,
+        selectedIcon=None,
     ):
         """添加子页面"""
         self.stackWidget.addWidget(interface)
@@ -517,9 +517,50 @@ class Window(FramelessWindow):
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                        self.stackWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
+            if a1.key() == Qt.Key_Up:
+                if (
+                    self.stackWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
+                ):
+                    if (
+                        GlobalMCSL2Variables.userCommandHistory != []
+                        and GlobalMCSL2Variables.upT
+                        > -len(GlobalMCSL2Variables.userCommandHistory)
+                    ):
+                        lastCommand = GlobalMCSL2Variables.userCommandHistory[
+                            GlobalMCSL2Variables.upT - 1
+                        ]
+                        GlobalMCSL2Variables.upT -= 1
+                        self.consoleInterface.commandLineEdit.setText(lastCommand)
+                        return True
+            if a1.key() == Qt.Key_Down:
+                if (
+                    self.stackWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
+                ):
+                    if (
+                        GlobalMCSL2Variables.userCommandHistory != []
+                        and GlobalMCSL2Variables.upT
+                        < 0
+                    ):
+                        nextCommand = GlobalMCSL2Variables.userCommandHistory[
+                            GlobalMCSL2Variables.upT + 1
+                        ]
+                        GlobalMCSL2Variables.upT += 1
+                        self.consoleInterface.commandLineEdit.setText(nextCommand)
+                        return True
+                    if (
+                        GlobalMCSL2Variables.userCommandHistory != []
+                        and GlobalMCSL2Variables.upT
+                        == 0
+                    ):
+                        self.consoleInterface.commandLineEdit.setText("")
+                        return True
+        print(GlobalMCSL2Variables.userCommandHistory)
+        print(GlobalMCSL2Variables.upT)
         return super().eventFilter(a0, a1)
