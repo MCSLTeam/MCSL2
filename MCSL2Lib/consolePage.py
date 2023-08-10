@@ -369,7 +369,7 @@ class ConsolePage(QWidget):
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
-        serverOutput = serverOutput[:-1]
+        serverOutput = serverOutput[:-1].replace("[38;2;170;170;170m", "").replace("[38;2;255;170;0m", "").replace("[38;2;255;255;255m", "").replace("[0m", "").replace("[38;2;255;255;85m", "").replace("[38;2;255;255;255m", "").replace("[3m", "")
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
             serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
