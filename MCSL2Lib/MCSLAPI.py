@@ -15,7 +15,7 @@ A function for communicatng with MCSLAPI.
 '''
 
 from json import loads
-from typing import Dict, Callable
+from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 

@@ -480,6 +480,11 @@ class Window(FramelessWindow):
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
 
+        # 下载
+        self.stackWidget.currentChanged.connect(
+            self.downloadInterface.onPageChangedRefresh
+        )
+
     def startServer(self):
         """启动服务器总函数，直接放这里得了"""
         firstTry = ServerLauncher().startServer()
