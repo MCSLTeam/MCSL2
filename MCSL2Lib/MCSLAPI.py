@@ -31,7 +31,7 @@ class MCSLAPIDownloadURLParser:
         pass
 
     def parseDownloaderAPIUrl():
-        UrlArg = "http://mcsl_api.df100.ltd/json"
+        UrlArg = "https://mcslapi.df100.ltd/json"
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",

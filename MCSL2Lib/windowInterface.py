@@ -237,7 +237,7 @@ class Window(FramelessWindow):
 
     def catchExceptions(self, ty, value, _traceback):
         """
-            全局捕获异常，并弹窗显示
+        全局捕获异常，并弹窗显示
         :param ty: 异常的类型
         :param value: 异常的对象
         :param _traceback: 异常的traceback
