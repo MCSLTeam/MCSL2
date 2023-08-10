@@ -506,7 +506,7 @@ class Window(FramelessWindow):
             self.switchTo(self.consoleInterface)
             self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorThread(self)
-            self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
+            self.serverMemThread.mem.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)
             ServerHandler().serverClosed.connect(
                 lambda: self.serverMemThread.terminate()
@@ -561,6 +561,4 @@ class Window(FramelessWindow):
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
-        print(GlobalMCSL2Variables.userCommandHistory)
-        print(GlobalMCSL2Variables.upT)
         return super().eventFilter(a0, a1)

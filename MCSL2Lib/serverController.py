@@ -58,7 +58,6 @@ class ServerHelper(QObject):
         """选择了服务器"""
         self.loadServerConfig(index=index)
         self.serverName.emit(readGlobalServerConfig()[index]["name"])
-        self.backToHomePage.emit(0)
         self.startBtnStat.emit(True)
         # 防止和设置页冲突导致设置无效，得这样写，立刻保存变量以及文件
         settingsController.unSavedSettings.update(
@@ -68,6 +67,7 @@ class ServerHelper(QObject):
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
             writeConfig.write(dumps(settingsController.fileSettings, indent=4))
             writeConfig.close()
+        self.backToHomePage.emit(0)
 
 
 class Server:
@@ -311,7 +311,7 @@ class MinecraftServerResMonitorThread(QThread):
     获取服务器资源占用的线程
     """
 
-    memPercent = pyqtSignal(float)
+    mem = pyqtSignal(float)
     cpuPercent = pyqtSignal(float)
 
     def __init__(self, parent=None):
@@ -325,7 +325,6 @@ class MinecraftServerResMonitorThread(QThread):
     def getServerMem(self):
         divisionNumList = {"G": 1024, "M": 1048576}
         divisionNum = divisionNumList[serverVariables.memUnit]
-        maxMem = serverVariables.maxMem
         try:
             if ServerHandler().isServerRunning():
                 serverMem = (
@@ -334,9 +333,9 @@ class MinecraftServerResMonitorThread(QThread):
                     .uss
                     / divisionNum
                 )
-                self.memPercent.emit(float("{:.4f}".format(serverMem / maxMem)))
+                self.mem.emit(float("{:.4f}".format(serverMem)))
             else:
-                self.memPercent.emit(0.0000)
+                self.mem.emit(0.0000)
         except NoSuchProcess:
             pass
 

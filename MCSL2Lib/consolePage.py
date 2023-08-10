@@ -258,7 +258,7 @@ class ConsolePage(QWidget):
         self.setObjectName("ConsoleInterface")
 
         self.serverMemLabel.setText("内存： NaN")
-        self.serverCPULabel.setText("CPU： NaN")
+        self.serverCPULabel.setText("CPU占用：")
         self.subTitleLabel.setText("直观地观察你的服务器的输出，资源占用等。")
         self.titleLabel.setText("终端")
         self.quickMenuTitleLabel.setText("快捷菜单：")
@@ -303,16 +303,17 @@ class ConsolePage(QWidget):
         intellisense.setCaseSensitivity(Qt.CaseInsensitive)
         self.commandLineEdit.setCompleter(intellisense)
         self.commandLineEdit.setClearButtonEnabled(True)
+        self.serverMemProgressRing.setTextVisible(True)
+        self.serverCPUProgressRing.setTextVisible(True)
 
     @pyqtSlot(float)
-    def setMemView(self, memPercent):
-        self.serverMemLabel.setText(f"内存：{round(memPercent*100, 2)}%")
-        self.serverMemProgressRing.setVal(round(memPercent * 100, 2))
+    def setMemView(self, mem):
+        self.serverMemLabel.setText(f"内存：{round(mem, 2)}{serverVariables.memUnit}")
+        self.serverMemProgressRing.setValue(int(int(mem) / serverVariables.maxMem * 100))
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
-        self.serverCPULabel.setText(f"CPU：{round(cpuPercent, 2)}%")
-        self.serverCPUProgressRing.setVal(round(cpuPercent, 2))
+        self.serverCPUProgressRing.setValue(int(cpuPercent))
 
     @pyqtSlot(str)
     def colorConsoleText(self, serverOutput):
