@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>singleServerManager</class>
- <widget class="CardWidget" name="singleServerManager">
+ <class>singleServerManagerWidget</class>
+ <widget class="CardWidget" name="singleServerManagerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

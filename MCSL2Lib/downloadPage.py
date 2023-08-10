@@ -1,4 +1,4 @@
-#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#     Copyright 2023, MCSL Team, mailto:lxhtt@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -33,11 +33,11 @@ from qfluentwidgets import (
     Pivot,
 )
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
+from MCSL2Lib.loadingTipWidget import LoadingTip
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, DownloadVariables
 
 downloadVariables = DownloadVariables()
-
 
 @Singleton
 class DownloadPage(QWidget):
@@ -45,8 +45,6 @@ class DownloadPage(QWidget):
 
     def __init__(self):
         super().__init__()
-
-        self.MCSLAPIDownloadUrlDict = {}
 
         self.fetchDownloadURLThreadFactory = FetchMCSLAPIDownloadURLThreadFactory()
         self.gridLayout = QGridLayout(self)
@@ -223,28 +221,68 @@ class DownloadPage(QWidget):
         self.MCSLAPIJava = QWidget()
         self.MCSLAPIJava.setObjectName("MCSLAPIJava")
 
+        self.verticalLayout_3 = QVBoxLayout(self.MCSLAPIJava)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+
+        self.MCSLAPIJavaLayout = QVBoxLayout()
+        self.MCSLAPIJavaLayout.setObjectName("MCSLAPIJavaLayout")
+
+        self.verticalLayout_3.addLayout(self.MCSLAPIJavaLayout)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIJava)
         self.MCSLAPISpigot = QWidget()
         self.MCSLAPISpigot.setObjectName("MCSLAPISpigot")
 
+        self.verticalLayout_4 = QVBoxLayout(self.MCSLAPISpigot)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+
+        self.MCSLAPISpigotLayout = QVBoxLayout()
+        self.MCSLAPISpigotLayout.setObjectName("MCSLAPISpigotLayout")
+
+        self.verticalLayout_4.addLayout(self.MCSLAPISpigotLayout)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPISpigot)
         self.MCSLAPIPaper = QWidget()
         self.MCSLAPIPaper.setObjectName("MCSLAPIPaper")
 
+        self.verticalLayout_5 = QVBoxLayout(self.MCSLAPIPaper)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+
+        self.MCSLAPIPaperLayout = QVBoxLayout()
+        self.MCSLAPIPaperLayout.setObjectName("MCSLAPIPaperLayout")
+
+        self.verticalLayout_5.addLayout(self.MCSLAPIPaperLayout)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIPaper)
         self.MCSLAPIBungeeCord = QWidget()
         self.MCSLAPIBungeeCord.setObjectName("MCSLAPIBungeeCord")
 
+        self.verticalLayout_6 = QVBoxLayout(self.MCSLAPIBungeeCord)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+
+        self.MCSLAPIBungeeCordLayout = QVBoxLayout()
+        self.MCSLAPIBungeeCordLayout.setObjectName("MCSLAPIBungeeCordLayout")
+
+        self.verticalLayout_6.addLayout(self.MCSLAPIBungeeCordLayout)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIBungeeCord)
         self.MCSLAPIOfficialCore = QWidget()
         self.MCSLAPIOfficialCore.setObjectName("MCSLAPIOfficialCore")
 
+        self.verticalLayout_7 = QVBoxLayout(self.MCSLAPIOfficialCore)
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+
+        self.MCSLAPIOfficialCoreLayout = QVBoxLayout()
+        self.MCSLAPIOfficialCoreLayout.setObjectName("MCSLAPIOfficialCoreLayout")
+
+        self.verticalLayout_7.addLayout(self.MCSLAPIOfficialCoreLayout)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIOfficialCore)
         self.gridLayout_3.addWidget(self.MCSLAPIStackedWidget, 1, 0, 1, 2)
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
 
-        self.downloadStackedWidget.setCurrentWidget(self.downloadWithFastMirror)
+        self.downloadStackedWidget.setCurrentWidget(self.downloadWithMCSLAPI)
 
         self.setObjectName("DownloadInterface")
 
@@ -301,14 +339,37 @@ class DownloadPage(QWidget):
         )
         self.MCSLAPIPivot.setCurrentItem("MCSLAPIJava")
 
+    @pyqtSlot(int)
+    def onPageChangedRefresh(self, currentChanged):
+        """刷新下载列表触发"""
+        if currentChanged == 3:
+            self.refreshDownloads()
+        else:
+            pass
+
+    def refreshDownloads(self):
+        if self.downloadStackedWidget.currentIndex() == 0:
+            pass
+        elif self.downloadStackedWidget.currentIndex() == 1:
+            # 如果存在列表且不为空,则不再重新获取
+            if downloadVariables.MCSLAPIDownloadUrlDict != {}:
+                idx = self.MCSLAPIStackedWidget.currentIndex()
+                # self.InitDownloadSubWidget(downloadVariables.MCSLAPIDownloadUrlDict[idx]['SubWidgetNames'])
+                self.DownloadURLList = downloadVariables.MCSLAPIDownloadUrlDict[idx]['DownloadUrls']
+            else:
+                self.getMCSLAPI()
+
     def getMCSLAPI(self):
         """请求MCSLAPI"""
+        print(1)
         workThread = self.fetchDownloadURLThreadFactory.create(
             _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict
         )
         if workThread.isRunning():
             return
         else:
+            loadingTip = LoadingTip()
+            self.MCSLAPIStackedWidget.currentWidget().layout().itemAt(0).addWidget(loadingTip)
             workThread.start()
 
     @pyqtSlot(dict)
@@ -317,17 +378,19 @@ class DownloadPage(QWidget):
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
         self.getMCSLAPI()
 
-    # @staticmethod
-    # def GetDownloadSubWidgetImage(GraphType):
-    #     if GraphType == 0:
-    #         return QPixmap(":/MCSL2_Icon/JavaIcon.png")
-    #     elif GraphType == 1:
-    #         return QPixmap(":/MCSL2_Icon/SpigotIcon.png")
-    #     elif GraphType == 2:
-    #         return QPixmap(":/MCSL2_Icon/PaperIcon.png")
-    #     elif GraphType == 3:
-    #         return QPixmap(":/MCSL2_Icon/BungeeCordIcon.png")
-    #     elif GraphType == 4:
-    #         return QPixmap(":/MCSL2_Icon/OfficialCoreIcon.png")
-    #     else:
-    #         return None
+    @staticmethod
+    def getMCSLAPIDownloadIcon(downloadType):
+        if downloadType == 0:
+            return QPixmap(":/built-InIcons/Java.svg")
+        elif downloadType == 1:
+            return QPixmap(":/built-InIcons/Spigot.svg")
+        elif downloadType == 2:
+            return QPixmap(":/built-InIcons/Paper.png")
+        elif downloadType == 3:
+            return QPixmap(":/built-InIcons/Spigot.svg")
+        elif downloadType == 4:
+            return QPixmap(":/built-InIcons/Grass.png")
+        else:
+            return QPixmap(":/built-InIcons/MCSL2.png")
+        
+    # def initMCSLAPIDownloadWidget(self

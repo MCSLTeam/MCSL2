@@ -1,4 +1,4 @@
-#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#     Copyright 2023, MCSL Team, mailto:lxhtt@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -65,14 +65,13 @@ class HomePage(QWidget):
         self.horizontalLayout.setObjectName("horizontalLayout")
 
         self.subTitleLabel = StrongBodyLabel(self.noticeWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.subTitleLabel.sizePolicy().hasHeightForWidth()
         )
         self.subTitleLabel.setSizePolicy(sizePolicy)
-        self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
 
         self.horizontalLayout.addWidget(self.subTitleLabel)
@@ -189,7 +188,7 @@ class GetNoticeThread(QThread):
     def run(self):
         getNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
         try:
-            notice = f"公告: {Session.get(getNoticeUrl).text}"
+            notice = f"公告: \n{Session.get(getNoticeUrl).text}"
             self.notice.emit(notice)
         except Exception as e:
             self.notice.emit("网络连接失败，无法获取公告。")

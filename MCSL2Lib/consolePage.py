@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#     Copyright 2023, MCSL Team, mailto:lxhtt@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -24,6 +24,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy,
     QFrame,
+    QCompleter
 )
 from qfluentwidgets import (
     CardWidget,
@@ -45,7 +46,7 @@ from MCSL2Lib.serverController import ServerHandler, readServerProperties
 from MCSL2Lib.singleton import Singleton
 
 from MCSL2Lib.playersControllerMainWidget import playersController
-from MCSL2Lib.variables import ServerVariables
+from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
 
 serverVariables = ServerVariables()
 
@@ -300,6 +301,10 @@ class ConsolePage(QWidget):
         self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
         self.exitServer.clicked.connect(lambda: self.sendCommand("stop"))
         self.killServer.clicked.connect(self.runQuickMenu_KillServer)
+        intellisense = QCompleter(GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit)
+        intellisense.setCaseSensitivity(Qt.CaseInsensitive)
+        self.commandLineEdit.setCompleter(intellisense)
+        self.commandLineEdit.setClearButtonEnabled(True)
 
     def onExitServerClickedHandler(self):
 
@@ -394,7 +399,7 @@ class ConsolePage(QWidget):
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
-        serverOutput = serverOutput[:-1]
+        serverOutput = serverOutput[:-1].replace("[38;2;170;170;170m", "").replace("[38;2;255;170;0m", "").replace("[38;2;255;255;255m", "").replace("[0m", "").replace("[38;2;255;255;85m", "").replace("[38;2;255;255;255m", "").replace("[3m", "")
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
             serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
@@ -492,6 +497,8 @@ class ConsolePage(QWidget):
             if command != "":
                 ServerHandler().sendCommand(command=command)
                 self.commandLineEdit.clear()
+                GlobalMCSL2Variables.userCommandHistory.append(command)
+                GlobalMCSL2Variables.upT = 0
             else:
                 pass
         else:

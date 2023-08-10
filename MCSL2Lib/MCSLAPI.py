@@ -1,4 +1,4 @@
-#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#     Copyright 2023, MCSL Team, mailto:lxhtt@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -15,7 +15,7 @@ A function for communicatng with MCSLAPI.
 '''
 
 from json import loads
-from typing import Dict, Callable
+from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 

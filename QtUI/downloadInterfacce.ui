@@ -168,7 +168,7 @@
             <x>0</x>
             <y>0</y>
             <width>200</width>
-            <height>354</height>
+            <height>353</height>
            </rect>
           </property>
          </widget>
@@ -209,7 +209,7 @@
             <x>0</x>
             <y>0</y>
             <width>160</width>
-            <height>354</height>
+            <height>353</height>
            </rect>
           </property>
          </widget>
@@ -241,7 +241,7 @@
             <x>0</x>
             <y>0</y>
             <width>304</width>
-            <height>354</height>
+            <height>353</height>
            </rect>
           </property>
          </widget>
@@ -262,7 +262,7 @@
          <property name="minimumSize">
           <size>
            <width>210</width>
-           <height>44</height>
+           <height>45</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -294,11 +294,41 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <widget class="QWidget" name="MCSLAPIJava"/>
-         <widget class="QWidget" name="MCSLAPISpigot"/>
-         <widget class="QWidget" name="MCSLAPIPaper"/>
-         <widget class="QWidget" name="MCSLAPIBungeeCord"/>
-         <widget class="QWidget" name="MCSLAPIOfficialCore"/>
+         <widget class="QWidget" name="MCSLAPIJava">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="MCSLAPIJavaLayout"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="MCSLAPISpigot">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QVBoxLayout" name="MCSLAPISpigotLayout"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="MCSLAPIPaper">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <layout class="QVBoxLayout" name="MCSLAPIPaperLayout"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="MCSLAPIBungeeCord">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <layout class="QVBoxLayout" name="MCSLAPIBungeeCordLayout"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="MCSLAPIOfficialCore">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <layout class="QVBoxLayout" name="MCSLAPIOfficialCoreLayout"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>

@@ -1,4 +1,4 @@
-#     Copyright 2023, MCSL Team, mailto:lxhtz.dl@qq.com
+#     Copyright 2023, MCSL Team, mailto:lxhtt@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -19,6 +19,7 @@ from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
+
 
 @Singleton
 class ConfigureServerVariables:
@@ -149,6 +150,89 @@ class GlobalMCSL2Variables:
 
     MCSL2Version = "2.1.4.0"
     scrollAreaViewportQss = "background-color: transparent;"
+    MinecraftBuiltInCommand = [
+            "advancement",
+            "attribute",
+            "ban",
+            "ban-ip",
+            "banlist",
+            "bossbar",
+            "clear",
+            "clone",
+            "damage",
+            "data",
+            "datapack",
+            "debug",
+            "defaultgamemode",
+            "deop",
+            "difficulty",
+            "effect",
+            "enchant",
+            "execute",
+            "experience",
+            "fill",
+            "fillbiome",
+            "forceload",
+            "function",
+            "gamemode",
+            "gamerule",
+            "give",
+            "item",
+            "jfr",
+            "kick",
+            "kill",
+            "list",
+            "locate",
+            "loot",
+            "me",
+            "minecraft:help",
+            "minecraft:reload",
+            "msg",
+            "op",
+            "pardon",
+            "pardon-ip",
+            "particle",
+            "perf",
+            "place",
+            "playsound",
+            "recipe",
+            "return",
+            "ride",
+            "save-all",
+            "save-off",
+            "save-on",
+            "say",
+            "schedule",
+            "scoreboard",
+            "seed",
+            "setblock",
+            "setidletimeout",
+            "setworldspawn",
+            "spawnpoint",
+            "spectate",
+            "spreadplayers",
+            "stop",
+            "stopsound",
+            "summon",
+            "tag",
+            "team",
+            "teammsg",
+            "teleport",
+            "tell",
+            "tellraw",
+            "time",
+            "title",
+            "tm",
+            "tp",
+            "trigger",
+            "w",
+            "weather",
+            "whitelist",
+            "worldborder",
+            "xp",
+        ]
+    userCommandHistory = []
+    upT = 0
 
 
 @Singleton
@@ -188,11 +272,11 @@ class ServerVariables:
         self.outputDecoding = serverConfig["output_decoding"]
         self.inputEncoding = serverConfig["input_encoding"]
         self.translateCoding()
-    
+
     def translateCoding(self):
         if self.outputDecoding == "follow":
-            self.outputDecoding = settingsController.fileSettings['outputDeEncoding']
+            self.outputDecoding = settingsController.fileSettings["outputDeEncoding"]
         if self.inputEncoding == "follow":  # 跟随全局
-            self.inputEncoding = settingsController.fileSettings['inputDeEncoding']
+            self.inputEncoding = settingsController.fileSettings["inputDeEncoding"]
             if self.inputEncoding == "follow":  # 跟随输出
                 self.inputEncoding = self.outputDecoding
