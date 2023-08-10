@@ -65,14 +65,13 @@ class HomePage(QWidget):
         self.horizontalLayout.setObjectName("horizontalLayout")
 
         self.subTitleLabel = StrongBodyLabel(self.noticeWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.subTitleLabel.sizePolicy().hasHeightForWidth()
         )
         self.subTitleLabel.setSizePolicy(sizePolicy)
-        self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
 
         self.horizontalLayout.addWidget(self.subTitleLabel)
