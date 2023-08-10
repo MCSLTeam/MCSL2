@@ -261,16 +261,16 @@ class ServerVariables:
         self.serverProperties = {}
 
     def initialize(self, index: int):
-        serverConfig: dict = readGlobalServerConfig()[index]
-        self.serverName = serverConfig["name"]
-        self.coreFileName = serverConfig["core_file_name"]
-        self.javaPath = serverConfig["java_path"]
-        self.minMem = serverConfig["min_memory"]
-        self.maxMem = serverConfig["max_memory"]
-        self.memUnit = serverConfig["memory_unit"]
-        self.jvmArg = serverConfig["jvm_arg"]
-        self.outputDecoding = serverConfig["output_decoding"]
-        self.inputEncoding = serverConfig["input_encoding"]
+        self.serverConfig: dict = readGlobalServerConfig()[index]
+        self.serverName = self.serverConfig["name"]
+        self.coreFileName = self.serverConfig["core_file_name"]
+        self.javaPath = self.serverConfig["java_path"]
+        self.minMem = self.serverConfig["min_memory"]
+        self.maxMem = self.serverConfig["max_memory"]
+        self.memUnit = self.serverConfig["memory_unit"]
+        self.jvmArg = self.serverConfig["jvm_arg"]
+        self.outputDecoding = self.serverConfig["output_decoding"]
+        self.inputEncoding = self.serverConfig["input_encoding"]
         self.translateCoding()
 
     def translateCoding(self):

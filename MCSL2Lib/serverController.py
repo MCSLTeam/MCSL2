@@ -237,7 +237,7 @@ class ServerLauncher:
 
     def __init__(self):
         self.jvmArg: List[str] = [""]
-        self.javaPath = serverVariables.javaPath
+        self.javaPath: str = ""
 
     def startServer(self) -> bool:
         """
@@ -249,9 +249,13 @@ class ServerLauncher:
         if not MojangEula().checkEula():
             return False
         else:
+            self.reGetNewJava()
             self.setjvmArg()
             self.launch()
             return True
+
+    def reGetNewJava(self):
+        self.javaPath = serverVariables.javaPath
 
     def setjvmArg(self):
         """生成开服命令参数"""
@@ -361,7 +365,9 @@ class MinecraftServerResMonitorThread(QThread):
 def readServerProperties():
     serverVariables.serverProperties.clear()
     try:
-        with open(f"./Servers/{serverVariables.serverName}/server.properties", "r") as serverPropertiesFile:
+        with open(
+            f"./Servers/{serverVariables.serverName}/server.properties", "r"
+        ) as serverPropertiesFile:
             lines = serverPropertiesFile.readlines()
             for line in lines:
                 line = line.strip()
