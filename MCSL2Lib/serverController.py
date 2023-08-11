@@ -316,7 +316,7 @@ class MinecraftServerResMonitorUtil(QObject):
     获取服务器资源占用的线程
     """
 
-    mem = pyqtSignal(float)
+    memPercent = pyqtSignal(float)
     cpuPercent = pyqtSignal(float)
 
     def __init__(self, parent=None):
@@ -338,9 +338,9 @@ class MinecraftServerResMonitorUtil(QObject):
                     .uss
                     / divisionNum
                 )
-                self.mem.emit(float("{:.4f}".format(serverMem)))
+                self.memPercent.emit(float("{:.4f}".format(serverMem)))
             else:
-                self.mem.emit(0.0000)
+                self.memPercent.emit(0.0000)
         except NoSuchProcess:
             pass
 

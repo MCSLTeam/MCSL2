@@ -352,7 +352,7 @@ class DownloadPage(QWidget):
             pass
         elif self.downloadStackedWidget.currentIndex() == 1:
             # 如果存在列表且不为空,则不再重新获取
-            if downloadVariables.MCSLAPIDownloadUrlDict != {}:
+            if downloadVariables.MCSLAPIDownloadUrlDict:
                 idx = self.MCSLAPIStackedWidget.currentIndex()
                 # self.InitDownloadSubWidget(downloadVariables.MCSLAPIDownloadUrlDict[idx]['SubWidgetNames'])
                 self.DownloadURLList = downloadVariables.MCSLAPIDownloadUrlDict[idx]['DownloadUrls']
@@ -376,7 +376,6 @@ class DownloadPage(QWidget):
     def updateMCSLAPIDownloadUrlDict(self, _downloadUrlDict: dict):
         """更新获取MCSLAPI结果"""
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
-        self.getMCSLAPI()
 
     @staticmethod
     def getMCSLAPIDownloadIcon(downloadType):
