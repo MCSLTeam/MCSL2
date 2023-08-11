@@ -21,8 +21,6 @@ from PyQt5.QtCore import pyqtSignal, QThread
 
 from MCSL2Lib.networkController import Session
 
-from MCSL2Lib.singleton import Singleton
-
 
 class MCSLAPIDownloadURLParser:
     """URL设定器"""
@@ -30,6 +28,7 @@ class MCSLAPIDownloadURLParser:
     def __init__(self):
         pass
 
+    @staticmethod
     def parseDownloaderAPIUrl():
         UrlArg = "https://mcslapi.df100.ltd/json"
         TypeArg = [
@@ -70,6 +69,7 @@ class MCSLAPIDownloadURLParser:
             )
         return rv
 
+    @staticmethod
     def DecodeDownloadJsons(RefreshUrl):
         downloadFileTitles = []
         downloadFileURLs = []
@@ -125,18 +125,17 @@ class FetchMCSLAPIDownloadURLThread(QThread):
         return self.Data
 
 
-@Singleton
 class FetchMCSLAPIDownloadURLThreadFactory:
-    singletonThread: FetchMCSLAPIDownloadURLThread = {}
+    def __init__(self):
+        self.singletonThread = None
 
-    @classmethod
-    def create(cls, _singleton=False, finishSlot=...) -> FetchMCSLAPIDownloadURLThread:
+    def create(self, _singleton=False, finishSlot=...) -> FetchMCSLAPIDownloadURLThread:
         if _singleton:
-            if cls.singletonThread.isRunning():
-                return cls.singletonThread
+            if self.singletonThread is not None and self.singletonThread.isRunning():
+                return self.singletonThread
             else:
                 thread = FetchMCSLAPIDownloadURLThread(finishSlot)
-                cls.singletonThread = thread
+                self.singletonThread = thread
                 return thread
         else:
             return FetchMCSLAPIDownloadURLThread(finishSlot)
