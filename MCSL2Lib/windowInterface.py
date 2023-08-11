@@ -556,6 +556,4 @@ class Window(FramelessWindow):
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
-        print(GlobalMCSL2Variables.userCommandHistory)
-        print(GlobalMCSL2Variables.upT)
         return super().eventFilter(a0, a1)

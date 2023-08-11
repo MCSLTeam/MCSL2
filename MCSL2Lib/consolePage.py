@@ -260,7 +260,7 @@ class ConsolePage(QWidget):
         self.setObjectName("ConsoleInterface")
 
         self.serverMemLabel.setText("内存： NaN")
-        self.serverCPULabel.setText("CPU： NaN")
+        self.serverCPULabel.setText("CPU占用：")
         self.subTitleLabel.setText("直观地观察你的服务器的输出，资源占用等。")
         self.titleLabel.setText("终端")
         self.quickMenuTitleLabel.setText("快捷菜单：")
@@ -305,6 +305,31 @@ class ConsolePage(QWidget):
         intellisense.setCaseSensitivity(Qt.CaseInsensitive)
         self.commandLineEdit.setCompleter(intellisense)
         self.commandLineEdit.setClearButtonEnabled(True)
+        self.serverMemProgressRing.setTextVisible(True)
+        self.serverCPUProgressRing.setTextVisible(True)
+
+    def onExitServerClickedHandler(self):
+
+        if ServerHandler().isServerRunning():
+            box = MessageBox("关闭服务器", "你确定要关闭服务器吗？", self)
+            box.setModal(True)
+            if box.exec():
+                ServerHandler().stopServer()
+        else:
+            box = MessageBox("关闭服务器", "服务器未开启", self)
+            box.setModal(True)
+            box.cancelButton.hide()
+            box.exec()
+
+    def onKillServerClickedHandler(self):
+        if ServerHandler().isServerRunning():
+            box = MessageBox("强制关闭服务器", "你确定要强制关闭服务器吗？", self)
+            if box.exec():
+                ServerHandler().haltServer()
+        else:
+            box = MessageBox("关闭服务器", "服务器未开启", self)
+            box.cancelButton.hide()
+            box.exec()
 
     def onExitServerClickedHandler(self):
 
@@ -330,14 +355,13 @@ class ConsolePage(QWidget):
             box.exec()
 
     @pyqtSlot(float)
-    def setMemView(self, memPercent):
-        self.serverMemLabel.setText(f"内存：{round(memPercent * 100, 2)}%")
-        self.serverMemProgressRing.setVal(round(memPercent * 100, 2))
+    def setMemView(self, mem):
+        self.serverMemLabel.setText(f"内存：{round(mem, 2)}{serverVariables.memUnit}")
+        self.serverMemProgressRing.setValue(int(int(mem) / serverVariables.maxMem * 100))
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
-        self.serverCPULabel.setText(f"CPU：{round(cpuPercent, 2)}%")
-        self.serverCPUProgressRing.setVal(round(cpuPercent, 2))
+        self.serverCPUProgressRing.setValue(int(cpuPercent))
 
     @pyqtSlot(str)
     def colorConsoleText(self, serverOutput):

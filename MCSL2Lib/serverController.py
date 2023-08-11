@@ -58,7 +58,6 @@ class ServerHelper(QObject):
         """选择了服务器"""
         self.loadServerConfig(index=index)
         self.serverName.emit(readGlobalServerConfig()[index]["name"])
-        self.backToHomePage.emit(0)
         self.startBtnStat.emit(True)
         # 防止和设置页冲突导致设置无效，得这样写，立刻保存变量以及文件
         settingsController.unSavedSettings.update(
@@ -68,6 +67,7 @@ class ServerHelper(QObject):
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
             writeConfig.write(dumps(settingsController.fileSettings, indent=4))
             writeConfig.close()
+        self.backToHomePage.emit(0)
 
 
 class Server:
@@ -238,7 +238,7 @@ class ServerLauncher:
 
     def __init__(self):
         self.jvmArg: List[str] = [""]
-        self.javaPath = serverVariables.javaPath
+        self.javaPath: str = ""
 
     def startServer(self) -> bool:
         """
@@ -250,9 +250,13 @@ class ServerLauncher:
         if not MojangEula().checkEula():
             return False
         else:
+            self.reGetNewJava()
             self.setjvmArg()
             self.launch()
             return True
+
+    def reGetNewJava(self):
+        self.javaPath = serverVariables.javaPath
 
     def setjvmArg(self):
         """生成开服命令参数"""
@@ -312,7 +316,7 @@ class MinecraftServerResMonitorUtil(QObject):
     获取服务器资源占用的线程
     """
 
-    memPercent = pyqtSignal(float)
+    mem = pyqtSignal(float)
     cpuPercent = pyqtSignal(float)
 
     def __init__(self, parent=None):
@@ -326,7 +330,6 @@ class MinecraftServerResMonitorUtil(QObject):
     def getServerMem(self):
         divisionNumList = {"G": 1024, "M": 1048576}
         divisionNum = divisionNumList[serverVariables.memUnit]
-        maxMem = serverVariables.maxMem
         try:
             if ServerHandler().isServerRunning():
                 serverMem = (
@@ -335,9 +338,9 @@ class MinecraftServerResMonitorUtil(QObject):
                     .uss
                     / divisionNum
                 )
-                self.memPercent.emit(float("{:.4f}".format(serverMem / maxMem)))
+                self.mem.emit(float("{:.4f}".format(serverMem)))
             else:
-                self.memPercent.emit(0.0000)
+                self.mem.emit(0.0000)
         except NoSuchProcess:
             pass
 
@@ -363,7 +366,9 @@ class MinecraftServerResMonitorUtil(QObject):
 def readServerProperties():
     serverVariables.serverProperties.clear()
     try:
-        with open(f"./Servers/{serverVariables.serverName}/server.properties", "r") as serverPropertiesFile:
+        with open(
+            f"./Servers/{serverVariables.serverName}/server.properties", "r"
+        ) as serverPropertiesFile:
             lines = serverPropertiesFile.readlines()
             for line in lines:
                 line = line.strip()
