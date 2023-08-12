@@ -49,13 +49,13 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.singleton import Singleton
 
-from MCSL2Lib.variables import GlobalMCSL2Variables, ConfigureServerVariables
+from MCSL2Lib.variables import GlobalMCSL2Variables, ConfigureServerVariables, SettingsVariables
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib import javaDetector
 
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
-
+settingsVariables = SettingsVariables()
 
 @Singleton
 class ConfigurePage(QWidget):
@@ -1160,8 +1160,6 @@ class ConfigurePage(QWidget):
         spacerItem20 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem20, 1, 0, 2, 1)
 
-        self.newServerStackedWidget.setCurrentIndex(0)
-
         self.setObjectName("ConfigureInterface")
 
         self.noobNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
@@ -1269,6 +1267,10 @@ class ConfigurePage(QWidget):
         self.importNewServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+        self.settingsRunner_newServerType()
+
+    def settingsRunner_newServerType(self):
+        self.newServerStackedWidget.setCurrentIndex(settingsVariables.newServerTypeList.index(settingsController.fileSettings['newServerType']))
 
     def newServerStackedWidgetNavigation(self):
         """决定新建服务器的方式"""
