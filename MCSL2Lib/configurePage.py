@@ -46,16 +46,25 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     MessageBox,
+    HyperlinkButton,
 )
+from MCSL2Lib.serverController import MojangEula
 from MCSL2Lib.singleton import Singleton
 
-from MCSL2Lib.variables import GlobalMCSL2Variables, ConfigureServerVariables, SettingsVariables
+from MCSL2Lib.variables import (
+    GlobalMCSL2Variables,
+    ConfigureServerVariables,
+    ServerVariables,
+    SettingsVariables,
+)
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib import javaDetector
 
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
+serverVariables = ServerVariables()
+
 
 @Singleton
 class ConfigurePage(QWidget):
@@ -1270,7 +1279,11 @@ class ConfigurePage(QWidget):
         self.settingsRunner_newServerType()
 
     def settingsRunner_newServerType(self):
-        self.newServerStackedWidget.setCurrentIndex(settingsVariables.newServerTypeList.index(settingsController.fileSettings['newServerType']))
+        self.newServerStackedWidget.setCurrentIndex(
+            settingsVariables.newServerTypeList.index(
+                settingsController.fileSettings["newServerType"]
+            )
+        )
 
     def newServerStackedWidgetNavigation(self):
         """决定新建服务器的方式"""
@@ -1584,11 +1597,15 @@ class ConfigurePage(QWidget):
         if currentNewServerType == 2:
             # 有写
             if self.JVMArgPlainTextEdit.toPlainText() != "":
-                configureServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
+                configureServerVariables.jvmArg = (
+                    self.JVMArgPlainTextEdit.toPlainText().split(" ")
+                )
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
             else:
-                configureServerVariables.jvmArg.append("-Dlog4j2.formatMsgNoLookups=true")
+                configureServerVariables.jvmArg.append(
+                    "-Dlog4j2.formatMsgNoLookups=true"
+                )
                 return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         elif currentNewServerType == 1:
             configureServerVariables.jvmArg.append("-Dlog4j2.formatMsgNoLookups=true")
@@ -1698,7 +1715,9 @@ class ConfigurePage(QWidget):
         # 检查JVM参数防止意外无法启动服务器
         for arg in configureServerVariables.jvmArg:
             if arg == "" or arg == " ":
-                configureServerVariables.jvmArg.pop(configureServerVariables.jvmArg.index(arg))
+                configureServerVariables.jvmArg.pop(
+                    configureServerVariables.jvmArg.index(arg)
+                )
 
         serverConfig = {
             "name": configureServerVariables.serverName,
@@ -1770,6 +1789,32 @@ class ConfigurePage(QWidget):
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"
+
+        # 自动同意Mojang Eula
+        if settingsController.fileSettings["acceptAllMojangEula"]:
+            tmpServerName = serverVariables.serverName
+            serverVariables.serverName = configureServerVariables.serverName
+            MinecraftEulaInfoBar = InfoBar(
+                icon=FIF.GITHUB,
+                title="功能提醒",
+                content="您开启了“创建时自动同意服务器的Eula”功能。\n如需要查看Minecraft Eula，请点击右边的按钮。",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                duration=10000,
+                position=InfoBarPosition.TOP,
+                parent=self,
+            )
+            MinecraftEulaInfoBar.addWidget(
+                HyperlinkButton(
+                    url="https://aka.ms/MinecraftEULA",
+                    text="Eula",
+                    parent=MinecraftEulaInfoBar,
+                    icon=FIF.LINK,
+                )
+            )
+            MinecraftEulaInfoBar.show()
+            MojangEula().acceptEula()
+            serverVariables.serverName = tmpServerName
 
         if exitCode == 0:
             InfoBar.success(
