@@ -1841,6 +1841,16 @@ class ConfigurePage(QWidget):
                     self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
                     self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
                     self.JVMArgPlainTextEdit.setPlainText("")
+                InfoBar.info(
+                    title="功能提醒",
+                    content="”新建服务器后立刻清空相关设置项“已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+
         else:
             InfoBar.error(
                 title="失败",
