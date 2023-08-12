@@ -297,7 +297,6 @@ class ConsolePage(QWidget):
         self.kickPlayers.clicked.connect(self.initQuickMenu_Kick)
         self.banPlayers.clicked.connect(self.initQuickMenu_BanOrPardon)
         self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
-        self.exitServer.clicked.connect(lambda: self.sendCommand("stop"))
         self.killServer.clicked.connect(self.runQuickMenu_KillServer)
         intellisense = QCompleter(GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit)
         intellisense.setCaseSensitivity(Qt.CaseInsensitive)
@@ -515,8 +514,6 @@ class ConsolePage(QWidget):
                 pass
         else:
             self.showServerNotOpenMsg()
-            
-
 
     def runQuickMenu_Difficulty(self):
         self.sendCommand(f"difficulty {self.difficulty.currentIndex()}")
@@ -669,9 +666,8 @@ class ConsolePage(QWidget):
     def runQuickMenu_StopServer(self):
         if ServerHandler().isServerRunning():
             box = MessageBox("正常关闭服务器", "你确定要关闭服务器吗？", self)
-            box.setModal(True)
-            if box.exec():
-                ServerHandler().stopServer()
+            box.yesSignal.connect(ServerHandler().stopServer)
+            box.exec()
         else:
             self.showServerNotOpenMsg()
 
