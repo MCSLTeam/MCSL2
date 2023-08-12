@@ -246,13 +246,11 @@ class ConsolePage(QWidget):
         self.exitServer = TransparentPushButton(self.quickMenu)
         self.exitServer.setMinimumSize(QSize(0, 30))
         self.exitServer.setObjectName("exitServer")
-        self.exitServer.clicked.connect(self.onExitServerClickedHandler)
 
         self.verticalLayout.addWidget(self.exitServer)
         self.killServer = TransparentPushButton(self.quickMenu)
         self.killServer.setMinimumSize(QSize(0, 30))
         self.killServer.setObjectName("killServer")
-        self.killServer.clicked.connect(self.onKillServerClickedHandler)
 
         self.verticalLayout.addWidget(self.killServer)
         self.gridLayout.addWidget(self.quickMenu, 3, 4, 1, 1)
@@ -307,52 +305,7 @@ class ConsolePage(QWidget):
         self.commandLineEdit.setClearButtonEnabled(True)
         self.serverMemProgressRing.setTextVisible(True)
         self.serverCPUProgressRing.setTextVisible(True)
-
-    def onExitServerClickedHandler(self):
-
-        if ServerHandler().isServerRunning():
-            box = MessageBox("关闭服务器", "你确定要关闭服务器吗？", self)
-            box.setModal(True)
-            if box.exec():
-                ServerHandler().stopServer()
-        else:
-            box = MessageBox("关闭服务器", "服务器未开启", self)
-            box.setModal(True)
-            box.cancelButton.hide()
-            box.exec()
-
-    def onKillServerClickedHandler(self):
-        if ServerHandler().isServerRunning():
-            box = MessageBox("强制关闭服务器", "你确定要强制关闭服务器吗？", self)
-            if box.exec():
-                ServerHandler().haltServer()
-        else:
-            box = MessageBox("关闭服务器", "服务器未开启", self)
-            box.cancelButton.hide()
-            box.exec()
-
-    def onExitServerClickedHandler(self):
-
-        if ServerHandler().isServerRunning():
-            box = MessageBox("关闭服务器", "你确定要关闭服务器吗？", self)
-            box.setModal(True)
-            if box.exec():
-                ServerHandler().stopServer()
-        else:
-            box = MessageBox("关闭服务器", "服务器未开启", self)
-            box.setModal(True)
-            box.cancelButton.hide()
-            box.exec()
-
-    def onKillServerClickedHandler(self):
-        if ServerHandler().isServerRunning():
-            box = MessageBox("强制关闭服务器", "你确定要强制关闭服务器吗？", self)
-            if box.exec():
-                ServerHandler().haltServer()
-        else:
-            box = MessageBox("关闭服务器", "服务器未开启", self)
-            box.cancelButton.hide()
-            box.exec()
+        self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
 
     @pyqtSlot(float)
     def setMemView(self, mem):
@@ -562,6 +515,8 @@ class ConsolePage(QWidget):
                 pass
         else:
             self.showServerNotOpenMsg()
+            
+
 
     def runQuickMenu_Difficulty(self):
         self.sendCommand(f"difficulty {self.difficulty.currentIndex()}")
@@ -710,6 +665,15 @@ class ConsolePage(QWidget):
     def runQuickMenu_BanOrPardon(self, mode: int, player: str):
         commandPrefixList = ["ban", "pardon"]
         ServerHandler().sendCommand(command=f"{commandPrefixList[mode]} {player}")
+
+    def runQuickMenu_StopServer(self):
+        if ServerHandler().isServerRunning():
+            box = MessageBox("正常关闭服务器", "你确定要关闭服务器吗？", self)
+            box.setModal(True)
+            if box.exec():
+                ServerHandler().stopServer()
+        else:
+            self.showServerNotOpenMsg()
 
     def runQuickMenu_KillServer(self):
         """快捷菜单-强制关闭服务器"""
