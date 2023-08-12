@@ -61,6 +61,7 @@ from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
     PluginVariables,
     ServerVariables,
+    SettingsVariables,
 )
 
 serverVariables = ServerVariables()
@@ -69,6 +70,7 @@ configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 pluginVariables = PluginVariables()
+settingsVariables = SettingsVariables()
 
 
 class CustomTitleBar(TitleBar):
@@ -388,7 +390,7 @@ class Window(FramelessWindow):
         )
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                self.settingsInterface.downloadSourceList.index(
+                settingsVariables.downloadSourceList.index(
                     settingsController.fileSettings["downloadSource"]
                 )
             )
@@ -398,7 +400,7 @@ class Window(FramelessWindow):
         )
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                self.settingsInterface.downloadSourceList.index(
+                settingsVariables.downloadSourceList.index(
                     settingsController.fileSettings["downloadSource"]
                 )
             )
@@ -474,7 +476,7 @@ class Window(FramelessWindow):
         )
         self.serverManagerInterface.editDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                self.settingsInterface.downloadSourceList.index(
+                settingsVariables.downloadSourceList.index(
                     settingsController.fileSettings["downloadSource"]
                 )
             )
@@ -575,7 +577,7 @@ class Window(FramelessWindow):
 
     @pyqtSlot(bool)
     def settingsRunner_autoRunLastServer(self, startBtnStat):
-        # 启动时自动运行上次运行的服务器判断
+        '''设置：启动时自动运行上次运行的服务器'''
         if settingsController.fileSettings["autoRunLastServer"]:
             if startBtnStat:
                 InfoBar.info(

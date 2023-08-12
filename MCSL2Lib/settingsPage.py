@@ -52,9 +52,8 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF,
 )
-from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.variables import GlobalMCSL2Variables
+from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.settingsController import SettingsController
 from platform import (
     system as systemType,
@@ -66,6 +65,7 @@ from os import getpid
 from psutil import Process
 
 settingsController = SettingsController()
+settingsVariables = SettingsVariables()
 
 
 @Singleton
@@ -76,13 +76,6 @@ class SettingsPage(QWidget):
 
     def __init__(self):
         super().__init__()
-
-        self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
-        self.downloadSourceList = ["FastMirror", "MCSLAPI"]
-        self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
-        self.outputDeEncodingList = ["utf-8", "gbk"]
-        self.inputDeEncodingList = ["follow", "utf-8", "gbk"]
-        self.themeList = ["auto", "dark", "light"]
 
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -1093,7 +1086,12 @@ class SettingsPage(QWidget):
         self.gridLayout = QGridLayout(self.aboutContentWidget)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.openSourceCodeRepo = HyperlinkButton("https://www.github.com/MCSLTeam/MCSL2", "打开源码仓库", self.aboutContentWidget, FIF.LINK)
+        self.openSourceCodeRepo = HyperlinkButton(
+            "https://www.github.com/MCSLTeam/MCSL2",
+            "打开源码仓库",
+            self.aboutContentWidget,
+            FIF.LINK,
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1115,7 +1113,12 @@ class SettingsPage(QWidget):
         self.generateSysReport.setObjectName("generateSysReport")
 
         self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
-        self.joinQQGroup = HyperlinkButton("https://jq.qq.com/?_wv=1027&k=x2ISlviQ", "加入官方群聊", self.aboutContentWidget, FIF.LINK)
+        self.joinQQGroup = HyperlinkButton(
+            "https://jq.qq.com/?_wv=1027&k=x2ISlviQ",
+            "加入官方群聊",
+            self.aboutContentWidget,
+            FIF.LINK,
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1126,7 +1129,9 @@ class SettingsPage(QWidget):
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
         spacerItem27 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem27, 1, 4, 1, 2)
-        self.openOfficialWeb = HyperlinkButton("https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.LINK)
+        self.openOfficialWeb = HyperlinkButton(
+            "https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.LINK
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1286,7 +1291,9 @@ class SettingsPage(QWidget):
         self.newServerTypeComboBox.currentIndexChanged.connect(
             lambda: self.changeSettings(
                 "newServerType",
-                self.newServerTypeList[self.newServerTypeComboBox.currentIndex()],
+                settingsVariables.newServerTypeList[
+                    self.newServerTypeComboBox.currentIndex()
+                ],
             )
         )
         self.onlySaveGlobalServerConfigSwitchBtn.checkedChanged.connect(
@@ -1306,7 +1313,9 @@ class SettingsPage(QWidget):
         self.downloadSourceComboBox.currentIndexChanged.connect(
             lambda: self.changeSettings(
                 "downloadSource",
-                self.downloadSourceList[self.downloadSourceComboBox.currentIndex()],
+                settingsVariables.downloadSourceList[
+                    self.downloadSourceComboBox.currentIndex()
+                ],
             )
         )
         self.alwaysAskSaveDirectoryCheckBox.clicked.connect(
@@ -1320,17 +1329,17 @@ class SettingsPage(QWidget):
         )
         self.saveSameFileExceptionToAsk.clicked.connect(
             lambda: self.changeSettings(
-                "saveSameFileException", self.saveSameFileExceptionList[0]
+                "saveSameFileException", settingsVariables.saveSameFileExceptionList[0]
             )
         )
         self.saveSameFileExceptionToOverwrite.clicked.connect(
             lambda: self.changeSettings(
-                "saveSameFileException", self.saveSameFileExceptionList[1]
+                "saveSameFileException", settingsVariables.saveSameFileExceptionList[1]
             )
         )
         self.saveSameFileExceptionToStop.clicked.connect(
             lambda: self.changeSettings(
-                "saveSameFileException", self.saveSameFileExceptionList[2]
+                "saveSameFileException", settingsVariables.saveSameFileExceptionList[2]
             )
         )
 
@@ -1338,13 +1347,17 @@ class SettingsPage(QWidget):
         self.outputDeEncodingComboBox.currentIndexChanged.connect(
             lambda: self.changeSettings(
                 "outputDeEncoding",
-                self.outputDeEncodingList[self.outputDeEncodingComboBox.currentIndex()],
+                settingsVariables.outputDeEncodingList[
+                    self.outputDeEncodingComboBox.currentIndex()
+                ],
             )
         )
         self.inputDeEncodingComboBox.currentIndexChanged.connect(
             lambda: self.changeSettings(
                 "inputDeEncoding",
-                self.inputDeEncodingList[self.inputDeEncodingComboBox.currentIndex()],
+                settingsVariables.inputDeEncodingList[
+                    self.inputDeEncodingComboBox.currentIndex()
+                ],
             )
         )
         self.quickMenuSwitchBtn.checkedChanged.connect(
@@ -1367,7 +1380,7 @@ class SettingsPage(QWidget):
         # softwareSettings
         self.themeComboBox.currentIndexChanged.connect(
             lambda: self.changeSettings(
-                "theme", self.themeList[self.themeComboBox.currentIndex()]
+                "theme", settingsVariables.themeList[self.themeComboBox.currentIndex()]
             )
         )
         self.selectThemeColorBtn.colorChanged.connect(
@@ -1445,7 +1458,7 @@ class SettingsPage(QWidget):
 
         # configureSettings
         self.newServerTypeComboBox.setCurrentIndex(
-            self.newServerTypeList.index(
+            settingsVariables.newServerTypeList.index(
                 settingsController.fileSettings["newServerType"]
             )
         )
@@ -1458,7 +1471,7 @@ class SettingsPage(QWidget):
 
         # downloadSettings
         self.downloadSourceComboBox.setCurrentIndex(
-            self.downloadSourceList.index(
+            settingsVariables.downloadSourceList.index(
                 settingsController.fileSettings["downloadSource"]
             )
         )
@@ -1472,19 +1485,19 @@ class SettingsPage(QWidget):
             self.saveSameFileExceptionToStop,
         ]
         self.saveSameFileExceptionRadioBtnList[
-            self.saveSameFileExceptionList.index(
+            settingsVariables.saveSameFileExceptionList.index(
                 settingsController.fileSettings["saveSameFileException"]
             )
         ].setChecked(True)
 
         # consoleSettings
         self.outputDeEncodingComboBox.setCurrentIndex(
-            self.outputDeEncodingList.index(
+            settingsVariables.outputDeEncodingList.index(
                 settingsController.fileSettings["outputDeEncoding"]
             )
         )
         self.inputDeEncodingComboBox.setCurrentIndex(
-            self.inputDeEncodingList.index(
+            settingsVariables.inputDeEncodingList.index(
                 settingsController.fileSettings["inputDeEncoding"]
             )
         )
@@ -1495,7 +1508,7 @@ class SettingsPage(QWidget):
 
         # softwareSettings
         self.themeComboBox.setCurrentIndex(
-            self.themeList.index(settingsController.fileSettings["theme"])
+            settingsVariables.themeList.index(settingsController.fileSettings["theme"])
         )
         self.selectThemeColorBtn.setColor(settingsController.fileSettings["themeColor"])
         self.alwaysRunAsAdministratorSwitchBtn.setChecked(
