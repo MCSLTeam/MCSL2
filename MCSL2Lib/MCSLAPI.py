@@ -46,7 +46,7 @@ class MCSLAPIDownloadURLParser:
                 downloadFileURLs,
                 downloadFileNames,
                 downloadFileFormats,
-            ) = MCSLAPIDownloadURLParser.DecodeDownloadJsons(DownloadAPIUrl)
+            ) = MCSLAPIDownloadURLParser.decodeDownloadJsons(DownloadAPIUrl)
             rv.update(
                 {
                     i: dict(
@@ -70,7 +70,7 @@ class MCSLAPIDownloadURLParser:
         return rv
 
     @staticmethod
-    def DecodeDownloadJsons(RefreshUrl):
+    def decodeDownloadJsons(RefreshUrl):
         downloadFileTitles = []
         downloadFileURLs = []
         downloadFileFormats = []

@@ -200,7 +200,6 @@ class MojangEula:
     """有关Mojang Eula的部分。"""
 
     def __init__(self):
-        self.eulaURL = "https://aka.ms/MinecraftEULA"
         self.serverDir = f"./Servers/{serverVariables.serverName}"
 
     def checkEula(self) -> bool:

@@ -30,7 +30,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QVBoxLayout,
     QSlider,
-    QApplication
+    QApplication,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -50,6 +50,7 @@ from qfluentwidgets import (
     MessageBox,
     InfoBarPosition,
     InfoBar,
+    FluentIcon as FIF,
 )
 from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.singleton import Singleton
@@ -1092,7 +1093,7 @@ class SettingsPage(QWidget):
         self.gridLayout = QGridLayout(self.aboutContentWidget)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.openSourceCodeRepo = HyperlinkButton(self.aboutContentWidget)
+        self.openSourceCodeRepo = HyperlinkButton("https://www.github.com/MCSLTeam/MCSL2", "打开源码仓库", self.aboutContentWidget, FIF.LINK)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1114,7 +1115,7 @@ class SettingsPage(QWidget):
         self.generateSysReport.setObjectName("generateSysReport")
 
         self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
-        self.joinQQGroup = HyperlinkButton(self.aboutContentWidget)
+        self.joinQQGroup = HyperlinkButton("https://jq.qq.com/?_wv=1027&k=x2ISlviQ", "加入官方群聊", self.aboutContentWidget, FIF.LINK)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1125,7 +1126,7 @@ class SettingsPage(QWidget):
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
         spacerItem27 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem27, 1, 4, 1, 2)
-        self.openOfficialWeb = HyperlinkButton(self.aboutContentWidget)
+        self.openOfficialWeb = HyperlinkButton("https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.LINK)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1215,10 +1216,7 @@ class SettingsPage(QWidget):
         self.checkUpdateOnStartSwitchBtn.setOnText("已开启")
         self.checkUpdateOnStartSwitchBtn.setOffText("已关闭")
         self.updateSettingsTitle.setText("更新")
-        self.openSourceCodeRepo.setText("打开源码仓库")
         self.generateSysReport.setText("系统报告")
-        self.joinQQGroup.setText("加入官方群聊")
-        self.openOfficialWeb.setText("打开官网")
         self.aboutContent.setText(
             "MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
             "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
@@ -1261,13 +1259,6 @@ class SettingsPage(QWidget):
 
         self.checkUpdateBtn.clicked.connect(self.checkUpdate)
 
-        self.joinQQGroup.clicked.connect(
-            lambda: openWebUrl("https://jq.qq.com/?_wv=1027&k=x2ISlviQ")
-        )
-        self.openOfficialWeb.clicked.connect(lambda: openWebUrl("https://mcsl.com.cn"))
-        self.openSourceCodeRepo.clicked.connect(
-            lambda: openWebUrl("https://www.github.com/MCSLTeam/MCSL2")
-        )
         self.generateSysReport.clicked.connect(self.generateSystemReport)
 
         self.settingsChanged.connect(self.saveSettingsBtnWidget.setVisible)
@@ -1609,16 +1600,17 @@ class SettingsPage(QWidget):
         w.yesButton.setText("复制")
         w.cancelButton.setText("关闭")
         w.yesSignal.connect(lambda: QApplication.clipboard().setText(report))
-        w.yesSignal.connect(lambda: InfoBar.success(
-                                                    title="成功",
-                                                    content="已复制到剪贴板",
-                                                    orient=Qt.Horizontal,
-                                                    isClosable=True,
-                                                    position=InfoBarPosition.TOP_RIGHT,
-                                                    duration=2500,
-                                                    parent=self,
-                                                    )
-                            )
+        w.yesSignal.connect(
+            lambda: InfoBar.success(
+                title="成功",
+                content="已复制到剪贴板",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2500,
+                parent=self,
+            )
+        )
         w.exec()
 
 

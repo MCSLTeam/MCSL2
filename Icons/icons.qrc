@@ -17,5 +17,6 @@
     <file>RedstoneLampOff.png</file>
     <file>RedstoneLampOn.png</file>
     <file>Spigot.svg</file>
+    <file>Error.svg</file>
   </qresource>
 </RCC>

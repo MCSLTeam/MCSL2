@@ -42,7 +42,6 @@ from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.homePage import HomePage
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
-from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (
@@ -495,9 +494,7 @@ class Window(FramelessWindow):
             w.yesButton.setText("同意")
             w.yesSignal.connect(lambda: MojangEula().acceptEula())
             w.cancelButton.setText("拒绝")
-            eulaBtn = HyperlinkButton()
-            eulaBtn.setText("Eula")
-            eulaBtn.clicked.connect(lambda: openWebUrl(MojangEula().eulaURL))
+            eulaBtn = HyperlinkButton(url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK)
             w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
             w.exec()
         else:
