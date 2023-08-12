@@ -326,3 +326,14 @@ class ServerVariables:
             self.inputEncoding = settingsController.fileSettings["inputDeEncoding"]
             if self.inputEncoding == "follow":  # 跟随输出
                 self.inputEncoding = self.outputDecoding
+
+@Singleton
+class SettingsVariables:
+    '''设置相关'''
+    def __init__(self):
+        self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
+        self.downloadSourceList = ["FastMirror", "MCSLAPI"]
+        self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
+        self.outputDeEncodingList = ["utf-8", "gbk"]
+        self.inputDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.themeList = ["auto", "dark", "light"]
