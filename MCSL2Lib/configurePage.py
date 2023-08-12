@@ -1711,6 +1711,9 @@ class ConfigurePage(QWidget):
             "icon": "Grass.png",
         }
 
+        # 新建文件夹
+        mkdir(f"Servers//{configureServerVariables.serverName}")
+
         # 写入全局配置
         try:
             with open(
@@ -1734,7 +1737,6 @@ class ConfigurePage(QWidget):
         # 写入单独配置
         try:
             if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
-                mkdir(f"Servers//{configureServerVariables.serverName}")
                 with open(
                     f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
                     "w+",
@@ -1744,7 +1746,7 @@ class ConfigurePage(QWidget):
                     serverListFile.close()
             else:
                 InfoBar.info(
-                    title="提示",
+                    title="功能提醒",
                     content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
                     orient=Qt.Horizontal,
                     isClosable=True,
@@ -1761,7 +1763,7 @@ class ConfigurePage(QWidget):
         try:
             copy(
                 configureServerVariables.corePath,
-                f"Servers//{configureServerVariables.serverName}//{configureServerVariables.coreFileName}",
+                f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
             )
         except Exception as e:
             exitCode = 1
