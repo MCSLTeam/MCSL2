@@ -169,7 +169,7 @@ class HomePage(QWidget):
     @pyqtSlot(str)
     def afterSelectedServer(self, serverName):
         """选择服务器后的处理"""
-        self.startServerBtn.setText(f"启动服务器：{serverName}")
+        self.startServerBtn.setText(f"启动服务器：\n{serverName}")
 
 
 class GetNoticeThread(QThread):
