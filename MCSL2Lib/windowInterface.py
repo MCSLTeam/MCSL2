@@ -16,7 +16,7 @@ The main window of MCSL2.
 import sys
 from traceback import format_exception
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer
+from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer, pyqtSlot
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
@@ -195,13 +195,21 @@ class Window(FramelessWindow):
         serverHelper.loadAtLaunch()
 
         self.initPluginSystem()
+
         # 注册快捷键
         self.consoleInterface.installEventFilter(self)
 
-        self.exitingMsgBox = MessageBox("正在关闭", "正在关闭服务器,稍后将退出", parent=self)
+        self.exitingMsgBox = MessageBox(
+            "正在退出MCSL2", "安全关闭服务器中...\n\nMCSL2稍后将自行退出。", parent=self
+        )
         # 安全退出控件
         self.exitingMsgBox.cancelButton.hide()
-        self.exitingMsgBox.yesButton.setText("强制退出")
+        self.exitingMsgBox.yesButton.setText("强制结束服务器并退出")
+        self.exitingMsgBox.yesButton.setStyleSheet(
+            GlobalMCSL2Variables.darkWarnBtnStyleSheet
+            if isDarkTheme
+            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        )
         self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
         self.exitingMsgBox.yesButton.setEnabled(False)
         self.exitingMsgBox.hide()
@@ -213,9 +221,14 @@ class Window(FramelessWindow):
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
-            box = MessageBox("进程退出", "服务器正在运行，退出前请关闭服务器", parent=self)
+            box = MessageBox("是否退出MCSL2？", "服务器正在运行。\n\n请在退出前先关闭服务器。", parent=self)
             box.yesButton.setText("取消")
-            box.cancelButton.setText("关闭并退出")
+            box.cancelButton.setText("安全关闭并退出")
+            box.cancelButton.setStyleSheet(
+                GlobalMCSL2Variables.darkWarnBtnStyleSheet
+                if isDarkTheme
+                else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+            )
             if box.exec() == 1:
                 a0.ignore()
                 return
@@ -426,6 +439,9 @@ class Window(FramelessWindow):
         # 设置
         self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
 
+        # 设置器
+        serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)
+
         # 管理服务器
         self.stackWidget.currentChanged.connect(
             self.serverManagerInterface.onPageChangedRefresh
@@ -494,7 +510,9 @@ class Window(FramelessWindow):
             w.yesButton.setText("同意")
             w.yesSignal.connect(lambda: MojangEula().acceptEula())
             w.cancelButton.setText("拒绝")
-            eulaBtn = HyperlinkButton(url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK)
+            eulaBtn = HyperlinkButton(
+                url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK
+            )
             w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
             w.exec()
         else:
@@ -503,7 +521,9 @@ class Window(FramelessWindow):
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)
-            ServerHandler().serverClosed.connect(self.serverMemThread.onServerClosedHandler)
+            ServerHandler().serverClosed.connect(
+                self.serverMemThread.onServerClosedHandler
+            )
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
@@ -537,8 +557,7 @@ class Window(FramelessWindow):
                 ):
                     if (
                         GlobalMCSL2Variables.userCommandHistory != []
-                        and GlobalMCSL2Variables.upT
-                        < 0
+                        and GlobalMCSL2Variables.upT < 0
                     ):
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
                             GlobalMCSL2Variables.upT + 1
@@ -548,9 +567,43 @@ class Window(FramelessWindow):
                         return True
                     if (
                         GlobalMCSL2Variables.userCommandHistory != []
-                        and GlobalMCSL2Variables.upT
-                        == 0
+                        and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
         return super().eventFilter(a0, a1)
+
+    @pyqtSlot(bool)
+    def settingsRunner_autoRunLastServer(self, startBtnStat):
+        # 启动时自动运行上次运行的服务器判断
+        if settingsController.fileSettings["autoRunLastServer"]:
+            if startBtnStat:
+                InfoBar.info(
+                    title="MCSL2功能提醒",
+                    content="您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器...",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self.homeInterface,
+                )
+                self.homeInterface.startServerBtn.click()
+                InfoBar.info(
+                    title="功能提醒",
+                    content="您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器...",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self.consoleInterface,
+                )
+            else:
+                InfoBar.info(
+                    title="功能提醒",
+                    content="虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self.homeInterface,
+                )

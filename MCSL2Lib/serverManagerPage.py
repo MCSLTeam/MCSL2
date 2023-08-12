@@ -659,9 +659,10 @@ class ServerManagerPage(QWidget):
         ]
         self.editServerIcon.addItems(self.iconsList)
         self.editServerIcon.setMaxVisibleItems(5)
-        self.serversScrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.serversScrollAreaSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+        )
         self.verticalLayout.addItem(self.serversScrollAreaSpacer)
-
 
     def goBack(self):
         # 没改就直接退出
@@ -800,48 +801,11 @@ class ServerManagerPage(QWidget):
         w = MessageBox(title, content, self)
         w.yesButton.setText("取消")
         w.cancelButton.setText("删除")
-        if isDarkTheme:
-            w.cancelButton.setStyleSheet(
-                "PushButton {\n"
-                "    color: black;\n"
-                "    background: rgba(255, 255, 255, 0.7);\n"
-                "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                "    border-radius: 5px;\n"
-                "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
-                "    padding: 5px 12px 6px 12px;\n"
-                "    outline: none;\n"
-                "}\n"
-                "QPushButton {\n"
-                "    background-color: rgba(255, 117, 117, 30%);\n"
-                "    color: rgb(245, 0, 0)\n"
-                "}\n"
-                "QPushButton:hover {\n"
-                "    background-color: rgba(255, 122, 122, 50%);\n"
-                "    color: rgb(245, 0, 0)\n"
-                "}"
-            )
-        else:
-            w.cancelButton.setStyleSheet(
-                "PushButton {\n"
-                "    color: black;\n"
-                "    background: rgba(255, 255, 255, 0.7);\n"
-                "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                "    border-radius: 5px;\n"
-                "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
-                "    padding: 5px 12px 6px 12px;\n"
-                "    outline: none;\n"
-                "}\n"
-                "QPushButton {\n"
-                "    background-color: rgba(255, 117, 117, 30%);\n"
-                "    color: rgb(255, 0, 0)\n"
-                "}\n"
-                "QPushButton:hover {\n"
-                "    background-color: rgba(255, 122, 122, 50%);\n"
-                "    color: rgb(255, 0, 0)\n"
-                "}"
-            )
+        w.cancelButton.setStyleSheet(
+            GlobalMCSL2Variables.darkWarnBtnStyleSheet
+            if isDarkTheme
+            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        )
         w.cancelSignal.connect(lambda: self.deleteServer_Step2(index=index))
         w.exec()
 
@@ -853,51 +817,11 @@ class ServerManagerPage(QWidget):
         w2 = MessageBox(title, content, self)
         w2.yesButton.setText("取消")
         w2.cancelButton.setText("删除")
-        if isDarkTheme:
-            w2.cancelButton.setStyleSheet(
-                "PushButton {\n"
-                "    color: black;\n"
-                "    background: rgba(255, 255, 255, 0.7);\n"
-                "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                "    border-radius: 5px;\n"
-                "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
-                "    padding: 5px 12px 6px 12px;\n"
-                "    outline: none;\n"
-                "}\n"
-                "QPushButton {\n"
-                "    background-color: rgba(255, 117, 117, 30%);\n"
-                "    color: rgb(245, 0, 0)\n"
-                "}\n"
-                "QPushButton:hover {\n"
-                "    background-color: rgba(255, 122, 122, 50%);\n"
-                "    color: rgb(245, 0, 0)\n"
-                "}\n"
-                "QPushButton:disabled {\n"
-                "    background-color: transparent\n"
-                "}"
-            )
-        else:
-            w2.cancelButton.setStyleSheet(
-                "PushButton {\n"
-                "    color: black;\n"
-                "    background: rgba(255, 255, 255, 0.7);\n"
-                "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                "    border-radius: 5px;\n"
-                "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
-                "    padding: 5px 12px 6px 12px;\n"
-                "    outline: none;\n"
-                "}\n"
-                "QPushButton {\n"
-                "    background-color: rgba(255, 117, 117, 30%);\n"
-                "    color: rgb(255, 0, 0)\n"
-                "}\n"
-                "QPushButton:hover {\n"
-                "    background-color: rgba(255, 122, 122, 50%);\n"
-                "    color: rgb(255, 0, 0)\n"
-                "}"
-            )
+        w2.cancelButton.setStyleSheet(
+            GlobalMCSL2Variables.darkWarnBtnStyleSheet
+            if isDarkTheme
+            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        )
         w2.cancelButton.setEnabled(False)
         confirmLineEdit = LineEdit(w2)
         confirmLineEdit.textChanged.connect(
@@ -976,10 +900,14 @@ class ServerManagerPage(QWidget):
         self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
         self.editOutputDeEncodingComboBox.setCurrentIndex(
-            editServerVariables.consoleDeEncodingList.index(globalConfig[index]["output_decoding"])
+            editServerVariables.consoleDeEncodingList.index(
+                globalConfig[index]["output_decoding"]
+            )
         )
         self.editInputDeEncodingComboBox.setCurrentIndex(
-            editServerVariables.consoleDeEncodingList.index(globalConfig[index]["input_encoding"])
+            editServerVariables.consoleDeEncodingList.index(
+                globalConfig[index]["input_encoding"]
+            )
         )
         self.editMemUnitComboBox.setCurrentIndex(
             editServerVariables.memUnitList.index(globalConfig[index]["memory_unit"])
@@ -1040,13 +968,17 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
         self.editMemUnitComboBox.currentIndexChanged.connect(self.changeMemUnit)
         self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.changeCore)
-        self.editOutputDeEncodingComboBox.currentIndexChanged.connect(self.changeOutputDeEncoding)
-        self.editInputDeEncodingComboBox.currentIndexChanged.connect(self.changeInputDeEncoding)
+        self.editOutputDeEncodingComboBox.currentIndexChanged.connect(
+            self.changeOutputDeEncoding
+        )
+        self.editInputDeEncodingComboBox.currentIndexChanged.connect(
+            self.changeInputDeEncoding
+        )
         self.editServerIcon.currentIndexChanged.connect(
             lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
         )
         self.editServerNameLineEdit.textChanged.connect(self.changeServerName)
-    
+
     def disconnectEditServerSlot(self):
         self.editJavaTextEdit.textChanged.disconnect()
         self.editMinMemLineEdit.textChanged.disconnect()
@@ -1062,7 +994,9 @@ class ServerManagerPage(QWidget):
         """改图标用"""
         editServerVariables.icon = editServerVariables.iconsFileNameList[iconIndex]
         self.editServerPixmapLabel.setPixmap(
-            QPixmap(f":/built-InIcons/{editServerVariables.iconsFileNameList[iconIndex]}")
+            QPixmap(
+                f":/built-InIcons/{editServerVariables.iconsFileNameList[iconIndex]}"
+            )
         )
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
@@ -1077,7 +1011,7 @@ class ServerManagerPage(QWidget):
 
     def changeMemUnit(self):
         editServerVariables.memUnit = self.editMemUnitComboBox.currentText()
-    
+
     def changeCore(self):
         """手动更换服务器核心"""
         tmpCorePath = str(
@@ -1108,10 +1042,18 @@ class ServerManagerPage(QWidget):
             )
 
     def changeOutputDeEncoding(self):
-        editServerVariables.consoleOutputDeEncoding = editServerVariables.consoleDeEncodingList[self.editOutputDeEncodingComboBox.currentIndex()]
-    
+        editServerVariables.consoleOutputDeEncoding = (
+            editServerVariables.consoleDeEncodingList[
+                self.editOutputDeEncodingComboBox.currentIndex()
+            ]
+        )
+
     def changeInputDeEncoding(self):
-        editServerVariables.consoleInputDeEncoding = editServerVariables.consoleDeEncodingList[self.editInputDeEncodingComboBox.currentIndex()]
+        editServerVariables.consoleInputDeEncoding = (
+            editServerVariables.consoleDeEncodingList[
+                self.editInputDeEncodingComboBox.currentIndex()
+            ]
+        )
 
     def changeServerName(self):
         editServerVariables.serverName = self.editServerNameLineEdit.text()
@@ -1330,7 +1272,9 @@ class ServerManagerPage(QWidget):
     def checkJVMArgSet(self):
         """检查JVM参数设置，同时设置"""
         if self.JVMArgPlainTextEdit.toPlainText() != "":
-            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
+            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(
+                " "
+            )
             return "JVM参数检查：正常", 0
         else:
             editServerVariables.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
@@ -1511,7 +1455,7 @@ class ServerManagerPage(QWidget):
                     serverListFile.close()
             else:
                 InfoBar.info(
-                    title="提示",
+                    title="功能提醒",
                     content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
                     orient=Qt.Horizontal,
                     isClosable=True,

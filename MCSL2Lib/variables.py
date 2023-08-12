@@ -151,88 +151,134 @@ class GlobalMCSL2Variables:
     MCSL2Version = "2.2.0.0"
     scrollAreaViewportQss = "background-color: transparent;"
     MinecraftBuiltInCommand = [
-            "advancement",
-            "attribute",
-            "ban",
-            "ban-ip",
-            "banlist",
-            "bossbar",
-            "clear",
-            "clone",
-            "damage",
-            "data",
-            "datapack",
-            "debug",
-            "defaultgamemode",
-            "deop",
-            "difficulty",
-            "effect",
-            "enchant",
-            "execute",
-            "experience",
-            "fill",
-            "fillbiome",
-            "forceload",
-            "function",
-            "gamemode",
-            "gamerule",
-            "give",
-            "item",
-            "jfr",
-            "kick",
-            "kill",
-            "list",
-            "locate",
-            "loot",
-            "me",
-            "minecraft:help",
-            "minecraft:reload",
-            "msg",
-            "op",
-            "pardon",
-            "pardon-ip",
-            "particle",
-            "perf",
-            "place",
-            "playsound",
-            "recipe",
-            "return",
-            "ride",
-            "save-all",
-            "save-off",
-            "save-on",
-            "say",
-            "schedule",
-            "scoreboard",
-            "seed",
-            "setblock",
-            "setidletimeout",
-            "setworldspawn",
-            "spawnpoint",
-            "spectate",
-            "spreadplayers",
-            "stop",
-            "stopsound",
-            "summon",
-            "tag",
-            "team",
-            "teammsg",
-            "teleport",
-            "tell",
-            "tellraw",
-            "time",
-            "title",
-            "tm",
-            "tp",
-            "trigger",
-            "w",
-            "weather",
-            "whitelist",
-            "worldborder",
-            "xp",
-        ]
+        "advancement",
+        "attribute",
+        "ban",
+        "ban-ip",
+        "banlist",
+        "bossbar",
+        "clear",
+        "clone",
+        "damage",
+        "data",
+        "datapack",
+        "debug",
+        "defaultgamemode",
+        "deop",
+        "difficulty",
+        "effect",
+        "enchant",
+        "execute",
+        "experience",
+        "fill",
+        "fillbiome",
+        "forceload",
+        "function",
+        "gamemode",
+        "gamerule",
+        "give",
+        "item",
+        "jfr",
+        "kick",
+        "kill",
+        "list",
+        "locate",
+        "loot",
+        "me",
+        "minecraft:help",
+        "minecraft:reload",
+        "msg",
+        "op",
+        "pardon",
+        "pardon-ip",
+        "particle",
+        "perf",
+        "place",
+        "playsound",
+        "recipe",
+        "return",
+        "ride",
+        "save-all",
+        "save-off",
+        "save-on",
+        "say",
+        "schedule",
+        "scoreboard",
+        "seed",
+        "setblock",
+        "setidletimeout",
+        "setworldspawn",
+        "spawnpoint",
+        "spectate",
+        "spreadplayers",
+        "stop",
+        "stopsound",
+        "summon",
+        "tag",
+        "team",
+        "teammsg",
+        "teleport",
+        "tell",
+        "tellraw",
+        "time",
+        "title",
+        "tm",
+        "tp",
+        "trigger",
+        "w",
+        "weather",
+        "whitelist",
+        "worldborder",
+        "xp",
+    ]
     userCommandHistory = []
     upT = 0
+    darkWarnBtnStyleSheet = (
+        "PushButton {\n"
+        "    color: black;\n"
+        "    background: rgba(255, 255, 255, 0.7);\n"
+        "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
+        "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
+        "    border-radius: 5px;\n"
+        "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
+        "    padding: 5px 12px 6px 12px;\n"
+        "    outline: none;\n"
+        "}\n"
+        "QPushButton {\n"
+        "    background-color: rgba(255, 117, 117, 30%);\n"
+        "    color: rgb(245, 0, 0)\n"
+        "}\n"
+        "QPushButton:hover {\n"
+        "    background-color: rgba(255, 122, 122, 50%);\n"
+        "    color: rgb(245, 0, 0)\n"
+        "}\n"
+        "QPushButton:disabled {\n"
+        "    background-color: transparent\n"
+        "}"
+    )
+    lightWarnBtnStyleSheet = (
+        "PushButton {\n"
+        "    color: black;\n"
+        "    background: rgba(255, 255, 255, 0.7);\n"
+        "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
+        "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
+        "    border-radius: 5px;\n"
+        "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
+        "    padding: 5px 12px 6px 12px;\n"
+        "    outline: none;\n"
+        "}\n"
+        "QPushButton {\n"
+        "    background-color: rgba(255, 117, 117, 30%);\n"
+        "    color: rgb(255, 0, 0)\n"
+        "}\n"
+        "QPushButton:hover {\n"
+        "    background-color: rgba(255, 122, 122, 50%);\n"
+        "    color: rgb(255, 0, 0)\n"
+        "}\n"
+        "QPushButton:disabled {\n"
+        "    background-color: transparent\n"
+        "}"
+    )
 
 
 @Singleton
