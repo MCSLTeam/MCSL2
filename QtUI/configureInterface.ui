@@ -74,7 +74,7 @@
    <item row="2" column="2">
     <widget class="QStackedWidget" name="newServerStackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="guideNewServerPage">
       <layout class="QVBoxLayout" name="guideNewServerVerticalLayout">
@@ -392,8 +392,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>611</width>
-            <height>396</height>
+            <width>428</width>
+            <height>382</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout">
@@ -839,7 +839,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>594</width>
+            <width>428</width>
             <height>589</height>
            </rect>
           </property>
@@ -1405,7 +1405,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="importNewServerFirstGuide">
           <property name="sizePolicy">
@@ -1485,7 +1485,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>1. 请选择导入服务器的方式</string>
+              <string>  请选择导入服务器的方式：</string>
              </property>
             </widget>
            </item>
@@ -1648,7 +1648,7 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-793</y>
+                <y>0</y>
                 <width>519</width>
                 <height>1141</height>
                </rect>
@@ -2459,7 +2459,7 @@
             <widget class="TransparentToolButton" name="shellArchivesBackToMain"/>
            </item>
            <item row="0" column="2">
-            <widget class="SubtitleLabel" name="shellArchivesTitle_2">
+            <widget class="SubtitleLabel" name="shellArchivesTitle">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -2515,9 +2515,9 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-467</y>
+                <y>0</y>
                 <width>519</width>
-                <height>1141</height>
+                <height>1191</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -2673,7 +2673,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="CardWidget" name="shellArchivesSelectCore">
+                <widget class="CardWidget" name="shellArchivesSelectShell">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -2688,7 +2688,7 @@
                  </property>
                  <layout class="QGridLayout" name="gridLayout_23">
                   <item row="0" column="1">
-                   <widget class="PixmapLabel" name="shellArchivesSelectCoreStatus">
+                   <widget class="PixmapLabel" name="shellArchivesSelectShellStatus">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -2726,7 +2726,7 @@
                    </spacer>
                   </item>
                   <item row="1" column="1" colspan="2">
-                   <widget class="BodyLabel" name="shellArchivesSelectCoreStatusText">
+                   <widget class="BodyLabel" name="shellArchivesSelectShellStatusText">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -2739,7 +2739,7 @@
                    </widget>
                   </item>
                   <item row="0" column="2">
-                   <widget class="SubtitleLabel" name="shellArchivesSelectCoreTitle">
+                   <widget class="SubtitleLabel" name="shellArchivesSelectShellTitle">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -2752,7 +2752,7 @@
                    </widget>
                   </item>
                   <item row="2" column="1" colspan="2">
-                   <widget class="TreeWidget" name="shellArchivesSelectCoreTreeWidget">
+                   <widget class="TreeWidget" name="shellArchivesSelectShellTreeWidget">
                     <column>
                      <property name="text">
                       <string notr="true">1</string>
@@ -2764,7 +2764,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="CardWidget" name="shellArchivesSetArgs">
+                <widget class="CardWidget" name="shellArchivesValidateArgs">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -2774,13 +2774,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>580</height>
+                   <height>630</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>580</height>
+                   <height>630</height>
                   </size>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_24">
@@ -2801,7 +2801,7 @@
                    </spacer>
                   </item>
                   <item row="5" column="2" colspan="3">
-                   <widget class="QWidget" name="shellArchivesSetJavaWidget" native="true">
+                   <widget class="QWidget" name="shellArchivesValidateArgsJavaWidget" native="true">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -2816,7 +2816,7 @@
                     </property>
                     <layout class="QGridLayout" name="gridLayout_26">
                      <item row="2" column="2">
-                      <widget class="PrimaryPushButton" name="shellArchivesAutoDetectJavaPrimaryPushBtn">
+                      <widget class="PrimaryPushButton" name="shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2832,7 +2832,7 @@
                       </widget>
                      </item>
                      <item row="0" column="0">
-                      <widget class="SubtitleLabel" name="shellArchivesJavaSubtitleLabel">
+                      <widget class="SubtitleLabel" name="shellArchivesValidateArgsJavaSubtitleLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2845,7 +2845,7 @@
                       </widget>
                      </item>
                      <item row="3" column="2">
-                      <widget class="PushButton" name="shellArchivesJavaListPushBtn">
+                      <widget class="PushButton" name="shellArchivesValidateArgsJavaListPushBtn">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2867,7 +2867,7 @@
                       </widget>
                      </item>
                      <item row="2" column="1">
-                      <widget class="PrimaryPushButton" name="shellArchivesManuallyAddJavaPrimaryPushBtn">
+                      <widget class="PrimaryPushButton" name="shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2889,7 +2889,7 @@
                       </widget>
                      </item>
                      <item row="3" column="1">
-                      <widget class="PrimaryPushButton" name="shellArchivesDownloadJavaPrimaryPushBtn">
+                      <widget class="PrimaryPushButton" name="shellArchivesValidateArgsDownloadJavaPrimaryPushBtn">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2911,13 +2911,13 @@
                       </widget>
                      </item>
                      <item row="2" column="0" rowspan="2">
-                      <widget class="TextEdit" name="shellArchivesJavaTextEdit"/>
+                      <widget class="TextEdit" name="shellArchivesValidateArgsJavaTextEdit"/>
                      </item>
                     </layout>
                    </widget>
                   </item>
                   <item row="8" column="2" colspan="3">
-                   <widget class="QWidget" name="shellArchivesSetDeEncodingWidget" native="true">
+                   <widget class="QWidget" name="shellArchivesValidateArgsDeEncodingWidget" native="true">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -2938,7 +2938,7 @@
                     </property>
                     <layout class="QGridLayout" name="gridLayout_27">
                      <item row="2" column="1">
-                      <widget class="ComboBox" name="shellArchivesOutputDeEncodingComboBox">
+                      <widget class="ComboBox" name="shellArchivesValidateArgsOutputDeEncodingComboBox">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2948,14 +2948,14 @@
                       </widget>
                      </item>
                      <item row="3" column="1">
-                      <widget class="ComboBox" name="shellArchivesInputDeEncodingComboBox">
+                      <widget class="ComboBox" name="shellArchivesValidateArgsInputDeEncodingComboBox">
                        <property name="text">
                         <string/>
                        </property>
                       </widget>
                      </item>
                      <item row="2" column="0">
-                      <widget class="StrongBodyLabel" name="shellArchivesOutputDeEncodingLabel">
+                      <widget class="StrongBodyLabel" name="shellArchivesValidateArgsOutputDeEncodingLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2968,7 +2968,7 @@
                       </widget>
                      </item>
                      <item row="0" column="0">
-                      <widget class="SubtitleLabel" name="shellArchivesDeEncodingSubtitleLabel">
+                      <widget class="SubtitleLabel" name="shellArchivesValidateArgsDeEncodingSubtitleLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2981,7 +2981,7 @@
                       </widget>
                      </item>
                      <item row="3" column="0">
-                      <widget class="StrongBodyLabel" name="shellArchivesInputDeEncodingLabel">
+                      <widget class="StrongBodyLabel" name="shellArchivesValidateArgsInputDeEncodingLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -2997,7 +2997,7 @@
                    </widget>
                   </item>
                   <item row="9" column="2" colspan="3">
-                   <widget class="QWidget" name="shellArchivesSetJVMArgWidget" native="true">
+                   <widget class="QWidget" name="shellArchivesValidateArgsJVMArgWidget" native="true">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                       <horstretch>0</horstretch>
@@ -3007,25 +3007,25 @@
                     <property name="minimumSize">
                      <size>
                       <width>0</width>
-                      <height>171</height>
+                      <height>140</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
                       <width>16777215</width>
-                      <height>171</height>
+                      <height>140</height>
                      </size>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_25">
                      <item row="1" column="0">
-                      <widget class="PlainTextEdit" name="shellArchivesJVMArgPlainTextEdit">
+                      <widget class="PlainTextEdit" name="shellArchivesValidateArgsJVMArgPlainTextEdit">
                        <property name="placeholderText">
                         <string>可选，用一个空格分组</string>
                        </property>
                       </widget>
                      </item>
                      <item row="0" column="0">
-                      <widget class="SubtitleLabel" name="shellArchivesJVMArgSubtitleLabel">
+                      <widget class="SubtitleLabel" name="shellArchivesValidateArgsJVMArgSubtitleLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3041,7 +3041,7 @@
                    </widget>
                   </item>
                   <item row="0" column="2">
-                   <widget class="PixmapLabel" name="shellArchivesSetArgsStatus">
+                   <widget class="PixmapLabel" name="shellArchivesValidateArgsStatus">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -3063,7 +3063,7 @@
                    </widget>
                   </item>
                   <item row="6" column="2" colspan="3">
-                   <widget class="QWidget" name="shellArchivesSetMemWidget" native="true">
+                   <widget class="QWidget" name="shellArchivesValidateArgsMemWidget" native="true">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -3084,7 +3084,7 @@
                     </property>
                     <layout class="QGridLayout" name="gridLayout_28">
                      <item row="1" column="1">
-                      <widget class="LineEdit" name="shellArchivesMinMemLineEdit">
+                      <widget class="LineEdit" name="shellArchivesValidateArgsMinMemLineEdit">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3100,7 +3100,7 @@
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="SubtitleLabel" name="shellArchivesMemSubtitleLabel">
+                      <widget class="SubtitleLabel" name="shellArchivesValidateArgsMemSubtitleLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3113,7 +3113,7 @@
                       </widget>
                      </item>
                      <item row="1" column="3">
-                      <widget class="LineEdit" name="shellArchivesMaxMemLineEdit">
+                      <widget class="LineEdit" name="shellArchivesValidateArgsMaxMemLineEdit">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3129,7 +3129,7 @@
                       </widget>
                      </item>
                      <item row="1" column="2">
-                      <widget class="SubtitleLabel" name="shellArchivesToSymbol">
+                      <widget class="SubtitleLabel" name="shellArchivesValidateArgsToSymbol">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                          <horstretch>0</horstretch>
@@ -3142,7 +3142,7 @@
                       </widget>
                      </item>
                      <item row="1" column="5">
-                      <spacer name="shellArchivesMemSpacer">
+                      <spacer name="shellArchivesValidateArgsMemSpacer">
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
                        </property>
@@ -3155,13 +3155,13 @@
                       </spacer>
                      </item>
                      <item row="1" column="4">
-                      <widget class="ComboBox" name="shellArchivesMemUnitComboBox"/>
+                      <widget class="ComboBox" name="shellArchivesValidateArgsMemUnitComboBox"/>
                      </item>
                     </layout>
                    </widget>
                   </item>
                   <item row="0" column="3">
-                   <widget class="SubtitleLabel" name="shellArchivesSetArgsTitle">
+                   <widget class="SubtitleLabel" name="shellArchivesValidateArgsTitle">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -3174,7 +3174,7 @@
                    </widget>
                   </item>
                   <item row="7" column="2" colspan="3">
-                   <widget class="QWidget" name="shellArchivesSetCoreWidget" native="true">
+                   <widget class="QWidget" name="shellArchivesValidateArgsCoreWidget" native="true">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -3183,7 +3183,7 @@
                     </property>
                     <layout class="QGridLayout" name="gridLayout_31">
                      <item row="1" column="3">
-                      <widget class="PrimaryPushButton" name="shellArchivesDownloadCorePrimaryPushBtn">
+                      <widget class="PrimaryPushButton" name="shellArchivesValidateArgsDownloadCorePrimaryPushBtn">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3202,7 +3202,7 @@
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="SubtitleLabel" name="shellArchivesCoreSubtitleLabel">
+                      <widget class="SubtitleLabel" name="shellArchivesValidateArgsCoreSubtitleLabel">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3215,10 +3215,10 @@
                       </widget>
                      </item>
                      <item row="1" column="1">
-                      <widget class="LineEdit" name="shellArchivesCoreLineEdit"/>
+                      <widget class="LineEdit" name="shellArchivesValidateArgsCoreLineEdit"/>
                      </item>
                      <item row="1" column="2">
-                      <widget class="PrimaryPushButton" name="shellArchivesManuallyAddCorePrimaryPushBtn">
+                      <widget class="PrimaryPushButton" name="shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -3361,6 +3361,1615 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="serverArchiveSite">
+          <layout class="QGridLayout" name="gridLayout_41">
+           <item row="0" column="3">
+            <spacer name="horizontalSpacer_17">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>256</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="2" colspan="2">
+            <widget class="SmoothScrollArea" name="serverArchiveSiteScrollArea">
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <widget class="QWidget" name="serverArchiveSiteScrollAreaWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>519</width>
+                <height>935</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="CardWidget" name="serverArchiveSiteImport">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>150</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>150</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_32">
+                  <item row="0" column="0" rowspan="3">
+                   <spacer name="horizontalSpacer_18">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="PixmapLabel" name="serverArchiveSiteImportStatus">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1" colspan="2">
+                   <widget class="BodyLabel" name="serverArchiveSiteImportStatusText">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>[状态文本]</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1" colspan="2">
+                   <widget class="QWidget" name="serverArchiveSiteImportBtnWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_9">
+                     <item>
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteImportArchives">
+                       <property name="minimumSize">
+                        <size>
+                         <width>110</width>
+                         <height>32</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>110</width>
+                         <height>32</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>导入文件</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteImportFolder">
+                       <property name="minimumSize">
+                        <size>
+                         <width>110</width>
+                         <height>32</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>110</width>
+                         <height>32</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>导入文件夹</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="2" column="6" colspan="2">
+                   <spacer name="horizontalSpacer_19">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="SubtitleLabel" name="serverArchiveSiteImportTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>1. 导入文件/文件夹</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="CardWidget" name="serverArchiveSiteSetArgs">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>630</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>630</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_34">
+                  <item row="0" column="0" rowspan="21">
+                   <spacer name="horizontalSpacer_21">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>102</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="5" column="2" colspan="3">
+                   <widget class="QWidget" name="serverArchiveSiteSetJavaWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>120</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_35">
+                     <item row="2" column="2">
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteAutoDetectJavaPrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>自动查找Java</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="SubtitleLabel" name="serverArchiveSiteJavaSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>Java:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="2">
+                      <widget class="PushButton" name="serverArchiveSiteJavaListPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>108</width>
+                         <height>31</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>Java列表</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteManuallyAddJavaPrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>手动导入</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteDownloadJavaPrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>下载Java</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0" rowspan="2">
+                      <widget class="TextEdit" name="serverArchiveSiteJavaTextEdit"/>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="8" column="2" colspan="3">
+                   <widget class="QWidget" name="serverArchiveSiteSetDeEncodingWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>122</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>122</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_36">
+                     <item row="2" column="1">
+                      <widget class="ComboBox" name="serverArchiveSiteOutputDeEncodingComboBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="ComboBox" name="serverArchiveSiteInputDeEncodingComboBox">
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="StrongBodyLabel" name="serverArchiveSiteOutputDeEncodingLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>控制台输出编码（优先级高于全局设置）</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="SubtitleLabel" name="serverArchiveSiteDeEncodingSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>编码设置：</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="StrongBodyLabel" name="serverArchiveSiteInputDeEncodingLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>指令输入编码（优先级高于全局设置）</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="9" column="2" colspan="3">
+                   <widget class="QWidget" name="serverArchiveSiteSetJVMArgWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>140</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>140</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_37">
+                     <item row="1" column="0">
+                      <widget class="PlainTextEdit" name="serverArchiveSiteJVMArgPlainTextEdit">
+                       <property name="placeholderText">
+                        <string>可选，用一个空格分组</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="SubtitleLabel" name="serverArchiveSiteJVMArgSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>JVM参数：</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="PixmapLabel" name="serverArchiveSiteSetArgsStatus">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="2" colspan="3">
+                   <widget class="QWidget" name="serverArchiveSiteSetMemWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>85</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>85</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_38">
+                     <item row="1" column="1">
+                      <widget class="LineEdit" name="serverArchiveSiteMinMemLineEdit">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="SubtitleLabel" name="serverArchiveSiteMemSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>内存:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="3">
+                      <widget class="LineEdit" name="serverArchiveSiteMaxMemLineEdit">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="2">
+                      <widget class="SubtitleLabel" name="serverArchiveSiteToSymbol">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>~</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="5">
+                      <spacer name="serverArchiveSiteMemSpacer">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item row="1" column="4">
+                      <widget class="ComboBox" name="serverArchiveSiteMemUnitComboBox"/>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="SubtitleLabel" name="serverArchiveSiteSetArgsTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>2. 设置参数</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="2" colspan="3">
+                   <widget class="QWidget" name="serverArchiveSiteSetCoreWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_39">
+                     <item row="1" column="3">
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteDownloadCorePrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>下载核心</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="SubtitleLabel" name="serverArchiveSiteCoreSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>核心：</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="LineEdit" name="serverArchiveSiteCoreLineEdit"/>
+                     </item>
+                     <item row="1" column="2">
+                      <widget class="PrimaryPushButton" name="serverArchiveSiteManuallyAddCorePrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>重新导入</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="CardWidget" name="serverArchiveSiteSave">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>125</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>125</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_40">
+                  <item row="0" column="1">
+                   <widget class="SubtitleLabel" name="serverArchiveSiteSaveTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>4. 完成导入</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="LineEdit" name="serverArchiveSiteServerNameLineEdit">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="placeholderText">
+                     <string>设置服务器昵称，不能包含非法字符</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" rowspan="3">
+                   <spacer name="horizontalSpacer_22">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>79</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="PrimaryPushButton" name="serverArchiveSiteSaveServerPrimaryPushBtn">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>130</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>导入！</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="TransparentToolButton" name="serverArchiveSiteBackToMain"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="SubtitleLabel" name="serverArchiveSiteTitle">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>导入 服务器 存档 压缩包/文件夹</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <spacer name="verticalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>299</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0" rowspan="2">
+            <spacer name="horizontalSpacer_20">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>335</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="MCSLv1">
+          <layout class="QGridLayout" name="gridLayout_49">
+           <item row="0" column="4">
+            <spacer name="horizontalSpacer_24">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>415</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="2">
+            <widget class="TransparentToolButton" name="MCSLv1BackToMain"/>
+           </item>
+           <item row="1" column="2">
+            <spacer name="verticalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>346</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="3">
+            <widget class="SubtitleLabel" name="MCSLv1Title">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>导入 MCSL 1的服务器</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="2">
+            <spacer name="horizontalSpacer_23">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>335</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="3" colspan="2">
+            <widget class="SmoothScrollArea" name="MCSLv1ScrollArea">
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <widget class="QWidget" name="MCSLv1ScrollAreaWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>-48</y>
+                <width>519</width>
+                <height>935</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="CardWidget" name="MCSLv1Import">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>150</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>150</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_33">
+                  <item row="1" column="1" colspan="2">
+                   <widget class="BodyLabel" name="MCSLv1ImportStatusText">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>[状态文本]</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="SubtitleLabel" name="MCSLv1ImportTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>1. 选择MCSL 1主程序</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="5" colspan="3">
+                   <spacer name="horizontalSpacer_26">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="PixmapLabel" name="MCSLv1ImportStatus">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" rowspan="3">
+                   <spacer name="horizontalSpacer_25">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="2" column="1" colspan="2">
+                   <widget class="PrimaryPushButton" name="MCSLv1ImportArchives">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>110</width>
+                      <height>32</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>150</width>
+                      <height>32</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>选择程序</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="CardWidget" name="MCSLv1ValidateArgs">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>630</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>630</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_43">
+                  <item row="0" column="0" rowspan="21">
+                   <spacer name="horizontalSpacer_28">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>102</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="5" column="2" colspan="3">
+                   <widget class="QWidget" name="MCSLv1ValidateArgsJavaWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>120</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_44">
+                     <item row="2" column="2">
+                      <widget class="PrimaryPushButton" name="MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>自动查找Java</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="SubtitleLabel" name="MCSLv1ValidateArgsJavaSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>Java:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="2">
+                      <widget class="PushButton" name="MCSLv1ValidateArgsJavaListPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>108</width>
+                         <height>31</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>Java列表</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="PrimaryPushButton" name="MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>手动导入</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="PrimaryPushButton" name="MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="text">
+                        <string>下载Java</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0" rowspan="2">
+                      <widget class="TextEdit" name="MCSLv1ValidateArgsJavaTextEdit"/>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="8" column="2" colspan="3">
+                   <widget class="QWidget" name="MCSLv1ValidateArgsDeEncodingWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>122</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>122</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_45">
+                     <item row="2" column="1">
+                      <widget class="ComboBox" name="MCSLv1ValidateArgsOutputDeEncodingComboBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="ComboBox" name="MCSLv1ValidateArgsInputDeEncodingComboBox">
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="StrongBodyLabel" name="MCSLv1ValidateArgsOutputDeEncodingLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>控制台输出编码（优先级高于全局设置）</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="SubtitleLabel" name="MCSLv1ValidateArgsDeEncodingSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>编码设置：</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="StrongBodyLabel" name="MCSLv1ValidateArgsInputDeEncodingLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>指令输入编码（优先级高于全局设置）</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="9" column="2" colspan="3">
+                   <widget class="QWidget" name="MCSLv1ValidateArgsJVMArgWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>140</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>140</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_46">
+                     <item row="1" column="0">
+                      <widget class="PlainTextEdit" name="MCSLv1ValidateArgsJVMArgPlainTextEdit">
+                       <property name="placeholderText">
+                        <string>可选，用一个空格分组</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="SubtitleLabel" name="MCSLv1ValidateArgsJVMArgSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>JVM参数：</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="PixmapLabel" name="MCSLv1ValidateArgsStatus">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="2" colspan="3">
+                   <widget class="QWidget" name="MCSLv1ValidateArgsMemWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>85</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>85</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_47">
+                     <item row="1" column="1">
+                      <widget class="LineEdit" name="MCSLv1ValidateArgsMinMemLineEdit">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="SubtitleLabel" name="MCSLv1ValidateArgsMemSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>内存:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="3">
+                      <widget class="LineEdit" name="MCSLv1ValidateArgsMaxMemLineEdit">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="2">
+                      <widget class="SubtitleLabel" name="MCSLv1ValidateArgsToSymbol">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>~</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="5">
+                      <spacer name="MCSLv1ValidateArgsMemSpacer">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item row="1" column="4">
+                      <widget class="ComboBox" name="MCSLv1ValidateArgsMemUnitComboBox"/>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="SubtitleLabel" name="MCSLv1ValidateArgsTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>2. 确认参数</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="2" colspan="3">
+                   <widget class="QWidget" name="MCSLv1ValidateArgsCoreWidget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_48">
+                     <item row="1" column="3">
+                      <widget class="PrimaryPushButton" name="MCSLv1ValidateArgsDownloadCorePrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>下载核心</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="SubtitleLabel" name="MCSLv1ValidateArgsCoreSubtitleLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>核心：</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="LineEdit" name="MCSLv1ValidateArgsCoreLineEdit"/>
+                     </item>
+                     <item row="1" column="2">
+                      <widget class="PrimaryPushButton" name="MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>90</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>重新导入</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="CardWidget" name="MCSLv1Save">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>125</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>125</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_50">
+                  <item row="0" column="1">
+                   <widget class="SubtitleLabel" name="MCSLv1SaveTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>3. 完成导入</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="LineEdit" name="MCSLv1SaveServerNameLineEdit">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="placeholderText">
+                     <string>设置服务器昵称，不能包含非法字符</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" rowspan="3">
+                   <spacer name="horizontalSpacer_29">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>79</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="PrimaryPushButton" name="MCSLv1SaveServerPrimaryPushBtn">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>130</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>导入！</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -3476,6 +5085,11 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
+   <class>TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
    <class>PlainTextEdit</class>
    <extends>QPlainTextEdit</extends>
    <header>qfluentwidgets</header>
@@ -3483,11 +5097,6 @@
   <customwidget>
    <class>TreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>TextEdit</class>
-   <extends>QTextEdit</extends>
    <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
