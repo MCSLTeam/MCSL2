@@ -14,7 +14,7 @@
 Download page with FastMirror and MCSLAPI.
 """
 
-from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, QPoint
+from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QSpacerItem,
+    QStackedWidget,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
@@ -211,7 +212,8 @@ class DownloadPage(QWidget):
         self.gridLayout_3.addWidget(self.MCSLAPIPivot, 0, 0, 1, 1)
         spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem2, 0, 1, 1, 1)
-        self.MCSLAPIStackedWidget = PopUpAniStackedWidget(self.downloadWithMCSLAPI)
+        # self.MCSLAPIStackedWidget = PopUpAniStackedWidget(self.downloadWithMCSLAPI)
+        self.MCSLAPIStackedWidget = QStackedWidget(self.downloadWithMCSLAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
