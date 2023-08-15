@@ -505,18 +505,24 @@ class ConsolePage(QWidget):
 
     def initQuickMenu_Difficulty(self):
         """快捷菜单-服务器游戏难度"""
+        textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
         if ServerHandler().isServerRunning():
             try:
                 self.difficulty.setCurrentIndex(
                     int(serverVariables.serverProperties["difficulty"])
                 )
-            except:
+            except ValueError:
+                self.difficulty.setCurrentIndex(
+                    int(textDiffiultyList.index(serverVariables.serverProperties["difficulty"]))
+                )
+            except Exception:
                 pass
         else:
             self.showServerNotOpenMsg()
 
     def runQuickMenu_Difficulty(self):
-        self.sendCommand(f"difficulty {self.difficulty.currentIndex()}")
+        textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
+        self.sendCommand(f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}")
 
     def initQuickMenu_GameMode(self):
         """快捷菜单-游戏模式"""
@@ -535,7 +541,7 @@ class ConsolePage(QWidget):
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
                 lambda: self.runQuickMenu_GameMode(
-                    difficulty=gamemodeWidget.mode.currentIndex(),
+                    gamemode=gamemodeWidget.mode.currentIndex(),
                     player=gamemodeWidget.who.text(),
                 )
             )
@@ -543,9 +549,9 @@ class ConsolePage(QWidget):
         else:
             self.showServerNotOpenMsg()
 
-    def runQuickMenu_GameMode(self, difficulty: int, player: str):
+    def runQuickMenu_GameMode(self, gamemode: int, player: str):
         gameModeList = ["survival", "creative", "adventure", "spectator"]
-        ServerHandler().sendCommand(command=f"{gameModeList[difficulty]} {player}")
+        ServerHandler().sendCommand(command=f"gamemode {gameModeList[gamemode]} {player}")
 
     def initQuickMenu_WhiteList(self):
         """快捷菜单-白名单"""
