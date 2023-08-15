@@ -25,7 +25,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy,
     QSpacerItem,
-    QStackedWidget,
     QHBoxLayout,
     QFrame,
     QFileDialog,
@@ -55,6 +54,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.serverController import MojangEula
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.interfaceController import ChildStackedWidget
 
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
@@ -121,7 +121,7 @@ class ConfigurePage(QWidget):
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 1, 1)
         spacerItem = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 0, 2, 1, 1)
-        self.newServerStackedWidget = QStackedWidget(self)
+        self.newServerStackedWidget = ChildStackedWidget(self)
         self.newServerStackedWidget.setObjectName("newServerStackedWidget")
 
         self.guideNewServerPage = QWidget()
