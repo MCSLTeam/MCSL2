@@ -252,6 +252,7 @@ jobs:
         run: |
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
           7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
+          7z a "MCSL2-${{ matrix.mcsl2version }}-Windows-arm64.zip" "./MCSL2-Windows-arm64/*"
 
       - name: Release
         uses: softprops/action-gh-release@v1
