@@ -21,7 +21,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QGridLayout,
     QSpacerItem,
-    QStackedWidget,
     QHBoxLayout,
     QFileDialog,
 )
@@ -52,6 +51,7 @@ from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 from MCSL2Lib import javaDetector
 from json import dump, loads, dumps
@@ -117,7 +117,7 @@ class ServerManagerPage(QWidget):
         self.subTitleLabel.setObjectName("subTitleLabel")
 
         self.gridLayout_2.addWidget(self.subTitleLabel, 1, 0, 1, 1)
-        self.stackedWidget = QStackedWidget(self.titleLimitWidget)
+        self.stackedWidget = ChildStackedWidget(self.titleLimitWidget)
         self.stackedWidget.setObjectName("stackedWidget")
 
         self.serversPage = QWidget()

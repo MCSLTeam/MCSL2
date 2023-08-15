@@ -87,7 +87,7 @@ class EditServerVariables:
         self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
 
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
         self.memUnitList = ["M", "G"]
         self.iconsFileNameList = [
             "Anvil.png",
