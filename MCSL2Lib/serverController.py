@@ -17,7 +17,7 @@ Communicate with Minecraft servers.
 
 from datetime import datetime
 from json import dumps
-from os.path import realpath
+from os import path as ospath
 from typing import List, Optional
 
 from psutil import NoSuchProcess, Process
@@ -204,7 +204,7 @@ class MojangEula:
 
     def checkEula(self) -> bool:
         """检查Eula"""
-        try:
+        if ospath.exists(f"{self.serverDir}/eula.txt"):
             with open(f"{self.serverDir}/eula.txt", "r", encoding="utf-8") as Eula:
                 EulaText = Eula.readlines()
                 Eula.close()
@@ -217,7 +217,7 @@ class MojangEula:
                         return False
                 else:
                     continue
-        except FileNotFoundError:
+        else:
             return False
 
     def acceptEula(self):
@@ -279,7 +279,7 @@ class ServerLauncher:
         ServerHandler().startServer(
             javaPath=self.javaPath,
             processArgs=self.jvmArg,
-            workingDirectory=str(realpath(f"Servers//{serverVariables.serverName}")),
+            workingDirectory=str(ospath.realpath(f"Servers//{serverVariables.serverName}")),
         )
 
 
