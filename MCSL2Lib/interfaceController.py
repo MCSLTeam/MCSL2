@@ -13,11 +13,10 @@
 """
 A stackeed widget controller.
 """
-
 from PyQt5.QtCore import pyqtSignal, QEasingCurve
 from PyQt5.QtWidgets import QFrame, QHBoxLayout, QAbstractScrollArea
 from qfluentwidgets import PopUpAniStackedWidget
-from qfluentwidgets.window import stacked_widget
+from qfluentwidgets.window.stacked_widget import StackedWidget as QFStackedWidget
 from MCSL2Lib import icons as _
 from MCSL2Lib.singleton import Singleton  # noqa: F401
 
@@ -53,8 +52,7 @@ class StackedWidget(QFrame):
     def setCurrentIndex(self, index, popOut=False):
         self.setCurrentWidget(self.view.widget(index), popOut)
 
-class ChildStackedWidget(stacked_widget.StackedWidget):
-    '''重写'''
+class ChildStackedWidget(QFStackedWidget):
     def setCurrentWidget(self, widget, popOut=False):
         if isinstance(widget, QAbstractScrollArea):
             widget.verticalScrollBar().setValue(0)
