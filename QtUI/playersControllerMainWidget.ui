@@ -31,13 +31,10 @@
    <property name="minimumSize">
     <size>
      <width>350</width>
-     <height>190</height>
+     <height>241</height>
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="ComboBox" name="mode"/>
-    </item>
     <item row="0" column="0">
      <widget class="LineEdit" name="who">
       <property name="placeholderText">
@@ -45,54 +42,85 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="BodyLabel" name="targetSelectorTip">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="0" column="1">
+     <widget class="ComboBox" name="mode"/>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="SmoothScrollArea" name="tipSmoothScrollArea">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
       </property>
-      <property name="text">
-       <string>@p - 最近的玩家(在控制台可能无法使用)
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="tipScrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-6</y>
+         <width>313</width>
+         <height>188</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="StrongBodyLabel" name="targetSelectorTipTitle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>目标选择器提示:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="BodyLabel" name="targetSelectorTip">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>@p - 最近的玩家(在控制台可能无法使用)
 @r - 随机玩家
 @a - 所有玩家
 @e - 所有实体(不包括死亡实体)
 @s - 命令执行者(控制台不可用)</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="StrongBodyLabel" name="playersTipTitle">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>当前在线玩家：(可能不准确)</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="BodyLabel" name="playersTip">
-      <property name="text">
-       <string>[在线玩家列表]</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="StrongBodyLabel" name="targetSelectorTipTitle">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>目标选择器提示:</string>
-      </property>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="StrongBodyLabel" name="playersTipTitle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>当前在线玩家：(可能不准确)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="BodyLabel" name="playersTip">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>[在线玩家列表]</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -103,6 +131,12 @@
    <class>ComboBox</class>
    <extends>QPushButton</extends>
    <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SmoothScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>qfluentwidgets</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>BodyLabel</class>

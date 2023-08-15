@@ -448,14 +448,16 @@ class ConsolePage(QWidget):
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
-            self.playersList.append(serverOutput.split("INFO]: ")[1].split("[/")[0])
+            self.playersList.append(str(str(serverOutput).split("INFO]: ")[1].split("[/")[0]))
         elif " left the game" in serverOutput:
             try:
+                print(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0]))
                 self.playersList.pop(
-                    serverOutput.split("INFO]: ")[1].split(" left the game")[0]
+                    self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0]))
                 )
             except Exception:
                 pass
+        print(self.playersList)
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
@@ -631,7 +633,7 @@ class ConsolePage(QWidget):
             w.textLayout.addWidget(kickWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
-                lambda: self.runQuickMenu_GameMode(player=kickWidget.who.text())
+                lambda: self.runQuickMenu_Kick(player=kickWidget.who.text())
             )
             w.exec()
         else:

@@ -537,14 +537,14 @@ class Window(FramelessWindow):
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                    self.stackWidget.view.currentIndex() == 4
+                    self.stackedWidget.view.currentIndex() == 4
                     and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             if a1.key() == Qt.Key_Up:
                 if (
-                    self.stackWidget.view.currentIndex() == 4
+                    self.stackedWidget.view.currentIndex() == 4
                     and self.consoleInterface.commandLineEdit
                 ):
                     if (
@@ -560,7 +560,7 @@ class Window(FramelessWindow):
                         return True
             if a1.key() == Qt.Key_Down:
                 if (
-                    self.stackWidget.view.currentIndex() == 4
+                    self.stackedWidget.view.currentIndex() == 4
                     and self.consoleInterface.commandLineEdit
                 ):
                     if (
@@ -580,6 +580,7 @@ class Window(FramelessWindow):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
         return super().eventFilter(a0, a1)
+
     @pyqtSlot(bool)
     def settingsRunner_autoRunLastServer(self, startBtnStat):
         '''设置：启动时自动运行上次运行的服务器'''
