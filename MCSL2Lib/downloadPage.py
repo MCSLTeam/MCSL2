@@ -626,20 +626,6 @@ class DownloadPage(QWidget):
                 layout.itemAt(i).widget().setParent(None)
 
         self.refreshMCSLAPIBtn.setEnabled(True)
-        # lwlist = [
-        #     self.MCSLAPIStackedWidget,
-        #     self.verticalLayout_3,
-        #     self.MCSLAPIJava,
-        #     self.MCSLAPIJavaScrollArea,
-        #     self.MCSLAPIJavaScrollAreaLayout,
-        #     self.MCSLAPIJavaScrollAreaWidgetContents
-        # ]
-        # for layout in self.MCSLAPILayoutList:
-        #     layout.setGeometry(QRect(0, 0, 698, 348))
-        # self.MCSLAPIStackedWidget.move(QPoint(9, 60))
-        # for i in lwlist:
-        #     print(i.objectName(), i.geometry().y())
-        # 添加新的
         try:
             if type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"]) == list:
                 for i in range(
