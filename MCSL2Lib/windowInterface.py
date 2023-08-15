@@ -38,6 +38,7 @@ from qframelesswindow import FramelessWindow
 # from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
+from MCSL2Lib.aria2ClientController import Aria2Controller
 from MCSL2Lib.configurePage import ConfigurePage
 from MCSL2Lib.consolePage import ConsolePage
 from MCSL2Lib.downloadPage import DownloadPage
@@ -243,6 +244,7 @@ class Window(FramelessWindow):
 
             a0.ignore()
             return
+        Aria2Controller.Shutdown()
         a0.accept()
 
     def onForceExit(self):
