@@ -74,8 +74,8 @@ class SettingsPage(QWidget):
 
     settingsChanged = pyqtSignal(bool)
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")

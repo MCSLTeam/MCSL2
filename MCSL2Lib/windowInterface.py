@@ -164,13 +164,13 @@ class Window(FramelessWindow):
         self.stackWidget = StackedWidget(self)
 
         # 定义子页面
-        self.homeInterface = HomePage()
-        self.configureInterface = ConfigurePage()
-        self.downloadInterface = DownloadPage()
-        self.consoleInterface = ConsolePage()
-        self.pluginsInterface = PluginPage()
-        self.settingsInterface = SettingsPage()
-        self.serverManagerInterface = ServerManagerPage()
+        self.homeInterface = HomePage(self)
+        self.configureInterface = ConfigurePage(self)
+        self.downloadInterface = DownloadPage(self)
+        self.consoleInterface = ConsolePage(self)
+        self.pluginsInterface = PluginPage(self)
+        self.settingsInterface = SettingsPage(self)
+        self.serverManagerInterface = ServerManagerPage(self)
 
         # 定义隐藏的子页面
         self.selectJavaPage = SelectJavaPage()

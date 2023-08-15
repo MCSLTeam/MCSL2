@@ -23,18 +23,17 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QSpacerItem,
-    QStackedWidget,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
     StrongBodyLabel,
     SubtitleLabel,
     TitleLabel,
-    PopUpAniStackedWidget,
     Pivot,
     ToolButton,
     FluentIcon as FIF,
 )
+from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
 from MCSL2Lib.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
@@ -48,8 +47,8 @@ downloadVariables = DownloadVariables()
 class DownloadPage(QWidget):
     """下载页"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.fetchDownloadURLThreadFactory = FetchMCSLAPIDownloadURLThreadFactory()
         self.gridLayout = QGridLayout(self)
@@ -87,7 +86,7 @@ class DownloadPage(QWidget):
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem1, 0, 2, 1, 1)
-        self.downloadStackedWidget = PopUpAniStackedWidget(self)
+        self.downloadStackedWidget = ChildStackedWidget(self)
         self.downloadStackedWidget.setObjectName("downloadStackedWidget")
 
         self.downloadWithFastMirror = QWidget()
@@ -212,8 +211,7 @@ class DownloadPage(QWidget):
         self.gridLayout_3.addWidget(self.MCSLAPIPivot, 0, 0, 1, 1)
         spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem2, 0, 1, 1, 1)
-        # self.MCSLAPIStackedWidget = PopUpAniStackedWidget(self.downloadWithMCSLAPI)
-        self.MCSLAPIStackedWidget = QStackedWidget(self.downloadWithMCSLAPI)
+        self.MCSLAPIStackedWidget = ChildStackedWidget(self.downloadWithMCSLAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

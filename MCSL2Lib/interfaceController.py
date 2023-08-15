@@ -15,9 +15,9 @@ A stackeed widget controller.
 """
 
 from PyQt5.QtCore import pyqtSignal, QEasingCurve
-from PyQt5.QtWidgets import QFrame, QHBoxLayout
+from PyQt5.QtWidgets import QFrame, QHBoxLayout, QAbstractScrollArea
 from qfluentwidgets import PopUpAniStackedWidget
-
+from qfluentwidgets.window import stacked_widget
 from MCSL2Lib import icons as _
 from MCSL2Lib.singleton import Singleton  # noqa: F401
 
@@ -49,6 +49,21 @@ class StackedWidget(QFrame):
             self.view.setCurrentWidget(widget, duration=300)
         else:
             self.view.setCurrentWidget(widget, True, False, 200, QEasingCurve.InQuad)
+
+    def setCurrentIndex(self, index, popOut=False):
+        self.setCurrentWidget(self.view.widget(index), popOut)
+
+class ChildStackedWidget(stacked_widget.StackedWidget):
+    '''重写'''
+    def setCurrentWidget(self, widget, popOut=False):
+        if isinstance(widget, QAbstractScrollArea):
+            widget.verticalScrollBar().setValue(0)
+
+        if not popOut:
+            self.view.setCurrentWidget(widget, duration=300)
+        else:
+            self.view.setCurrentWidget(
+                widget, True, False, 200, QEasingCurve.OutQuad)
 
     def setCurrentIndex(self, index, popOut=False):
         self.setCurrentWidget(self.view.widget(index), popOut)

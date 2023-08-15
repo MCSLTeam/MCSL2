@@ -52,7 +52,6 @@ from qfluentwidgets import (
     TextEdit,
     PixmapLabel,
     BodyLabel,
-    PopUpAniStackedWidget,
 )
 from MCSL2Lib.serverController import MojangEula
 from MCSL2Lib.singleton import Singleton
@@ -63,6 +62,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib import javaDetector
 
@@ -76,8 +76,8 @@ serverVariables = ServerVariables()
 class ConfigurePage(QWidget):
     """新建服务器页"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.fuzzySearch = True
@@ -1145,8 +1145,7 @@ class ConfigurePage(QWidget):
         self.gridLayout_21.addWidget(self.importTitleWidget, 0, 1, 1, 1)
         spacerItem19 = QSpacerItem(20, 406, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_21.addItem(spacerItem19, 0, 0, 2, 1)
-        # self.importNewServerStackWidget = PopUpAniStackedWidget(self.importNewServerPage)
-        self.importNewServerStackWidget = QStackedWidget(self.importNewServerPage)
+        self.importNewServerStackWidget = ChildStackedWidget(self.importNewServerPage)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

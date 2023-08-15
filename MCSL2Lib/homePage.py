@@ -31,8 +31,8 @@ from MCSL2Lib.singleton import Singleton
 class HomePage(QWidget):
     """主页"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
