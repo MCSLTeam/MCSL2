@@ -864,9 +864,9 @@ class ServerManagerPage(QWidget):
                 title="提示",
                 content=f"删除服务器成功！",
                 orient=Qt.Horizontal,
-                isClosable=False,
+                isClosable=True,
                 position=InfoBarPosition.TOP,
-                duration=2000,
+                duration=1000,
                 parent=self,
             )
         else:
@@ -874,9 +874,9 @@ class ServerManagerPage(QWidget):
                 title="错误",
                 content=f"删除服务器失败！{exit1Msg}",
                 orient=Qt.Horizontal,
-                isClosable=False,
+                isClosable=True,
                 position=InfoBarPosition.TOP,
-                duration=2000,
+                duration=1000,
                 parent=self,
             )
         self.refreshServers()
