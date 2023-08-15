@@ -17,7 +17,7 @@ class playersController(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.playersControllerMainWidget.sizePolicy().hasHeightForWidth())
         self.playersControllerMainWidget.setSizePolicy(sizePolicy)
-        self.playersControllerMainWidget.setMinimumSize(QSize(350, 190))
+        self.playersControllerMainWidget.setMinimumSize(QSize(350, 210))
         self.playersControllerMainWidget.setObjectName("playersControllerMainWidget")
 
         self.gridLayout = QGridLayout(self.playersControllerMainWidget)
@@ -68,7 +68,7 @@ class playersController(QWidget):
         self.targetSelectorTip.setText("@p - 最近的玩家(在控制台可能无法使用)\n"
                                        "@r - 随机玩家\n"
                                        "@a - 所有玩家\n"
-                                       "@a - 所有实体(不包括死亡实体)\n"
+                                       "@e - 所有实体(不包括死亡实体)\n"
                                        "@s - 命令执行者(控制台不可用)")
         self.playersTipTitle.setText("当前在线玩家：(可能不准确)")
         self.targetSelectorTipTitle.setText("目标选择器提示:")
