@@ -31,9 +31,11 @@ from qfluentwidgets import (
     InfoBarPosition,
     MessageBox,
     HyperlinkButton,
+    MSFluentTitleBar,
+    FluentStyleSheet
 )
-from qframelesswindow import FramelessWindow, TitleBar
-
+from qframelesswindow import FramelessWindow
+# from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.configurePage import ConfigurePage
@@ -73,7 +75,7 @@ pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
 
 
-class CustomTitleBar(TitleBar):
+class MCSL2TitleBar(MSFluentTitleBar):
     """标题栏"""
 
     def __init__(self, parent):
@@ -154,14 +156,14 @@ class Window(FramelessWindow):
         self.oldHook = sys.excepthook
         sys.excepthook = self.catchExceptions
 
-        self.setTitleBar(CustomTitleBar(self))
+        self.setTitleBar(MCSL2TitleBar(self))
 
         # 读取程序设置，不放在第一位就会爆炸！
         settingsController._readSettings(firstLoad=True)
 
         self.hBoxLayout = QHBoxLayout(self)
         self.navigationBar = NavigationBar(self)
-        self.stackWidget = StackedWidget(self)
+        self.stackedWidget = StackedWidget(self)
 
         # 定义子页面
         self.homeInterface = HomePage(self)
@@ -173,8 +175,8 @@ class Window(FramelessWindow):
         self.serverManagerInterface = ServerManagerPage(self)
 
         # 定义隐藏的子页面
-        self.selectJavaPage = SelectJavaPage()
-        self.selectNewJavaPage = SelectNewJavaPage()  # 草泥马摆烂偷懒！！！好好好！！！CV大法嘎嘎好！
+        self.selectJavaPage = SelectJavaPage(self)
+        self.selectNewJavaPage = SelectNewJavaPage(self)  # 草泥马摆烂偷懒！！！好好好！！！CV大法嘎嘎好！
 
         # 设置主题
         configThemeList = ["auto", "dark", "light"]
@@ -198,9 +200,6 @@ class Window(FramelessWindow):
 
         self.initPluginSystem()
 
-        # 注册快捷键
-        self.consoleInterface.installEventFilter(self)
-
         self.exitingMsgBox = MessageBox(
             "正在退出MCSL2", "安全关闭服务器中...\n\nMCSL2稍后将自行退出。", parent=self
         )
@@ -220,6 +219,7 @@ class Window(FramelessWindow):
         self.quitTimer.timeout.connect(
             lambda: self.exitingMsgBox.yesButton.setEnabled(True)
         )
+        self.installEventFilter(self)
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
@@ -274,15 +274,15 @@ class Window(FramelessWindow):
 
     def switchTo(self, widget):
         """换页"""
-        self.stackWidget.setCurrentWidget(widget)
+        self.stackedWidget.setCurrentWidget(widget)
 
     def initLayout(self):
         """初始化布局"""
         self.hBoxLayout.setSpacing(0)
         self.hBoxLayout.setContentsMargins(0, 48, 0, 0)
         self.hBoxLayout.addWidget(self.navigationBar)
-        self.hBoxLayout.addWidget(self.stackWidget)
-        self.hBoxLayout.setStretchFactor(self.stackWidget, 1)
+        self.hBoxLayout.addWidget(self.stackedWidget)
+        self.hBoxLayout.setStretchFactor(self.stackedWidget, 1)
 
     def initNavigation(self):
         """初始化导航栏"""
@@ -298,10 +298,10 @@ class Window(FramelessWindow):
             self.settingsInterface, FIF.SETTING, "设置", NavigationItemPosition.BOTTOM
         )
 
-        self.stackWidget.addWidget(self.selectJavaPage)
-        self.stackWidget.addWidget(self.selectNewJavaPage)
+        self.stackedWidget.addWidget(self.selectJavaPage)
+        self.stackedWidget.addWidget(self.selectNewJavaPage)
 
-        self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
+        self.stackedWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
         self.navigationBar.setCurrentItem(self.homeInterface.objectName())
 
     def initWindow(self):
@@ -314,7 +314,11 @@ class Window(FramelessWindow):
         w, h = desktop.width(), desktop.height()
         self.resize(w // 2, h // 2)
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
-
+        # try:
+        #     self.windowEffect.setMicaEffect(self.winId(), isDarkTheme())
+        #     self.setBackgroundColor(QColor(0, 0, 0, 0) if isDarkTheme() else QColor(255, 255, 255, 50))
+        # except Exception:
+        #     pass
         self.setQss()
 
     def addSubInterface(
@@ -326,7 +330,7 @@ class Window(FramelessWindow):
         selectedIcon=None,
     ):
         """添加子页面"""
-        self.stackWidget.addWidget(interface)
+        self.stackedWidget.addWidget(interface)
         self.navigationBar.addItem(
             routeKey=interface.objectName(),
             icon=icon,
@@ -341,10 +345,12 @@ class Window(FramelessWindow):
         color = "dark" if isDarkTheme() else "light"
         with open(f"resource/{color}/demo.qss", encoding="utf-8") as f:
             self.setStyleSheet(f.read())
+            
+        FluentStyleSheet.FLUENT_WINDOW.apply(self.stackedWidget)
 
     def onCurrentInterfaceChanged(self, index):
         """导航栏触发器"""
-        widget = self.stackWidget.widget(index)
+        widget = self.stackedWidget.widget(index)
         self.navigationBar.setCurrentItem(widget.objectName())
 
     def initLJQtSlot(self):
@@ -445,7 +451,7 @@ class Window(FramelessWindow):
         serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)
 
         # 管理服务器
-        self.stackWidget.currentChanged.connect(
+        self.stackedWidget.currentChanged.connect(
             self.serverManagerInterface.onPageChangedRefresh
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
@@ -496,7 +502,7 @@ class Window(FramelessWindow):
             )
 
         # 下载
-        self.stackWidget.currentChanged.connect(
+        self.stackedWidget.currentChanged.connect(
             self.downloadInterface.onPageChangedRefresh
         )
 
@@ -574,7 +580,6 @@ class Window(FramelessWindow):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
         return super().eventFilter(a0, a1)
-
     @pyqtSlot(bool)
     def settingsRunner_autoRunLastServer(self, startBtnStat):
         '''设置：启动时自动运行上次运行的服务器'''
