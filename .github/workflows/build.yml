@@ -67,7 +67,7 @@ jobs:
         with:
           name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
           path: |
-            build/**/*
+            build/MCSL2.dist/**/*
 
   # macOS:
   #   strategy:
@@ -263,7 +263,9 @@ jobs:
           tag_name: v${{ matrix.mcsl2version }}
           files: |
             *.zip
-            *.bin
+            ./MCSL2-Linux-arm64/**.bin
+            ./MCSL2-Linux-x64/**.bin
+            ./MCSL2-Linux-x86/**.bin
             
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
