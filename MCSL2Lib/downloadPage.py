@@ -35,6 +35,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
+from MCSL2Lib.aria2ClientController import Aria2Controller, DownloadWatcher
 from MCSL2Lib.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
 from MCSL2Lib.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
@@ -230,7 +231,7 @@ class DownloadPage(QWidget):
         sizePolicy.setHeightForWidth(self.MCSLAPIJava.sizePolicy().hasHeightForWidth())
         self.MCSLAPIJava.setSizePolicy(sizePolicy)
         self.MCSLAPIJava.setObjectName("MCSLAPIJava")
-        
+
         self.verticalLayout_3 = QVBoxLayout(self.MCSLAPIJava)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -540,18 +541,18 @@ class DownloadPage(QWidget):
             if downloadVariables.MCSLAPIDownloadUrlDict:
                 idx = self.MCSLAPIStackedWidget.currentIndex()
                 if (
-                    str(
-                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                            "downloadFileTitles"
-                        ]
-                    )
-                    != "-2"
-                    or str(
-                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                            "downloadFileTitles"
-                        ]
-                    )
-                    != "-1"
+                        str(
+                            downloadVariables.MCSLAPIDownloadUrlDict[idx][
+                                "downloadFileTitles"
+                            ]
+                        )
+                        != "-2"
+                        or str(
+                    downloadVariables.MCSLAPIDownloadUrlDict[idx][
+                        "downloadFileTitles"
+                    ]
+                )
+                        != "-1"
                 ):
                     self.initMCSLAPIDownloadWidget(n=idx)
                 else:
@@ -582,10 +583,10 @@ class DownloadPage(QWidget):
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
         idx = self.MCSLAPIStackedWidget.currentIndex()
         if (
-            str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-            != "-2"
-            or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-            != "-1"
+                str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
+                != "-2"
+                or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
+                != "-1"
         ):
             self.initMCSLAPIDownloadWidget(n=idx)
         else:
@@ -629,7 +630,7 @@ class DownloadPage(QWidget):
         try:
             if type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"]) == list:
                 for i in range(
-                    len(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
+                        len(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
                 ):
                     self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
@@ -650,8 +651,33 @@ class DownloadPage(QWidget):
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.setObjectName(
                         f"DownloadBtn{i}..{n}"
                     )
+                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.clicked.connect(
+                        self.downloadMCSLAPIFile
+                    )
                     self.MCSLAPILayoutList[n].addWidget(self.tmpSingleMCSLAPIDownloadWidget)
             else:
                 self.showMCSLAPIFailedWidget()
         except TypeError:
             self.showMCSLAPIFailedWidget()
+
+    def downloadMCSLAPIFile(self):
+        """下载MCSLAPI文件"""
+        sender = self.sender()
+        idx = int(sender.objectName().split("..")[-1])
+        idx2 = int(sender.objectName().split("..")[0].split("n")[-1])
+        url = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileURLs"][idx2]
+        name = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][idx2]
+        format = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][idx2]
+        titles = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"][idx2]
+
+        print(url, name, format, titles)
+        # todo：未完成本机测试：无法下载获取的连接，但是浏览器可以下载，离谱！
+        Aria2Controller.download(
+            uri=url.replace('mcsl_api', "mcslapi"),
+            watch=True,
+            info_get=lambda _dict: print('获取到下载信息'),
+            stopped=lambda _int: print('下载停止, 状态码:', _int),
+            interval=0.1
+        )
+        # t = 'https://download-baishan.maj-soul.com/app/download/Majsoul_2.0.34_MC.apk'
+        # a = DownloadWatcher([t])
