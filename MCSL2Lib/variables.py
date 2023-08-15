@@ -36,7 +36,7 @@ class ConfigureServerVariables:
         self.memUnit: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
-        self.consoleDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "gbk", "ansi"]
         self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
@@ -334,6 +334,6 @@ class SettingsVariables:
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
         self.downloadSourceList = ["FastMirror", "MCSLAPI"]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
-        self.outputDeEncodingList = ["utf-8", "gbk"]
-        self.inputDeEncodingList = ["follow", "utf-8", "gbk"]
+        self.outputDeEncodingList = ["utf-8", "gbk", "ansi"]
+        self.inputDeEncodingList = ["follow", "utf-8", "gbk", "ansi"]
         self.themeList = ["auto", "dark", "light"]

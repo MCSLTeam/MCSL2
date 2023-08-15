@@ -630,8 +630,8 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setPlaceholderText("整数")
         self.editServerNameLineEdit.setPlaceholderText("不能包含非法字符")
         self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.editOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
-        self.editInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK"])
+        self.editOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK", "ANSI(推荐)"])
+        self.editInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GBK", "ANSI(推荐)"])
         self.editMemUnitComboBox.addItems(["M", "G"])
 
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
