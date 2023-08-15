@@ -1262,6 +1262,8 @@ class SettingsPage(QWidget):
         self.clearConsoleWhenStopServerSwitchBtn.setOnText("已开启")
         self.clearConsoleWhenStopServerSwitchBtn.setOffText("已关闭")
 
+        self.setObjectName("settingInterface")
+
         self.checkUpdateBtn.clicked.connect(self.checkUpdate)
 
         self.generateSysReport.clicked.connect(self.generateSystemReport)
