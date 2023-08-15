@@ -641,28 +641,31 @@ class DownloadPage(QWidget):
         #     print(i.objectName(), i.geometry().y())
         # 添加新的
         try:
-            for i in range(
-                len(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
-            ):
-                self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
-                self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
-                    self.getMCSLAPIDownloadIcon(downloadType=n)
-                )
-                self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setFixedSize(
-                    QSize(60, 60)
-                )
-                self.tmpSingleMCSLAPIDownloadWidget.fileTitle.setText(
-                    downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"][i]
-                )
-                self.tmpSingleMCSLAPIDownloadWidget.fileName.setText(
-                    f"{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileNames'][i]}.{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileFormats'][i]}"
-                )
-                self.tmpSingleMCSLAPIDownloadWidget.setObjectName(
-                    f"DownloadWidget{i}..{n}"
-                )
-                self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.setObjectName(
-                    f"DownloadBtn{i}..{n}"
-                )
-                self.MCSLAPILayoutList[n].addWidget(self.tmpSingleMCSLAPIDownloadWidget)
+            if type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"]) == list:
+                for i in range(
+                    len(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
+                ):
+                    self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
+                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
+                        self.getMCSLAPIDownloadIcon(downloadType=n)
+                    )
+                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setFixedSize(
+                        QSize(60, 60)
+                    )
+                    self.tmpSingleMCSLAPIDownloadWidget.fileTitle.setText(
+                        downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"][i]
+                    )
+                    self.tmpSingleMCSLAPIDownloadWidget.fileName.setText(
+                        f"{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileNames'][i]}.{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileFormats'][i]}"
+                    )
+                    self.tmpSingleMCSLAPIDownloadWidget.setObjectName(
+                        f"DownloadWidget{i}..{n}"
+                    )
+                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.setObjectName(
+                        f"DownloadBtn{i}..{n}"
+                    )
+                    self.MCSLAPILayoutList[n].addWidget(self.tmpSingleMCSLAPIDownloadWidget)
+            else:
+                self.showMCSLAPIFailedWidget()
         except TypeError:
             self.showMCSLAPIFailedWidget()
