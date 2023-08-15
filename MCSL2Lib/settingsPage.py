@@ -1244,9 +1244,9 @@ class SettingsPage(QWidget):
         self.aria2ThreadSlider.valueChanged.connect(
             lambda: self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
         )
-        self.outputDeEncodingComboBox.addItems(["UTF-8", "GBK", "ANSI(推荐)"])
+        self.outputDeEncodingComboBox.addItems(["UTF-8", "GB18030", "ANSI(推荐)"])
         self.outputDeEncodingComboBox.setCurrentIndex(0)
-        self.inputDeEncodingComboBox.addItems(["跟随控制台输出", "UTF-8", "GBK", "ANSI(推荐)"])
+        self.inputDeEncodingComboBox.addItems(["跟随控制台输出", "UTF-8", "GB18030", "ANSI(推荐)"])
         self.inputDeEncodingComboBox.setCurrentIndex(0)
         self.themeComboBox.addItems(["自动", "深色", "浅色"])
         self.saveBtn.setText("保存")
