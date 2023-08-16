@@ -54,9 +54,12 @@ ___
  - WB-Block: https://wb-block.top  
  - shenjack: https://shenjack.top:81
 
-还有所有的贡献者们！
+还有所有的贡献者们！  
 
 <a href="https://github.com/MCSLTeam/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=MCSLTeam/MCSL2&anon=1&max=100000000"></a>
+
+还有，赞助者们！  
+[赞助者列表](https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md)
 ___
 ## 开发文档 
 ~~其实我就不知道该写啥好~~  
