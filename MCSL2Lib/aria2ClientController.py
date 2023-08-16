@@ -423,10 +423,7 @@ class Aria2Controller:
         """
         try:
             cls._aria2.client.get_version()
-            cls._aria2: API
-            print(cls._aria2.get_stats())
         except:
-
             return False
         return True
 
