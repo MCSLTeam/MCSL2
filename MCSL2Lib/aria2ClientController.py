@@ -24,7 +24,7 @@ from zipfile import ZipFile
 
 from MCSL2Lib.networkController import Session
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
-from PyQt5.QtWidgets import QProgressDialog
+from PyQt5.QtWidgets import QProgressDialog, QScrollArea
 from aria2p import Client, API, Download
 from requests.exceptions import SSLError
 
@@ -679,20 +679,19 @@ class DownloadWatcher(QObject):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.updateDownloadInfo)
-        self.timer.start(int(interval * 1000))
+        self.timer.singleShot(1000 * self._interval, lambda: self.timer.start(self._interval * 1000))
 
     def updateDownloadInfo(self):
         if (status := Aria2Controller.getDownloadsStatus(self._gid))[
             "status"
         ] not in ["complete", "error", "removed"]:
             self.onDownloadInfoGet.emit(status)
-            print(
-                f'下载进度：{status["progress"]},'
-                f'下载速度：{status["speed"]},'
-                f'连接数量:{status["connections"]},'
-                f'文件大小：{status["totalLength"]},'
-                f'eta：{status["eta"]}')
-            self._files = status.get("files", None)
+            # print(
+            #     f'下载进度：{status["progress"]},'
+            #     f'下载速度：{status["speed"]},'
+            #     f'连接数量:{status["connections"]},'
+            #     f'文件大小：{status["totalLength"]},'
+            #     f'eta：{status["eta"]}')
         elif status["status"] == "complete":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
