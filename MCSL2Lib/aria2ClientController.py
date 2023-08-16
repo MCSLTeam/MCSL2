@@ -29,7 +29,8 @@ from aria2p import Client, API
 from requests.exceptions import SSLError
 
 from MCSL2Lib.publicFunctions import openWebUrl
-
+from MCSL2Lib.settingsController import SettingsController
+settingsController = SettingsController()
 
 class Aria2Controller:
     """
@@ -193,54 +194,22 @@ class Aria2Controller:
     #  Start Aria2  #
     #################
 
-    def InitAria2Configuration(self):
-        pass
-        # try:
-        #     Aria2Thread = str(MCSL2Settings().Aria2Thread)
-        #     with open(
-        #         r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8"
-        #     ) as Aria2ConfigFile:
-        #         Aria2ConfigFile.write(
-        #             "file-allocation=falloc\n"
-        #             "continue=true\n"
-        #             "max-concurrent-downloads=5\n"
-        #             "min-split-size=5M\n"
-        #             "split=64\n"
-        #             "disable-ipv6=false\n"
-        #             "enable-http-pipelining=false\n"
-        #             f"max-connection-per-server={Aria2Thread}\n"
-        #             "enable-rpc=true\n"
-        #             "rpc-allow-origin-all=true\n"
-        #             "rpc-listen-all=true\n"
-        #             "event-poll=select\n"
-        #             "rpc-listen-port=6800\n"
-        #             "force-save=false"
-        #         )
-        #         Aria2ConfigFile.close()
-        #     with open(
-        #         r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
-        #     ) as Aria2SessionFile:
-        #         Aria2SessionFile.write("")
-        #         Aria2SessionFile.close()
-        # except Exception as e:
-        #     MCSLLogger.ExceptionLog(e)
-
-    # def Download(self, DownloadURL: str):
-    #     if self.systemType == "Windows":
-    #         Aria2Program = "MCSL2/Aria2/aria2c.exe"
-    #     elif self.systemType == "macOS":
-    #         Aria2Program = "/usr/local/bin/aria2c"
-    #     elif self.systemType == "Linux":
-    #         Aria2Program = "aria2c"
-    #     else:
-    #         Aria2Program = "aria2c"
-    #     ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
-    #     Aria2Thread = Aria2ProcessThread(
-    #         Aria2Program=Aria2Program,
-    #         ConfigCommand=ConfigCommand,
-    #         DownloadURL=DownloadURL,
-    #     )
-    #     Aria2Thread.start()
+    def Download(self, DownloadURL: str):
+        if self.systemType == "Windows":
+            Aria2Program = "MCSL2/Aria2/aria2c.exe"
+        elif self.systemType == "macOS":
+            Aria2Program = "/usr/local/bin/aria2c"
+        elif self.systemType == "Linux":
+            Aria2Program = "aria2c"
+        else:
+            Aria2Program = "aria2c"
+        ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
+        Aria2Thread = Aria2ProcessThread(
+            Aria2Program=Aria2Program,
+            ConfigCommand=ConfigCommand,
+            DownloadURL=DownloadURL,
+        )
+        Aria2Thread.start()
 
     @classmethod
     def WinInstallAria2(cls, mainWindow):
@@ -350,7 +319,7 @@ class Aria2Controller:
                 2: download removed
         param interval: the interval of watching the download progress
         """
-        gid = cls.AddUri(uri)
+        gid = cls.addUri(uri)
         if watch:
             cls._downloadWatcher[gid] = DownloadWatcher(
                 gid,
@@ -368,16 +337,16 @@ class Aria2Controller:
         return cls._downloadWatcher.get(gid, None)
 
     @classmethod
-    def AddUri(cls, uri: str) -> str:
+    def addUri(cls, uri: str) -> str:
         """
         Add a download task to Aria2,and return the gid of the task
         * normally, this function is only used by Class:DownloadWatcher
 
         param uri: the uri of the file to be downloaded
         """
-        if not cls.TestAria2Service():
+        if not cls.testAria2Service():
             if not cls.aria2Process.isOpen():
-                cls.StartAria2()
+                cls.startAria2()
             else:
                 raise Exception("Aria2 service is not running")
 
@@ -392,15 +361,15 @@ class Aria2Controller:
         return gid
 
     @classmethod
-    def AddUris(cls, uris: list):
+    def addUris(cls, uris: list):
         """
         Add a download task to Aria2,and return the gid of the task
         * normally, this function is only used by Class:DownloadWatcher
 
         param uris: the uris of the files to be downloaded
         """
-        if not cls.TestAria2Service():
-            cls.StartAria2()
+        if not cls.testAria2Service():
+            cls.startAria2()
 
         gid = cls._aria2.add_uris(uris).gid
         if gid in cls._downloadTasks.keys():
@@ -411,7 +380,7 @@ class Aria2Controller:
         return gid
 
     @classmethod
-    def GetDownloadsStatus(cls, gid: str) -> dict:
+    def getDownloadsStatus(cls, gid: str) -> dict:
         """
         Get the state of a download task by gid
         * normally, this function is only used by Class:DownloadWatcher
@@ -431,7 +400,7 @@ class Aria2Controller:
         return rv
 
     @classmethod
-    def PauseDownloadTask(cls, gid: str):
+    def pauseDownloadTask(cls, gid: str):
         """
         Halt a download task by gid
         * normally, this function is only used by Class:DownloadWatcher
@@ -439,7 +408,7 @@ class Aria2Controller:
         print("已暂停:", cls._aria2.client.pause(gid))
 
     @classmethod
-    def ApplySettings(cls, Settings: dict):
+    def applySettings(cls, Settings: dict):
         """
         Apply settings to Aria2,current not used
         """
@@ -447,7 +416,7 @@ class Aria2Controller:
         cls._port = cls._aria2.port
 
     @classmethod
-    def TestAria2Service(cls):
+    def testAria2Service(cls):
         """
         测试Aria2服务是否正常
         :return:
@@ -462,7 +431,7 @@ class Aria2Controller:
         return True
 
     @classmethod
-    def StartAria2(cls) -> bool:
+    def startAria2(cls) -> bool:
         """
         启动Aria2服务,如果启动失败则返回False，否则返回True
         """
@@ -486,7 +455,7 @@ class Aria2Controller:
             cls.aria2Process.start(Aria2Program, ConfigCommand)
             cls.aria2Process.waitForStarted()
             cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret="", timeout=0.1))
-            if cls.TestAria2Service():
+            if cls.testAria2Service():
                 return True
             else:
                 cls._aria2 = None
@@ -494,7 +463,7 @@ class Aria2Controller:
         return rv
 
     @classmethod
-    def DownloadCompletedHandler(cls, gid, stopFlag):
+    def downloadCompletedHandler(cls, gid, stopFlag):
         cls._aria2: API
         download = cls._aria2.get_download(gid)
         if stopFlag:
@@ -508,7 +477,7 @@ class Aria2Controller:
                 cls._downloadWatcher.pop(gid)
 
     @classmethod
-    def Shutdown(cls):
+    def shutDown(cls):
         if cls._aria2 is not None:
             cls._aria2: API
             cls._aria2.remove_all(True)
@@ -516,6 +485,7 @@ class Aria2Controller:
         if cls.aria2Process is not None:
             if cls.aria2Process.isOpen():
                 cls.aria2Process.kill()
+        return True
 
 
 class NormalDownloadManager(QObject):
@@ -603,23 +573,23 @@ class NormalDownloadThread(QThread):
 ###################
 
 
-# class Aria2ProcessThread(QThread):
-#     started = pyqtSignal()
-#     finished = pyqtSignal(bool)
-#
-#     def __init__(self, Aria2Program, ConfigCommand, DownloadURL):
-#         super().__init__()
-#         self.Aria2Program = Aria2Program
-#         self.ConfigCommand = ConfigCommand
-#         self.DownloadURL = DownloadURL
-#
-#     def run(self):
-#         MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
-#         MCSL2_Aria2Client.add_uris(self.DownloadURL)
-#         process = Popen(
-#             [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
-#         )
-#         process.wait()
+class Aria2ProcessThread(QThread):
+    started = pyqtSignal()
+    finished = pyqtSignal(bool)
+
+    def __init__(self, Aria2Program, ConfigCommand, DownloadURL):
+        super().__init__()
+        self.Aria2Program = Aria2Program
+        self.ConfigCommand = ConfigCommand
+        self.DownloadURL = DownloadURL
+
+    def run(self):
+        MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
+        MCSL2_Aria2Client.add_uris(self.DownloadURL)
+        process = Popen(
+            [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
+        )
+        process.wait()
 
 
 class DownloadWatcher(QObject):
@@ -629,8 +599,8 @@ class DownloadWatcher(QObject):
     """
 
     # 每隔一段时间获取一次下载信息(self.Interval)，并发射下载信息OnDownloadInfoGet(dict)
-    OnDownloadInfoGet = pyqtSignal(dict)
-    DownloadStop = pyqtSignal(int)
+    onDownloadInfoGet = pyqtSignal(dict)
+    downloadStop = pyqtSignal(int)
 
     def __init__(
             self,
@@ -650,19 +620,19 @@ class DownloadWatcher(QObject):
         self._files = None
 
         if info_get is not None:
-            self.OnDownloadInfoGet.connect(info_get)
+            self.onDownloadInfoGet.connect(info_get)
         if stopped is not None:
-            self.DownloadStop.connect(stopped)
+            self.downloadStop.connect(stopped)
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.updateDownloadInfo)
         self.timer.start(int(interval * 1000))
 
     def updateDownloadInfo(self):
-        if (status := Aria2Controller.GetDownloadsStatus(self._gid))[
+        if (status := Aria2Controller.getDownloadsStatus(self._gid))[
             "status"
         ] not in ["complete", "error", "removed"]:
-            self.OnDownloadInfoGet.emit(status)
+            self.onDownloadInfoGet.emit(status)
             print(
                 f'下载进度：{status["progress"]},'
                 f'下载速度：{status["speed"]},'
@@ -672,35 +642,63 @@ class DownloadWatcher(QObject):
             self._files = status.get("files", None)
         elif status["status"] == "complete":
             self.timer.stop()
-            self.OnDownloadInfoGet.emit(status)
-            Aria2Controller.DownloadCompletedHandler(self._gid, False)
-            self.DownloadStop.emit(0)
+            self.onDownloadInfoGet.emit(status)
+            Aria2Controller.downloadCompletedHandler(self._gid, False)
+            self.downloadStop.emit(0)
             print("下载完成")
         elif status["status"] == "error":
             self.timer.stop()
-            self.OnDownloadInfoGet.emit(status)
-            Aria2Controller.DownloadCompletedHandler(self._gid, True)
-            self.DownloadStop.emit(1)
+            self.onDownloadInfoGet.emit(status)
+            Aria2Controller.downloadCompletedHandler(self._gid, True)
+            self.downloadStop.emit(1)
             print("下载失败")
         elif status["status"] == "removed":
             self.timer.stop()
-            self.OnDownloadInfoGet.emit(status)
-            Aria2Controller.DownloadCompletedHandler(self._gid, True)
-            self.DownloadStop.emit(2)
+            self.onDownloadInfoGet.emit(status)
+            Aria2Controller.downloadCompletedHandler(self._gid, True)
+            self.downloadStop.emit(2)
             print("下载被取消")
 
     def stopDownload(self):
-        Aria2Controller.PauseDownloadTask(self._gid)
-        Aria2Controller.DownloadCompletedHandler(self._gid, True)
+        Aria2Controller.pauseDownloadTask(self._gid)
+        Aria2Controller.downloadCompletedHandler(self._gid, True)
 
     @property
-    def Gid(self):
+    def gid(self):
         return self._gid
 
     @property
-    def Interval(self):
+    def interval(self):
         return self._interval
 
     @property
-    def Files(self):
+    def files(self):
         return self._files
+
+def initializeAria2Configuration():
+    Aria2Thread = str(settingsController.fileSettings['aria2Thread'])
+    with open(
+        r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8"
+    ) as Aria2ConfigFile:
+        Aria2ConfigFile.write(
+            "file-allocation=falloc\n"
+            "continue=true\n"
+            "max-concurrent-downloads=5\n"
+            "min-split-size=5M\n"
+            "split=64\n"
+            "disable-ipv6=false\n"
+            "enable-http-pipelining=false\n"
+            f"max-connection-per-server={Aria2Thread}\n"
+            "enable-rpc=true\n"
+            "rpc-allow-origin-all=true\n"
+            "rpc-listen-all=true\n"
+            "event-poll=select\n"
+            "rpc-listen-port=6800\n"
+            "force-save=false"
+        )
+        Aria2ConfigFile.close()
+    with open(
+        r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
+    ) as Aria2SessionFile:
+        Aria2SessionFile.write("")
+        Aria2SessionFile.close()
