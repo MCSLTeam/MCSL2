@@ -30,7 +30,7 @@ class MCSLAPIDownloadURLParser:
 
     @staticmethod
     def parseDownloaderAPIUrl():
-        UrlArg = "https://mcslapi.df100.ltd/json"
+        UrlArg = "http://43.133.181.186/json"
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",
