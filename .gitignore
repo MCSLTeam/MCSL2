@@ -8,6 +8,8 @@ Tools/OfflineBuild/**
 Servers/**
 MCSL2/Downloads/**
 MCSL2/MCSL2_Config.json
+MCSL2/Aria2/aria2.conf
+MCSL2/Aria2/aria2.session
 MCSL2/MCSL2_DetectedJava.json
 MCSL2/MCSL2_ServerList.json
 Plugins/**
