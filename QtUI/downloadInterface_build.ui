@@ -53,7 +53,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PrimaryToolButton" name="DownloadBtn">
+    <widget class="PrimaryToolButton" name="downloadBtn">
      <property name="minimumSize">
       <size>
        <width>50</width>
