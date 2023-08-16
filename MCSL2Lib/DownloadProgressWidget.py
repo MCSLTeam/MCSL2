@@ -1,36 +1,41 @@
-from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal, Qt, QEvent
-from PyQt5.QtGui import QColor
-from qfluentwidgets import BodyLabel, PrimaryPushButton, ProgressBar, PushButton, StrongBodyLabel, SubtitleLabel, \
-    MessageBox
+from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
+from qfluentwidgets import (
+    BodyLabel,
+    PrimaryPushButton,
+    ProgressBar,
+    PushButton,
+    StrongBodyLabel,
+    SubtitleLabel,
+)
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QGridLayout,
     QWidget,
     QStackedWidget,
     QSpacerItem,
-    QHBoxLayout, QFrame, QVBoxLayout,
+    QHBoxLayout,
 )
-from qfluentwidgets.components.dialog_box.dialog import Ui_MessageBox
-from qfluentwidgets.components.dialog_box.mask_dialog_base import MaskDialogBase
 
 
 class DownloadProgressWidget(QWidget):
     canceled = pyqtSignal()
     paused = pyqtSignal()
 
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
+    def __init__(self):
+        super().__init__()
 
         self.setObjectName("downloadProgress")
 
         self.downloadProgressMainWidget = QStackedWidget(self)
-        self.downloadProgressMainWidget.setGeometry(QRect(20, 20, 321, 241))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadProgressMainWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadProgressMainWidget.sizePolicy().hasHeightForWidth()
+        )
         self.downloadProgressMainWidget.setSizePolicy(sizePolicy)
         self.downloadProgressMainWidget.setMinimumSize(QSize(321, 241))
+        self.downloadProgressMainWidget.setMaximumSize(QSize(16777215, 16777215))
         self.downloadProgressMainWidget.setObjectName("downloadProgressMainWidget")
 
         self.downloading = QWidget()
@@ -49,7 +54,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileSizeTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.fileSizeTitle.sizePolicy().hasHeightForWidth()
+        )
         self.fileSizeTitle.setSizePolicy(sizePolicy)
         self.fileSizeTitle.setObjectName("fileSizeTitle")
 
@@ -62,7 +69,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ProgressWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.ProgressWidget.sizePolicy().hasHeightForWidth()
+        )
         self.ProgressWidget.setSizePolicy(sizePolicy)
         self.ProgressWidget.setMinimumSize(QSize(315, 40))
         self.ProgressWidget.setMaximumSize(QSize(16777215, 40))
@@ -137,7 +146,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileNameTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.fileNameTitle.sizePolicy().hasHeightForWidth()
+        )
         self.fileNameTitle.setSizePolicy(sizePolicy)
         self.fileNameTitle.setObjectName("fileNameTitle")
 
@@ -161,7 +172,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.closeBoxBtnFinished.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.closeBoxBtnFinished.sizePolicy().hasHeightForWidth()
+        )
         self.closeBoxBtnFinished.setSizePolicy(sizePolicy)
         self.closeBoxBtnFinished.setMinimumSize(QSize(60, 0))
         self.closeBoxBtnFinished.setMaximumSize(QSize(60, 16777215))
@@ -229,7 +242,8 @@ class DownloadProgressWidget(QWidget):
 
     @pyqtSlot(int)
     def onDownloadFinished(self, status):
-        if self.isHidden(): self.show()
+        if self.isHidden():
+            self.show()
 
         if status == 0:
             self.downloadProgressMainWidget.setCurrentIndex(1)

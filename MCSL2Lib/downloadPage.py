@@ -528,12 +528,6 @@ class DownloadPage(QWidget):
         self.refreshMCSLAPIBtn.clicked.connect(self.getMCSLAPI)
         self.refreshMCSLAPIBtn.setEnabled(False)
 
-        # downloadProgressWidget
-        self.DL_MessageBox = MessageBox("", "", self)
-        self.DL_Widget = DownloadProgressWidget(self.DL_MessageBox)
-        self.DL_MessageBox.textLayout.addWidget(self.DL_Widget)
-        self.DL_MessageBox.show()
-
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
         """刷新下载列表触发"""
@@ -680,19 +674,27 @@ class DownloadPage(QWidget):
         format = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][idx2]
         titles = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"][idx2]
 
-
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self)
                 box.exec()
                 return
-        self.DL_Widget.flush()
-        self.DL_Widget.setFileName(f"{name}.{format}")
-        self.DL_MessageBox.show()
+
+        w = MessageBox("", "", self)
+        downloadProgressWidget = DownloadProgressWidget()
+        w.titleLabel.setParent(None)
+        w.contentLabel.setParent(None)
+        w.buttonGroup.setParent(None)
+
+        downloadProgressWidget.flush()
+        downloadProgressWidget.setFileName(f"{name}.{format}")
         Aria2Controller.download(
             uri=url.replace('mcsl_api.df100.ltd', "43.133.181.186"),
             watch=True,
-            info_get=self.DL_Widget.onInfoGet,
-            stopped=self.DL_Widget.onDownloadFinished,
+            info_get=downloadProgressWidget.onInfoGet,
+            stopped=downloadProgressWidget.onDownloadFinished,
             interval=0.1,
         )
+        
+        w.textLayout.addWidget(downloadProgressWidget.downloadProgressMainWidget)
+        w.show()
