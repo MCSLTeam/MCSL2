@@ -673,15 +673,15 @@ class DownloadPage(QWidget):
         format = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][idx2]
         titles = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"][idx2]
 
-        if not Aria2Controller.TestAria2Service():
-            if not Aria2Controller.StartAria2():
+        if not Aria2Controller.testAria2Service():
+            if not Aria2Controller.startAria2():
                 box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败",parent=self)
                 box.exec()
                 return
         Aria2Controller.download(
-            uri=url.replace('mcsl_api', "mcslapi"),
+            uri=url.replace('mcsl_api.df100.ltd', "43.133.181.186"),
             watch=True,
             info_get=lambda _dict: print('获取到下载信息'),
             stopped=lambda _int: print('下载停止, 状态码:', _int),
-            interval=0.1
+            interval=0.05
         )
