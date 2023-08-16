@@ -2,7 +2,7 @@ PyQt5==5.15.9
 pyqt5-tools==5.15.9.3.3
 requests>=2.31.0
 aria2p==0.11.3
-PyQt-Fluent-Widgets[full]>=1.1.4
+PyQt-Fluent-Widgets[full]>=1.1.7
 psutil==5.9.5
 imageio>=2.31.1
 zstandard>=0.21.0
