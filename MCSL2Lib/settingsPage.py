@@ -52,6 +52,7 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF,
 )
+from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.settingsController import SettingsController
@@ -76,7 +77,7 @@ class SettingsPage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-
+        self.tmpParent = self
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
 
@@ -1266,7 +1267,7 @@ class SettingsPage(QWidget):
 
         self.setObjectName("settingInterface")
 
-        self.checkUpdateBtn.clicked.connect(self.checkUpdate)
+        self.checkUpdateBtn.clicked.connect(lambda: self.checkUpdate(parent=self))
 
         self.generateSysReport.clicked.connect(self.generateSystemReport)
 
@@ -1536,7 +1537,7 @@ class SettingsPage(QWidget):
             settingsController.fileSettings["checkUpdateOnStart"]
         )
 
-    def checkUpdate(self):
+    def checkUpdate(self, parent):
         """
         检查更新触发器\n
         返回：\n
@@ -1548,15 +1549,20 @@ class SettingsPage(QWidget):
         3.新版更新介绍\n
         """
         self.checkUpdateBtn.setEnabled(False)  # 防止爆炸
+        if parent != self:
+            title = "触发自定义设置-开始检查更新..."
+        else:
+            title = "开始检查更新..."
         InfoBar.info(
-            title="开始检查更新...",
+            title=title,
             content="",
             orient=Qt.Horizontal,
             isClosable=True,
-            position=InfoBarPosition.TOP_RIGHT,
-            duration=1500,
-            parent=self,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=parent,
         )
+        self.tmpParent = parent
         self.thread_checkUpdate = CheckUpdateThread(self)
         self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
         self.thread_checkUpdate.start()
@@ -1566,14 +1572,14 @@ class SettingsPage(QWidget):
         """如果需要更新，显示弹窗；不需要则弹出提示"""
         if latestVerInfo[0] == "true":  # 需要更新
             title = f"有新版本：{latestVerInfo[4]}"
-            w = MessageBox(title, "更新介绍加载中...", self)
+            w = MessageBox(title, "更新介绍加载中...", parent=self.tmpParent)
             w.contentLabel.setTextFormat(Qt.MarkdownText)
             w.yesButton.setText("更新")
             w.cancelButton.setText("关闭")
             self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
             self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
             self.thread_fetchUpdateIntro.start()
-            # w.yesSignal.connect()  # 确定， latestVerInfo[3]为下载链接
+            w.yesSignal.connect(lambda: openWebUrl(Url="https://github.com/MCSLTeam/MCSL2"))
             w.exec()
 
         elif latestVerInfo[0] == "false":  # 已是最新版
@@ -1584,7 +1590,7 @@ class SettingsPage(QWidget):
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
                 duration=2500,
-                parent=self,
+                parent=self.tmpParent,
             )
         else:
             InfoBar.error(

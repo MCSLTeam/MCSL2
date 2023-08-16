@@ -256,6 +256,8 @@ class Window(FramelessWindow):
             lambda: self.exitingMsgBox.yesButton.setEnabled(True)
         )
         self.installEventFilter(self)
+        if settingsController.fileSettings["checkUpdateOnStart"]:
+            self.settingsInterface.checkUpdate(parent=self)
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
