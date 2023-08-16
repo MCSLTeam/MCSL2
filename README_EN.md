@@ -59,6 +59,8 @@ And all the contributors!
 
 <a href="https://github.com/MCSLTeam/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=MCSLTeam/MCSL2&anon=1&max=100000000"></a>
 
+And our sponsors!  
+[Sponsor List](https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md)
 ___
 ## Development document
 ~~Actually, I don't know what to write.~~ XD  
