@@ -5,7 +5,7 @@ from qfluentwidgets import (
     ProgressBar,
     PushButton,
     StrongBodyLabel,
-    SubtitleLabel,
+    SubtitleLabel, MessageBox,
 )
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -13,13 +13,11 @@ from PyQt5.QtWidgets import (
     QWidget,
     QStackedWidget,
     QSpacerItem,
-    QHBoxLayout,
+    QHBoxLayout, QApplication,
 )
 
 
 class DownloadProgressWidget(QWidget):
-    canceled = pyqtSignal()
-    paused = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -224,21 +222,51 @@ class DownloadProgressWidget(QWidget):
         self.closeBoxBtnFailed.setText("关闭")
         self.downloadFailedLabel.setText("下载失败！")
 
-        self.cancelBtn.clicked.connect(self.canceled.emit)
-        self.pauseBtn.clicked.connect(self.paused.emit)
-        self.PrimaryPushButton.clicked.connect(self.hide)
-        self.closeBoxBtnFinished.clicked.connect(self.hide)
-
         self.downloading = False
+
+
+class DL_MessageBox(MessageBox):
+    canceled = pyqtSignal()
+    paused = pyqtSignal(bool)
+
+    def __init__(self, fileName, parent=None):
+        super().__init__("", "", parent)
+        self.pauseSwitch = False
+        self.fileName = fileName
+        self.downloadProgressWidget = DownloadProgressWidget()
+        self.titleLabel.setParent(None)
+        self.contentLabel.setParent(None)
+        self.buttonGroup.setParent(None)
+        self.downloadProgressWidget.fileName.setText(self.fileName)
+        self.textLayout.addWidget(self.downloadProgressWidget.downloadProgressMainWidget)
+
+        widget = self.downloadProgressWidget
+
+        widget.cancelBtn.clicked.connect(self.canceled.emit)
+
+        widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
+        widget.PrimaryPushButton.clicked.connect(self.hide)
+
+    def DL_Widget(self):
+        return self.downloadProgressWidget
+
+    def onPauseBtnClicked(self):
+        self.pauseSwitch = not self.pauseSwitch
+        if self.pauseSwitch:
+            self.downloadProgressWidget.pauseBtn.setText("继续")
+        else:
+            self.downloadProgressWidget.pauseBtn.setText("暂停")
+        self.paused.emit(self.pauseSwitch)
 
     @pyqtSlot(dict)
     def onInfoGet(self, info):
-        self.fileSize.setText(info["totalLength"])
-        self.ETA.setText(info["eta"])
-        self.speed.setText(info["speed"])
-        self.ProgressNum.setText(info["progress"])
-        self.ProgressBar.setValue(info["bar"])
-        self.downloading = True
+        self.downloadProgressWidget.fileSize.setText(info["totalLength"])
+        self.downloadProgressWidget.ETA.setText(info["eta"])
+        self.downloadProgressWidget.speed.setText(info["speed"])
+        self.downloadProgressWidget.ProgressNum.setText(info["progress"])
+        self.downloadProgressWidget.ProgressBar.setValue(info["bar"])
+        self.downloadProgressWidget.downloading = True
+
 
     @pyqtSlot(int)
     def onDownloadFinished(self, status):
@@ -246,23 +274,23 @@ class DownloadProgressWidget(QWidget):
             self.show()
 
         if status == 0:
-            self.downloadProgressMainWidget.setCurrentIndex(1)
+            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
         else:
-            self.downloadProgressMainWidget.setCurrentIndex(2)
-        self.downloading = False
+            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+        self.downloadProgressWidget.downloading = False
 
     def setFileName(self, name):
-        self.fileName.setText(name)
+        self.downloadProgressWidget.fileName.setText(name)
 
     def isDownloading(self):
-        return self.downloading
+        return self.downloadProgressWidget.downloading
 
     def flush(self):
-        self.fileSize.setText("[文件大小]")
-        self.speed.setText("[速度]")
-        self.ETA.setText("[ETA]")
-        self.ProgressNum.setText("NaN%")
-        self.ProgressBar.setValue(0)
-        self.fileName.setText("[文件名]")
-        self.downloadProgressMainWidget.setCurrentIndex(0)
-        self.downloading = False
+        self.downloadProgressWidget.fileSize.setText("[文件大小]")
+        self.downloadProgressWidget.speed.setText("[速度]")
+        self.downloadProgressWidget.ETA.setText("[ETA]")
+        self.downloadProgressWidget.ProgressNum.setText("NaN%")
+        self.downloadProgressWidget.ProgressBar.setValue(0)
+        self.downloadProgressWidget.fileName.setText("[文件名]")
+        self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(0)
+        self.downloadProgressWidget.downloading = False

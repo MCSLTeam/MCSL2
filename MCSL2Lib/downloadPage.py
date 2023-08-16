@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QSpacerItem,
-    QStackedWidget,
+    QStackedWidget, QApplication,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
@@ -35,7 +35,7 @@ from qfluentwidgets import (
     FluentIcon as FIF, MessageBox,
 )
 
-from MCSL2Lib.DownloadProgressWidget import DownloadProgressWidget
+from MCSL2Lib.DownloadProgressWidget import DownloadProgressWidget, DL_MessageBox
 from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.aria2ClientController import Aria2Controller
@@ -679,22 +679,18 @@ class DownloadPage(QWidget):
                 box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self)
                 box.exec()
                 return
-
-        w = MessageBox("", "", self)
-        downloadProgressWidget = DownloadProgressWidget()
-        w.titleLabel.setParent(None)
-        w.contentLabel.setParent(None)
-        w.buttonGroup.setParent(None)
-
-        downloadProgressWidget.flush()
-        downloadProgressWidget.setFileName(f"{name}.{format}")
-        Aria2Controller.download(
+        box = DL_MessageBox(f"{name}.{format}", parent=self)
+        gid = Aria2Controller.download(
             uri=url.replace('mcsl_api.df100.ltd', "43.133.181.186"),
             watch=True,
-            info_get=downloadProgressWidget.onInfoGet,
-            stopped=downloadProgressWidget.onDownloadFinished,
-            interval=0.1,
+            info_get=box.onInfoGet,
+            stopped=box.onDownloadFinished,
+            interval=0.2,
         )
-        
-        w.textLayout.addWidget(downloadProgressWidget.downloadProgressMainWidget)
-        w.show()
+        box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+        box.paused.connect(
+            lambda x: Aria2Controller.pauseDownloadTask(gid) if x else Aria2Controller.resumeDownloadTask(gid)
+        )
+        box.DL_Widget().closeBoxBtnFinished.clicked.connect(box.close)
+        box.DL_Widget().closeBoxBtnFailed.clicked.connect(box.close)
+        box.show()
