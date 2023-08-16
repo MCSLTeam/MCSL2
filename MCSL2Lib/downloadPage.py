@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QSpacerItem,
+    QStackedWidget,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
@@ -87,7 +88,7 @@ class DownloadPage(QWidget):
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem1, 0, 2, 1, 1)
-        self.downloadStackedWidget = ChildStackedWidget(self)
+        self.downloadStackedWidget = QStackedWidget(self)
         self.downloadStackedWidget.setObjectName("downloadStackedWidget")
 
         self.downloadWithFastMirror = QWidget()
@@ -443,6 +444,8 @@ class DownloadPage(QWidget):
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
         self.downloadStackedWidget.setCurrentWidget(self.downloadWithMCSLAPI)
+        # self.downloadStackedWidget.setCurrentWidget(self.downloadWithFastMirror)
+
 
         self.setObjectName("DownloadInterface")
 
