@@ -5,11 +5,11 @@ poetry.lock
 .vs/**
 .vscode/**
 Tools/OfflineBuild/**
-Tools/qView.exe
-Tools/Aria2/aria2c.exe
-Tools/ParseOneDriveLink/ParseOneDriveLink.exe
 Servers/**
-MCSL2/**
+MCSL2/Downloads/**
+MCSL2/MCSL2_Config.json
+MCSL2/MCSL2_DetectedJava.json
+MCSL2/MCSL2_ServerList.json
 Plugins/**
 pdm.lock
 pdm.toml
