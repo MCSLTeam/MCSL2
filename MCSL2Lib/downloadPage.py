@@ -13,6 +13,7 @@
 """
 Download page with FastMirror and MCSLAPI.
 """
+from os import path
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
@@ -680,17 +681,25 @@ class DownloadPage(QWidget):
                 box.exec()
                 return
         box = DL_MessageBox(f"{name}.{format}", parent=self)
-        gid = Aria2Controller.download(
-            uri=url.replace('mcsl_api.df100.ltd', "43.133.181.186"),
-            watch=True,
-            info_get=box.onInfoGet,
-            stopped=box.onDownloadFinished,
-            interval=0.2,
-        )
-        box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
-        box.paused.connect(
-            lambda x: Aria2Controller.pauseDownloadTask(gid) if x else Aria2Controller.resumeDownloadTask(gid)
-        )
         box.DL_Widget().closeBoxBtnFinished.clicked.connect(box.close)
         box.DL_Widget().closeBoxBtnFailed.clicked.connect(box.close)
-        box.show()
+
+        # 判断文件是否存在
+        if path.exists(path.join("MCSL2", "Downloads", f"{name}.{format}")) \
+                and not path.exists(path.join("MCSL2", "Downloads", f"{name}.{format}.aria2")):
+            print("文件已存在")
+            box.show()
+            box.onDownloadFinished(3)
+        else:
+            gid = Aria2Controller.download(
+                uri=url.replace('mcsl_api.df100.ltd', "43.133.181.186"),
+                watch=True,
+                info_get=box.onInfoGet,
+                stopped=box.onDownloadFinished,
+                interval=0.2,
+            )
+            box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+            box.paused.connect(
+                lambda x: Aria2Controller.pauseDownloadTask(gid) if x else Aria2Controller.resumeDownloadTask(gid)
+            )
+            box.show()

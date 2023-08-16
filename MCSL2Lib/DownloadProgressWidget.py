@@ -1,4 +1,7 @@
+from os import path, remove
+
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
+from PyQt5.QtGui import QPaintEvent, QResizeEvent
 from qfluentwidgets import (
     BodyLabel,
     PrimaryPushButton,
@@ -202,25 +205,18 @@ class DownloadProgressWidget(QWidget):
         self.gridLayout_3.addWidget(self.downloadFailedLabel, 0, 0, 1, 2)
         self.downloadProgressMainWidget.addWidget(self.downloadFailed)
 
-        # self.downloadProgressMainWidget.setCurrentIndex(0)
-
         self.fileSizeTitle.setText("文件大小：")
         self.downloadingLabel.setText("正在下载：")
         self.ETATitle.setText("预计剩余时间：")
         self.cancelBtn.setText("取消")
         self.speedTitle.setText("当前速度：")
         self.pauseBtn.setText("暂停")
-        # self.ProgressNum.setText("NaN%")
-        # self.fileSize.setText("[文件大小]")
-        # self.speed.setText("[速度]")
-        # self.ETA.setText("[ETA]")
-        # self.fileName.setText("[文件名]")
         self.fileNameTitle.setText("文件名：")
         self.PrimaryPushButton.setText("隐藏")
         self.closeBoxBtnFinished.setText("关闭")
         self.downloadedLabel.setText("下载完毕。")
         self.closeBoxBtnFailed.setText("关闭")
-        self.downloadFailedLabel.setText("下载失败！")
+        self.downloadFailedLabel.setText("下载失败或取消！")
 
         self.downloading = False
 
@@ -241,9 +237,7 @@ class DL_MessageBox(MessageBox):
         self.textLayout.addWidget(self.downloadProgressWidget.downloadProgressMainWidget)
 
         widget = self.downloadProgressWidget
-
         widget.cancelBtn.clicked.connect(self.canceled.emit)
-
         widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
         widget.PrimaryPushButton.clicked.connect(self.hide)
 
@@ -267,16 +261,19 @@ class DL_MessageBox(MessageBox):
         self.downloadProgressWidget.ProgressBar.setValue(info["bar"])
         self.downloadProgressWidget.downloading = True
 
-
     @pyqtSlot(int)
     def onDownloadFinished(self, status):
-        if self.isHidden():
-            self.show()
+        self.hide()
+        self.show()
 
         if status == 0:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-        else:
+        elif status == 1:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+        elif status == 2:
+            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+        elif status == 3:
+            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
         self.downloadProgressWidget.downloading = False
 
     def setFileName(self, name):
@@ -294,3 +291,4 @@ class DL_MessageBox(MessageBox):
         self.downloadProgressWidget.fileName.setText("[文件名]")
         self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(0)
         self.downloadProgressWidget.downloading = False
+
