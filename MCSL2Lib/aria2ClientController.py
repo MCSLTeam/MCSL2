@@ -50,6 +50,10 @@ class Aria2Controller:
 
     _downloadWatcher = {}
 
+    systemType = ""
+
+    aria2cStatus = False
+
     def __init__(self):
         super().__init__()
         self.systemType: str
@@ -59,6 +63,10 @@ class Aria2Controller:
     #################
     #  Check Aria2  #
     #################
+
+    @classmethod
+    def init(cls):
+        cls.checkPlatform()
 
     @classmethod
     def checkPlatform(cls):
@@ -75,25 +83,27 @@ class Aria2Controller:
         else:
             pass
 
-    def checkAria2(self):
-        self.checkPlatform()
-        if self.systemType == "Windows":
+    @classmethod
+    def checkAria2(cls):
+        cls.checkPlatform()
+        if cls.systemType == "Windows":
             if not ospath.exists(r"MCSL2/Aria2/aria2c.exe"):
-                self.aria2cStatus = False
+                cls.aria2cStatus = False
             else:
-                self.aria2cStatus = True
-        elif self.systemType == "macOS":
+                cls.aria2cStatus = True
+        elif cls.systemType == "macOS":
             if not ospath.exists(r"/usr/local/bin/aria2c"):
-                self.aria2cStatus = False
+                cls.aria2cStatus = False
             else:
-                self.aria2cStatus = True
-        elif self.systemType == "Linux":
-            self.aria2cStatus = self.checkPackageExistsOnLinux("aria2c")
+                cls.aria2cStatus = True
+        elif cls.systemType == "Linux":
+            cls.aria2cStatus = cls.checkPackageExistsOnLinux("aria2c")
         else:
             pass
-        return self.aria2cStatus
+        return cls.aria2cStatus
 
-    def checkPackageExistsOnLinux(self, PackageName):
+    @staticmethod
+    def checkPackageExistsOnLinux(PackageName):
         try:
             check_output(["which", PackageName])
             return True
@@ -448,24 +458,29 @@ class Aria2Controller:
         return True
 
     @classmethod
-    def StartAria2(cls):
-        if cls._osType == "Windows":
-            Aria2Program = "MCSL2/Aria2/aria2c.exe"
-        elif cls._osType == "macOS":
-            Aria2Program = "/usr/local/bin/aria2c"
-        elif cls._osType == "Linux":
-            Aria2Program = "aria2c"
-        else:
-            Aria2Program = "aria2c"
-        path = ospath.join(getcwd(), "MCSL2", "Downloads")
-        ConfigCommand = [
-            "--conf-path=MCSL2/Aria2/aria2.conf",
-            "--input-file=MCSL2/Aria2/aria2.session",
-            "--save-session=MCSL2/Aria2/aria2.session",
-            f"--dir={path}",
-        ]
-        QProcess.startDetached(Aria2Program, ConfigCommand)
-        cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret=""))
+    def StartAria2(cls) -> bool:
+        """
+        启动Aria2服务,如果启动失败则返回False，否则返回True
+        """
+        if rv := cls.checkAria2():
+            if cls._osType == "Windows":
+                Aria2Program = "MCSL2/Aria2/aria2c.exe"
+            elif cls._osType == "macOS":
+                Aria2Program = "/usr/local/bin/aria2c"
+            elif cls._osType == "Linux":
+                Aria2Program = "aria2c"
+            else:
+                Aria2Program = "aria2c"
+            path = ospath.join(getcwd(), "MCSL2", "Downloads")
+            ConfigCommand = [
+                "--conf-path=MCSL2/Aria2/aria2.conf",
+                "--input-file=MCSL2/Aria2/aria2.session",
+                "--save-session=MCSL2/Aria2/aria2.session",
+                f"--dir={path}",
+            ]
+            QProcess.startDetached(Aria2Program, ConfigCommand)
+            cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret=""))
+        return rv
 
     @classmethod
     def DownloadCompletedHandler(cls, gid, stopFlag):
@@ -639,7 +654,11 @@ class DownloadWatcher(QObject):
         ] not in ["complete", "error", "removed"]:
             self.OnDownloadInfoGet.emit(status)
             print(
-                f'下载进度：{status["progress"]},下载速度：{status["speed"]},连接数量:{status["connections"]},文件大小：{status["totalLength"]},eta：{status["eta"]}')
+                f'下载进度：{status["progress"]},'
+                f'下载速度：{status["speed"]},'
+                f'连接数量:{status["connections"]},'
+                f'文件大小：{status["totalLength"]},'
+                f'eta：{status["eta"]}')
             self._files = status.get("files", None)
         elif status["status"] == "complete":
             self.timer.stop()
@@ -676,6 +695,3 @@ class DownloadWatcher(QObject):
     def Files(self):
         return self._files
 
-
-controller = Aria2Controller()
-controller.StartAria2()

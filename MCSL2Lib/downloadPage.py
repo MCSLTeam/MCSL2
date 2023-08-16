@@ -31,7 +31,7 @@ from qfluentwidgets import (
     TitleLabel,
     Pivot,
     ToolButton,
-    FluentIcon as FIF,
+    FluentIcon as FIF, MessageBox,
 )
 from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
@@ -670,8 +670,11 @@ class DownloadPage(QWidget):
         format = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][idx2]
         titles = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"][idx2]
 
-        print(url, name, format, titles)
-        # todo：未完成本机测试：无法下载获取的连接，但是浏览器可以下载，离谱！
+        if not Aria2Controller.TestAria2Service():
+            if not Aria2Controller.StartAria2():
+                box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败",parent=self)
+                box.exec()
+                return
         Aria2Controller.download(
             uri=url.replace('mcsl_api', "mcslapi"),
             watch=True,
@@ -679,5 +682,3 @@ class DownloadPage(QWidget):
             stopped=lambda _int: print('下载停止, 状态码:', _int),
             interval=0.1
         )
-        # t = 'https://download-baishan.maj-soul.com/app/download/Majsoul_2.0.34_MC.apk'
-        # a = DownloadWatcher([t])
