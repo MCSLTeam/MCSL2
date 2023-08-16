@@ -60,6 +60,7 @@ jobs:
           --follow-import-to=Adapters
           --follow-import-to=MCSL2Lib
           --lto=no
+          --remove-output
           MCSL2.py
 
       - name: Upload Artifacts
@@ -130,6 +131,7 @@ jobs:
   #         --enable-plugin=pyqt5
   #         --include-data-dir=PyQt5/Qt5=PyQt5/Qt5
   #         --macos-app-version=${{ matrix.mcsl2version }}
+  #         --remove-output
   #         MCSL2App.py
           
   #     - name: Fix Nuitka-built App
@@ -209,6 +211,8 @@ jobs:
           --file-version=${{ matrix.mcsl2version }}
           --product-version=${{ matrix.mcsl2version }}
           --file-description="MC Server Launcher 2"
+          --remove-output
+          --output-filename="MCSL2-${{ matrix.mcsl2version }}-${{ runner.os }}-${{ matrix.architecture }}"
           MCSL2.py
 
       - name: Upload Artifacts
