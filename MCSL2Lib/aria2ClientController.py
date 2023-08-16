@@ -54,6 +54,8 @@ class Aria2Controller:
 
     aria2cStatus = False
 
+    aria2Process = None
+
     def __init__(self):
         super().__init__()
         self.systemType: str
@@ -154,26 +156,22 @@ class Aria2Controller:
     ########################################
 
     def macOSInstallAria2(self):
-        pass
-        # try:
-        #     HomeBrewInstallCommand = '/bin/bash -c "$(curl -fsSL https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master/MCSL2NecessaryTools/Install_Homebrew.sh)"'
-        #     InstallHomeBrew = Popen(HomeBrewInstallCommand, stdout=PIPE, shell=True)
-        #     output, error = InstallHomeBrew.communicate()
-        #     if InstallHomeBrew.returncode == 0:
-        #         InstallAria2 = Popen("brew install aria2", stdout=PIPE, shell=True)
-        #         self.aria2cStatus = True
-        #     else:
-        #         MCSLLogger.Log(
-        #             Msg="InstallAria2Failed", MsgArg=f"平台：{self.systemType}", MsgLevel=2
-        #         )
-        #         CallMCSL2Dialog(
-        #             Tip="InstallAria2Failed",
-        #             OtherTextArg=None,
-        #             isNeededTwoButtons=0,
-        #             ButtonArg=None,
-        #         )
-        # except Exception as e:
-        #     print(e)
+        try:
+            HomeBrewInstallCommand = '/bin/bash -c "$(curl -fsSL https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master/MCSL2NecessaryTools/Install_Homebrew.sh)"'
+            InstallHomeBrew = Popen(HomeBrewInstallCommand, stdout=PIPE, shell=True)
+            output, error = InstallHomeBrew.communicate()
+            if InstallHomeBrew.returncode == 0:
+                InstallAria2 = Popen("brew install aria2", stdout=PIPE, shell=True)
+                self.aria2cStatus = True
+            else:
+                CallMCSL2Dialog(
+                    Tip="InstallAria2Failed",
+                    OtherTextArg=None,
+                    isNeededTwoButtons=0,
+                    ButtonArg=None,
+                )
+        except Exception as e:
+            print(e)
 
     def LinuxInstallAria2(self):
         if which("apt"):
@@ -227,22 +225,22 @@ class Aria2Controller:
         # except Exception as e:
         #     MCSLLogger.ExceptionLog(e)
 
-    def Download(self, DownloadURL: str):
-        if self.systemType == "Windows":
-            Aria2Program = "MCSL2/Aria2/aria2c.exe"
-        elif self.systemType == "macOS":
-            Aria2Program = "/usr/local/bin/aria2c"
-        elif self.systemType == "Linux":
-            Aria2Program = "aria2c"
-        else:
-            Aria2Program = "aria2c"
-        ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
-        Aria2Thread = Aria2ProcessThread(
-            Aria2Program=Aria2Program,
-            ConfigCommand=ConfigCommand,
-            DownloadURL=DownloadURL,
-        )
-        Aria2Thread.start()
+    # def Download(self, DownloadURL: str):
+    #     if self.systemType == "Windows":
+    #         Aria2Program = "MCSL2/Aria2/aria2c.exe"
+    #     elif self.systemType == "macOS":
+    #         Aria2Program = "/usr/local/bin/aria2c"
+    #     elif self.systemType == "Linux":
+    #         Aria2Program = "aria2c"
+    #     else:
+    #         Aria2Program = "aria2c"
+    #     ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
+    #     Aria2Thread = Aria2ProcessThread(
+    #         Aria2Program=Aria2Program,
+    #         ConfigCommand=ConfigCommand,
+    #         DownloadURL=DownloadURL,
+    #     )
+    #     Aria2Thread.start()
 
     @classmethod
     def WinInstallAria2(cls, mainWindow):
@@ -378,7 +376,10 @@ class Aria2Controller:
         param uri: the uri of the file to be downloaded
         """
         if not cls.TestAria2Service():
-            cls.StartAria2()
+            if not cls.aria2Process.isOpen():
+                cls.StartAria2()
+            else:
+                raise Exception("Aria2 service is not running")
 
         gid = cls._aria2.add_uris([uri]).gid
         if gid in cls._downloadTasks.keys():
@@ -453,7 +454,10 @@ class Aria2Controller:
         """
         try:
             cls._aria2.client.get_version()
+            cls._aria2: API
+            print(cls._aria2.get_stats())
         except:
+
             return False
         return True
 
@@ -478,8 +482,15 @@ class Aria2Controller:
                 "--save-session=MCSL2/Aria2/aria2.session",
                 f"--dir={path}",
             ]
-            QProcess.startDetached(Aria2Program, ConfigCommand)
-            cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret=""))
+            cls.aria2Process = QProcess()
+            cls.aria2Process.start(Aria2Program, ConfigCommand)
+            cls.aria2Process.waitForStarted()
+            cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret="", timeout=0.1))
+            if cls.TestAria2Service():
+                return True
+            else:
+                cls._aria2 = None
+                return False
         return rv
 
     @classmethod
@@ -502,6 +513,9 @@ class Aria2Controller:
             cls._aria2: API
             cls._aria2.remove_all(True)
             cls._aria2.client.shutdown()
+        if cls.aria2Process is not None:
+            if cls.aria2Process.isOpen():
+                cls.aria2Process.kill()
 
 
 class NormalDownloadManager(QObject):
@@ -589,27 +603,23 @@ class NormalDownloadThread(QThread):
 ###################
 
 
-class Aria2ProcessThread(QThread):
-    started = pyqtSignal()
-    finished = pyqtSignal(bool)
-
-    def __init__(self, Aria2Program, ConfigCommand, DownloadURL):
-        super().__init__()
-        self.Aria2Program = Aria2Program
-        self.ConfigCommand = ConfigCommand
-        self.DownloadURL = DownloadURL
-
-    def run(self):
-        MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
-        MCSL2_Aria2Client.add_uris(self.DownloadURL)
-        # todo
-        # MCSLLogger.Log(
-        #     Msg="StartDownload", MsgArg=f"\n链接：{self.DownloadURL}", MsgLevel=0
-        # )
-        process = Popen(
-            [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
-        )
-        process.wait()
+# class Aria2ProcessThread(QThread):
+#     started = pyqtSignal()
+#     finished = pyqtSignal(bool)
+#
+#     def __init__(self, Aria2Program, ConfigCommand, DownloadURL):
+#         super().__init__()
+#         self.Aria2Program = Aria2Program
+#         self.ConfigCommand = ConfigCommand
+#         self.DownloadURL = DownloadURL
+#
+#     def run(self):
+#         MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
+#         MCSL2_Aria2Client.add_uris(self.DownloadURL)
+#         process = Popen(
+#             [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
+#         )
+#         process.wait()
 
 
 class DownloadWatcher(QObject):
@@ -694,4 +704,3 @@ class DownloadWatcher(QObject):
     @property
     def Files(self):
         return self._files
-
