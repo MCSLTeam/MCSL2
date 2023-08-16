@@ -25,12 +25,14 @@ from zipfile import ZipFile
 from MCSL2Lib.networkController import Session
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
 from PyQt5.QtWidgets import QProgressDialog
-from aria2p import Client, API
+from aria2p import Client, API, Download
 from requests.exceptions import SSLError
 
 from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.settingsController import SettingsController
+
 settingsController = SettingsController()
+
 
 class Aria2Controller:
     """
@@ -337,6 +339,16 @@ class Aria2Controller:
         return cls._downloadWatcher.get(gid, None)
 
     @classmethod
+    def killWatcher(cls, gid):
+        """
+        kill the DownloadWatcher of the download task
+        """
+        watcher = cls._downloadWatcher.get(gid, None)
+        if watcher:
+            watcher.kill()
+            del cls._downloadWatcher[gid]
+
+    @classmethod
     def addUri(cls, uri: str) -> str:
         """
         Add a download task to Aria2,and return the gid of the task
@@ -385,10 +397,25 @@ class Aria2Controller:
         Get the state of a download task by gid
         * normally, this function is only used by Class:DownloadWatcher
         """
-        download = cls._aria2.get_download(gid)
+        try:
+            download = cls._aria2.get_download(gid)
+        except:
+            cls.killWatcher(gid)
+            return {
+                "connections": 0,
+                "speed": "0.0B/s",
+                "progress": "0.0%",
+                "status": "removed",
+                "totalLength": "0.0B",
+                "completedLength": "0.0B",
+                "files": [],
+                "bar": 0,
+                "eta": "-",
+            }
+        download: Download
         rv = {
             "connections": download.connections,
-            "speed": download.download_speed_string(),
+            "speed": download.download_speed_string() if download.status == 'active' else download.status,
             "progress": download.progress_string(),
             "status": download.status,
             "totalLength": download.total_length_string(),
@@ -405,7 +432,32 @@ class Aria2Controller:
         Halt a download task by gid
         * normally, this function is only used by Class:DownloadWatcher
         """
-        print("已暂停:", cls._aria2.client.pause(gid))
+        try:
+            print("已暂停:", cls._aria2.client.pause(gid))
+            cls._downloadTasks.pop(gid)
+        except:
+            pass
+
+    @classmethod
+    def resumeDownloadTask(cls, gid: str):
+        """
+        Resume a download task by gid
+        * normally, this function is only used by Class:DownloadWatcher
+        """
+        print("已恢复:", cls._aria2.client.unpause(gid))
+        cls._downloadTasks.update({gid: cls._aria2.get_download(gid).files})
+
+    @classmethod
+    def cancelDownloadTask(cls, gid: str):
+        """
+        Cancel a download task by gid
+        * normally, this function is only used by Class:DownloadWatcher
+        """
+        try:
+            print("已取消:", cls._aria2.client.remove(gid))
+        finally:
+            if gid in cls._downloadTasks.keys():
+                cls._downloadTasks.pop(gid)
 
     @classmethod
     def applySettings(cls, Settings: dict):
@@ -462,7 +514,11 @@ class Aria2Controller:
     @classmethod
     def downloadCompletedHandler(cls, gid, stopFlag):
         cls._aria2: API
-        download = cls._aria2.get_download(gid)
+        try:
+            download = cls._aria2.get_download(gid)
+        except:
+            cls.killWatcher(gid)
+            return
         if stopFlag:
             try:
                 cls._aria2.client.remove(gid)  # 删除下载任务
@@ -660,6 +716,15 @@ class DownloadWatcher(QObject):
         Aria2Controller.pauseDownloadTask(self._gid)
         Aria2Controller.downloadCompletedHandler(self._gid, True)
 
+    def resumeDownload(self):
+        Aria2Controller.resumeDownloadTask(self._gid)
+
+    def pauseDownload(self):
+        Aria2Controller.pauseDownloadTask(self._gid)
+
+    def kill(self):
+        self.timer.stop()
+
     @property
     def gid(self):
         return self._gid
@@ -672,10 +737,11 @@ class DownloadWatcher(QObject):
     def files(self):
         return self._files
 
+
 def initializeAria2Configuration():
     Aria2Thread = str(settingsController.fileSettings['aria2Thread'])
     with open(
-        r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8"
+            r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8"
     ) as Aria2ConfigFile:
         Aria2ConfigFile.write(
             "file-allocation=falloc\n"
@@ -695,7 +761,7 @@ def initializeAria2Configuration():
         )
         Aria2ConfigFile.close()
     with open(
-        r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
+            r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
     ) as Aria2SessionFile:
         Aria2SessionFile.write("")
         Aria2SessionFile.close()
