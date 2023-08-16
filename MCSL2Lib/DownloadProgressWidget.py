@@ -1,20 +1,28 @@
-from PyQt5.QtCore import QSize, QRect
-from qfluentwidgets import BodyLabel, PrimaryPushButton, ProgressBar, PushButton, StrongBodyLabel, SubtitleLabel
+from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal, Qt, QEvent
+from PyQt5.QtGui import QColor
+from qfluentwidgets import BodyLabel, PrimaryPushButton, ProgressBar, PushButton, StrongBodyLabel, SubtitleLabel, \
+    MessageBox
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QGridLayout,
     QWidget,
     QStackedWidget,
     QSpacerItem,
-    QHBoxLayout,
+    QHBoxLayout, QFrame, QVBoxLayout,
 )
-class downloadProgressWidget(QWidget):
-    def __init__(self):
+from qfluentwidgets.components.dialog_box.dialog import Ui_MessageBox
+from qfluentwidgets.components.dialog_box.mask_dialog_base import MaskDialogBase
 
-        super().__init__()
+
+class DownloadProgressWidget(QWidget):
+    canceled = pyqtSignal()
+    paused = pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
 
         self.setObjectName("downloadProgress")
-        
+
         self.downloadProgressMainWidget = QStackedWidget(self)
         self.downloadProgressMainWidget.setGeometry(QRect(20, 20, 321, 241))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -202,3 +210,45 @@ class downloadProgressWidget(QWidget):
         self.downloadedLabel.setText("下载完毕。")
         self.closeBoxBtnFailed.setText("关闭")
         self.downloadFailedLabel.setText("下载失败！")
+
+        self.cancelBtn.clicked.connect(self.canceled.emit)
+        self.pauseBtn.clicked.connect(self.paused.emit)
+        self.PrimaryPushButton.clicked.connect(self.hide)
+        self.closeBoxBtnFinished.clicked.connect(self.hide)
+
+        self.downloading = False
+
+    @pyqtSlot(dict)
+    def onInfoGet(self, info):
+        self.fileSize.setText(info["totalLength"])
+        self.ETA.setText(info["eta"])
+        self.speed.setText(info["speed"])
+        self.ProgressNum.setText(info["progress"])
+        self.ProgressBar.setValue(info["bar"])
+        self.downloading = True
+
+    @pyqtSlot(int)
+    def onDownloadFinished(self, status):
+        if self.isHidden(): self.show()
+
+        if status == 0:
+            self.downloadProgressMainWidget.setCurrentIndex(1)
+        else:
+            self.downloadProgressMainWidget.setCurrentIndex(2)
+        self.downloading = False
+
+    def setFileName(self, name):
+        self.fileName.setText(name)
+
+    def isDownloading(self):
+        return self.downloading
+
+    def flush(self):
+        self.fileSize.setText("[文件大小]")
+        self.speed.setText("[速度]")
+        self.ETA.setText("[ETA]")
+        self.ProgressNum.setText("NaN%")
+        self.ProgressBar.setValue(0)
+        self.fileName.setText("[文件名]")
+        self.downloadProgressMainWidget.setCurrentIndex(0)
+        self.downloading = False
