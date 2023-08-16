@@ -32,9 +32,10 @@ from qfluentwidgets import (
     MessageBox,
     HyperlinkButton,
     MSFluentTitleBar,
-    FluentStyleSheet
+    FluentStyleSheet,
 )
 from qframelesswindow import FramelessWindow
+
 # from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
@@ -202,20 +203,30 @@ class Window(FramelessWindow):
         self.initPluginSystem()
 
         initializeAria2Configuration()
-
-        if Aria2Controller.startAria2():
-            if Aria2Controller.testAria2Service():
-                InfoBar.success(
-                title="Aria2下载引擎提示",
-                content="启动成功！",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-            else:
-                InfoBar.error(
+        try:
+            if Aria2Controller.startAria2():
+                if Aria2Controller.testAria2Service():
+                    InfoBar.success(
+                        title="Aria2下载引擎提示",
+                        content="启动成功！",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self,
+                    )
+                else:
+                    InfoBar.error(
+                        title="Aria2下载引擎启动失败",
+                        content="请检查是否安装了Aria2。",
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self,
+                    )
+        except Exception:
+            InfoBar.error(
                 title="Aria2下载引擎启动失败",
                 content="请检查是否安装了Aria2。",
                 orient=Qt.Horizontal,
@@ -268,7 +279,10 @@ class Window(FramelessWindow):
 
             a0.ignore()
             return
-        if Aria2Controller.shutDown():
+        try:
+            if Aria2Controller.shutDown():
+                a0.accept()
+        except Exception:
             a0.accept()
 
     def onForceExit(self):
@@ -371,7 +385,7 @@ class Window(FramelessWindow):
         color = "dark" if isDarkTheme() else "light"
         with open(f"resource/{color}/demo.qss", encoding="utf-8") as f:
             self.setStyleSheet(f.read())
-            
+
         FluentStyleSheet.FLUENT_WINDOW.apply(self.stackedWidget)
 
     def onCurrentInterfaceChanged(self, index):
@@ -609,7 +623,7 @@ class Window(FramelessWindow):
 
     @pyqtSlot(bool)
     def settingsRunner_autoRunLastServer(self, startBtnStat):
-        '''设置：启动时自动运行上次运行的服务器'''
+        """设置：启动时自动运行上次运行的服务器"""
         if settingsController.fileSettings["autoRunLastServer"]:
             if startBtnStat:
                 InfoBar.info(
