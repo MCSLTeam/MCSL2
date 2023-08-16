@@ -1,3 +1,5 @@
+from os import path, remove
+
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QPaintEvent, QResizeEvent
 from qfluentwidgets import (

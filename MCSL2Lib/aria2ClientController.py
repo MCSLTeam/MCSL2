@@ -533,7 +533,8 @@ class Aria2Controller:
     def shutDown(cls):
         if cls._aria2 is not None:
             cls._aria2: API
-            cls._aria2.remove_all(True)
+            # 清理aria2中被取消和暂停的任务，以及其对应的下载文件
+            cls._aria2.pause_all()
             cls._aria2.client.shutdown()
         if cls.aria2Process is not None:
             if cls.aria2Process.isOpen():
