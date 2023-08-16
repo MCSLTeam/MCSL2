@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 A function for communicatng with FastMirrorAPI.
-'''
+"""
 
 from json import loads
 from typing import Callable
@@ -29,32 +29,32 @@ class FMAPIDownloadURLParser:
         pass
 
     @staticmethod
-    def parseDownloaderAPIUrl():
-        UrlArg = "https://download.fastmirror.net/api/v3"
-        
+    def parseFMAPIUrl():
+        fmAPI = "https://download.fastmirror.net/api/v3"
+
         rv = {}
-        DownloadAPIUrl = UrlArg
+        downloadAPIUrl = fmAPI
         (
-            downloadServerData,
-            downloadCode,
-            downloadSuccess,
-            downloadMsg,
-        ) = FMAPIDownloadURLParser.decodeDownloadJsons(DownloadAPIUrl)
+            data,
+            code,
+            success,
+            message,
+        ) = FMAPIDownloadURLParser.decodeDownloadJsons(downloadAPIUrl)
         rv.update(
             {
                 dict(
                     zip(
                         (
-                            "downloadServerData",
-                            "downloadCode",
-                            "downloadSuccess",
-                            "downloadMsg",
+                            "data",
+                            "code",
+                            "success",
+                            "message",
                         ),
                         (
-                            downloadServerData,
-                            downloadCode,
-                            downloadSuccess,
-                            downloadMsg,
+                            data,
+                            code,
+                            success,
+                            message,
                         ),
                     )
                 )
@@ -63,34 +63,60 @@ class FMAPIDownloadURLParser:
         return rv
 
     @staticmethod
-    def decodeDownloadJsons(RefreshUrl):
-        downloadServerDatas = []
+    def parseFMAPIUrl():
+        fmAPI = "https://download.fastmirror.net/api/v3"
+
+        rv = {}
+        downloadAPIUrl = fmAPI
+        (
+            data,
+            code,
+            success,
+            message,
+        ) = FMAPIDownloadURLParser.decodeDownloadJsons(downloadAPIUrl)
+        rv.update(
+            {
+                dict(
+                    zip(
+                        (
+                            "data",
+                            "code",
+                            "success",
+                            "message",
+                        ),
+                        (
+                            data,
+                            code,
+                            success,
+                            message,
+                        ),
+                    )
+                )
+            }
+        )
+        return rv
+
+
+    @staticmethod
+    def decodeDownloadJsons(downloadAPIUrl):
+        data = []
         try:
-            DownloadJson = Session.get(RefreshUrl).text
+            apiData = loads(Session.get(downloadAPIUrl).text)
         except Exception as e:
-            return -2, -2, -2, -2
+            return -2
         try:
-            PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
-            for i in PyDownloadList:
-                downloadServerData = i["name"]
-                downloadServerDatas.insert(0, downloadServerData)
-                downloadCode = i["url"]
-                downloadSucces = i["format"]
-                downloadMsg = i["filename"]
-            return (
-                downloadServerDatas,
-                downloadCodes,
-                downloadSuccess,
-                downloadMsgs,
-            )
+            if apiData["success"]:
+                for i in apiData["data"]:
+                    data.insert(0, i)
+                return data
         except:
-            return -1, -1, -1, -1
+            return -1
 
 
-class FetchFMAPIDownloadURLThread(QThread):
+class FetchFMAPIThread(QThread):
     """
-    用于获取网页内容的线程
-    结束时发射fetchSignal信号，参数为url和data组成的元组
+    用于获取/api/v3
+    即核心类型+游戏版本列表
     """
 
     fetchSignal = pyqtSignal(dict)
@@ -106,7 +132,33 @@ class FetchFMAPIDownloadURLThread(QThread):
         return self.url
 
     def run(self):
-        self.fetchSignal.emit(FMAPIDownloadURLParser.parseDownloaderAPIUrl())
+        self.fetchSignal.emit(FMAPIDownloadURLParser.parseFMAPIUrl())
+
+    def getData(self):
+        return self.Data
+
+
+class FetchFMAPICoreVersionThread(QThread):
+    """
+    用于获取/api/v3/{name}/{mc_version}
+    即服务端版本列表
+    需加上?offset=0&limit=25参数
+    """
+
+    fetchSignal = pyqtSignal(dict)
+
+    def __init__(self, FinishSlot: Callable = ...):
+        super().__init__()
+        self._id = None
+        self.Data = None
+        if FinishSlot is not ...:
+            self.fetchSignal.connect(FinishSlot)
+
+    def getURL(self):
+        return self.url
+
+    def run(self):
+        self.fetchSignal.emit(FMAPIDownloadURLParser.parseFMAPIUrl())
 
     def getData(self):
         return self.Data
@@ -116,13 +168,13 @@ class FetchFMAPIDownloadURLThreadFactory:
     def __init__(self):
         self.singletonThread = None
 
-    def create(self, _singleton=False, finishSlot=...) -> FetchFMAPIDownloadURLThread:
+    def create(self, _singleton=False, finishSlot=...) -> FetchFMAPIThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
             else:
-                thread = FetchFMAPIDownloadURLThread(finishSlot)
+                thread = FetchFMAPIThread(finishSlot)
                 self.singletonThread = thread
                 return thread
         else:
-            return FetchFMAPIDownloadURLThread(finishSlot)
+            return FetchFMAPIThread(finishSlot)
