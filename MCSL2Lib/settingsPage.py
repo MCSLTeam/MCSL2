@@ -1246,7 +1246,9 @@ class SettingsPage(QWidget):
         )
         self.outputDeEncodingComboBox.addItems(["UTF-8", "GB18030", "ANSI(推荐)"])
         self.outputDeEncodingComboBox.setCurrentIndex(0)
-        self.inputDeEncodingComboBox.addItems(["跟随控制台输出", "UTF-8", "GB18030", "ANSI(推荐)"])
+        self.inputDeEncodingComboBox.addItems(
+            ["跟随控制台输出", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
         self.inputDeEncodingComboBox.setCurrentIndex(0)
         self.themeComboBox.addItems(["自动", "深色", "浅色"])
         self.saveBtn.setText("保存")
@@ -1442,6 +1444,15 @@ class SettingsPage(QWidget):
             writeConfig.close()
         self.refreshSettingsInterface()
         self.settingsChanged.emit(False)
+        InfoBar.success(
+            title="已保存",
+            content=f"部分设置需要重启生效。",
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
 
     def refreshSettingsInterface(self):
         """刷新设置页"""
