@@ -16,7 +16,7 @@ A function for communicatng with MCSLAPI.
 
 from json import loads
 from typing import Callable
-
+from random import randint
 from PyQt5.QtCore import pyqtSignal, QThread
 
 from MCSL2Lib.networkController import Session
@@ -30,7 +30,8 @@ class MCSLAPIDownloadURLParser:
 
     @staticmethod
     def parseDownloaderAPIUrl():
-        UrlArg = "http://43.133.181.186/json"
+        equilibriumList = ["SharePoint", "Gitee"]
+        UrlArg = f"https://http://117.21.183.18:8927/ipns/mcslapiipfs.x-xh.cn/{equilibriumList[randint(0, 1)]}"
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",
@@ -47,6 +48,8 @@ class MCSLAPIDownloadURLParser:
                 downloadFileNames,
                 downloadFileFormats,
             ) = MCSLAPIDownloadURLParser.decodeDownloadJsons(DownloadAPIUrl)
+            
+            print(DownloadAPIUrl)
             rv.update(
                 {
                     i: dict(
@@ -67,6 +70,7 @@ class MCSLAPIDownloadURLParser:
                     )
                 }
             )
+        print(rv)
         return rv
 
     @staticmethod
