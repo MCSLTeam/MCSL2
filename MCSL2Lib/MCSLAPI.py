@@ -40,7 +40,7 @@ def get_mcslapicon():
 def change_mcslapicon(node_url = False , equilibriumList = False):
     '''更改配置'''
     with open('./mcslapi.json','r') as j:
-        data = j.read()
+        data = json.dumps(j.read())
     with open('./mcslapi.json','w') as f:
         if node_url :
             data['node_url'] = node_url
