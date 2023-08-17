@@ -223,7 +223,7 @@ class DownloadProgressWidget(QWidget):
         self.downloading = False
 
 
-class DL_MessageBox(MessageBox):
+class DownloadMessageBox(MessageBox):
     canceled = pyqtSignal()
     paused = pyqtSignal(bool)
 
@@ -243,7 +243,7 @@ class DL_MessageBox(MessageBox):
         widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
         widget.PrimaryPushButton.clicked.connect(self.hide)
 
-    def DL_Widget(self):
+    def DownloadWidget(self):
         return self.downloadProgressWidget
 
     def onPauseBtnClicked(self):

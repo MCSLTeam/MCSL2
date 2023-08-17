@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QSpacerItem,
-    QStackedWidget, QApplication,
+    QStackedWidget,
 )
 from qfluentwidgets import (
     SmoothScrollArea,
@@ -33,10 +33,11 @@ from qfluentwidgets import (
     TitleLabel,
     Pivot,
     ToolButton,
-    FluentIcon as FIF, MessageBox,
+    FluentIcon as FIF,
+    MessageBox,
 )
 
-from MCSL2Lib.DownloadProgressWidget import DownloadProgressWidget, DL_MessageBox
+from MCSL2Lib.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.aria2ClientController import Aria2Controller
@@ -680,9 +681,9 @@ class DownloadPage(QWidget):
                 box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self)
                 box.exec()
                 return
-        box = DL_MessageBox(f"{name}.{format}", parent=self)
-        box.DL_Widget().closeBoxBtnFinished.clicked.connect(box.close)
-        box.DL_Widget().closeBoxBtnFailed.clicked.connect(box.close)
+        box = DownloadMessageBox(f"{name}.{format}", parent=self)
+        box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
+        box.DownloadWidget().closeBoxBtnFailed.clicked.connect(box.close)
 
         # 判断文件是否存在
         if path.exists(path.join("MCSL2", "Downloads", f"{name}.{format}")) \
