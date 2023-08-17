@@ -531,15 +531,23 @@ class Aria2Controller:
 
     @classmethod
     def shutDown(cls):
-        if cls._aria2 is not None:
-            cls._aria2: API
-            # 清理aria2中被取消和暂停的任务，以及其对应的下载文件
-            cls._aria2.pause_all()
-            cls._aria2.client.shutdown()
-        if cls.aria2Process is not None:
-            if cls.aria2Process.isOpen():
+        try:
+            if cls._aria2 is not None:
+                cls._aria2: API
+                # 清理aria2中被取消和暂停的任务，以及其对应的下载文件
+                cls._aria2.pause_all()
+                cls._aria2.client.shutdown()
+            if cls.aria2Process is not None:
+                if cls.aria2Process.isOpen():
+                    cls.aria2Process.kill()
+            return True
+        except Exception:
+            try:
                 cls.aria2Process.kill()
-        return True
+            except Exception:
+                pass
+            return True
+        
 
 
 class NormalDownloadManager(QObject):
