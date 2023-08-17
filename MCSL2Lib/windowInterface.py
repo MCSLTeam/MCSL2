@@ -254,10 +254,10 @@ class Window(FramelessWindow):
         self.quitTimer.setInterval(3000)
         self.quitTimer.timeout.connect(
             lambda: self.exitingMsgBox.yesButton.setEnabled(True)
-        )
-        self.installEventFilter(self)
+        )   
         if settingsController.fileSettings["checkUpdateOnStart"]:
             self.settingsInterface.checkUpdate(parent=self)
+        self.installEventFilter(self)
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
@@ -578,13 +578,15 @@ class Window(FramelessWindow):
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
+                print("enter")
                 if (
                     self.stackedWidget.view.currentIndex() == 4
                     and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
-            if a1.key() == Qt.Key_Up:
+            elif a1.key() == Qt.Key_Up:
+                print("up")
                 if (
                     self.stackedWidget.view.currentIndex() == 4
                     and self.consoleInterface.commandLineEdit
@@ -600,7 +602,8 @@ class Window(FramelessWindow):
                         GlobalMCSL2Variables.upT -= 1
                         self.consoleInterface.commandLineEdit.setText(lastCommand)
                         return True
-            if a1.key() == Qt.Key_Down:
+            elif a1.key() == Qt.Key_Down:
+                print("down")
                 if (
                     self.stackedWidget.view.currentIndex() == 4
                     and self.consoleInterface.commandLineEdit
