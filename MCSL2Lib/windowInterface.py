@@ -127,28 +127,6 @@ class MCSL2TitleBar(MSFluentTitleBar):
         pass
 
 
-class CloseServerThread(QThread):
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-
-    def run(self):
-        try:
-            pass
-        finally:
-            pass
-
-
-class ExitAndCloseServerMsgBox(MessageBox):
-    def __init__(self, title: str, content: str, *args, **kwargs):
-        super().__init__(title, content, *args, **kwargs)
-        self.closeThread = CloseServerThread(self.parent())
-        self.closeThread.finished.connect(self.close)
-
-    def exec(self) -> int:
-        self.closeThread.start()
-        return super().exec()
-
-
 @Singleton
 class Window(FramelessWindow):
     """程序主窗口"""

@@ -20,54 +20,55 @@ from random import randint
 from PyQt5.QtCore import pyqtSignal, QThread
 
 from MCSL2Lib.networkController import Session
-import os 
+import os
 import json
+
 
 def get_mcslapicon():
     '''获得配置'''
     if not os.path.exists('./mcslapi.json'):
-        with open('./mcslapi.json','w') as f:
+        with open('./mcslapi.json', 'w') as f:
             data = {
-                'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
-                'equilibriumList':'Gitee'
+                'node_url': 'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
+                'equilibriumList': 'Gitee'
             }
             f.write(json.dumps(data))
             return data
     else:
-        with open('./mcslapi.json','r') as f:
-            return json.dumps(f.read())
+        with open('./mcslapi.json', 'r') as f:
+            return json.load(f)
 
-def change_mcslapicon(node_url = False , equilibriumList = False):
+
+def change_mcslapicon(node_url=False, equilibriumList=False):
     '''更改配置'''
     data = {}
-    with open('./mcslapi.json','r') as j:
+    with open('./mcslapi.json', 'r') as j:
         try:
             data = json.dumps(j.read())
         except:
             j.close()
-    with open('./mcslapi.json','w') as f:
+    with open('./mcslapi.json', 'w') as f:
         try:
-            if node_url :
+            if node_url:
                 data['node_url'] = node_url
             elif equilibriumList:
                 data['equilibriumList'] = equilibriumList
         except:
             data = {
-                'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
-                'equilibriumList':'Gitee'
+                'node_url': 'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
+                'equilibriumList': 'Gitee'
             }
-            if node_url :
+            if node_url:
                 data['node_url'] = node_url
             elif equilibriumList:
                 data['equilibriumList'] = equilibriumList
         f.write(json.dumps(data))
-    
+
         return True
 
 
 class MCSLAPIDownloadURLParser:
     """URL设定器"""
-
 
     def __init__(self):
         pass
