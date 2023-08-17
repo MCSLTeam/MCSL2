@@ -34,12 +34,34 @@ class FastMirrorAPIDownloadURLParser:
         rv = {}
         downloadAPIUrl = fastMirrorAPI
         (
-            data,
-            code,
-            success,
-            message,
+            name,
+            tag,
+            homepage,
+            recommend,
+            mc_versions,
         ) = FastMirrorAPIDownloadURLParser.decodeFastMirrorJsons(downloadAPIUrl)
-        rv.update({dict(zip("data", data))})
+        rv.update(
+            {
+                dict(
+                    zip(
+                        (
+                            "name",
+                            "tag",
+                            "homepage",
+                            "recommend",
+                            "mc_versions",
+                        ),
+                        (
+                            name,
+                            tag,
+                            homepage,
+                            recommend,
+                            mc_versions,
+                        ),
+                    )
+                )
+            }
+        )
         return rv
 
     @staticmethod
@@ -63,10 +85,11 @@ class FastMirrorAPIDownloadURLParser:
         rv = {}
         downloadAPIUrl = fastMirrorAPI
         (
-            data,
-            code,
-            success,
-            message,
+            name,
+            mc_version,
+            core_version,
+            update_time,
+            sha1,
         ) = FastMirrorAPIDownloadURLParser.decodeFastMirrorCoreVersionJsons(
             downloadAPIUrl
         )
@@ -75,16 +98,18 @@ class FastMirrorAPIDownloadURLParser:
                 dict(
                     zip(
                         (
-                            "data",
-                            "code",
-                            "success",
-                            "message",
+                            "name",
+                            "mc_version",
+                            "core_version",
+                            "update_time",
+                            "sha1",
                         ),
                         (
-                            data,
-                            code,
-                            success,
-                            message,
+                            name,
+                            mc_version,
+                            core_version,
+                            update_time,
+                            sha1,
                         ),
                     )
                 )
@@ -108,53 +133,29 @@ class FastMirrorAPIDownloadURLParser:
             return -1
 
     @staticmethod
-    def parseFastMirrorAPICoreDownloadUrl(name, mcVersion, coreVersion):
+    def parseFastMirrorAPIRealCoreDownloadURL(name, mcVersion, coreVersion):
         fastMirrorAPI = (
             f"https://download.fastmirror.net/api/v3/{name}/{mcVersion}/{coreVersion}"
         )
-        rv = {}
         downloadAPIUrl = fastMirrorAPI
-        (
-            data,
-            code,
-            success,
-            message,
-        ) = FastMirrorAPIDownloadURLParser.decodeFastMirrorCoreVersionJsons(
-            downloadAPIUrl
+        downloadURL: str = (
+            FastMirrorAPIDownloadURLParser.getFastMirrorAPIRealCoreDownloadURL(
+                downloadAPIUrl
+            )
         )
-        rv.update(
-            {
-                dict(
-                    zip(
-                        (
-                            "data",
-                            "code",
-                            "success",
-                            "message",
-                        ),
-                        (
-                            data,
-                            code,
-                            success,
-                            message,
-                        ),
-                    )
-                )
-            }
-        )
-        return rv
+        return downloadURL
 
     @staticmethod
-    def decodeFastMirrorCoreDownloadJsons(downloadAPIUrl):
-        data = []
+    def getFastMirrorAPIRealCoreDownloadURL(downloadAPIUrl):
+        downloadURL = ""
         try:
             apiData = loads(Session.get(downloadAPIUrl).text)
         except Exception as e:
             return -2
         try:
             if apiData["success"]:
-                data = apiData["data"]
-                return data
+                downloadURL = apiData["data"]["download_url"]
+                return downloadURL
         except:
             return -1
 
@@ -217,18 +218,19 @@ class FetchFastMirrorAPICoreVersionThread(QThread):
 
 class FetchFastMirrorAPICoreDownloadThread(QThread):
     """
-    用于获取/api/v3/{name}/{mc_version}
-    即服务端版本列表
+    用于获取/api/v3/{name}/{mc_version}/{coreVersion}
+    即真正的下载地址
     """
 
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, name, mcVersion, FinishSlot: Callable = ...):
+    def __init__(self, name, mcVersion, coreVersion, FinishSlot: Callable = ...):
         super().__init__()
         self._id = None
         self.Data = None
         self.name = name
         self.mcVersion = mcVersion
+        self.coreVersion = coreVersion
         if FinishSlot is not ...:
             self.fetchSignal.connect(FinishSlot)
 
@@ -237,8 +239,8 @@ class FetchFastMirrorAPICoreDownloadThread(QThread):
 
     def run(self):
         self.fetchSignal.emit(
-            FastMirrorAPIDownloadURLParser.parseFastMirrorAPICoreVersionUrl(
-                name=self.name, mcVersion=self.mcVersion
+            FastMirrorAPIDownloadURLParser.parseFastMirrorAPIRealCoreDownloadURL(
+                name=self.name, mcVersion=self.mcVersion, coreVersion=self.coreVersion
             )
         )
 
@@ -246,7 +248,7 @@ class FetchFastMirrorAPICoreDownloadThread(QThread):
         return self.Data
 
 
-class FetchFastMirrorAPIDownloadURLThreadFactory:
+class FetchFastMirrorAPIThreadFactory:
     def __init__(self):
         self.singletonThread = None
 
@@ -260,3 +262,39 @@ class FetchFastMirrorAPIDownloadURLThreadFactory:
                 return thread
         else:
             return FetchFastMirrorAPIThread(finishSlot)
+
+
+class FetchFastMirrorAPICoreVersionThreadFactory:
+    def __init__(self):
+        self.singletonThread = None
+
+    def create(
+        self, _singleton=False, finishSlot=...
+    ) -> FetchFastMirrorAPICoreVersionThread:
+        if _singleton:
+            if self.singletonThread is not None and self.singletonThread.isRunning():
+                return self.singletonThread
+            else:
+                thread = FetchFastMirrorAPICoreVersionThread(finishSlot)
+                self.singletonThread = thread
+                return thread
+        else:
+            return FetchFastMirrorAPICoreVersionThread(finishSlot)
+
+
+class FetchFastMirrorAPICoreDownloadThreadFactory:
+    def __init__(self):
+        self.singletonThread = None
+
+    def create(
+        self, _singleton=False, finishSlot=...
+    ) -> FetchFastMirrorAPICoreDownloadThread:
+        if _singleton:
+            if self.singletonThread is not None and self.singletonThread.isRunning():
+                return self.singletonThread
+            else:
+                thread = FetchFastMirrorAPICoreDownloadThread(finishSlot)
+                self.singletonThread = thread
+                return thread
+        else:
+            return FetchFastMirrorAPICoreDownloadThread(finishSlot)
