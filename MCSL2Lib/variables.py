@@ -287,7 +287,12 @@ class DownloadVariables:
 
     def __init__(self):
         self.MCSLAPIDownloadUrlDict = {}
-
+        self.FastMirrorAPIDict = {}
+        self.FastMirrorAPICoreVersionDict = {}
+        self.FastMirrorAPIRealCoreDownloadURL: str = ""
+        self.selectedName: str = ""
+        self.selectedMCVersion: str = ""
+        self.selectedCoreVersion: str = ""
 
 @Singleton
 class ServerVariables:

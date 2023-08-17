@@ -94,19 +94,6 @@
      </property>
      <widget class="QWidget" name="downloadWithFastMirror">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="SubtitleLabel" name="coreListSubtitleLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>核心列表</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <widget class="SubtitleLabel" name="versionSubtitleLabel">
          <property name="sizePolicy">
@@ -117,19 +104,6 @@
          </property>
          <property name="text">
           <string>游戏版本</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="SubtitleLabel" name="buildSubtitleLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>构建列表</string>
          </property>
         </widget>
        </item>
@@ -168,10 +142,41 @@
             <x>0</x>
             <y>0</y>
             <width>200</width>
-            <height>401</height>
+            <height>349</height>
            </rect>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <layout class="QVBoxLayout" name="coreListLayout"/>
+           </item>
+          </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="SubtitleLabel" name="buildSubtitleLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>构建列表</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="SubtitleLabel" name="coreListSubtitleLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>核心列表</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
@@ -209,13 +214,21 @@
             <x>0</x>
             <y>0</y>
             <width>160</width>
-            <height>401</height>
+            <height>349</height>
            </rect>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <item>
+            <layout class="QVBoxLayout" name="versionLayout"/>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item row="0" column="3">
+        <widget class="ToolButton" name="refreshFastMirrorAPIBtn"/>
+       </item>
+       <item row="1" column="2" colspan="2">
         <widget class="SmoothScrollArea" name="buildScrollArea">
          <property name="minimumSize">
           <size>
@@ -241,9 +254,14 @@
             <x>0</x>
             <y>0</y>
             <width>346</width>
-            <height>401</height>
+            <height>349</height>
            </rect>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QVBoxLayout" name="buildLayout"/>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -252,7 +270,7 @@
      <widget class="QWidget" name="downloadWithMCSLAPI">
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
-        <widget class="Pivot" name="MCSLAPIPivot" native="true">
+        <widget class="Pivot" name="MCSLAPIPivot">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -327,8 +345,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>698</width>
-                <height>348</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -365,8 +383,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>698</width>
-                <height>348</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -403,8 +421,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>698</width>
-                <height>348</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -441,8 +459,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>698</width>
-                <height>348</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -480,7 +498,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>698</width>
-                <height>348</height>
+                <height>316</height>
                </rect>
               </property>
               <property name="sizePolicy">
