@@ -689,7 +689,7 @@ class DownloadPage(QWidget):
                 and not path.exists(path.join("MCSL2", "Downloads", f"{name}.{format}.aria2")):
             print("文件已存在")
             box.show()
-            box.onDownloadFinished(3)
+            box.onDownloadExist()
         else:
             gid = Aria2Controller.download(
                 uri=url,

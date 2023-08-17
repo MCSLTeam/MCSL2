@@ -501,7 +501,7 @@ class Aria2Controller:
                 f"--dir={path}",
             ]
             cls.aria2Process = QProcess()
-            cls.aria2Process.start(Aria2Program, ConfigCommand)
+            cls.aria2Process.startDetached(Aria2Program, ConfigCommand)
             cls.aria2Process.waitForStarted()
             cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret="", timeout=0.1))
             if cls.testAria2Service():
@@ -518,7 +518,7 @@ class Aria2Controller:
             download = cls._aria2.get_download(gid)
         except:
             cls.killWatcher(gid)
-            return
+            return None
         if stopFlag:
             try:
                 cls._aria2.client.remove(gid)  # 删除下载任务
@@ -528,6 +528,7 @@ class Aria2Controller:
             cls._downloadTasks.pop(gid)
             if gid in cls._downloadWatcher.keys():
                 cls._downloadWatcher.pop(gid)
+        return download
 
     @classmethod
     def shutDown(cls):
@@ -547,7 +548,6 @@ class Aria2Controller:
             except Exception:
                 pass
             return True
-        
 
 
 class NormalDownloadManager(QObject):
@@ -662,7 +662,7 @@ class DownloadWatcher(QObject):
 
     # 每隔一段时间获取一次下载信息(self.Interval)，并发射下载信息OnDownloadInfoGet(dict)
     onDownloadInfoGet = pyqtSignal(dict)
-    downloadStop = pyqtSignal(int)
+    downloadStop = pyqtSignal(list)
 
     def __init__(
             self,
@@ -688,7 +688,7 @@ class DownloadWatcher(QObject):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.updateDownloadInfo)
-        self.timer.singleShot(1000 * self._interval, lambda: self.timer.start(self._interval * 1000))
+        self.timer.singleShot(int(1000 * self._interval), lambda: self.timer.start(int(self._interval * 1000)))
 
     def updateDownloadInfo(self):
         if (status := Aria2Controller.getDownloadsStatus(self._gid))[
@@ -704,20 +704,20 @@ class DownloadWatcher(QObject):
         elif status["status"] == "complete":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
-            Aria2Controller.downloadCompletedHandler(self._gid, False)
-            self.downloadStop.emit(0)
+            dl = Aria2Controller.downloadCompletedHandler(self._gid, False)
+            self.downloadStop.emit([dl])
             print("下载完成")
         elif status["status"] == "error":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
-            Aria2Controller.downloadCompletedHandler(self._gid, True)
-            self.downloadStop.emit(1)
+            dl = Aria2Controller.downloadCompletedHandler(self._gid, True)
+            self.downloadStop.emit([dl])
             print("下载失败")
         elif status["status"] == "removed":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
-            Aria2Controller.downloadCompletedHandler(self._gid, True)
-            self.downloadStop.emit(2)
+            dl = Aria2Controller.downloadCompletedHandler(self._gid, True)
+            self.downloadStop.emit([dl])
             print("下载被取消")
 
     def stopDownload(self):

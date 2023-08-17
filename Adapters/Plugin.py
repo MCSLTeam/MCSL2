@@ -114,7 +114,10 @@ class PluginManager(BasePluginManager):
     def loadAllPlugins(self):
         """加载所有插件但不启用"""
         path = getcwd() + "\\Plugins"
-        pathList = next(walk(path))[1]
+        try:
+            pathList = next(walk(path))[1]
+        except StopIteration:
+            return
         for pluginName in pathList:
             try:
                 self.loadPlugin(pluginName)
