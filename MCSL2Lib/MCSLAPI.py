@@ -20,18 +20,48 @@ from random import randint
 from PyQt5.QtCore import pyqtSignal, QThread
 
 from MCSL2Lib.networkController import Session
+import os 
+import json
 
+def get_mcslapicon():
+    '''获得配置'''
+    if not os.path.exists('./mcslapi.json'):
+        with open('./mcslapi.json','w') as f:
+            data = {
+                'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
+                'equilibriumList':'Gitee'
+            }
+            f.write(json.dumps(data))
+            return data
+    else:
+        with open('./mcslapi.json','r') as f:
+            return json.dumps(f.read())
+
+def change_mcslapicon(node_url = False , equilibriumList = False):
+    '''更改配置'''
+    with open('./mcslapi.json','r') as j:
+        data = j.read()
+    with open('./mcslapi.json','w') as f:
+        if node_url :
+            data['node_url'] = node_url
+        elif equilibriumList:
+            data['equilibriumList'] = equilibriumList
+        f.write(json.dumps(data))
+        return True
 
 class MCSLAPIDownloadURLParser:
     """URL设定器"""
+
 
     def __init__(self):
         pass
 
     @staticmethod
     def parseDownloaderAPIUrl():
-        equilibriumList = ["SharePoint", "Gitee"]
-        UrlArg = f"http://117.21.183.18:8927/ipns/mcslapiipfs.x-xh.cn/{equilibriumList[randint(0, 1)]}"
+        #  ["SharePoint", "Gitee"]
+        con = get_mcslapicon()
+        equilibriumList = con['equilibriumList']
+        UrlArg = f"{con['node_url']}{equilibriumList}"
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",
