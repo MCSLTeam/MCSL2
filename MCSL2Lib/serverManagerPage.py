@@ -739,7 +739,7 @@ class ServerManagerPage(QWidget):
         self.verticalLayout.removeItem(self.serversScrollAreaSpacer)
 
         for i in reversed(range(self.verticalLayout.count())):
-            self.verticalLayout.itemAt(i).widget().setParent(None)
+            self.verticalLayout.itemAt(i).widget().deleteLater()
         # 读取全局设置
         globalConfig = readGlobalServerConfig()
 
