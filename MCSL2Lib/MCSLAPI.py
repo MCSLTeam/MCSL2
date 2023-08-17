@@ -39,8 +39,12 @@ def get_mcslapicon():
 
 def change_mcslapicon(node_url = False , equilibriumList = False):
     '''更改配置'''
+    data = {}
     with open('./mcslapi.json','r') as j:
-        data = json.dumps(j.read())
+        try:
+            data = json.dumps(j.read())
+        except:
+            j.close()
     with open('./mcslapi.json','w') as f:
         try:
             if node_url :
@@ -48,17 +52,18 @@ def change_mcslapicon(node_url = False , equilibriumList = False):
             elif equilibriumList:
                 data['equilibriumList'] = equilibriumList
         except:
-            with open('./mcslapi.json','w') as f:
-                data = {
-                    'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
-                    'equilibriumList':'Gitee'
-                }
+            data = {
+                'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
+                'equilibriumList':'Gitee'
+            }
             if node_url :
                 data['node_url'] = node_url
             elif equilibriumList:
                 data['equilibriumList'] = equilibriumList
         f.write(json.dumps(data))
+    
         return True
+
 
 class MCSLAPIDownloadURLParser:
     """URL设定器"""
