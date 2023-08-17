@@ -39,26 +39,7 @@ class FastMirrorAPIDownloadURLParser:
             success,
             message,
         ) = FastMirrorAPIDownloadURLParser.decodeFastMirrorJsons(downloadAPIUrl)
-        rv.update(
-            {
-                dict(
-                    zip(
-                        (
-                            "data",
-                            "code",
-                            "success",
-                            "message",
-                        ),
-                        (
-                            data,
-                            code,
-                            success,
-                            message,
-                        ),
-                    )
-                )
-            }
-        )
+        rv.update({dict(zip("data", data))})
         return rv
 
     @staticmethod
@@ -128,7 +109,9 @@ class FastMirrorAPIDownloadURLParser:
 
     @staticmethod
     def parseFastMirrorAPICoreDownloadUrl(name, mcVersion, coreVersion):
-        fastMirrorAPI = f"https://download.fastmirror.net/api/v3/{name}/{mcVersion}/{coreVersion}"
+        fastMirrorAPI = (
+            f"https://download.fastmirror.net/api/v3/{name}/{mcVersion}/{coreVersion}"
+        )
         rv = {}
         downloadAPIUrl = fastMirrorAPI
         (
@@ -222,7 +205,42 @@ class FetchFastMirrorAPICoreVersionThread(QThread):
         return self.url
 
     def run(self):
-        self.fetchSignal.emit(FastMirrorAPIDownloadURLParser.parseFastMirrorAPICoreVersionUrl(name=self.name, mcVersion=self.mcVersion))
+        self.fetchSignal.emit(
+            FastMirrorAPIDownloadURLParser.parseFastMirrorAPICoreVersionUrl(
+                name=self.name, mcVersion=self.mcVersion
+            )
+        )
+
+    def getData(self):
+        return self.Data
+
+
+class FetchFastMirrorAPICoreDownloadThread(QThread):
+    """
+    用于获取/api/v3/{name}/{mc_version}
+    即服务端版本列表
+    """
+
+    fetchSignal = pyqtSignal(dict)
+
+    def __init__(self, name, mcVersion, FinishSlot: Callable = ...):
+        super().__init__()
+        self._id = None
+        self.Data = None
+        self.name = name
+        self.mcVersion = mcVersion
+        if FinishSlot is not ...:
+            self.fetchSignal.connect(FinishSlot)
+
+    def getURL(self):
+        return self.url
+
+    def run(self):
+        self.fetchSignal.emit(
+            FastMirrorAPIDownloadURLParser.parseFastMirrorAPICoreVersionUrl(
+                name=self.name, mcVersion=self.mcVersion
+            )
+        )
 
     def getData(self):
         return self.Data
