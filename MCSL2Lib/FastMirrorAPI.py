@@ -269,13 +269,17 @@ class FetchFastMirrorAPICoreVersionThreadFactory:
         self.singletonThread = None
 
     def create(
-        self, _singleton=False, finishSlot=...
+        self, name, mcVersion, _singleton=False, finishSlot=...
     ) -> FetchFastMirrorAPICoreVersionThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
             else:
-                thread = FetchFastMirrorAPICoreVersionThread(finishSlot)
+                thread = FetchFastMirrorAPICoreVersionThread(
+                    name=name,
+                    mcVersion=mcVersion,
+                    FinishSlot=finishSlot
+                )
                 self.singletonThread = thread
                 return thread
         else:
@@ -287,13 +291,18 @@ class FetchFastMirrorAPICoreDownloadThreadFactory:
         self.singletonThread = None
 
     def create(
-        self, _singleton=False, finishSlot=...
+        self, name, mcVersion, coreVersion, _singleton=False, finishSlot=...
     ) -> FetchFastMirrorAPICoreDownloadThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
             else:
-                thread = FetchFastMirrorAPICoreDownloadThread(finishSlot)
+                thread = FetchFastMirrorAPICoreDownloadThread(
+                    name=name,
+                    mcVersion=mcVersion,
+                    coreVersion=coreVersion,
+                    FinishSlot=finishSlot
+                    )
                 self.singletonThread = thread
                 return thread
         else:
