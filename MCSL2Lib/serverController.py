@@ -20,7 +20,7 @@ from json import dumps
 from os import path as ospath
 from typing import List, Optional
 
-from psutil import NoSuchProcess, Process
+from psutil import NoSuchProcess, Process, AccessDenied
 from MCSL2Lib.singleton import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlot
 from MCSL2Lib.settingsController import SettingsController
@@ -327,7 +327,7 @@ class MinecraftServerResMonitorUtil(QObject):
         self.timer.start(1000)  # 每隔1秒获取一次
 
     def getServerMem(self):
-        divisionNumList = {"G": 1024, "M": 1048576}
+        divisionNumList = {"G": 1073741824, "M": 1048576}
         divisionNum = divisionNumList[serverVariables.memUnit]
         try:
             if ServerHandler().isServerRunning():
@@ -341,6 +341,10 @@ class MinecraftServerResMonitorUtil(QObject):
             else:
                 self.memPercent.emit(0.0000)
         except NoSuchProcess:
+            pass
+        except PermissionError:
+            pass
+        except AccessDenied:
             pass
 
     def getServerCPU(self):
