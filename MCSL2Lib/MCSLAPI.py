@@ -53,7 +53,6 @@ def change_mcslapicon(node_url = False , equilibriumList = False):
                     'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
                     'equilibriumList':'Gitee'
                 }
-                f.write(json.dumps(data))
             if node_url :
                 data['node_url'] = node_url
             elif equilibriumList:
