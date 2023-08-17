@@ -8,4 +8,4 @@ imageio>=2.31.1
 zstandard>=0.21.0
 ordered-set>=4.1.0
 Nuitka>=1.7.10
-pyqt5-stubs>=5.15.6.0
+pyqt5-stubs>=5.15.6.0r

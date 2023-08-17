@@ -1,7 +1,9 @@
 from os import path, remove
+from typing import Optional
 
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QPaintEvent, QResizeEvent
+from aria2p import Download
 from qfluentwidgets import (
     BodyLabel,
     PrimaryPushButton,
@@ -261,19 +263,26 @@ class DL_MessageBox(MessageBox):
         self.downloadProgressWidget.ProgressBar.setValue(info["bar"])
         self.downloadProgressWidget.downloading = True
 
-    @pyqtSlot(int)
-    def onDownloadFinished(self, status):
+    @pyqtSlot(list)
+    def onDownloadFinished(self, _: list):
+        [dl, ] = _
+        dl: Download
         self.hide()
         self.show()
 
-        if status == 0:
+        if dl.status == "complete":
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-        elif status == 1:
+        elif dl.status == "error":
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-        elif status == 2:
+            print(dl.error_code, dl.error_message, dl.files)
+        elif dl.status == "removed":
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-        elif status == 3:
-            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
+        self.downloadProgressWidget.downloading = False
+
+    def onDownloadExist(self):
+        self.hide()
+        self.show()
+        self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
         self.downloadProgressWidget.downloading = False
 
     def setFileName(self, name):
@@ -291,4 +300,3 @@ class DL_MessageBox(MessageBox):
         self.downloadProgressWidget.fileName.setText("[文件名]")
         self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(0)
         self.downloadProgressWidget.downloading = False
-
