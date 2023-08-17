@@ -42,10 +42,22 @@ def change_mcslapicon(node_url = False , equilibriumList = False):
     with open('./mcslapi.json','r') as j:
         data = json.dumps(j.read())
     with open('./mcslapi.json','w') as f:
-        if node_url :
-            data['node_url'] = node_url
-        elif equilibriumList:
-            data['equilibriumList'] = equilibriumList
+        try:
+            if node_url :
+                data['node_url'] = node_url
+            elif equilibriumList:
+                data['equilibriumList'] = equilibriumList
+        except:
+            with open('./mcslapi.json','w') as f:
+                data = {
+                    'node_url':'https://hardbin.com/ipns/mcslapiipfs.x-xh.cn/',
+                    'equilibriumList':'Gitee'
+                }
+                f.write(json.dumps(data))
+            if node_url :
+                data['node_url'] = node_url
+            elif equilibriumList:
+                data['equilibriumList'] = equilibriumList
         f.write(json.dumps(data))
         return True
 
