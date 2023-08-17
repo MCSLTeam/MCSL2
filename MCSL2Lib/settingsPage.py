@@ -1588,7 +1588,7 @@ class SettingsPage(QWidget):
                 content="已是最新版本",
                 orient=Qt.Horizontal,
                 isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
+                position=InfoBarPosition.TOP,
                 duration=2500,
                 parent=self.tmpParent,
             )
@@ -1598,7 +1598,7 @@ class SettingsPage(QWidget):
                 content="尝试自己检查一下网络？",
                 orient=Qt.Horizontal,
                 isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
+                position=InfoBarPosition.TOP,
                 duration=2500,
                 parent=self,
             )
