@@ -36,7 +36,7 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     MessageBox,
     InfoBarPosition,
-    InfoBar
+    InfoBar,
 )
 
 from MCSL2Lib.DownloadProgressWidget import DownloadMessageBox
@@ -51,12 +51,17 @@ from MCSL2Lib.aria2ClientController import Aria2Controller
 from MCSL2Lib.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
 from MCSL2Lib.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.variables import GlobalMCSL2Variables, DownloadVariables, SettingsVariables
+from MCSL2Lib.variables import (
+    GlobalMCSL2Variables,
+    DownloadVariables,
+    SettingsVariables,
+)
 from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
 downloadVariables = DownloadVariables()
 settingsVariables = SettingsVariables()
+
 
 @Singleton
 class DownloadPage(QWidget):
@@ -124,7 +129,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.versionSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.versionSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.versionSubtitleLabel.setSizePolicy(sizePolicy)
         self.versionSubtitleLabel.setObjectName("versionSubtitleLabel")
 
@@ -133,7 +140,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth()
+        )
         self.coreListSmoothScrollArea.setSizePolicy(sizePolicy)
         self.coreListSmoothScrollArea.setMinimumSize(QSize(200, 0))
         self.coreListSmoothScrollArea.setMaximumSize(QSize(200, 16777215))
@@ -144,7 +153,9 @@ class DownloadPage(QWidget):
 
         self.coreListScrollAreaWidgetContents = QWidget()
         self.coreListScrollAreaWidgetContents.setGeometry(QRect(0, 0, 200, 349))
-        self.coreListScrollAreaWidgetContents.setObjectName("coreListScrollAreaWidgetContents")
+        self.coreListScrollAreaWidgetContents.setObjectName(
+            "coreListScrollAreaWidgetContents"
+        )
 
         self.verticalLayout_14 = QVBoxLayout(self.coreListScrollAreaWidgetContents)
         self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
@@ -160,7 +171,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.buildSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.buildSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.buildSubtitleLabel.setSizePolicy(sizePolicy)
         self.buildSubtitleLabel.setObjectName("buildSubtitleLabel")
         self.gridLayout_2.addWidget(self.buildSubtitleLabel, 0, 2, 1, 1)
@@ -168,7 +181,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreListSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.coreListSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.coreListSubtitleLabel.setSizePolicy(sizePolicy)
         self.coreListSubtitleLabel.setObjectName("coreListSubtitleLabel")
         self.gridLayout_2.addWidget(self.coreListSubtitleLabel, 0, 0, 1, 1)
@@ -176,7 +191,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth()
+        )
         self.versionSmoothScrollArea.setSizePolicy(sizePolicy)
         self.versionSmoothScrollArea.setMinimumSize(QSize(160, 0))
         self.versionSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
@@ -184,10 +201,12 @@ class DownloadPage(QWidget):
         self.versionSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.versionSmoothScrollArea.setWidgetResizable(True)
         self.versionSmoothScrollArea.setObjectName("versionSmoothScrollArea")
-        
+
         self.versionScrollAreaWidgetContents = QWidget()
         self.versionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 160, 349))
-        self.versionScrollAreaWidgetContents.setObjectName("versionScrollAreaWidgetContents")
+        self.versionScrollAreaWidgetContents.setObjectName(
+            "versionScrollAreaWidgetContents"
+        )
 
         self.verticalLayout_13 = QVBoxLayout(self.versionScrollAreaWidgetContents)
         self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
@@ -213,7 +232,9 @@ class DownloadPage(QWidget):
 
         self.buildScrollAreaWidgetContents = QWidget()
         self.buildScrollAreaWidgetContents.setGeometry(QRect(0, 0, 346, 349))
-        self.buildScrollAreaWidgetContents.setObjectName("buildScrollAreaWidgetContents")
+        self.buildScrollAreaWidgetContents.setObjectName(
+            "buildScrollAreaWidgetContents"
+        )
 
         self.verticalLayout_2 = QVBoxLayout(self.buildScrollAreaWidgetContents)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -492,7 +513,13 @@ class DownloadPage(QWidget):
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
         dsList = [self.downloadWithFastMirror, self.downloadWithMCSLAPI]
-        self.downloadStackedWidget.setCurrentWidget(dsList[settingsVariables.downloadSourceList.index(settingsController.fileSettings['downloadSource'])])
+        self.downloadStackedWidget.setCurrentWidget(
+            dsList[
+                settingsVariables.downloadSourceList.index(
+                    settingsController.fileSettings["downloadSource"]
+                )
+            ]
+        )
 
         self.setObjectName("DownloadInterface")
 
@@ -672,9 +699,12 @@ class DownloadPage(QWidget):
             self.refreshFastMirrorAPIBtn.setEnabled(False)
 
     def getFastMirrorAPICoreVersion(self, name, mcVersion):
-        """请求FastMirror API"""
+        """请求FastMirror API 核心的版本"""
         workThread = self.fetchFastMirrorAPICoreVersionThreadFactory.create(
-            _singleton=True, finishSlot=self.updateFastMirrorAPIDict
+            name=name,
+            mcVersion=mcVersion,
+            _singleton=True,
+            finishSlot=self.updateFFastMirrorAPICoreVersionDict,
         )
         if workThread.isRunning():
             self.refreshFastMirrorAPIBtn.setEnabled(False)
@@ -687,6 +717,25 @@ class DownloadPage(QWidget):
             workThread.start()
             self.refreshFastMirrorAPIBtn.setEnabled(False)
 
+    def getFastMirrorAPIRealCoreDownloadURL(self, name, mcVersion, coreVersion):
+        """请求FastMirror API 下载链接"""
+        workThread = self.fetchFastMirrorAPICoreDownloadThreadFactory.create(
+            name=name,
+            mcVersion=mcVersion,
+            coreVersion=coreVersion,
+            _singleton=True,
+            finishSlot=self.updateFastMirrorAPIRealCoreDownloadURL,
+        )
+        if workThread.isRunning():
+            self.refreshFastMirrorAPIBtn.setEnabled(False)
+            return
+        else:
+            # for layout in self.MCSLAPILayoutList:
+            #     for i in reversed(range(layout.count())):
+            #         layout.itemAt(i).widget().setParent(None)
+            #     layout.addWidget(MCSLAPILoadingWidget())
+            workThread.start()
+            self.refreshFastMirrorAPIBtn.setEnabled(False)
 
     @pyqtSlot(dict)
     def updateFastMirrorAPIDict(self, _APIDict: dict):
