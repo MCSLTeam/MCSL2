@@ -671,6 +671,23 @@ class DownloadPage(QWidget):
             workThread.start()
             self.refreshFastMirrorAPIBtn.setEnabled(False)
 
+    def getFastMirrorAPICoreVersion(self, name, mcVersion):
+        """请求FastMirror API"""
+        workThread = self.fetchFastMirrorAPICoreVersionThreadFactory.create(
+            _singleton=True, finishSlot=self.updateFastMirrorAPIDict
+        )
+        if workThread.isRunning():
+            self.refreshFastMirrorAPIBtn.setEnabled(False)
+            return
+        else:
+            # for layout in self.MCSLAPILayoutList:
+            #     for i in reversed(range(layout.count())):
+            #         layout.itemAt(i).widget().setParent(None)
+            #     layout.addWidget(MCSLAPILoadingWidget())
+            workThread.start()
+            self.refreshFastMirrorAPIBtn.setEnabled(False)
+
+
     @pyqtSlot(dict)
     def updateFastMirrorAPIDict(self, _APIDict: dict):
         """更新获取FastMirrorAPI结果"""
