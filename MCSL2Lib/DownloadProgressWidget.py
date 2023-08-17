@@ -266,16 +266,19 @@ class DownloadMessageBox(MessageBox):
     @pyqtSlot(list)
     def onDownloadFinished(self, _: list):
         [dl, ] = _
-        dl: Download
+        dl: Optional[Download]
         self.hide()
         self.show()
 
-        if dl.status == "complete":
-            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-        elif dl.status == "error":
-            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-            print(dl.error_code, dl.error_message, dl.files)
-        elif dl.status == "removed":
+        if dl is not None:
+            if dl.status == "complete":
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
+            elif dl.status == "error":
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+                print(dl.error_code, dl.error_message, dl.files)
+            elif dl.status == "removed":
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+        else:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadProgressWidget.downloading = False
 
