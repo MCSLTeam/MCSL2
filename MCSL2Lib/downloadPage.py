@@ -692,7 +692,7 @@ class DownloadPage(QWidget):
             box.onDownloadFinished(3)
         else:
             gid = Aria2Controller.download(
-                uri=url.replace('mcsl_api.df100.ltd', "43.133.181.186"),
+                uri=url,
                 watch=True,
                 info_get=box.onInfoGet,
                 stopped=box.onDownloadFinished,
