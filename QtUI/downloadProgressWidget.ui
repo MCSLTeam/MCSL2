@@ -123,39 +123,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="BodyLabel" name="fileSize">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>[文件大小]</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="BodyLabel" name="speed">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>[速度]</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="BodyLabel" name="ETA">
-       <property name="text">
-        <string>[ETA]</string>
-       </property>
-      </widget>
-     </item>
      <item row="5" column="0">
       <widget class="StrongBodyLabel" name="speedTitle">
        <property name="sizePolicy">
@@ -173,19 +140,6 @@
       <widget class="PushButton" name="pauseBtn">
        <property name="text">
         <string>暂停</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="BodyLabel" name="fileName">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>[文件名]</string>
        </property>
       </widget>
      </item>
@@ -235,6 +189,52 @@
       <widget class="PrimaryPushButton" name="PrimaryPushButton">
        <property name="text">
         <string>隐藏</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="BodyLabel" name="fileName">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>[文件名]</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <widget class="BodyLabel" name="fileSize">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>[文件大小]</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1" colspan="2">
+      <widget class="BodyLabel" name="ETA">
+       <property name="text">
+        <string>[ETA]</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="2">
+      <widget class="BodyLabel" name="speed">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>[速度]</string>
        </property>
       </widget>
      </item>

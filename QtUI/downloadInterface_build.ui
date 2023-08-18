@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -24,7 +24,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>284</width>
+    <width>16777215</width>
     <height>80</height>
    </size>
   </property>
@@ -36,7 +36,7 @@
     <widget class="QWidget" name="TextWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="StrongBodyLabel" name="coreNameLabel">
+       <widget class="StrongBodyLabel" name="buildVerLabel">
         <property name="text">
          <string>[版本号]</string>
         </property>

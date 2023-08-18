@@ -279,6 +279,48 @@ class GlobalMCSL2Variables:
         "    background-color: transparent\n"
         "}"
     )
+    darkFastMirrorDownloadBtnStyleSheet = (
+        "PushButton {\n"
+        "    color: white;\n"
+        "    background-color: transparent;\n"
+        "    border: none;\n"
+        "    border-radius: 5px;\n"
+        "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
+        "    padding: 5px 12px 6px 12px;\n"
+        "    outline: none;\n"
+        "    margin: 0;\n"
+        "}\n"
+        "PushButton:hover {\n"
+        "    background-color: rgba(0, 0, 0, 9);\n"
+        "    border: none;\n"
+        "}\n"
+        "PushButton:pressed {\n"
+        "    color: rgba(0, 0, 0, 0.63);\n"
+        "    background: rgba(249, 249, 249, 0.3);\n"
+        "    border-bottom: 1px solid rgba(0, 0, 0, 0.073);\n"
+        "}"
+    )
+    lightFastMirrorDownloadBtnStyleSheet = (
+        "PushButton {\n"
+        "    color: black;\n"
+        "    background-color: transparent;\n"
+        "    border: none;\n"
+        "    border-radius: 5px;\n"
+        "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
+        "    padding: 5px 12px 6px 12px;\n"
+        "    outline: none;\n"
+        "    margin: 0;\n"
+        "}\n"
+        "PushButton:hover {\n"
+        "    background-color: rgba(0, 0, 0, 9);\n"
+        "    border: none;\n"
+        "}\n"
+        "PushButton:pressed {\n"
+        "    color: rgba(0, 0, 0, 0.63);\n"
+        "    background: rgba(249, 249, 249, 0.3);\n"
+        "    border-bottom: 1px solid rgba(0, 0, 0, 0.073);\n"
+        "}"
+    )
 
 
 @Singleton
@@ -289,10 +331,16 @@ class DownloadVariables:
         self.MCSLAPIDownloadUrlDict = {}
         self.FastMirrorAPIDict = {}
         self.FastMirrorAPICoreVersionDict = {}
-        self.FastMirrorAPIRealCoreDownloadURL: str = ""
         self.selectedName: str = ""
         self.selectedMCVersion: str = ""
-        self.selectedCoreVersion: str = ""
+        self.FastMirrorReplaceTagDict = {
+            "proxy": "代理",
+            "vanilla": "原版",
+            "pure": "纯净",
+            "mod": "模组",
+            "bedrock": "基岩",
+        }
+
 
 @Singleton
 class ServerVariables:
@@ -332,9 +380,11 @@ class ServerVariables:
             if self.inputEncoding == "follow":  # 跟随输出
                 self.inputEncoding = self.outputDecoding
 
+
 @Singleton
 class SettingsVariables:
-    '''设置相关'''
+    """设置相关"""
+
     def __init__(self):
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
         self.downloadSourceList = ["FastMirror", "MCSLAPI"]

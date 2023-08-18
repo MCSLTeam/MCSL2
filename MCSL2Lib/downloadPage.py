@@ -37,15 +37,20 @@ from qfluentwidgets import (
     MessageBox,
     InfoBarPosition,
     InfoBar,
+    StateToolTip,
 )
 
 from MCSL2Lib.DownloadProgressWidget import DownloadMessageBox
+from MCSL2Lib.FastMirrorWidgets import (
+    FastMirrorBuildListWidget,
+    FastMirrorCoreListWidget,
+    FastMirrorVersionListWidget,
+)
 from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.FastMirrorAPI import (
     FetchFastMirrorAPIThreadFactory,
     FetchFastMirrorAPICoreVersionThreadFactory,
-    FetchFastMirrorAPICoreDownloadThreadFactory,
 )
 from MCSL2Lib.aria2ClientController import Aria2Controller
 from MCSL2Lib.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
@@ -76,9 +81,6 @@ class DownloadPage(QWidget):
         self.fetchFastMirrorAPIThreadFactory = FetchFastMirrorAPIThreadFactory()
         self.fetchFastMirrorAPICoreVersionThreadFactory = (
             FetchFastMirrorAPICoreVersionThreadFactory()
-        )
-        self.fetchFastMirrorAPICoreDownloadThreadFactory = (
-            FetchFastMirrorAPICoreDownloadThreadFactory()
         )
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -195,15 +197,15 @@ class DownloadPage(QWidget):
             self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth()
         )
         self.versionSmoothScrollArea.setSizePolicy(sizePolicy)
-        self.versionSmoothScrollArea.setMinimumSize(QSize(160, 0))
-        self.versionSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
+        self.versionSmoothScrollArea.setMinimumSize(QSize(170, 0))
+        self.versionSmoothScrollArea.setMaximumSize(QSize(170, 16777215))
         self.versionSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.versionSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.versionSmoothScrollArea.setWidgetResizable(True)
         self.versionSmoothScrollArea.setObjectName("versionSmoothScrollArea")
 
         self.versionScrollAreaWidgetContents = QWidget()
-        self.versionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 160, 349))
+        self.versionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 170, 349))
         self.versionScrollAreaWidgetContents.setObjectName(
             "versionScrollAreaWidgetContents"
         )
@@ -218,7 +220,9 @@ class DownloadPage(QWidget):
         self.verticalLayout_13.addLayout(self.versionLayout)
         self.versionSmoothScrollArea.setWidget(self.versionScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.versionSmoothScrollArea, 1, 1, 1, 1)
-        self.refreshFastMirrorAPIBtn = ToolButton(self.downloadWithFastMirror)
+        self.refreshFastMirrorAPIBtn = ToolButton(
+            FIF.UPDATE, self.downloadWithFastMirror
+        )
         self.refreshFastMirrorAPIBtn.setObjectName("refreshFastMirrorAPIBtn")
 
         self.gridLayout_2.addWidget(self.refreshFastMirrorAPIBtn, 0, 3, 1, 1)
@@ -599,6 +603,7 @@ class DownloadPage(QWidget):
         self.MCSLAPIPivot.setCurrentItem("MCSLAPIJava")
         self.MCSLAPIStackedWidget.currentChanged.connect(self.refreshDownloads)
         self.refreshMCSLAPIBtn.clicked.connect(self.getMCSLAPI)
+        self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
         self.refreshMCSLAPIBtn.setEnabled(False)
 
     @pyqtSlot(int)
@@ -622,8 +627,10 @@ class DownloadPage(QWidget):
         # FastMirror
         if self.downloadStackedWidget.currentIndex() == 0:
             if downloadVariables.FastMirrorAPIDict:
-                # init
-                pass
+                if downloadVariables.FastMirrorAPIDict["name"] != -1:
+                    self.initFastMirrorCoreListWidget()
+                else:
+                    self.showFastMirrorFailedTip()
             else:
                 self.getFastMirrorAPI()
         # MCSLAPI
@@ -663,7 +670,7 @@ class DownloadPage(QWidget):
         else:
             for layout in self.MCSLAPILayoutList:
                 for i in reversed(range(layout.count())):
-                    layout.itemAt(i).widget().setParent(None)
+                    layout.itemAt(i).widget().deleteLater()
                 layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
             self.refreshMCSLAPIBtn.setEnabled(False)
@@ -686,7 +693,7 @@ class DownloadPage(QWidget):
     def showMCSLAPIFailedWidget(self):
         layout = self.MCSLAPILayoutList[self.MCSLAPIStackedWidget.currentIndex()]
         for i2 in reversed(range(layout.count())):
-            layout.itemAt(i2).widget().setParent(None)
+            layout.itemAt(i2).widget().deleteLater()
         layout.addWidget(MCSLAPILoadingErrorWidget())
         self.refreshMCSLAPIBtn.setEnabled(True)
 
@@ -699,10 +706,13 @@ class DownloadPage(QWidget):
             self.refreshFastMirrorAPIBtn.setEnabled(False)
             return
         else:
-            # for layout in self.MCSLAPILayoutList:
-            #     for i in reversed(range(layout.count())):
-            #         layout.itemAt(i).widget().setParent(None)
-            #     layout.addWidget(MCSLAPILoadingWidget())
+            self.getFastMirrorStateToolTip = StateToolTip(
+                "正在请求FastMirror API", "加载中，请稍后...", self
+            )
+            self.getFastMirrorStateToolTip.move(
+                self.getFastMirrorStateToolTip.getSuitablePos()
+            )
+            self.getFastMirrorStateToolTip.show()
             workThread.start()
             self.refreshFastMirrorAPIBtn.setEnabled(False)
 
@@ -712,18 +722,19 @@ class DownloadPage(QWidget):
             name=name,
             mcVersion=mcVersion,
             _singleton=True,
-            finishSlot=self.updateFFastMirrorAPICoreVersionDict,
+            finishSlot=self.updateFastMirrorAPICoreVersionDict,
         )
         if workThread.isRunning():
-            self.refreshFastMirrorAPIBtn.setEnabled(False)
             return
         else:
-            # for layout in self.MCSLAPILayoutList:
-            #     for i in reversed(range(layout.count())):
-            #         layout.itemAt(i).widget().setParent(None)
-            #     layout.addWidget(MCSLAPILoadingWidget())
+            self.getFastMirrorStateToolTip = StateToolTip(
+                "正在进一步请求FastMirror API", "加载中，请稍后...", self
+            )
+            self.getFastMirrorStateToolTip.move(
+                self.getFastMirrorStateToolTip.getSuitablePos()
+            )
+            self.getFastMirrorStateToolTip.show()
             workThread.start()
-            self.refreshFastMirrorAPIBtn.setEnabled(False)
 
     def getFastMirrorAPIRealCoreDownloadURL(self, name, mcVersion, coreVersion):
         """请求FastMirror API 下载链接"""
@@ -740,7 +751,7 @@ class DownloadPage(QWidget):
         else:
             # for layout in self.MCSLAPILayoutList:
             #     for i in reversed(range(layout.count())):
-            #         layout.itemAt(i).widget().setParent(None)
+            #         layout.itemAt(i).widget().deleteLater()
             #     layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
             self.refreshFastMirrorAPIBtn.setEnabled(False)
@@ -748,22 +759,39 @@ class DownloadPage(QWidget):
     @pyqtSlot(dict)
     def updateFastMirrorAPIDict(self, _APIDict: dict):
         """更新获取FastMirrorAPI结果"""
+        downloadVariables.FastMirrorAPIDict.clear()
         downloadVariables.FastMirrorAPIDict.update(_APIDict)
+        if downloadVariables.FastMirrorAPIDict["name"] != -1:
+            self.getFastMirrorStateToolTip.setContent("请求FastMirror API完毕！")
+            self.getFastMirrorStateToolTip.setState(True)
+            self.getFastMirrorStateToolTip = None
+            self.initFastMirrorCoreListWidget()
+        else:
+            self.getFastMirrorStateToolTip.setContent("请求FastMirror API失败！")
+            self.getFastMirrorStateToolTip.setState(True)
+            self.getFastMirrorStateToolTip = None
+            self.showFastMirrorFailedTip()
+        self.refreshFastMirrorAPIBtn.setEnabled(True)
 
     @pyqtSlot(dict)
-    def updateFFastMirrorAPICoreVersionDict(self, _APICoreVersionDict: dict):
+    def updateFastMirrorAPICoreVersionDict(self, _APICoreVersionDict: dict):
         """更新获取FastMirrorAPI结果"""
+        downloadVariables.FastMirrorAPICoreVersionDict.clear()
         downloadVariables.FastMirrorAPICoreVersionDict.update(_APICoreVersionDict)
-
-    @pyqtSlot(str)
-    def updateFastMirrorAPIRealCoreDownloadURL(self, _realCoreDownloadURL: str):
-        """更新获取FastMirrorAPI结果"""
-        downloadVariables.FastMirrorAPIRealCoreDownloadURL = _realCoreDownloadURL
+        if downloadVariables.FastMirrorAPICoreVersionDict["name"] != -1:
+            self.getFastMirrorStateToolTip.setContent("请求FastMirror API完毕！")
+            self.getFastMirrorStateToolTip.setState(True)
+            self.getFastMirrorStateToolTip = None
+            self.initFastMirrorCoreVersionListWidget()
+        else:
+            self.getFastMirrorStateToolTip.setContent("请求FastMirror API失败！")
+            self.getFastMirrorStateToolTip.setState(True)
+            self.getFastMirrorStateToolTip = None
 
     def showFastMirrorFailedTip(self):
         InfoBar.error(
             title="错误",
-            content="获取FastMirror API失败！\n尝试检查一下网络？",
+            content="获取FastMirror API失败！\n尝试检查网络后，请再尝试刷新。",
             orient=Qt.Horizontal,
             isClosable=False,
             position=InfoBarPosition.TOP,
@@ -796,7 +824,7 @@ class DownloadPage(QWidget):
         # 先把旧的清空，但是必须先删除Spacer
         for layout in self.MCSLAPILayoutList:
             for i in reversed(range(layout.count())):
-                layout.itemAt(i).widget().setParent(None)
+                layout.itemAt(i).widget().deleteLater()
 
         self.refreshMCSLAPIBtn.setEnabled(True)
         try:
@@ -853,9 +881,6 @@ class DownloadPage(QWidget):
         format = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][
             idx2
         ]
-        titles = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"][
-            idx2
-        ]
 
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
@@ -890,3 +915,143 @@ class DownloadPage(QWidget):
                 else Aria2Controller.resumeDownloadTask(gid)
             )
             box.show()
+
+    def initFastMirrorCoreListWidget(self):
+        """FastMirror核心列表"""
+
+        for i in reversed(range(self.coreListLayout.count())):
+            self.coreListLayout.itemAt(i).widget().deleteLater()
+        for i in range(len(downloadVariables.FastMirrorAPIDict["name"])):
+            fastMirrorCoreListWidget = FastMirrorCoreListWidget(self)
+            fastMirrorCoreListWidget.coreTag.setText(
+                downloadVariables.FastMirrorReplaceTagDict[
+                    downloadVariables.FastMirrorAPIDict["tag"][i]
+                ]
+            )
+            fastMirrorCoreListWidget.coreName.setText(
+                downloadVariables.FastMirrorAPIDict["name"][i]
+            )
+            fastMirrorCoreListWidget.coreName.setObjectName(
+                downloadVariables.FastMirrorAPIDict["name"][i]
+            )
+            fastMirrorCoreListWidget.coreName.clicked.connect(
+                self.fastMirrorCoreNameProcessor
+            )
+            self.coreListLayout.addWidget(fastMirrorCoreListWidget)
+
+        for i in reversed(range(self.versionLayout.count())):
+            self.versionLayout.itemAt(i).widget().deleteLater()
+        for i in reversed(range(self.buildLayout.count())):
+            self.buildLayout.itemAt(i).widget().deleteLater()
+
+    def fastMirrorCoreNameProcessor(self):
+        downloadVariables.selectedName = self.sender().objectName()
+        self.initFastMirrorMCVersionsListWidget()
+
+    def initFastMirrorMCVersionsListWidget(self):
+        for i in reversed(range(self.versionLayout.count())):
+            self.versionLayout.itemAt(i).widget().deleteLater()
+        for i in range(
+            len(
+                downloadVariables.FastMirrorAPIDict["mc_versions"][
+                    list(downloadVariables.FastMirrorAPIDict["name"]).index(
+                        downloadVariables.selectedName
+                    )
+                ]
+            )
+        ):
+            fastMirrorMCVersionsListWidget = FastMirrorVersionListWidget(self)
+            MCVersion = downloadVariables.FastMirrorAPIDict["mc_versions"][
+                list(downloadVariables.FastMirrorAPIDict["name"]).index(
+                    downloadVariables.selectedName
+                )
+            ][i]
+            fastMirrorMCVersionsListWidget.versionBtn.setText(MCVersion)
+            fastMirrorMCVersionsListWidget.versionBtn.setObjectName(MCVersion)
+            fastMirrorMCVersionsListWidget.versionBtn.clicked.connect(
+                self.fastMirrorMCVersionProcessor
+            )
+            self.versionLayout.addWidget(fastMirrorMCVersionsListWidget)
+
+        for i in reversed(range(self.buildLayout.count())):
+            self.buildLayout.itemAt(i).widget().deleteLater()
+
+    def fastMirrorMCVersionProcessor(self):
+        downloadVariables.selectedMCVersion = self.sender().objectName()
+        self.getFastMirrorAPICoreVersion(
+            name=downloadVariables.selectedName,
+            mcVersion=downloadVariables.selectedMCVersion,
+        )
+
+    def initFastMirrorCoreVersionListWidget(self):
+        for i in reversed(range(self.buildLayout.count())):
+            self.buildLayout.itemAt(i).widget().deleteLater()
+        for i in range(len(downloadVariables.FastMirrorAPICoreVersionDict["name"])):
+            fastMirrorBuildListWidget = FastMirrorBuildListWidget(self)
+            fastMirrorBuildListWidget.buildVerLabel.setText(
+                downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i]
+            )
+            fastMirrorBuildListWidget.syncTimeLabel.setText(
+                downloadVariables.FastMirrorAPICoreVersionDict["update_time"][
+                    i
+                ].replace("T", " ")
+            )
+            fastMirrorBuildListWidget.downloadBtn.setObjectName(
+                downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i]
+            )
+            fastMirrorBuildListWidget.downloadBtn.clicked.connect(
+                self.downloadFastMirrorAPIFile
+            )
+            self.buildLayout.addWidget(fastMirrorBuildListWidget)
+
+    def downloadFastMirrorAPIFile(self):
+        """下载FastMirror API文件"""
+        buildVer = self.sender().objectName()
+        fileName = f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
+        fileFormat = "jar"
+        if not Aria2Controller.testAria2Service():
+            if not Aria2Controller.startAria2():
+                box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self)
+                box.exec()
+                return
+        box = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
+        box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
+        box.DownloadWidget().closeBoxBtnFailed.clicked.connect(box.close)
+
+        # 判断文件是否存在
+        if path.exists(
+            path.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
+        ) and not path.exists(
+            path.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
+        ):
+            print("文件已存在")
+            box.show()
+            box.onDownloadExist()
+        else:
+            gid = Aria2Controller.download(
+                uri=f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}",
+                watch=True,
+                info_get=box.onInfoGet,
+                stopped=box.onDownloadFinished,
+                interval=0.2,
+            )
+            box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+            box.paused.connect(
+                lambda x: Aria2Controller.pauseDownloadTask(gid)
+                if x
+                else Aria2Controller.resumeDownloadTask(gid)
+            )
+            box.show()
+
+    def hideDownloadHelper(self):
+        self.downloadStateToolTip = StateToolTip("已隐藏下载窗口", "仍在下载...", self)
+        self.downloadStateToolTip.move(self.downloadStateToolTip.getSuitablePos())
+        self.downloadStateToolTip.show()
+
+    def downloadFinishedHelper(self):
+        try:
+            self.downloadStateToolTip.setContent("下载完毕。")
+            self.downloadStateToolTip.setState(True)
+            self.downloadStateToolTip = None
+        except:
+            pass
