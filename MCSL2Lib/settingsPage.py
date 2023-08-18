@@ -1426,15 +1426,18 @@ class SettingsPage(QWidget):
         更改设置触发器。\n
         会将更改后的设置临时保存但不写入文件
         """
+        print(f"{Setting}: {Status}")
         settingsController.unSavedSettings.update({Setting: Status})
         self.settingsChanged.emit(
             settingsController.unSavedSettings != settingsController.fileSettings
         )
+        print(settingsController.unSavedSettings)
+        print(settingsController.fileSettings)
 
     def giveUpSettings(self):
         """放弃所有未保存的设置"""
         self.refreshSettingsInterface()
-        settingsController.unSavedSettings = settingsController.fileSettings
+        settingsController.unSavedSettings = settingsController.fileSettings.copy()
         self.settingsChanged.emit(False)
 
     def saveSettings(self):
