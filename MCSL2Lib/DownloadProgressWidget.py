@@ -242,6 +242,8 @@ class DownloadMessageBox(MessageBox):
         widget.cancelBtn.clicked.connect(self.canceled.emit)
         widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
         widget.PrimaryPushButton.clicked.connect(self.hide)
+        
+        widget.PrimaryPushButton.clicked.connect(parent.hideDownloadHelper)
 
     def DownloadWidget(self):
         return self.downloadProgressWidget
@@ -281,6 +283,7 @@ class DownloadMessageBox(MessageBox):
         else:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadProgressWidget.downloading = False
+        self.parent().downloadFinishedHelper()
 
     def onDownloadExist(self):
         self.hide()
