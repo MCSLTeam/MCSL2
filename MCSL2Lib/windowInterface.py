@@ -186,9 +186,9 @@ class Window(FramelessWindow):
                         content="启动成功！",
                         orient=Qt.Horizontal,
                         isClosable=True,
-                        position=InfoBarPosition.TOP,
+                        position=InfoBarPosition.TOP_RIGHT,
                         duration=3000,
-                        parent=self,
+                        parent=self.homeInterface,
                     )
                 else:
                     InfoBar.error(
@@ -196,7 +196,7 @@ class Window(FramelessWindow):
                         content="请检查是否安装了Aria2。",
                         orient=Qt.Horizontal,
                         isClosable=True,
-                        position=InfoBarPosition.TOP,
+                        position=InfoBarPosition.TOP_RIGHT,
                         duration=3000,
                         parent=self,
                     )
@@ -206,7 +206,7 @@ class Window(FramelessWindow):
                 content="请检查是否安装了Aria2。",
                 orient=Qt.Horizontal,
                 isClosable=True,
-                position=InfoBarPosition.TOP,
+                position=InfoBarPosition.TOP_RIGHT,
                 duration=3000,
                 parent=self,
             )
