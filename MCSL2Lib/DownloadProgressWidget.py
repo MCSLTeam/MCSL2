@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import (
     QWidget,
     QStackedWidget,
     QSpacerItem,
-    QHBoxLayout, QApplication,
+    QHBoxLayout,
 )
 
 
@@ -30,15 +30,13 @@ class DownloadProgressWidget(QWidget):
         self.setObjectName("downloadProgress")
 
         self.downloadProgressMainWidget = QStackedWidget(self)
+        self.downloadProgressMainWidget.setGeometry(QRect(20, 20, 321, 241))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.downloadProgressMainWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.downloadProgressMainWidget.sizePolicy().hasHeightForWidth())
         self.downloadProgressMainWidget.setSizePolicy(sizePolicy)
         self.downloadProgressMainWidget.setMinimumSize(QSize(321, 241))
-        self.downloadProgressMainWidget.setMaximumSize(QSize(16777215, 16777215))
         self.downloadProgressMainWidget.setObjectName("downloadProgressMainWidget")
 
         self.downloading = QWidget()
@@ -57,13 +55,11 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fileSizeTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.fileSizeTitle.sizePolicy().hasHeightForWidth())
         self.fileSizeTitle.setSizePolicy(sizePolicy)
         self.fileSizeTitle.setObjectName("fileSizeTitle")
 
-        self.gridLayout_4.addWidget(self.fileName, 2, 1, 1, 2)
+        self.gridLayout_4.addWidget(self.fileSizeTitle, 3, 0, 1, 1)
         self.downloadingLabel = SubtitleLabel(self.downloading)
         self.downloadingLabel.setObjectName("downloadingLabel")
 
@@ -72,9 +68,7 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ProgressWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.ProgressWidget.sizePolicy().hasHeightForWidth())
         self.ProgressWidget.setSizePolicy(sizePolicy)
         self.ProgressWidget.setMinimumSize(QSize(315, 40))
         self.ProgressWidget.setMaximumSize(QSize(16777215, 40))
@@ -101,28 +95,6 @@ class DownloadProgressWidget(QWidget):
         self.cancelBtn.setObjectName("cancelBtn")
 
         self.gridLayout_4.addWidget(self.cancelBtn, 13, 0, 1, 1)
-        self.fileSize = BodyLabel(self.downloading)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileSize.sizePolicy().hasHeightForWidth())
-        self.fileSize.setSizePolicy(sizePolicy)
-        self.fileSize.setObjectName("fileSize")
-
-        self.gridLayout_4.addWidget(self.fileSize, 3, 1, 1, 2)
-        self.speed = BodyLabel(self.downloading)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.speed.sizePolicy().hasHeightForWidth())
-        self.speed.setSizePolicy(sizePolicy)
-        self.speed.setObjectName("speed")
-
-        self.gridLayout_4.addWidget(self.speed, 5, 1, 1, 2)
-        self.ETA = BodyLabel(self.downloading)
-        self.ETA.setObjectName("ETA")
-
-        self.gridLayout_4.addWidget(self.ETA, 4, 1, 1, 2)
         self.speedTitle = StrongBodyLabel(self.downloading)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -136,22 +108,11 @@ class DownloadProgressWidget(QWidget):
         self.pauseBtn.setObjectName("pauseBtn")
 
         self.gridLayout_4.addWidget(self.pauseBtn, 13, 1, 1, 1)
-        self.fileName = BodyLabel(self.downloading)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileName.sizePolicy().hasHeightForWidth())
-        self.fileName.setSizePolicy(sizePolicy)
-        self.fileName.setObjectName("fileName")
-
-        self.gridLayout_4.addWidget(self.fileName, 2, 1, 1, 1)
         self.fileNameTitle = StrongBodyLabel(self.downloading)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fileNameTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.fileNameTitle.sizePolicy().hasHeightForWidth())
         self.fileNameTitle.setSizePolicy(sizePolicy)
         self.fileNameTitle.setObjectName("fileNameTitle")
 
@@ -164,6 +125,37 @@ class DownloadProgressWidget(QWidget):
         self.PrimaryPushButton.setObjectName("PrimaryPushButton")
 
         self.gridLayout_4.addWidget(self.PrimaryPushButton, 13, 2, 1, 1)
+        self.fileName = BodyLabel(self.downloading)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.fileName.sizePolicy().hasHeightForWidth())
+        self.fileName.setSizePolicy(sizePolicy)
+        self.fileName.setObjectName("fileName")
+
+        self.gridLayout_4.addWidget(self.fileName, 2, 1, 1, 2)
+        self.fileSize = BodyLabel(self.downloading)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.fileSize.sizePolicy().hasHeightForWidth())
+        self.fileSize.setSizePolicy(sizePolicy)
+        self.fileSize.setObjectName("fileSize")
+
+        self.gridLayout_4.addWidget(self.fileSize, 3, 1, 1, 2)
+        self.ETA = BodyLabel(self.downloading)
+        self.ETA.setObjectName("ETA")
+
+        self.gridLayout_4.addWidget(self.ETA, 4, 1, 1, 2)
+        self.speed = BodyLabel(self.downloading)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.speed.sizePolicy().hasHeightForWidth())
+        self.speed.setSizePolicy(sizePolicy)
+        self.speed.setObjectName("speed")
+
+        self.gridLayout_4.addWidget(self.speed, 5, 1, 1, 2)
         self.downloadProgressMainWidget.addWidget(self.downloading)
         self.downloadFinished = QWidget()
         self.downloadFinished.setObjectName("downloadFinished")

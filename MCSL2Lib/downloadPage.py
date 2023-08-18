@@ -826,6 +826,10 @@ class DownloadPage(QWidget):
         """
         # 先把旧的清空，但是必须先删除Spacer
         for layout in self.MCSLAPILayoutList:
+            try:
+                layout.removeItem(self.scrollAreaSpacer)
+            except:
+                pass
             for i in reversed(range(layout.count())):
                 layout.itemAt(i).widget().deleteLater()
 
@@ -887,18 +891,26 @@ class DownloadPage(QWidget):
         idx = int(sender.objectName().split("..")[-1])
         idx2 = int(sender.objectName().split("..")[0].split("n")[-1])
         uri = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileURLs"][idx2]
-        fileName = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][idx2]
-        fileFormat = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][
+        fileName = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][
             idx2
         ]
+        fileFormat = downloadVariables.MCSLAPIDownloadUrlDict[idx][
+            "downloadFileFormats"
+        ][idx2]
         # 判断文件是否存在
         self.checkDownloadFileExists(fileName, fileFormat, uri)
 
     def initFastMirrorCoreListWidget(self):
         """FastMirror核心列表"""
-
-        for i in reversed(range(self.coreListLayout.count())):
-            self.coreListLayout.itemAt(i).widget().deleteLater()
+        try:
+            self.coreListLayout.removeItem(self.scrollAreaSpacer)
+        except:
+            pass
+        try:
+            for i in reversed(range(self.coreListLayout.count())):
+                self.coreListLayout.itemAt(i).widget().deleteLater()
+        except AttributeError:
+            pass
         for i in range(len(downloadVariables.FastMirrorAPIDict["name"])):
             fastMirrorCoreListWidget = FastMirrorCoreListWidget(self)
             fastMirrorCoreListWidget.coreTag.setText(
@@ -916,19 +928,22 @@ class DownloadPage(QWidget):
                 self.fastMirrorCoreNameProcessor
             )
             self.coreListLayout.addWidget(fastMirrorCoreListWidget)
-
-        for i in reversed(range(self.versionLayout.count())):
-            self.versionLayout.itemAt(i).widget().deleteLater()
-        for i in reversed(range(self.buildLayout.count())):
-            self.buildLayout.itemAt(i).widget().deleteLater()
+        self.coreListLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def fastMirrorCoreNameProcessor(self):
         downloadVariables.selectedName = self.sender().objectName()
         self.initFastMirrorMCVersionsListWidget()
 
     def initFastMirrorMCVersionsListWidget(self):
-        for i in reversed(range(self.versionLayout.count())):
-            self.versionLayout.itemAt(i).widget().deleteLater()
+        try:
+            self.versionLayout.removeItem(self.scrollAreaSpacer)
+        except:
+            pass
+        try:
+            for i in reversed(range(self.versionLayout.count())):
+                self.versionLayout.itemAt(i).widget().deleteLater()
+        except AttributeError:
+            pass
         for i in range(
             len(
                 downloadVariables.FastMirrorAPIDict["mc_versions"][
@@ -950,9 +965,7 @@ class DownloadPage(QWidget):
                 self.fastMirrorMCVersionProcessor
             )
             self.versionLayout.addWidget(fastMirrorMCVersionsListWidget)
-
-        for i in reversed(range(self.buildLayout.count())):
-            self.buildLayout.itemAt(i).widget().deleteLater()
+        self.versionLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def fastMirrorMCVersionProcessor(self):
         downloadVariables.selectedMCVersion = self.sender().objectName()
@@ -962,8 +975,15 @@ class DownloadPage(QWidget):
         )
 
     def initFastMirrorCoreVersionListWidget(self):
-        for i in reversed(range(self.buildLayout.count())):
-            self.buildLayout.itemAt(i).widget().deleteLater()
+        try:
+            self.buildLayout.removeItem(self.scrollAreaSpacer)
+        except:
+            pass
+        try:
+            for i in reversed(range(self.buildLayout.count())):
+                self.buildLayout.itemAt(i).widget().deleteLater()
+        except AttributeError:
+            pass
         for i in range(len(downloadVariables.FastMirrorAPICoreVersionDict["name"])):
             fastMirrorBuildListWidget = FastMirrorBuildListWidget(self)
             fastMirrorBuildListWidget.buildVerLabel.setText(
@@ -981,6 +1001,7 @@ class DownloadPage(QWidget):
                 self.downloadFastMirrorAPIFile
             )
             self.buildLayout.addWidget(fastMirrorBuildListWidget)
+        self.buildLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def downloadFastMirrorAPIFile(self):
         """下载FastMirror API文件"""
@@ -1019,10 +1040,16 @@ class DownloadPage(QWidget):
                 w = MessageBox("提示", "您要下载的文件已存在。请选择操作。", self)
                 w.yesButton.setText("停止下载")
                 w.cancelButton.setText("覆盖文件")
-                w.cancelSignal.connect(lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}"))
-                w.cancelSignal.connect(lambda: self.downloadFile(fileName, fileFormat, uri))
+                w.cancelSignal.connect(
+                    lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
+                )
+                w.cancelSignal.connect(
+                    lambda: self.downloadFile(fileName, fileFormat, uri)
+                )
                 w.exec()
-            elif settingsController.fileSettings["saveSameFileException"] == "overwrite":
+            elif (
+                settingsController.fileSettings["saveSameFileException"] == "overwrite"
+            ):
                 InfoBar.warning(
                     title="警告",
                     content="MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。",
@@ -1046,7 +1073,7 @@ class DownloadPage(QWidget):
                 )
         else:
             self.downloadFile(fileName, fileFormat, uri)
-    
+
     def downloadFile(self, fileName, fileFormat, uri):
         box = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
         box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
