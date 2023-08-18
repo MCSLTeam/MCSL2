@@ -605,6 +605,9 @@ class DownloadPage(QWidget):
         self.refreshMCSLAPIBtn.clicked.connect(self.getMCSLAPI)
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
         self.refreshMCSLAPIBtn.setEnabled(False)
+        self.scrollAreaSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+        )
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
@@ -866,6 +869,7 @@ class DownloadPage(QWidget):
                     self.MCSLAPILayoutList[n].addWidget(
                         self.tmpSingleMCSLAPIDownloadWidget
                     )
+                self.MCSLAPILayoutList[n].addSpacerItem(self.scrollAreaSpacer)
             else:
                 self.showMCSLAPIFailedWidget()
         except TypeError:

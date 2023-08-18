@@ -33,10 +33,15 @@ from qfluentwidgets import (
     MSFluentTitleBar,
 )
 from qframelesswindow import FramelessWindow
+
 # from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
-from MCSL2Lib.aria2ClientController import Aria2Controller, initializeAria2Configuration, Aria2BootThread
+from MCSL2Lib.aria2ClientController import (
+    Aria2Controller,
+    initializeAria2Configuration,
+    Aria2BootThread,
+)
 from MCSL2Lib.configurePage import ConfigurePage
 from MCSL2Lib.consolePage import ConsolePage
 from MCSL2Lib.downloadPage import DownloadPage
@@ -163,7 +168,11 @@ class Window(FramelessWindow):
         if settingsController.fileSettings["theme"] == "auto":
             setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
         else:
-            setTheme(qfluentwidgetsThemeList[configThemeList.index(settingsController.fileSettings["theme"])])
+            setTheme(
+                qfluentwidgetsThemeList[
+                    configThemeList.index(settingsController.fileSettings["theme"])
+                ]
+            )
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
         self.initLJQtSlot()
@@ -338,12 +347,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-            self,
-            interface,
-            icon,
-            text: str,
-            position=NavigationItemPosition.TOP,
-            selectedIcon=None,
+        self,
+        interface,
+        icon,
+        text: str,
+        position=NavigationItemPosition.TOP,
+        selectedIcon=None,
     ):
         """添加子页面"""
         self.stackedWidget.addWidget(interface)
@@ -388,6 +397,9 @@ class Window(FramelessWindow):
                 parent=self,
             )
         )
+        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
+            self.downloadInterface.getMCSLAPI
+        )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
         )
@@ -404,6 +416,9 @@ class Window(FramelessWindow):
                 duration=3000,
                 parent=self,
             )
+        )
+        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
+            self.downloadInterface.getMCSLAPI
         )
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
@@ -485,6 +500,9 @@ class Window(FramelessWindow):
                 parent=self,
             )
         )
+        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
+            self.downloadInterface.getMCSLAPI
+        )
         self.serverManagerInterface.editJavaListPushBtn.clicked.connect(
             lambda: self.switchTo(self.selectNewJavaPage)
         )
@@ -555,47 +573,47 @@ class Window(FramelessWindow):
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 print("enter")
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
                 print("up")
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                            GlobalMCSL2Variables.userCommandHistory != []
-                            and GlobalMCSL2Variables.upT
-                            > -len(GlobalMCSL2Variables.userCommandHistory)
+                        GlobalMCSL2Variables.userCommandHistory != []
+                        and GlobalMCSL2Variables.upT
+                        > -len(GlobalMCSL2Variables.userCommandHistory)
                     ):
                         lastCommand = GlobalMCSL2Variables.userCommandHistory[
                             GlobalMCSL2Variables.upT - 1
-                            ]
+                        ]
                         GlobalMCSL2Variables.upT -= 1
                         self.consoleInterface.commandLineEdit.setText(lastCommand)
                         return True
             elif a1.key() == Qt.Key_Down:
                 print("down")
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                            GlobalMCSL2Variables.userCommandHistory != []
-                            and GlobalMCSL2Variables.upT < 0
+                        GlobalMCSL2Variables.userCommandHistory != []
+                        and GlobalMCSL2Variables.upT < 0
                     ):
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
                             GlobalMCSL2Variables.upT + 1
-                            ]
+                        ]
                         GlobalMCSL2Variables.upT += 1
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                            GlobalMCSL2Variables.userCommandHistory != []
-                            and GlobalMCSL2Variables.upT == 0
+                        GlobalMCSL2Variables.userCommandHistory != []
+                        and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
