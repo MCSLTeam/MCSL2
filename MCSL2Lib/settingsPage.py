@@ -1267,6 +1267,10 @@ class SettingsPage(QWidget):
 
         self.setObjectName("settingInterface")
 
+        self.alwaysAskSaveDirectoryCheckBox.setEnabled(False)
+        self.alwaysRunAsAdministratorSwitchBtn.setEnabled(False)
+        self.startOnStartupSwitchBtn.setEnabled(False)
+
         self.checkUpdateBtn.clicked.connect(lambda: self.checkUpdate(parent=self))
 
         self.generateSysReport.clicked.connect(self.generateSystemReport)
