@@ -75,7 +75,12 @@ pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
 
 def isDarkTheme():
-    return currentTheme() == "Dark"
+    if settingsController.fileSettings["theme"] == "auto":
+        return currentTheme() == "Dark"
+    elif settingsController.fileSettings["theme"] == "light":
+        return False
+    elif settingsController.fileSettings["theme"] == "dark":
+        return True
 
 class MCSL2TitleBar(MSFluentTitleBar):
     """标题栏"""
