@@ -16,7 +16,6 @@ A function for communicatng with MCSLAPI.
 
 from json import loads
 from typing import Callable
-from random import randint
 from PyQt5.QtCore import pyqtSignal, QThread
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.networkController import Session
