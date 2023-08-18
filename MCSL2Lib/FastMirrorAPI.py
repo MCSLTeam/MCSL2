@@ -13,7 +13,7 @@
 """
 A function for communicatng with FastMirrorAPI.
 """
-
+from collections import defaultdict
 from json import loads
 from typing import Callable
 
@@ -31,38 +31,18 @@ class FastMirrorAPIDownloadURLParser:
     @staticmethod
     def parseFastMirrorAPIUrl():
         fastMirrorAPI = "https://download.fastmirror.net/api/v3"
-        rv = {}
         downloadAPIUrl = fastMirrorAPI
-        (
-            name,
-            tag,
-            homepage,
-            recommend,
-            mc_versions,
-        ) = FastMirrorAPIDownloadURLParser.decodeFastMirrorJsons(downloadAPIUrl)
-        rv.update(
-            {
-                dict(
-                    zip(
-                        (
-                            "name",
-                            "tag",
-                            "homepage",
-                            "recommend",
-                            "mc_versions",
-                        ),
-                        (
-                            name,
-                            tag,
-                            homepage,
-                            recommend,
-                            mc_versions,
-                        ),
-                    )
-                )
-            }
-        )
-        return rv
+        rv = defaultdict(list)
+        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorJsons(downloadAPIUrl)
+
+        if r not in [-1, -2]:
+            for e in r:
+                rv["name"].append(e["name"])
+                rv["mc_versions"].append(e["mc_versions"])
+                rv["tag"].append(e["tag"])
+                rv["homepage"].append(e["homepage"])
+                rv["recommend"].append(e["recommend"])
+            return rv
 
     @staticmethod
     def decodeFastMirrorJsons(downloadAPIUrl):
@@ -269,7 +249,7 @@ class FetchFastMirrorAPICoreVersionThreadFactory:
         self.singletonThread = None
 
     def create(
-        self, name, mcVersion, _singleton=False, finishSlot=...
+            self, name, mcVersion, _singleton=False, finishSlot=...
     ) -> FetchFastMirrorAPICoreVersionThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
@@ -291,7 +271,7 @@ class FetchFastMirrorAPICoreDownloadThreadFactory:
         self.singletonThread = None
 
     def create(
-        self, name, mcVersion, coreVersion, _singleton=False, finishSlot=...
+            self, name, mcVersion, coreVersion, _singleton=False, finishSlot=...
     ) -> FetchFastMirrorAPICoreDownloadThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
@@ -302,7 +282,7 @@ class FetchFastMirrorAPICoreDownloadThreadFactory:
                     mcVersion=mcVersion,
                     coreVersion=coreVersion,
                     FinishSlot=finishSlot
-                    )
+                )
                 self.singletonThread = thread
                 return thread
         else:

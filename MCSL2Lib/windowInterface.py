@@ -16,7 +16,7 @@ The main window of MCSL2.
 import sys
 from traceback import format_exception
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer, pyqtSlot
+from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer, pyqtSlot, QEventLoop
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
@@ -233,7 +233,7 @@ class Window(FramelessWindow):
         self.quitTimer.setInterval(3000)
         self.quitTimer.timeout.connect(
             lambda: self.exitingMsgBox.yesButton.setEnabled(True)
-        )   
+        )
         if settingsController.fileSettings["checkUpdateOnStart"]:
             self.settingsInterface.checkUpdate(parent=self)
         self.installEventFilter(self)
@@ -263,9 +263,9 @@ class Window(FramelessWindow):
             return
         try:
             if Aria2Controller.shutDown():
-                a0.accept()
-        except Exception:
-            a0.accept()
+                super().closeEvent(a0)
+        finally:
+            super().closeEvent(a0)
 
     def onForceExit(self):
         process = ServerHandler().Server.serverProcess
