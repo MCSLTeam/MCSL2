@@ -332,7 +332,6 @@ class ConsolePage(QWidget):
         ]
         redText = [
             "ERR",
-            "err",
             "Err",
             "Fatal",
             "FATAL",
