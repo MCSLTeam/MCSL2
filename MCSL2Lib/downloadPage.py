@@ -605,6 +605,14 @@ class DownloadPage(QWidget):
     def onPageChangedRefresh(self, currentChanged):
         """刷新下载列表触发"""
         if currentChanged == 3:
+            dsList = [self.downloadWithFastMirror, self.downloadWithMCSLAPI]
+            self.downloadStackedWidget.setCurrentWidget(
+                dsList[
+                    settingsVariables.downloadSourceList.index(
+                        settingsController.fileSettings["downloadSource"]
+                    )
+                ]
+            )
             self.refreshDownloads()
         else:
             pass
