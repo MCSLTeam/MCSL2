@@ -33,7 +33,6 @@ from qfluentwidgets import (
     MSFluentTitleBar,
 )
 from qframelesswindow import FramelessWindow
-from darkdetect import theme as currentTheme
 # from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
@@ -44,6 +43,7 @@ from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.homePage import HomePage
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
+from MCSL2Lib.publicFunctions import isDarkTheme
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (
@@ -73,14 +73,6 @@ editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
-
-def isDarkTheme():
-    if settingsController.fileSettings["theme"] == "auto":
-        return currentTheme() == "Dark"
-    elif settingsController.fileSettings["theme"] == "light":
-        return False
-    elif settingsController.fileSettings["theme"] == "dark":
-        return True
 
 class MCSL2TitleBar(MSFluentTitleBar):
     """标题栏"""

@@ -18,6 +18,10 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 from json import loads, dumps
 from os import makedirs, path as ospath
+from MCSL2Lib.settingsController import SettingsController
+from darkdetect import theme as currentTheme
+
+settingsController = SettingsController()
 
 
 def readGlobalServerConfig() -> list:
@@ -99,6 +103,15 @@ def initializeMCSL2():
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
             serverList.close()
+
+
+def isDarkTheme():
+    if settingsController.fileSettings["theme"] == "auto":
+        return currentTheme() == "Dark"
+    elif settingsController.fileSettings["theme"] == "light":
+        return False
+    elif settingsController.fileSettings["theme"] == "dark":
+        return True
 
 
 def openWebUrl(Url):
