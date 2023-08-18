@@ -1426,7 +1426,6 @@ class SettingsPage(QWidget):
         更改设置触发器。\n
         会将更改后的设置临时保存但不写入文件
         """
-        print(f"{Setting}: {Status}")
         settingsController.unSavedSettings.update({Setting: Status})
         self.settingsChanged.emit(
             settingsController.unSavedSettings != settingsController.fileSettings
@@ -1623,7 +1622,7 @@ class SettingsPage(QWidget):
             f"MCSL2版本：{GlobalMCSL2Variables.MCSL2Version}\n"
             f"操作系统：{systemType()}{systemRelease()} {systemVersion()}\n"
             f"架构：{systemArchitecture()[0]}\n"
-            f"内存占用：{str(Process(getpid()).memory_full_info().uss / 1024 / 1024)}MB"
+            f"内存占用：{str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))}MB"
         )
 
         title = "MC Server Launcher 2系统报告"
