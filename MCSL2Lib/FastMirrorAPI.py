@@ -49,7 +49,7 @@ class FastMirrorAPIDownloadURLParser:
         data = []
         try:
             apiData = loads(Session.get(downloadAPIUrl).text)
-        except Exception as e:
+        except Exception:
             return -2
         try:
             if apiData["success"]:
@@ -102,7 +102,7 @@ class FastMirrorAPIDownloadURLParser:
         builds = []
         try:
             apiData = loads(Session.get(downloadAPIUrl).text)
-        except Exception as e:
+        except Exception:
             return -2
         try:
             if apiData["success"]:
@@ -130,7 +130,7 @@ class FastMirrorAPIDownloadURLParser:
         downloadURL = ""
         try:
             apiData = loads(Session.get(downloadAPIUrl).text)
-        except Exception as e:
+        except Exception:
             return -2
         try:
             if apiData["success"]:
