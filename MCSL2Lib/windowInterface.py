@@ -22,7 +22,6 @@ from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
     NavigationBar,
     NavigationItemPosition,
-    isDarkTheme,
     FluentIcon as FIF,
     Theme,
     setTheme,
@@ -32,10 +31,9 @@ from qfluentwidgets import (
     MessageBox,
     HyperlinkButton,
     MSFluentTitleBar,
-    FluentStyleSheet,
 )
 from qframelesswindow import FramelessWindow
-
+from darkdetect import theme as currentTheme
 # from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
@@ -76,6 +74,8 @@ serverHelper = ServerHelper()
 pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
 
+def isDarkTheme():
+    return currentTheme() == "Dark"
 
 class MCSL2TitleBar(MSFluentTitleBar):
     """标题栏"""
@@ -160,13 +160,12 @@ class Window(FramelessWindow):
         self.selectNewJavaPage = SelectNewJavaPage(self)  # 草泥马摆烂偷懒！！！好好好！！！CV大法嘎嘎好！
 
         # 设置主题
-        configThemeList = ["auto", "dark", "light"]
-        qfluentwidgetsThemeList = [Theme.AUTO, Theme.DARK, Theme.LIGHT]
-        setTheme(
-            qfluentwidgetsThemeList[
-                configThemeList.index(settingsController.fileSettings["theme"])
-            ]
-        )
+        configThemeList = ["dark", "light"]
+        qfluentwidgetsThemeList = [Theme.DARK, Theme.LIGHT]
+        if settingsController.fileSettings["theme"] == "auto":
+            setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
+        else:
+            setTheme(qfluentwidgetsThemeList[configThemeList.index(settingsController.fileSettings["theme"])])
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
         self.initLJQtSlot()
@@ -367,8 +366,6 @@ class Window(FramelessWindow):
         color = "dark" if isDarkTheme() else "light"
         with open(f"resource/{color}/demo.qss", encoding="utf-8") as f:
             self.setStyleSheet(f.read())
-
-        FluentStyleSheet.FLUENT_WINDOW.apply(self.stackedWidget)
 
     def onCurrentInterfaceChanged(self, index):
         """导航栏触发器"""
