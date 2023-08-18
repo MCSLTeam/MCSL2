@@ -16,7 +16,7 @@ The main window of MCSL2.
 import sys
 from traceback import format_exception
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QThread, QTimer, pyqtSlot, QEventLoop
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
 from qfluentwidgets import (
