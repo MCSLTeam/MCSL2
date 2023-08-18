@@ -14,21 +14,18 @@
 A controller for aria2 download engine.
 """
 
+from os import getcwd
 from os import path as ospath
-from os import remove, listdir, getcwd
 from platform import system
-from shutil import which, rmtree, move
+from shutil import which
 from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
 from typing import Optional, Callable
-from zipfile import ZipFile
+
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
+from PyQt5.QtWidgets import QProgressDialog
+from aria2p import Client, API, Download
 
 from MCSL2Lib.networkController import Session
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
-from PyQt5.QtWidgets import QProgressDialog, QScrollArea
-from aria2p import Client, API, Download
-from requests.exceptions import SSLError
-
-from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
@@ -160,19 +157,16 @@ class Aria2Controller:
 
     def macOSInstallAria2(self):
         try:
-            HomeBrewInstallCommand = '/bin/bash -c "$(curl -fsSL https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master/MCSL2NecessaryTools/Install_Homebrew.sh)"'
+            HomeBrewInstallCommand = '/bin/bash -c "$(curl -fsSL ' \
+                                     'https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master' \
+                                     '/MCSL2NecessaryTools/Install_Homebrew.sh)"'
             InstallHomeBrew = Popen(HomeBrewInstallCommand, stdout=PIPE, shell=True)
             output, error = InstallHomeBrew.communicate()
             if InstallHomeBrew.returncode == 0:
                 InstallAria2 = Popen("brew install aria2", stdout=PIPE, shell=True)
                 self.aria2cStatus = True
             else:
-                CallMCSL2Dialog(
-                    Tip="InstallAria2Failed",
-                    OtherTextArg=None,
-                    isNeededTwoButtons=0,
-                    ButtonArg=None,
-                )
+                pass
         except Exception as e:
             print(e)
 
@@ -205,7 +199,8 @@ class Aria2Controller:
             Aria2Program = "aria2c"
         else:
             Aria2Program = "aria2c"
-        ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
+        ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session " \
+                        "--save-session=/MCSL2/Aria2/aria2.session"
         Aria2Thread = Aria2ProcessThread(
             Aria2Program=Aria2Program,
             ConfigCommand=ConfigCommand,
@@ -616,7 +611,7 @@ class NormalDownloadThread(QThread):
                 response = Session.get(self.uri, timeout=10, stream=True)
                 fileSize = response.headers.get("Content-Length", 0)
                 self.progress.emit(int(fileSize))
-                i = 0
+
                 for data in response.iter_content(chunk_size=4096):
                     self.progress.emit(len(data))
                     f.write(data)
