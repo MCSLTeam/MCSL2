@@ -13,23 +13,27 @@
 """
 Plugin page.
 """
+from os import getcwd, remove, path as ospath
+from shutil import copy
 
-from PyQt5.QtCore import Qt, QSize, QRect
+from PyQt5.QtCore import Qt, QSize, QRect, QThread
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QSpacerItem,
     QGridLayout,
     QWidget,
     QFrame,
-    QVBoxLayout,
+    QVBoxLayout, QFileDialog,
 )
 from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
     SmoothScrollArea,
     StrongBodyLabel,
-    TitleLabel,
+    TitleLabel, InfoBarPosition, InfoBar,
 )
+from zipfile import ZipFile
+
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -48,7 +52,7 @@ class PluginPage(QWidget):
         self.setSizePolicy(sizePolicy)
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-
+        self.thread = InstallPluginThread(self)
         self.PrimaryPushButton = PrimaryPushButton(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -61,6 +65,7 @@ class PluginPage(QWidget):
         self.PrimaryPushButton.setMaximumSize(QSize(82, 32))
         self.PrimaryPushButton.setObjectName("PrimaryPushButton")
 
+        self.PrimaryPushButton.clicked.connect(lambda: self.thread.run())
         self.gridLayout.addWidget(self.PrimaryPushButton, 3, 4, 1, 1)
         spacerItem = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 2, 4, 1, 1)
@@ -139,7 +144,49 @@ class PluginPage(QWidget):
         self.pluginsSmoothScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+
         self.subTitleLabel.setText("添加属于你的插件，让你的MCSL2更加强大！")
         self.titleLabel.setText("插件")
         self.PushButton.setText("插件设置")
         self.PrimaryPushButton.setText("安装插件")
+
+
+class InstallPluginThread(QThread):
+    """
+        安装插件的线程\n
+        使用多线程防止卡死
+        """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("InstallPluginThread")
+
+    def run(self):
+        tmpPluginFilePath = str(
+            QFileDialog.getOpenFileName(PluginPage(), "选择.zip形式的插件", getcwd(), "*.zip")[0]
+        ).replace("/", "\\")
+        PluginZipFileName = ""
+        try:
+            PluginZipFileName = ospath.basename(tmpPluginFilePath)
+
+            copy(
+                tmpPluginFilePath,
+                "./Plugins"
+            )
+        except:
+            pass
+        PluginFilePath = f"./Plugins/{PluginZipFileName}"
+        plugin_zip = ZipFile(PluginFilePath, 'r')
+        plugin_zip.extractall("./Plugins")
+        plugin_zip.close()
+        remove(f"./Plugins/{PluginZipFileName}")
+        print(f"成功安装插件{PluginZipFileName.replace('.zip', '')}")
+        InfoBar.success(
+            title="成功安装",
+            content=f"重启后生效",
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.BOTTOM_LEFT,
+            duration=3000,
+            parent=PluginPage(),
+        )

@@ -36,7 +36,7 @@ from qframelesswindow import FramelessWindow
 # from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
-from MCSL2Lib.aria2ClientController import Aria2Controller, initializeAria2Configuration
+from MCSL2Lib.aria2ClientController import Aria2Controller, initializeAria2Configuration, Aria2BootThread
 from MCSL2Lib.configurePage import ConfigurePage
 from MCSL2Lib.consolePage import ConsolePage
 from MCSL2Lib.downloadPage import DownloadPage
@@ -73,6 +73,7 @@ editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
+
 
 class MCSL2TitleBar(MSFluentTitleBar):
     """标题栏"""
@@ -178,38 +179,12 @@ class Window(FramelessWindow):
         self.initPluginSystem()
 
         initializeAria2Configuration()
-        try:
-            if Aria2Controller.startAria2():
-                if Aria2Controller.testAria2Service():
-                    InfoBar.success(
-                        title="Aria2下载引擎提示",
-                        content="启动成功！",
-                        orient=Qt.Horizontal,
-                        isClosable=True,
-                        position=InfoBarPosition.TOP_RIGHT,
-                        duration=3000,
-                        parent=self.homeInterface,
-                    )
-                else:
-                    InfoBar.error(
-                        title="Aria2下载引擎启动失败",
-                        content="请检查是否安装了Aria2。",
-                        orient=Qt.Horizontal,
-                        isClosable=True,
-                        position=InfoBarPosition.TOP_RIGHT,
-                        duration=3000,
-                        parent=self,
-                    )
-        except Exception:
-            InfoBar.error(
-                title="Aria2下载引擎启动失败",
-                content="请检查是否安装了Aria2。",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=3000,
-                parent=self,
-            )
+
+        # 开启Aria2
+        bootThread = Aria2BootThread(self)
+        bootThread.loaded.connect(self.onAria2Loaded)
+        bootThread.finished.connect(bootThread.deleteLater)
+        bootThread.start()
 
         self.exitingMsgBox = MessageBox(
             "正在退出MCSL2", "安全关闭服务器中...\n\nMCSL2稍后将自行退出。", parent=self
@@ -234,6 +209,29 @@ class Window(FramelessWindow):
             self.settingsInterface.checkUpdate(parent=self)
         self.installEventFilter(self)
         self._init = True
+
+    @pyqtSlot(bool)
+    def onAria2Loaded(self, flag: bool):
+        if flag:
+            InfoBar.success(
+                title="Aria2下载引擎提示",
+                content="启动成功！",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+        else:
+            InfoBar.error(
+                title="Aria2下载引擎启动失败",
+                content="请检查是否安装了Aria2。",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():

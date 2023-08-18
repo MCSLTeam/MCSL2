@@ -23,7 +23,7 @@ from typing import Optional, Callable
 from zipfile import ZipFile
 
 from MCSL2Lib.networkController import Session
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer, QRunnable
 from PyQt5.QtWidgets import QProgressDialog, QScrollArea
 from aria2p import Client, API, Download
 from requests.exceptions import SSLError
@@ -548,6 +548,26 @@ class Aria2Controller:
             except Exception:
                 pass
             return True
+
+
+class Aria2BootThread(QThread):
+    """
+    Aria2启动线程
+    """
+    loaded = pyqtSignal(bool)
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+
+    def run(self):
+        try:
+            if Aria2Controller.startAria2():
+                if Aria2Controller.testAria2Service():
+                    self.loaded.emit(True)
+                else:
+                    self.loaded.emit(False)
+        except Exception:
+            self.loaded.emit(False)
 
 
 class NormalDownloadManager(QObject):
