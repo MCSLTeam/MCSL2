@@ -30,6 +30,7 @@ def gen_compiler() -> CompilerHelper:
         
         show_progress=True,
         download_confirm=True,
+        remove_output=True,
         
         company_name="MCSL Team",
         product_name="MCSL 2",
