@@ -111,8 +111,12 @@ def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     rv = []
     for process in processes:
         process.waitForFinished()
-        if match := _Match(process.readAllStandardError().data().decode("utf-8")):
-            rv.append(Java(process.program(), match))
+        try:
+            if match := _Match(process.readAllStandardError().data().decode("utf-8")):
+                rv.append(Java(process.program(), match))
+        except UnicodeDecodeError:
+            if match := _Match(process.readAllStandardError().data().decode("gbk")):
+                rv.append(Java(process.program(), match))
     return rv
 
 
@@ -138,7 +142,7 @@ def searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
         except PermissionError:
             pass
         except FileNotFoundError as e:
-            print(f"扫描路径时出错: {e}")
+            pass
     return processes
 
 
