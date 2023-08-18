@@ -15,7 +15,7 @@ Settings controller, for editing MCSL2's configurations.
 """
 
 from os import path as ospath
-from json import loads
+from json import dumps, loads
 
 from MCSL2Lib.singleton import Singleton
 
@@ -41,3 +41,15 @@ class SettingsController:
                     else:
                         pass
                     readConfig.close()
+
+    def _changeSettings(self, setting: dict):
+        self.unSavedSettings.update(setting)
+
+    def _giveUpSettings(self):
+        self.unSavedSettings = self.fileSettings.copy()
+
+    def _saveSettings(self):
+        self.fileSettings.update(self.unSavedSettings)
+        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
+            writeConfig.write(dumps(self.fileSettings, indent=4))
+            writeConfig.close()

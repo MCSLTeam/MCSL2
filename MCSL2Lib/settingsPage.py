@@ -1426,7 +1426,7 @@ class SettingsPage(QWidget):
         更改设置触发器。\n
         会将更改后的设置临时保存但不写入文件
         """
-        settingsController.unSavedSettings.update({Setting: Status})
+        settingsController._changeSettings({Setting: Status})
         self.settingsChanged.emit(
             settingsController.unSavedSettings != settingsController.fileSettings
         )
@@ -1434,15 +1434,12 @@ class SettingsPage(QWidget):
     def giveUpSettings(self):
         """放弃所有未保存的设置"""
         self.refreshSettingsInterface()
-        settingsController.unSavedSettings = settingsController.fileSettings.copy()
+        settingsController._giveUpSettings()
         self.settingsChanged.emit(False)
 
     def saveSettings(self):
         """保存设置"""
-        settingsController.fileSettings.update(settingsController.unSavedSettings)
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
-            writeConfig.write(dumps(settingsController.fileSettings, indent=4))
-            writeConfig.close()
+        settingsController._saveSettings()
         self.refreshSettingsInterface()
         self.settingsChanged.emit(False)
         InfoBar.success(
