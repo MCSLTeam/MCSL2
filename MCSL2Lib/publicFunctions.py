@@ -67,6 +67,7 @@ def initializeMCSL2():
                 "startOnStartup": False,
                 "checkUpdateOnStart": False,
                 "lastServer": "",
+                "nodeMCSLAPI": "https://api.puqicraft.fun",
             }
             config.write(dumps(configTemplate, indent=4))
             config.close()
@@ -93,6 +94,7 @@ def initializeMCSL2():
                 "startOnStartup": False,
                 "checkUpdateOnStart": False,
                 "lastServer": "",
+                "nodeMCSLAPI": "https://api.puqicraft.fun",
             }
             config.write(dumps(configTemplate, indent=4))
             config.close()

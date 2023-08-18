@@ -10,72 +10,29 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 A function for communicatng with MCSLAPI.
-'''
+"""
 
 from json import loads
 from typing import Callable
 from random import randint
 from PyQt5.QtCore import pyqtSignal, QThread
-
+from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.networkController import Session
-import os 
-import json
 
-def getMCSLAPIConfig():
-    '''获得配置'''
-    if not os.path.exists('./mcslapi.json'):
-        with open('./mcslapi.json','w') as f:
-            data = {
-                'node_url':'https://mcslapiipfs-x--xh-cn.ipns.dweb.link/',
-                'equilibriumList':'SharePoint'
-            }
-            f.write(json.dumps(data))
-            return data
-    else:
-        with open('./mcslapi.json','r') as f:
-            return json.loads(f.read())
+settingsController = SettingsController()
 
-def changeMCSLAPIConfig(node_url = False , equilibriumList = False):
-    '''更改配置'''
-    data = {}
-    with open('./mcslapi.json','r') as j:
-        try:
-            data = json.dumps(j.read())
-        except:
-            j.close()
-    with open('./mcslapi.json','w') as f:
-        try:
-            if node_url :
-                data['node_url'] = node_url
-            elif equilibriumList:
-                data['equilibriumList'] = equilibriumList
-        except:
-            data = {
-                'node_url':'https://mcslapiipfs-x--xh-cn.ipns.dweb.link/',
-                'equilibriumList':''
-            }
-            if node_url :
-                data['node_url'] = node_url
-            elif equilibriumList:
-                data['equilibriumList'] = equilibriumList
-        f.write(json.dumps(data))
-    
-        return True
 
 class MCSLAPIDownloadURLParser:
     """URL设定器"""
-
 
     def __init__(self):
         pass
 
     @staticmethod
     def parseDownloaderAPIUrl():
-        con = getMCSLAPIConfig()
-        equilibriumList = con['equilibriumList']
-        UrlArg = f"{con['node_url']}{equilibriumList}"
+        UrlArg = f"{settingsController.fileSettings['nodeMCSLAPI']}/ipns/mcslapiipfs.x-xh.cn/SharePoint"
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",
