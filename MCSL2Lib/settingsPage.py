@@ -1431,8 +1431,6 @@ class SettingsPage(QWidget):
         self.settingsChanged.emit(
             settingsController.unSavedSettings != settingsController.fileSettings
         )
-        print(settingsController.unSavedSettings)
-        print(settingsController.fileSettings)
 
     def giveUpSettings(self):
         """放弃所有未保存的设置"""
