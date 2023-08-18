@@ -123,7 +123,7 @@ class SelectNewJavaPage(QWidget):
 
         # 删除旧的
         for i in reversed(range(self.javaItemVerticalLayout.count())):
-            self.javaItemVerticalLayout.itemAt(i).widget().setParent(None)
+            self.javaItemVerticalLayout.itemAt(i).widget().deleteLater()
         # 添加新的
         for i in range(len(JavaPath)):
             self.tmpSingleJavaWidget = singleSelectJavaWidget()
