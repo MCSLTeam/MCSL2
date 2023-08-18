@@ -63,7 +63,7 @@ class DownloadProgressWidget(QWidget):
         self.fileSizeTitle.setSizePolicy(sizePolicy)
         self.fileSizeTitle.setObjectName("fileSizeTitle")
 
-        self.gridLayout_4.addWidget(self.fileSizeTitle, 3, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.fileName, 2, 1, 1, 2)
         self.downloadingLabel = SubtitleLabel(self.downloading)
         self.downloadingLabel.setObjectName("downloadingLabel")
 
@@ -109,7 +109,7 @@ class DownloadProgressWidget(QWidget):
         self.fileSize.setSizePolicy(sizePolicy)
         self.fileSize.setObjectName("fileSize")
 
-        self.gridLayout_4.addWidget(self.fileSize, 3, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.fileSize, 3, 1, 1, 2)
         self.speed = BodyLabel(self.downloading)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -118,11 +118,11 @@ class DownloadProgressWidget(QWidget):
         self.speed.setSizePolicy(sizePolicy)
         self.speed.setObjectName("speed")
 
-        self.gridLayout_4.addWidget(self.speed, 5, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.speed, 5, 1, 1, 2)
         self.ETA = BodyLabel(self.downloading)
         self.ETA.setObjectName("ETA")
 
-        self.gridLayout_4.addWidget(self.ETA, 4, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.ETA, 4, 1, 1, 2)
         self.speedTitle = StrongBodyLabel(self.downloading)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -284,12 +284,6 @@ class DownloadMessageBox(MessageBox):
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadProgressWidget.downloading = False
         self.parent().downloadFinishedHelper()
-
-    def onDownloadExist(self):
-        self.hide()
-        self.show()
-        self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-        self.downloadProgressWidget.downloading = False
 
     def setFileName(self, name):
         self.downloadProgressWidget.fileName.setText(name)

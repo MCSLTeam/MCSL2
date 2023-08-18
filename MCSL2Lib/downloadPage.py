@@ -13,7 +13,7 @@
 """
 Download page with FastMirror and MCSLAPI.
 """
-from os import path
+from os import path as ospath, remove
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
@@ -873,48 +873,22 @@ class DownloadPage(QWidget):
 
     def downloadMCSLAPIFile(self):
         """下载MCSLAPI文件"""
-        sender = self.sender()
-        idx = int(sender.objectName().split("..")[-1])
-        idx2 = int(sender.objectName().split("..")[0].split("n")[-1])
-        url = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileURLs"][idx2]
-        name = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][idx2]
-        format = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][
-            idx2
-        ]
-
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self)
                 box.exec()
                 return
-        box = DownloadMessageBox(f"{name}.{format}", parent=self)
-        box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
-        box.DownloadWidget().closeBoxBtnFailed.clicked.connect(box.close)
 
+        sender = self.sender()
+        idx = int(sender.objectName().split("..")[-1])
+        idx2 = int(sender.objectName().split("..")[0].split("n")[-1])
+        uri = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileURLs"][idx2]
+        fileName = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][idx2]
+        fileFormat = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][
+            idx2
+        ]
         # 判断文件是否存在
-        if path.exists(
-            path.join("MCSL2", "Downloads", f"{name}.{format}")
-        ) and not path.exists(
-            path.join("MCSL2", "Downloads", f"{name}.{format}.aria2")
-        ):
-            print("文件已存在")
-            box.show()
-            box.onDownloadExist()
-        else:
-            gid = Aria2Controller.download(
-                uri=url,
-                watch=True,
-                info_get=box.onInfoGet,
-                stopped=box.onDownloadFinished,
-                interval=0.2,
-            )
-            box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
-            box.paused.connect(
-                lambda x: Aria2Controller.pauseDownloadTask(gid)
-                if x
-                else Aria2Controller.resumeDownloadTask(gid)
-            )
-            box.show()
+        self.checkDownloadFileExists(fileName, fileFormat, uri)
 
     def initFastMirrorCoreListWidget(self):
         """FastMirror核心列表"""
@@ -1006,42 +980,17 @@ class DownloadPage(QWidget):
 
     def downloadFastMirrorAPIFile(self):
         """下载FastMirror API文件"""
-        buildVer = self.sender().objectName()
-        fileName = f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
-        fileFormat = "jar"
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self)
                 box.exec()
                 return
-        box = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
-        box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
-        box.DownloadWidget().closeBoxBtnFailed.clicked.connect(box.close)
-
+        buildVer = self.sender().objectName()
+        fileName = f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
+        fileFormat = "jar"
+        uri = f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}"
         # 判断文件是否存在
-        if path.exists(
-            path.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
-        ) and not path.exists(
-            path.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
-        ):
-            print("文件已存在")
-            box.show()
-            box.onDownloadExist()
-        else:
-            gid = Aria2Controller.download(
-                uri=f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}",
-                watch=True,
-                info_get=box.onInfoGet,
-                stopped=box.onDownloadFinished,
-                interval=0.2,
-            )
-            box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
-            box.paused.connect(
-                lambda x: Aria2Controller.pauseDownloadTask(gid)
-                if x
-                else Aria2Controller.resumeDownloadTask(gid)
-            )
-            box.show()
+        self.checkDownloadFileExists(fileName, fileFormat, uri)
 
     def hideDownloadHelper(self):
         self.downloadStateToolTip = StateToolTip("已隐藏下载窗口", "仍在下载...", self)
@@ -1055,3 +1004,60 @@ class DownloadPage(QWidget):
             self.downloadStateToolTip = None
         except:
             pass
+
+    def checkDownloadFileExists(self, fileName, fileFormat, uri) -> bool:
+        if ospath.exists(
+            ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
+        ) and not ospath.exists(
+            ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
+        ):
+            if settingsController.fileSettings["saveSameFileException"] == "ask":
+                w = MessageBox("提示", "您要下载的文件已存在。请选择操作。", self)
+                w.yesButton.setText("停止下载")
+                w.cancelButton.setText("覆盖文件")
+                w.cancelSignal.connect(lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}"))
+                w.cancelSignal.connect(lambda: self.downloadFile(fileName, fileFormat, uri))
+                w.exec()
+            elif settingsController.fileSettings["saveSameFileException"] == "overwrite":
+                InfoBar.warning(
+                    title="警告",
+                    content="MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。",
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.TOP,
+                    duration=2222,
+                    parent=self,
+                )
+                remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
+                self.downloadFile(fileName, fileFormat, uri)
+            elif settingsController.fileSettings["saveSameFileException"] == "stop":
+                InfoBar.warning(
+                    title="警告",
+                    content="MCSL2/Downloads文件夹存在同名文件。\n根据设置，已停止下载。",
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.TOP,
+                    duration=2222,
+                    parent=self,
+                )
+        else:
+            self.downloadFile(fileName, fileFormat, uri)
+    
+    def downloadFile(self, fileName, fileFormat, uri):
+        box = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
+        box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
+        box.DownloadWidget().closeBoxBtnFailed.clicked.connect(box.close)
+        gid = Aria2Controller.download(
+            uri=uri,
+            watch=True,
+            info_get=box.onInfoGet,
+            stopped=box.onDownloadFinished,
+            interval=0.2,
+        )
+        box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+        box.paused.connect(
+            lambda x: Aria2Controller.pauseDownloadTask(gid)
+            if x
+            else Aria2Controller.resumeDownloadTask(gid)
+        )
+        box.show()
