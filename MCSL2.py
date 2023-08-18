@@ -13,14 +13,16 @@
 """
 Main entry.
 """
-from os import environ
+import os
+import sys
 from platform import system
-from sys import argv as SystemArgv
+
 from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication
-from MCSL2Lib.publicFunctions import initializeMCSL2
 from qfluentwidgets import FluentTranslator
+
 from MCSL2Lib.windowInterface import Window
+from MCSL2Lib.publicFunctions import initializeMCSL2
 
 if __name__ == "__main__":
     # 初始化
@@ -37,16 +39,16 @@ if __name__ == "__main__":
     # 适配Linux特殊情况
     if system().lower() == "linux":
         try:
-            if environ["XDG_SESSION_TYPE"].lower() != "x11":
-                environ["QT_QPA_PLATFORM"] = "wayland"
+            if os.environ["XDG_SESSION_TYPE"].lower() != "x11":
+                os.environ["QT_QPA_PLATFORM"] = "wayland"
             else:
                 pass
         except:
             pass
-    environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
+    os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
 
     # 启动
-    app = QApplication(SystemArgv)
+    app = QApplication(sys.argv)
 
     translator = FluentTranslator(QLocale())
     app.installTranslator(translator)
