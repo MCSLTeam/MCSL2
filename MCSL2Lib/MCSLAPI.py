@@ -23,13 +23,13 @@ from MCSL2Lib.networkController import Session
 import os 
 import json
 
-def get_mcslapicon():
+def getMCSLAPIConfig():
     '''获得配置'''
     if not os.path.exists('./mcslapi.json'):
         with open('./mcslapi.json','w') as f:
             data = {
                 'node_url':'https://mcslapiipfs-x--xh-cn.ipns.dweb.link/',
-                'equilibriumList':'Gitee'
+                'equilibriumList':'SharePoint'
             }
             f.write(json.dumps(data))
             return data
@@ -37,7 +37,7 @@ def get_mcslapicon():
         with open('./mcslapi.json','r') as f:
             return json.loads(f.read())
 
-def change_mcslapicon(node_url = False , equilibriumList = False):
+def changeMCSLAPIConfig(node_url = False , equilibriumList = False):
     '''更改配置'''
     data = {}
     with open('./mcslapi.json','r') as j:
@@ -54,7 +54,7 @@ def change_mcslapicon(node_url = False , equilibriumList = False):
         except:
             data = {
                 'node_url':'https://mcslapiipfs-x--xh-cn.ipns.dweb.link/',
-                'equilibriumList':'Gitee'
+                'equilibriumList':''
             }
             if node_url :
                 data['node_url'] = node_url
@@ -73,8 +73,7 @@ class MCSLAPIDownloadURLParser:
 
     @staticmethod
     def parseDownloaderAPIUrl():
-        #  ["SharePoint", "Gitee"]
-        con = get_mcslapicon()
+        con = getMCSLAPIConfig()
         equilibriumList = con['equilibriumList']
         UrlArg = f"{con['node_url']}{equilibriumList}"
         TypeArg = [

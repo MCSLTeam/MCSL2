@@ -26,10 +26,10 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Replace MCSLAPI IPFS Gateway
-        run: |
-          cd MCSL2Lib
-          echo "${{ secrets.MCSLAPI_GATEWAY }}" >> MCSLAPI.py
+      # - name: Replace MCSLAPI IPFS Gateway
+      #   run: |
+      #     cd MCSL2Lib
+      #     echo "${{ secrets.MCSLAPI_GATEWAY }}" >> MCSLAPI.py
       
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -195,10 +195,10 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Replace MCSLAPI IPFS Gateway
-        run: |
-          cd MCSL2Lib
-          echo "${{ secrets.MCSLAPI_GATEWAY }}" >> MCSLAPI.py
+      # - name: Replace MCSLAPI IPFS Gateway
+      #   run: |
+      #     cd MCSL2Lib
+      #     echo "${{ secrets.MCSLAPI_GATEWAY }}" >> MCSLAPI.py
 
       - name: Setup Python
         uses: actions/setup-python@v4
