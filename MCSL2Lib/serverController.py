@@ -122,7 +122,7 @@ class ServerHandler(QObject):
             lambda: self.serverClosed.emit(self.AServer.serverProcess.exitCode())
         )
         self.AServer.serverProcess.finished.connect(
-            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器已关闭！")
+            lambda: self.serverLogOutput.emit(f"[MCSL2 | 提示]：服务器已关闭！进程退出状态码：{self.AServer.serverProcess.exitCode()}")
         )
         return self.AServer
 
