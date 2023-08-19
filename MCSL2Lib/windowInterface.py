@@ -561,6 +561,10 @@ class Window(FramelessWindow):
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)
+            try:
+                self.consoleInterface.exitServer.clicked.disconnect()
+            except TypeError:
+                pass
             ServerHandler().serverClosed.connect(
                 self.serverMemThread.onServerClosedHandler
             )

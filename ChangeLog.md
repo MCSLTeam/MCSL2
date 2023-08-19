@@ -2,7 +2,8 @@
  - MCSLAPI原地复活功能
     > 就是在配置文件`MCSL2_Config.json`中的`nodeMCSLAPI`项添加了自行更换IPFS网关功能，自带的IPFS网关炸了可以自己再找IPFS网关替换即可复活
  - FastMirror接入
- - 下载存在同名文件提示
+ - 下载存在同名文件提示  
+ - 快捷菜单关闭服务器可变开启服务器
 ### 修复  
  - MCSLAPI炸掉的问题  
  - DDoS的你妈死透了  
