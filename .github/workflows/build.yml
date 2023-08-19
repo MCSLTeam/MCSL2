@@ -77,17 +77,17 @@ jobs:
 
       - name: Delete Useless Files and Compress with upx
         run: |
-          rmdir /s /q certifi
-          rmdir /s /q zstandard
-          del /f /q _asyncio.pyd
-          del /f /q _multiprocessing.pyd
-          del /f /q _queue.pyd
-          del /f /q libeay32.dll
-          del /f /q pyexpat.pyd
-          del /f /q qt5qml.dll
-          del /f /q qt5qmlmodels.dll
-          del /f /q qt5quick.dll
-          del /f /q ssleay32.dll
+          cmd /K delrmdir /s /q certifi
+          cmd /K delrmdir /s /q zstandard
+          cmd /K deldel /f /q _asyncio.pyd
+          cmd /K deldel /f /q _multiprocessing.pyd
+          cmd /K deldel /f /q _queue.pyd
+          cmd /K deldel /f /q libeay32.dll
+          cmd /K deldel /f /q pyexpat.pyd
+          cmd /K deldel /f /q qt5qml.dll
+          cmd /K deldel /f /q qt5qmlmodels.dll
+          cmd /K deldel /f /q qt5quick.dll
+          cmd /K deldel /f /q ssleay32.dll
           upx.exe -9 .\build\MCSL2.dist\MCSL2.exe
 
       - name: Upload Artifacts
