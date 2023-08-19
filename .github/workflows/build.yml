@@ -230,6 +230,7 @@ jobs:
           python -m nuitka
           --clang
           --msvc=latest
+          --standalone
           --enable-plugin=pyqt5
           --disable-plugin=multiprocessing
           --nofollow-import-to=scipy
