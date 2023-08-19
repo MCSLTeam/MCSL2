@@ -88,7 +88,7 @@ jobs:
           cmd /K deldel /f /q qt5qmlmodels.dll
           cmd /K deldel /f /q qt5quick.dll
           cmd /K deldel /f /q ssleay32.dll
-          upx.exe -9 .\build\MCSL2.dist\MCSL2.exe
+          .\upx.exe -9 .\build\MCSL2.dist\MCSL2.exe
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
