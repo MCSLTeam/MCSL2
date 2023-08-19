@@ -1,8 +1,8 @@
-
+from os import path, remove
 from typing import Optional
 
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
-
+from PyQt5.QtGui import QPaintEvent, QResizeEvent
 from aria2p import Download
 from qfluentwidgets import (
     BodyLabel,

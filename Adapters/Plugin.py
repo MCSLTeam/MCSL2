@@ -11,7 +11,7 @@ from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from os import walk, getcwd, path as ospath
 from MCSL2Lib.pluginWidget import singlePluginWidget
 from MCSL2Lib.variables import PluginVariables
-# from MCSL2Lib.variables import Singleton
+from MCSL2Lib.variables import Singleton
 
 pluginVariables = PluginVariables()
 

@@ -33,7 +33,7 @@ class BaseEvent(metaclass=ABCMeta):
         self.handlers.append()
     '''
     @abstractmethod
-    def registerHandle(self, func, priority: int):
+    def registerHandle(self,func,priority: int):
         pass
 
     @abstractmethod
