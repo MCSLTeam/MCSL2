@@ -564,6 +564,21 @@ class Window(FramelessWindow):
             ServerHandler().serverClosed.connect(
                 self.serverMemThread.onServerClosedHandler
             )
+            ServerHandler().serverClosed.connect(
+                self.consoleInterface.exitServer.clicked.disconnect
+            )
+            ServerHandler().serverClosed.connect(
+                lambda: self.consoleInterface.exitServer.clicked.connect(
+                    self.homeInterface.startServerBtn.click
+                )
+            )
+            ServerHandler().serverClosed.connect(
+                lambda: self.consoleInterface.exitServer.setText("开启服务器")
+            )
+            self.consoleInterface.exitServer.clicked.connect(
+                self.consoleInterface.runQuickMenu_StopServer
+            )
+            self.consoleInterface.exitServer.setText("关闭服务器")
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if not self._init:

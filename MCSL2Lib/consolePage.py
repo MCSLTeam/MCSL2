@@ -304,7 +304,6 @@ class ConsolePage(QWidget):
         self.commandLineEdit.setClearButtonEnabled(True)
         self.serverMemProgressRing.setTextVisible(True)
         self.serverCPUProgressRing.setTextVisible(True)
-        self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
 
     @pyqtSlot(float)
     def setMemView(self, mem):
