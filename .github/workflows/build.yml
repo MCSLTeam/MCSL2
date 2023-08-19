@@ -53,6 +53,9 @@ jobs:
           --clang
           --msvc=latest
           --enable-plugin=pyqt5
+          --disable-plugin=multiprocessing
+          --nofollow-import-to=scipy
+          --nofollow-import-to=numpy
           --output-dir=build
           --assume-yes-for-downloads
           --windows-icon-from-ico=MCSL2.ico
@@ -66,7 +69,7 @@ jobs:
           --include-data-dir=resource/light=resource/light
           --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
           --follow-import-to=Adapters
-          --include-package=MCSL2Lib
+          --follow-import-to=MCSL2Lib
           --copyright="Copyright ©MCSL Team. All right reserved."
           --lto=no
           --remove-output
@@ -75,7 +78,6 @@ jobs:
       - name: Delete Useless Files
         run: |
           rmdir /s /q certifi
-          rmdir /s /q numpy
           rmdir /s /q zstandard
           del /f /q _asyncio.pyd
           del /f /q _multiprocessing.pyd
@@ -228,10 +230,13 @@ jobs:
           --clang
           --msvc=latest
           --enable-plugin=pyqt5
+          --disable-plugin=multiprocessing
+          --nofollow-import-to=scipy
+          --nofollow-import-to=numpy
           --assume-yes-for-downloads
           --disable-console
           --follow-import-to=Adapters
-          --include-package=MCSL2Lib
+          --follow-import-to=MCSL2Lib
           --lto=no
           --output-dir=build
           --linux-icon=MCSL2.ico
