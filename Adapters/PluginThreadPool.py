@@ -2,6 +2,7 @@ from typing import List
 
 from PyQt5.QtCore import QThread
 
+
 class _PluginThread(QThread):
 
     def __init__(self):

@@ -11,7 +11,7 @@ class Handler(BaseHandler):
 
     def register_func(self, func):
         if func is None:
-            raise Exception("注册失败",None)
+            raise Exception("注册失败", None)
         self.handle_func = func
 
     @staticmethod
@@ -33,4 +33,3 @@ class Event(BaseEvent):
                 await handler.handle_func()
             except:
                 raise Exception("事件处理错误")
-

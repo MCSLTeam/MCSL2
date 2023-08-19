@@ -1126,7 +1126,7 @@ class ServerManagerPage(QWidget):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
         with open(
-            "MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8"
+                "MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8"
         ) as SaveFoundedJava:
             tmpNewJavaPath = editServerVariables.javaPath
             editServerVariables.javaPath = list(
@@ -1183,22 +1183,22 @@ class ServerManagerPage(QWidget):
 
         # 是否为空
         if (
-            self.editMinMemLineEdit.text() != ""
-            and self.editMaxMemLineEdit.text() != ""
+                self.editMinMemLineEdit.text() != ""
+                and self.editMaxMemLineEdit.text() != ""
         ):
             # 是否是数字
             if (
-                self.editMinMemLineEdit.text().isdigit()
-                and self.editMaxMemLineEdit.text().isdigit()
+                    self.editMinMemLineEdit.text().isdigit()
+                    and self.editMaxMemLineEdit.text().isdigit()
             ):
                 # 是否为整数
                 if (
-                    int(self.editMinMemLineEdit.text()) % 1 == 0
-                    and int(self.editMaxMemLineEdit.text()) % 1 == 0
+                        int(self.editMinMemLineEdit.text()) % 1 == 0
+                        and int(self.editMaxMemLineEdit.text()) % 1 == 0
                 ):
                     # 是否为整数
                     if int(self.editMinMemLineEdit.text()) <= int(
-                        self.editMaxMemLineEdit.text()
+                            self.editMaxMemLineEdit.text()
                     ):
                         # 设!
                         editServerVariables.minMem = int(self.editMinMemLineEdit.text())
@@ -1425,14 +1425,14 @@ class ServerManagerPage(QWidget):
         # 写入全局配置
         try:
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
                 globalServerListFile.close()
 
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as newGlobalServerListFile:
                 # 添加新的
                 globalServerList["MCSLServerList"].pop(self.serverIndex)
@@ -1447,9 +1447,9 @@ class ServerManagerPage(QWidget):
         try:
             if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
                 with open(
-                    f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
-                    "w+",
-                    encoding="utf-8",
+                        f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
+                        "w+",
+                        encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
                     serverListFile.close()
@@ -1511,19 +1511,19 @@ class ServerManagerPage(QWidget):
         没错，就是答辩if！！！
         """
         if (
-            editServerVariables.oldMinMem == editServerVariables.minMem
-            and editServerVariables.oldMaxMem == editServerVariables.maxMem
-            and editServerVariables.oldCoreFileName == editServerVariables.coreFileName
-            and editServerVariables.oldSelectedJavaPath
-            == editServerVariables.selectedJavaPath
-            and editServerVariables.oldMemUnit == editServerVariables.memUnit
-            and editServerVariables.oldJVMArg == editServerVariables.jvmArg
-            and editServerVariables.oldServerName == editServerVariables.serverName
-            and editServerVariables.oldConsoleOutputDeEncoding
-            == editServerVariables.consoleOutputDeEncoding
-            and editServerVariables.oldConsoleInputDeEncoding
-            == editServerVariables.consoleInputDeEncoding
-            and editServerVariables.oldIcon == editServerVariables.icon
+                editServerVariables.oldMinMem == editServerVariables.minMem
+                and editServerVariables.oldMaxMem == editServerVariables.maxMem
+                and editServerVariables.oldCoreFileName == editServerVariables.coreFileName
+                and editServerVariables.oldSelectedJavaPath
+                == editServerVariables.selectedJavaPath
+                and editServerVariables.oldMemUnit == editServerVariables.memUnit
+                and editServerVariables.oldJVMArg == editServerVariables.jvmArg
+                and editServerVariables.oldServerName == editServerVariables.serverName
+                and editServerVariables.oldConsoleOutputDeEncoding
+                == editServerVariables.consoleOutputDeEncoding
+                and editServerVariables.oldConsoleInputDeEncoding
+                == editServerVariables.consoleInputDeEncoding
+                and editServerVariables.oldIcon == editServerVariables.icon
         ):
             return 1  # 不变不让保存hiahiahia
         else:
@@ -1551,13 +1551,13 @@ class DeleteServerThread(QThread):
         # 删配置
         try:
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as RglobalServerListFile:
                 globalServerList = loads(RglobalServerListFile.read())
                 RglobalServerListFile.close()
             globalServerList["MCSLServerList"].pop(self.index)
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as WglobalServerConfigFile:
                 WglobalServerConfigFile.write(dumps(globalServerList, indent=4))
                 WglobalServerConfigFile.close()
