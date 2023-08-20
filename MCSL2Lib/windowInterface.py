@@ -48,7 +48,7 @@ from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.homePage import HomePage
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
-from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter
+from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (
@@ -128,9 +128,6 @@ class MCSL2TitleBar(MSFluentTitleBar):
 
     def resizeEvent(self, e):
         pass
-
-
-
 
 
 @Singleton
@@ -285,18 +282,26 @@ class Window(FramelessWindow):
         :param _traceback: 异常的traceback
         """
         # 过滤部分异常
-        if exceptionFilter(ty, value, _traceback):
-            print("过滤了异常：", ty, value, _traceback)
+        mode = exceptionFilter(ty, value, _traceback)
+
+        if mode == ExceptionFilterMode.PASS:
+            print("忽略了异常：", ty, value, _traceback)
+            return
+
+        elif mode == ExceptionFilterMode.RAISE:
+            print("捕捉到异常：", ty, value, _traceback)
             self.oldHook(ty, value, _traceback)
             return
 
-        tracebackFormat = format_exception(ty, value, _traceback)
-        tracebackString = "".join(tracebackFormat)
-        box = MessageBox("程序出现异常", tracebackString, parent=self)
-        box.yesButton.setText("确认并复制到剪切板")
-        if box.exec() == 1:
-            QApplication.clipboard().setText(tracebackString)
-        self.oldHook(ty, value, _traceback)
+        elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
+            tracebackFormat = format_exception(ty, value, _traceback)
+            tracebackString = "".join(tracebackFormat)
+            box = MessageBox("程序出现异常", tracebackString, parent=self)
+            box.yesButton.setText("确认并复制到剪切板")
+            if box.exec() == 1:
+                QApplication.clipboard().setText(tracebackString)
+            self.oldHook(ty, value, _traceback)
+            return
 
     def initPluginSystem(self):
         """初始化插件系统"""

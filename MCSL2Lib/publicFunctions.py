@@ -13,9 +13,11 @@
 """
 These are the built-in functions of MCSL2. They are just for solving the circular import.
 """
+import enum
 from types import TracebackType
 from typing import Type
 
+import aria2p
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 from json import loads, dumps
@@ -123,9 +125,19 @@ def openWebUrl(Url):
     QDesktopServices.openUrl(QUrl(Url))
 
 
-def exceptionFilter(ty: Type[BaseException], value: BaseException, _traceback: TracebackType) -> bool:
-    """过滤异常"""
-    if ty == AttributeError and "MessageBox" in str(value):
-        return True
+class ExceptionFilterMode(enum.Enum):
+    RAISE_AND_PRINT = enum.auto()  # 不过滤
+    RAISE = enum.auto()  # 过滤：不弹框提示，但是会抛出异常
+    PASS = enum.auto()  # 过滤：不弹框提示，也不抛出异常，就当做什么都没发生
 
-    return False
+
+def exceptionFilter(ty: Type[BaseException], value: BaseException, _traceback: TracebackType) -> ExceptionFilterMode:
+    """
+    过滤异常
+    """
+    if isinstance(value, AttributeError) and "MessageBox" in str(value):
+        return ExceptionFilterMode.PASS
+    if isinstance(value, aria2p.client.ClientException) and "Active Download not found for GID" in str(value):
+        return ExceptionFilterMode.RAISE
+
+    return ExceptionFilterMode.RAISE_AND_PRINT
