@@ -26,6 +26,8 @@ def gen_compiler() -> CompilerHelper:
 
         use_ccache=True,
         use_clang=True,
+        use_msvc=True,
+        # use_mingw=True,
         use_lto=False,
         standalone=True,
         enable_console=True,
@@ -56,6 +58,7 @@ def gen_compiler() -> CompilerHelper:
         ],
 
         enable_plugin=['pyqt5'],
+        disable_plugin=['multiprocessing']
     )
     return compiler
 
