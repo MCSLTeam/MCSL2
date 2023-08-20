@@ -2,6 +2,7 @@ from typing import List
 
 from PyQt5.QtCore import QThread
 
+
 class _PluginThread(QThread):
 
     def __init__(self):
@@ -29,10 +30,10 @@ class _PluginThreadPool:
     def __init__(self):
         self.threadPool: List[_PluginThread] = []
 
-    def registerThread(self, runFunc, stopFunc):
+    def registerThread(self, runFunc, stopCallback):
         pluginThread: _PluginThread = _PluginThread()
         pluginThread.registerStartFunc(runFunc)
-        pluginThread.registerStopFunc(stopFunc)
+        pluginThread.registerStopFunc(stopCallback)
         self.threadPool.append(pluginThread)
         pluginThread.start()
 
