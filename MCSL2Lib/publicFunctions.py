@@ -13,6 +13,8 @@
 """
 These are the built-in functions of MCSL2. They are just for solving the circular import.
 """
+from types import TracebackType
+from typing import Type
 
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
@@ -27,7 +29,7 @@ settingsController = SettingsController()
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
     with open(
-        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
     ) as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
         globalServerConfigFile.close()
@@ -100,7 +102,7 @@ def initializeMCSL2():
             config.close()
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
-            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
@@ -119,3 +121,11 @@ def isDarkTheme():
 def openWebUrl(Url):
     """打开网址"""
     QDesktopServices.openUrl(QUrl(Url))
+
+
+def exceptionFilter(ty: Type[BaseException], value: BaseException, _traceback: TracebackType) -> bool:
+    """过滤异常"""
+    if ty == AttributeError and "MessageBox" in str(value):
+        return True
+
+    return False
