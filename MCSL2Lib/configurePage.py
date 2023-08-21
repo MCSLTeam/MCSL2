@@ -5419,10 +5419,16 @@ class ConfigurePage(QWidget):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
         savedJavaList = javaDetector.loadJavaList()
-        javaList = javaDetector.combineJavaList(savedJavaList, _JavaPaths)
+        invaildJavaList = []
+        javaList = javaDetector.combineJavaList(savedJavaList, _JavaPaths,invaild=invaildJavaList)
         javaDetector.sortJavaList(javaList, reverse=False)
         configureServerVariables.javaPath = javaList
         javaDetector.saveJavaList(javaList)
+        for java in invaildJavaList:
+            InfoBar.error(
+                title=f"Java: {java.version} 已失效",
+                content=f"位于{java.path}的{java.version}已失效"
+            )
 
     @pyqtSlot(int)
     def onJavaFindWorkThreadFinished(self, sequenceNumber):
