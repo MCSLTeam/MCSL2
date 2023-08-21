@@ -1785,14 +1785,17 @@ class ConfigurePage(QWidget):
         self.shellArchivesValidateArgsJavaWidget.setObjectName("shellArchivesValidateArgsJavaWidget")
         self.gridLayout_26 = QGridLayout(self.shellArchivesValidateArgsJavaWidget)
         self.gridLayout_26.setObjectName("gridLayout_26")
-        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.shellArchivesValidateArgsJavaWidget)
+        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn")
+        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_26.addWidget(self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.shellArchivesValidateArgsJavaSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -1812,25 +1815,31 @@ class ConfigurePage(QWidget):
         self.shellArchivesValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.shellArchivesValidateArgsJavaListPushBtn.setObjectName("shellArchivesValidateArgsJavaListPushBtn")
         self.gridLayout_26.addWidget(self.shellArchivesValidateArgsJavaListPushBtn, 3, 2, 1, 1)
-        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.shellArchivesValidateArgsJavaWidget)
+        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_26.addWidget(self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.shellArchivesValidateArgsJavaWidget)
+        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("shellArchivesValidateArgsDownloadJavaPrimaryPushBtn")
+        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "shellArchivesValidateArgsDownloadJavaPrimaryPushBtn")
         self.gridLayout_26.addWidget(self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
         self.shellArchivesValidateArgsJavaTextEdit = TextEdit(self.shellArchivesValidateArgsJavaWidget)
         self.shellArchivesValidateArgsJavaTextEdit.setObjectName("shellArchivesValidateArgsJavaTextEdit")
@@ -1847,41 +1856,54 @@ class ConfigurePage(QWidget):
         self.shellArchivesValidateArgsDeEncodingWidget.setObjectName("shellArchivesValidateArgsDeEncodingWidget")
         self.gridLayout_27 = QGridLayout(self.shellArchivesValidateArgsDeEncodingWidget)
         self.gridLayout_27.setObjectName("gridLayout_27")
-        self.shellArchivesValidateArgsOutputDeEncodingComboBox = ComboBox(self.shellArchivesValidateArgsDeEncodingWidget)
+        self.shellArchivesValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.shellArchivesValidateArgsDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsOutputDeEncodingComboBox.setObjectName("shellArchivesValidateArgsOutputDeEncodingComboBox")
+        self.shellArchivesValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "shellArchivesValidateArgsOutputDeEncodingComboBox")
         self.gridLayout_27.addWidget(self.shellArchivesValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
         self.shellArchivesValidateArgsInputDeEncodingComboBox = ComboBox(self.shellArchivesValidateArgsDeEncodingWidget)
         self.shellArchivesValidateArgsInputDeEncodingComboBox.setText("")
-        self.shellArchivesValidateArgsInputDeEncodingComboBox.setObjectName("shellArchivesValidateArgsInputDeEncodingComboBox")
+        self.shellArchivesValidateArgsInputDeEncodingComboBox.setObjectName(
+            "shellArchivesValidateArgsInputDeEncodingComboBox")
         self.gridLayout_27.addWidget(self.shellArchivesValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.shellArchivesValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.shellArchivesValidateArgsDeEncodingWidget)
+        self.shellArchivesValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.shellArchivesValidateArgsDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsOutputDeEncodingLabel.setObjectName("shellArchivesValidateArgsOutputDeEncodingLabel")
+        self.shellArchivesValidateArgsOutputDeEncodingLabel.setObjectName(
+            "shellArchivesValidateArgsOutputDeEncodingLabel")
         self.gridLayout_27.addWidget(self.shellArchivesValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.shellArchivesValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsDeEncodingWidget)
+        self.shellArchivesValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.shellArchivesValidateArgsDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsDeEncodingSubtitleLabel.setObjectName("shellArchivesValidateArgsDeEncodingSubtitleLabel")
+        self.shellArchivesValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "shellArchivesValidateArgsDeEncodingSubtitleLabel")
         self.gridLayout_27.addWidget(self.shellArchivesValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.shellArchivesValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.shellArchivesValidateArgsDeEncodingWidget)
+        self.shellArchivesValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.shellArchivesValidateArgsDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsInputDeEncodingLabel.setObjectName("shellArchivesValidateArgsInputDeEncodingLabel")
+        self.shellArchivesValidateArgsInputDeEncodingLabel.setObjectName(
+            "shellArchivesValidateArgsInputDeEncodingLabel")
         self.gridLayout_27.addWidget(self.shellArchivesValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
         self.gridLayout_24.addWidget(self.shellArchivesValidateArgsDeEncodingWidget, 8, 2, 1, 3)
         self.shellArchivesValidateArgsJVMArgWidget = QWidget(self.shellArchivesValidateArgs)
@@ -1985,14 +2007,17 @@ class ConfigurePage(QWidget):
         self.shellArchivesValidateArgsCoreWidget.setObjectName("shellArchivesValidateArgsCoreWidget")
         self.gridLayout_31 = QGridLayout(self.shellArchivesValidateArgsCoreWidget)
         self.gridLayout_31.setObjectName("gridLayout_31")
-        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.shellArchivesValidateArgsCoreWidget)
+        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesValidateArgsCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setObjectName("shellArchivesValidateArgsDownloadCorePrimaryPushBtn")
+        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "shellArchivesValidateArgsDownloadCorePrimaryPushBtn")
         self.gridLayout_31.addWidget(self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
         self.shellArchivesValidateArgsCoreSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -2005,14 +2030,17 @@ class ConfigurePage(QWidget):
         self.shellArchivesValidateArgsCoreLineEdit = LineEdit(self.shellArchivesValidateArgsCoreWidget)
         self.shellArchivesValidateArgsCoreLineEdit.setObjectName("shellArchivesValidateArgsCoreLineEdit")
         self.gridLayout_31.addWidget(self.shellArchivesValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.shellArchivesValidateArgsCoreWidget)
+        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesValidateArgsCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_31.addWidget(self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_24.addWidget(self.shellArchivesValidateArgsCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_3.addWidget(self.shellArchivesValidateArgs)
@@ -2170,10 +2198,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setObjectName("serverArchiveSiteAutoDetectJavaPrimaryPushBtn")
+        self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "serverArchiveSiteAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_35.addWidget(self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.serverArchiveSiteJavaSubtitleLabel = SubtitleLabel(self.serverArchiveSiteSetJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -2197,11 +2227,13 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setObjectName("serverArchiveSiteManuallyAddJavaPrimaryPushBtn")
+        self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "serverArchiveSiteManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_35.addWidget(self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.serverArchiveSiteDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSetJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -2390,10 +2422,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setObjectName("serverArchiveSiteManuallyAddCorePrimaryPushBtn")
+        self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setObjectName(
+            "serverArchiveSiteManuallyAddCorePrimaryPushBtn")
         self.gridLayout_39.addWidget(self.serverArchiveSiteManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_6.addWidget(self.serverArchiveSiteSetArgs)
@@ -2569,10 +2603,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn")
+        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.MCSLv1ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -2596,11 +2632,13 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv1ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -2789,10 +2827,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_7.addWidget(self.MCSLv1ValidateArgs)
@@ -2949,10 +2989,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn")
+        self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.MCSLv2ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSLv2ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -2976,11 +3018,13 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv2ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -3169,10 +3213,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_56.addWidget(self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_8.addWidget(self.MCSLv2ValidateArgs)
@@ -3393,11 +3439,13 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_61.addWidget(self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MSL3ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -3524,10 +3572,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("MSL3ValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "MSL3ValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_65.addWidget(self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.MSL3ValidateArgsMemWidget = QWidget(self.MSL3ValidateArgs)
@@ -3758,30 +3808,37 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn")
+        self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_72.addWidget(self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.NullCraftValidateArgsJavaWidget)
+        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.NullCraftValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_72.addWidget(self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.NullCraftValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("NullCraftValidateArgsDownloadJavaPrimaryPushBtn")
+        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "NullCraftValidateArgsDownloadJavaPrimaryPushBtn")
         self.gridLayout_72.addWidget(self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
         self.NullCraftValidateArgsJavaSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -3807,9 +3864,11 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
         self.NullCraftValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsOutputDeEncodingComboBox.setObjectName("NullCraftValidateArgsOutputDeEncodingComboBox")
+        self.NullCraftValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "NullCraftValidateArgsOutputDeEncodingComboBox")
         self.gridLayout_73.addWidget(self.NullCraftValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
         self.NullCraftValidateArgsInputDeEncodingComboBox = ComboBox(self.NullCraftValidateArgsDeEncodingWidget)
         self.NullCraftValidateArgsInputDeEncodingComboBox.setText("")
@@ -3878,10 +3937,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setObjectName("NullCraftValidateArgsDownloadCorePrimaryPushBtn")
+        self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "NullCraftValidateArgsDownloadCorePrimaryPushBtn")
         self.gridLayout_75.addWidget(self.NullCraftValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
         self.NullCraftValidateArgsCoreSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -3894,14 +3955,17 @@ class ConfigurePage(QWidget):
         self.NullCraftValidateArgsCoreLineEdit = LineEdit(self.NullCraftValidateArgsCoreWidget)
         self.NullCraftValidateArgsCoreLineEdit.setObjectName("NullCraftValidateArgsCoreLineEdit")
         self.gridLayout_75.addWidget(self.NullCraftValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.NullCraftValidateArgsCoreWidget)
+        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.NullCraftValidateArgsCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("NullCraftValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "NullCraftValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_75.addWidget(self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_71.addWidget(self.NullCraftValidateArgsCoreWidget, 7, 2, 1, 3)
         self.NullCraftValidateArgsMemWidget = QWidget(self.NullCraftValidateArgs)
@@ -4200,20 +4264,24 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn")
+        self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_81.addWidget(self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_81.addWidget(self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -4340,10 +4408,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_84.addWidget(self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.MCSM8ValidateArgsMemWidget = QWidget(self.MCSM8ValidateArgs)
@@ -4614,20 +4684,24 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn")
+        self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn")
         self.gridLayout_91.addWidget(self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName("MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn")
+        self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn")
         self.gridLayout_91.addWidget(self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -4754,10 +4828,12 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName("MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn")
+        self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
+            "MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn")
         self.gridLayout_94.addWidget(self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.MCSM9ValidateArgsMemWidget = QWidget(self.MCSM9ValidateArgs)
@@ -5185,7 +5261,11 @@ class ConfigurePage(QWidget):
         self.MCSM9SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.MCSM9SaveServerPrimaryPushBtn.setText("导入！")
         self.MCSM9Title.setText("导入 MCSManager 9 的服务器")
-        self.importNewServerTypeComboBox.addItems(["选择一项", "导入 不含开服脚本的 完整的 服务器", "导入 含开服脚本的 完整的 服务器", "导入 服务器 存档(没有开服脚本、没有服务器核心)", "导入 MCSL 1 的服务器", "导入 MCSL 2 的服务器", "导入 MSL 的服务器", "导入 灵工艺我的世界「轻」开服器 的服务器", "导入 MCSManager 8 的服务器", "导入 MCSManager 9 的服务器"])
+        self.importNewServerTypeComboBox.addItems(
+            ["选择一项", "导入 不含开服脚本的 完整的 服务器", "导入 含开服脚本的 完整的 服务器",
+             "导入 服务器 存档(没有开服脚本、没有服务器核心)", "导入 MCSL 1 的服务器", "导入 MCSL 2 的服务器",
+             "导入 MSL 的服务器", "导入 灵工艺我的世界「轻」开服器 的服务器", "导入 MCSManager 8 的服务器",
+             "导入 MCSManager 9 的服务器"])
 
         # 引导页绑定
         self.noobNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
@@ -5214,7 +5294,8 @@ class ConfigurePage(QWidget):
         self.importBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
-        self.goBtn.clicked.connect(lambda: self.importNewServerStackWidget.setCurrentIndex(self.importNewServerTypeComboBox.currentIndex()))
+        self.goBtn.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(self.importNewServerTypeComboBox.currentIndex()))
 
         self.noobNewServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
@@ -5249,7 +5330,7 @@ class ConfigurePage(QWidget):
         self.MCSM9ScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
-        
+
         self.settingsRunner_newServerType()
 
     def settingsRunner_newServerType(self):
@@ -5271,18 +5352,19 @@ class ConfigurePage(QWidget):
 
     def addJavaManually(self):
         """手动添加Java"""
-        tmpJavaPath = str(
+        selectedJavaPath = str(
             QFileDialog.getOpenFileName(self, "选择java.exe程序", getcwd(), "java.exe")[0]
         )
-        if tmpJavaPath != "":
-            tmpJavaPath = tmpJavaPath.replace("/", "\\")
-            if v := javaDetector.getJavaVersion(tmpJavaPath):
-                tmpNewJavaPath = configureServerVariables.javaPath
-                if javaDetector.Java(tmpJavaPath, v) not in tmpNewJavaPath:
-                    tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
+        if selectedJavaPath != "":
+            selectedJavaPath = selectedJavaPath.replace("/", "\\")
+            if v := javaDetector.getJavaVersion(selectedJavaPath):
+                currentJavaPaths = configureServerVariables.javaPath
+                if (java := javaDetector.Java(selectedJavaPath, v)) not in currentJavaPaths:
+                    currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
+                    javaDetector.sortJavaList(currentJavaPaths)
                     InfoBar.success(
                         title="已添加",
-                        content=f"Java路径：{tmpJavaPath}\n版本：{v}\n但你还需要继续到Java列表中选取。",
+                        content=f"Java路径：{selectedJavaPath}\n版本：{v}\n但你还需要继续到Java列表中选取。",
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
@@ -5299,8 +5381,7 @@ class ConfigurePage(QWidget):
                         duration=4848,
                         parent=self,
                     )
-                configureServerVariables.javaPath.clear()
-                configureServerVariables.javaPath = tmpNewJavaPath
+                javaDetector.saveJavaList(currentJavaPaths)
             else:
                 InfoBar.error(
                     title="添加失败",
@@ -5337,37 +5418,11 @@ class ConfigurePage(QWidget):
         if ospath.exists("MCSL2/AutoDetectJavaHistory.json"):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
-        with open(
-            "MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8"
-        ) as SaveFoundedJava:
-            tmpNewJavaPath = configureServerVariables.javaPath
-            configureServerVariables.javaPath = list(
-                {p[:-1] for p in SaveFoundedJava.readlines()}
-                .union(set(configureServerVariables.javaPath))
-                .union(set(_JavaPaths))
-            )
-            configureServerVariables.javaPath.sort(
-                key=lambda x: x.version, reverse=False
-            )
-            for d in configureServerVariables.javaPath:
-                if d not in tmpNewJavaPath:
-                    tmpNewJavaPath.append(d)
-                else:
-                    pass
-            configureServerVariables.javaPath.clear()
-            configureServerVariables.javaPath = tmpNewJavaPath
-
-            JavaPathList = [
-                {"Path": e.path, "Version": e.version}
-                for e in configureServerVariables.javaPath
-            ]
-            dump(
-                {"java": JavaPathList},
-                SaveFoundedJava,
-                sort_keys=True,
-                indent=4,
-                ensure_ascii=False,
-            )
+        savedJavaList = javaDetector.loadJavaList()
+        javaList = javaDetector.combineJavaList(savedJavaList, _JavaPaths)
+        javaDetector.sortJavaList(javaList, reverse=False)
+        configureServerVariables.javaPath = javaList
+        javaDetector.saveJavaList(javaList)
 
     @pyqtSlot(int)
     def onJavaFindWorkThreadFinished(self, sequenceNumber):
@@ -5436,22 +5491,22 @@ class ConfigurePage(QWidget):
 
         # 是否为空
         if (
-            minMemLineEditItems[currentNewServerType].text() != ""
-            and maxMemLineEditItems[currentNewServerType].text() != ""
+                minMemLineEditItems[currentNewServerType].text() != ""
+                and maxMemLineEditItems[currentNewServerType].text() != ""
         ):
             # 是否是数字
             if (
-                minMemLineEditItems[currentNewServerType].text().isdigit()
-                and maxMemLineEditItems[currentNewServerType].text().isdigit()
+                    minMemLineEditItems[currentNewServerType].text().isdigit()
+                    and maxMemLineEditItems[currentNewServerType].text().isdigit()
             ):
                 # 是否为整数
                 if (
-                    int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
-                    and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                        int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                        and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
                 ):
                     # 是否为整数
                     if int(minMemLineEditItems[currentNewServerType].text()) <= int(
-                        maxMemLineEditItems[currentNewServerType].text()
+                            maxMemLineEditItems[currentNewServerType].text()
                     ):
                         # 设!
                         configureServerVariables.minMem = int(
@@ -5474,8 +5529,8 @@ class ConfigurePage(QWidget):
     def checkCoreSet(self):
         """检查核心设置"""
         if (
-            configureServerVariables.corePath != ""
-            and configureServerVariables.coreFileName != ""
+                configureServerVariables.corePath != ""
+                and configureServerVariables.coreFileName != ""
         ):
             return "核心检查: 正常", 0
         else:
@@ -5512,8 +5567,8 @@ class ConfigurePage(QWidget):
 
         for i in range(len(illegalServerNameList)):
             if (
-                illegalServerNameList[i]
-                == serverNameLineEditItems[currentNewServerType].text()
+                    illegalServerNameList[i]
+                    == serverNameLineEditItems[currentNewServerType].text()
             ):
                 errText += "，名称与操作系统冲突"
                 isError = 1
@@ -5522,8 +5577,8 @@ class ConfigurePage(QWidget):
                 isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
             if (
-                not eachIllegalServerCharacter
-                in serverNameLineEditItems[currentNewServerType].text()
+                    not eachIllegalServerCharacter
+                        in serverNameLineEditItems[currentNewServerType].text()
             ):
                 pass
             else:
@@ -5712,14 +5767,14 @@ class ConfigurePage(QWidget):
         # 写入全局配置
         try:
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
                 globalServerListFile.close()
 
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as newGlobalServerListFile:
                 # 添加新的
                 globalServerList["MCSLServerList"].append(serverConfig)
@@ -5733,9 +5788,9 @@ class ConfigurePage(QWidget):
         try:
             if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
                 with open(
-                    f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
-                    "w+",
-                    encoding="utf-8",
+                        f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
+                        "w+",
+                        encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
                     serverListFile.close()
