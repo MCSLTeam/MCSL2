@@ -162,31 +162,39 @@ class InstallPluginThread(QThread):
         self.setObjectName("InstallPluginThread")
 
     def run(self):
-        tmpPluginFilePath = str(
-            QFileDialog.getOpenFileName(PluginPage(), "选择.zip形式的插件", getcwd(), "*.zip")[0]
-        ).replace("/", "\\")
-        PluginZipFileName = ""
         try:
+            tmpPluginFilePath = str(
+                QFileDialog.getOpenFileName(PluginPage(), "选择.zip形式的插件", getcwd(), "*.zip")[0]
+            ).replace("/", "\\")
             PluginZipFileName = ospath.basename(tmpPluginFilePath)
 
             copy(
                 tmpPluginFilePath,
                 "./Plugins"
             )
+            PluginFilePath = f"./Plugins/{PluginZipFileName}"
+            plugin_zip = ZipFile(PluginFilePath, 'r')
+            plugin_zip.extractall("./Plugins")
+            plugin_zip.close()
+            remove(f"./Plugins/{PluginZipFileName}")
+            print(f"成功安装插件{PluginZipFileName.replace('.zip', '')}")
+            InfoBar.success(
+                title="成功安装",
+                content=f"重启后生效",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.BOTTOM_LEFT,
+                duration=3000,
+                parent=PluginPage(),
+            )
         except:
+            InfoBar.error(
+                title="安装失败",
+                content=f"也许你未选择插件",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.BOTTOM_LEFT,
+                duration=3000,
+                parent=PluginPage(),
+            )
             pass
-        PluginFilePath = f"./Plugins/{PluginZipFileName}"
-        plugin_zip = ZipFile(PluginFilePath, 'r')
-        plugin_zip.extractall("./Plugins")
-        plugin_zip.close()
-        remove(f"./Plugins/{PluginZipFileName}")
-        print(f"成功安装插件{PluginZipFileName.replace('.zip', '')}")
-        InfoBar.success(
-            title="成功安装",
-            content=f"重启后生效",
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.BOTTOM_LEFT,
-            duration=3000,
-            parent=PluginPage(),
-        )
