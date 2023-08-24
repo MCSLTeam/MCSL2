@@ -33,6 +33,7 @@ from qfluentwidgets import (
     MessageBox,
     HyperlinkButton,
     MSFluentTitleBar,
+    TextWrap,
 )
 from qframelesswindow import FramelessWindow
 from Adapters.Plugin import PluginManager
@@ -45,6 +46,7 @@ from MCSL2Lib.aria2ClientController import (
 from MCSL2Lib.configurePage import ConfigurePage
 from MCSL2Lib.consolePage import ConsolePage
 from MCSL2Lib.downloadPage import DownloadPage
+from MCSL2Lib.exceptionWidget import ExceptionWidget
 from MCSL2Lib.homePage import HomePage
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
@@ -298,10 +300,17 @@ class Window(FramelessWindow):
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
             tracebackFormat = format_exception(ty, value, _traceback)
             tracebackString = "".join(tracebackFormat)
+            exceptionWidget = ExceptionWidget()
+            exceptionWidget.exceptionLabel.setText(TextWrap.wrap(tracebackString, 100.0, False)[0])
             box = MessageBox("程序出现异常", tracebackString, parent=self)
             box.yesButton.setText("确认并复制到剪切板")
-            if box.exec() == 1:
-                QApplication.clipboard().setText(tracebackString)
+            box.cancelButton.setText("知道了")
+            box.contentLabel.deleteLater()
+            box.textLayout.addWidget(exceptionWidget)
+            box.yesSignal.connect(lambda: QApplication.clipboard().setText(tracebackString))
+            box.yesSignal.connect(exceptionWidget.deleteLater)
+            box.cancelSignal.connect(exceptionWidget.deleteLater)
+            box.exec()
             self.oldHook(ty, value, _traceback)
             return
 
