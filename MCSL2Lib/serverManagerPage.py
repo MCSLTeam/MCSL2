@@ -1066,7 +1066,7 @@ class ServerManagerPage(QWidget):
         if tmpJavaPath != "":
             tmpJavaPath = tmpJavaPath.replace("/", "\\")
             if v := javaDetector.getJavaVersion(tmpJavaPath):
-                tmpNewJavaPath = editServerVariables.javaPath
+                tmpNewJavaPath = editServerVariables.javaPath.copy()
                 if javaDetector.Java(tmpJavaPath, v) not in tmpNewJavaPath:
                     tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
                     InfoBar.success(

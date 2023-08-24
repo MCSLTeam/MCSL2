@@ -14,13 +14,13 @@
 An auto-detect Java function.
 '''
 
-from os import listdir
+import json
+from os import listdir, remove
 from os import path as ospath
 from platform import system
 from re import search
 
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
-
 
 foundJava = []
 isNeedFuzzySearch = True
@@ -53,8 +53,18 @@ class Java:
     def version(self):
         return self._version
 
+    @property
+    def json(self):
+        return {
+            "Path": self.path,
+            "Version": self.version
+        }
+
     def __hash__(self):
         return hash((self._path, self._version))
+
+    def __str__(self):
+        return json.dumps(self.json)
 
     def __eq__(self, other):
         if isinstance(other, Java):
@@ -96,14 +106,11 @@ def findStr(s):
 
 
 def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
-    # construct _Math function
+    # construct _Match function
     if "windows" in system().lower():
-
         def Match(P, F):
             return ospath.join(P, F).endswith(r"bin\java.exe")
-
     else:
-
         def Match(P, F):
             return ospath.join(P, F).endswith(r"bin/java")
 
@@ -146,15 +153,17 @@ def searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     return processes
 
 
+def JavaVersionMatcher(s):
+    pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
+    match = search(pattern, s)
+    if match is not None:
+        match = ".".join(filter(None, match.groups()))
+    else:
+        match = "unknown"
+    return match
+
+
 def detectJava(FuzzySearch=True):
-    def JavaVersionMatcher(s):
-        pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
-        match = search(pattern, s)
-        if match is not None:
-            match = ".".join(filter(None, match.groups()))
-        else:
-            match = "unknown"
-        return match
     JavaPathList = []
     foundJava.clear()
     if "windows" in system().lower():
@@ -169,6 +178,85 @@ def detectJava(FuzzySearch=True):
             searchFile("/usr/lib", "java", "", FuzzySearch, JavaVersionMatcher)
         )
     return JavaPathList
+
+
+def checkJavaAvailability(java: Java):
+    if ospath.exists(java.path):
+        process = QProcess()
+        process.start(java.path, ["-version"])
+        process.waitForFinished()
+        output = process.readAllStandardError().data().decode("utf-8")
+        process.deleteLater()
+        matcher = JavaVersionMatcher(output)
+        if matcher == java.version:
+            return True
+    return False
+
+
+def loadJavaList():
+    """
+    从配置文件中读取Java
+    """
+
+    # 兼容
+    if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+        remove("MCSL2/AutoDetectJavaHistory.txt")
+    if ospath.exists("MCSL2/AutoDetectJavaHistory.json"):
+        remove("MCSL2/AutoDetectJavaHistory.json")
+
+    if not ospath.exists("MCSL2/MCSL2_DetectedJava.json"):
+        return []
+    with open(
+            "MCSL2/MCSL2_DetectedJava.json", "r", encoding="utf-8"
+    ) as f:
+        foundedJava = json.load(f)
+        l = [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
+        return l
+
+
+def saveJavaList(l: list):
+    with open(
+            "MCSL2/MCSL2_DetectedJava.json", "w", encoding="utf-8"
+    ) as f:
+        json.dump(
+            {"java": [j.json for j in l]},
+            f,
+            ensure_ascii=False,
+            sort_keys=True,
+            indent=4
+        )
+
+
+def sortJavaList(l: list, reverse=False):
+    """
+    为List[Java]排序
+    """
+    l.sort(key=lambda x: x.version, reverse=reverse)
+
+
+def sortedJavaList(l: list, reverse=False):
+    """
+    为List[Java]排序，并返回新列表
+    """
+    return sorted(l, key=lambda x: x.version, reverse=reverse)
+
+
+def combineJavaList(original: list, l: list,invaild:...,check=True):
+    """
+    合并两个List[Java]
+    invaild为引用输出(list)
+    """
+    s1 = set(original)
+    s2 = set(l)
+    s = s1.union(s2)
+    if check:
+        for e in s1 - s2:
+            if not checkJavaAvailability(e):
+                s.remove(e)
+                print(e, "已失效")
+                if isinstance(invaild,list):
+                    invaild.append(e)
+    return list(s)
 
 
 class JavaFindWorkThread(QThread):

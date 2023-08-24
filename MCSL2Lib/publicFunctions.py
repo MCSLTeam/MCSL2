@@ -13,7 +13,11 @@
 """
 These are the built-in functions of MCSL2. They are just for solving the circular import.
 """
+import enum
+from types import TracebackType
+from typing import Type
 
+import aria2p
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
 from json import loads, dumps
@@ -27,7 +31,7 @@ settingsController = SettingsController()
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
     with open(
-        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
     ) as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
         globalServerConfigFile.close()
@@ -100,7 +104,7 @@ def initializeMCSL2():
             config.close()
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
-            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
@@ -119,3 +123,29 @@ def isDarkTheme():
 def openWebUrl(Url):
     """打开网址"""
     QDesktopServices.openUrl(QUrl(Url))
+
+
+class ExceptionFilterMode(enum.Enum):
+    RAISE_AND_PRINT = enum.auto()  # 过滤：弹框提示，也会抛出异常
+    RAISE = enum.auto()  # 过滤：不弹框提示，但是会抛出异常
+    PASS = enum.auto()  # 过滤：不弹框提示，也不抛出异常，就当做什么都没发生
+
+
+def exceptionFilter(ty: Type[BaseException], value: BaseException, _traceback: TracebackType) -> ExceptionFilterMode:
+    """
+    过滤异常
+    """
+    if isinstance(value, AttributeError) and "MessageBox" in str(value):
+        return ExceptionFilterMode.PASS
+    if isinstance(value, aria2p.client.ClientException) and "Active Download not found for GID" in str(value):
+        return ExceptionFilterMode.RAISE
+    if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
+        return ExceptionFilterMode.PASS
+    if isinstance(value, Exception) and "raise test" in str(value):
+        return ExceptionFilterMode.RAISE
+    if isinstance(value, Exception) and "pass test" in str(value):
+        return ExceptionFilterMode.PASS
+    if isinstance(value, Exception) and "print test" in str(value):
+        return ExceptionFilterMode.RAISE_AND_PRINT
+
+    return ExceptionFilterMode.RAISE_AND_PRINT

@@ -15,6 +15,8 @@ The main window of MCSL2.
 """
 import sys
 from traceback import format_exception
+from types import TracebackType
+from typing import Type
 
 from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot
 from PyQt5.QtGui import QIcon
@@ -33,8 +35,6 @@ from qfluentwidgets import (
     MSFluentTitleBar,
 )
 from qframelesswindow import FramelessWindow
-
-# from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.aria2ClientController import (
@@ -48,7 +48,7 @@ from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.homePage import HomePage
 from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
-from MCSL2Lib.publicFunctions import isDarkTheme
+from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (
@@ -274,20 +274,34 @@ class Window(FramelessWindow):
         process = ServerHandler().Server.serverProcess
         process.kill()
 
-    def catchExceptions(self, ty, value, _traceback):
+    def catchExceptions(self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType):
         """
         全局捕获异常，并弹窗显示
         :param ty: 异常的类型
         :param value: 异常的对象
         :param _traceback: 异常的traceback
         """
-        tracebackFormat = format_exception(ty, value, _traceback)
-        tracebackString = "".join(tracebackFormat)
-        box = MessageBox("程序出现异常", tracebackString, parent=self)
-        box.yesButton.setText("确认并复制到剪切板")
-        if box.exec() == 1:
-            QApplication.clipboard().setText(tracebackString)
-        self.oldHook(ty, value, _traceback)
+        # 过滤部分异常
+        mode = exceptionFilter(ty, value, _traceback)
+
+        if mode == ExceptionFilterMode.PASS:
+            print("忽略了异常：", ty, value, _traceback)
+            return
+
+        elif mode == ExceptionFilterMode.RAISE:
+            print("捕捉到异常：", ty, value, _traceback)
+            self.oldHook(ty, value, _traceback)
+            return
+
+        elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
+            tracebackFormat = format_exception(ty, value, _traceback)
+            tracebackString = "".join(tracebackFormat)
+            box = MessageBox("程序出现异常", tracebackString, parent=self)
+            box.yesButton.setText("确认并复制到剪切板")
+            if box.exec() == 1:
+                QApplication.clipboard().setText(tracebackString)
+            self.oldHook(ty, value, _traceback)
+            return
 
     def initPluginSystem(self):
         """初始化插件系统"""
@@ -347,12 +361,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-        self,
-        interface,
-        icon,
-        text: str,
-        position=NavigationItemPosition.TOP,
-        selectedIcon=None,
+            self,
+            interface,
+            icon,
+            text: str,
+            position=NavigationItemPosition.TOP,
+            selectedIcon=None,
     ):
         """添加子页面"""
         self.stackedWidget.addWidget(interface)
@@ -592,47 +606,47 @@ class Window(FramelessWindow):
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 print("enter")
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
                 print("up")
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                        GlobalMCSL2Variables.userCommandHistory != []
-                        and GlobalMCSL2Variables.upT
-                        > -len(GlobalMCSL2Variables.userCommandHistory)
+                            GlobalMCSL2Variables.userCommandHistory != []
+                            and GlobalMCSL2Variables.upT
+                            > -len(GlobalMCSL2Variables.userCommandHistory)
                     ):
                         lastCommand = GlobalMCSL2Variables.userCommandHistory[
                             GlobalMCSL2Variables.upT - 1
-                        ]
+                            ]
                         GlobalMCSL2Variables.upT -= 1
                         self.consoleInterface.commandLineEdit.setText(lastCommand)
                         return True
             elif a1.key() == Qt.Key_Down:
                 print("down")
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                        GlobalMCSL2Variables.userCommandHistory != []
-                        and GlobalMCSL2Variables.upT < 0
+                            GlobalMCSL2Variables.userCommandHistory != []
+                            and GlobalMCSL2Variables.upT < 0
                     ):
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
                             GlobalMCSL2Variables.upT + 1
-                        ]
+                            ]
                         GlobalMCSL2Variables.upT += 1
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                        GlobalMCSL2Variables.userCommandHistory != []
-                        and GlobalMCSL2Variables.upT == 0
+                            GlobalMCSL2Variables.userCommandHistory != []
+                            and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
