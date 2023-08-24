@@ -204,7 +204,8 @@ class MojangEula:
 
     def checkEula(self) -> bool:
         """检查Eula"""
-        if ospath.exists(f"{self.serverDir}/eula.txt"):
+        self.__init__()
+        try:
             with open(f"{self.serverDir}/eula.txt", "r", encoding="utf-8") as Eula:
                 EulaText = Eula.readlines()
                 Eula.close()
@@ -217,7 +218,7 @@ class MojangEula:
                         return False
                 else:
                     continue
-        else:
+        except FileNotFoundError:
             return False
 
     def acceptEula(self):
