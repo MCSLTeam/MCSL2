@@ -17,7 +17,7 @@ jobs:
           - x86
           - arm64
         mcsl2version: 
-          - 2.2.1.0
+          - 2.2.1.1
 
     runs-on: ${{ matrix.os }}
 
@@ -26,11 +26,6 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      # - name: Replace MCSLAPI IPFS Gateway
-      #   run: |
-      #     cd MCSL2Lib
-      #     echo "${{ secrets.MCSLAPI_GATEWAY }}" >> MCSLAPI.py
-      
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -77,18 +72,22 @@ jobs:
 
       - name: Delete Useless Files and Compress with upx
         run: |
-          cmd /K delrmdir /s /q certifi
-          cmd /K delrmdir /s /q zstandard
-          cmd /K deldel /f /q _asyncio.pyd
-          cmd /K deldel /f /q _multiprocessing.pyd
-          cmd /K deldel /f /q _queue.pyd
-          cmd /K deldel /f /q libeay32.dll
-          cmd /K deldel /f /q pyexpat.pyd
-          cmd /K deldel /f /q qt5qml.dll
-          cmd /K deldel /f /q qt5qmlmodels.dll
-          cmd /K deldel /f /q qt5quick.dll
-          cmd /K deldel /f /q ssleay32.dll
-          .\upx.exe -9 .\build\MCSL2.dist\MCSL2.exe
+          cd build
+          cd MCSL2.dist
+          cmd /K rmdir /s /q certifi
+          cmd /K rmdir /s /q zstandard
+          cmd /K del /f /q _asyncio.pyd
+          cmd /K del /f /q _multiprocessing.pyd
+          cmd /K del /f /q _queue.pyd
+          cmd /K del /f /q libeay32.dll
+          cmd /K del /f /q pyexpat.pyd
+          cmd /K del /f /q qt5qml.dll
+          cmd /K del /f /q qt5qmlmodels.dll
+          cmd /K del /f /q qt5quick.dll
+          cmd /K del /f /q ssleay32.dll
+          cd ..
+          cd ..
+          .\upx.exe -9 .\build\MCSL2.dist\*
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -96,89 +95,6 @@ jobs:
           name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
           path: |
             build/MCSL2.dist/**/*
-
-  # macOS:
-  #   strategy:
-  #     fail-fast: false
-
-  #     matrix:
-  #       os:
-  #         - macos-latest
-  #       architecture:
-  #         - x64
-  #         - arm64
-  #       mcsl2version: 
-  #         - 2.2.1.0
-
-  #   runs-on: ${{ matrix.os }}
-
-  #   steps:
-  #     - name: Check-out repository
-  #       uses: actions/checkout@v3
-
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: '3.8'
-  #         cache: 'pip'
-  #         cache-dependency-path: |
-  #           requirements.txt
-
-  #     - name: Update Pip and Install Requirements
-  #       run: |
-  #         python -m pip install pip setuptools -U
-  #         python -m pip install -r requirements.txt
-          
-  #     - name: Install create-dmg
-  #       run: | 
-  #         brew install create-dmg
-
-  #     - name: Prepare for Nuitka
-  #       run: |
-  #         rm PyQt5/Qt5/.gitkeep
-  #         mv MCSL2.py MCSL2App.py && sed -i '' 's/MCSL2/MCSL2App/g' MCSL2App.py
-
-  #     - name: Build on macOS
-  #       run: >
-  #         python -m nuitka
-  #         --enable-plugin=pyqt5
-  #         --assume-yes-for-downloads
-  #         --macos-app-icon=MCSL2.icns
-  #         --disable-console
-  #         --include-data-dir=resource/dark=resource/dark
-  #         --include-data-dir=resource/light=resource/light
-  #         --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
-  #         --follow-import-to=Adapters
-  #         --follow-import-to=MCSL2Lib
-  #         --lto=no
-  #         --standalone
-  #         --onefile
-  #         --macos-create-app-bundle
-  #         --output-dir=MCSL2Main
-  #         --enable-plugin=pyqt5
-  #         --include-data-dir=PyQt5/Qt5=PyQt5/Qt5
-  #         --macos-app-version=${{ matrix.mcsl2version }}
-  #         --remove-output
-  #         MCSL2App.py
-          
-  #     - name: Fix Nuitka-built App
-  #       run: | 
-  #         cp MCSL2Main/Info.plist MCSL2Main/MCSL2App.app/Contents/
-  #         cp -r MCSL2Main/Resources/ MCSL2Main/MCSL2App.app/Contents/Resources/
-  #         cp MCSL2_macOS_DMG_Background.jpeg MCSL2Main/
-  #         cp MCSL2.icns MCSL2Main/
-
-  #     - name: Create DMG
-  #       run: |
-  #         cd MCSL2Main
-  #         create-dmg --volname "MCSL2 Installer" --volicon "MCSL2.icns" --background "MCSL2_macOS_DMG_Background.jpeg" --window-pos 200 110 --window-size 576 324 --text-size 12 --icon-size 72 --icon "MCSL2App.app" 200 126 --app-drop-link 346 126 --hide-extension "MCSL2App.app" "MCSL2-${{ matrix.mcsl2version }}-macOS-x64.dmg" "MCSL2App.app"
-          
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
-  #         path: |
-  #           MCSL2Main/*.dmg
 
   Linux:
     strategy:
@@ -192,18 +108,13 @@ jobs:
           - x86
           - arm64
         mcsl2version: 
-          - 2.2.1.0
+          - 2.2.1.1
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Check-out repository
         uses: actions/checkout@v3
-
-      # - name: Replace MCSLAPI IPFS Gateway
-      #   run: |
-      #     cd MCSL2Lib
-      #     echo "${{ secrets.MCSLAPI_GATEWAY }}" >> MCSLAPI.py
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -224,6 +135,7 @@ jobs:
         run: |
           sudo apt-get install -y libfuse2
           sudo apt-get install -y ccache
+          sudo apt-get install -y upx-ucl
 
       - name: Build on Linux
         run: >
@@ -253,6 +165,17 @@ jobs:
           --copyright="Copyright ©MCSL Team. All right reserved."
           MCSL2.py
 
+      - name: Delete Useless Files and Compress with upx
+        run: |
+          cd build
+          cd MCSL2.dist
+          rm -r certifi
+          rm -r zstandard
+          sudo rm .\build\MCSL2.dist\libQt5Quick.so.5
+          sudo rm .\build\MCSL2.dist\libQt5Qml.so.5
+          sudo rm .\build\MCSL2.dist\libQt5QmlModels.so.5
+          upx -9 .\*
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -265,13 +188,12 @@ jobs:
 
     needs:
       - Windows
-      # - macOS
       - Linux
     
     strategy:
       matrix:
         mcsl2version: 
-          - 2.2.1.0
+          - 2.2.1.1
 
     steps:
 
@@ -308,6 +230,6 @@ jobs:
           tag_name: v${{ matrix.mcsl2version }}
           files: |
             *.zip
-            
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
