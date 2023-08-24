@@ -171,9 +171,9 @@ jobs:
           cd MCSL2.dist
           rm -r certifi
           rm -r zstandard
-          sudo rm .\build\MCSL2.dist\libQt5Quick.so.5
-          sudo rm .\build\MCSL2.dist\libQt5Qml.so.5
-          sudo rm .\build\MCSL2.dist\libQt5QmlModels.so.5
+          sudo rm libQt5Quick.so.5
+          sudo rm libQt5Qml.so.5
+          sudo rm libQt5QmlModels.so.5
           upx -9 .\*
 
       - name: Upload Artifacts
