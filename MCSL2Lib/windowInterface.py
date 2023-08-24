@@ -306,7 +306,7 @@ class Window(FramelessWindow):
             box.yesButton.setText("确认并复制到剪切板")
             box.cancelButton.setText("知道了")
             box.contentLabel.deleteLater()
-            box.textLayout.addWidget(exceptionWidget)
+            box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
             box.yesSignal.connect(lambda: QApplication.clipboard().setText(tracebackString))
             box.yesSignal.connect(exceptionWidget.deleteLater)
             box.cancelSignal.connect(exceptionWidget.deleteLater)

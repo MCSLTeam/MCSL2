@@ -22,6 +22,8 @@ class ExceptionWidget(QWidget):
         self.exceptionScrollArea = SmoothScrollArea(self.exceptionWidget)
         self.exceptionScrollArea.setWidgetResizable(True)
         self.exceptionScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.exceptionScrollArea.setMinimumSize(QSize(480, 320))
+        self.exceptionScrollArea.setMaximumSize(QSize(480, 320))
 
         self.exceptionScrollAreaWidgetContents = QWidget()
         self.exceptionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 481, 331))
