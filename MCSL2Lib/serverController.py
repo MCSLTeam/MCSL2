@@ -358,6 +358,10 @@ class MinecraftServerResMonitorUtil(QObject):
                 self.cpuPercent.emit(0.0000)
         except NoSuchProcess:
             pass
+        except PermissionError:
+            pass
+        except AccessDenied:
+            pass
 
     @pyqtSlot(int)
     def onServerClosedHandler(self, _):
