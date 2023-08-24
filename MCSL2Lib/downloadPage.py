@@ -672,7 +672,12 @@ class DownloadPage(QWidget):
             return
         else:
             for layout in self.MCSLAPILayoutList:
+                try:
+                    layout.removeItem(self.scrollAreaSpacer)
+                except:
+                    pass
                 for i in reversed(range(layout.count())):
+                    print(layout.itemAt(i))
                     layout.itemAt(i).widget().deleteLater()
                 layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
@@ -752,10 +757,6 @@ class DownloadPage(QWidget):
             self.refreshFastMirrorAPIBtn.setEnabled(False)
             return
         else:
-            # for layout in self.MCSLAPILayoutList:
-            #     for i in reversed(range(layout.count())):
-            #         layout.itemAt(i).widget().deleteLater()
-            #     layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
             self.refreshFastMirrorAPIBtn.setEnabled(False)
 
