@@ -674,10 +674,9 @@ class DownloadPage(QWidget):
             for layout in self.MCSLAPILayoutList:
                 try:
                     layout.removeItem(self.scrollAreaSpacer)
-                except:
+                except AttributeError:
                     pass
                 for i in reversed(range(layout.count())):
-                    print(layout.itemAt(i))
                     layout.itemAt(i).widget().deleteLater()
                 layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
@@ -829,7 +828,7 @@ class DownloadPage(QWidget):
         for layout in self.MCSLAPILayoutList:
             try:
                 layout.removeItem(self.scrollAreaSpacer)
-            except:
+            except AttributeError:
                 pass
             for i in reversed(range(layout.count())):
                 layout.itemAt(i).widget().deleteLater()
@@ -905,7 +904,7 @@ class DownloadPage(QWidget):
         """FastMirror核心列表"""
         try:
             self.coreListLayout.removeItem(self.scrollAreaSpacer)
-        except:
+        except AttributeError:
             pass
         try:
             for i in reversed(range(self.coreListLayout.count())):
@@ -938,7 +937,7 @@ class DownloadPage(QWidget):
     def initFastMirrorMCVersionsListWidget(self):
         try:
             self.versionLayout.removeItem(self.scrollAreaSpacer)
-        except:
+        except AttributeError:
             pass
         try:
             for i in reversed(range(self.versionLayout.count())):
@@ -978,7 +977,7 @@ class DownloadPage(QWidget):
     def initFastMirrorCoreVersionListWidget(self):
         try:
             self.buildLayout.removeItem(self.scrollAreaSpacer)
-        except:
+        except AttributeError:
             pass
         try:
             for i in reversed(range(self.buildLayout.count())):
