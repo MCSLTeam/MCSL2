@@ -177,7 +177,7 @@ jobs:
           sudo rm _asyncio.so
           sudo rm _multiprocessing.so
           sudo rm _queue.so
-          upx -9 _bisect.so _blake2.so _bz2.so _codecs_cn.so _codecs_hk.so _codecs_iso2022.so _codecs_jp.so _codecs_kr.so _codecs_tw.so _contextvars.so _crypt.so _csv.so _ctypes.so _datetime.so _dbm.so _decimal.so _elementtree.so _hashlib.so _heapq.so _lzma.so _json.so _md5.so _multibytecodec.so _opcode.so _pickle.so _posixshmem.so _posixsubprocess.so _random.so _sha1.so _sha256.so _sha3.so _sha512.so _socket.so _ssl.so _struct.so array.so audioop.so binascii.so fcntl.so grp.so libicui18n.so.56 libicuuc.so.56 libpython3.8.so.1.0 libQt5DBus.so.5 libQt5Network.so.5 libQt5PrintSupport.so.5 libQt5Svg.so.5 libQt5WaylandClient.so.5 libQt5WebSockets.so.5 libQt5Widgets.so.5 libQt5X11Extras.so.5 libQt5Xml.so.5 math.so MCSL2.bin mmap.so pyexpat.so resource.so select.so termios.so unicodedata.so zlib.so
+          upx -9 MCSL2.bin
 
 
       - name: Upload Artifacts
