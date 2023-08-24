@@ -216,7 +216,7 @@ class Window(FramelessWindow):
         )
         if settingsController.fileSettings["checkUpdateOnStart"]:
             self.settingsInterface.checkUpdate(parent=self)
-        self.installEventFilter(self)
+        self.consoleInterface.installEventFilter(self)
         self._init = True
 
     @pyqtSlot(bool)
@@ -274,7 +274,9 @@ class Window(FramelessWindow):
         process = ServerHandler().Server.serverProcess
         process.kill()
 
-    def catchExceptions(self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType):
+    def catchExceptions(
+        self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+    ):
         """
         全局捕获异常，并弹窗显示
         :param ty: 异常的类型
@@ -361,12 +363,12 @@ class Window(FramelessWindow):
         self.setQss()
 
     def addSubInterface(
-            self,
-            interface,
-            icon,
-            text: str,
-            position=NavigationItemPosition.TOP,
-            selectedIcon=None,
+        self,
+        interface,
+        icon,
+        text: str,
+        position=NavigationItemPosition.TOP,
+        selectedIcon=None,
     ):
         """添加子页面"""
         self.stackedWidget.addWidget(interface)
@@ -597,6 +599,7 @@ class Window(FramelessWindow):
                 self.consoleInterface.runQuickMenu_StopServer
             )
             self.consoleInterface.exitServer.setText("关闭服务器")
+            self._init = True
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if not self._init:
@@ -604,49 +607,46 @@ class Window(FramelessWindow):
 
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
-                print("enter")
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
-                print("up")
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
-                    if (
-                            GlobalMCSL2Variables.userCommandHistory != []
-                            and GlobalMCSL2Variables.upT
-                            > -len(GlobalMCSL2Variables.userCommandHistory)
+                    if len(
+                        GlobalMCSL2Variables.userCommandHistory
+                    ) and GlobalMCSL2Variables.upT > -len(
+                        GlobalMCSL2Variables.userCommandHistory
                     ):
-                        lastCommand = GlobalMCSL2Variables.userCommandHistory[
-                            GlobalMCSL2Variables.upT - 1
-                            ]
                         GlobalMCSL2Variables.upT -= 1
+                        lastCommand = GlobalMCSL2Variables.userCommandHistory[
+                            GlobalMCSL2Variables.upT
+                        ]
                         self.consoleInterface.commandLineEdit.setText(lastCommand)
                         return True
             elif a1.key() == Qt.Key_Down:
-                print("down")
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                            GlobalMCSL2Variables.userCommandHistory != []
-                            and GlobalMCSL2Variables.upT < 0
+                        len(GlobalMCSL2Variables.userCommandHistory)
+                        and GlobalMCSL2Variables.upT < 0
                     ):
-                        nextCommand = GlobalMCSL2Variables.userCommandHistory[
-                            GlobalMCSL2Variables.upT + 1
-                            ]
                         GlobalMCSL2Variables.upT += 1
+                        nextCommand = GlobalMCSL2Variables.userCommandHistory[
+                            GlobalMCSL2Variables.upT
+                        ]
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                            GlobalMCSL2Variables.userCommandHistory != []
-                            and GlobalMCSL2Variables.upT == 0
+                        len(GlobalMCSL2Variables.userCommandHistory)
+                        and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
