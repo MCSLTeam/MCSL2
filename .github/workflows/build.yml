@@ -87,7 +87,7 @@ jobs:
           cmd /K del /f /q ssleay32.dll
           cd ..
           cd ..
-          .\upx.exe -9 .\build\MCSL2.dist\*
+          .\upx.exe -9  _ctypes.pyd _decimal.pyd _elementtree.pyd _lzma.pyd _overlapped.pyd _socket.pyd _ssl.pyd _win32sysloader.pyd libffi-7.dll libcrypto-1_1.dll libssl-1_1.dll MCSL2.exe python38.dll pythoncom38.dll pywintypes38.dll qt5core.dll qt5dbus.dll qt5gui.dll qt5multimedia.dll qt5network.dll qt5printsupport.dll qt5svg.dll qt5websockets.dll qt5widgets.dll qt5xml.dll select.pyd unicodedata.pyd win32api.pyd win32gui.pyd win32print.pyd
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -174,7 +174,11 @@ jobs:
           sudo rm libQt5Quick.so.5
           sudo rm libQt5Qml.so.5
           sudo rm libQt5QmlModels.so.5
-          upx -9 .\*
+          sudo rm _asyncio.so
+          sudo rm _multiprocessing.so
+          sudo rm _queue.so
+          upx -9 _bisect.so _blake2.so _bz2.so _codecs_cn.so _codecs_hk.so _codecs_iso2022.so _codecs_jp.so _codecs_kr.so _codecs_tw.so _contextvars.so _crypt.so _csv.so _ctypes.so _datetime.so _dbm.so _decimal.so _elementtree.so _hashlib.so _heapq.so _lzma.so _json.so _md5.so _multibytecodec.so _opcode.so _pickle.so _posixshmem.so _posixsubprocess.so _random.so _sha1.so _sha256.so _sha3.so _sha512.so _socket.so _ssl.so _struct.so array.so audioop.so binascii.so fcntl.so grp.so libicui18n.so.56 libicuuc.so.56 libpython3.8.so.1.0 libQt5DBus.so.5 libQt5Network.so.5 libQt5PrintSupport.so.5 libQt5Svg.so.5 libQt5WaylandClient.so.5 libQt5WebSockets.so.5 libQt5Widgets.so.5 libQt5X11Extras.so.5 libQt5Xml.so.5 math.so MCSL2.bin mmap.so pyexpat.so resource.so select.so termios.so unicodedata.so zlib.so
+
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
