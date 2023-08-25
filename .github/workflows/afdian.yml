@@ -12,6 +12,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v2
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           ref: master # 注意修改为你的分支, 例如: master
 
       - name: Afdian action
