@@ -1,5 +1,5 @@
 name: Afdian Sponsors
-permissions: read-all|write-all
+permissions: write-all
 on:
   schedule: # Run workflow automatically
     - cron: '0 * * * *' # Runs every hour, on the hour
