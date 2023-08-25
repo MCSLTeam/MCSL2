@@ -81,7 +81,7 @@ if __name__ == "__main__":
         sys.argv.remove('--output')
         sys.argv.remove(compiler.output_path.as_posix())
 
-    print(compiler.as_markdown(70))
+    print(compiler.as_markdown())
 
     print(f'```bash\n{compiler.gen_subprocess_cmd()}\n```')
 
