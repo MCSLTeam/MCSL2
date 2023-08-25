@@ -52,7 +52,7 @@ ___
  - Xiexilin: https://xiexilin.com/  
  - FiveCDN公益加速: https://cdn.5-5.site  
  - WB-Block: https://wb-block.top  
- - shenjack: https://shenjack.top:81
+ - shenjack: http://shenjack.top:81
 
 还有所有的贡献者们！  
 
