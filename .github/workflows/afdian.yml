@@ -37,7 +37,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: "Update 爱发电 赞助"
-          branch: master
+          branch: afdian
           delete-branch: true
           branch-suffix: "short-commit-hash"
           title: '[afdian-action] Update 赞助'
