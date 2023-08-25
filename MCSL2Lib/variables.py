@@ -148,7 +148,7 @@ class PluginVariables:
 class GlobalMCSL2Variables:
     """需要被全局使用的变量"""
 
-    MCSL2Version = "2.2.1.1"
+    MCSL2Version = "2.2.1.2"
     scrollAreaViewportQss = "background-color: transparent;"
     MinecraftBuiltInCommand = [
         "advancement",
