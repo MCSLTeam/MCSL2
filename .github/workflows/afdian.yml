@@ -1,4 +1,4 @@
-name: afdian-action
+name: Afdian Sponsors
 
 on:
   schedule: # Run workflow automatically
@@ -33,16 +33,15 @@ jobs:
           # 例如: assemblyReferences: "System.Collections, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
           assemblyReferences: ""
 
-
-      # 下方为 直接 push 到目标分支, 当然你也可以选择 Pull Request 方式
-      - name: Commit files
-        run: |
-          git config --local user.email ${{ secrets.EM }}
-          git config --local user.name LxHTT
-          git commit -m "U | 爱发电赞助名单" -a
-      
-      - name: Push changes
-        uses: ad-m/github-push-action@master # https://github.com/ad-m/github-push-action
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master # 注意修改为你的分支, 例如: master
+      - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        commit-message: "Update 爱发电 赞助"
+        branch: afdian-action/update
+        delete-branch: true
+        branch-suffix: "short-commit-hash"
+        title: '[afdian-action] Update 赞助'
+        body: "更新 爱发电 赞助"
+        labels: |
+          afdian-action
+          automated pr
