@@ -41,7 +41,6 @@ ___
 ___
 ### Related link
 MCSL 2 Official Website:[https://mcsl.com.cn](https://mcsl.com.cn)  
-MCSLAPI Official Website:[https://mcsl.com.cn/MCSLAPIGuide](https://mcsl.com.cn/MCSLAPIGuide)  
 GitHub Issue:[https://github.com/MCSLTeam/MCSL2/issues](https://github.com/MCSLTeam/MCSL2/issues)  
 QQ Group:[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
 GNU General Public License v3.0:[https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)

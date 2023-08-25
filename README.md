@@ -40,7 +40,6 @@ ___
 ___
 ### 相关链接
 MCSL 2官网：[https://mcsl.com.cn](https://mcsl.com.cn)  
-MCSLAPI官网：[https://mcsl.com.cn/MCSLAPIGuide](https://mcsl.com.cn/MCSLAPIGuide)  
 GitHub Issue：[https://github.com/MCSLTeam/MCSL2/issues](https://github.com/MCSLTeam/MCSL2/issues)  
 QQ官方群聊：[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
 GPLv3开源协议：[https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
