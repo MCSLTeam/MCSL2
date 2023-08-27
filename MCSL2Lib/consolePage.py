@@ -278,12 +278,6 @@ class ConsolePage(QWidget):
             lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
         )
         self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
         self.sendCommandButton.clicked.connect(
             lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
@@ -388,22 +382,10 @@ class ConsolePage(QWidget):
             )
         self.serverOutput.appendPlainText(serverOutput)
         self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
         if " INFO]: Done" in serverOutput:
             fmt.setForeground(QBrush(color[3]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
             self.serverOutput.appendPlainText("[MCSL2 | 提示]：服务器启动完毕！")
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             InfoBar.success(
                 title="提示",
@@ -422,12 +404,6 @@ class ConsolePage(QWidget):
             self.serverOutput.appendPlainText(
                 "[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。"
             )
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             InfoBar.warning(
                 title="警告",
