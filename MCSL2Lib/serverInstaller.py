@@ -82,14 +82,14 @@ class Installer(QObject):
         self.cwd = cwd
         self.file = file
         self.logDecode = logDecode
-        self.installerProcess: Optional[QProcess] = None
+        self.workingProcess: Optional[QProcess] = None
         self.logPartialData = b""
 
     def install(self):
         raise NotImplementedError
 
     def _installerLogHandler(self):
-        newData = self.installerProcess.readAllStandardOutput().data()
+        newData = self.workingProcess.readAllStandardOutput().data()
         self.logPartialData += newData  # Append the incoming data to the buffer
         lines = self.logPartialData.split(b"\n")  # Split the buffer into lines
         self.partialData = (
@@ -98,21 +98,22 @@ class Installer(QObject):
 
         for line in lines:
             newOutput = line.decode(self.logDecode, errors="replace")
-            self.installerProcess.emit(newOutput)
+            self.installerLogOutput.emit(newOutput)
 
 
 class ForgeInstaller(Installer):
-    def __init__(self, cwd, file, logDecode="utf-8"):
+    def __init__(self, cwd, file, java=None, logDecode="utf-8"):
         super().__init__(cwd, file, logDecode)
         self.version = None
         self.mcVersion = None
         self.forgeVersion = None
+        self.java = java
         self.getInstallerData()
 
     def getInstallerData(self):
         # 打开Installer压缩包
         # 读取version.json
-        zipfile = ZipFile(self.file, mode="r")
+        zipfile = ZipFile(os.path.join(self.cwd,self.file), mode="r")
         versionJson = zipfile.read("version.json")
         versionInfo = json.loads(versionJson)
         self.mcVersion = McVersion(versionInfo["inheritsFrom"])
@@ -138,14 +139,17 @@ class ForgeInstaller(Installer):
         """
         if not installed:
             var = ConfigureServerVariables()
-            try:
-                java_path_ = var.javaPath[0]
-            except IndexError:
-                raise InstallerError("No Java path found")
+
+            # set forge runtime java path
+            if self.java is None:
+                try:
+                    self.java = var.javaPath[0]
+                except IndexError:
+                    raise InstallerError("No Java path found")
 
             process = QProcess()
             process.setWorkingDirectory(self.cwd)
-            process.setProgram(java_path_)
+            process.setProgram(self.java)
             process.setArguments(["-jar", self.file, "--installServer"])
             process.readyReadStandardOutput.connect(self._installerLogHandler)
             process.finished.connect(lambda a, b: self._installPlanB(True))

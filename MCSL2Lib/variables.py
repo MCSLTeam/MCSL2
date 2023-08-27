@@ -40,6 +40,9 @@ class ConfigureServerVariables:
         self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
+        # TODO 完善两个变量的功能
+        self.serverType = ""  # 标志他是什么类型的服务器，例如forge，paper，spigot等,再下载或者导入的时候确定(用户选择，或者自动识别(例如读取文件名))
+        self.extraData = {}  # 会包含例如forge 版本号等信息，在下载的时候确定，可能会在导入的时候更新
 
     def resetToDefault(self):
         self.minMem: int
@@ -54,6 +57,9 @@ class ConfigureServerVariables:
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.icon: str = ""
+        # TODO 完善两个变量的功能
+        self.serverType = ""  # 标志他是什么类型的服务器，例如forge，paper，spigot等,再下载或者导入的时候确定(用户选择，或者自动识别(例如读取文件名))
+        self.extraData = {}  # 会包含例如forge 版本号等信息，在下载的时候确定，可能会在导入的时候更新
 
 
 @Singleton
