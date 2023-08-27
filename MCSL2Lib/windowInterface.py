@@ -319,7 +319,7 @@ class Window(FramelessWindow):
     def initPluginSystem(self):
         """初始化插件系统"""
         pluginManager: PluginManager = PluginManager()
-        pluginManager.loadAllPlugins()
+        pluginManager.readAllPlugins()
         pluginManager.initSinglePluginsWidget(
             self.pluginsInterface.pluginsVerticalLayout
         )

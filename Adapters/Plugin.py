@@ -1,17 +1,17 @@
 from __future__ import annotations
-from json import loads
 
-# import threading
+from json import loads
+from os import walk, getcwd, path as ospath
 from threading import Thread
 from typing import List
 
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
+
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
-from os import walk, getcwd, path as ospath
-from MCSL2Lib.pluginWidget import singlePluginWidget
+from MCSL2Lib.pluginWidget import singlePluginWidget, PluginSwitchButton
+from MCSL2Lib.publicFunctions import warning, obsolete
 from MCSL2Lib.variables import PluginVariables
-from MCSL2Lib.variables import Singleton
 
 pluginVariables = PluginVariables()
 
@@ -29,6 +29,21 @@ class Plugin(BasePlugin):
 
     def register_disableFunc(self, fn_Disable):
         self.DISABLE = fn_Disable
+
+
+class PluginType:
+    def __init__(self):
+        self.pluginName: str = ""
+        self.version: str = ""
+        self.description: str = []
+        self.author: List[str] = []
+        self.authorEmail: List[str] = []
+        self.icon: str = None
+        self.isEnabled: bool = False
+        self.isLoaded: bool = False
+        self.LOAD = None
+        self.ENABLE = None
+        self.DISABLE = None
 
 
 class PluginLoader(BasePluginLoader):
@@ -60,37 +75,62 @@ class PluginLoader(BasePluginLoader):
         else:
             return None
 
+    @classmethod
+    def getInfo(cls, pluginName: str) -> PluginType:
+        pluginType = PluginType()
+        pluginType.pluginName = pluginName
+        with open(
+                f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
+        ) as f:
+            importedPluginConfig: dict = loads(f.read())
+        pluginType.version = importedPluginConfig.get("version")
+        pluginType.description = importedPluginConfig.get("description")
+        pluginType.author = importedPluginConfig.get("author")
+        pluginType.authorEmail = importedPluginConfig.get("author_email")
+        if "icon" in importedPluginConfig:
+            pluginType.icon = importedPluginConfig.get("icon")
+
+        return pluginType
+
 
 class PluginManager(BasePluginManager):
     """插件管理器"""
 
     def __init__(self):
-        self.pluginDict: {str, Plugin} = {}
+        self.loadedPlugin: {str, Plugin} = {}
+        self.allPlugins: {str, PluginType} = {}
         self.threadPool: List[Thread] = []
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         """禁用插件"""
-        plugin: Plugin = self.pluginDict.get(pluginName)
-        plugin.isEnabled = False
+        plugin: Plugin = self.loadedPlugin.get(pluginName)
         if plugin is None:
             return False, None
+        plugin.isEnabled = False
         if plugin.DISABLE is not None:
             try:
                 plugin.DISABLE()
             except:
+                del self.loadedPlugin[pluginName]
                 return False, plugin.pluginName
+        del self.loadedPlugin[pluginName]
         return True, plugin.pluginName
 
-    def decideEnableOrDisable(self, pluginName: str, switchBtnStatus: bool):
-        pluginName = pluginName.replace("switchBtn_", "")
+    def decideEnableOrDisable(self, pluginButton: PluginSwitchButton, switchBtnStatus: bool):
+        pluginName = pluginButton.objectName().replace("switchBtn_", "")
         if switchBtnStatus:
-            self.enablePlugin(pluginName)
+            try:
+                self.enablePlugin(pluginName)
+            except Warning as e:
+                raise Exception(e)
         else:
             self.disablePlugin(pluginName)
 
     def enablePlugin(self, pluginName: str):
         """启用插件"""
-        plugin: Plugin = self.pluginDict.get(pluginName)
+        if self.loadedPlugin.get(pluginName) is not None:
+            return True
+        plugin: Plugin = self.loadPlugin(pluginName)
         if plugin is None:
             return False
         if plugin.ENABLE is not None:
@@ -100,17 +140,28 @@ class PluginManager(BasePluginManager):
             except:
                 raise Warning("未完全卸载", plugin.pluginName)
 
-    def loadPlugin(self, pluginName: str):
+    def loadPlugin(self, pluginName: str) -> Plugin | None:
         """加载插件但不启用"""
         plugin: Plugin = PluginLoader.load(pluginName)
         plugin.isLoaded = True
         if plugin is None:
-            return
+            return None
         else:
             if plugin.LOAD is not None:
                 plugin.LOAD()
-            self.pluginDict[pluginName] = plugin
+            self.loadedPlugin[pluginName] = plugin
+            return plugin
 
+    def readPlugin(self, pluginName: str):
+        """读取插件但不启用"""
+        plugin: PluginType = PluginLoader.getInfo(pluginName)
+        if plugin is None:
+            return
+        else:
+            self.allPlugins[pluginName] = plugin
+
+    @obsolete("请改用新函数PluginManager::readAllPlugins")
+    @warning("尽量不要用这个函数!!!")
     def loadAllPlugins(self):
         """加载所有插件但不启用"""
         path = getcwd() + "\\Plugins"
@@ -119,15 +170,30 @@ class PluginManager(BasePluginManager):
         except StopIteration:
             return
         for pluginName in pathList:
+            # TODO 这里需要更清晰的报错提示
             try:
                 self.loadPlugin(pluginName)
             except Exception as e:
                 raise Warning("加载插件错误")
 
+    def readAllPlugins(self):
+        """读取所有插件但不启用"""
+        path = getcwd() + "\\Plugins"
+        try:
+            pathList = next(walk(path))[1]
+        except StopIteration:
+            return
+        for pluginName in pathList:
+            # TODO 这里需要更清晰的报错提示
+            try:
+                self.readPlugin(pluginName)
+            except Exception as e:
+                raise Warning("加载插件错误")
+
     def enableAllPlugins(self):
         """启用所有插件"""
-        for pluginName in self.pluginDict.keys():
-            plugin: Plugin = self.pluginDict.get(pluginName)
+        for pluginName in self.loadedPlugin.keys():
+            plugin: Plugin = self.loadedPlugin.get(pluginName)
             if plugin.ENABLE is not None:
                 try:
                     self.enablePlugin(pluginName)
@@ -140,8 +206,7 @@ class PluginManager(BasePluginManager):
 
     def initSinglePluginsWidget(self, pluginsVerticalLayout: QVBoxLayout):
         """初始化插件页Widget"""
-        for pluginName in self.pluginDict.keys():
-            plugin: Plugin = self.pluginDict.get(pluginName)
+        for pluginName, plugin in self.allPlugins.items():
             self.pluginWidget = singlePluginWidget()
 
             # 设置信息
@@ -168,10 +233,11 @@ class PluginManager(BasePluginManager):
 
             # 设置槽函数
             ASwitchBtn.selfCheckedChanged.connect(
-                lambda instance, checked: self.decideEnableOrDisable(
-                    pluginName=instance.objectName(),
-                    switchBtnStatus=checked,
-                )
+                lambda instance, checked: {
+                    self.decideEnableOrDisable(
+                        pluginButton=instance,
+                        switchBtnStatus=checked),
+                }
             )
 
             pluginsVerticalLayout.addWidget(self.pluginWidget)
