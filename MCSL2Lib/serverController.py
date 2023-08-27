@@ -20,12 +20,13 @@ from json import dumps
 from os import path as ospath
 from typing import List, Optional
 
-from psutil import NoSuchProcess, Process, AccessDenied
-from MCSL2Lib.singleton import Singleton
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlot
-from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
+from psutil import NoSuchProcess, Process, AccessDenied
+
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
+from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.variables import ServerVariables
 
 settingsController = SettingsController()
 serverVariables = ServerVariables()
@@ -122,7 +123,8 @@ class ServerHandler(QObject):
             lambda: self.serverClosed.emit(self.AServer.serverProcess.exitCode())
         )
         self.AServer.serverProcess.finished.connect(
-            lambda: self.serverLogOutput.emit(f"[MCSL2 | 提示]：服务器已关闭！进程退出状态码：{self.AServer.serverProcess.exitCode()}")
+            lambda: self.serverLogOutput.emit(
+                f"[MCSL2 | 提示]：服务器已关闭！进程退出状态码：{self.AServer.serverProcess.exitCode()}")
         )
         return self.AServer
 
@@ -263,17 +265,23 @@ class ServerLauncher:
         self.jvmArg = [
             f"-Xms{serverVariables.minMem}{serverVariables.memUnit}",
             f"-Xmx{serverVariables.maxMem}{serverVariables.memUnit}",
-            "-jar",
-            f"{serverVariables.coreFileName}",
-            "nogui",
         ]
+        # add jvm args
         if isinstance(serverVariables.jvmArg, list):
-            for arg in serverVariables.jvmArg:
-                if arg:
-                    self.jvmArg.insert(2, arg)
+            self.jvmArg.extend(serverVariables.jvmArg)
         else:
             if serverVariables.jvmArg:
-                self.jvmArg.insert(2, serverVariables.jvmArg)
+                self.jvmArg.append(serverVariables.jvmArg)
+
+        # adjust to different server type
+        if serverVariables.serverType == "forge":
+            pass
+        else:
+            self.jvmArg.append("-jar")
+            self.jvmArg.append(f"{serverVariables.coreFileName}")
+
+        # add "nogui" arg
+        self.jvmArg.append("nogui")
 
     def launch(self):
         """启动进程"""
@@ -333,10 +341,10 @@ class MinecraftServerResMonitorUtil(QObject):
         try:
             if ServerHandler().isServerRunning():
                 serverMem = (
-                    Process(ServerHandler().AServer.serverProcess.processId())
-                    .memory_full_info()
-                    .uss
-                    / divisionNum
+                        Process(ServerHandler().AServer.serverProcess.processId())
+                        .memory_full_info()
+                        .uss
+                        / divisionNum
                 )
                 self.memPercent.emit(float("{:.4f}".format(serverMem)))
             else:
@@ -375,7 +383,7 @@ def readServerProperties():
     serverVariables.serverProperties.clear()
     try:
         with open(
-            f"./Servers/{serverVariables.serverName}/server.properties", "r"
+                f"./Servers/{serverVariables.serverName}/server.properties", "r"
         ) as serverPropertiesFile:
             lines = serverPropertiesFile.readlines()
             for line in lines:

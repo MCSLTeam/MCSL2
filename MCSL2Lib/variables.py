@@ -14,9 +14,9 @@
 These are the built-in variables of MCSL2.
 """
 
-from MCSL2Lib.publicFunctions import readGlobalServerConfig
-from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.publicFunctions import readGlobalServerConfig, warning
 from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.singleton import Singleton
 
 settingsController = SettingsController()
 
@@ -358,7 +358,11 @@ class ServerVariables:
         self.inputEncoding: str = "utf-8"
         # self.icon = serverConfig['icon']  不需要。
         self.serverProperties = {}
+        # TODO 完善两个变量的功能
+        self.serverType = ""  # 标志他是什么类型的服务器，例如forge，paper，spigot等,再下载或者导入的时候确定(用户选择，或者自动识别(例如读取文件名))
+        self.extraData = {}  # 会包含例如forge 版本号等信息，在下载的时候确定，可能会在导入的时候更新
 
+    @warning("要为所有ServerVariables添加serverType和extraData属性")
     def initialize(self, index: int):
         self.serverConfig: dict = readGlobalServerConfig()[index]
         self.serverName = self.serverConfig["name"]
@@ -370,6 +374,8 @@ class ServerVariables:
         self.jvmArg = self.serverConfig["jvm_arg"]
         self.outputDecoding = self.serverConfig["output_decoding"]
         self.inputEncoding = self.serverConfig["input_encoding"]
+        self.serverType = self.serverConfig.get("server_type", "")
+        self.extraData = self.serverConfig.get("extra_data", {})
         self.translateCoding()
 
     def translateCoding(self):
