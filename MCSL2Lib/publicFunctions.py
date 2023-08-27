@@ -14,16 +14,18 @@
 These are the built-in functions of MCSL2. They are just for solving the circular import.
 """
 import enum
+import functools
+from json import loads, dumps
+from os import makedirs, path as ospath
 from types import TracebackType
 from typing import Type
 
 import aria2p
-from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
-from json import loads, dumps
-from os import makedirs, path as ospath
-from MCSL2Lib.settingsController import SettingsController
+from PyQt5.QtGui import QDesktopServices
 from darkdetect import theme as currentTheme
+
+from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
 
@@ -109,6 +111,29 @@ def initializeMCSL2():
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
             serverList.close()
+
+
+# 带有text的warning装饰器
+def warning(text: str):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            print(">>> 警告:", func.__name__, text)
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def obsolete(text: str):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            print(">>> 此函数已过时: ", func.__name__, text)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 
 def isDarkTheme():
