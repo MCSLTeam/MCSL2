@@ -18,11 +18,10 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QApplication
+from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import (
-    NavigationBar,
     NavigationItemPosition,
     FluentIcon as FIF,
     Theme,
@@ -32,10 +31,9 @@ from qfluentwidgets import (
     InfoBarPosition,
     MessageBox,
     HyperlinkButton,
-    MSFluentTitleBar,
-    TextWrap,
+    MSFluentWindow,
+    SplashScreen,
 )
-from qframelesswindow import FramelessWindow
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.aria2ClientController import (
@@ -48,9 +46,8 @@ from MCSL2Lib.consolePage import ConsolePage
 from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.exceptionWidget import ExceptionWidget
 from MCSL2Lib.homePage import HomePage
-from MCSL2Lib.interfaceController import StackedWidget
 from MCSL2Lib.pluginPage import PluginPage
-from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
+from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode, openWebUrl
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (
@@ -82,74 +79,19 @@ pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
 
 
-class MCSL2TitleBar(MSFluentTitleBar):
-    """标题栏"""
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.setFixedHeight(48)
-        self.hBoxLayout.removeWidget(self.minBtn)
-        self.hBoxLayout.removeWidget(self.maxBtn)
-        self.hBoxLayout.removeWidget(self.closeBtn)
-
-        # 图标
-        self.iconLabel = QLabel(self)
-        self.iconLabel.setFixedSize(18, 18)
-        self.hBoxLayout.insertSpacing(0, 20)
-        self.hBoxLayout.insertWidget(
-            1, self.iconLabel, 0, Qt.AlignLeft | Qt.AlignVCenter
-        )
-        self.window().windowIconChanged.connect(self.setIcon)
-
-        # 标题
-        self.titleLabel = QLabel(self)
-        self.hBoxLayout.insertWidget(
-            2, self.titleLabel, 0, Qt.AlignLeft | Qt.AlignVCenter
-        )
-        self.titleLabel.setObjectName("titleLabel")
-        self.window().windowTitleChanged.connect(self.setTitle)
-
-        self.vBoxLayout = QVBoxLayout()
-        self.buttonLayout = QHBoxLayout()
-        self.buttonLayout.setSpacing(0)
-        self.buttonLayout.setContentsMargins(0, 0, 0, 0)
-        self.buttonLayout.setAlignment(Qt.AlignTop)
-        self.buttonLayout.addWidget(self.minBtn)
-        self.buttonLayout.addWidget(self.maxBtn)
-        self.buttonLayout.addWidget(self.closeBtn)
-        self.vBoxLayout.addLayout(self.buttonLayout)
-        self.vBoxLayout.addStretch(1)
-        self.hBoxLayout.addLayout(self.vBoxLayout, 0)
-
-    def setTitle(self, title):
-        self.titleLabel.setText(title)
-        self.titleLabel.adjustSize()
-
-    def setIcon(self, icon):
-        self.iconLabel.setPixmap(QIcon(icon).pixmap(18, 18))
-
-    def resizeEvent(self, e):
-        pass
-
-
 @Singleton
-class Window(FramelessWindow):
+class Window(MSFluentWindow):
     """程序主窗口"""
 
     def __init__(self):
         super().__init__()
-        self._init = False
         self.oldHook = sys.excepthook
         sys.excepthook = self.catchExceptions
-
-        self.setTitleBar(MCSL2TitleBar(self))
 
         # 读取程序设置，不放在第一位就会爆炸！
         settingsController._readSettings(firstLoad=True)
 
-        self.hBoxLayout = QHBoxLayout(self)
-        self.navigationBar = NavigationBar(self)
-        self.stackedWidget = StackedWidget(self)
+        self.setTheme()
 
         # 定义子页面
         self.homeInterface = HomePage(self)
@@ -162,28 +104,13 @@ class Window(FramelessWindow):
 
         # 定义隐藏的子页面
         self.selectJavaPage = SelectJavaPage(self)
-        self.selectNewJavaPage = SelectNewJavaPage(self)  # 草泥马摆烂偷懒！！！好好好！！！CV大法嘎嘎好！
-
-        # 设置主题
-        configThemeList = ["dark", "light"]
-        qfluentwidgetsThemeList = [Theme.DARK, Theme.LIGHT]
-        if settingsController.fileSettings["theme"] == "auto":
-            setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
-        else:
-            setTheme(
-                qfluentwidgetsThemeList[
-                    configThemeList.index(settingsController.fileSettings["theme"])
-                ]
-            )
-        setThemeColor(str(settingsController.fileSettings["themeColor"]))
-
-        self.initLJQtSlot()
-
-        self.initLayout()
+        self.selectNewJavaPage = SelectNewJavaPage(self)
 
         self.initNavigation()
 
         self.initWindow()
+
+        self.initQtSlot()
 
         serverHelper.loadAtLaunch()
 
@@ -191,35 +118,16 @@ class Window(FramelessWindow):
 
         initializeAria2Configuration()
 
-        # 开启Aria2
-        bootThread = Aria2BootThread(self)
-        bootThread.loaded.connect(self.onAria2Loaded)
-        bootThread.finished.connect(bootThread.deleteLater)
-        bootThread.start()
+        self.startAria2Client()
 
-        self.exitingMsgBox = MessageBox(
-            "正在退出MCSL2", "安全关闭服务器中...\n\nMCSL2稍后将自行退出。", parent=self
-        )
-        # 安全退出控件
-        self.exitingMsgBox.cancelButton.hide()
-        self.exitingMsgBox.yesButton.setText("强制结束服务器并退出")
-        self.exitingMsgBox.yesButton.setStyleSheet(
-            GlobalMCSL2Variables.darkWarnBtnStyleSheet
-            if isDarkTheme
-            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
-        )
-        self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
-        self.exitingMsgBox.yesButton.setEnabled(False)
-        self.exitingMsgBox.hide()
-        self.quitTimer = QTimer(self)
-        self.quitTimer.setInterval(3000)
-        self.quitTimer.timeout.connect(
-            lambda: self.exitingMsgBox.yesButton.setEnabled(True)
-        )
+        self.initSafeQuitController()
+
         if settingsController.fileSettings["checkUpdateOnStart"]:
             self.settingsInterface.checkUpdate(parent=self)
+
         self.consoleInterface.installEventFilter(self)
-        self._init = True
+
+        GlobalMCSL2Variables.isLoadFinished = True
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
@@ -324,18 +232,6 @@ class Window(FramelessWindow):
             self.pluginsInterface.pluginsVerticalLayout
         )
 
-    def switchTo(self, widget):
-        """换页"""
-        self.stackedWidget.setCurrentWidget(widget)
-
-    def initLayout(self):
-        """初始化布局"""
-        self.hBoxLayout.setSpacing(0)
-        self.hBoxLayout.setContentsMargins(0, 48, 0, 0)
-        self.hBoxLayout.addWidget(self.navigationBar)
-        self.hBoxLayout.addWidget(self.stackedWidget)
-        self.hBoxLayout.setStretchFactor(self.stackedWidget, 1)
-
     def initNavigation(self):
         """初始化导航栏"""
         self.addSubInterface(
@@ -347,14 +243,16 @@ class Window(FramelessWindow):
         self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, "终端")
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, "插件")
         self.addSubInterface(
-            self.settingsInterface, FIF.SETTING, "设置", NavigationItemPosition.BOTTOM
+            self.settingsInterface,
+            FIF.SETTING,
+            "设置",
+            position=NavigationItemPosition.BOTTOM,
         )
 
         self.stackedWidget.addWidget(self.selectJavaPage)
         self.stackedWidget.addWidget(self.selectNewJavaPage)
 
-        self.stackedWidget.currentChanged.connect(self.onCurrentInterfaceChanged)
-        self.navigationBar.setCurrentItem(self.homeInterface.objectName())
+        self.navigationInterface.setCurrentItem(self.homeInterface.objectName())
 
     def initWindow(self):
         """初始化窗口"""
@@ -362,48 +260,50 @@ class Window(FramelessWindow):
         self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
+        self.splashScreen = SplashScreen(self.windowIcon(), self)
+        self.splashScreen.setIconSize(QSize(106, 106))
+        self.splashScreen.raise_()
+
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         self.resize(w // 2, h // 2)
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
-        # try:
-        #     self.windowEffect.setMicaEffect(self.winId(), isDarkTheme())
-        #     self.setBackgroundColor(QColor(0, 0, 0, 0) if isDarkTheme() else QColor(255, 255, 255, 50))
-        # except Exception:
-        #     pass
-        self.setQss()
 
-    def addSubInterface(
-        self,
-        interface,
-        icon,
-        text: str,
-        position=NavigationItemPosition.TOP,
-        selectedIcon=None,
-    ):
-        """添加子页面"""
-        self.stackedWidget.addWidget(interface)
-        self.navigationBar.addItem(
-            routeKey=interface.objectName(),
-            icon=icon,
-            text=text,
-            onClick=lambda: self.switchTo(interface),
-            selectedIcon=selectedIcon,
-            position=position,
+    def setTheme(self):
+        configThemeList = ["dark", "light"]
+        qfluentwidgetsThemeList = [Theme.DARK, Theme.LIGHT]
+        if settingsController.fileSettings["theme"] == "auto":
+            setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
+        else:
+            setTheme(
+                qfluentwidgetsThemeList[
+                    configThemeList.index(settingsController.fileSettings["theme"])
+                ]
+            )
+        setThemeColor(str(settingsController.fileSettings["themeColor"]))
+
+    def initSafeQuitController(self):
+        # 安全退出控件
+        self.exitingMsgBox = MessageBox(
+            "正在退出MCSL2", "安全关闭服务器中...\n\nMCSL2稍后将自行退出。", parent=self
+        )
+        self.exitingMsgBox.cancelButton.hide()
+        self.exitingMsgBox.yesButton.setText("强制结束服务器并退出")
+        self.exitingMsgBox.yesButton.setStyleSheet(
+            GlobalMCSL2Variables.darkWarnBtnStyleSheet
+            if isDarkTheme
+            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        )
+        self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
+        self.exitingMsgBox.yesButton.setEnabled(False)
+        self.exitingMsgBox.hide()
+        self.quitTimer = QTimer(self)
+        self.quitTimer.setInterval(3000)
+        self.quitTimer.timeout.connect(
+            lambda: self.exitingMsgBox.yesButton.setEnabled(True)
         )
 
-    def setQss(self):
-        """设置Qss"""
-        color = "dark" if isDarkTheme() else "light"
-        with open(f"resource/{color}/demo.qss", encoding="utf-8") as f:
-            self.setStyleSheet(f.read())
-
-    def onCurrentInterfaceChanged(self, index):
-        """导航栏触发器"""
-        widget = self.stackedWidget.widget(index)
-        self.navigationBar.setCurrentItem(widget.objectName())
-
-    def initLJQtSlot(self):
+    def initQtSlot(self):
         """定义无法直接设置的Qt信号槽"""
 
         # 新建服务器
@@ -610,10 +510,10 @@ class Window(FramelessWindow):
                 self.consoleInterface.runQuickMenu_StopServer
             )
             self.consoleInterface.exitServer.setText("关闭服务器")
-            self._init = True
+            GlobalMCSL2Variables.isLoadFinished = True
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-        if not self._init:
+        if not GlobalMCSL2Variables.isLoadFinished:
             return super().eventFilter(a0, a1)
 
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
@@ -662,6 +562,13 @@ class Window(FramelessWindow):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
         return super().eventFilter(a0, a1)
+
+    def startAria2Client(self):
+        bootThread = Aria2BootThread(self)
+        bootThread.loaded.connect(self.onAria2Loaded)
+        bootThread.finished.connect(bootThread.deleteLater)
+        bootThread.finished.connect(self.splashScreen.finish)
+        bootThread.start()
 
     @pyqtSlot(bool)
     def settingsRunner_autoRunLastServer(self, startBtnStat):

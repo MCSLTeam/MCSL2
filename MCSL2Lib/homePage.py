@@ -20,6 +20,7 @@ from qfluentwidgets import (
     StrongBodyLabel,
     TitleLabel,
     IndeterminateProgressRing,
+    FluentIcon as FIF,
 )
 from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import QGridLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
@@ -108,6 +109,7 @@ class HomePage(QWidget):
         self.gridLayout_2.setObjectName("gridLayout_2")
 
         self.newServerBtn = PushButton(self.home_btnWidget)
+        self.newServerBtn.setIcon(FIF.ADD_TO)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -118,6 +120,7 @@ class HomePage(QWidget):
 
         self.gridLayout_2.addWidget(self.newServerBtn, 0, 2, 1, 1)
         self.startServerBtn = PrimaryPushButton(self.home_btnWidget)
+        self.startServerBtn.setIcon(FIF.PLAY_SOLID)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
@@ -131,6 +134,7 @@ class HomePage(QWidget):
 
         self.gridLayout_2.addWidget(self.startServerBtn, 1, 1, 1, 2)
         self.selectServerBtn = PushButton(self.home_btnWidget)
+        self.selectServerBtn.setIcon(FIF.LIBRARY_FILL)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

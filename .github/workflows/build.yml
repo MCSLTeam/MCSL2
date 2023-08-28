@@ -60,8 +60,6 @@ jobs:
           --file-version=${{ matrix.mcsl2version }}
           --product-version=${{ matrix.mcsl2version }}
           --windows-file-description="MC Server Launcher 2"
-          --include-data-dir=resource/dark=resource/dark
-          --include-data-dir=resource/light=resource/light
           --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
           --follow-import-to=Adapters
           --follow-import-to=MCSL2Lib
@@ -152,8 +150,6 @@ jobs:
           --file-version=${{ matrix.mcsl2version }}
           --product-version=${{ matrix.mcsl2version }}
           --file-description="MC Server Launcher 2"
-          --include-data-dir=resource/dark=resource/dark
-          --include-data-dir=resource/light=resource/light
           --remove-output
           --copyright="Copyright ©MCSL Team. All right reserved."
           MCSL2.py

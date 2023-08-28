@@ -94,78 +94,6 @@
      </property>
      <widget class="QWidget" name="downloadWithFastMirror">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1">
-        <widget class="SubtitleLabel" name="versionSubtitleLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>游戏版本</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="SmoothScrollArea" name="coreListSmoothScrollArea">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="coreListScrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>200</width>
-            <height>349</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_14">
-           <item>
-            <layout class="QVBoxLayout" name="coreListLayout"/>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="SubtitleLabel" name="buildSubtitleLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>构建列表</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="SubtitleLabel" name="coreListSubtitleLabel">
          <property name="sizePolicy">
@@ -225,10 +153,7 @@
          </widget>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="ToolButton" name="refreshFastMirrorAPIBtn"/>
-       </item>
-       <item row="1" column="2" colspan="2">
+       <item row="1" column="2" colspan="3">
         <widget class="SmoothScrollArea" name="buildScrollArea">
          <property name="minimumSize">
           <size>
@@ -263,6 +188,97 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="SubtitleLabel" name="buildSubtitleLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>构建列表</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="SubtitleLabel" name="versionSubtitleLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>游戏版本</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="SmoothScrollArea" name="coreListSmoothScrollArea">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="coreListScrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>200</width>
+            <height>349</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <layout class="QVBoxLayout" name="coreListLayout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="PushButton" name="refreshFastMirrorAPIBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>刷新</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="hasIcon" stdset="0">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -497,8 +513,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>698</width>
+                <height>316</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -520,7 +536,20 @@
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="ToolButton" name="refreshMCSLAPIBtn"/>
+        <widget class="PushButton" name="refreshMCSLAPIBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>刷新</string>
+         </property>
+         <property name="hasIcon" stdset="0">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -530,8 +559,8 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ToolButton</class>
-   <extends>QToolButton</extends>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>

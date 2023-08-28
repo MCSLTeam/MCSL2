@@ -32,7 +32,7 @@ from qfluentwidgets import (
     SubtitleLabel,
     TitleLabel,
     Pivot,
-    ToolButton,
+    PushButton,
     FluentIcon as FIF,
     MessageBox,
     InfoBarPosition,
@@ -220,9 +220,8 @@ class DownloadPage(QWidget):
         self.verticalLayout_13.addLayout(self.versionLayout)
         self.versionSmoothScrollArea.setWidget(self.versionScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.versionSmoothScrollArea, 1, 1, 1, 1)
-        self.refreshFastMirrorAPIBtn = ToolButton(
-            FIF.UPDATE, self.downloadWithFastMirror
-        )
+        self.refreshFastMirrorAPIBtn = PushButton(self.downloadWithFastMirror)
+        self.refreshFastMirrorAPIBtn.setIcon(FIF.UPDATE)
         self.refreshFastMirrorAPIBtn.setObjectName("refreshFastMirrorAPIBtn")
 
         self.gridLayout_2.addWidget(self.refreshFastMirrorAPIBtn, 0, 3, 1, 1)
@@ -510,7 +509,8 @@ class DownloadPage(QWidget):
         self.verticalLayout_7.addWidget(self.MCSLAPIOfficialCoreScrollArea)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIOfficialCore)
         self.gridLayout_3.addWidget(self.MCSLAPIStackedWidget, 1, 0, 1, 3)
-        self.refreshMCSLAPIBtn = ToolButton(FIF.UPDATE, self.downloadWithMCSLAPI)
+        self.refreshMCSLAPIBtn = PushButton(self.downloadWithMCSLAPI)
+        self.refreshMCSLAPIBtn.setIcon(FIF.UPDATE)
         self.refreshMCSLAPIBtn.setObjectName("refreshMCSLAPIBtn")
 
         self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 2, 1, 1)
@@ -532,6 +532,8 @@ class DownloadPage(QWidget):
         self.coreListSubtitleLabel.setText("核心列表")
         self.versionSubtitleLabel.setText("游戏版本")
         self.buildSubtitleLabel.setText("构建列表")
+        self.refreshFastMirrorAPIBtn.setText("刷新")
+        self.refreshMCSLAPIBtn.setText("刷新")
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.MCSLAPIPivot.addItem(
