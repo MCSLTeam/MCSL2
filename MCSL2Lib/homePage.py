@@ -1,4 +1,4 @@
-#     Copyright 2023, MCSL Team, mailto:lxhtt@mcsl.com.cn
+#     Copyright 2023, MCSL Team, mailto:lxhtt@vip.qq.com
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #

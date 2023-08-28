@@ -20,7 +20,7 @@ ___
 [![](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
 [![](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
 [![](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.com.cn)
-[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40mcsl.com.cn-%2357728B?style=for-the-badge)](mailto:lxhtt@mcsl.com.cn)  
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40mcsl.com.cn-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)  
 ___
 ### 他能干什么？  
 ~~可以帮助你非常方便的开启一个Java版Minecraft服务器。（废话文学~~
