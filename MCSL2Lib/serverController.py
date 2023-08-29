@@ -130,7 +130,7 @@ class ServerHandler(QObject):
 
     def serverCrashed(self, exitCode):
         if exitCode:
-            if exitCode != "62097":
+            if exitCode != 62097:
                 self.serverLogOutput.emit(f"[MCSL2 | 提示]：服务器崩溃！")
                 if settingsController.fileSettings["restartServerWhenCrashed"]:
                     self.Server.serverProcess.waitForFinished()
