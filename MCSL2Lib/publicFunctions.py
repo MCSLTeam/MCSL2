@@ -29,14 +29,38 @@ from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
 
+configTemplate = {
+    "autoRunLastServer": False,
+    "acceptAllMojangEula": False,
+    "sendStopInsteadOfKill": True,
+    "restartServerWhenCrashed": False,
+    "newServerType": "Default",
+    "onlySaveGlobalServerConfig": False,
+    "clearAllNewServerConfigInProgram": False,
+    "downloadSource": "FastMirror",
+    "alwaysAskSaveDirectory": False,
+    "aria2Thread": 8,
+    "saveSameFileException": "ask",
+    "outputDeEncoding": "ansi",
+    "inputDeEncoding": "follow",
+    "quickMenu": True,
+    "clearConsoleWhenStopServer": False,
+    "theme": "auto",
+    "themeColor": "#0078d4",
+    "alwaysRunAsAdministrator": False,
+    "startOnStartup": False,
+    "checkUpdateOnStart": False,
+    "lastServer": "",
+    "nodeMCSLAPI": "https://hardbin.com",
+}
+
 
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
     with open(
-            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
     ) as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
-        globalServerConfigFile.close()
     return globalServerList
 
 
@@ -52,65 +76,31 @@ def initializeMCSL2():
 
     if not ospath.exists(r"./MCSL2/MCSL2_Config.json"):
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
-            configTemplate = {
-                "autoRunLastServer": False,
-                "acceptAllMojangEula": False,
-                "sendStopInsteadOfKill": True,
-                "newServerType": "Default",
-                "onlySaveGlobalServerConfig": False,
-                "clearAllNewServerConfigInProgram": False,
-                "downloadSource": "FastMirror",
-                "alwaysAskSaveDirectory": False,
-                "aria2Thread": 8,
-                "saveSameFileException": "ask",
-                "outputDeEncoding": "ansi",
-                "inputDeEncoding": "follow",
-                "quickMenu": True,
-                "clearConsoleWhenStopServer": False,
-                "theme": "auto",
-                "themeColor": "#0078d4",
-                "alwaysRunAsAdministrator": False,
-                "startOnStartup": False,
-                "checkUpdateOnStart": False,
-                "lastServer": "",
-                "nodeMCSLAPI": "https://hardbin.com",
-            }
             config.write(dumps(configTemplate, indent=4))
-            config.close()
     if ospath.getsize(r"./MCSL2/MCSL2_Config.json") == 0:
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
-            configTemplate = {
-                "autoRunLastServer": False,
-                "acceptAllMojangEula": False,
-                "sendStopInsteadOfKill": True,
-                "newServerType": "Default",
-                "onlySaveGlobalServerConfig": False,
-                "clearAllNewServerConfigInProgram": False,
-                "downloadSource": "FastMirror",
-                "alwaysAskSaveDirectory": False,
-                "aria2Thread": 8,
-                "saveSameFileException": "ask",
-                "outputDeEncoding": "ansi",
-                "inputDeEncoding": "follow",
-                "quickMenu": True,
-                "clearConsoleWhenStopServer": False,
-                "theme": "auto",
-                "themeColor": "#0078d4",
-                "alwaysRunAsAdministrator": False,
-                "startOnStartup": False,
-                "checkUpdateOnStart": False,
-                "lastServer": "",
-                "nodeMCSLAPI": "https://hardbin.com",
-            }
             config.write(dumps(configTemplate, indent=4))
-            config.close()
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
-                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
-            serverList.close()
+    configurationCompleter()
+
+
+def configurationCompleter():
+    with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as config:
+        configContent = loads(config.read())
+        if set(configContent.keys()) == set(configTemplate.keys()):
+            pass
+        else:
+            missingKeys = set(configTemplate.keys()) - set(configContent.keys())
+            print(f">>> 警告:缺失配置{missingKeys}，正在使用默认配置补全。")
+            for key in missingKeys:
+                configContent[key] = configTemplate[key]
+    with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
+        config.write(dumps(configContent, indent=4))
 
 
 # 带有text的warning装饰器
@@ -132,7 +122,9 @@ def obsolete(text: str):
         def wrapper(*args, **kwargs):
             print(">>> 此函数已过时: ", func.__name__, text)
             return func(*args, **kwargs)
+
         return wrapper
+
     return decorator
 
 
@@ -156,13 +148,17 @@ class ExceptionFilterMode(enum.Enum):
     PASS = enum.auto()  # 过滤：不弹框提示，也不抛出异常，就当做什么都没发生
 
 
-def exceptionFilter(ty: Type[BaseException], value: BaseException, _traceback: TracebackType) -> ExceptionFilterMode:
+def exceptionFilter(
+    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+) -> ExceptionFilterMode:
     """
     过滤异常
     """
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.PASS
-    if isinstance(value, aria2p.client.ClientException) and "Active Download not found for GID" in str(value):
+    if isinstance(
+        value, aria2p.client.ClientException
+    ) and "Active Download not found for GID" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
         return ExceptionFilterMode.PASS
