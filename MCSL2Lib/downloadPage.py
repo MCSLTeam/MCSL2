@@ -1020,15 +1020,33 @@ class DownloadPage(QWidget):
         self.checkDownloadFileExists(fileName, fileFormat, uri)
 
     def hideDownloadHelper(self):
-        self.downloadStateToolTip = StateToolTip("已隐藏下载窗口", "仍在下载...", self)
-        self.downloadStateToolTip.move(self.downloadStateToolTip.getSuitablePos())
-        self.downloadStateToolTip.show()
+        # self.downloadStateToolTip = StateToolTip("已隐藏下载窗口", "仍在下载...", self)
+        # self.downloadStateToolTip.move(self.downloadStateToolTip.getSuitablePos())
+        # self.downloadStateToolTip.show()
+        self.downloadingInfoBar = InfoBar(
+            icon=FIF.DOWNLOAD,
+            title="已隐藏下载窗口",
+            content="仍在下载中，点击按钮恢复下载窗口...",
+            orient=Qt.Horizontal,
+            isClosable=False,
+            duration=-1,
+            position=InfoBarPosition.TOP_RIGHT,
+            parent=self
+        )
+        showDownloadMsgBoxBtn = PushButton()
+        showDownloadMsgBoxBtn.setText("恢复")
+        showDownloadMsgBoxBtn.clicked.connect(self.downloadingBox.show)
+        showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.close)
+        self.downloadingInfoBar.addWidget(showDownloadMsgBoxBtn)
+        self.downloadingInfoBar.show()
 
     def downloadFinishedHelper(self):
         try:
-            self.downloadStateToolTip.setContent("下载完毕。")
-            self.downloadStateToolTip.setState(True)
-            self.downloadStateToolTip = None
+            # self.downloadStateToolTip.setContent("下载完毕。")
+            # self.downloadStateToolTip.setState(True)
+            # self.downloadStateToolTip = None
+            self.downloadingInfoBar.close()
+            InfoBar.success("下载完毕")
         except:
             pass
 
@@ -1077,20 +1095,20 @@ class DownloadPage(QWidget):
             self.downloadFile(fileName, fileFormat, uri)
 
     def downloadFile(self, fileName, fileFormat, uri):
-        box = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
-        box.DownloadWidget().closeBoxBtnFinished.clicked.connect(box.close)
-        box.DownloadWidget().closeBoxBtnFailed.clicked.connect(box.close)
+        self.downloadingBox = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
+        self.downloadingBox.DownloadWidget().closeBoxBtnFinished.clicked.connect(self.downloadingBox.close)
+        self.downloadingBox.DownloadWidget().closeBoxBtnFailed.clicked.connect(self.downloadingBox.close)
         gid = Aria2Controller.download(
             uri=uri,
             watch=True,
-            info_get=box.onInfoGet,
-            stopped=box.onDownloadFinished,
+            info_get=self.downloadingBox.onInfoGet,
+            stopped=self.downloadingBox.onDownloadFinished,
             interval=0.2,
         )
-        box.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
-        box.paused.connect(
+        self.downloadingBox.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+        self.downloadingBox.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
             if x
             else Aria2Controller.resumeDownloadTask(gid)
         )
-        box.show()
+        self.downloadingBox.show()
