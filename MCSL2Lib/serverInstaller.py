@@ -71,6 +71,7 @@ class Installer(QObject):
     """
     安装器的基类,包含installerLogOutput信号,用于输出安装器的日志
     """
+
     installerLogOutput = pyqtSignal(str)
 
     def __init__(self, cwd: str, file: str, logDecode="utf-8"):
@@ -113,7 +114,7 @@ class ForgeInstaller(Installer):
     def getInstallerData(self):
         # 打开Installer压缩包
         # 读取version.json
-        zipfile = ZipFile(os.path.join(self.cwd,self.file), mode="r")
+        zipfile = ZipFile(os.path.join(self.cwd, self.file), mode="r")
         versionJson = zipfile.read("version.json")
         versionInfo = json.loads(versionJson)
         self.mcVersion = McVersion(versionInfo["inheritsFrom"])
@@ -125,7 +126,7 @@ class ForgeInstaller(Installer):
         安装Forge
         若为1.13以上版本,则使用PlanB
         若为1.13以下版本,则使用PlanA
-        
+
         若安装过程中出现错误,则抛出InstallerError
         """
         if self.mcVersion >= McVersion("1.13"):
@@ -175,7 +176,9 @@ class ForgeInstaller(Installer):
                     raise InstallerError("No java command found")
 
                 try:
-                    forgeArgs = list(filter(lambda x: x.startswith("@libraries"), command.split(" "))).pop()
+                    forgeArgs = list(
+                        filter(lambda x: x.startswith("@libraries"), command.split(" "))
+                    ).pop()
                 except IndexError:
                     raise InstallerError("bad forge run script")
 
@@ -185,23 +188,31 @@ class ForgeInstaller(Installer):
                 var.serverType = "forge"
                 var.extraData["forge_version"] = self.forgeVersion
                 # 保存json
-                if p := os.path.exists(os.path.join(self.cwd, "MCSL2ServerConfig.json")):
+                if p := os.path.exists(
+                    os.path.join(self.cwd, "MCSL2ServerConfig.json")
+                ):
                     with open(p, mode="r", encoding="utf-8") as f:
                         d = json.load(f)
                         d["jvmArg"].append(forgeArgs)
-                    d.update({
-                        "server_type": "forge",
-                        "extra_data": {
-                            "forge_version": self.forgeVersion,
+                    d.update(
+                        {
+                            "server_type": "forge",
+                            "extra_data": {
+                                "forge_version": self.forgeVersion,
+                            },
                         }
-                    })
+                    )
                     with open(p, mode="w", encoding="utf-8") as f:
                         json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True)
                     # TODO: 需要同时保存全局配置文件
                 else:
-                    raise InstallerError("MCSL2ServerConfig.json not found,failed to save forge launch args")
+                    raise InstallerError(
+                        "MCSL2ServerConfig.json not found,failed to save forge launch args"
+                    )
             else:
-                raise InstallerError(f"Forge installer exited with code {self.workingProcess.exitCode()}")
+                raise InstallerError(
+                    f"Forge installer exited with code {self.workingProcess.exitCode()}"
+                )
 
     def _installPlanA(self):
         """

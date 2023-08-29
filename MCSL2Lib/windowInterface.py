@@ -272,6 +272,7 @@ class Window(MSFluentWindow):
                     configThemeList.index(settingsController.fileSettings["theme"])
                 ]
             )
+        self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme(), isAlt=True)
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
     def initSafeQuitController(self):
