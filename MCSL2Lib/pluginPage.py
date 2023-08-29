@@ -65,7 +65,7 @@ class PluginPage(QWidget):
         self.PrimaryPushButton.setMaximumSize(QSize(82, 32))
         self.PrimaryPushButton.setObjectName("PrimaryPushButton")
 
-        self.PrimaryPushButton.clicked.connect(lambda: self.thread.run())
+        self.PrimaryPushButton.clicked.connect(self.thread.run)
         self.gridLayout.addWidget(self.PrimaryPushButton, 3, 4, 1, 1)
         spacerItem = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 2, 4, 1, 1)
