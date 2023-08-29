@@ -165,24 +165,30 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverSettings.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverSettings.sizePolicy().hasHeightForWidth())
         self.serverSettings.setSizePolicy(sizePolicy)
-        self.serverSettings.setMinimumSize(QSize(630, 200))
-        self.serverSettings.setMaximumSize(QSize(16777215, 200))
+        self.serverSettings.setMinimumSize(QSize(630, 250))
+        self.serverSettings.setMaximumSize(QSize(16777215, 250))
         self.serverSettings.setObjectName("serverSettings")
 
         self.gridLayout_7 = QGridLayout(self.serverSettings)
         self.gridLayout_7.setObjectName("gridLayout_7")
 
+        self.serverSettingsTitle = StrongBodyLabel(self.serverSettings)
+        self.serverSettingsTitle.setObjectName("serverSettingsTitle")
+
+        self.gridLayout_7.addWidget(self.serverSettingsTitle, 0, 2, 1, 1)
+        self.serverSettingsIndicator = PrimaryPushButton(self.serverSettings)
+        self.serverSettingsIndicator.setMinimumSize(QSize(3, 20))
+        self.serverSettingsIndicator.setMaximumSize(QSize(3, 20))
+        self.serverSettingsIndicator.setObjectName("serverSettingsIndicator")
+
+        self.gridLayout_7.addWidget(self.serverSettingsIndicator, 0, 1, 1, 1)
         self.autoRunLastServer = QWidget(self.serverSettings)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autoRunLastServer.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.autoRunLastServer.sizePolicy().hasHeightForWidth())
         self.autoRunLastServer.setSizePolicy(sizePolicy)
         self.autoRunLastServer.setObjectName("autoRunLastServer")
 
@@ -193,9 +199,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autoRunLastServerTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.autoRunLastServerTitle.sizePolicy().hasHeightForWidth())
         self.autoRunLastServerTitle.setSizePolicy(sizePolicy)
         self.autoRunLastServerTitle.setObjectName("autoRunLastServerTitle")
 
@@ -206,26 +210,18 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autoRunLastServerSwitchBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.autoRunLastServerSwitchBtn.sizePolicy().hasHeightForWidth())
         self.autoRunLastServerSwitchBtn.setSizePolicy(sizePolicy)
         self.autoRunLastServerSwitchBtn.setChecked(False)
         self.autoRunLastServerSwitchBtn.setObjectName("autoRunLastServerSwitchBtn")
 
         self.horizontalLayout_6.addWidget(self.autoRunLastServerSwitchBtn)
         self.gridLayout_7.addWidget(self.autoRunLastServer, 1, 0, 1, 4)
-        self.serverSettingsTitle = StrongBodyLabel(self.serverSettings)
-        self.serverSettingsTitle.setObjectName("serverSettingsTitle")
-
-        self.gridLayout_7.addWidget(self.serverSettingsTitle, 0, 2, 1, 1)
         self.acceptAllMojangEula = QWidget(self.serverSettings)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.acceptAllMojangEula.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.acceptAllMojangEula.sizePolicy().hasHeightForWidth())
         self.acceptAllMojangEula.setSizePolicy(sizePolicy)
         self.acceptAllMojangEula.setObjectName("acceptAllMojangEula")
 
@@ -236,9 +232,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.acceptAllMojangEulaTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.acceptAllMojangEulaTitle.sizePolicy().hasHeightForWidth())
         self.acceptAllMojangEulaTitle.setSizePolicy(sizePolicy)
         self.acceptAllMojangEulaTitle.setObjectName("acceptAllMojangEulaTitle")
 
@@ -249,17 +243,18 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.acceptAllMojangEulaSwitchBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.acceptAllMojangEulaSwitchBtn.sizePolicy().hasHeightForWidth())
         self.acceptAllMojangEulaSwitchBtn.setSizePolicy(sizePolicy)
         self.acceptAllMojangEulaSwitchBtn.setObjectName("acceptAllMojangEulaSwitchBtn")
 
         self.horizontalLayout_7.addWidget(self.acceptAllMojangEulaSwitchBtn)
         self.gridLayout_7.addWidget(self.acceptAllMojangEula, 2, 0, 1, 4)
-        spacerItem4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_7.addItem(spacerItem4, 0, 3, 1, 1)
         self.sendStopInsteadOfKill = QWidget(self.serverSettings)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKill.sizePolicy().hasHeightForWidth())
+        self.sendStopInsteadOfKill.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKill.setObjectName("sendStopInsteadOfKill")
 
         self.horizontalLayout_8 = QHBoxLayout(self.sendStopInsteadOfKill)
@@ -269,37 +264,58 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.sendStopInsteadOfKillTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKillTitle.sizePolicy().hasHeightForWidth())
         self.sendStopInsteadOfKillTitle.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKillTitle.setObjectName("sendStopInsteadOfKillTitle")
 
         self.horizontalLayout_8.addWidget(self.sendStopInsteadOfKillTitle)
-        spacerItem5 = QSpacerItem(239, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.horizontalLayout_8.addItem(spacerItem5)
+        spacerItem4 = QSpacerItem(239, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_8.addItem(spacerItem4)
         self.sendStopInsteadOfKillSwitchBtn = SwitchButton(self.sendStopInsteadOfKill)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.sendStopInsteadOfKillSwitchBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKillSwitchBtn.sizePolicy().hasHeightForWidth())
         self.sendStopInsteadOfKillSwitchBtn.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKillSwitchBtn.setChecked(True)
-        self.sendStopInsteadOfKillSwitchBtn.setObjectName(
-            "sendStopInsteadOfKillSwitchBtn"
-        )
+        self.sendStopInsteadOfKillSwitchBtn.setObjectName("sendStopInsteadOfKillSwitchBtn")
 
         self.horizontalLayout_8.addWidget(self.sendStopInsteadOfKillSwitchBtn)
         self.gridLayout_7.addWidget(self.sendStopInsteadOfKill, 3, 0, 1, 4)
-        self.serverSettingsIndicator = PrimaryPushButton(self.serverSettings)
-        self.serverSettingsIndicator.setMinimumSize(QSize(3, 20))
-        self.serverSettingsIndicator.setMaximumSize(QSize(3, 20))
-        self.serverSettingsIndicator.setText("")
-        self.serverSettingsIndicator.setObjectName("serverSettingsIndicator")
+        spacerItem5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_7.addItem(spacerItem5, 0, 3, 1, 1)
+        self.restartServerWhenCrashed = QWidget(self.serverSettings)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.restartServerWhenCrashed.sizePolicy().hasHeightForWidth())
+        self.restartServerWhenCrashed.setSizePolicy(sizePolicy)
+        self.restartServerWhenCrashed.setObjectName("restartServerWhenCrashed")
 
-        self.gridLayout_7.addWidget(self.serverSettingsIndicator, 0, 1, 1, 1)
+        self.horizontalLayout_9 = QHBoxLayout(self.restartServerWhenCrashed)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+
+        self.restartServerWhenCrashedTitle = BodyLabel(self.restartServerWhenCrashed)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.restartServerWhenCrashedTitle.sizePolicy().hasHeightForWidth())
+        self.restartServerWhenCrashedTitle.setSizePolicy(sizePolicy)
+        self.restartServerWhenCrashedTitle.setObjectName("restartServerWhenCrashedTitle")
+
+        self.horizontalLayout_9.addWidget(self.restartServerWhenCrashedTitle)
+        spacerItem6 = QSpacerItem(311, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout_9.addItem(spacerItem6)
+        self.restartServerWhenCrashedSwitchBtn = SwitchButton(self.restartServerWhenCrashed)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.restartServerWhenCrashedSwitchBtn.sizePolicy().hasHeightForWidth())
+        self.restartServerWhenCrashedSwitchBtn.setSizePolicy(sizePolicy)
+        self.restartServerWhenCrashedSwitchBtn.setObjectName("restartServerWhenCrashedSwitchBtn")
+
+        self.horizontalLayout_9.addWidget(self.restartServerWhenCrashedSwitchBtn)
+        self.gridLayout_7.addWidget(self.restartServerWhenCrashed, 4, 0, 1, 4)
         self.verticalLayout.addWidget(self.serverSettings)
         self.configureSettings = CardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -1179,6 +1195,10 @@ class SettingsPage(QWidget):
         self.sendStopInsteadOfKillSwitchBtn.setText("已开启")
         self.sendStopInsteadOfKillSwitchBtn.setOnText("已开启")
         self.sendStopInsteadOfKillSwitchBtn.setOffText("已关闭")
+        self.restartServerWhenCrashedTitle.setText("当前开启的服务器崩溃自动重启")
+        self.restartServerWhenCrashedSwitchBtn.setText("已关闭")
+        self.restartServerWhenCrashedSwitchBtn.setOnText("已开启")
+        self.restartServerWhenCrashedSwitchBtn.setOffText("已关闭")
         self.onlySaveGlobalServerConfigTitle.setText("只保存全局服务器设置")
         self.onlySaveGlobalServerConfigSwitchBtn.setText("已关闭")
         self.onlySaveGlobalServerConfigSwitchBtn.setOnText("已开启")
@@ -1292,6 +1312,11 @@ class SettingsPage(QWidget):
         self.sendStopInsteadOfKillSwitchBtn.checkedChanged.connect(
             lambda: self.changeSettings(
                 "sendStopInsteadOfKill", self.sendStopInsteadOfKillSwitchBtn.isChecked()
+            )
+        )
+        self.restartServerWhenCrashedSwitchBtn.checkedChanged.connect(
+            lambda: self.changeSettings(
+                "restartServerWhenCrashed", self.restartServerWhenCrashedSwitchBtn.isChecked()
             )
         )
 
@@ -1468,6 +1493,9 @@ class SettingsPage(QWidget):
         )
         self.sendStopInsteadOfKillSwitchBtn.setChecked(
             settingsController.fileSettings["sendStopInsteadOfKill"]
+        )
+        self.restartServerWhenCrashedSwitchBtn.setChecked(
+            settingsController.fileSettings["restartServerWhenCrashed"]
         )
 
         # configureSettings

@@ -787,9 +787,7 @@ def initializeAria2Configuration():
             "rpc-listen-port=6800\n"
             "force-save=false"
         )
-        Aria2ConfigFile.close()
     with open(
             r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
     ) as Aria2SessionFile:
         Aria2SessionFile.write("")
-        Aria2SessionFile.close()

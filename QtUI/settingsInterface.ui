@@ -136,7 +136,7 @@
         <x>0</x>
         <y>0</y>
         <width>653</width>
-        <height>1625</height>
+        <height>1675</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -157,16 +157,42 @@
          <property name="minimumSize">
           <size>
            <width>630</width>
-           <height>200</height>
+           <height>250</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>200</height>
+           <height>250</height>
           </size>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="2">
+           <widget class="StrongBodyLabel" name="serverSettingsTitle">
+            <property name="text">
+             <string>服务器设置</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="PrimaryPushButton" name="serverSettingsIndicator">
+            <property name="minimumSize">
+             <size>
+              <width>3</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>3</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0" colspan="4">
            <widget class="QWidget" name="autoRunLastServer" native="true">
             <property name="sizePolicy">
@@ -230,13 +256,6 @@
             </layout>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="StrongBodyLabel" name="serverSettingsTitle">
-            <property name="text">
-             <string>服务器设置</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0" colspan="4">
            <widget class="QWidget" name="acceptAllMojangEula" native="true">
             <property name="sizePolicy">
@@ -294,21 +313,14 @@
             </layout>
            </widget>
           </item>
-          <item row="0" column="3">
-           <spacer name="autoRunLastServerSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item row="3" column="0" colspan="4">
            <widget class="QWidget" name="sendStopInsteadOfKill" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
               <widget class="BodyLabel" name="sendStopInsteadOfKillTitle">
@@ -361,23 +373,74 @@
             </layout>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="PrimaryPushButton" name="serverSettingsIndicator">
-            <property name="minimumSize">
+          <item row="0" column="3">
+           <spacer name="autoRunLastServerSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>3</width>
+              <width>40</width>
               <height>20</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>3</width>
-              <height>20</height>
-             </size>
+           </spacer>
+          </item>
+          <item row="4" column="0" colspan="4">
+           <widget class="QWidget" name="restartServerWhenCrashed" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="text">
-             <string/>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="BodyLabel" name="restartServerWhenCrashedTitle">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>当前开启的服务器崩溃自动重启</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="restartServerWhenCrashedSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>311</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="SwitchButton" name="restartServerWhenCrashedSwitchBtn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>已关闭</string>
+               </property>
+               <property name="onText">
+                <string>已开启</string>
+               </property>
+               <property name="offText">
+                <string>已关闭</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -1767,7 +1830,7 @@ Copyright ©MCSL Team. All right reserved.
   </customwidget>
   <customwidget>
    <class>HyperlinkButton</class>
-   <extends>QPushButton</extends>
+   <extends>PushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>

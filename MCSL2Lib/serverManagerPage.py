@@ -1395,7 +1395,6 @@ class ServerManagerPage(QWidget):
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
-                globalServerListFile.close()
 
             with open(
                 r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
@@ -1418,7 +1417,6 @@ class ServerManagerPage(QWidget):
                     encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
-                    serverListFile.close()
             else:
                 InfoBar.info(
                     title="功能提醒",
@@ -1520,13 +1518,11 @@ class DeleteServerThread(QThread):
                 r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as RglobalServerListFile:
                 globalServerList = loads(RglobalServerListFile.read())
-                RglobalServerListFile.close()
             globalServerList["MCSLServerList"].pop(self.index)
             with open(
                 r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as WglobalServerConfigFile:
                 WglobalServerConfigFile.write(dumps(globalServerList, indent=4))
-                WglobalServerConfigFile.close()
         except Exception as e:
             self.exitCode.emit(1)
             exit1Msg += f"\n{e}"

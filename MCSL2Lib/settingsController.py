@@ -40,7 +40,6 @@ class SettingsController:
                         self.unSavedSettings = self.fileSettings
                     else:
                         pass
-                    readConfig.close()
 
     def _changeSettings(self, setting: dict):
         self.unSavedSettings.update(setting)
@@ -52,4 +51,3 @@ class SettingsController:
         self.fileSettings.update(self.unSavedSettings)
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
             writeConfig.write(dumps(self.fileSettings, indent=4))
-            writeConfig.close()

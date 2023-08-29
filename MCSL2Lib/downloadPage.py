@@ -1020,9 +1020,6 @@ class DownloadPage(QWidget):
         self.checkDownloadFileExists(fileName, fileFormat, uri)
 
     def hideDownloadHelper(self):
-        # self.downloadStateToolTip = StateToolTip("已隐藏下载窗口", "仍在下载...", self)
-        # self.downloadStateToolTip.move(self.downloadStateToolTip.getSuitablePos())
-        # self.downloadStateToolTip.show()
         self.downloadingInfoBar = InfoBar(
             icon=FIF.DOWNLOAD,
             title="已隐藏下载窗口",
@@ -1042,9 +1039,6 @@ class DownloadPage(QWidget):
 
     def downloadFinishedHelper(self):
         try:
-            # self.downloadStateToolTip.setContent("下载完毕。")
-            # self.downloadStateToolTip.setState(True)
-            # self.downloadStateToolTip = None
             self.downloadingInfoBar.close()
             InfoBar.success("下载完毕")
         except:

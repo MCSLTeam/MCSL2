@@ -5811,7 +5811,6 @@ class ConfigurePage(QWidget):
                         encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
-                    serverListFile.close()
             else:
                 InfoBar.info(
                     title="功能提醒",
@@ -5836,10 +5835,6 @@ class ConfigurePage(QWidget):
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"
-
-        if configureServerVariables.serverType == "forge":
-            pass
-            # TODO: 链接Forge安装器
 
         # 自动同意Mojang Eula
         if settingsController.fileSettings["acceptAllMojangEula"]:
