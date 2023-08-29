@@ -5276,6 +5276,17 @@ class ConfigurePage(QWidget):
         self.noobBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
+        self.noobDownloadJavaPrimaryPushBtn.clicked.connect(
+            lambda: InfoBar.info(
+                title="切换到MCSLAPI",
+                content="因为FastMirror没有Java啊 (",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self.parent(),
+            )
+        )
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)

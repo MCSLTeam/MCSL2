@@ -97,6 +97,9 @@ class PluginManager(BasePluginManager):
         self.allPlugins: {str, PluginType} = {}
         self.threadPool: List[Thread] = []
         self.isDelMsgShowed: int = 0
+        self.pluginsScrollAreaSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+        )
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         """禁用插件"""
@@ -167,7 +170,6 @@ class PluginManager(BasePluginManager):
         except StopIteration:
             return
         for pluginName in pathList:
-            # TODO 这里需要更清晰的报错提示
             try:
                 self.readPlugin(pluginName)
             except Exception as e:
@@ -189,6 +191,15 @@ class PluginManager(BasePluginManager):
 
     def initSinglePluginsWidget(self, pluginsVerticalLayout: QVBoxLayout):
         """初始化插件页Widget"""
+        # 先把旧的清空，但是必须先删除Spacer
+        try:
+            pluginsVerticalLayout.removeItem(self.pluginsScrollAreaSpacer)
+        except Exception:
+            pass
+
+        for i in reversed(range(pluginsVerticalLayout.count())):
+            pluginsVerticalLayout.itemAt(i).widget().deleteLater()
+
         for pluginName, plugin in self.allPlugins.items():
             self.pluginWidget = singlePluginWidget()
 
@@ -237,10 +248,7 @@ class PluginManager(BasePluginManager):
 
             pluginsVerticalLayout.addWidget(self.pluginWidget)
 
-        serversScrollAreaSpacer = QSpacerItem(
-            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
-        )
-        pluginsVerticalLayout.addItem(serversScrollAreaSpacer)
+        pluginsVerticalLayout.addItem(self.pluginsScrollAreaSpacer)
 
     def deletePlugin(self, pluginName, parent):
         if not self.isDelMsgShowed:

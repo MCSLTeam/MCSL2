@@ -87,6 +87,7 @@ class Window(MSFluentWindow):
         super().__init__()
         self.oldHook = sys.excepthook
         sys.excepthook = self.catchExceptions
+        self.pluginManager: PluginManager = PluginManager()
 
         # 读取程序设置，不放在第一位就会爆炸！
         settingsController._readSettings(firstLoad=True)
@@ -218,9 +219,9 @@ class Window(MSFluentWindow):
 
     def initPluginSystem(self):
         """初始化插件系统"""
-        pluginManager: PluginManager = PluginManager()
-        pluginManager.readAllPlugins()
-        pluginManager.initSinglePluginsWidget(
+        print(1)
+        self.pluginManager.readAllPlugins()
+        self.pluginManager.initSinglePluginsWidget(
             self.pluginsInterface.pluginsVerticalLayout
         )
 
@@ -306,17 +307,6 @@ class Window(MSFluentWindow):
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: InfoBar.info(
-                title="切换到MCSLAPI",
-                content="因为FastMirror没有Java啊 (",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-        )
-        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
             self.downloadInterface.getMCSLAPI
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
@@ -391,9 +381,6 @@ class Window(MSFluentWindow):
         serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
         serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)
         self.homeInterface.startServerBtn.clicked.connect(self.startServer)
-
-        # 设置
-        self.settingsInterface.selectThemeColorBtn.colorChanged.connect(setThemeColor)
 
         # 设置器
         serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)

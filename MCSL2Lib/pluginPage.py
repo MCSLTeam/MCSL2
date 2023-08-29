@@ -23,14 +23,17 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QWidget,
     QFrame,
-    QVBoxLayout, QFileDialog,
+    QVBoxLayout,
+    QFileDialog,
 )
 from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
     SmoothScrollArea,
     StrongBodyLabel,
-    TitleLabel, InfoBarPosition, InfoBar,
+    TitleLabel,
+    InfoBarPosition,
+    InfoBar,
 )
 from zipfile import ZipFile
 
@@ -52,34 +55,34 @@ class PluginPage(QWidget):
         self.setSizePolicy(sizePolicy)
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-        self.thread = InstallPluginThread(self)
-        self.PrimaryPushButton = PrimaryPushButton(self)
+        self.installPluginBtn = PrimaryPushButton(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.PrimaryPushButton.sizePolicy().hasHeightForWidth()
+            self.installPluginBtn.sizePolicy().hasHeightForWidth()
         )
-        self.PrimaryPushButton.setSizePolicy(sizePolicy)
-        self.PrimaryPushButton.setMinimumSize(QSize(82, 32))
-        self.PrimaryPushButton.setMaximumSize(QSize(82, 32))
-        self.PrimaryPushButton.setObjectName("PrimaryPushButton")
+        self.installPluginBtn.setSizePolicy(sizePolicy)
+        self.installPluginBtn.setMinimumSize(QSize(82, 32))
+        self.installPluginBtn.setMaximumSize(QSize(82, 32))
+        self.installPluginBtn.setObjectName("installPluginBtn")
 
-        self.PrimaryPushButton.clicked.connect(self.thread.run)
-        self.gridLayout.addWidget(self.PrimaryPushButton, 3, 4, 1, 1)
+        self.gridLayout.addWidget(self.installPluginBtn, 3, 4, 1, 1)
         spacerItem = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 2, 4, 1, 1)
-        self.PushButton = PushButton(self)
+        self.refreshPluginListBtn = PushButton(self)
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.PushButton.sizePolicy().hasHeightForWidth())
-        self.PushButton.setSizePolicy(sizePolicy)
-        self.PushButton.setMinimumSize(QSize(82, 32))
-        self.PushButton.setMaximumSize(QSize(82, 32))
-        self.PushButton.setObjectName("PushButton")
+        sizePolicy.setHeightForWidth(
+            self.refreshPluginListBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.refreshPluginListBtn.setSizePolicy(sizePolicy)
+        self.refreshPluginListBtn.setMinimumSize(QSize(82, 32))
+        self.refreshPluginListBtn.setMaximumSize(QSize(82, 32))
+        self.refreshPluginListBtn.setObjectName("refreshPluginListBtn")
 
-        self.gridLayout.addWidget(self.PushButton, 4, 4, 1, 1)
+        self.gridLayout.addWidget(self.refreshPluginListBtn, 4, 4, 1, 1)
         self.titleLimitWidget = QWidget(self)
         self.titleLimitWidget.setObjectName("titleLimitWidget")
 
@@ -145,17 +148,31 @@ class PluginPage(QWidget):
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
 
+        self.installPluginThread = InstallPluginThread(self)
         self.subTitleLabel.setText("添加属于你的插件，让你的MCSL2更加强大！")
         self.titleLabel.setText("插件")
-        self.PushButton.setText("插件设置")
-        self.PrimaryPushButton.setText("安装插件")
+        self.refreshPluginListBtn.setText("刷新列表")
+        self.installPluginBtn.setText("安装插件")
+        self.refreshPluginListBtn.clicked.connect(self.parent().initPluginSystem)
+        self.refreshPluginListBtn.clicked.connect(
+            lambda: InfoBar.success(
+                title="成功",
+                content="刷新完毕",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.BOTTOM_LEFT,
+                duration=2222,
+                parent=self,
+            )
+        )
+        self.installPluginBtn.clicked.connect(self.installPluginThread.start)
 
 
 class InstallPluginThread(QThread):
     """
-        安装插件的线程\n
-        使用多线程防止卡死
-        """
+    安装插件的线程\n
+    使用多线程防止卡死
+    """
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -164,23 +181,22 @@ class InstallPluginThread(QThread):
     def run(self):
         try:
             tmpPluginFilePath = str(
-                QFileDialog.getOpenFileName(PluginPage(), "选择.zip形式的插件", getcwd(), "*.zip")[0]
+                QFileDialog.getOpenFileName(
+                    PluginPage(), "选择.zip形式的插件", getcwd(), "*.zip"
+                )[0]
             ).replace("/", "\\")
             PluginZipFileName = ospath.basename(tmpPluginFilePath)
 
-            copy(
-                tmpPluginFilePath,
-                "./Plugins"
-            )
+            copy(tmpPluginFilePath, "./Plugins")
             PluginFilePath = f"./Plugins/{PluginZipFileName}"
-            plugin_zip = ZipFile(PluginFilePath, 'r')
+            plugin_zip = ZipFile(PluginFilePath, "r")
             plugin_zip.extractall("./Plugins")
             plugin_zip.close()
             remove(f"./Plugins/{PluginZipFileName}")
             print(f"成功安装插件{PluginZipFileName.replace('.zip', '')}")
             InfoBar.success(
                 title="成功安装",
-                content=f"重启后生效",
+                content=f"可能需要重启以生效",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_LEFT,

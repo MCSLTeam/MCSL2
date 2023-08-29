@@ -50,6 +50,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
     FluentIcon as FIF,
+    setThemeColor
 )
 from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.singleton import Singleton
@@ -1441,6 +1442,7 @@ class SettingsPage(QWidget):
         )
 
         self.refreshSettingsInterface()
+        self.selectThemeColorBtn.colorChanged.connect(setThemeColor)
 
     def readSettings(self, firstLoad):
         """
