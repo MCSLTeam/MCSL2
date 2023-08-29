@@ -570,84 +570,84 @@ class Aria2BootThread(QThread):
             self.loaded.emit(False)
 
 
-class NormalDownloadManager(QObject):
-    downloadFinished = pyqtSignal(bool)
+# class NormalDownloadManager(QObject):
+#     downloadFinished = pyqtSignal(bool)
 
-    def __init__(self, uri, savePath, retryCount=3, parent=None):
-        super().__init__()
-        self.uri = uri
-        self.setParent(parent)
-        self.savePath = savePath
-        self.retryCount = retryCount
-        self.downloadThread = None
-        self.dialog: Optional[QProgressDialog] = None
-        self.downloadProgress = 0
+#     def __init__(self, uri, savePath, retryCount=3, parent=None):
+#         super().__init__()
+#         self.uri = uri
+#         self.setParent(parent)
+#         self.savePath = savePath
+#         self.retryCount = retryCount
+#         self.downloadThread = None
+#         self.dialog: Optional[QProgressDialog] = None
+#         self.downloadProgress = 0
 
-    def download(self):
-        self.downloadThread = NormalDownloadThread(
-            self.uri, self.savePath, self.retryCount, parent=self.parent()
-        )
+#     def download(self):
+#         self.downloadThread = NormalDownloadThread(
+#             self.uri, self.savePath, self.retryCount, parent=self.parent()
+#         )
 
-        self.downloadThread.finished.connect(self.downloadFinish)
-        self.downloadThread.start()
+#         self.downloadThread.finished.connect(self.downloadFinish)
+#         self.downloadThread.start()
 
-    @pyqtSlot(int)
-    def getFileSize(self, fileSize):
-        self.dialog.setRange(0, fileSize)
+#     @pyqtSlot(int)
+#     def getFileSize(self, fileSize):
+#         self.dialog.setRange(0, fileSize)
 
-    def showDialog(self):
-        self.dialog = QProgressDialog(labelText="正在下载", parent=self.parent())
-        # 阻塞主窗口
-        self.dialog.setModal(True)
-        self.dialog.show()
+#     def showDialog(self):
+#         self.dialog = QProgressDialog(labelText="正在下载", parent=self.parent())
+#         # 阻塞主窗口
+#         self.dialog.setModal(True)
+#         self.dialog.show()
 
-    @pyqtSlot(int)
-    def updateProgress(self, progress):
-        self.downloadProgress += progress
-        print(self.downloadProgress)
-        self.dialog.setValue(self.downloadProgress)
+#     @pyqtSlot(int)
+#     def updateProgress(self, progress):
+#         self.downloadProgress += progress
+#         print(self.downloadProgress)
+#         self.dialog.setValue(self.downloadProgress)
 
-    @pyqtSlot(bool)
-    def downloadFinish(self, failed):
-        if self.needDialog:
-            self.dialog.close()
-        self.downloadFinished.emit(failed)
+#     @pyqtSlot(bool)
+#     def downloadFinish(self, failed):
+#         if self.needDialog:
+#             self.dialog.close()
+#         self.downloadFinished.emit(failed)
 
 
-class NormalDownloadThread(QThread):
-    fileSize = pyqtSignal(int)
-    progress = pyqtSignal(int)
-    finished = pyqtSignal(bool)
+# class NormalDownloadThread(QThread):
+#     fileSize = pyqtSignal(int)
+#     progress = pyqtSignal(int)
+#     finished = pyqtSignal(bool)
 
-    def __init__(self, uri, savePath, retryCount=3, parent=None):
-        super().__init__()
-        self.setParent(parent)
-        self.uri = uri
-        self.savePath = savePath
-        self.retryCount = retryCount
-        self.failed = False
+#     def __init__(self, uri, savePath, retryCount=3, parent=None):
+#         super().__init__()
+#         self.setParent(parent)
+#         self.uri = uri
+#         self.savePath = savePath
+#         self.retryCount = retryCount
+#         self.failed = False
 
-    def run(self):
-        print("开始下载")
-        flag = False
-        # 普通下载
-        with open(self.savePath, "wb") as f:
-            for r in range(self.retryCount):
-                response = Session.get(self.uri, timeout=10, stream=True)
-                fileSize = response.headers.get("Content-Length", 0)
-                self.progress.emit(int(fileSize))
-                i = 0
-                for data in response.iter_content(chunk_size=4096):
-                    self.progress.emit(len(data))
-                    f.write(data)
-                flag = True
-                break
-        if flag:
-            print("下载完成")
-        else:
-            print("下载失败")
-            self.failed = True
-        self.finished.emit(self.failed)
+#     def run(self):
+#         print("开始下载")
+#         flag = False
+#         # 普通下载
+#         with open(self.savePath, "wb") as f:
+#             for r in range(self.retryCount):
+#                 response = Session.get(self.uri, timeout=10, stream=True)
+#                 fileSize = response.headers.get("Content-Length", 0)
+#                 self.progress.emit(int(fileSize))
+#                 i = 0
+#                 for data in response.iter_content(chunk_size=4096):
+#                     self.progress.emit(len(data))
+#                     f.write(data)
+#                 flag = True
+#                 break
+#         if flag:
+#             print("下载完成")
+#         else:
+#             print("下载失败")
+#             self.failed = True
+#         self.finished.emit(self.failed)
 
 
 ###################
