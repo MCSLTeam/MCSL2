@@ -5,7 +5,8 @@
 <!-- AFDIAN-ACTION:START -->
 <!-- AFDIAN-ACTION:END -->
 
-2023年8月的爱发电赞助者：
+2023年8月的爱发电赞助者：  
+
 <a href="https://afdian.net/u/8a5063b67b7211e9954852540025c377">
     <img src="https://pic1.afdiancdn.com/user/8a5063b67b7211e9954852540025c377/avatar/9acace1647ac79eaced123638e873b73_w1080_h1080_s32.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="瓶盖PING" title="瓶盖PING"/>
 </a>
