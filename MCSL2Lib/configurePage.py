@@ -5332,6 +5332,7 @@ class ConfigurePage(QWidget):
         )
 
         self.settingsRunner_newServerType()
+        self.importNewServerBtn.setEnabled(False)
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
@@ -5740,6 +5741,17 @@ class ConfigurePage(QWidget):
             w.yesSignal.connect(self.saveNewServer)
             w.cancelButton.setText("我再看看")
             w.exec()
+    
+    def confirmForgeServer(self):
+        w = MessageBox("这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self)
+        w.yesButton.setText("是")
+        w.cancelButton.setText("不是")
+        w.yesSignal.connect(self.saveNewServer)
+        w.yesSignal.connect(self.setForge)
+        w.exec()
+
+    def setForge(self):
+        configureServerVariables.serverType = "forge"
 
     def saveNewServer(self):
         """真正的保存服务器函数"""
@@ -5824,6 +5836,10 @@ class ConfigurePage(QWidget):
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"
+
+        if configureServerVariables.serverType == "forge":
+            pass
+            # TODO: 链接Forge安装器
 
         # 自动同意Mojang Eula
         if settingsController.fileSettings["acceptAllMojangEula"]:

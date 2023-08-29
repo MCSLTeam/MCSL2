@@ -115,7 +115,8 @@ class ServerHandler(QObject):
         self.AServer.serverProcess.setArguments(self.processArgs)
         self.AServer.serverProcess.setWorkingDirectory(self.workingDirectory)
         self.AServer.serverProcess.started.connect(
-            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
+            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后...")
+        )
         self.AServer.serverProcess.readyReadStandardOutput.connect(
             self.serverLogOutputHandler
         )
@@ -123,8 +124,7 @@ class ServerHandler(QObject):
             lambda: self.serverClosed.emit(self.AServer.serverProcess.exitCode())
         )
         self.AServer.serverProcess.finished.connect(
-            lambda: self.serverLogOutput.emit(
-                f"[MCSL2 | 提示]：服务器已关闭！进程退出状态码：{self.AServer.serverProcess.exitCode()}")
+            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器已关闭！")
         )
         return self.AServer
 
@@ -288,7 +288,9 @@ class ServerLauncher:
         ServerHandler().startServer(
             javaPath=self.javaPath,
             processArgs=self.jvmArg,
-            workingDirectory=str(ospath.realpath(f"Servers//{serverVariables.serverName}")),
+            workingDirectory=str(
+                ospath.realpath(f"Servers//{serverVariables.serverName}")
+            ),
         )
 
 
@@ -341,10 +343,10 @@ class MinecraftServerResMonitorUtil(QObject):
         try:
             if ServerHandler().isServerRunning():
                 serverMem = (
-                        Process(ServerHandler().AServer.serverProcess.processId())
-                        .memory_full_info()
-                        .uss
-                        / divisionNum
+                    Process(ServerHandler().AServer.serverProcess.processId())
+                    .memory_full_info()
+                    .uss
+                    / divisionNum
                 )
                 self.memPercent.emit(float("{:.4f}".format(serverMem)))
             else:
@@ -383,7 +385,7 @@ def readServerProperties():
     serverVariables.serverProperties.clear()
     try:
         with open(
-                f"./Servers/{serverVariables.serverName}/server.properties", "r"
+            f"./Servers/{serverVariables.serverName}/server.properties", "r"
         ) as serverPropertiesFile:
             lines = serverPropertiesFile.readlines()
             for line in lines:
