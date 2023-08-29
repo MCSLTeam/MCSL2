@@ -138,6 +138,13 @@ class SelectJavaPage(QWidget):
             self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].path))
             self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].version))
             self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
+            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
             self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
 
     def scrollAreaProcessor(self, JavaPath):
