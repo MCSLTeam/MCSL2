@@ -350,47 +350,53 @@ class ServerVariables:
     """需要开启的服务器的变量"""
 
     def __init__(self):
-        self.serverName: str = ""
-        self.coreFileName: str = ""
-        self.javaPath: str = ""
-        self.minMem: int = 0
-        self.maxMem: int = 0
-        self.memUnit: str = "M"
+        self.serverName: list[str] = [""]
+        self.coreFileName: list[str] = [""]
+        self.javaPath: list[str] = [""]
+        self.minMem: list[int] = [0]
+        self.maxMem: list[int] = [0]
+        self.memUnit: list[str] = ["M"]
         self.jvmArg: list[str] = [""]
-        self.outputDecoding: str = "utf-8"
-        self.inputEncoding: str = "utf-8"
+        self.outputDecoding: list[str] = ["utf-8"]
+        self.inputEncoding: list[str] = ["utf-8"]
         self.serverProperties = {}
-        self.serverType: str = ""
+        self.serverType = {}
         self.extraData = {}
+        self.currentServer = {}  # {"服务器名称", "索引值"}
 
     @warning("要为所有ServerVariables添加serverType和extraData属性")
     def initialize(self, index: int):
         self.serverConfig: dict = readGlobalServerConfig()[index]
-        self.serverName = self.serverConfig["name"]
-        self.coreFileName = self.serverConfig["core_file_name"]
-        self.javaPath = self.serverConfig["java_path"]
-        self.minMem = self.serverConfig["min_memory"]
-        self.maxMem = self.serverConfig["max_memory"]
-        self.memUnit = self.serverConfig["memory_unit"]
-        self.jvmArg = self.serverConfig["jvm_arg"]
-        self.outputDecoding = self.serverConfig["output_decoding"]
-        self.inputEncoding = self.serverConfig["input_encoding"]
+
+        self.serverName.append(self.serverConfig["name"])
+        self.coreFileName.append(self.serverConfig["core_file_name"])
+        self.javaPath.append(self.serverConfig["java_path"])
+        self.minMem.append(self.serverConfig["min_memory"])
+        self.maxMem.append(self.serverConfig["max_memory"])
+        self.memUnit.append(self.serverConfig["memory_unit"])
+        self.jvmArg.append(self.serverConfig["jvm_arg"])
+        self.outputDecoding.append(self.serverConfig["output_decoding"])
+        self.inputEncoding.append(self.serverConfig["input_encoding"])
         self.translateCoding()
         try:
-            self.serverType = self.serverConfig["server_type"]
-            self.extraData = self.serverConfig["extra_data"]
+            self.serverType[self.serverConfig["name"]] = self.serverConfig[
+                "server_type"
+            ]
+            self.extraData[self.serverConfig["name"]] = self.serverConfig["extra_data"]
         except KeyError:
-            self.serverType = ""
-            self.extraData = {}
+            self.serverType[self.serverConfig["name"]] = ""
+            self.extraData[self.serverConfig["name"]] = {}
             pass
 
     def translateCoding(self):
-        if self.outputDecoding == "follow":
-            self.outputDecoding = settingsController.fileSettings["outputDeEncoding"]
-        if self.inputEncoding == "follow":  # 跟随全局
-            self.inputEncoding = settingsController.fileSettings["inputDeEncoding"]
-            if self.inputEncoding == "follow":  # 跟随输出
-                self.inputEncoding = self.outputDecoding
+        if self.outputDecoding[-1] == "follow":
+            self.outputDecoding[-1] = settingsController.fileSettings[
+                "outputDeEncoding"
+            ]
+        if self.inputEncoding[-1] == "follow":  # 跟随全局
+            self.inputEncoding[-1] = settingsController.fileSettings["inputDeEncoding"]
+            if self.inputEncoding[-1] == "follow":  # 跟随输出
+                self.inputEncoding[-1] = self.outputDecoding[-1]
 
 
 @Singleton

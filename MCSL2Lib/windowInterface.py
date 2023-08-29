@@ -68,6 +68,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+from MCSL2Lib.singleConsoleWidget import singleConsoleWidget
 
 serverVariables = ServerVariables()
 settingsController = SettingsController()
@@ -446,7 +447,8 @@ class Window(MSFluentWindow):
 
     def startServer(self):
         """启动服务器总函数，直接放这里得了"""
-        firstTry = ServerLauncher().startServer()
+        serverLauncher = ServerLauncher(serverName=serverVariables.serverName[-1])
+        firstTry = serverLauncher.startServer()
         if not firstTry:
             w = MessageBox(
                 title="提示",
@@ -463,7 +465,15 @@ class Window(MSFluentWindow):
             w.exec()
         else:
             self.switchTo(self.consoleInterface)
-            self.consoleInterface.serverOutput.setPlainText("")
+            consoleWidget = singleConsoleWidget()
+            consoleWidget.setObjectName(f"singleConsoleWidget_{serverLauncher.serverName}")
+            consoleWidget.serverOutput.setObjectName(f"serverOutput_{serverLauncher.serverName}")
+            consoleWidget.commandLineEdit.setObjectName(f"commandLineEdit_{serverLauncher.serverName}")
+            consoleWidget.sendCommandButton.setObjectName(f"sendCommandButton_{serverLauncher.serverName}")
+            consoleWidget.serverOutput.setPlaceholderText(f"请先开启服务器\"{serverLauncher.serverName}\"！不开服务器没有日志的喂")
+            self.consoleInterface.serversStackedWidget.addWidget(consoleWidget)
+            self.consoleInterface.serversStackedWidget.setCurrentWidget(consoleWidget)
+            self.consoleInterface.serversTabBar.addTab(routeKey=serverVariables.serverName[-1], text=serverVariables.serverName[-1], onClick=self.consoleInterface.serversStackedWidget.setCurrentIndex(self.consoleInterface.serversTabBar.currentIndex()+1))
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)

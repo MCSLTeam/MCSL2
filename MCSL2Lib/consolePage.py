@@ -24,22 +24,20 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy,
     QFrame,
-    QCompleter
+    QCompleter,
+    QStackedWidget
 )
 from qfluentwidgets import (
     CardWidget,
     ComboBox,
-    LineEdit,
-    PlainTextEdit,
-    PrimaryToolButton,
     ProgressRing,
     StrongBodyLabel,
     TitleLabel,
     TransparentPushButton,
-    FluentIcon as FIF,
     MessageBox,
     InfoBar,
     InfoBarPosition,
+    TabBar,
 )
 from MCSL2Lib.serverController import ServerHandler, readServerProperties
 
@@ -62,6 +60,11 @@ class ConsolePage(QWidget):
 
         self.playersList = []
         self.playersControllerBtnEnabled.emit(False)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -69,9 +72,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverMemCardWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverMemCardWidget.sizePolicy().hasHeightForWidth())
         self.serverMemCardWidget.setSizePolicy(sizePolicy)
         self.serverMemCardWidget.setMinimumSize(QSize(130, 120))
         self.serverMemCardWidget.setMaximumSize(QSize(130, 120))
@@ -94,12 +95,10 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverMemLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverMemLabel.sizePolicy().hasHeightForWidth())
         self.serverMemLabel.setSizePolicy(sizePolicy)
         self.serverMemLabel.setObjectName("serverMemLabel")
-
+        
         self.gridLayout_3.addWidget(self.serverMemLabel, 0, 0, 1, 3)
         self.gridLayout.addWidget(self.serverMemCardWidget, 1, 4, 1, 1)
         spacerItem2 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -110,9 +109,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverCPUCardWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverCPUCardWidget.sizePolicy().hasHeightForWidth())
         self.serverCPUCardWidget.setSizePolicy(sizePolicy)
         self.serverCPUCardWidget.setMinimumSize(QSize(130, 120))
         self.serverCPUCardWidget.setMaximumSize(QSize(130, 120))
@@ -135,9 +132,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverCPULabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverCPULabel.sizePolicy().hasHeightForWidth())
         self.serverCPULabel.setSizePolicy(sizePolicy)
         self.serverCPULabel.setObjectName("serverCPULabel")
 
@@ -151,36 +146,6 @@ class ConsolePage(QWidget):
         self.gridLayout_2 = QGridLayout(self.titleLimitWidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
 
-        self.sendCommandButton = PrimaryToolButton(FIF.SEND, self.titleLimitWidget)
-        self.sendCommandButton.setText("")
-        self.sendCommandButton.setToolButtonStyle(Qt.ToolButtonIconOnly)
-        self.sendCommandButton.setObjectName("sendCommandButton")
-
-        self.gridLayout_2.addWidget(self.sendCommandButton, 4, 1, 1, 1)
-        self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
-        self.subTitleLabel.setSizePolicy(sizePolicy)
-        self.subTitleLabel.setTextFormat(Qt.MarkdownText)
-        self.subTitleLabel.setObjectName("subTitleLabel")
-
-        self.gridLayout_2.addWidget(self.subTitleLabel, 1, 0, 1, 1)
-        self.commandLineEdit = LineEdit(self.titleLimitWidget)
-        self.commandLineEdit.setObjectName("commandLineEdit")
-
-        self.gridLayout_2.addWidget(self.commandLineEdit, 4, 0, 1, 1)
-        self.serverOutput = PlainTextEdit(self.titleLimitWidget)
-        self.serverOutput.setFrameShape(QFrame.NoFrame)
-        self.serverOutput.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.serverOutput.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.serverOutput.setPlainText("")
-        self.serverOutput.setObjectName("serverOutput")
-
-        self.gridLayout_2.addWidget(self.serverOutput, 3, 0, 1, 2)
         self.titleLabel = TitleLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -190,6 +155,45 @@ class ConsolePage(QWidget):
         self.titleLabel.setObjectName("titleLabel")
 
         self.gridLayout_2.addWidget(self.titleLabel, 0, 0, 1, 1)
+        self.serversStackedWidget = QStackedWidget(self.titleLimitWidget)
+        self.serversStackedWidget.setObjectName("serversStackedWidget")
+
+        self.noServer = QWidget()
+        self.noServer.setObjectName("noServer")
+
+        self.gridLayout_5 = QGridLayout(self.noServer)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+
+        self.TitleLabel = TitleLabel(self.noServer)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.TitleLabel.sizePolicy().hasHeightForWidth())
+        self.TitleLabel.setSizePolicy(sizePolicy)
+        self.TitleLabel.setObjectName("TitleLabel")
+
+        self.gridLayout_5.addWidget(self.TitleLabel, 0, 0, 1, 1)
+        self.serversStackedWidget.addWidget(self.noServer)
+        # self.sampleServerPage = QWidget()
+        # self.sampleServerPage.setObjectName("sampleServerPage")
+
+        # self.serversStackedWidget.addWidget(self.sampleServerPage)
+        self.gridLayout_2.addWidget(self.serversStackedWidget, 3, 0, 1, 1)
+        self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        self.subTitleLabel.setSizePolicy(sizePolicy)
+        self.subTitleLabel.setTextFormat(Qt.MarkdownText)
+        self.subTitleLabel.setObjectName("subTitleLabel")
+
+        self.gridLayout_2.addWidget(self.subTitleLabel, 1, 0, 1, 1)
+        self.serversTabBar = TabBar(self.titleLimitWidget)
+        self.serversTabBar.setFrameShape(QFrame.NoFrame)
+        self.serversTabBar.setObjectName("serversTabBar")
+
+        self.gridLayout_2.addWidget(self.serversTabBar, 2, 0, 1, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 4, 2)
         self.quickMenu = CardWidget(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -241,7 +245,6 @@ class ConsolePage(QWidget):
         self.saveServer = TransparentPushButton(self.quickMenu)
         self.saveServer.setMinimumSize(QSize(0, 30))
         self.saveServer.setObjectName("saveServer")
-
         self.verticalLayout.addWidget(self.saveServer)
         self.exitServer = TransparentPushButton(self.quickMenu)
         self.exitServer.setMinimumSize(QSize(0, 30))
@@ -254,6 +257,9 @@ class ConsolePage(QWidget):
 
         self.verticalLayout.addWidget(self.killServer)
         self.gridLayout.addWidget(self.quickMenu, 3, 4, 1, 1)
+
+        self.serversStackedWidget.setCurrentIndex(0)
+        self.serversTabBar.setAddButtonVisible(False)
 
         self.setObjectName("ConsoleInterface")
 
@@ -270,27 +276,8 @@ class ConsolePage(QWidget):
         self.banPlayers.setText("封禁/解封")
         self.saveServer.setText("保存存档")
         self.exitServer.setText("关闭服务器")
+        self.TitleLabel.setText("请先开启服务器。")
         self.killServer.setText("强制关闭")
-        self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送，不需要加/")
-        self.serverOutput.setPlaceholderText("请先开启服务器！不开服务器没有日志的喂")
-        self.sendCommandButton.setEnabled(False)
-        self.commandLineEdit.textChanged.connect(
-            lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
-        )
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.sendCommandButton.clicked.connect(
-            lambda: self.sendCommand(command=self.commandLineEdit.text())
-        )
-        self.commandLineEdit.returnPressed.connect(
-            lambda: self.sendCommand(command=self.commandLineEdit.text())
-        )
         self.gamemode.clicked.connect(self.initQuickMenu_GameMode)
         self.difficulty.currentIndexChanged.connect(self.runQuickMenu_Difficulty)
         self.whiteList.clicked.connect(self.initQuickMenu_WhiteList)
@@ -299,17 +286,17 @@ class ConsolePage(QWidget):
         self.banPlayers.clicked.connect(self.initQuickMenu_BanOrPardon)
         self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
         self.killServer.clicked.connect(self.runQuickMenu_KillServer)
-        intellisense = QCompleter(GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit)
-        intellisense.setCaseSensitivity(Qt.CaseInsensitive)
-        self.commandLineEdit.setCompleter(intellisense)
-        self.commandLineEdit.setClearButtonEnabled(True)
+        # intellisense = QCompleter(GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit)
+        # intellisense.setCaseSensitivity(Qt.CaseInsensitive)
+        # self.commandLineEdit.setCompleter(intellisense)
+        # self.commandLineEdit.setClearButtonEnabled(True)
         self.serverMemProgressRing.setTextVisible(True)
         self.serverCPUProgressRing.setTextVisible(True)
 
     @pyqtSlot(float)
     def setMemView(self, mem):
-        self.serverMemLabel.setText(f"内存：{round(mem, 2)}{serverVariables.memUnit}")
-        self.serverMemProgressRing.setValue(int(int(mem) / serverVariables.maxMem * 100))
+        self.serverMemLabel.setText(f"内存：{round(mem, 2)}{serverVariables.memUnit[-1]}")
+        self.serverMemProgressRing.setValue(int(int(mem) / serverVariables.maxMem[-1] * 100))
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
