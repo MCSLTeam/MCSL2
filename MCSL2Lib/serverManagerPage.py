@@ -42,12 +42,11 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF,
     MessageBox,
-    isDarkTheme,
     InfoBar,
     InfoBarPosition,
 )
 from MCSL2Lib.serverController import ServerHelper
-from MCSL2Lib.publicFunctions import readGlobalServerConfig
+from MCSL2Lib.publicFunctions import readGlobalServerConfig, isDarkTheme
 from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
@@ -630,8 +629,12 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setPlaceholderText("整数")
         self.editServerNameLineEdit.setPlaceholderText("不能包含非法字符")
         self.JVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.editOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"])
-        self.editInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"])
+        self.editOutputDeEncodingComboBox.addItems(
+            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
+        self.editInputDeEncodingComboBox.addItems(
+            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
         self.editMemUnitComboBox.addItems(["M", "G"])
 
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
@@ -676,48 +679,11 @@ class ServerManagerPage(QWidget):
             )
             w.yesButton.setText("取消")
             w.cancelButton.setText("退出")
-            if isDarkTheme:
-                w.cancelButton.setStyleSheet(
-                    "PushButton {\n"
-                    "    color: black;\n"
-                    "    background: rgba(255, 255, 255, 0.7);\n"
-                    "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                    "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                    "    border-radius: 5px;\n"
-                    "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
-                    "    padding: 5px 12px 6px 12px;\n"
-                    "    outline: none;\n"
-                    "}\n"
-                    "QPushButton {\n"
-                    "    background-color: rgba(255, 117, 117, 30%);\n"
-                    "    color: rgb(245, 0, 0)\n"
-                    "}\n"
-                    "QPushButton:hover {\n"
-                    "    background-color: rgba(255, 122, 122, 50%);\n"
-                    "    color: rgb(245, 0, 0)\n"
-                    "}"
-                )
-            else:
-                w.cancelButton.setStyleSheet(
-                    "PushButton {\n"
-                    "    color: black;\n"
-                    "    background: rgba(255, 255, 255, 0.7);\n"
-                    "    border: 1px solid rgba(0, 0, 0, 0.073);\n"
-                    "    border-bottom: 1px solid rgba(0, 0, 0, 0.183);\n"
-                    "    border-radius: 5px;\n"
-                    "    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */\n"
-                    "    padding: 5px 12px 6px 12px;\n"
-                    "    outline: none;\n"
-                    "}\n"
-                    "QPushButton {\n"
-                    "    background-color: rgba(255, 117, 117, 30%);\n"
-                    "    color: rgb(255, 0, 0)\n"
-                    "}\n"
-                    "QPushButton:hover {\n"
-                    "    background-color: rgba(255, 122, 122, 50%);\n"
-                    "    color: rgb(255, 0, 0)\n"
-                    "}"
-                )
+            w.cancelButton.setStyleSheet(
+                GlobalMCSL2Variables.darkWarnBtnStyleSheet
+                if isDarkTheme()
+                else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+            )
             w.cancelButton.clicked.connect(
                 lambda: self.stackedWidget.setCurrentIndex(0)
             )
@@ -803,7 +769,7 @@ class ServerManagerPage(QWidget):
         w.cancelButton.setText("删除")
         w.cancelButton.setStyleSheet(
             GlobalMCSL2Variables.darkWarnBtnStyleSheet
-            if isDarkTheme
+            if isDarkTheme()
             else GlobalMCSL2Variables.lightWarnBtnStyleSheet
         )
         w.cancelSignal.connect(lambda: self.deleteServer_Step2(index=index))
@@ -819,7 +785,7 @@ class ServerManagerPage(QWidget):
         w2.cancelButton.setText("删除")
         w2.cancelButton.setStyleSheet(
             GlobalMCSL2Variables.darkWarnBtnStyleSheet
-            if isDarkTheme
+            if isDarkTheme()
             else GlobalMCSL2Variables.lightWarnBtnStyleSheet
         )
         w2.cancelButton.setEnabled(False)
