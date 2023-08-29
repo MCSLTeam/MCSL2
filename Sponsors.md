@@ -3,7 +3,9 @@
 感谢这些来自爱发电的赞助者：
 
 <!-- AFDIAN-ACTION:START -->
+<!-- AFDIAN-ACTION:END -->
 
+2023年8月的爱发电赞助者：
 <a href="https://afdian.net/u/8a5063b67b7211e9954852540025c377">
     <img src="https://pic1.afdiancdn.com/user/8a5063b67b7211e9954852540025c377/avatar/9acace1647ac79eaced123638e873b73_w1080_h1080_s32.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="瓶盖PING" title="瓶盖PING"/>
 </a>
@@ -20,4 +22,3 @@
     <img src="https://pic1.afdiancdn.com/user/a5d575eabc3f11eaa5a452540025c377/avatar/66592060ae8b0db60c36922d6ca8f515_w639_h640_s133.jpg?imageView2/1/w/120/h/120" width="40" height="40" alt="Washtile645" title="Washtile645"/>
 </a>
 <!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
-<!-- AFDIAN-ACTION:END -->
