@@ -18,7 +18,7 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import (
@@ -65,7 +65,6 @@ from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
     GlobalMCSL2Variables,
-    PluginVariables,
     ServerVariables,
     SettingsVariables,
 )
@@ -75,13 +74,14 @@ settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
-pluginVariables = PluginVariables()
 settingsVariables = SettingsVariables()
 
 
 @Singleton
 class Window(MSFluentWindow):
     """程序主窗口"""
+
+    deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
         super().__init__()
@@ -132,15 +132,7 @@ class Window(MSFluentWindow):
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
         if flag:
-            InfoBar.success(
-                title="Aria2下载引擎提示",
-                content="启动成功！",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
+            pass
         else:
             InfoBar.error(
                 title="Aria2下载引擎启动失败",

@@ -1,19 +1,17 @@
 from __future__ import annotations
-
+from qfluentwidgets import MessageBox, LineEdit, InfoBar, InfoBarPosition
 from json import loads
-from os import walk, getcwd, path as ospath
+from os import walk, getcwd, path as ospath, startfile
 from threading import Thread
 from typing import List
-
+from shutil import rmtree
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.pluginWidget import singlePluginWidget, PluginSwitchButton
-from MCSL2Lib.publicFunctions import warning, obsolete
-from MCSL2Lib.variables import PluginVariables
-
-pluginVariables = PluginVariables()
+from MCSL2Lib.publicFunctions import isDarkTheme
+from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class Plugin(BasePlugin):
@@ -58,7 +56,7 @@ class PluginLoader(BasePluginLoader):
         try:
             importedPlugin.pluginName = pluginName
             with open(
-                    f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
+                f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
             ) as f:
                 importedPluginConfig: dict = loads(f.read())
             importedPlugin.version = importedPluginConfig.get("version")
@@ -79,9 +77,7 @@ class PluginLoader(BasePluginLoader):
     def getInfo(cls, pluginName: str) -> PluginType:
         pluginType = PluginType()
         pluginType.pluginName = pluginName
-        with open(
-                f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
-        ) as f:
+        with open(f"Plugins//{pluginName}//config.json", "r", encoding="utf-8") as f:
             importedPluginConfig: dict = loads(f.read())
         pluginType.version = importedPluginConfig.get("version")
         pluginType.description = importedPluginConfig.get("description")
@@ -100,6 +96,7 @@ class PluginManager(BasePluginManager):
         self.loadedPlugin: {str, Plugin} = {}
         self.allPlugins: {str, PluginType} = {}
         self.threadPool: List[Thread] = []
+        self.isDelMsgShowed: int = 0
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         """禁用插件"""
@@ -116,7 +113,9 @@ class PluginManager(BasePluginManager):
         del self.loadedPlugin[pluginName]
         return True, plugin.pluginName
 
-    def decideEnableOrDisable(self, pluginButton: PluginSwitchButton, switchBtnStatus: bool):
+    def decideEnableOrDisable(
+        self, pluginButton: PluginSwitchButton, switchBtnStatus: bool
+    ):
         pluginName = pluginButton.objectName().replace("switchBtn_", "")
         if switchBtnStatus:
             try:
@@ -160,22 +159,6 @@ class PluginManager(BasePluginManager):
         else:
             self.allPlugins[pluginName] = plugin
 
-    @obsolete("请改用新函数PluginManager::readAllPlugins")
-    @warning("尽量不要用这个函数!!!")
-    def loadAllPlugins(self):
-        """加载所有插件但不启用"""
-        path = getcwd() + "\\Plugins"
-        try:
-            pathList = next(walk(path))[1]
-        except StopIteration:
-            return
-        for pluginName in pathList:
-            # TODO 这里需要更清晰的报错提示
-            try:
-                self.loadPlugin(pluginName)
-            except Exception as e:
-                raise Warning("加载插件错误")
-
     def readAllPlugins(self):
         """读取所有插件但不启用"""
         path = getcwd() + "\\Plugins"
@@ -188,7 +171,7 @@ class PluginManager(BasePluginManager):
             try:
                 self.readPlugin(pluginName)
             except Exception as e:
-                raise Warning("加载插件错误")
+                raise Warning(f"加载插件错误: {e}")
 
     def enableAllPlugins(self):
         """启用所有插件"""
@@ -217,7 +200,9 @@ class PluginManager(BasePluginManager):
 
             # 设置图标
             if plugin.icon is None:
-                self.pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
+                self.pluginWidget.pluginIcon.setPixmap(
+                    QPixmap(":/built-InIcons/MCSL2.png")
+                )
             elif plugin.icon[0] == ":":
                 self.pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
             else:
@@ -227,17 +212,27 @@ class PluginManager(BasePluginManager):
                     QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
                 )
             self.pluginWidget.pluginIcon.setFixedSize(60, 60)
-            ASwitchBtn = self.pluginWidget.SwitchButton
-            ASwitchBtn.setObjectName(f"switchBtn_{pluginName}")
-            pluginVariables.pluginSwitchBtnDict.update({pluginName: ASwitchBtn})
+            self.pluginWidget.SwitchButton.setObjectName(f"switchBtn_{pluginName}")
+            self.pluginWidget.openFolderButton.setObjectName(
+                f"openFolderBtn_{pluginName}"
+            )
+            self.pluginWidget.deleteBtn.setObjectName(f"deleteBtn_{pluginName}")
 
             # 设置槽函数
-            ASwitchBtn.selfCheckedChanged.connect(
+            self.pluginWidget.SwitchButton.selfCheckedChanged.connect(
                 lambda instance, checked: {
                     self.decideEnableOrDisable(
-                        pluginButton=instance,
-                        switchBtnStatus=checked),
+                        pluginButton=instance, switchBtnStatus=checked
+                    ),
                 }
+            )
+            self.pluginWidget.openFolderButton.selfClicked.connect(
+                lambda instance: startfile(f".\\Plugins\\{instance}\\")
+            )
+            self.pluginWidget.deleteBtn.selfClicked.connect(
+                lambda instance: self.deletePlugin(
+                    instance, self.pluginWidget.deleteBtn.window()
+                )
             )
 
             pluginsVerticalLayout.addWidget(self.pluginWidget)
@@ -246,3 +241,56 @@ class PluginManager(BasePluginManager):
             20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
         )
         pluginsVerticalLayout.addItem(serversScrollAreaSpacer)
+
+    def deletePlugin(self, pluginName, parent):
+        if not self.isDelMsgShowed:
+            w = MessageBox(
+                f'你真的要删除插件"{pluginName}"?吗？', "删除后，这个插件将会消失不见！\n此操作是不可逆的！你确定这么做吗？", parent
+            )
+            w.yesButton.setText("取消")
+            w.cancelButton.setText("删除")
+            w.cancelSignal.connect(lambda: self.deletePluginConfirm(pluginName, parent))
+            w.exec()
+            self.isDelMsgShowed = 1
+        else:
+            self.isDelMsgShowed = 0
+
+    def deletePluginConfirm(self, pluginName, parent):
+        self.isDelMsgShowed = 0
+        title = f'你真的要删除插件"{pluginName}"?'
+        content = f'此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"{pluginName}"，然后点击“删除”按钮：'
+        w2 = MessageBox(title, content, parent)
+        w2.yesButton.setText("取消")
+        w2.cancelButton.setText("删除")
+        w2.cancelButton.setStyleSheet(
+            GlobalMCSL2Variables.darkWarnBtnStyleSheet
+            if isDarkTheme()
+            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        )
+        w2.cancelButton.setEnabled(False)
+        confirmLineEdit = LineEdit(w2)
+        confirmLineEdit.textChanged.connect(
+            lambda: self.compareDeletePluginName(
+                name=pluginName, LineEditText=confirmLineEdit.text(), parent=parent
+            )
+        )
+        confirmLineEdit.setPlaceholderText(f'在此输入"{pluginName}"')
+        parent.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
+        w2.cancelSignal.connect(lambda: self.deletePluginFile(pluginName, parent))
+        w2.textLayout.addWidget(confirmLineEdit)
+        w2.exec()
+
+    def compareDeletePluginName(self, name, LineEditText, parent):
+        parent.deleteBtnEnabled.emit(name == LineEditText)
+
+    def deletePluginFile(self, pluginName, parent):
+        if self.disablePlugin(pluginName)[0]:
+            rmtree(f"Plugins//{pluginName}")
+        else:
+            InfoBar.error(
+                title="提示",
+                content=f"删除插件{pluginName}失败！",
+                duration=2000,
+                position=InfoBarPosition.BOTTOM_LEFT,
+                parent=parent,
+            )

@@ -15,7 +15,6 @@ Settings page.
 """
 
 from datetime import datetime
-from json import dumps
 from typing import Union
 from MCSL2Lib.networkController import Session
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QThread, pyqtSlot

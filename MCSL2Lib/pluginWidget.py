@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 A single widget template of plugin.
-'''
+"""
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSize, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QVBoxLayout, QHBoxLayout, QSpacerItem
@@ -23,7 +23,7 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SwitchButton,
     TransparentToolButton,
-    FluentIcon as FIF
+    FluentIcon as FIF,
 )
 
 
@@ -36,6 +36,17 @@ class PluginSwitchButton(SwitchButton):
 
     def onCheckedChanged(self, checked):
         self.selfCheckedChanged.emit(self, checked)
+
+
+class PluginOperationButton(TransparentToolButton):
+    selfClicked = pyqtSignal(str)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.clicked.connect(self.onClicked)
+
+    def onClicked(self):
+        self.selfClicked.emit(self.objectName().split("Btn_")[1])
 
 
 class singlePluginWidget(CardWidget):
@@ -76,7 +87,9 @@ class singlePluginWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pluginInfoWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.pluginInfoWidget.sizePolicy().hasHeightForWidth()
+        )
         self.pluginInfoWidget.setSizePolicy(sizePolicy)
         self.pluginInfoWidget.setMinimumSize(QSize(0, 120))
         self.pluginInfoWidget.setMaximumSize(QSize(16777215, 120))
@@ -123,22 +136,15 @@ class singlePluginWidget(CardWidget):
         self.verticalLayout.addWidget(self.pluginTip)
         self.horizontalLayout.addWidget(self.pluginInfoWidget)
         self.SwitchButton = PluginSwitchButton(self)
-        # self.SwitchButton.setChecked(False)
-        # self.SwitchButton.setObjectName("SwitchButton")
-
         self.horizontalLayout.addWidget(self.SwitchButton)
-        self.shareButton = TransparentToolButton(FIF.SHARE, self)
-        self.shareButton.setObjectName("shareButton")
+        self.openFolderButton = PluginOperationButton(FIF.FOLDER, self)
+        self.openFolderButton.setObjectName("openFolderButton")
 
-        self.horizontalLayout.addWidget(self.shareButton)
-        self.deleteIcon = TransparentToolButton(FIF.DELETE, self)
-        self.deleteIcon.setObjectName("deleteIcon")
+        self.horizontalLayout.addWidget(self.openFolderButton)
+        self.deleteBtn = PluginOperationButton(FIF.DELETE, self)
+        self.deleteBtn.setObjectName("deleteBtn")
 
-        self.horizontalLayout.addWidget(self.deleteIcon)
+        self.horizontalLayout.addWidget(self.deleteBtn)
 
-        # self.pluginName.setText("[插件名称]")
-        # self.pluginVer.setText("[插件版本]")
-        # self.pluginAuthor.setText("[插件作者]")
-        # self.pluginTip.setText("[插件注释]")
         self.SwitchButton.setOnText("已启用")
         self.SwitchButton.setOffText("已禁用")

@@ -179,10 +179,10 @@
     </widget>
    </item>
    <item>
-    <widget class="TransparentToolButton" name="shareButton"/>
+    <widget class="TransparentToolButton" name="openFolderBtn"/>
    </item>
    <item>
-    <widget class="TransparentToolButton" name="deleteIcon"/>
+    <widget class="TransparentToolButton" name="deleteBtn"/>
    </item>
   </layout>
  </widget>

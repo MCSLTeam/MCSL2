@@ -40,9 +40,8 @@ class ConfigureServerVariables:
         self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
-        # TODO 完善两个变量的功能
-        self.serverType = ""  # 标志他是什么类型的服务器，例如forge，paper，spigot等,再下载或者导入的时候确定(用户选择，或者自动识别(例如读取文件名))
-        self.extraData = {}  # 会包含例如forge 版本号等信息，在下载的时候确定，可能会在导入的时候更新
+        self.serverType = ""
+        self.extraData = {}
 
     def resetToDefault(self):
         self.minMem: int
@@ -57,9 +56,8 @@ class ConfigureServerVariables:
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.icon: str = ""
-        # TODO 完善两个变量的功能
-        self.serverType = ""  # 标志他是什么类型的服务器，例如forge，paper，spigot等,再下载或者导入的时候确定(用户选择，或者自动识别(例如读取文件名))
-        self.extraData = {}  # 会包含例如forge 版本号等信息，在下载的时候确定，可能会在导入的时候更新
+        self.serverType = ""
+        self.extraData.clear()
 
 
 @Singleton
@@ -115,6 +113,9 @@ class EditServerVariables:
             "Spigot.svg",
         ]
 
+        self.serverType = ""
+        self.extraData = {}
+
     def resetToDefault(self):
         self.oldMinMem: int
         self.oldMaxMem: int
@@ -142,19 +143,14 @@ class EditServerVariables:
         self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
 
-
-@Singleton
-class PluginVariables:
-    """插件系统所需变量"""
-
-    def __init__(self):
-        self.pluginSwitchBtnDict = {}
+        self.serverType = ""
+        self.extraData.clear()
 
 
 class GlobalMCSL2Variables:
     """需要被全局使用的变量"""
 
-    MCSL2Version = "2.2.1.2"
+    MCSL2Version = "2.2.1.3"
     scrollAreaViewportQss = "background-color: transparent;"
     MinecraftBuiltInCommand = [
         "advancement",
@@ -329,6 +325,7 @@ class GlobalMCSL2Variables:
     )
     isLoadFinished: bool = False
 
+
 @Singleton
 class DownloadVariables:
     """下载页需要的变量"""
@@ -362,11 +359,9 @@ class ServerVariables:
         self.jvmArg: list[str] = [""]
         self.outputDecoding: str = "utf-8"
         self.inputEncoding: str = "utf-8"
-        # self.icon = serverConfig['icon']  不需要。
         self.serverProperties = {}
-        # TODO 完善两个变量的功能
-        self.serverType = ""  # 标志他是什么类型的服务器，例如forge，paper，spigot等,再下载或者导入的时候确定(用户选择，或者自动识别(例如读取文件名))
-        self.extraData = {}  # 会包含例如forge 版本号等信息，在下载的时候确定，可能会在导入的时候更新
+        self.serverType: str = ""
+        self.extraData = {}
 
     @warning("要为所有ServerVariables添加serverType和extraData属性")
     def initialize(self, index: int):
@@ -380,9 +375,14 @@ class ServerVariables:
         self.jvmArg = self.serverConfig["jvm_arg"]
         self.outputDecoding = self.serverConfig["output_decoding"]
         self.inputEncoding = self.serverConfig["input_encoding"]
-        self.serverType = self.serverConfig.get("server_type", "")
-        self.extraData = self.serverConfig.get("extra_data", {})
         self.translateCoding()
+        try:
+            self.serverType = self.serverConfig["server_type"]
+            self.extraData = self.serverConfig["extra_data"]
+        except KeyError:
+            self.serverType = ""
+            self.extraData = {}
+            pass
 
     def translateCoding(self):
         if self.outputDecoding == "follow":
