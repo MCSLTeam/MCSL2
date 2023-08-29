@@ -197,6 +197,7 @@ class ForgeInstaller(Installer):
                     })
                     with open(p, mode="w", encoding="utf-8") as f:
                         json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True)
+                    # TODO: 需要同时保存全局配置文件
                 else:
                     raise InstallerError("MCSL2ServerConfig.json not found,failed to save forge launch args")
             else:
