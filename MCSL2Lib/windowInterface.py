@@ -219,7 +219,6 @@ class Window(MSFluentWindow):
 
     def initPluginSystem(self):
         """初始化插件系统"""
-        print(1)
         self.pluginManager.readAllPlugins()
         self.pluginManager.initSinglePluginsWidget(
             self.pluginsInterface.pluginsVerticalLayout

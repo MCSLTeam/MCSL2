@@ -131,10 +131,8 @@ def obsolete(text: str):
 def isDarkTheme():
     if settingsController.fileSettings["theme"] == "auto":
         return currentTheme() == "Dark"
-    elif settingsController.fileSettings["theme"] == "light":
-        return False
-    elif settingsController.fileSettings["theme"] == "dark":
-        return True
+    else:
+        return settingsController.fileSettings["theme"] == "dark"
 
 
 def openWebUrl(Url):
