@@ -175,7 +175,7 @@ class ForgeInstaller(Installer):
                     raise InstallerError("No java command found")
 
                 try:
-                    forgeArgs = list(filter(lambda x: x.startswith("@libraries"), command)).pop()
+                    forgeArgs = list(filter(lambda x: x.startswith("@libraries"), command.split(" "))).pop()
                 except IndexError:
                     raise InstallerError("bad forge run script")
 
