@@ -14,6 +14,8 @@
 Home page.
 """
 
+from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal, pyqtSlot
+from PyQt5.QtWidgets import QGridLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
@@ -22,8 +24,7 @@ from qfluentwidgets import (
     IndeterminateProgressRing,
     FluentIcon as FIF,
 )
-from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal, pyqtSlot
-from PyQt5.QtWidgets import QGridLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
+
 from MCSL2Lib.networkController import Session
 from MCSL2Lib.singleton import Singleton
 

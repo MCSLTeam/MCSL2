@@ -15,8 +15,15 @@ Settings page.
 """
 
 from datetime import datetime
+from os import getpid
+from platform import (
+    system as systemType,
+    architecture as systemArchitecture,
+    version as systemVersion,
+    release as systemRelease,
+)
 from typing import Union
-from MCSL2Lib.networkController import Session
+
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QThread, pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
@@ -31,6 +38,7 @@ from PyQt5.QtWidgets import (
     QSlider,
     QApplication,
 )
+from psutil import Process
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
@@ -52,18 +60,12 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     setThemeColor
 )
+
+from MCSL2Lib.networkController import Session
 from MCSL2Lib.publicFunctions import openWebUrl
+from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
-from MCSL2Lib.settingsController import SettingsController
-from platform import (
-    system as systemType,
-    architecture as systemArchitecture,
-    version as systemVersion,
-    release as systemRelease,
-)
-from os import getpid
-from psutil import Process
 
 settingsController = SettingsController()
 settingsVariables = SettingsVariables()

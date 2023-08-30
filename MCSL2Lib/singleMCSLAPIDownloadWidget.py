@@ -1,3 +1,5 @@
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QWidget, QSpacerItem, QSizePolicy, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
@@ -5,8 +7,6 @@ from qfluentwidgets import (
     PrimaryPushButton,
     SubtitleLabel,
 )
-from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QWidget, QSpacerItem, QSizePolicy, QHBoxLayout, QVBoxLayout
 
 
 class singleMCSLAPIDownloadWidget(CardWidget):

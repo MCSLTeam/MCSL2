@@ -34,6 +34,7 @@ from qfluentwidgets import (
     MSFluentWindow,
     SplashScreen,
 )
+
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.aria2ClientController import (
@@ -47,7 +48,7 @@ from MCSL2Lib.downloadPage import DownloadPage
 from MCSL2Lib.exceptionWidget import ExceptionWidget
 from MCSL2Lib.homePage import HomePage
 from MCSL2Lib.pluginPage import PluginPage
-from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode, openWebUrl
+from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
 from MCSL2Lib.selectJavaPage import SelectJavaPage
 from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.serverController import (

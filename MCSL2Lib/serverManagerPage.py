@@ -14,6 +14,12 @@
 Manage exist Minecraft servers.
 """
 
+from json import dump, loads, dumps
+from os import getcwd, rename, path as ospath, remove
+from shutil import copy, rmtree
+
+from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal, QThread
+from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QFrame,
@@ -24,8 +30,6 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QFileDialog,
 )
-from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal, QThread
-from PyQt5.QtGui import QPixmap, QCursor
 from qfluentwidgets import (
     BodyLabel,
     ComboBox,
@@ -45,17 +49,15 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
 )
-from MCSL2Lib.serverController import ServerHelper
+
+from MCSL2Lib import javaDetector
+from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.publicFunctions import readGlobalServerConfig, isDarkTheme
+from MCSL2Lib.serverController import ServerHelper
 from MCSL2Lib.serverManagerWidget import singleServerManager
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
-from MCSL2Lib import javaDetector
-from json import dump, loads, dumps
-from shutil import copy, rmtree
-from os import getcwd, rename, path as ospath, remove
 
 editServerVariables = EditServerVariables()
 settingsController = SettingsController()

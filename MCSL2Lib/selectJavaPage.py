@@ -30,10 +30,11 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF,
 )
+
+from MCSL2Lib import icons as _  # noqa: F401
+from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
-from MCSL2Lib import icons as _  # noqa: F401
 
 
 @Singleton

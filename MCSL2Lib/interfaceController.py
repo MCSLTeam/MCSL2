@@ -16,6 +16,7 @@ A stackeed widget controller.
 from PyQt5.QtCore import QEasingCurve
 from PyQt5.QtWidgets import QAbstractScrollArea
 from qfluentwidgets.window.stacked_widget import StackedWidget as QFStackedWidget
+
 from MCSL2Lib import icons as _  # noqa: F401
 
 

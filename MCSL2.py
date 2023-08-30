@@ -21,8 +21,8 @@ from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 
-from MCSL2Lib.windowInterface import Window
 from MCSL2Lib.publicFunctions import initializeMCSL2
+from MCSL2Lib.windowInterface import Window
 
 if __name__ == "__main__":
     # 初始化

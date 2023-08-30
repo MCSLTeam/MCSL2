@@ -1,8 +1,14 @@
-from os import path, remove
 from typing import Optional
 
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
-from PyQt5.QtGui import QPaintEvent, QResizeEvent
+from PyQt5.QtWidgets import (
+    QSizePolicy,
+    QGridLayout,
+    QWidget,
+    QStackedWidget,
+    QSpacerItem,
+    QHBoxLayout,
+)
 from aria2p import Download
 from qfluentwidgets import (
     BodyLabel,
@@ -11,14 +17,6 @@ from qfluentwidgets import (
     PushButton,
     StrongBodyLabel,
     SubtitleLabel, MessageBox,
-)
-from PyQt5.QtWidgets import (
-    QSizePolicy,
-    QGridLayout,
-    QWidget,
-    QStackedWidget,
-    QSpacerItem,
-    QHBoxLayout,
 )
 
 

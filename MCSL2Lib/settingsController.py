@@ -14,8 +14,8 @@
 Settings controller, for editing MCSL2's configurations.
 """
 
-from os import path as ospath
 from json import dumps, loads
+from os import path as ospath
 
 from MCSL2Lib.singleton import Singleton
 

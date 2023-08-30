@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QSizePolicy, QGridLayout, QHBoxLayout, QWidget, QVBoxLayout
 from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtWidgets import QSizePolicy, QGridLayout, QHBoxLayout, QWidget, QVBoxLayout
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
@@ -8,8 +8,9 @@ from qfluentwidgets import (
     PrimaryToolButton,
     FluentIcon as FIF
 )
-from MCSL2Lib.variables import GlobalMCSL2Variables
+
 from MCSL2Lib.publicFunctions import isDarkTheme
+from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class FastMirrorVersionListWidget(CardWidget):

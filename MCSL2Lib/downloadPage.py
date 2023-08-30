@@ -41,19 +41,20 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.DownloadProgressWidget import DownloadMessageBox
+from MCSL2Lib.FastMirrorAPI import (
+    FetchFastMirrorAPIThreadFactory,
+    FetchFastMirrorAPICoreVersionThreadFactory,
+)
 from MCSL2Lib.FastMirrorWidgets import (
     FastMirrorBuildListWidget,
     FastMirrorCoreListWidget,
     FastMirrorVersionListWidget,
 )
-from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
-from MCSL2Lib.FastMirrorAPI import (
-    FetchFastMirrorAPIThreadFactory,
-    FetchFastMirrorAPICoreVersionThreadFactory,
-)
 from MCSL2Lib.aria2ClientController import Aria2Controller
+from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
+from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
@@ -61,7 +62,6 @@ from MCSL2Lib.variables import (
     DownloadVariables,
     SettingsVariables,
 )
-from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
 downloadVariables = DownloadVariables()

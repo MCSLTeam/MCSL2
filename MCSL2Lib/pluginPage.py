@@ -15,6 +15,7 @@ Plugin page.
 """
 from os import getcwd, remove, path as ospath
 from shutil import copy
+from zipfile import ZipFile
 
 from PyQt5.QtCore import Qt, QSize, QRect, QThread
 from PyQt5.QtWidgets import (
@@ -35,7 +36,6 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
-from zipfile import ZipFile
 
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables

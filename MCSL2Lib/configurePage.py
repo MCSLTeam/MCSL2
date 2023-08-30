@@ -14,11 +14,12 @@
 Configure new server page.
 """
 
-from json import dump, loads, dumps
+from json import loads, dumps
 from os import getcwd, mkdir, remove, path as ospath
 from shutil import copy
-from PyQt5.QtGui import QCursor
+
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
+from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import (
     QGridLayout,
     QWidget,
@@ -29,7 +30,6 @@ from PyQt5.QtWidgets import (
     QFrame,
     QFileDialog,
 )
-
 from qfluentwidgets import (
     ComboBox,
     LineEdit,
@@ -52,19 +52,18 @@ from qfluentwidgets import (
     PixmapLabel,
     BodyLabel,
 )
-from MCSL2Lib.serverController import MojangEula
-from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.interfaceController import ChildStackedWidget
 
+from MCSL2Lib import javaDetector
+from MCSL2Lib.interfaceController import ChildStackedWidget
+from MCSL2Lib.serverController import MojangEula
+from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
     ConfigureServerVariables,
     ServerVariables,
     SettingsVariables,
 )
-from MCSL2Lib.interfaceController import ChildStackedWidget
-from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib import javaDetector
 
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()

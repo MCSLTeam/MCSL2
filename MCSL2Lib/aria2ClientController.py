@@ -14,21 +14,18 @@
 A controller for aria2 download engine.
 """
 
+from os import getcwd
 from os import path as ospath
-from os import remove, listdir, getcwd
 from platform import system
-from shutil import which, rmtree, move
+from shutil import which
 from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
 from typing import Optional, Callable
-from zipfile import ZipFile
+
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
+from PyQt5.QtWidgets import QProgressDialog
+from aria2p import Client, API, Download
 
 from MCSL2Lib.networkController import Session
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer, QRunnable
-from PyQt5.QtWidgets import QProgressDialog, QScrollArea
-from aria2p import Client, API, Download
-from requests.exceptions import SSLError
-
-from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
