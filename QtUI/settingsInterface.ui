@@ -134,7 +134,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-504</y>
         <width>653</width>
         <height>1675</height>
        </rect>
@@ -786,9 +786,15 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>24</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>200</width>
                  <height>24</height>
                 </size>
                </property>
@@ -823,6 +829,24 @@
              </item>
              <item>
               <widget class="BodyLabel" name="aria2ThreadNum">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>45</width>
+                 <height>19</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>19</height>
+                </size>
+               </property>
                <property name="text">
                 <string>[NUM]</string>
                </property>
