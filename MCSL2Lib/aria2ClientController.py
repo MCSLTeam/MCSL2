@@ -13,19 +13,19 @@
 """
 A controller for aria2 download engine.
 """
-
-from os import getcwd
+import functools
+import hashlib
+import json
+from os import getcwd, mkdir, remove
 from os import path as ospath
 from platform import system
 from shutil import which
 from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
 from typing import Optional, Callable
 
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QProcess, QTimer
-from PyQt5.QtWidgets import QProgressDialog
+from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer
 from aria2p import Client, API, Download
 
-from MCSL2Lib.networkController import Session
 from MCSL2Lib.settingsController import SettingsController
 
 settingsController = SettingsController()
@@ -112,45 +112,6 @@ class Aria2Controller:
         except CalledProcessError:
             return False
 
-    #########################
-    #  If there's no Aria2  #
-    #########################
-
-    def ShowNoAria2Msg(self):
-        pass
-        # ReturnNum = CallMCSL2Dialog(
-        #     Tip="NoAria2",
-        #     OtherTextArg=None,
-        #     isNeededTwoButtons=1,
-        #     ButtonArg="安装|取消",
-        # )
-        # if ReturnNum == 1:
-        #     if self.systemType == "Windows":
-        #         openWebUrl(
-        #             "https://www.github.com/LxHTT/MCSL2",
-        #         )
-        #         # self.WinInstallAria2(mainWindow)
-        #     elif self.systemType == "macOS":
-        #         self.macOSInstallAria2()
-        #     elif self.systemType == "Linux":
-        #         LinuxInstall = self.LinuxInstallAria2()
-        #         if LinuxInstall:
-        #             pass
-        #         else:
-        #             MCSLLogger.Log(
-        #                 Msg="InstallAria2Failed",
-        #                 MsgArg=f"平台：{self.systemType}",
-        #                 MsgLevel=2,
-        #             )
-        #             CallMCSL2Dialog(
-        #                 Tip="InstallAria2Failed",
-        #                 OtherTextArg=None,
-        #                 isNeededTwoButtons=0,
-        #                 ButtonArg=None,
-        #             )
-        # else:
-        #     pass
-
     ########################################
     #  Install Aria2 (No Windows support)  #
     ########################################
@@ -209,92 +170,6 @@ class Aria2Controller:
             DownloadURL=DownloadURL,
         )
         Aria2Thread.start()
-
-    @classmethod
-    def WinInstallAria2(cls, mainWindow):
-        pass
-        # todo
-        # def onDownloadFinish(failed):
-        #     """
-        #     文件结构:aira2.zip
-        #             |-aria2-xxxxxxxx
-        #                 |-aria2c.exe
-        #                 |-...
-        #     将aria2c.exe移动到MCSL2/Aria2/aria2c.exe
-        #     :return:
-        #     """
-        #     if failed:
-        #         MCSLLogger.Log(
-        #             Msg="InstallAria2Failed", MsgArg=f"平台：{cls._osType}", MsgLevel=0
-        #         )
-        #         CallMCSL2Dialog(
-        #             Tip="InstallAria2Failed",
-        #             OtherTextArg=None,
-        #             isNeededTwoButtons=0,
-        #             ButtonArg=None,
-        #         )
-        #     zipFile = ZipFile("MCSL2/Aria2/aria2.zip")
-        #     zipFile.extractall("MCSL2/Aria2")
-        #     zipFile.close()
-        #     aria2Folder = [v for v in listdir("MCSL2/Aria2") if "aria2-" in v][0]
-        #     move(f"MCSL2/Aria2/{aria2Folder}/aria2c.exe", "MCSL2/Aria2/aria2c.exe")
-        #     rmtree(f"MCSL2/Aria2/{aria2Folder}")
-        #
-        #     remove("MCSL2/Aria2/aria2.zip")
-        #     CallMCSL2Dialog(
-        #         Tip="Aria2安装完成", OtherTextArg=None, isNeededTwoButtons=0, ButtonArg=None
-        #     )
-        #
-        # url = "https://api.github.com/repos/aria2/aria2/releases/latest"
-        # try:
-        #     releaseInfo = Session.get(url=url).json()
-        # except SSLError as e:
-        #     MCSLLogger.ExceptionLog(e)
-        #     print("获取Aria2仓库release失败:关闭代理后重试")
-        #     CallMCSL2Dialog(
-        #         Tip="获取Aria2仓库release失败:\n请关闭代理后重试",
-        #         OtherTextArg=None,
-        #         isNeededTwoButtons=0,
-        #         ButtonArg=None,
-        #     )
-        #     return
-        #
-        # except Exception as e:
-        #     MCSLLogger.ExceptionLog(e)
-        #     print(f"获取Aria2仓库release失败:{e}")
-        #     CallMCSL2Dialog(
-        #         Tip=f"获取Aria2仓库release失败:\n{e}",
-        #         OtherTextArg=None,
-        #         isNeededTwoButtons=0,
-        #         ButtonArg=None,
-        #     )
-        #     return
-        #
-        # try:
-        #     winPackageInfo = [
-        #         v for v in releaseInfo["assets"] if "win-32bit" in v["name"]
-        #     ][0]
-        # except KeyError as e:
-        #     # 肯定存在32bit 但是可能是因为rest api的问题导致获取失败
-        #     message = releaseInfo.get("message", "未知错误")
-        #     CallMCSL2Dialog(
-        #         Tip=f"获取Aria2仓库release失败:\n{message}",
-        #         OtherTextArg=None,
-        #         isNeededTwoButtons=0,
-        #         ButtonArg=None,
-        #     )
-        #     MCSLLogger.ExceptionLog(e)
-        #     print(f"获取Aria2仓库release失败:{message}")
-        #     return
-        #
-        # winPackageUrl = winPackageInfo["browser_download_url"]
-        # manager = NormalDownloadManager(
-        #     winPackageUrl, "MCSL2/Aria2/aria2.zip", parent=mainWindow
-        # )
-        #
-        # manager.downloadFinished.connect(onDownloadFinish)
-        #
-        # manager.download()
 
     @classmethod
     def download(
@@ -567,86 +442,6 @@ class Aria2BootThread(QThread):
             self.loaded.emit(False)
 
 
-# class NormalDownloadManager(QObject):
-#     downloadFinished = pyqtSignal(bool)
-
-#     def __init__(self, uri, savePath, retryCount=3, parent=None):
-#         super().__init__()
-#         self.uri = uri
-#         self.setParent(parent)
-#         self.savePath = savePath
-#         self.retryCount = retryCount
-#         self.downloadThread = None
-#         self.dialog: Optional[QProgressDialog] = None
-#         self.downloadProgress = 0
-
-#     def download(self):
-#         self.downloadThread = NormalDownloadThread(
-#             self.uri, self.savePath, self.retryCount, parent=self.parent()
-#         )
-
-#         self.downloadThread.finished.connect(self.downloadFinish)
-#         self.downloadThread.start()
-
-#     @pyqtSlot(int)
-#     def getFileSize(self, fileSize):
-#         self.dialog.setRange(0, fileSize)
-
-#     def showDialog(self):
-#         self.dialog = QProgressDialog(labelText="正在下载", parent=self.parent())
-#         # 阻塞主窗口
-#         self.dialog.setModal(True)
-#         self.dialog.show()
-
-#     @pyqtSlot(int)
-#     def updateProgress(self, progress):
-#         self.downloadProgress += progress
-#         print(self.downloadProgress)
-#         self.dialog.setValue(self.downloadProgress)
-
-#     @pyqtSlot(bool)
-#     def downloadFinish(self, failed):
-#         if self.needDialog:
-#             self.dialog.close()
-#         self.downloadFinished.emit(failed)
-
-
-# class NormalDownloadThread(QThread):
-#     fileSize = pyqtSignal(int)
-#     progress = pyqtSignal(int)
-#     finished = pyqtSignal(bool)
-
-#     def __init__(self, uri, savePath, retryCount=3, parent=None):
-#         super().__init__()
-#         self.setParent(parent)
-#         self.uri = uri
-#         self.savePath = savePath
-#         self.retryCount = retryCount
-#         self.failed = False
-
-#     def run(self):
-#         print("开始下载")
-#         flag = False
-#         # 普通下载
-#         with open(self.savePath, "wb") as f:
-#             for r in range(self.retryCount):
-#                 response = Session.get(self.uri, timeout=10, stream=True)
-#                 fileSize = response.headers.get("Content-Length", 0)
-#                 self.progress.emit(int(fileSize))
-#                 i = 0
-#                 for data in response.iter_content(chunk_size=4096):
-#                     self.progress.emit(len(data))
-#                     f.write(data)
-#                 flag = True
-#                 break
-#         if flag:
-#             print("下载完成")
-#         else:
-#             print("下载失败")
-#             self.failed = True
-#         self.finished.emit(self.failed)
-
-
 ###################
 #   Aria2 Thread  #
 ###################
@@ -712,12 +507,6 @@ class DownloadWatcher(QObject):
             "status"
         ] not in ["complete", "error", "removed"]:
             self.onDownloadInfoGet.emit(status)
-            # print(
-            #     f'下载进度：{status["progress"]},'
-            #     f'下载速度：{status["speed"]},'
-            #     f'连接数量:{status["connections"]},'
-            #     f'文件大小：{status["totalLength"]},'
-            #     f'eta：{status["eta"]}')
         elif status["status"] == "complete":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
@@ -788,3 +577,116 @@ def initializeAria2Configuration():
             r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
     ) as Aria2SessionFile:
         Aria2SessionFile.write("")
+
+
+class DL_EntryManager(QObject):
+    file = "MCSL2//Downloads//download_entries.json"
+    path = "MCSL2//Downloads"
+
+    @staticmethod
+    def fileExisted(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            if not ospath.exists(ospath.join("MCSL2", "Downloads")):
+                mkdir(ospath.join("MCSL2", "Downloads"))
+            if not ospath.exists(DL_EntryManager.file):
+                with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
+                    f.write("{}")
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    @staticmethod
+    @fileExisted
+    def read():
+        with open(DL_EntryManager.file) as f:
+            rv = json.load(f)
+        return rv
+
+    entries = read()
+
+    @classmethod
+    @fileExisted
+    def addEntry(cls, entryName: str, entryData: dict):
+        """
+        向文件中添加一条记录
+        """
+        with open(cls.file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        data[entryName] = entryData
+        with open(cls.file, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False, sort_keys=True)
+
+    @classmethod
+    def addCoreEntry(cls, coreName: str, extraData: dict):
+        """
+        添加核心文件的记录
+        """
+        coreFileName = ospath.join(cls.path, coreName)
+        # 计算md5
+        with open(coreFileName, "rb") as f:
+            md5 = hashlib.md5(f.read()).hexdigest()
+        extraData.update({"md5": md5})
+        cls.addEntry(coreName, extraData)
+
+    @classmethod
+    @fileExisted
+    def flush(cls):
+        """
+        将文件中的数据写入文件
+        """
+        with open(cls.file, "w", encoding="utf-8") as f:
+            json.dump(cls.entries, f, indent=4, ensure_ascii=False, sort_keys=True)
+
+    @classmethod
+    def checkCoreEntry(cls, coreName: str, originMd5: str, autoDelete=False):
+        """
+        检查核心文件的完整性
+        :param coreName: 核心文件名
+        :param originMd5: 原始md5
+        :param autoDelete: 如果文件不完整是否自动删除核心文件
+        """
+        coreFileName = ospath.join(cls.path, coreName)
+        # 计算md5
+        with open(coreFileName, "rb") as f:
+            fileMd5 = hashlib.md5(f.read()).hexdigest()
+        if fileMd5 == originMd5:
+            return True
+        else:
+            if autoDelete:
+                try:  # 删除文件和记录
+                    remove(coreFileName)
+                    cls.entries.pop(coreName)
+                except:
+                    pass
+            return False
+
+    @classmethod
+    def check(cls, autoDelete=False):
+        """
+        检查所有核心文件的完整性
+        :param autoDelete: 如果文件不完整是否自动删除核心文件
+        """
+        for coreName, coreData in cls.entries.items():
+            if not cls.checkCoreEntry(coreName, coreData["md5"], autoDelete):
+                return False
+        cls.flush()
+        return True
+
+    @classmethod
+    def tryGetEntry(cls, entryName: str):
+        """
+        尝试获取一条记录，如果记录不完整则返回None
+        """
+        if cls.checkCoreEntry(entryName, cls.entries[entryName]["md5"], autoDelete=True):
+            return cls.entries[entryName]
+        else:
+            return None
+
+    @classmethod
+    def GetEntries(cls):
+        """
+        获取所有正确的记录(不完整的记录将被删除)
+        """
+        cls.check(autoDelete=True)
+        return cls.entries
