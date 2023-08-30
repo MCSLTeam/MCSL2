@@ -233,7 +233,7 @@ class Window(MSFluentWindow):
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, "新建")
         self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, "管理")
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, "下载")
-        self.addSubInterface(self.consoleInterface, FIF.ALIGNMENT, "终端")
+        self.addSubInterface(self.consoleInterface, FIF.COMMAND_PROMPT, "终端")
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, "插件")
         self.addSubInterface(
             self.settingsInterface,
