@@ -644,18 +644,18 @@ class DownloadPage(QWidget):
             if downloadVariables.MCSLAPIDownloadUrlDict:
                 idx = self.MCSLAPIStackedWidget.currentIndex()
                 if (
-                    str(
-                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                            "downloadFileTitles"
-                        ]
-                    )
-                    != "-2"
-                    or str(
-                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                            "downloadFileTitles"
-                        ]
-                    )
-                    != "-1"
+                        str(
+                            downloadVariables.MCSLAPIDownloadUrlDict[idx][
+                                "downloadFileTitles"
+                            ]
+                        )
+                        != "-2"
+                        or str(
+                    downloadVariables.MCSLAPIDownloadUrlDict[idx][
+                        "downloadFileTitles"
+                    ]
+                )
+                        != "-1"
                 ):
                     self.initMCSLAPIDownloadWidget(n=idx)
                 else:
@@ -690,10 +690,10 @@ class DownloadPage(QWidget):
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
         idx = self.MCSLAPIStackedWidget.currentIndex()
         if (
-            str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-            != "-2"
-            or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-            != "-1"
+                str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
+                != "-2"
+                or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
+                != "-1"
         ):
             self.initMCSLAPIDownloadWidget(n=idx)
         else:
@@ -838,15 +838,15 @@ class DownloadPage(QWidget):
         self.refreshMCSLAPIBtn.setEnabled(True)
         try:
             if (
-                type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
-                == list
+                    type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
+                    == list
             ):
                 for i in range(
-                    len(
-                        downloadVariables.MCSLAPIDownloadUrlDict[n][
-                            "downloadFileTitles"
-                        ]
-                    )
+                        len(
+                            downloadVariables.MCSLAPIDownloadUrlDict[n][
+                                "downloadFileTitles"
+                            ]
+                        )
                 ):
                     self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
@@ -900,7 +900,8 @@ class DownloadPage(QWidget):
             "downloadFileFormats"
         ][idx2]
         # 判断文件是否存在
-        self.checkDownloadFileExists(fileName, fileFormat, uri)
+        # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
+        self.checkDownloadFileExists(fileName, fileFormat, uri, (fileName, "coreName", "MCVer", "buildVer"))
 
     def initFastMirrorCoreListWidget(self):
         """FastMirror核心列表"""
@@ -947,13 +948,13 @@ class DownloadPage(QWidget):
         except AttributeError:
             pass
         for i in range(
-            len(
-                downloadVariables.FastMirrorAPIDict["mc_versions"][
-                    list(downloadVariables.FastMirrorAPIDict["name"]).index(
-                        downloadVariables.selectedName
-                    )
-                ]
-            )
+                len(
+                    downloadVariables.FastMirrorAPIDict["mc_versions"][
+                        list(downloadVariables.FastMirrorAPIDict["name"]).index(
+                            downloadVariables.selectedName
+                        )
+                    ]
+                )
         ):
             fastMirrorMCVersionsListWidget = FastMirrorVersionListWidget(self)
             MCVersion = downloadVariables.FastMirrorAPIDict["mc_versions"][
@@ -1017,7 +1018,9 @@ class DownloadPage(QWidget):
         fileFormat = "jar"
         uri = f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}"
         # 判断文件是否存在
-        self.checkDownloadFileExists(fileName, fileFormat, uri)
+        self.checkDownloadFileExists(fileName, fileFormat, uri,
+                                     (fileName, downloadVariables.selectedName, downloadVariables.selectedMCVersion,
+                                      buildVer))
 
     def hideDownloadHelper(self):
         self.downloadingInfoBar = InfoBar(
@@ -1044,9 +1047,9 @@ class DownloadPage(QWidget):
         except:
             pass
 
-    def checkDownloadFileExists(self, fileName, fileFormat, uri) -> bool:
+    def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
         if ospath.exists(
-            ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
+                ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
         ) and not ospath.exists(
             ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
         ):
@@ -1058,11 +1061,11 @@ class DownloadPage(QWidget):
                     lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
                 )
                 w.cancelSignal.connect(
-                    lambda: self.downloadFile(fileName, fileFormat, uri)
+                    lambda: self.downloadFile(fileName, fileFormat, uri, extraData)
                 )
                 w.exec()
             elif (
-                settingsController.fileSettings["saveSameFileException"] == "overwrite"
+                    settingsController.fileSettings["saveSameFileException"] == "overwrite"
             ):
                 InfoBar.warning(
                     title="警告",
@@ -1074,7 +1077,7 @@ class DownloadPage(QWidget):
                     parent=self,
                 )
                 remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
-                self.downloadFile(fileName, fileFormat, uri)
+                self.downloadFile(fileName, fileFormat, uri, extraData)
             elif settingsController.fileSettings["saveSameFileException"] == "stop":
                 InfoBar.warning(
                     title="警告",
@@ -1086,9 +1089,9 @@ class DownloadPage(QWidget):
                     parent=self,
                 )
         else:
-            self.downloadFile(fileName, fileFormat, uri)
+            self.downloadFile(fileName, fileFormat, uri, extraData)
 
-    def downloadFile(self, fileName, fileFormat, uri):
+    def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
         self.downloadingBox = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
         self.downloadingBox.DownloadWidget().closeBoxBtnFinished.clicked.connect(self.downloadingBox.close)
         self.downloadingBox.DownloadWidget().closeBoxBtnFailed.clicked.connect(self.downloadingBox.close)
@@ -1098,6 +1101,7 @@ class DownloadPage(QWidget):
             info_get=self.downloadingBox.onInfoGet,
             stopped=self.downloadingBox.onDownloadFinished,
             interval=0.2,
+            extraData=extraData
         )
         self.downloadingBox.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
         self.downloadingBox.paused.connect(

@@ -19,6 +19,8 @@ from qfluentwidgets import (
     SubtitleLabel, MessageBox,
 )
 
+from MCSL2Lib.aria2ClientController import DL_EntryManager
+
 
 class DownloadProgressWidget(QWidget):
 
@@ -232,7 +234,7 @@ class DownloadMessageBox(MessageBox):
         widget.cancelBtn.clicked.connect(self.canceled.emit)
         widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
         widget.PrimaryPushButton.clicked.connect(self.hide)
-        
+
         widget.PrimaryPushButton.clicked.connect(parent.hideDownloadHelper)
 
     def DownloadWidget(self):
@@ -257,14 +259,21 @@ class DownloadMessageBox(MessageBox):
 
     @pyqtSlot(list)
     def onDownloadFinished(self, _: list):
-        [dl, ] = _
+        [dl, extraData] = _
         dl: Optional[Download]
         self.hide()
         self.show()
+        filename = extraData[0]
+        data = {
+            "type": extraData[1],
+            "mc_version": extraData[2],
+            "build_version": extraData[3],
+        }
 
         if dl is not None:
             if dl.status == "complete":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
+                DL_EntryManager.addCoreEntry(filename, data)
             elif dl.status == "error":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
                 print(dl.error_code, dl.error_message, dl.files)

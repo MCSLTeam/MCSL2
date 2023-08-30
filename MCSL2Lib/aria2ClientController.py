@@ -13,7 +13,6 @@
 """
 A controller for aria2 download engine.
 """
-import functools
 import hashlib
 import json
 from os import getcwd, mkdir, remove
@@ -177,6 +176,7 @@ class Aria2Controller:
             uri,
             info_get: Optional[Callable[[dict], None]] = None,
             stopped: Optional[Callable[[int], None]] = None,
+            extraData: Optional[tuple] = None,
             watch=True,
             interval=0.1
     ) -> str:
@@ -199,7 +199,8 @@ class Aria2Controller:
                 gid,
                 info_get=info_get,
                 stopped=stopped,
-                interval=interval
+                interval=interval,
+                extraData=extraData
             )
         return gid
 
@@ -480,8 +481,9 @@ class DownloadWatcher(QObject):
             self,
             gid,
             info_get: Optional[Callable[[dict], None]],
-            stopped: Optional[Callable[[int], None]],
+            stopped: Optional[Callable[[list], None]],
             interval=0.1,
+            extraData: Optional[tuple] = None,
             parent: Optional[QObject] = None
     ) -> None:
         """
@@ -492,6 +494,7 @@ class DownloadWatcher(QObject):
         self._gid = gid
         self._interval = interval
         self._files = None
+        self._extraData = extraData
 
         if info_get is not None:
             self.onDownloadInfoGet.connect(info_get)
@@ -511,19 +514,19 @@ class DownloadWatcher(QObject):
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
             dl = Aria2Controller.downloadCompletedHandler(self._gid, False)
-            self.downloadStop.emit([dl])
+            self.downloadStop.emit([dl, self._extraData])
             print("下载完成")
         elif status["status"] == "error":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
             dl = Aria2Controller.downloadCompletedHandler(self._gid, True)
-            self.downloadStop.emit([dl])
+            self.downloadStop.emit([dl, self._extraData])
             print("下载失败")
         elif status["status"] == "removed":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
             dl = Aria2Controller.downloadCompletedHandler(self._gid, True)
-            self.downloadStop.emit([dl])
+            self.downloadStop.emit([dl, self._extraData])
             print("下载被取消")
 
     def stopDownload(self):
@@ -584,33 +587,32 @@ class DL_EntryManager(QObject):
     path = "MCSL2//Downloads"
 
     @staticmethod
-    def fileExisted(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            if not ospath.exists(ospath.join("MCSL2", "Downloads")):
-                mkdir(ospath.join("MCSL2", "Downloads"))
-            if not ospath.exists(DL_EntryManager.file):
-                with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
-                    f.write("{}")
-            return func(*args, **kwargs)
-
-        return wrapper
+    def fileExisted():
+        """
+        在对文件进行操作前检查文件是否存在，如果不存在则创建文件,确保文件操作不会出错
+        """
+        if not ospath.exists(ospath.join("MCSL2", "Downloads")):
+            mkdir(ospath.join("MCSL2", "Downloads"))
+        if not ospath.exists(DL_EntryManager.file):
+            with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
+                f.write("{}")
 
     @staticmethod
-    @fileExisted
     def read():
+        DL_EntryManager.fileExisted()
         with open(DL_EntryManager.file) as f:
             rv = json.load(f)
         return rv
 
-    entries = read()
+    entries = {}
 
     @classmethod
-    @fileExisted
     def addEntry(cls, entryName: str, entryData: dict):
         """
         向文件中添加一条记录
         """
+        cls.fileExisted()
+        print("新增记录:", json.dumps({entryName, entryData}, indent=4, ensure_ascii=False, sort_keys=True))
         with open(cls.file, "r", encoding="utf-8") as f:
             data = json.load(f)
         data[entryName] = entryData
@@ -630,11 +632,11 @@ class DL_EntryManager(QObject):
         cls.addEntry(coreName, extraData)
 
     @classmethod
-    @fileExisted
     def flush(cls):
         """
         将文件中的数据写入文件
         """
+        cls.fileExisted()
         with open(cls.file, "w", encoding="utf-8") as f:
             json.dump(cls.entries, f, indent=4, ensure_ascii=False, sort_keys=True)
 
@@ -674,11 +676,11 @@ class DL_EntryManager(QObject):
         return True
 
     @classmethod
-    def tryGetEntry(cls, entryName: str):
+    def tryGetEntry(cls, entryName: str, autoDelete=True):
         """
         尝试获取一条记录，如果记录不完整则返回None
         """
-        if cls.checkCoreEntry(entryName, cls.entries[entryName]["md5"], autoDelete=True):
+        if cls.checkCoreEntry(entryName, cls.entries[entryName]["md5"], autoDelete):
             return cls.entries[entryName]
         else:
             return None
@@ -686,7 +688,13 @@ class DL_EntryManager(QObject):
     @classmethod
     def GetEntries(cls):
         """
-        获取所有正确的记录(不完整的记录将被删除)
+        获取所有正确的记录
         """
-        cls.check(autoDelete=True)
-        return cls.entries
+        rv = cls.entries.copy()
+        for entryName in cls.entries.keys():
+            if cls.tryGetEntry(entryName) is None:
+                rv.pop(entryName)
+        return rv
+
+
+DL_EntryManager.entries = DL_EntryManager.read()
