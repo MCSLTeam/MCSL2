@@ -70,6 +70,7 @@ class McVersion:
 class Installer(QObject):
     """
     安装器的基类,包含installerLogOutput信号,用于输出安装器的日志
+    支持with语句
     """
 
     installerLogOutput = pyqtSignal(str)
@@ -89,7 +90,7 @@ class Installer(QObject):
     def install(self):
         raise NotImplementedError
 
-    def _installerLogHandler(self):
+    def _installerLogHandler(self, prefix: str = ""):
         newData = self.workingProcess.readAllStandardOutput().data()
         self.logPartialData += newData  # Append the incoming data to the buffer
         lines = self.logPartialData.split(b"\n")  # Split the buffer into lines
@@ -99,7 +100,15 @@ class Installer(QObject):
 
         for line in lines:
             newOutput = line.decode(self.logDecode, errors="replace")
-            self.installerLogOutput.emit(newOutput)
+            self.installerLogOutput.emit('>>'.join([prefix, newOutput]))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.workingProcess is not None:
+            self.workingProcess.kill()
+            self.workingProcess = None
 
 
 class ForgeInstaller(Installer):
@@ -152,7 +161,7 @@ class ForgeInstaller(Installer):
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
             process.setArguments(["-jar", self.file, "--installServer"])
-            process.readyReadStandardOutput.connect(self._installerLogHandler)
+            process.readyReadStandardOutput.connect(lambda: self._installerLogHandler("ForgeInstaller::PlanB"))
             process.finished.connect(lambda a, b: self._installPlanB(True))
             self.workingProcess = process
             self.workingProcess.start()
@@ -189,7 +198,7 @@ class ForgeInstaller(Installer):
                 var.extraData["forge_version"] = self.forgeVersion
                 # 保存json
                 if p := os.path.exists(
-                    os.path.join(self.cwd, "MCSL2ServerConfig.json")
+                        os.path.join(self.cwd, "MCSL2ServerConfig.json")
                 ):
                     with open(p, mode="r", encoding="utf-8") as f:
                         d = json.load(f)
@@ -219,3 +228,22 @@ class ForgeInstaller(Installer):
         安装1.13版本以下的Forge
         """
         pass
+
+    @classmethod
+    def isPossibleForgeInstaller(cls, fileName: str) -> bool:
+        """
+        判断是否可能为Forge安装器
+        """
+        fileFile = ZipFile(fileName, mode="r")
+        # 判断是否有version.json
+        try:
+            fileFile.getinfo("version.json")
+        except KeyError:
+            return False
+        # 判断是否有install_profile.json
+        try:
+            fileFile.getinfo("install_profile.json")
+        except KeyError:
+            return False
+
+        return True

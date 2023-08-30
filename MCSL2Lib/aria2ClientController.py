@@ -15,6 +15,7 @@ A controller for aria2 download engine.
 """
 import hashlib
 import json
+import subprocess
 from os import getcwd, mkdir, remove
 from os import path as ospath
 from platform import system
@@ -404,6 +405,22 @@ class Aria2Controller:
         return download
 
     @classmethod
+    def killAria2(cls):
+        # 如果是Windows系统，强制关闭aria2进程
+        if cls._osType == "Windows":
+            # command = 'tasklist | findstr "aria2c"'
+            # result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
+            # if result.stdout != "":
+            #     print("已杀死aria2进程")
+            subprocess.run("taskkill /f /im aria2c.exe", shell=True)
+        elif cls._osType == "macOS":
+            subprocess.run("killall aria2c", shell=True)
+        elif cls._osType == "Linux":
+            subprocess.run("killall aria2c", shell=True)
+        else:
+            subprocess.run("killall aria2c", shell=True)
+
+    @classmethod
     def shutDown(cls):
         try:
             if cls._aria2 is not None:
@@ -412,12 +429,11 @@ class Aria2Controller:
                 cls._aria2.pause_all()
                 cls._aria2.client.shutdown()
             if cls.aria2Process is not None:
-                if cls.aria2Process.isOpen():
-                    cls.aria2Process.kill()
+                cls.killAria2()
             return True
         except Exception:
             try:
-                cls.aria2Process.kill()
+                cls.killAria2()
             except Exception:
                 pass
             return True
@@ -617,7 +633,7 @@ class DL_EntryManager(QObject):
         向文件中添加一条记录
         """
         cls.fileExisted()
-        print("新增记录:", json.dumps({entryName:entryData}, indent=4, ensure_ascii=False, sort_keys=True))
+        print("新增记录:", json.dumps({entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True))
         with open(cls.file, "r", encoding="utf-8") as f:
             data = json.load(f)
         data[entryName] = entryData
