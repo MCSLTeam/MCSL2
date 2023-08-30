@@ -15,6 +15,7 @@ A controller for aria2 download engine.
 """
 import hashlib
 import json
+import subprocess
 from os import getcwd, mkdir, remove
 from os import path as ospath
 from platform import system
@@ -404,6 +405,22 @@ class Aria2Controller:
         return download
 
     @classmethod
+    def killAria2(cls):
+        # 如果是Windows系统，强制关闭aria2进程
+        if cls._osType == "Windows":
+            # command = 'tasklist | findstr "aria2c"'
+            # result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
+            # if result.stdout != "":
+            #     print("已杀死aria2进程")
+            subprocess.run("taskkill /f /im aria2c.exe", text=True, shell=True)
+        elif cls._osType == "macOS":
+            subprocess.run("killall aria2c", text=True, shell=True)
+        elif cls._osType == "Linux":
+            subprocess.run("killall aria2c", text=True, shell=True)
+        else:
+            subprocess.run("killall aria2c", text=True, shell=True)
+
+    @classmethod
     def shutDown(cls):
         try:
             if cls._aria2 is not None:
@@ -412,12 +429,11 @@ class Aria2Controller:
                 cls._aria2.pause_all()
                 cls._aria2.client.shutdown()
             if cls.aria2Process is not None:
-                if cls.aria2Process.isOpen():
-                    cls.aria2Process.kill()
+                cls.killAria2()
             return True
         except Exception:
             try:
-                cls.aria2Process.kill()
+                cls.killAria2()
             except Exception:
                 pass
             return True
@@ -607,6 +623,10 @@ class DL_EntryManager(QObject):
         DL_EntryManager.fileExisted()
         with open(DL_EntryManager.file) as f:
             rv = json.load(f)
+        for coreName, coreData in rv.copy().items():
+            if not DL_EntryManager.checkCoreEntry(coreName, coreData["md5"]):
+                print("删除不完整的核心文件记录:", coreName)
+                rv.pop(coreName)
         return rv
 
     entries = {}
@@ -617,7 +637,7 @@ class DL_EntryManager(QObject):
         向文件中添加一条记录
         """
         cls.fileExisted()
-        print("新增记录:", json.dumps({entryName:entryData}, indent=4, ensure_ascii=False, sort_keys=True))
+        print("新增记录:", json.dumps({entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True))
         with open(cls.file, "r", encoding="utf-8") as f:
             data = json.load(f)
         data[entryName] = entryData
@@ -667,7 +687,7 @@ class DL_EntryManager(QObject):
                 except:
                     pass
         else:
-            cls.entries.pop(coreName)
+            if autoDelete: cls.entries.pop(coreName)
         return False
 
     @classmethod
@@ -703,8 +723,9 @@ class DL_EntryManager(QObject):
                 rv.pop(entryName)
         return rv
 
-    def __call__(self, *args, **kwargs):
+    def __new__(cls, *args, **kwargs):
         raise Exception("请勿实例化本类,请使用类方法!")
 
 
 DL_EntryManager.entries = DL_EntryManager.read()
+DL_EntryManager.flush()
