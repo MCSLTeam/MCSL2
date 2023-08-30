@@ -157,19 +157,27 @@ class PluginManager(BasePluginManager):
     def readPlugin(self, pluginName: str):
         """读取插件但不启用"""
         plugin: PluginType = PluginLoader.getInfo(pluginName)
-        if plugin is None:
-            return
+        if plugin.pluginName == "":
+            self.allPlugins.pop(pluginName)
         else:
             self.allPlugins[pluginName] = plugin
 
-    def readAllPlugins(self):
+    def readAllPlugins(self, firstLoad):
         """读取所有插件但不启用"""
         path = getcwd() + "\\Plugins"
         try:
-            pathList = next(walk(path))[1]
+            self.pathList = next(walk(path))[1]
+            if not firstLoad:
+                for i in self.pathListBackup:
+                    if not i in self.pathList:
+                        self.allPlugins.pop(i)
+                        self.pathListBackup.pop(self.pathListBackup.index(i))
+                    else:
+                        pass
+            self.pathListBackup = self.pathList
         except StopIteration:
             return
-        for pluginName in pathList:
+        for pluginName in self.pathList:
             try:
                 self.readPlugin(pluginName)
             except Exception as e:
@@ -198,7 +206,7 @@ class PluginManager(BasePluginManager):
             pass
 
         for i in reversed(range(pluginsVerticalLayout.count())):
-            pluginsVerticalLayout.itemAt(i).widget().deleteLater()
+            pluginsVerticalLayout.itemAt(i).widget().setParent(None)
 
         for pluginName, plugin in self.allPlugins.items():
             self.pluginWidget = singlePluginWidget()
@@ -228,6 +236,7 @@ class PluginManager(BasePluginManager):
                 f"openFolderBtn_{pluginName}"
             )
             self.pluginWidget.deleteBtn.setObjectName(f"deleteBtn_{pluginName}")
+            self.pluginWidget.setObjectName(f"pluginWidget_{pluginName}")
 
             # 设置槽函数
             self.pluginWidget.SwitchButton.selfCheckedChanged.connect(
@@ -253,7 +262,9 @@ class PluginManager(BasePluginManager):
     def deletePlugin(self, pluginName, parent):
         if not self.isDelMsgShowed:
             w = MessageBox(
-                f'你真的要删除插件"{pluginName}"?吗？', "删除后，这个插件将会消失不见！\n此操作是不可逆的！你确定这么做吗？", parent
+                f'你真的要删除插件"{pluginName}"?吗？',
+                "删除后，这个插件将会消失不见！\n此操作是不可逆的！你确定这么做吗？",
+                parent,
             )
             w.yesButton.setText("取消")
             w.cancelButton.setText("删除")

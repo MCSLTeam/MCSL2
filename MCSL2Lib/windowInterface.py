@@ -218,9 +218,9 @@ class Window(MSFluentWindow):
             self.oldHook(ty, value, _traceback)
             return
 
-    def initPluginSystem(self):
+    def initPluginSystem(self, firstLoad=True):
         """初始化插件系统"""
-        self.pluginManager.readAllPlugins()
+        self.pluginManager.readAllPlugins(firstLoad)
         self.pluginManager.initSinglePluginsWidget(
             self.pluginsInterface.pluginsVerticalLayout
         )
