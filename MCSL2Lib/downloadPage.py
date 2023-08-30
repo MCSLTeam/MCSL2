@@ -602,6 +602,11 @@ class DownloadPage(QWidget):
         self.buildScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+        self.MCSLAPIJavaScrollArea.setFrameShape(QFrame.NoFrame)
+        self.MCSLAPISpigotScrollArea.setFrameShape(QFrame.NoFrame)
+        self.MCSLAPIPaperScrollArea.setFrameShape(QFrame.NoFrame)
+        self.MCSLAPIBungeeCordScrollArea.setFrameShape(QFrame.NoFrame)
+        self.MCSLAPIOfficialCoreScrollArea.setFrameShape(QFrame.NoFrame)
         self.MCSLAPIPivot.setCurrentItem("MCSLAPIJava")
         self.MCSLAPIStackedWidget.currentChanged.connect(self.refreshDownloads)
         self.refreshMCSLAPIBtn.clicked.connect(self.getMCSLAPI)
