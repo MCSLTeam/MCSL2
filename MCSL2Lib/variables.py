@@ -324,6 +324,7 @@ class GlobalMCSL2Variables:
         "}"
     )
     isLoadFinished: bool = False
+    installingPluginArchiveDirectory: str = ""
 
 
 @Singleton

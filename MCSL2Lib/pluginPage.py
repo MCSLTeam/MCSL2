@@ -17,7 +17,7 @@ from os import getcwd, remove, path as ospath
 from shutil import copy
 from zipfile import ZipFile
 
-from PyQt5.QtCore import Qt, QSize, QRect, QThread
+from PyQt5.QtCore import Qt, QSize, QRect, QThread, pyqtSignal
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QSpacerItem,
@@ -148,7 +148,6 @@ class PluginPage(QWidget):
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
 
-        self.installPluginThread = InstallPluginThread(self)
         self.subTitleLabel.setText("添加属于你的插件，让你的MCSL2更加强大！")
         self.titleLabel.setText("插件")
         self.refreshPluginListBtn.setText("刷新列表")
@@ -165,14 +164,45 @@ class PluginPage(QWidget):
                 parent=self,
             )
         )
-        self.installPluginBtn.clicked.connect(self.installPluginThread.start)
+        self.installPluginBtn.clicked.connect(self.installPlugin)
+
+    def installPlugin(self):
+        GlobalMCSL2Variables.installingPluginArchiveDirectory = (
+            str(QFileDialog.getOpenFileName(self, "选择.zip形式的插件", getcwd(), "*.zip")[
+                0
+            ]).replace("/", "\\")
+        )
+        if GlobalMCSL2Variables.installingPluginArchiveDirectory != "":
+            self.installPluginThread = InstallPluginThread(self)
+            self.installPluginThread.success.connect(
+                lambda: InfoBar.success(
+                    title="成功安装",
+                    content=f"可能需要重启以生效",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.BOTTOM_LEFT,
+                    duration=3000,
+                    parent=PluginPage(),
+                )
+            )
+            self.installPluginThread.failed.connect(
+                lambda: InfoBar.error(
+                    title="安装失败",
+                    content="",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.BOTTOM_LEFT,
+                    duration=3000,
+                    parent=PluginPage(),
+                )
+            )
+            self.installPluginThread.start()
+            self.installPluginThread.finished.connect(self.refreshPluginListBtn.click)
 
 
 class InstallPluginThread(QThread):
-    """
-    安装插件的线程\n
-    使用多线程防止卡死
-    """
+    success = pyqtSignal()
+    failed = pyqtSignal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -180,37 +210,10 @@ class InstallPluginThread(QThread):
 
     def run(self):
         try:
-            tmpPluginFilePath = str(
-                QFileDialog.getOpenFileName(
-                    PluginPage(), "选择.zip形式的插件", getcwd(), "*.zip"
-                )[0]
-            ).replace("/", "\\")
-            PluginZipFileName = ospath.basename(tmpPluginFilePath)
-
-            copy(tmpPluginFilePath, "./Plugins")
-            PluginFilePath = f"./Plugins/{PluginZipFileName}"
-            plugin_zip = ZipFile(PluginFilePath, "r")
-            plugin_zip.extractall("./Plugins")
-            plugin_zip.close()
-            remove(f"./Plugins/{PluginZipFileName}")
-            print(f"成功安装插件{PluginZipFileName.replace('.zip', '')}")
-            InfoBar.success(
-                title="成功安装",
-                content=f"可能需要重启以生效",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.BOTTOM_LEFT,
-                duration=3000,
-                parent=PluginPage(),
-            )
-        except:
-            InfoBar.error(
-                title="安装失败",
-                content=f"也许你未选择插件",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.BOTTOM_LEFT,
-                duration=3000,
-                parent=PluginPage(),
-            )
-            pass
+            pluginArchive = ZipFile(GlobalMCSL2Variables.installingPluginArchiveDirectory, "r")
+            pluginArchive.extractall("./Plugins")
+            pluginArchive.close()
+            self.success.emit()
+        except Exception as e:
+            print(Exception().with_traceback())
+            self.failed.emit()
