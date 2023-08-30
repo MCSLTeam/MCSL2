@@ -153,7 +153,7 @@ class Window(MSFluentWindow):
             box.cancelButton.setText("安全关闭并退出")
             box.cancelButton.setStyleSheet(
                 GlobalMCSL2Variables.darkWarnBtnStyleSheet
-                if isDarkTheme
+                if isDarkTheme()
                 else GlobalMCSL2Variables.lightWarnBtnStyleSheet
             )
             if box.exec() == 1:
@@ -285,7 +285,7 @@ class Window(MSFluentWindow):
         self.exitingMsgBox.yesButton.setText("强制结束服务器并退出")
         self.exitingMsgBox.yesButton.setStyleSheet(
             GlobalMCSL2Variables.darkWarnBtnStyleSheet
-            if isDarkTheme
+            if isDarkTheme()
             else GlobalMCSL2Variables.lightWarnBtnStyleSheet
         )
         self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
