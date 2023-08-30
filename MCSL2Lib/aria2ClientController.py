@@ -612,7 +612,7 @@ class DL_EntryManager(QObject):
         向文件中添加一条记录
         """
         cls.fileExisted()
-        print("新增记录:", json.dumps({entryName, entryData}, indent=4, ensure_ascii=False, sort_keys=True))
+        print("新增记录:", json.dumps({entryName:entryData}, indent=4, ensure_ascii=False, sort_keys=True))
         with open(cls.file, "r", encoding="utf-8") as f:
             data = json.load(f)
         data[entryName] = entryData

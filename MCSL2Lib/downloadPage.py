@@ -906,7 +906,7 @@ class DownloadPage(QWidget):
         ][idx2]
         # 判断文件是否存在
         # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
-        self.checkDownloadFileExists(fileName, fileFormat, uri, (fileName, "coreName", "MCVer", "buildVer"))
+        self.checkDownloadFileExists(fileName, fileFormat, uri, (fileName+"."+fileFormat, "coreName", "MCVer", "buildVer"))
 
     def initFastMirrorCoreListWidget(self):
         """FastMirror核心列表"""
@@ -1024,7 +1024,7 @@ class DownloadPage(QWidget):
         uri = f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}"
         # 判断文件是否存在
         self.checkDownloadFileExists(fileName, fileFormat, uri,
-                                     (fileName, downloadVariables.selectedName, downloadVariables.selectedMCVersion,
+                                     (f"{fileName}.jar", downloadVariables.selectedName, downloadVariables.selectedMCVersion,
                                       buildVer))
 
     def hideDownloadHelper(self):
