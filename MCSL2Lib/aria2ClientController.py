@@ -561,7 +561,7 @@ def initializeAria2Configuration():
             r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8"
     ) as Aria2ConfigFile:
         Aria2ConfigFile.write(
-            "file-allocation=falloc\n"
+            "file-allocation=none\n"
             "continue=true\n"
             "max-concurrent-downloads=5\n"
             "min-split-size=5M\n"
