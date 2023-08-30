@@ -558,7 +558,7 @@ class SettingsPage(QWidget):
         self.aria2ThreadSlider.setMaximumSize(QSize(16777215, 24))
         self.aria2ThreadSlider.setFocusPolicy(Qt.NoFocus)
         self.aria2ThreadSlider.setMinimum(1)
-        self.aria2ThreadSlider.setMaximum(16)
+        self.aria2ThreadSlider.setMaximum(128 if "windows" in systemType().lower() else 16)
         self.aria2ThreadSlider.setSliderPosition(1)
         self.aria2ThreadSlider.setOrientation(Qt.Horizontal)
         self.aria2ThreadSlider.setInvertedAppearance(False)
