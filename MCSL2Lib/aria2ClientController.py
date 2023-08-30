@@ -654,19 +654,21 @@ class DL_EntryManager(QObject):
         :param autoDelete: 如果文件不完整是否自动删除核心文件
         """
         coreFileName = ospath.join(cls.path, coreName)
-        # 计算md5
-        with open(coreFileName, "rb") as f:
-            fileMd5 = hashlib.md5(f.read()).hexdigest()
-        if fileMd5 == originMd5:
-            return True
-        else:
+        if ospath.exists(coreFileName):
+            # 计算md5
+            with open(coreFileName, "rb") as f:
+                fileMd5 = hashlib.md5(f.read()).hexdigest()
+            if fileMd5 == originMd5:
+                return True
             if autoDelete:
                 try:  # 删除文件和记录
                     remove(coreFileName)
                     cls.entries.pop(coreName)
                 except:
                     pass
-            return False
+        else:
+            cls.entries.pop(coreName)
+        return False
 
     @classmethod
     def check(cls, autoDelete=False):
