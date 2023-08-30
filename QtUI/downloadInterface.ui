@@ -341,7 +341,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="MCSLAPIJava">
           <property name="sizePolicy">
@@ -353,6 +353,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="SmoothScrollArea" name="MCSLAPIJavaScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -361,8 +364,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>700</width>
+                <height>318</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -391,6 +394,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
             <widget class="SmoothScrollArea" name="MCSLAPISpigotScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -399,8 +405,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>700</width>
+                <height>318</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -429,6 +435,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="SmoothScrollArea" name="MCSLAPIPaperScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -437,8 +446,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>700</width>
+                <height>318</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -467,6 +476,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="SmoothScrollArea" name="MCSLAPIBungeeCordScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -475,8 +487,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>700</width>
+                <height>318</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -505,6 +517,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
             <widget class="SmoothScrollArea" name="MCSLAPIOfficialCoreScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -513,8 +528,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>698</width>
-                <height>316</height>
+                <width>700</width>
+                <height>318</height>
                </rect>
               </property>
               <property name="sizePolicy">
