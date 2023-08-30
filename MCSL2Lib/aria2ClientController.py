@@ -412,13 +412,13 @@ class Aria2Controller:
             # result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
             # if result.stdout != "":
             #     print("已杀死aria2进程")
-            subprocess.run("taskkill /f /im aria2c.exe", shell=True)
+            subprocess.run("taskkill /f /im aria2c.exe", text=True, shell=True)
         elif cls._osType == "macOS":
-            subprocess.run("killall aria2c", shell=True)
+            subprocess.run("killall aria2c", text=True, shell=True)
         elif cls._osType == "Linux":
-            subprocess.run("killall aria2c", shell=True)
+            subprocess.run("killall aria2c", text=True, shell=True)
         else:
-            subprocess.run("killall aria2c", shell=True)
+            subprocess.run("killall aria2c", text=True, shell=True)
 
     @classmethod
     def shutDown(cls):
@@ -623,6 +623,10 @@ class DL_EntryManager(QObject):
         DL_EntryManager.fileExisted()
         with open(DL_EntryManager.file) as f:
             rv = json.load(f)
+        for coreName, coreData in rv.copy().items():
+            if not DL_EntryManager.checkCoreEntry(coreName, coreData["md5"]):
+                print("删除不完整的核心文件记录:", coreName)
+                rv.pop(coreName)
         return rv
 
     entries = {}
@@ -683,7 +687,7 @@ class DL_EntryManager(QObject):
                 except:
                     pass
         else:
-            cls.entries.pop(coreName)
+            if autoDelete: cls.entries.pop(coreName)
         return False
 
     @classmethod
@@ -719,8 +723,9 @@ class DL_EntryManager(QObject):
                 rv.pop(entryName)
         return rv
 
-    def __call__(self, *args, **kwargs):
+    def __new__(cls, *args, **kwargs):
         raise Exception("请勿实例化本类,请使用类方法!")
 
 
 DL_EntryManager.entries = DL_EntryManager.read()
+DL_EntryManager.flush()
