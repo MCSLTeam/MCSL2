@@ -583,6 +583,11 @@ def initializeAria2Configuration():
 
 
 class DL_EntryManager(QObject):
+    """
+    下载记录管理器,用于管理下载记录:获取下载记录,检查记录完整性,删除不完整的记录,添加记录等
+    # >>> 注意：本类方法全部是类方法,请勿将本类实例化!<<<
+    """
+
     file = "MCSL2//Downloads//download_entries.json"
     path = "MCSL2//Downloads"
 
@@ -649,19 +654,21 @@ class DL_EntryManager(QObject):
         :param autoDelete: 如果文件不完整是否自动删除核心文件
         """
         coreFileName = ospath.join(cls.path, coreName)
-        # 计算md5
-        with open(coreFileName, "rb") as f:
-            fileMd5 = hashlib.md5(f.read()).hexdigest()
-        if fileMd5 == originMd5:
-            return True
-        else:
+        if ospath.exists(coreFileName):
+            # 计算md5
+            with open(coreFileName, "rb") as f:
+                fileMd5 = hashlib.md5(f.read()).hexdigest()
+            if fileMd5 == originMd5:
+                return True
             if autoDelete:
                 try:  # 删除文件和记录
                     remove(coreFileName)
                     cls.entries.pop(coreName)
                 except:
                     pass
-            return False
+        else:
+            cls.entries.pop(coreName)
+        return False
 
     @classmethod
     def check(cls, autoDelete=False):
@@ -695,6 +702,9 @@ class DL_EntryManager(QObject):
             if cls.tryGetEntry(entryName) is None:
                 rv.pop(entryName)
         return rv
+
+    def __call__(self, *args, **kwargs):
+        raise Exception("请勿实例化本类,请使用类方法!")
 
 
 DL_EntryManager.entries = DL_EntryManager.read()
