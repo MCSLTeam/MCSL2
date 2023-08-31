@@ -101,6 +101,9 @@ class LoadFailedTip(QWidget):
         
         self.gridLayout.addWidget(self.refreshBtn, 2, 1, 1, 1)
 
+        self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
+        self.errPixmap.setFixedSize(QSize(80, 80))
+
         self.loadFailedText.setText("加载失败")
         self.refreshBtn.setText("刷新")
 
