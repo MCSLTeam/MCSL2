@@ -18,9 +18,9 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QWidget
 from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
@@ -78,6 +78,82 @@ serverHelper = ServerHelper()
 settingsVariables = SettingsVariables()
 
 
+class InterfaceLoaded:
+    homeInterfaceLoaded = False
+    configureInterfaceLoaded = False
+    downloadInterfaceLoaded = False
+    consoleInterfaceLoaded = False
+    pluginsInterfaceLoaded = False
+    settingsInterfaceLoaded = False
+    serverManagerInterfaceLoaded = False
+    selectJavaPageLoaded = False
+    selectNewJavaPageLoaded = False
+
+    initNavigationFinished = False
+    initQtSlotFinished = False
+    initPluginSystemFinished = False
+
+    mainWindowInited = False
+
+    def canInitNavigation(self):
+        return (
+                self.homeInterfaceLoaded
+                and self.configureInterfaceLoaded
+                and self.downloadInterfaceLoaded
+                and self.consoleInterfaceLoaded
+                and self.pluginsInterfaceLoaded
+                and self.settingsInterfaceLoaded
+                and self.serverManagerInterfaceLoaded
+        )
+
+    def canInitQtSlot(self):
+        return (
+                self.configureInterfaceLoaded
+                and self.pluginsInterfaceLoaded
+                and self.selectJavaPageLoaded
+                and self.homeInterfaceLoaded
+                and self.serverManagerInterfaceLoaded
+                and self.selectNewJavaPageLoaded
+        )
+
+    def canInitPluginSystem(self):
+        return (
+            self.pluginsInterfaceLoaded
+        )
+
+    def allPageLoaded(self):
+        return (
+                self.homeInterfaceLoaded
+                and self.configureInterfaceLoaded
+                and self.downloadInterfaceLoaded
+                and self.consoleInterfaceLoaded
+                and self.pluginsInterfaceLoaded
+                and self.settingsInterfaceLoaded
+                and self.serverManagerInterfaceLoaded
+                and self.selectJavaPageLoaded
+                and self.selectNewJavaPageLoaded
+        )
+
+
+loaded = InterfaceLoaded()
+
+
+class PageLoader(QThread):
+    loadFinished = pyqtSignal(object, str, str)
+
+    def __init__(self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None):
+        super().__init__()
+        self.pageType = pageType
+        self.targetObj = targetObj
+        self.flag = flag
+        self.page = None
+        self.loadFinished.connect(callback)
+
+    def run(self) -> None:
+        self.page = self.pageType()
+        self.loadFinished.emit(self.page, self.targetObj, self.flag)
+
+
 @Singleton
 class Window(MSFluentWindow):
     """程序主窗口"""
@@ -94,29 +170,65 @@ class Window(MSFluentWindow):
         settingsController._readSettings(firstLoad=True)
 
         self.setTheme()
-
         # 定义子页面
-        self.homeInterface = HomePage(self)
-        self.configureInterface = ConfigurePage(self)
-        self.downloadInterface = DownloadPage(self)
-        self.consoleInterface = ConsolePage(self)
-        self.pluginsInterface = PluginPage(self)
-        self.settingsInterface = SettingsPage(self)
-        self.serverManagerInterface = ServerManagerPage(self)
+        # self.homeInterface = HomePage(self)
+        # self.configureInterface = ConfigurePage(self)
+        # self.downloadInterface = DownloadPage(self)
+        # self.consoleInterface = ConsolePage(self)
+        # self.pluginsInterface = PluginPage(self)
+        # self.settingsInterface = SettingsPage(self)
+        # self.serverManagerInterface = ServerManagerPage(self)
+        self.homeInterface = None
+        self.configureInterface = None
+        self.downloadInterface = None
+        self.consoleInterface = None
+        self.pluginsInterface = None
+        self.settingsInterface = None
+        self.serverManagerInterface = None
 
         # 定义隐藏的子页面
-        self.selectJavaPage = SelectJavaPage(self)
-        self.selectNewJavaPage = SelectNewJavaPage(self)
+        # self.selectJavaPage = SelectJavaPage(self)
+        # self.selectNewJavaPage = SelectNewJavaPage(self)
+        self.selectJavaPage = None
+        self.selectNewJavaPage = None
 
-        self.initNavigation()
+        self.homePageLoader = PageLoader(HomePage, "homeInterface", "homeInterfaceLoaded", self.onPageLoaded)
+        self.configureInterfaceLoader = PageLoader(ConfigurePage, "configureInterface", "configureInterfaceLoaded",
+                                                   self.onPageLoaded)
+        self.downloadInterfaceLoader = PageLoader(DownloadPage, "downloadInterface", "downloadInterfaceLoaded",
+                                                  self.onPageLoaded)
+        self.consoleInterfaceLoader = PageLoader(ConsolePage, "consoleInterface", "consoleInterfaceLoaded",
+                                                 self.onPageLoaded)
+        self.pluginsInterfaceLoader = PageLoader(PluginPage, "pluginsInterface", "pluginsInterfaceLoaded",
+                                                 self.onPageLoaded)
+        self.settingsInterfaceLoader = PageLoader(SettingsPage, "settingsInterface", "settingsInterfaceLoaded",
+                                                  self.onPageLoaded)
+        self.serverManagerInterfaceLoader = PageLoader(ServerManagerPage, "serverManagerInterface",
+                                                       "serverManagerInterfaceLoaded", self.onPageLoaded)
+        self.selectJavaPageLoader = PageLoader(SelectJavaPage, "selectJavaPage", "selectJavaPageLoaded",
+                                               self.onPageLoaded)
+        self.selectNewJavaPageLoader = PageLoader(SelectNewJavaPage, "selectNewJavaPage", "selectNewJavaPageLoaded",
+                                                  self.onPageLoaded)
+
+        self.homePageLoader.start()
+        self.configureInterfaceLoader.start()
+        self.downloadInterfaceLoader.start()
+        self.consoleInterfaceLoader.start()
+        self.pluginsInterfaceLoader.start()
+        self.settingsInterfaceLoader.start()
+        self.serverManagerInterfaceLoader.start()
+        self.selectJavaPageLoader.start()
+        self.selectNewJavaPageLoader.start()
+
+        # self.initNavigation()
 
         self.initWindow()
 
-        self.initQtSlot()
+        # self.initQtSlot()
 
         serverHelper.loadAtLaunch()
 
-        self.initPluginSystem()
+        # self.initPluginSystem()
 
         initializeAria2Configuration()
 
@@ -124,12 +236,32 @@ class Window(MSFluentWindow):
 
         self.initSafeQuitController()
 
-        if settingsController.fileSettings["checkUpdateOnStart"]:
-            self.settingsInterface.checkUpdate(parent=self)
+        loaded.mainWindowInited = True
+        GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
-        self.consoleInterface.installEventFilter(self)
-
-        GlobalMCSL2Variables.isLoadFinished = True
+    @pyqtSlot(object, str, str)
+    def onPageLoaded(self, pageObj: QWidget, targetObj, flag):
+        setattr(self, targetObj, pageObj)
+        pageObj.__init__(self)
+        setattr(loaded, flag, True)
+        print(f"{targetObj}加载完毕")
+        if loaded.canInitNavigation() and not loaded.initNavigationFinished:
+            self.initNavigation()
+            loaded.initNavigationFinished = True
+        if loaded.canInitQtSlot() and not loaded.initQtSlotFinished:
+            self.initQtSlot()
+            loaded.initQtSlotFinished = True
+        if loaded.canInitPluginSystem() and not loaded.initPluginSystemFinished:
+            self.initPluginSystem()
+            loaded.initPluginSystemFinished = True
+        if loaded.allPageLoaded() and not GlobalMCSL2Variables.isLoadFinished:
+            GlobalMCSL2Variables.isLoadFinished = True
+            self.splashScreen.finish()
+        if loaded.allPageLoaded():
+            if settingsController.fileSettings["checkUpdateOnStart"]:
+                self.settingsInterface.checkUpdate(parent=self)
+            self.consoleInterface.installEventFilter(self)
+            print("所有页面加载完毕")
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
@@ -179,7 +311,7 @@ class Window(MSFluentWindow):
         process.kill()
 
     def catchExceptions(
-        self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+            self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
     ):
         """
         全局捕获异常，并弹窗显示
@@ -383,6 +515,9 @@ class Window(MSFluentWindow):
         serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)
         self.homeInterface.startServerBtn.clicked.connect(self.startServer)
 
+        # 插件页
+        self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
+
         # 设置器
         serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)
 
@@ -499,18 +634,18 @@ class Window(MSFluentWindow):
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     if len(
-                        GlobalMCSL2Variables.userCommandHistory
+                            GlobalMCSL2Variables.userCommandHistory
                     ) and GlobalMCSL2Variables.upT > -len(
                         GlobalMCSL2Variables.userCommandHistory
                     ):
@@ -522,12 +657,12 @@ class Window(MSFluentWindow):
                         return True
             elif a1.key() == Qt.Key_Down:
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT < 0
+                            len(GlobalMCSL2Variables.userCommandHistory)
+                            and GlobalMCSL2Variables.upT < 0
                     ):
                         GlobalMCSL2Variables.upT += 1
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
@@ -536,8 +671,8 @@ class Window(MSFluentWindow):
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT == 0
+                            len(GlobalMCSL2Variables.userCommandHistory)
+                            and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True

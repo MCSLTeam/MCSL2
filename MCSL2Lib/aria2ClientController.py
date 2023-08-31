@@ -16,6 +16,7 @@ A controller for aria2 download engine.
 import hashlib
 import json
 import subprocess
+import time
 from os import getcwd, mkdir, remove
 from os import path as ospath
 from platform import system
@@ -450,13 +451,17 @@ class Aria2BootThread(QThread):
 
     def run(self):
         try:
+            time_time = time.time()
             if Aria2Controller.startAria2():
                 if Aria2Controller.testAria2Service():
                     self.loaded.emit(True)
                 else:
                     self.loaded.emit(False)
+
         except Exception:
             self.loaded.emit(False)
+        finally:
+            print(f"启动Aria2服务耗时:{time.time() - time_time}")
 
 
 ###################
@@ -701,6 +706,13 @@ class DL_EntryManager(QObject):
                 return False
         cls.flush()
         return True
+
+    @classmethod
+    def cleanUnavailable(cls):
+        """
+        清理所有无效记录（包括本地文件）
+        """
+        cls.check(True)
 
     @classmethod
     def tryGetEntry(cls, entryName: str, autoDelete=True):

@@ -152,7 +152,7 @@ class PluginPage(QWidget):
         self.titleLabel.setText("插件")
         self.refreshPluginListBtn.setText("刷新列表")
         self.installPluginBtn.setText("安装插件")
-        self.refreshPluginListBtn.clicked.connect(self.parent().initPluginSystem)
+        # self.refreshPluginListBtn.clicked.connect(self.parent().initPluginSystem)
         self.refreshPluginListBtn.clicked.connect(
             lambda: InfoBar.success(
                 title="成功",

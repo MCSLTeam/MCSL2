@@ -13,20 +13,26 @@
 """
 Main entry.
 """
+import time
+
+begin = time.time()
+print(f"{time.time()-begin}MCSL2: Importing...")
 import os
 import sys
 from platform import system
 
+print(f"{time.time()-begin}MCSL2: PyQt importing.")
 from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
-
+print(f"{time.time()-begin}MCSL2: PyQt imported")
 from MCSL2Lib.publicFunctions import initializeMCSL2
-from MCSL2Lib.windowInterface import Window
-
+print(f"{time.time()-begin}MCSL2: initializeMCSL2 imported")
 if __name__ == "__main__":
     # 初始化
+    print(f"{time.time()-begin}MCSL2: Initializing...")
     initializeMCSL2()
+    print(f"{time.time()-begin}MCSL2: Initialized.")
 
     # 高DPI适配
     QApplication.setHighDpiScaleFactorRoundingPolicy(
@@ -49,10 +55,12 @@ if __name__ == "__main__":
 
     # 启动
     app = QApplication(sys.argv)
-
+    print(f"{time.time()-begin}MCSL2: QApplication initialized.")
     translator = FluentTranslator(QLocale())
     app.installTranslator(translator)
-
+    print(f"{time.time()-begin}MCSL2: Fluent translation system initialized.")
+    from MCSL2Lib.windowInterface import Window
     w = Window()
     w.show()
+    print(f"{time.time()-begin}MCSL2: Window initialized.")
     app.exec_()
