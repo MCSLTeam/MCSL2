@@ -166,10 +166,11 @@ class HomePage(QWidget):
 
         self.startServerBtn.setEnabled(False)
 
-        self.thread = GetNoticeThread(self)
-        self.thread.notice.connect(self.subTitleLabel.setText)
-        self.thread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
-        self.thread.start()
+        self.noticeThread = GetNoticeThread(self)
+        self.noticeThread.notice.connect(self.subTitleLabel.setText)
+        self.noticeThread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
+        self.noticeThread.start()
+
 
     @pyqtSlot(str)
     def afterSelectedServer(self, serverName):
@@ -188,12 +189,11 @@ class GetNoticeThread(QThread):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setObjectName("NoticeThread")
+        self.setObjectName("GetNoticeThread")
 
     def run(self):
-        getNoticeUrl = "http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice"
         try:
-            notice = f"公告: \n{Session.get(getNoticeUrl).text}"
+            notice = f"公告: \n{Session.get('http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice').text}"
             self.notice.emit(notice)
         except Exception as e:
             self.notice.emit("网络连接失败，无法获取公告。")

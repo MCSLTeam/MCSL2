@@ -8,7 +8,12 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QVBoxLayout,
 )
-from qfluentwidgets import IndeterminateProgressRing, SubtitleLabel, PixmapLabel
+from qfluentwidgets import (
+    IndeterminateProgressRing,
+    SubtitleLabel,
+    PixmapLabel,
+    PrimaryPushButton,
+)
 
 
 class LoadingTip(QWidget):
@@ -24,7 +29,6 @@ class LoadingTip(QWidget):
         self.setSizePolicy(sizePolicy)
         self.setMinimumSize(QSize(120, 135))
         self.setMaximumSize(QSize(120, 135))
-        self.setWindowTitle("")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -48,6 +52,57 @@ class LoadingTip(QWidget):
         spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 0, 2, 2, 1)
         self.loadingText.setText("加载中...")
+
+
+class LoadFailedTip(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setObjectName("LoadFailedTip")
+        self.resize(120, 170)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QSize(120, 170))
+        self.setMaximumSize(QSize(120, 170))
+        self.gridLayout = QGridLayout(self)
+        self.gridLayout.setObjectName("gridLayout")
+
+        spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 0, 2, 1)
+        self.errPixmap = PixmapLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.errPixmap.sizePolicy().hasHeightForWidth())
+        self.errPixmap.setSizePolicy(sizePolicy)
+        self.errPixmap.setMinimumSize(QSize(80, 80))
+        self.errPixmap.setMaximumSize(QSize(80, 80))
+        self.errPixmap.setObjectName("errPixmap")
+
+        self.gridLayout.addWidget(self.errPixmap, 0, 1, 1, 1)
+        self.loadFailedText = SubtitleLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.loadFailedText.sizePolicy().hasHeightForWidth()
+        )
+        self.loadFailedText.setSizePolicy(sizePolicy)
+        self.loadFailedText.setAlignment(Qt.AlignCenter)
+        self.loadFailedText.setObjectName("loadFailedText")
+
+        self.gridLayout.addWidget(self.loadFailedText, 1, 1, 1, 1)
+        spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 0, 2, 2, 1)
+        self.refreshBtn = PrimaryPushButton(self)
+        self.refreshBtn.setObjectName("refreshBtn")
+        
+        self.gridLayout.addWidget(self.refreshBtn, 2, 1, 1, 1)
+
+        self.loadFailedText.setText("加载失败")
+        self.refreshBtn.setText("刷新")
 
 
 class MCSLAPILoadingWidget(QWidget):
