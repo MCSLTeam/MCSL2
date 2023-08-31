@@ -25,8 +25,10 @@ print(f"{time.time()-begin}MCSL2: PyQt importing.")
 from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
+
 print(f"{time.time()-begin}MCSL2: PyQt imported")
 from MCSL2Lib.publicFunctions import initializeMCSL2
+
 print(f"{time.time()-begin}MCSL2: initializeMCSL2 imported")
 if __name__ == "__main__":
     # 初始化
@@ -60,6 +62,7 @@ if __name__ == "__main__":
     app.installTranslator(translator)
     print(f"{time.time()-begin}MCSL2: Fluent translation system initialized.")
     from MCSL2Lib.windowInterface import Window
+
     w = Window()
     w.show()
     print(f"{time.time()-begin}MCSL2: Window initialized.")
