@@ -37,6 +37,7 @@ from qfluentwidgets import (
 )
 
 from Adapters.Plugin import PluginManager
+from MCSL2 import begin
 from MCSL2Lib import icons as _  # noqa: F401
 from MCSL2Lib.aria2ClientController import (
     Aria2Controller,
@@ -271,6 +272,8 @@ class Window(MSFluentWindow):
 
             self.splashScreen.finish()
 
+            print(f"所有页面加载完毕:{time.time() - begin}秒")
+
         initializeAria2Configuration()
 
         self.initSafeQuitController()
@@ -286,18 +289,18 @@ class Window(MSFluentWindow):
         setattr(loaded, flag, True)
         print(f"{targetObj}加载完毕")
         if loaded.allPageLoaded():
-            print("所有页面加载完毕")
-
             self.initNavigation()
             serverHelper.loadAtLaunch()
             self.initQtSlot()
             self.initPluginSystem()
-
             if settingsController.fileSettings["checkUpdateOnStart"]:
                 self.settingsInterface.checkUpdate(parent=self)
             self.consoleInterface.installEventFilter(self)
             sys.excepthook = self.catchExceptions
             self.startAria2Client()
+            self.splashScreen.finish()
+            print(f"所有页面加载完毕:{time.time() - begin}秒")
+            self.update()
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
