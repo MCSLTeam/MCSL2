@@ -14,11 +14,12 @@
 The main window of MCSL2.
 """
 import sys
+import time
 from traceback import format_exception
 from types import TracebackType
 from typing import Type
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread, Q_ARG, QMetaObject
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget
 from qfluentwidgets import (
@@ -77,6 +78,54 @@ editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 settingsVariables = SettingsVariables()
 
+pageLoadConfig = [
+    {
+        'type': HomePage,
+        'targetObj': 'homeInterface',
+        'flag': 'homeInterfaceLoaded'
+    },
+    {
+        'type': ConfigurePage,
+        'targetObj': 'configureInterface',
+        'flag': 'configureInterfaceLoaded'
+    },
+    {
+        'type': DownloadPage,
+        'targetObj': 'downloadInterface',
+        'flag': 'downloadInterfaceLoaded'
+    },
+    {
+        'type': ConsolePage,
+        'targetObj': 'consoleInterface',
+        'flag': 'consoleInterfaceLoaded'
+    },
+    {
+        'type': PluginPage,
+        'targetObj': 'pluginsInterface',
+        'flag': 'pluginsInterfaceLoaded'
+    },
+    {
+        'type': SettingsPage,
+        'targetObj': 'settingsInterface',
+        'flag': 'settingsInterfaceLoaded'
+    },
+    {
+        'type': ServerManagerPage,
+        'targetObj': 'serverManagerInterface',
+        'flag': 'serverManagerInterfaceLoaded'
+    },
+    {
+        'type': SelectJavaPage,
+        'targetObj': 'selectJavaPage',
+        'flag': 'selectJavaPageLoaded'
+    },
+    {
+        'type': SelectNewJavaPage,
+        'targetObj': 'selectNewJavaPage',
+        'flag': 'selectNewJavaPageLoaded'
+    }
+]
+
 
 class InterfaceLoaded:
     homeInterfaceLoaded = False
@@ -109,11 +158,12 @@ class InterfaceLoaded:
     def canInitQtSlot(self):
         return (
                 self.configureInterfaceLoaded
-                and self.pluginsInterfaceLoaded
                 and self.selectJavaPageLoaded
                 and self.homeInterfaceLoaded
                 and self.serverManagerInterfaceLoaded
+                and self.consoleInterfaceLoaded
                 and self.selectNewJavaPageLoaded
+                and self.downloadInterfaceLoaded
         )
 
     def canInitPluginSystem(self):
@@ -150,8 +200,9 @@ class PageLoader(QThread):
         self.loadFinished.connect(callback)
 
     def run(self) -> None:
-        self.page = self.pageType()
-        self.loadFinished.emit(self.page, self.targetObj, self.flag)
+        # 强行切换上下文,留给UI线程进行刷新
+        self.yieldCurrentThread()
+        self.loadFinished.emit(self.pageType, self.targetObj, self.flag)
 
 
 @Singleton
@@ -163,7 +214,6 @@ class Window(MSFluentWindow):
     def __init__(self):
         super().__init__()
         self.oldHook = sys.excepthook
-        sys.excepthook = self.catchExceptions
         self.pluginManager: PluginManager = PluginManager()
 
         # 读取程序设置，不放在第一位就会爆炸！
@@ -192,33 +242,15 @@ class Window(MSFluentWindow):
         self.selectJavaPage = None
         self.selectNewJavaPage = None
 
-        self.homePageLoader = PageLoader(HomePage, "homeInterface", "homeInterfaceLoaded", self.onPageLoaded)
-        self.configureInterfaceLoader = PageLoader(ConfigurePage, "configureInterface", "configureInterfaceLoaded",
-                                                   self.onPageLoaded)
-        self.downloadInterfaceLoader = PageLoader(DownloadPage, "downloadInterface", "downloadInterfaceLoaded",
-                                                  self.onPageLoaded)
-        self.consoleInterfaceLoader = PageLoader(ConsolePage, "consoleInterface", "consoleInterfaceLoaded",
-                                                 self.onPageLoaded)
-        self.pluginsInterfaceLoader = PageLoader(PluginPage, "pluginsInterface", "pluginsInterfaceLoaded",
-                                                 self.onPageLoaded)
-        self.settingsInterfaceLoader = PageLoader(SettingsPage, "settingsInterface", "settingsInterfaceLoaded",
-                                                  self.onPageLoaded)
-        self.serverManagerInterfaceLoader = PageLoader(ServerManagerPage, "serverManagerInterface",
-                                                       "serverManagerInterfaceLoaded", self.onPageLoaded)
-        self.selectJavaPageLoader = PageLoader(SelectJavaPage, "selectJavaPage", "selectJavaPageLoaded",
-                                               self.onPageLoaded)
-        self.selectNewJavaPageLoader = PageLoader(SelectNewJavaPage, "selectNewJavaPage", "selectNewJavaPageLoaded",
-                                                  self.onPageLoaded)
+        # 页面加载器
+        loaders=[]
+        for config in pageLoadConfig:
+            loader = PageLoader(config['type'], config['targetObj'], config['flag'], self.onPageLoaded)
+            loaders.append(loader)
 
-        self.homePageLoader.start()
-        self.configureInterfaceLoader.start()
-        self.downloadInterfaceLoader.start()
-        self.consoleInterfaceLoader.start()
-        self.pluginsInterfaceLoader.start()
-        self.settingsInterfaceLoader.start()
-        self.serverManagerInterfaceLoader.start()
-        self.selectJavaPageLoader.start()
-        self.selectNewJavaPageLoader.start()
+        for loader in loaders:
+            loader.start()
+
 
         # self.initNavigation()
 
@@ -232,7 +264,7 @@ class Window(MSFluentWindow):
 
         initializeAria2Configuration()
 
-        self.startAria2Client()
+        # self.startAria2Client()
 
         self.initSafeQuitController()
 
@@ -240,9 +272,10 @@ class Window(MSFluentWindow):
         GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
     @pyqtSlot(object, str, str)
-    def onPageLoaded(self, pageObj: QWidget, targetObj, flag):
-        setattr(self, targetObj, pageObj)
-        pageObj.__init__(self)
+    def onPageLoaded(self, pageType, targetObj, flag):
+        t = time.time()
+        setattr(self, targetObj, pageType(self))
+        print(f"{targetObj}初始化完毕，耗时{time.time() - t}秒")
         setattr(loaded, flag, True)
         print(f"{targetObj}加载完毕")
         if loaded.canInitNavigation() and not loaded.initNavigationFinished:
@@ -253,6 +286,7 @@ class Window(MSFluentWindow):
             loaded.initQtSlotFinished = True
         if loaded.canInitPluginSystem() and not loaded.initPluginSystemFinished:
             self.initPluginSystem()
+            self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
             loaded.initPluginSystemFinished = True
         if loaded.allPageLoaded() and not GlobalMCSL2Variables.isLoadFinished:
             GlobalMCSL2Variables.isLoadFinished = True
@@ -262,6 +296,7 @@ class Window(MSFluentWindow):
                 self.settingsInterface.checkUpdate(parent=self)
             self.consoleInterface.installEventFilter(self)
             print("所有页面加载完毕")
+            sys.excepthook = self.catchExceptions
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
@@ -514,9 +549,6 @@ class Window(MSFluentWindow):
         serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
         serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)
         self.homeInterface.startServerBtn.clicked.connect(self.startServer)
-
-        # 插件页
-        self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
 
         # 设置器
         serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)

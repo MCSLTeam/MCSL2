@@ -77,7 +77,7 @@ class ConfigurePage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-
+        
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.fuzzySearch = True
         self.javaFindWorkThreadFactory.signalConnect = self.autoDetectJavaFinished
