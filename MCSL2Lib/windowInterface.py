@@ -19,7 +19,7 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 
-from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread, Q_ARG, QMetaObject
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget
 from qfluentwidgets import (
@@ -217,50 +217,59 @@ class Window(MSFluentWindow):
         self.pluginManager: PluginManager = PluginManager()
 
         # 读取程序设置，不放在第一位就会爆炸！
-        settingsController._readSettings(firstLoad=True)
+        settingsController.initialize(firstLoad=True)
 
         self.setTheme()
-        # 定义子页面
-        # self.homeInterface = HomePage(self)
-        # self.configureInterface = ConfigurePage(self)
-        # self.downloadInterface = DownloadPage(self)
-        # self.consoleInterface = ConsolePage(self)
-        # self.pluginsInterface = PluginPage(self)
-        # self.settingsInterface = SettingsPage(self)
-        # self.serverManagerInterface = ServerManagerPage(self)
-        self.homeInterface = None
-        self.configureInterface = None
-        self.downloadInterface = None
-        self.consoleInterface = None
-        self.pluginsInterface = None
-        self.settingsInterface = None
-        self.serverManagerInterface = None
+        if experiment := settingsController.fileSettings.get("enableExperimentalFeatures", False):
+            print("实验性功能已启用")
+            print("实验性功能：", experiment)
+            self.homeInterface = None
+            self.configureInterface = None
+            self.downloadInterface = None
+            self.consoleInterface = None
+            self.pluginsInterface = None
+            self.settingsInterface = None
+            self.serverManagerInterface = None
 
-        # 定义隐藏的子页面
-        # self.selectJavaPage = SelectJavaPage(self)
-        # self.selectNewJavaPage = SelectNewJavaPage(self)
-        self.selectJavaPage = None
-        self.selectNewJavaPage = None
+            self.selectJavaPage = None
+            self.selectNewJavaPage = None
 
-        self.initWindow()
+            # 页面加载器
+            loaders = []
+            for config in pageLoadConfig:
+                loader = PageLoader(config['type'], config['targetObj'], config['flag'], self.onPageLoaded)
+                loaders.append(loader)
 
-        # 页面加载器
-        loaders=[]
-        for config in pageLoadConfig:
-            loader = PageLoader(config['type'], config['targetObj'], config['flag'], self.onPageLoaded)
-            loaders.append(loader)
+            for loader in loaders:
+                loader.start()
 
-        for loader in loaders:
-            loader.start()
+            self.initWindow()
+        else:
 
+            # 定义子页面
+            self.homeInterface = HomePage(self)
+            self.configureInterface = ConfigurePage(self)
+            self.downloadInterface = DownloadPage(self)
+            self.consoleInterface = ConsolePage(self)
+            self.pluginsInterface = PluginPage(self)
+            self.settingsInterface = SettingsPage(self)
+            self.serverManagerInterface = ServerManagerPage(self)
 
-        # self.initNavigation()
+            # 定义隐藏的子页面
+            self.selectJavaPage = SelectJavaPage(self)
+            self.selectNewJavaPage = SelectNewJavaPage(self)
 
-        # self.initQtSlot()
+            self.initWindow()
 
-        # serverHelper.loadAtLaunch()
+            self.initNavigation()
 
-        # self.initPluginSystem()
+            self.initQtSlot()
+
+            serverHelper.loadAtLaunch()
+
+            self.initPluginSystem()
+
+            self.splashScreen.finish()
 
         initializeAria2Configuration()
 
@@ -276,18 +285,6 @@ class Window(MSFluentWindow):
         print(f"{targetObj}初始化完毕，耗时{time.time() - t}秒")
         setattr(loaded, flag, True)
         print(f"{targetObj}加载完毕")
-        # if loaded.canInitNavigation() and not loaded.initNavigationFinished:
-        #     self.initNavigation()
-        #     loaded.initNavigationFinished = True
-        # if loaded.canInitQtSlot() and not loaded.initQtSlotFinished:
-        #     loaded.initQtSlotFinished = True
-        # if loaded.canInitPluginSystem() and not loaded.initPluginSystemFinished:
-        #     self.initPluginSystem()
-        #     self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
-        #     loaded.initPluginSystemFinished = True
-        # if loaded.allPageLoaded() and not GlobalMCSL2Variables.isLoadFinished:
-        #     GlobalMCSL2Variables.isLoadFinished = True
-        #     self.splashScreen.finish()
         if loaded.allPageLoaded():
             print("所有页面加载完毕")
 

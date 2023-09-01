@@ -26,6 +26,9 @@ class SettingsController:
         self.fileSettings = {}  # 文件中的原始配置
         self.unSavedSettings = {}  # 更改后的配置
 
+    def initialize(self, firstLoad):
+        self._readSettings(firstLoad)
+
     def _readSettings(self, firstLoad):
         """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
         if ospath.exists(r"./MCSL2/MCSL2_Config.json"):

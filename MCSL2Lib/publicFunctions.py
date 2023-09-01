@@ -52,13 +52,14 @@ configTemplate = {
     "checkUpdateOnStart": False,
     "lastServer": "",
     "nodeMCSLAPI": "https://hardbin.com",
+    "enableExperimentalFeatures": False
 }
 
 
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
     with open(
-        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
     ) as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
     return globalServerList
@@ -82,7 +83,7 @@ def initializeMCSL2():
             config.write(dumps(configTemplate, indent=4))
     if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
-            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
@@ -147,7 +148,7 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
@@ -155,7 +156,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.PASS
     if isinstance(
-        value, aria2p.client.ClientException
+            value, aria2p.client.ClientException
     ) and "Active Download not found for GID" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
