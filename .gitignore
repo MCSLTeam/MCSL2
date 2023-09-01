@@ -21,3 +21,4 @@ Adapters/__pycache__/**
 tmp.py
 /PyQt-Fluent-Widgets/
 mcslapi.json
+/build/

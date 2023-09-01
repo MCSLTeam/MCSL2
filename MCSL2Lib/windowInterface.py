@@ -85,16 +85,6 @@ pageLoadConfig = [
         'flag': 'homeInterfaceLoaded'
     },
     {
-        'type': ConfigurePage,
-        'targetObj': 'configureInterface',
-        'flag': 'configureInterfaceLoaded'
-    },
-    {
-        'type': DownloadPage,
-        'targetObj': 'downloadInterface',
-        'flag': 'downloadInterfaceLoaded'
-    },
-    {
         'type': ConsolePage,
         'targetObj': 'consoleInterface',
         'flag': 'consoleInterfaceLoaded'
@@ -115,19 +105,29 @@ pageLoadConfig = [
         'flag': 'serverManagerInterfaceLoaded'
     },
     {
+        'type': SelectNewJavaPage,
+        'targetObj': 'selectNewJavaPage',
+        'flag': 'selectNewJavaPageLoaded'
+    },
+    {
         'type': SelectJavaPage,
         'targetObj': 'selectJavaPage',
         'flag': 'selectJavaPageLoaded'
     },
     {
-        'type': SelectNewJavaPage,
-        'targetObj': 'selectNewJavaPage',
-        'flag': 'selectNewJavaPageLoaded'
-    }
+        'type': DownloadPage,
+        'targetObj': 'downloadInterface',
+        'flag': 'downloadInterfaceLoaded'
+    },
+    {
+        'type': ConfigurePage,
+        'targetObj': 'configureInterface',
+        'flag': 'configureInterfaceLoaded'
+    },
 ]
 
 
-class InterfaceLoaded:
+class InterfaceLoaded(QObject):
     homeInterfaceLoaded = False
     configureInterfaceLoaded = False
     downloadInterfaceLoaded = False
@@ -242,6 +242,8 @@ class Window(MSFluentWindow):
         self.selectJavaPage = None
         self.selectNewJavaPage = None
 
+        self.initWindow()
+
         # 页面加载器
         loaders=[]
         for config in pageLoadConfig:
@@ -254,8 +256,6 @@ class Window(MSFluentWindow):
 
         # self.initNavigation()
 
-        self.initWindow()
-
         # self.initQtSlot()
 
         serverHelper.loadAtLaunch()
@@ -263,8 +263,6 @@ class Window(MSFluentWindow):
         # self.initPluginSystem()
 
         initializeAria2Configuration()
-
-        # self.startAria2Client()
 
         self.initSafeQuitController()
 
@@ -297,6 +295,7 @@ class Window(MSFluentWindow):
             self.consoleInterface.installEventFilter(self)
             print("所有页面加载完毕")
             sys.excepthook = self.catchExceptions
+            self.startAria2Client()
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
