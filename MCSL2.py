@@ -62,7 +62,6 @@ if __name__ == "__main__":
     app.installTranslator(translator)
     print(f"{time.time()-begin}MCSL2: Fluent translation system initialized.")
     from MCSL2Lib.windowInterface import Window
-
     w = Window()
     w.show()
     print(f"{time.time()-begin}MCSL2: Window initialized.")

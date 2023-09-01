@@ -258,7 +258,7 @@ class Window(MSFluentWindow):
 
         # self.initQtSlot()
 
-        serverHelper.loadAtLaunch()
+        # serverHelper.loadAtLaunch()
 
         # self.initPluginSystem()
 
@@ -276,24 +276,29 @@ class Window(MSFluentWindow):
         print(f"{targetObj}初始化完毕，耗时{time.time() - t}秒")
         setattr(loaded, flag, True)
         print(f"{targetObj}加载完毕")
-        if loaded.canInitNavigation() and not loaded.initNavigationFinished:
-            self.initNavigation()
-            loaded.initNavigationFinished = True
-        if loaded.canInitQtSlot() and not loaded.initQtSlotFinished:
-            self.initQtSlot()
-            loaded.initQtSlotFinished = True
-        if loaded.canInitPluginSystem() and not loaded.initPluginSystemFinished:
-            self.initPluginSystem()
-            self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
-            loaded.initPluginSystemFinished = True
-        if loaded.allPageLoaded() and not GlobalMCSL2Variables.isLoadFinished:
-            GlobalMCSL2Variables.isLoadFinished = True
-            self.splashScreen.finish()
+        # if loaded.canInitNavigation() and not loaded.initNavigationFinished:
+        #     self.initNavigation()
+        #     loaded.initNavigationFinished = True
+        # if loaded.canInitQtSlot() and not loaded.initQtSlotFinished:
+        #     loaded.initQtSlotFinished = True
+        # if loaded.canInitPluginSystem() and not loaded.initPluginSystemFinished:
+        #     self.initPluginSystem()
+        #     self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
+        #     loaded.initPluginSystemFinished = True
+        # if loaded.allPageLoaded() and not GlobalMCSL2Variables.isLoadFinished:
+        #     GlobalMCSL2Variables.isLoadFinished = True
+        #     self.splashScreen.finish()
         if loaded.allPageLoaded():
+            print("所有页面加载完毕")
+
+            self.initNavigation()
+            serverHelper.loadAtLaunch()
+            self.initQtSlot()
+            self.initPluginSystem()
+
             if settingsController.fileSettings["checkUpdateOnStart"]:
                 self.settingsInterface.checkUpdate(parent=self)
             self.consoleInterface.installEventFilter(self)
-            print("所有页面加载完毕")
             sys.excepthook = self.catchExceptions
             self.startAria2Client()
 
@@ -551,7 +556,6 @@ class Window(MSFluentWindow):
 
         # 设置器
         serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)
-
         # 管理服务器
         self.stackedWidget.currentChanged.connect(
             self.serverManagerInterface.onPageChangedRefresh
