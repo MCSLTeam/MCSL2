@@ -134,7 +134,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-504</y>
+        <y>-1216</y>
         <width>653</width>
         <height>1675</height>
        </rect>
@@ -1712,6 +1712,19 @@
              </sizepolicy>
             </property>
             <layout class="QGridLayout" name="gridLayout">
+             <item row="1" column="1">
+              <widget class="HyperlinkButton" name="openOfficialWeb">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>打开官网</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="2">
               <widget class="HyperlinkButton" name="openSourceCodeRepo">
                <property name="sizePolicy">
@@ -1725,16 +1738,16 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="3">
-              <widget class="PrimaryPushButton" name="generateSysReport">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+             <item row="0" column="0" colspan="7">
+              <widget class="BodyLabel" name="aboutContent">
                <property name="text">
-                <string>系统报告</string>
+                <string>MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。
+任何人皆可使用MCSL2的源码进行再编译、修改以及发行，
+但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有
+明显辨识度。
+
+Copyright ©MCSL Team. All right reserved.
+</string>
                </property>
               </widget>
              </item>
@@ -1751,7 +1764,20 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="4" colspan="2">
+             <item row="1" column="3">
+              <widget class="PrimaryPushButton" name="generateSysReport">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>系统报告</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5" colspan="2">
               <spacer name="aboutContentWidgetSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1764,8 +1790,8 @@
                </property>
               </spacer>
              </item>
-             <item row="1" column="1">
-              <widget class="HyperlinkButton" name="openOfficialWeb">
+             <item row="1" column="4">
+              <widget class="PrimaryPushButton" name="augSponsorsBtn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1773,20 +1799,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>打开官网</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="6">
-              <widget class="BodyLabel" name="aboutContent">
-               <property name="text">
-                <string>MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。
-任何人皆可使用MCSL2的源码进行再编译、修改以及发行，
-但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有
-明显辨识度。
-
-Copyright ©MCSL Team. All right reserved.
-</string>
+                <string>8月赞助者名单</string>
                </property>
               </widget>
              </item>

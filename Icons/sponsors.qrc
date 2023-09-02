@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="MCSL2_Sponsors">
+    <file>pgPING.jpg</file>
+    <file>qqysq.jpg</file>
+    <file>shuaibao.png</file>
+    <file>skw.jpg</file>
+    <file>washtile.jpg</file>
+  </qresource>
+</RCC>

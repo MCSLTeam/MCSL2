@@ -58,7 +58,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
     FluentIcon as FIF,
-    setThemeColor
+    setThemeColor,
 )
 
 from MCSL2Lib.networkController import Session
@@ -66,6 +66,7 @@ from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
+from MCSL2Lib.sponsorWidget import MCSL2Sponsors
 
 settingsController = SettingsController()
 settingsVariables = SettingsVariables()
@@ -168,7 +169,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverSettings.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverSettings.sizePolicy().hasHeightForWidth()
+        )
         self.serverSettings.setSizePolicy(sizePolicy)
         self.serverSettings.setMinimumSize(QSize(630, 250))
         self.serverSettings.setMaximumSize(QSize(16777215, 250))
@@ -191,7 +194,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoRunLastServer.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoRunLastServer.sizePolicy().hasHeightForWidth()
+        )
         self.autoRunLastServer.setSizePolicy(sizePolicy)
         self.autoRunLastServer.setObjectName("autoRunLastServer")
 
@@ -202,7 +207,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoRunLastServerTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoRunLastServerTitle.sizePolicy().hasHeightForWidth()
+        )
         self.autoRunLastServerTitle.setSizePolicy(sizePolicy)
         self.autoRunLastServerTitle.setObjectName("autoRunLastServerTitle")
 
@@ -213,7 +220,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoRunLastServerSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoRunLastServerSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.autoRunLastServerSwitchBtn.setSizePolicy(sizePolicy)
         self.autoRunLastServerSwitchBtn.setChecked(False)
         self.autoRunLastServerSwitchBtn.setObjectName("autoRunLastServerSwitchBtn")
@@ -224,7 +233,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.acceptAllMojangEula.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.acceptAllMojangEula.sizePolicy().hasHeightForWidth()
+        )
         self.acceptAllMojangEula.setSizePolicy(sizePolicy)
         self.acceptAllMojangEula.setObjectName("acceptAllMojangEula")
 
@@ -235,7 +246,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.acceptAllMojangEulaTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.acceptAllMojangEulaTitle.sizePolicy().hasHeightForWidth()
+        )
         self.acceptAllMojangEulaTitle.setSizePolicy(sizePolicy)
         self.acceptAllMojangEulaTitle.setObjectName("acceptAllMojangEulaTitle")
 
@@ -246,7 +259,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.acceptAllMojangEulaSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.acceptAllMojangEulaSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.acceptAllMojangEulaSwitchBtn.setSizePolicy(sizePolicy)
         self.acceptAllMojangEulaSwitchBtn.setObjectName("acceptAllMojangEulaSwitchBtn")
 
@@ -256,7 +271,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKill.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.sendStopInsteadOfKill.sizePolicy().hasHeightForWidth()
+        )
         self.sendStopInsteadOfKill.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKill.setObjectName("sendStopInsteadOfKill")
 
@@ -267,7 +284,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKillTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.sendStopInsteadOfKillTitle.sizePolicy().hasHeightForWidth()
+        )
         self.sendStopInsteadOfKillTitle.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKillTitle.setObjectName("sendStopInsteadOfKillTitle")
 
@@ -278,10 +297,14 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sendStopInsteadOfKillSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.sendStopInsteadOfKillSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.sendStopInsteadOfKillSwitchBtn.setSizePolicy(sizePolicy)
         self.sendStopInsteadOfKillSwitchBtn.setChecked(True)
-        self.sendStopInsteadOfKillSwitchBtn.setObjectName("sendStopInsteadOfKillSwitchBtn")
+        self.sendStopInsteadOfKillSwitchBtn.setObjectName(
+            "sendStopInsteadOfKillSwitchBtn"
+        )
 
         self.horizontalLayout_8.addWidget(self.sendStopInsteadOfKillSwitchBtn)
         self.gridLayout_7.addWidget(self.sendStopInsteadOfKill, 3, 0, 1, 4)
@@ -291,7 +314,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.restartServerWhenCrashed.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.restartServerWhenCrashed.sizePolicy().hasHeightForWidth()
+        )
         self.restartServerWhenCrashed.setSizePolicy(sizePolicy)
         self.restartServerWhenCrashed.setObjectName("restartServerWhenCrashed")
 
@@ -302,20 +327,30 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.restartServerWhenCrashedTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.restartServerWhenCrashedTitle.sizePolicy().hasHeightForWidth()
+        )
         self.restartServerWhenCrashedTitle.setSizePolicy(sizePolicy)
-        self.restartServerWhenCrashedTitle.setObjectName("restartServerWhenCrashedTitle")
+        self.restartServerWhenCrashedTitle.setObjectName(
+            "restartServerWhenCrashedTitle"
+        )
 
         self.horizontalLayout_9.addWidget(self.restartServerWhenCrashedTitle)
         spacerItem6 = QSpacerItem(311, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_9.addItem(spacerItem6)
-        self.restartServerWhenCrashedSwitchBtn = SwitchButton(self.restartServerWhenCrashed)
+        self.restartServerWhenCrashedSwitchBtn = SwitchButton(
+            self.restartServerWhenCrashed
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.restartServerWhenCrashedSwitchBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.restartServerWhenCrashedSwitchBtn.sizePolicy().hasHeightForWidth()
+        )
         self.restartServerWhenCrashedSwitchBtn.setSizePolicy(sizePolicy)
-        self.restartServerWhenCrashedSwitchBtn.setObjectName("restartServerWhenCrashedSwitchBtn")
+        self.restartServerWhenCrashedSwitchBtn.setObjectName(
+            "restartServerWhenCrashedSwitchBtn"
+        )
 
         self.horizontalLayout_9.addWidget(self.restartServerWhenCrashedSwitchBtn)
         self.gridLayout_7.addWidget(self.restartServerWhenCrashed, 4, 0, 1, 4)
@@ -558,7 +593,9 @@ class SettingsPage(QWidget):
         self.aria2ThreadSlider.setFixedSize(QSize(200, 24))
         self.aria2ThreadSlider.setFocusPolicy(Qt.NoFocus)
         self.aria2ThreadSlider.setMinimum(1)
-        self.aria2ThreadSlider.setMaximum(128 if "windows" in systemType().lower() else 16)
+        self.aria2ThreadSlider.setMaximum(
+            128 if "windows" in systemType().lower() else 16
+        )
         self.aria2ThreadSlider.setSliderPosition(1)
         self.aria2ThreadSlider.setOrientation(Qt.Horizontal)
         self.aria2ThreadSlider.setInvertedAppearance(False)
@@ -573,7 +610,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aria2ThreadNum.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aria2ThreadNum.sizePolicy().hasHeightForWidth()
+        )
         self.aria2ThreadNum.setSizePolicy(sizePolicy)
         self.aria2ThreadNum.setFixedSize(QSize(30, 19))
 
@@ -1096,21 +1135,30 @@ class SettingsPage(QWidget):
         self.gridLayout_5 = QGridLayout(self.about)
         self.gridLayout_5.setObjectName("gridLayout_5")
 
-        spacerItem26 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem26, 0, 3, 1, 1)
+        spacerItem29 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem29, 0, 3, 1, 1)
         self.aboutContentWidget = QWidget(self.about)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.aboutContentWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.aboutContentWidget.sizePolicy().hasHeightForWidth())
         self.aboutContentWidget.setSizePolicy(sizePolicy)
         self.aboutContentWidget.setObjectName("aboutContentWidget")
 
         self.gridLayout = QGridLayout(self.aboutContentWidget)
         self.gridLayout.setObjectName("gridLayout")
 
+        self.openOfficialWeb = HyperlinkButton(
+            "https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.LINK
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.openOfficialWeb.sizePolicy().hasHeightForWidth())
+        self.openOfficialWeb.setSizePolicy(sizePolicy)
+        self.openOfficialWeb.setObjectName("openOfficialWeb")
+
+        self.gridLayout.addWidget(self.openOfficialWeb, 1, 1, 1, 1)
         self.openSourceCodeRepo = HyperlinkButton(
             "https://www.github.com/MCSLTeam/MCSL2",
             "打开源码仓库",
@@ -1120,24 +1168,15 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openSourceCodeRepo.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.openSourceCodeRepo.sizePolicy().hasHeightForWidth())
         self.openSourceCodeRepo.setSizePolicy(sizePolicy)
         self.openSourceCodeRepo.setObjectName("openSourceCodeRepo")
 
         self.gridLayout.addWidget(self.openSourceCodeRepo, 1, 2, 1, 1)
-        self.generateSysReport = PrimaryPushButton(self.aboutContentWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.generateSysReport.sizePolicy().hasHeightForWidth()
-        )
-        self.generateSysReport.setSizePolicy(sizePolicy)
-        self.generateSysReport.setObjectName("generateSysReport")
+        self.aboutContent = BodyLabel(self.aboutContentWidget)
+        self.aboutContent.setObjectName("aboutContent")
 
-        self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.aboutContent, 0, 0, 1, 7)
         self.joinQQGroup = HyperlinkButton(
             "https://jq.qq.com/?_wv=1027&k=x2ISlviQ",
             "加入官方群聊",
@@ -1152,30 +1191,29 @@ class SettingsPage(QWidget):
         self.joinQQGroup.setObjectName("joinQQGroup")
 
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
-        spacerItem27 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem27, 1, 4, 1, 2)
-        self.openOfficialWeb = HyperlinkButton(
-            "https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.LINK
-        )
+        self.generateSysReport = PrimaryPushButton(self.aboutContentWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openOfficialWeb.sizePolicy().hasHeightForWidth()
-        )
-        self.openOfficialWeb.setSizePolicy(sizePolicy)
-        self.openOfficialWeb.setObjectName("openOfficialWeb")
+        sizePolicy.setHeightForWidth(self.generateSysReport.sizePolicy().hasHeightForWidth())
+        self.generateSysReport.setSizePolicy(sizePolicy)
+        self.generateSysReport.setObjectName("generateSysReport")
 
-        self.gridLayout.addWidget(self.openOfficialWeb, 1, 1, 1, 1)
-        self.aboutContent = BodyLabel(self.aboutContentWidget)
-        self.aboutContent.setObjectName("aboutContent")
+        self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
+        spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem30, 1, 5, 1, 2)
+        self.augSponsorsBtn = PrimaryPushButton(self.aboutContentWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.augSponsorsBtn.sizePolicy().hasHeightForWidth())
+        self.augSponsorsBtn.setSizePolicy(sizePolicy)
+        self.augSponsorsBtn.setObjectName("augSponsorsBtn")
 
-        self.gridLayout.addWidget(self.aboutContent, 0, 0, 1, 6)
+        self.gridLayout.addWidget(self.augSponsorsBtn, 1, 4, 1, 1)
         self.gridLayout_5.addWidget(self.aboutContentWidget, 2, 0, 1, 4)
         self.aboutIndicator = PrimaryPushButton(self.about)
-        self.aboutIndicator.setMinimumSize(QSize(3, 20))
-        self.aboutIndicator.setMaximumSize(QSize(3, 20))
-        self.aboutIndicator.setText("")
+        self.aboutIndicator.setFixedSize(QSize(3, 20))
         self.aboutIndicator.setObjectName("aboutIndicator")
 
         self.gridLayout_5.addWidget(self.aboutIndicator, 0, 1, 1, 1)
@@ -1184,8 +1222,8 @@ class SettingsPage(QWidget):
 
         self.gridLayout_5.addWidget(self.aboutTitle, 0, 2, 1, 1)
         self.verticalLayout.addWidget(self.about)
-        spacerItem28 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem28)
+        spacerItem31 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem31)
         self.settingsSmoothScrollArea.setWidget(self.settingsScrollAreaWidgetContents)
         self.gridLayout_3.addWidget(self.settingsSmoothScrollArea, 2, 1, 1, 1)
 
@@ -1217,7 +1255,11 @@ class SettingsPage(QWidget):
         self.downloadSettingsTitle.setText("下载设置")
         self.alwaysAskSaveDirectoryInfo.setText("          不勾选，则保存到MCSL2/Downloads文件夹。")
         self.alwaysAskSaveDirectoryCheckBox.setText("总是询问保存路径")
-        self.aria2ThreadTitle.setText("Aria2下载引擎线程数 (不建议大于64)" if "windows" in systemType().lower() else "Aria2下载引擎线程数")
+        self.aria2ThreadTitle.setText(
+            "Aria2下载引擎线程数 (不建议大于64)"
+            if "windows" in systemType().lower()
+            else "Aria2下载引擎线程数"
+        )
         self.saveSameFileExceptionTitle.setText("保存路径存在同名文件的处理")
         self.saveSameFileExceptionToAsk.setText("询问")
         self.saveSameFileExceptionToOverwrite.setText("覆盖")
@@ -1251,6 +1293,7 @@ class SettingsPage(QWidget):
         self.checkUpdateOnStartSwitchBtn.setOffText("已关闭")
         self.updateSettingsTitle.setText("更新")
         self.generateSysReport.setText("系统报告")
+        self.augSponsorsBtn.setText("8月赞助者名单")
         self.aboutContent.setText(
             "MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
             "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
@@ -1325,7 +1368,8 @@ class SettingsPage(QWidget):
         )
         self.restartServerWhenCrashedSwitchBtn.checkedChanged.connect(
             lambda: self.changeSettings(
-                "restartServerWhenCrashed", self.restartServerWhenCrashedSwitchBtn.isChecked()
+                "restartServerWhenCrashed",
+                self.restartServerWhenCrashedSwitchBtn.isChecked(),
             )
         )
 
@@ -1448,7 +1492,8 @@ class SettingsPage(QWidget):
                 "checkUpdateOnStart", self.checkUpdateOnStartSwitchBtn.isChecked()
             )
         )
-
+        self.augSponsorsBtn.clicked.connect(self.showAfDianSponsors)
+        
         self.refreshSettingsInterface()
         self.selectThemeColorBtn.colorChanged.connect(setThemeColor)
 
@@ -1617,7 +1662,9 @@ class SettingsPage(QWidget):
             self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
             self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
             self.thread_fetchUpdateIntro.start()
-            w.yesSignal.connect(lambda: openWebUrl(Url="https://github.com/MCSLTeam/MCSL2"))
+            w.yesSignal.connect(
+                lambda: openWebUrl(Url="https://github.com/MCSLTeam/MCSL2")
+            )
             w.exec()
 
         elif latestVerInfo[0] == "false":  # 已是最新版
@@ -1683,6 +1730,13 @@ class SettingsPage(QWidget):
         )
         w.exec()
 
+    def showAfDianSponsors(self):
+        w = MessageBox("", "", self)
+        w.textLayout.addWidget(MCSL2Sponsors())
+        w.cancelButton.setParent(None)
+        w.titleLabel.setParent(None)
+        w.contentLabel.setParent(None)
+        w.show()
 
 class CheckUpdateThread(QThread):
     """

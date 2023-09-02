@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MCSL2Sponsors</class>
+ <widget class="QWidget" name="MCSL2Sponsors">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>340</width>
+    <height>330</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>340</width>
+    <height>330</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>340</width>
+    <height>330</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="4">
+    <widget class="HyperlinkLabel" name="shuaibao">
+     <property name="text">
+      <string>帅宝</string>
+     </property>
+     <property name="url">
+      <url>
+       <string>https://afdian.net/u/55c079ea268611eb9a4852540025c377</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="ImageLabel" name="shuaibaoImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Icons/sponsors.qrc">:/MCSL2_Sponsors/shuaibao.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="ImageLabel" name="skwImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Icons/sponsors.qrc">:/MCSL2_Sponsors/skw.jpg</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" rowspan="4">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="0">
+    <widget class="ImageLabel" name="pgPINGImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Icons/sponsors.qrc">:/MCSL2_Sponsors/pgPING.jpg</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="HyperlinkLabel" name="pgPING">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>瓶盖PING</string>
+     </property>
+     <property name="url">
+      <url>
+       <string>https://afdian.net/a/PingGai</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="ImageLabel" name="washtileImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Icons/sponsors.qrc">:/MCSL2_Sponsors/washtile.jpg</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" rowspan="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="BodyLabel" name="thanksLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>非常感谢你们对MCSL2开发的鼓励与支持！</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="6">
+    <widget class="SubtitleLabel" name="afdTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>爱发电 - 8月赞助者名单</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="ImageLabel" name="qqysqImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Icons/sponsors.qrc">:/MCSL2_Sponsors/qqysq.jpg</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="HyperlinkLabel" name="qqysq">
+     <property name="text">
+      <string>谦谦yaosiqian</string>
+     </property>
+     <property name="url">
+      <url>
+       <string>https://afdian.net/a/yaosiqian</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="HyperlinkLabel" name="skw">
+     <property name="text">
+      <string>SKWStudios</string>
+     </property>
+     <property name="url">
+      <url>
+       <string>https://afdian.net/a/skwstudios</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="HyperlinkLabel" name="washtile">
+     <property name="text">
+      <string>Washtile645</string>
+     </property>
+     <property name="url">
+      <url>
+       <string>https://afdian.net/a/XZQAQ</string>
+      </url>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SubtitleLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HyperlinkLabel</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ImageLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../Icons/sponsors.qrc"/>
+ </resources>
+ <connections/>
+</ui>
