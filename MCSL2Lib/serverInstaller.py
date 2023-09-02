@@ -238,14 +238,17 @@ class ForgeInstaller(Installer):
                     ) as globalServerListFile:
                         # old
                         globalServerList = loads(globalServerListFile.read())
-                    d = globalServerList[-1]
+                    d = globalServerList["MCSLServerList"][
+                        len(globalServerList["MCSLServerList"]) - 1
+                    ]
+                    print(d)
                     d["jvmArg"].append(forgeArgs)
                     d.update(
                         {
                             "server_type": "forge",
-                            "extra_data": {
-                                "forge_version": self.forgeVersion,
-                            },
+                            # "extra_data": {
+                            #     "forge_version": self.forgeVersion,
+                            # },
                         }
                     )
                     globalServerList["MCSLServerList"].pop(-1)
