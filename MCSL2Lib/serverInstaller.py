@@ -128,11 +128,11 @@ class ForgeInstaller(Installer):
         _profile = json.loads(_)
         if (versionInfo := _profile.get("versionInfo", {})).get("id", "").startswith("forge"):
             self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self.forgeVersion = versionInfo["id"].replace(self.mcVersion, "").replace("-","")
-
-        elif "forge" in versionInfo.get("version", ""):
-            self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self.forgeVersion = versionInfo["id"].replace(self.mcVersion, "").replace("-", "")
+
+        elif "forge" in (version := _profile.get("version", "")):
+            self.mcVersion = McVersion(version.split("-")[0])
+            self.forgeVersion = version.replace(self.mcVersion, "").replace("-", "")
 
         else:
             raise InstallerError("Invalid forge installer")
