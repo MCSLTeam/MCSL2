@@ -62,11 +62,11 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers.networkController import Session
-from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
+from MCSL2Lib.publicFunctions import openWebUrl
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
-from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
 
 settingsController = SettingsController()
 settingsVariables = SettingsVariables()

@@ -1,3 +1,4 @@
+from PyQt5.QtCore import QSize, Qt, QRect
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -6,7 +7,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
 )
-from PyQt5.QtCore import QSize, Qt, QRect
 from qfluentwidgets import (
     BodyLabel,
     PixmapLabel,
@@ -24,6 +24,7 @@ from qfluentwidgets import (
     PushButton,
     TextEdit,
 )
+
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 

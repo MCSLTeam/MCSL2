@@ -23,8 +23,8 @@ from typing import List, Optional
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlot
 from psutil import NoSuchProcess, Process, AccessDenied
 
-from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.publicFunctions import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables
 

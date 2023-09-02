@@ -14,7 +14,7 @@ from qfluentwidgets import (
     PixmapLabel,
     PrimaryPushButton,
 )
-from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.Resources.icons import *  # noqa: F401
 
 
 class LoadingTip(QWidget):

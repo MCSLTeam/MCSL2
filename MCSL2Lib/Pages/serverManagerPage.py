@@ -58,7 +58,7 @@ from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
-from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.Resources.icons import * # noqa: F401
 
 editServerVariables = EditServerVariables()
 settingsController = SettingsController()

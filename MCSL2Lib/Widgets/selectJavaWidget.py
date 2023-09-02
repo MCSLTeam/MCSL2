@@ -33,7 +33,7 @@ from qfluentwidgets import (
     BodyLabel,
     TextEdit,
 )
-from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.Resources.icons import * # noqa: F401
 
 
 class singleSelectJavaWidget(CardWidget):

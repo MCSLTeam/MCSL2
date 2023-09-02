@@ -3,14 +3,10 @@ from PyQt5.QtWidgets import QSizePolicy, QGridLayout, QHBoxLayout, QWidget, QVBo
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
-    PushButton,
     StrongBodyLabel,
     PrimaryToolButton,
     FluentIcon as FIF
 )
-
-from MCSL2Lib.publicFunctions import isDarkTheme
-from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class FastMirrorVersionListWidget(CardWidget):

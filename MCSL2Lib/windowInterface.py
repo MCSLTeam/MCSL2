@@ -43,15 +43,6 @@ from MCSL2Lib.Controllers.aria2ClientController import (
     initializeAria2Configuration,
     Aria2BootThread,
 )
-from MCSL2Lib.Pages.configurePage import ConfigurePage
-from MCSL2Lib.Pages.consolePage import ConsolePage
-from MCSL2Lib.Pages.downloadPage import DownloadPage
-from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
-from MCSL2Lib.Pages.homePage import HomePage
-from MCSL2Lib.Pages.pluginPage import PluginPage
-from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
-from MCSL2Lib.Pages.selectJavaPage import SelectJavaPage
-from MCSL2Lib.Pages.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.Controllers.serverController import (
     MinecraftServerResMonitorUtil,
     MojangEula,
@@ -59,10 +50,18 @@ from MCSL2Lib.Controllers.serverController import (
     ServerHelper,
     ServerLauncher,
 )
-from MCSL2Lib.Pages.serverManagerPage import ServerManagerPage
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Pages.configurePage import ConfigurePage
+from MCSL2Lib.Pages.consolePage import ConsolePage
+from MCSL2Lib.Pages.downloadPage import DownloadPage
+from MCSL2Lib.Pages.homePage import HomePage
+from MCSL2Lib.Pages.pluginPage import PluginPage
+from MCSL2Lib.Pages.selectJavaPage import SelectJavaPage
+from MCSL2Lib.Pages.selectNewJavaPage import SelectNewJavaPage
+from MCSL2Lib.Pages.serverManagerPage import ServerManagerPage
 from MCSL2Lib.Pages.settingsPage import SettingsPage
-from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
+from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
@@ -71,6 +70,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+from MCSL2Lib.Resources.icons import * # noqa: F401
 
 serverVariables = ServerVariables()
 settingsController = SettingsController()

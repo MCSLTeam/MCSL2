@@ -1,18 +1,21 @@
 from __future__ import annotations
-from qfluentwidgets import MessageBox, LineEdit, InfoBar, InfoBarPosition
+
 from json import loads
 from os import walk, getcwd, path as ospath, startfile
+from shutil import rmtree
 from threading import Thread
 from typing import List
-from shutil import rmtree
+
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
+from qfluentwidgets import MessageBox, LineEdit, InfoBar, InfoBarPosition
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
+from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
 from MCSL2Lib.publicFunctions import isDarkTheme
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from MCSL2Lib.Resources.icons import *
+
 
 class Plugin(BasePlugin):
     def __init__(self):

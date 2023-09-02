@@ -12,7 +12,7 @@
 ################################################################################
 '''
 A modified network session for bypassing system proxies in order to allow MCSL2
-to networking normally.
+to access the network normally.
 '''
 
 from requests import Session

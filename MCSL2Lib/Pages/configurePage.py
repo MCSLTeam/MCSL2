@@ -50,19 +50,19 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
-from MCSL2Lib.ImportServerTypes.importMCSM8 import MCSM8
-from MCSL2Lib.ImportServerTypes.importMCSM9 import MCSM9
-from MCSL2Lib.ImportServerTypes.importMSL3 import MSL3
-from MCSL2Lib.ImportServerTypes.importNullCraft import NullCraft
 from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.ImportServerTypes.importNoShellArchives import NoShellArchives
-from MCSL2Lib.ImportServerTypes.importServerArchiveSite import ServerArchiveSite
 from MCSL2Lib.Controllers.serverController import MojangEula
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
 from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
 from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
+from MCSL2Lib.ImportServerTypes.importMCSM8 import MCSM8
+from MCSL2Lib.ImportServerTypes.importMCSM9 import MCSM9
+from MCSL2Lib.ImportServerTypes.importMSL3 import MSL3
+from MCSL2Lib.ImportServerTypes.importNoShellArchives import NoShellArchives
+from MCSL2Lib.ImportServerTypes.importNullCraft import NullCraft
+from MCSL2Lib.ImportServerTypes.importServerArchiveSite import ServerArchiveSite
+from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
