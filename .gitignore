@@ -17,6 +17,12 @@ pdm.lock
 pdm.toml
 __pycache__/**
 MCSL2Lib/__pycache__/**
+MCSL2Lib/Controllers/__pycache__/**
+MCSL2Lib/DownloadAPIs/__pycache__/**
+MCSL2Lib/ImportServerTypes/__pycache__/**
+MCSL2Lib/Pages/__pycache__/**
+MCSL2Lib/Resources/__pycache__/**
+MCSL2Lib/Widgets/__pycache__/**
 Adapters/__pycache__/**
 tmp.py
 /PyQt-Fluent-Widgets/

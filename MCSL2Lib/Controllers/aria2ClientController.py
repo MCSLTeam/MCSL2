@@ -27,7 +27,7 @@ from typing import Optional, Callable
 from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer
 from aria2p import Client, API, Download
 
-from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import SettingsController
 
 settingsController = SettingsController()
 

@@ -41,22 +41,22 @@ from qfluentwidgets import (
     TransparentPushButton,
 )
 
-from MCSL2Lib.DownloadProgressWidget import DownloadMessageBox
-from MCSL2Lib.FastMirrorAPI import (
+from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
+from MCSL2Lib.DownloadAPIs.FastMirrorAPI import (
     FetchFastMirrorAPIThreadFactory,
     FetchFastMirrorAPICoreVersionThreadFactory,
 )
-from MCSL2Lib.FastMirrorWidgets import (
+from MCSL2Lib.Widgets.FastMirrorWidgets import (
     FastMirrorBuildListWidget,
     FastMirrorCoreListWidget,
     FastMirrorVersionListWidget,
 )
-from MCSL2Lib.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
-from MCSL2Lib.aria2ClientController import Aria2Controller
-from MCSL2Lib.interfaceController import ChildStackedWidget
-from MCSL2Lib.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
-from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
+from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
+from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
+from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
+from MCSL2Lib.Widgets.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
+from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,

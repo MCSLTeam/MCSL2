@@ -19,7 +19,7 @@ from qfluentwidgets import (
     SubtitleLabel, MessageBox,
 )
 
-from MCSL2Lib.aria2ClientController import DL_EntryManager
+from MCSL2Lib.Controllers.aria2ClientController import DL_EntryManager
 
 
 class DownloadProgressWidget(QWidget):

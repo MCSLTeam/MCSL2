@@ -11,7 +11,7 @@
 #
 ################################################################################
 """
-Select Java page, for adding new Minecraft servers.
+Select Java page, for modifying exist Minecraft servers.
 """
 
 from PyQt5.QtCore import Qt, QRect, pyqtSignal
@@ -31,17 +31,15 @@ from qfluentwidgets import (
     FluentIcon as FIF,
 )
 
-from MCSL2Lib import icons as _  # noqa: F401
-from MCSL2Lib.selectJavaWidget import singleSelectJavaWidget
+from MCSL2Lib.Widgets.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 @Singleton
-class SelectJavaPage(QWidget):
-    """适用于新建服务器时的选择Java页面"""
+class SelectNewJavaPage(QWidget):
+    """适用于修改服务器时的选择Java页面"""
 
-    setJavaVer = pyqtSignal(str)
     setJavaPath = pyqtSignal(str)
 
     def __init__(self, parent=None):
@@ -152,6 +150,4 @@ class SelectJavaPage(QWidget):
         """判断索引"""
         index = int(str(self.sender().objectName()).split("Btn")[1])
         selectedJavaPath = str(JavaPath[index].path)
-        selectedJavaVer = str(str(JavaPath[index].version))
         self.setJavaPath.emit(selectedJavaPath)
-        self.setJavaVer.emit(selectedJavaVer)

@@ -50,12 +50,12 @@ from qfluentwidgets import (
     InfoBarPosition,
 )
 
-from MCSL2Lib import javaDetector
-from MCSL2Lib.interfaceController import ChildStackedWidget
+from MCSL2Lib.Controllers import javaDetector
+from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.publicFunctions import readGlobalServerConfig, isDarkTheme
-from MCSL2Lib.serverController import ServerHelper
-from MCSL2Lib.serverManagerWidget import singleServerManager
-from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.Controllers.serverController import ServerHelper
+from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
+from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 

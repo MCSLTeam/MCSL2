@@ -25,7 +25,7 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
 from darkdetect import theme as currentTheme
 
-from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import SettingsController
 
 settingsController = SettingsController()
 

@@ -42,8 +42,8 @@ from qfluentwidgets import (
     InfoBarPosition,
 )
 
-from MCSL2Lib.playersControllerMainWidget import playersController
-from MCSL2Lib.serverController import ServerHandler, readServerProperties
+from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
+from MCSL2Lib.Controllers.serverController import ServerHandler, readServerProperties
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
 

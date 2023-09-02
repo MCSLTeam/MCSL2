@@ -25,7 +25,7 @@ from qfluentwidgets import (
     FluentIcon as FIF,
 )
 
-from MCSL2Lib.networkController import Session
+from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.singleton import Singleton
 
 

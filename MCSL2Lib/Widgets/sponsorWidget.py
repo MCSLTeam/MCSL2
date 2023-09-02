@@ -2,7 +2,6 @@ from PyQt5.QtCore import QSize, QUrl
 from PyQt5.QtWidgets import QSpacerItem, QSizePolicy, QGridLayout, QWidget
 from PyQt5.QtGui import QPixmap
 from qfluentwidgets import BodyLabel, HyperlinkLabel, ImageLabel, SubtitleLabel
-from MCSL2Lib import sponsorsImage as _  # noqa: F401
 
 
 class MCSL2Sponsors(QWidget):

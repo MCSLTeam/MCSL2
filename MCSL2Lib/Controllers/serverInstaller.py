@@ -2,10 +2,10 @@ from json import loads, dumps
 from os import path as ospath, name as osname
 from typing import Optional
 from zipfile import ZipFile
-from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer
+from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 from MCSL2Lib.publicFunctions import warning
 from MCSL2Lib.variables import ConfigureServerVariables
-from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import SettingsController
 
 configureServerVariables = ConfigureServerVariables()
 settingsController = SettingsController()

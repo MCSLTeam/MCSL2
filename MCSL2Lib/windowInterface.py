@@ -38,31 +38,30 @@ from qfluentwidgets import (
 
 from Adapters.Plugin import PluginManager
 from MCSL2 import begin
-from MCSL2Lib import icons as _  # noqa: F401
-from MCSL2Lib.aria2ClientController import (
+from MCSL2Lib.Controllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
     Aria2BootThread,
 )
-from MCSL2Lib.configurePage import ConfigurePage
-from MCSL2Lib.consolePage import ConsolePage
-from MCSL2Lib.downloadPage import DownloadPage
-from MCSL2Lib.exceptionWidget import ExceptionWidget
-from MCSL2Lib.homePage import HomePage
-from MCSL2Lib.pluginPage import PluginPage
+from MCSL2Lib.Pages.configurePage import ConfigurePage
+from MCSL2Lib.Pages.consolePage import ConsolePage
+from MCSL2Lib.Pages.downloadPage import DownloadPage
+from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
+from MCSL2Lib.Pages.homePage import HomePage
+from MCSL2Lib.Pages.pluginPage import PluginPage
 from MCSL2Lib.publicFunctions import isDarkTheme, exceptionFilter, ExceptionFilterMode
-from MCSL2Lib.selectJavaPage import SelectJavaPage
-from MCSL2Lib.selectNewJavaPage import SelectNewJavaPage
-from MCSL2Lib.serverController import (
+from MCSL2Lib.Pages.selectJavaPage import SelectJavaPage
+from MCSL2Lib.Pages.selectNewJavaPage import SelectNewJavaPage
+from MCSL2Lib.Controllers.serverController import (
     MinecraftServerResMonitorUtil,
     MojangEula,
     ServerHandler,
     ServerHelper,
     ServerLauncher,
 )
-from MCSL2Lib.serverManagerPage import ServerManagerPage
-from MCSL2Lib.settingsController import SettingsController
-from MCSL2Lib.settingsPage import SettingsPage
+from MCSL2Lib.Pages.serverManagerPage import ServerManagerPage
+from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Pages.settingsPage import SettingsPage
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,

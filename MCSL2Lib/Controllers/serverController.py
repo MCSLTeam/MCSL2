@@ -24,7 +24,7 @@ from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlo
 from psutil import NoSuchProcess, Process, AccessDenied
 
 from MCSL2Lib.publicFunctions import readGlobalServerConfig
-from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables
 

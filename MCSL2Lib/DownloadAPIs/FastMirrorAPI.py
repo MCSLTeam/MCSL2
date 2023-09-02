@@ -19,7 +19,7 @@ from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 
-from MCSL2Lib.networkController import Session
+from MCSL2Lib.Controllers.networkController import Session
 
 
 class FastMirrorAPIDownloadURLParser:

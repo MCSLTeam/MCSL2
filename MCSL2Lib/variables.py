@@ -15,7 +15,7 @@ These are the built-in variables of MCSL2.
 """
 
 from MCSL2Lib.publicFunctions import readGlobalServerConfig, warning
-from MCSL2Lib.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 
 settingsController = SettingsController()

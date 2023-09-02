@@ -9,7 +9,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
-from MCSL2Lib.pluginWidget import singlePluginWidget, PluginSwitchButton
+from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
 from MCSL2Lib.publicFunctions import isDarkTheme
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
