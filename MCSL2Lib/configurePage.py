@@ -7761,7 +7761,10 @@ class ConfigurePage(QWidget):
             "output_decoding": configureServerVariables.consoleOutputDeEncoding,
             "input_encoding": configureServerVariables.consoleInputDeEncoding,
             "icon": "Grass.png",
+            "server_type": configureServerVariables.serverType,
+            "extra_data": configureServerVariables.extraData
         }
+        
 
         # 新建文件夹
         mkdir(f"Servers//{configureServerVariables.serverName}")
@@ -7812,10 +7815,13 @@ class ConfigurePage(QWidget):
 
         # 复制核心
         try:
-            copy(
-                configureServerVariables.corePath,
-                f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
-            )
+            if configureServerVariables.serverType != "forge":
+                copy(
+                    configureServerVariables.corePath,
+                    f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
+                )
+            else:
+                pass
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"
@@ -7871,7 +7877,6 @@ class ConfigurePage(QWidget):
                     logDecode=settingsController.fileSettings["outputDeEncoding"],
                 )
                 self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
-                self.forgeInstaller.install()
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:

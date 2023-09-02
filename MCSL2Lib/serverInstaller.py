@@ -1,12 +1,16 @@
-import json
-import os.path
+from json import loads, dumps
+from os import path as ospath, name as osname, remove
 from typing import Optional
 from zipfile import ZipFile
 from shutil import copy
-from PyQt5.QtCore import QProcess, QObject, pyqtSignal
+from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer
 
 from MCSL2Lib.publicFunctions import warning
-from MCSL2Lib.variables import ConfigureServerVariables, ServerVariables
+from MCSL2Lib.variables import ConfigureServerVariables
+from MCSL2Lib.settingsController import SettingsController
+
+configureServerVariables = ConfigureServerVariables()
+settingsController = SettingsController()
 
 
 class InstallerError(Exception):
@@ -72,6 +76,7 @@ class Installer(QObject):
     安装器的基类,包含installerLogOutput信号,用于输出安装器的日志
     支持with语句
     """
+
     installFinished = pyqtSignal(bool)
     installerLogOutput = pyqtSignal(str)
 
@@ -101,7 +106,7 @@ class Installer(QObject):
 
         for line in lines:
             newOutput = line.decode(self.logDecode, errors="replace")
-            self.installerLogOutput.emit('>>'.join([prefix, newOutput]))
+            self.installerLogOutput.emit(">>".join([prefix, newOutput]))
 
     def __enter__(self):
         return self
@@ -119,24 +124,43 @@ class ForgeInstaller(Installer):
         self.mcVersion = None
         self.forgeVersion = None
         self.java = java
-        self.getInstallerData()
+        copy(
+            configureServerVariables.corePath,
+            f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
+        )
+        self.checkCopyThread = CopyCheckThread(
+            f1=configureServerVariables.corePath,
+            f2=f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
+            parent=self,
+        )
+        self.checkCopyThread.fileFinished.connect(self.getInstallerData)
+        self.checkCopyThread.start()
 
     def getInstallerData(self):
         # 打开Installer压缩包
         # 读取version.json
-        copy(os.path.join(self.cwd, self.file), f"{os.path.join(self.cwd, self.file)}.mcsl2tmp")
-        with ZipFile(f"{os.path.join(self.cwd, self.file)}.mcsl2tmp", mode="r") as zipfile:
+        with ZipFile(
+            f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}", mode="r"
+        ) as zipfile:
             _ = zipfile.read("install_profile.json")
-            _profile = json.loads(_)
+            _profile = loads(_)
             zipfile.close()
-        if (versionInfo := _profile.get("versionInfo", {})).get("id", "").startswith("forge"):
+        if (
+            (versionInfo := _profile.get("versionInfo", {}))
+            .get("id", "")
+            .startswith("forge")
+        ):
             self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self.forgeVersion = versionInfo["id"].replace((self.mcVersion), "").replace("-", "")
-
+            self.forgeVersion = (
+                versionInfo["id"].replace((self.mcVersion), "").replace("-", "")
+            )
+            self.install()
         elif "forge" in (version := _profile.get("version", "")):
             self.mcVersion = McVersion(version.split("-")[0])
-            self.forgeVersion = version.replace(str(self.mcVersion), "").replace("-", "")
-
+            self.forgeVersion = version.replace(str(self.mcVersion), "").replace(
+                "-", ""
+            )
+            self.install()
         else:
             raise InstallerError("Invalid forge installer")
 
@@ -159,12 +183,10 @@ class ForgeInstaller(Installer):
         安装1.12版本及以上的Forge
         """
         if not installed:
-            var = ConfigureServerVariables()
-
             # set forge runtime java path
             if self.java is None:
                 try:
-                    self.java = var.javaPath[0]
+                    self.java = configureServerVariables.javaPath[0]
                 except IndexError:
                     raise InstallerError("No Java path found")
 
@@ -172,22 +194,20 @@ class ForgeInstaller(Installer):
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
             process.setArguments(["-jar", self.file, "--installServer"])
-            process.readyReadStandardOutput.connect(lambda: self._installerLogHandler("ForgeInstaller::PlanB"))
+            process.readyReadStandardOutput.connect(
+                lambda: self._installerLogHandler("ForgeInstaller::PlanB")
+            )
             process.finished.connect(lambda a, b: self._installPlanB(True))
             self.workingProcess = process
             self.workingProcess.start()
         else:
             if self.workingProcess.exitCode() == 0:
-                # 生成eula.txt
-                with open(os.path.join(self.cwd, "eula.txt"), mode="w") as f:
-                    f.write("eula=true")
-
                 # 判断系统，分别读取run.bat和run.sh
-                if os.name == "nt":
-                    with open(os.path.join(self.cwd, "run.bat"), mode="r") as f:
+                if osname == "nt":
+                    with open(ospath.join(self.cwd, "run.bat"), mode="r") as f:
                         run = f.readlines()
                 else:
-                    with open(os.path.join(self.cwd, "run.sh"), mode="r") as f:
+                    with open(ospath.join(self.cwd, "run.sh"), mode="r") as f:
                         run = f.readlines()
                 # 找到java命令
                 try:
@@ -202,18 +222,18 @@ class ForgeInstaller(Installer):
                 except IndexError:
                     raise InstallerError("bad forge run script")
 
-                # 更新serverVariables的信息
-                var = ServerVariables()
-                var.jvmArg.append(forgeArgs)
-                var.serverType = "forge"
-                var.extraData["forge_version"] = self.forgeVersion
-                # 保存json
-                if p := os.path.exists(
-                        os.path.join(self.cwd, "MCSL2ServerConfig.json")
-                ):
-                    with open(p, mode="r", encoding="utf-8") as f:
-                        d = json.load(f)
-                        d["jvmArg"].append(forgeArgs)
+                configureServerVariables.jvmArg.append(forgeArgs)
+                configureServerVariables.serverType = "forge"
+                configureServerVariables.extraData["forge_version"] = self.forgeVersion
+                # 写入全局配置
+                try:
+                    with open(
+                        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                    ) as globalServerListFile:
+                        # old
+                        globalServerList = loads(globalServerListFile.read())
+                    d = globalServerList[-1]
+                    d["jvmArg"].append(forgeArgs)
                     d.update(
                         {
                             "server_type": "forge",
@@ -222,13 +242,29 @@ class ForgeInstaller(Installer):
                             },
                         }
                     )
-                    with open(p, mode="w", encoding="utf-8") as f:
-                        json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True)
-                    # TODO: 需要同时保存全局配置文件
-                else:
-                    raise InstallerError(
-                        "MCSL2ServerConfig.json not found,failed to save forge launch args"
-                    )
+                    globalServerList["MCSLServerList"].pop(-1)
+                    globalServerList["MCSLServerList"].append(d)
+                    with open(
+                        r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                    ) as newGlobalServerListFile:
+                        newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+                except Exception as e:
+                    raise e
+
+                # 写入单独配置
+                try:
+                    if not settingsController.fileSettings[
+                        "onlySaveGlobalServerConfig"
+                    ]:
+                        with open(
+                            ospath.join(self.cwd, "MCSL2ServerConfig.json"),
+                            mode="w+",
+                            encoding="utf-8",
+                        ) as f:
+                            f.write(dumps(d, indent=4))
+                except Exception as e:
+                    raise e
+
                 self.installFinished.emit(True)
             else:
                 self.installFinished.emit(False)
@@ -252,6 +288,26 @@ class ForgeInstaller(Installer):
             _profile = fileFile.read("install_profile.json")
         except KeyError:
             return False
-        if "forge" not in json.loads(_profile).get("versionInfo", {}).get("id"):
+        if "forge" not in loads(_profile).get("versionInfo", {}).get("id"):
             return False
         return True
+
+
+class CopyCheckThread(QThread):
+    fileFinished = pyqtSignal()
+
+    def __init__(self, f1, f2, parent=None):
+        super().__init__(parent)
+        self.f1 = f1
+        self.f2 = f2
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.checkFile)
+        self.timer.start(800)
+
+    def checkFile(self):
+        print(self.f1, ospath.getsize(self.f1), self.f2, ospath.getsize(self.f2))
+        if ospath.getsize(self.f1) == ospath.getsize(self.f2):
+            self.timer.stop()
+            self.timer.timeout.disconnect()
+            self.fileFinished.emit()
+            self.terminate()

@@ -927,6 +927,15 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldIcon = editServerVariables.icon = globalConfig[index][
             "icon"
         ]
+        try:
+            editServerVariables.oldServerType = (
+                editServerVariables.serverType
+            ) = globalConfig[index]["server_type"]
+            editServerVariables.oldExtraData = (
+                editServerVariables.extraData
+            ) = globalConfig[index]["extra_data"]
+        except Exception:
+            pass
         # 初始化QtSlot
         self.connectEditServerSlot()
 
@@ -1357,8 +1366,9 @@ class ServerManagerPage(QWidget):
             "output_decoding": editServerVariables.consoleOutputDeEncoding,
             "input_encoding": editServerVariables.consoleInputDeEncoding,
             "icon": editServerVariables.icon,
+            "server_type": editServerVariables.serverType,
+            "extra_data": editServerVariables.extraData
         }
-
         # 复制核心
         try:
             if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
@@ -1375,6 +1385,23 @@ class ServerManagerPage(QWidget):
                     )
                 )
                 w2.exec()
+            elif (
+                ospath.getsize(
+                    f"Servers//{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
+                )
+                != ospath.getsize(
+                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
+                )
+                and editServerVariables.coreFileName
+                == editServerVariables.oldCoreFileName
+            ):
+                remove(
+                    f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
+                )
+                copy(
+                    editServerVariables.corePath,
+                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}",
+                )
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"

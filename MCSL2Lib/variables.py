@@ -57,7 +57,7 @@ class ConfigureServerVariables:
         self.serverName: str = ""
         self.icon: str = ""
         self.serverType = ""
-        self.extraData.clear()
+        self.extraData = {}
 
 
 @Singleton
@@ -113,7 +113,9 @@ class EditServerVariables:
             "Spigot.svg",
         ]
 
+        self.oldServerType = ""
         self.serverType = ""
+        self.oldExtraData = {}
         self.extraData = {}
 
     def resetToDefault(self):
