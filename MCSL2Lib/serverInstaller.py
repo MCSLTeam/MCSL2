@@ -1,10 +1,8 @@
 from json import loads, dumps
-from os import path as ospath, name as osname, remove
+from os import path as ospath, name as osname
 from typing import Optional
 from zipfile import ZipFile
-from shutil import copyfile
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer
-from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.publicFunctions import warning
 from MCSL2Lib.variables import ConfigureServerVariables
 from MCSL2Lib.settingsController import SettingsController
@@ -77,7 +75,6 @@ class Installer(QObject):
     支持with语句
     """
 
-    readFinished = pyqtSignal(int)
     installFinished = pyqtSignal(bool)
     installerLogOutput = pyqtSignal(str)
 
@@ -117,14 +114,13 @@ class Installer(QObject):
             self.workingProcess.kill()
             self.workingProcess = None
 
-@Singleton
-class ForgeInstaller(Installer):
 
+class ForgeInstaller(Installer):
     def __init__(self, cwd, file, java=None, logDecode="utf-8"):
         super().__init__(cwd, file, logDecode)
         self.version = None
         self.mcVersion = None
-        self.forgeVersion = None
+        # self.forgeVersion = None
         self.java = java
         # copyfile(
         #     configureServerVariables.corePath,
@@ -137,43 +133,42 @@ class ForgeInstaller(Installer):
         # )
         # self.checkCopyThread.fileFinished.connect(self.getInstallerData)
         # self.checkCopyThread.start()
-        self.getInstallerData()
 
-    def getInstallerData(self):
-        # 打开Installer压缩包
-        # 读取version.json
-        zipfile = ZipFile(
-            f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
-            mode="r",
-        )
-        _ = zipfile.read("install_profile.json")
-        self._profile = loads(_)
-        zipfile.close()
-        print("read ok")
-        self.readFinished.emit(1)
+    #     self.getInstallerData()
 
-    def checkInstaller(self):
-        if (
-            (versionInfo := self._profile.get("versionInfo", {}))
-            .get("id", "")
-            .startswith("forge")
-        ):
-            self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self.forgeVersion = (
-                versionInfo["id"].replace((self.mcVersion), "").replace("-", "")
-            )
-            canInstall = 1
-        elif "forge" in (version := self._profile.get("version", "")):
-            self.mcVersion = McVersion(version.split("-")[0])
-            self.forgeVersion = version.replace(str(self.mcVersion), "").replace(
-                "-", ""
-            )
-            canInstall = 1
-        else:
-            canInstall = 0
-            raise InstallerError("Invalid forge installer")
-        if canInstall:
-            self.install()
+    # def getInstallerData(self):
+    #     # 打开Installer压缩包
+    #     # 读取version.json
+    #     zipfile = ZipFile(
+    #         f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
+    #         mode="r",
+    #     )
+    #     _ = zipfile.read("install_profile.json")
+    #     self._profile = loads(_)
+    #     zipfile.close()
+
+    # def checkInstaller(self):
+    #     if (
+    #         (versionInfo := self._profile.get("versionInfo", {}))
+    #         .get("id", "")
+    #         .startswith("forge")
+    #     ):
+    #         self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
+    #         self.forgeVersion = (
+    #             versionInfo["id"].replace((self.mcVersion), "").replace("-", "")
+    #         )
+    #         canInstall = 1
+    #     elif "forge" in (version := self._profile.get("version", "")):
+    #         self.mcVersion = McVersion(version.split("-")[0])
+    #         self.forgeVersion = version.replace(str(self.mcVersion), "").replace(
+    #             "-", ""
+    #         )
+    #         canInstall = 1
+    #     else:
+    #         canInstall = 0
+    #         raise InstallerError("Invalid forge installer")
+    #     if canInstall:
+    #         self.install()
 
     @warning("该方法还未完善,目前仅支持1.12以上的Forge安装,且还未测试")
     def install(self):
@@ -184,6 +179,7 @@ class ForgeInstaller(Installer):
 
         若安装过程中出现错误,则抛出InstallerError
         """
+        self.mcVersion = McVersion(configureServerVariables.extraData["forge_version"])
         if self.mcVersion >= McVersion("1.12"):
             self._installPlanB()
         else:
@@ -234,8 +230,7 @@ class ForgeInstaller(Installer):
                     raise InstallerError("bad forge run script")
 
                 configureServerVariables.jvmArg.append(forgeArgs)
-                configureServerVariables.serverType = "forge"
-                configureServerVariables.extraData["forge_version"] = self.forgeVersion
+                # configureServerVariables.extraData["forge_version"] = self.forgeVersion
                 # 写入全局配置
                 try:
                     with open(

@@ -7734,7 +7734,29 @@ class ConfigurePage(QWidget):
         w.exec()
 
     def setForge(self):
+        self.forgeInstaller = ForgeInstaller(
+            cwd=f"Servers//{configureServerVariables.serverName}",
+            file=configureServerVariables.coreFileName,
+            java=configureServerVariables.selectedJavaPath,
+            logDecode=settingsController.fileSettings["outputDeEncoding"],
+        )
+        self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
         configureServerVariables.serverType = "forge"
+        w = MessageBox(
+            "这个Forge服务器的版本？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self
+        )
+        w.yesButton.setText("大于等于1.12")
+        w.cancelButton.setText("低于1.12")
+        w.cancelSignal.connect(self.forgePlanA)
+        w.yesSignal.connect(self.forgePlanB)
+        w.exec()
+
+    def forgePlanA(self):
+        configureServerVariables.extraData["forge_version"] = "1.11"
+        self.saveNewServer()
+
+    def forgePlanB(self):
+        configureServerVariables.extraData["forge_version"] = "1.12.2"
         self.saveNewServer()
 
     def saveNewServer(self):
@@ -7867,14 +7889,7 @@ class ConfigurePage(QWidget):
                     self.installingForgeStateToolTip.getSuitablePos()
                 )
                 self.installingForgeStateToolTip.show()
-                self.forgeInstaller = ForgeInstaller(
-                    cwd=f"Servers//{configureServerVariables.serverName}",
-                    file=configureServerVariables.coreFileName,
-                    java=configureServerVariables.selectedJavaPath,
-                    logDecode=settingsController.fileSettings["outputDeEncoding"],
-                )
-                self.forgeInstaller.readFinished.connect(self.afterCopyForge)
-                self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                self.forgeInstaller.install()
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:
@@ -7911,13 +7926,6 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
-    @pyqtSlot(int)
-    def afterCopyForge(self):
-        print("w")
-        w = MessageBox("继续？", "基础配置已完成。单击确定开始安装Forge。", self)
-        w.cancelButton.setParent(None)
-        w.yesSignal.connect(self.forgeInstaller.checkInstaller)
-        w.exec()
 
     @pyqtSlot(bool)
     def afterInstallingForge(self, installFinished):
