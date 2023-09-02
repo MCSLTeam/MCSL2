@@ -7858,18 +7858,20 @@ class ConfigurePage(QWidget):
             )
             if configureServerVariables.serverType == "forge":
                 self.installingForgeStateToolTip = StateToolTip(
-                    "正在安装Forge", "请稍后...", self
+                    "安装Forge", "请稍后，正在安装...", self
                 )
                 self.installingForgeStateToolTip.move(
                     self.installingForgeStateToolTip.getSuitablePos()
                 )
                 self.installingForgeStateToolTip.show()
-                ForgeInstaller(
+                self.forgeInstaller = ForgeInstaller(
                     cwd=f"Servers//{configureServerVariables.serverName}",
                     file=configureServerVariables.coreFileName,
                     java=configureServerVariables.selectedJavaPath,
                     logDecode=settingsController.fileSettings["outputDeEncoding"],
                 )
+                self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                self.forgeInstaller.install()
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:
@@ -7905,3 +7907,14 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
+
+    @pyqtSlot(bool)
+    def afterInstallingForge(self, installFinished):
+        if installFinished:
+            self.installingForgeStateToolTip.setContent("安装成功！")
+            self.installingForgeStateToolTip.setState(True)
+            self.installingForgeStateToolTip = None
+        else:
+            self.installingForgeStateToolTip.setContent("怪，安装失败！")
+            self.installingForgeStateToolTip.setState(True)
+            self.installingForgeStateToolTip = None

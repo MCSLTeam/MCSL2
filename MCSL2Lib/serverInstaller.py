@@ -2,7 +2,7 @@ import json
 import os.path
 from typing import Optional
 from zipfile import ZipFile
-
+from shutil import copy
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 from MCSL2Lib.publicFunctions import warning
@@ -72,7 +72,7 @@ class Installer(QObject):
     安装器的基类,包含installerLogOutput信号,用于输出安装器的日志
     支持with语句
     """
-
+    installFinished = pyqtSignal(bool)
     installerLogOutput = pyqtSignal(str)
 
     def __init__(self, cwd: str, file: str, logDecode="utf-8"):
@@ -86,6 +86,7 @@ class Installer(QObject):
         self.logDecode = logDecode
         self.workingProcess: Optional[QProcess] = None
         self.logPartialData = b""
+        self.installerLogOutput.connect(print)
 
     def install(self):
         raise NotImplementedError
@@ -123,37 +124,39 @@ class ForgeInstaller(Installer):
     def getInstallerData(self):
         # 打开Installer压缩包
         # 读取version.json
-        zipfile = ZipFile(os.path.join(self.cwd, self.file), mode="r")
-        _ = zipfile.read("install_profile.json")
-        _profile = json.loads(_)
+        copy(os.path.join(self.cwd, self.file), f"{os.path.join(self.cwd, self.file)}.mcsl2tmp")
+        with ZipFile(f"{os.path.join(self.cwd, self.file)}.mcsl2tmp", mode="r") as zipfile:
+            _ = zipfile.read("install_profile.json")
+            _profile = json.loads(_)
+            zipfile.close()
         if (versionInfo := _profile.get("versionInfo", {})).get("id", "").startswith("forge"):
             self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self.forgeVersion = versionInfo["id"].replace(self.mcVersion, "").replace("-", "")
+            self.forgeVersion = versionInfo["id"].replace((self.mcVersion), "").replace("-", "")
 
         elif "forge" in (version := _profile.get("version", "")):
             self.mcVersion = McVersion(version.split("-")[0])
-            self.forgeVersion = version.replace(self.mcVersion, "").replace("-", "")
+            self.forgeVersion = version.replace(str(self.mcVersion), "").replace("-", "")
 
         else:
             raise InstallerError("Invalid forge installer")
 
-    @warning("该方法还未完善,目前仅支持1.13以上的Forge安装,且还未测试")
+    @warning("该方法还未完善,目前仅支持1.12以上的Forge安装,且还未测试")
     def install(self):
         """
         安装Forge
-        若为1.13以上版本,则使用PlanB
-        若为1.13以下版本,则使用PlanA
+        若为1.12以上版本,则使用PlanB
+        若为1.12以下版本,则使用PlanA
 
         若安装过程中出现错误,则抛出InstallerError
         """
-        if self.mcVersion >= McVersion("1.13"):
+        if self.mcVersion >= McVersion("1.12"):
             self._installPlanB()
         else:
             self._installPlanA()
 
     def _installPlanB(self, installed=False):
         """
-        安装1.13版本以上的Forge
+        安装1.12版本及以上的Forge
         """
         if not installed:
             var = ConfigureServerVariables()
@@ -226,14 +229,16 @@ class ForgeInstaller(Installer):
                     raise InstallerError(
                         "MCSL2ServerConfig.json not found,failed to save forge launch args"
                     )
+                self.installFinished.emit(True)
             else:
+                self.installFinished.emit(False)
                 raise InstallerError(
                     f"Forge installer exited with code {self.workingProcess.exitCode()}"
                 )
 
     def _installPlanA(self):
         """
-        安装1.13版本以下的Forge
+        安装1.12版本以下的Forge
         """
         pass
 
