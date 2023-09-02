@@ -7815,13 +7815,10 @@ class ConfigurePage(QWidget):
 
         # 复制核心
         try:
-            if configureServerVariables.serverType != "forge":
-                copy(
-                    configureServerVariables.corePath,
-                    f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
-                )
-            else:
-                pass
+            copy(
+                configureServerVariables.corePath,
+                f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
+            )
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"
@@ -7876,6 +7873,7 @@ class ConfigurePage(QWidget):
                     java=configureServerVariables.selectedJavaPath,
                     logDecode=settingsController.fileSettings["outputDeEncoding"],
                 )
+                self.forgeInstaller.readFinished.connect(self.afterCopyForge)
                 self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
@@ -7912,6 +7910,14 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
+
+    @pyqtSlot(int)
+    def afterCopyForge(self):
+        print("w")
+        w = MessageBox("继续？", "基础配置已完成。单击确定开始安装Forge。", self)
+        w.cancelButton.setParent(None)
+        w.yesSignal.connect(self.forgeInstaller.checkInstaller)
+        w.exec()
 
     @pyqtSlot(bool)
     def afterInstallingForge(self, installFinished):
