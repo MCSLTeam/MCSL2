@@ -471,33 +471,28 @@ class Window(MSFluentWindow):
 
         # 新建服务器
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.switchTo(self.downloadInterface)
+            self.downloadInterface.getMCSLAPI
         )
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
+            lambda: self.switchTo(self.downloadInterface)
+        )
+        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
+            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
+        )
+        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             self.downloadInterface.getMCSLAPI
+        )
+        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
+            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
-        )
-        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: InfoBar.info(
-                title="切换到MCSLAPI",
-                content="因为FastMirror没有Java啊 (",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-        )
-        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLAPI
         )
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
@@ -559,10 +554,10 @@ class Window(MSFluentWindow):
             self.serverManagerInterface.onPageChangedRefresh
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.switchTo(self.downloadInterface)
+            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
+            self.downloadInterface.getMCSLAPI
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: InfoBar.info(
@@ -576,7 +571,7 @@ class Window(MSFluentWindow):
             )
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLAPI
+            lambda: self.switchTo(self.downloadInterface)
         )
         self.serverManagerInterface.editJavaListPushBtn.clicked.connect(
             lambda: self.switchTo(self.selectNewJavaPage)
