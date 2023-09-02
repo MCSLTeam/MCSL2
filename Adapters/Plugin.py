@@ -12,7 +12,7 @@ from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
 from MCSL2Lib.publicFunctions import isDarkTheme
 from MCSL2Lib.variables import GlobalMCSL2Variables
-
+from MCSL2Lib.Resources.icons import *
 
 class Plugin(BasePlugin):
     def __init__(self):

@@ -62,6 +62,7 @@ from MCSL2Lib.Controllers.serverController import (
 from MCSL2Lib.Pages.serverManagerPage import ServerManagerPage
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Pages.settingsPage import SettingsPage
+from MCSL2Lib.Resources.icons import *
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,

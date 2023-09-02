@@ -58,6 +58,7 @@ from MCSL2Lib.Widgets.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPI
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.Resources.icons import *
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
     DownloadVariables,
