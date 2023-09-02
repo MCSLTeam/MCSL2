@@ -367,8 +367,7 @@ class Window(MSFluentWindow):
 
         elif mode == ExceptionFilterMode.RAISE:
             print("捕捉到异常：", ty, value, _traceback)
-            self.oldHook(ty, value, _traceback)
-            return
+            return self.oldHook(ty, value, _traceback)
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
             tracebackFormat = format_exception(ty, value, _traceback)
@@ -386,8 +385,7 @@ class Window(MSFluentWindow):
             box.yesSignal.connect(exceptionWidget.deleteLater)
             box.cancelSignal.connect(exceptionWidget.deleteLater)
             box.exec()
-            self.oldHook(ty, value, _traceback)
-            return
+            return self.oldHook(ty, value, _traceback)
 
     def initPluginSystem(self, firstLoad=True):
         """初始化插件系统"""
