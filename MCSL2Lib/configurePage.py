@@ -79,7 +79,7 @@ class ConfigurePage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        
+
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.fuzzySearch = True
         self.javaFindWorkThreadFactory.signalConnect = self.autoDetectJavaFinished
@@ -1150,14 +1150,18 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerStackWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.importNewServerStackWidget.sizePolicy().hasHeightForWidth()
+        )
         self.importNewServerStackWidget.setSizePolicy(sizePolicy)
         self.importNewServerStackWidget.setObjectName("importNewServerStackWidget")
         self.importNewServerFirstGuide = QWidget()
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerFirstGuide.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.importNewServerFirstGuide.sizePolicy().hasHeightForWidth()
+        )
         self.importNewServerFirstGuide.setSizePolicy(sizePolicy)
         self.importNewServerFirstGuide.setObjectName("importNewServerFirstGuide")
         self.gridLayout_11 = QGridLayout(self.importNewServerFirstGuide)
@@ -1167,7 +1171,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerTypeComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.importNewServerTypeComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.importNewServerTypeComboBox.setSizePolicy(sizePolicy)
         self.importNewServerTypeComboBox.setMinimumSize(QSize(240, 35))
         self.importNewServerTypeComboBox.setMaximumSize(QSize(240, 35))
@@ -1179,13 +1185,19 @@ class ConfigurePage(QWidget):
         self.gridLayout_11.addItem(spacerItem21, 3, 5, 4, 1)
         spacerItem22 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.gridLayout_11.addItem(spacerItem22, 6, 3, 1, 1)
-        self.importNewServerFirstGuideTitle = SubtitleLabel(self.importNewServerFirstGuide)
+        self.importNewServerFirstGuideTitle = SubtitleLabel(
+            self.importNewServerFirstGuide
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerFirstGuideTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.importNewServerFirstGuideTitle.sizePolicy().hasHeightForWidth()
+        )
         self.importNewServerFirstGuideTitle.setSizePolicy(sizePolicy)
-        self.importNewServerFirstGuideTitle.setObjectName("importNewServerFirstGuideTitle")
+        self.importNewServerFirstGuideTitle.setObjectName(
+            "importNewServerFirstGuideTitle"
+        )
         self.gridLayout_11.addWidget(self.importNewServerFirstGuideTitle, 1, 3, 1, 1)
         self.goBtnWidget = QWidget(self.importNewServerFirstGuide)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -1221,34 +1233,48 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesTitle.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesTitle.setSizePolicy(sizePolicy)
         self.noShellArchivesTitle.setObjectName("noShellArchivesTitle")
         self.gridLayout_12.addWidget(self.noShellArchivesTitle, 0, 3, 1, 1)
         spacerItem27 = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_12.addItem(spacerItem27, 0, 0, 2, 1)
-        self.noShellArchivesBackToMain = TransparentToolButton(FIF.PAGE_LEFT, self.noShellArchives)
+        self.noShellArchivesBackToMain = TransparentToolButton(
+            FIF.PAGE_LEFT, self.noShellArchives
+        )
         self.noShellArchivesBackToMain.setObjectName("noShellArchivesBackToMain")
         self.gridLayout_12.addWidget(self.noShellArchivesBackToMain, 0, 1, 1, 1)
         spacerItem28 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_12.addItem(spacerItem28, 0, 4, 1, 1)
         self.noShellArchivesScrollArea = SmoothScrollArea(self.noShellArchives)
         self.noShellArchivesScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.noShellArchivesScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.noShellArchivesScrollArea.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarAsNeeded
+        )
         self.noShellArchivesScrollArea.setWidgetResizable(True)
         self.noShellArchivesScrollArea.setAlignment(Qt.AlignCenter)
         self.noShellArchivesScrollArea.setObjectName("noShellArchivesScrollArea")
         self.noShellArchivesScrollAreaWidgetContents = QWidget()
         self.noShellArchivesScrollAreaWidgetContents.setGeometry(QRect(0, 0, 500, 1141))
-        self.noShellArchivesScrollAreaWidgetContents.setObjectName("noShellArchivesScrollAreaWidgetContents")
-        self.verticalLayout_2 = QVBoxLayout(self.noShellArchivesScrollAreaWidgetContents)
+        self.noShellArchivesScrollAreaWidgetContents.setObjectName(
+            "noShellArchivesScrollAreaWidgetContents"
+        )
+        self.verticalLayout_2 = QVBoxLayout(
+            self.noShellArchivesScrollAreaWidgetContents
+        )
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.noShellArchivesImport = CardWidget(self.noShellArchivesScrollAreaWidgetContents)
+        self.noShellArchivesImport = CardWidget(
+            self.noShellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesImport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesImport.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesImport.setSizePolicy(sizePolicy)
         self.noShellArchivesImport.setMinimumSize(QSize(0, 150))
         self.noShellArchivesImport.setMaximumSize(QSize(16777215, 150))
@@ -1261,7 +1287,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesImportStatus.setSizePolicy(sizePolicy)
         self.noShellArchivesImportStatus.setMinimumSize(QSize(30, 30))
         self.noShellArchivesImportStatus.setMaximumSize(QSize(30, 30))
@@ -1271,25 +1299,39 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesImportStatusText.setSizePolicy(sizePolicy)
-        self.noShellArchivesImportStatusText.setObjectName("noShellArchivesImportStatusText")
+        self.noShellArchivesImportStatusText.setObjectName(
+            "noShellArchivesImportStatusText"
+        )
         self.gridLayout_13.addWidget(self.noShellArchivesImportStatusText, 1, 1, 1, 2)
         self.noShellArchivesImportBtnWidget = QWidget(self.noShellArchivesImport)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesImportBtnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesImportBtnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesImportBtnWidget.setSizePolicy(sizePolicy)
-        self.noShellArchivesImportBtnWidget.setObjectName("noShellArchivesImportBtnWidget")
+        self.noShellArchivesImportBtnWidget.setObjectName(
+            "noShellArchivesImportBtnWidget"
+        )
         self.horizontalLayout_2 = QHBoxLayout(self.noShellArchivesImportBtnWidget)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.noShellArchivesImportArchives = PrimaryPushButton(self.noShellArchivesImportBtnWidget)
+        self.noShellArchivesImportArchives = PrimaryPushButton(
+            self.noShellArchivesImportBtnWidget
+        )
         self.noShellArchivesImportArchives.setMinimumSize(QSize(110, 32))
         self.noShellArchivesImportArchives.setMaximumSize(QSize(110, 32))
-        self.noShellArchivesImportArchives.setObjectName("noShellArchivesImportArchives")
+        self.noShellArchivesImportArchives.setObjectName(
+            "noShellArchivesImportArchives"
+        )
         self.horizontalLayout_2.addWidget(self.noShellArchivesImportArchives)
-        self.noShellArchivesImportFolder = PrimaryPushButton(self.noShellArchivesImportBtnWidget)
+        self.noShellArchivesImportFolder = PrimaryPushButton(
+            self.noShellArchivesImportBtnWidget
+        )
         self.noShellArchivesImportFolder.setMinimumSize(QSize(110, 32))
         self.noShellArchivesImportFolder.setMaximumSize(QSize(110, 32))
         self.noShellArchivesImportFolder.setObjectName("noShellArchivesImportFolder")
@@ -1301,59 +1343,95 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesImportTitle.setSizePolicy(sizePolicy)
         self.noShellArchivesImportTitle.setObjectName("noShellArchivesImportTitle")
         self.gridLayout_13.addWidget(self.noShellArchivesImportTitle, 0, 2, 1, 1)
         self.verticalLayout_2.addWidget(self.noShellArchivesImport)
-        self.noShellArchivesSelectCore = CardWidget(self.noShellArchivesScrollAreaWidgetContents)
+        self.noShellArchivesSelectCore = CardWidget(
+            self.noShellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSelectCore.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSelectCore.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSelectCore.setSizePolicy(sizePolicy)
         self.noShellArchivesSelectCore.setMinimumSize(QSize(0, 250))
         self.noShellArchivesSelectCore.setObjectName("noShellArchivesSelectCore")
         self.gridLayout_14 = QGridLayout(self.noShellArchivesSelectCore)
         self.gridLayout_14.setObjectName("gridLayout_14")
-        self.noShellArchivesSelectCoreStatus = PixmapLabel(self.noShellArchivesSelectCore)
+        self.noShellArchivesSelectCoreStatus = PixmapLabel(
+            self.noShellArchivesSelectCore
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSelectCoreStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSelectCoreStatus.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSelectCoreStatus.setSizePolicy(sizePolicy)
         self.noShellArchivesSelectCoreStatus.setMinimumSize(QSize(30, 30))
         self.noShellArchivesSelectCoreStatus.setMaximumSize(QSize(30, 30))
-        self.noShellArchivesSelectCoreStatus.setObjectName("noShellArchivesSelectCoreStatus")
+        self.noShellArchivesSelectCoreStatus.setObjectName(
+            "noShellArchivesSelectCoreStatus"
+        )
         self.gridLayout_14.addWidget(self.noShellArchivesSelectCoreStatus, 0, 1, 1, 1)
         spacerItem31 = QSpacerItem(20, 279, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_14.addItem(spacerItem31, 0, 0, 3, 1)
-        self.noShellArchivesSelectCoreStatusText = BodyLabel(self.noShellArchivesSelectCore)
+        self.noShellArchivesSelectCoreStatusText = BodyLabel(
+            self.noShellArchivesSelectCore
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSelectCoreStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSelectCoreStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSelectCoreStatusText.setSizePolicy(sizePolicy)
-        self.noShellArchivesSelectCoreStatusText.setObjectName("noShellArchivesSelectCoreStatusText")
-        self.gridLayout_14.addWidget(self.noShellArchivesSelectCoreStatusText, 1, 1, 1, 2)
-        self.noShellArchivesSelectCoreTitle = SubtitleLabel(self.noShellArchivesSelectCore)
+        self.noShellArchivesSelectCoreStatusText.setObjectName(
+            "noShellArchivesSelectCoreStatusText"
+        )
+        self.gridLayout_14.addWidget(
+            self.noShellArchivesSelectCoreStatusText, 1, 1, 1, 2
+        )
+        self.noShellArchivesSelectCoreTitle = SubtitleLabel(
+            self.noShellArchivesSelectCore
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSelectCoreTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSelectCoreTitle.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSelectCoreTitle.setSizePolicy(sizePolicy)
-        self.noShellArchivesSelectCoreTitle.setObjectName("noShellArchivesSelectCoreTitle")
+        self.noShellArchivesSelectCoreTitle.setObjectName(
+            "noShellArchivesSelectCoreTitle"
+        )
         self.gridLayout_14.addWidget(self.noShellArchivesSelectCoreTitle, 0, 2, 1, 1)
-        self.noShellArchivesSelectCoreTreeWidget = TreeWidget(self.noShellArchivesSelectCore)
-        self.noShellArchivesSelectCoreTreeWidget.setObjectName("noShellArchivesSelectCoreTreeWidget")
+        self.noShellArchivesSelectCoreTreeWidget = TreeWidget(
+            self.noShellArchivesSelectCore
+        )
+        self.noShellArchivesSelectCoreTreeWidget.setObjectName(
+            "noShellArchivesSelectCoreTreeWidget"
+        )
         self.noShellArchivesSelectCoreTreeWidget.headerItem().setText(0, "1")
-        self.gridLayout_14.addWidget(self.noShellArchivesSelectCoreTreeWidget, 2, 1, 1, 2)
+        self.gridLayout_14.addWidget(
+            self.noShellArchivesSelectCoreTreeWidget, 2, 1, 1, 2
+        )
         self.verticalLayout_2.addWidget(self.noShellArchivesSelectCore)
-        self.noShellArchivesSetArgs = CardWidget(self.noShellArchivesScrollAreaWidgetContents)
+        self.noShellArchivesSetArgs = CardWidget(
+            self.noShellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetArgs.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetArgs.setSizePolicy(sizePolicy)
         self.noShellArchivesSetArgs.setMinimumSize(QSize(0, 580))
         self.noShellArchivesSetArgs.setMaximumSize(QSize(16777215, 580))
@@ -1364,30 +1442,50 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetJVMArgWidget.setSizePolicy(sizePolicy)
         self.noShellArchivesSetJVMArgWidget.setMinimumSize(QSize(0, 171))
         self.noShellArchivesSetJVMArgWidget.setMaximumSize(QSize(16777215, 171))
-        self.noShellArchivesSetJVMArgWidget.setObjectName("noShellArchivesSetJVMArgWidget")
+        self.noShellArchivesSetJVMArgWidget.setObjectName(
+            "noShellArchivesSetJVMArgWidget"
+        )
         self.gridLayout_18 = QGridLayout(self.noShellArchivesSetJVMArgWidget)
         self.gridLayout_18.setObjectName("gridLayout_18")
-        self.noShellArchivesJVMArgPlainTextEdit = PlainTextEdit(self.noShellArchivesSetJVMArgWidget)
-        self.noShellArchivesJVMArgPlainTextEdit.setObjectName("noShellArchivesJVMArgPlainTextEdit")
-        self.gridLayout_18.addWidget(self.noShellArchivesJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.noShellArchivesJVMArgSubtitleLabel = SubtitleLabel(self.noShellArchivesSetJVMArgWidget)
+        self.noShellArchivesJVMArgPlainTextEdit = PlainTextEdit(
+            self.noShellArchivesSetJVMArgWidget
+        )
+        self.noShellArchivesJVMArgPlainTextEdit.setObjectName(
+            "noShellArchivesJVMArgPlainTextEdit"
+        )
+        self.gridLayout_18.addWidget(
+            self.noShellArchivesJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.noShellArchivesJVMArgSubtitleLabel = SubtitleLabel(
+            self.noShellArchivesSetJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.noShellArchivesJVMArgSubtitleLabel.setObjectName("noShellArchivesJVMArgSubtitleLabel")
-        self.gridLayout_18.addWidget(self.noShellArchivesJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.noShellArchivesJVMArgSubtitleLabel.setObjectName(
+            "noShellArchivesJVMArgSubtitleLabel"
+        )
+        self.gridLayout_18.addWidget(
+            self.noShellArchivesJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_19.addWidget(self.noShellArchivesSetJVMArgWidget, 7, 2, 1, 3)
         self.noShellArchivesSetArgsTitle = SubtitleLabel(self.noShellArchivesSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetArgsTitle.setSizePolicy(sizePolicy)
         self.noShellArchivesSetArgsTitle.setObjectName("noShellArchivesSetArgsTitle")
         self.gridLayout_19.addWidget(self.noShellArchivesSetArgsTitle, 0, 3, 1, 1)
@@ -1397,7 +1495,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetArgsStatus.setSizePolicy(sizePolicy)
         self.noShellArchivesSetArgsStatus.setMinimumSize(QSize(30, 30))
         self.noShellArchivesSetArgsStatus.setMaximumSize(QSize(30, 30))
@@ -1407,134 +1507,234 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetJavaWidget.setSizePolicy(sizePolicy)
         self.noShellArchivesSetJavaWidget.setMinimumSize(QSize(0, 100))
         self.noShellArchivesSetJavaWidget.setMaximumSize(QSize(16777215, 100))
         self.noShellArchivesSetJavaWidget.setObjectName("noShellArchivesSetJavaWidget")
         self.gridLayout_17 = QGridLayout(self.noShellArchivesSetJavaWidget)
         self.gridLayout_17.setObjectName("gridLayout_17")
-        self.noShellArchivesSetJavaBtnWidget = QWidget(self.noShellArchivesSetJavaWidget)
+        self.noShellArchivesSetJavaBtnWidget = QWidget(
+            self.noShellArchivesSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetJavaBtnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetJavaBtnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetJavaBtnWidget.setSizePolicy(sizePolicy)
-        self.noShellArchivesSetJavaBtnWidget.setObjectName("noShellArchivesSetJavaBtnWidget")
+        self.noShellArchivesSetJavaBtnWidget.setObjectName(
+            "noShellArchivesSetJavaBtnWidget"
+        )
         self.horizontalLayout_8 = QHBoxLayout(self.noShellArchivesSetJavaBtnWidget)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.noShellArchivesDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.noShellArchivesSetJavaBtnWidget)
+        self.noShellArchivesDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.noShellArchivesSetJavaBtnWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noShellArchivesDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.noShellArchivesDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noShellArchivesDownloadJavaPrimaryPushBtn.setObjectName("noShellArchivesDownloadJavaPrimaryPushBtn")
-        self.horizontalLayout_8.addWidget(self.noShellArchivesDownloadJavaPrimaryPushBtn)
-        self.noShellArchivesManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.noShellArchivesSetJavaBtnWidget)
+        self.noShellArchivesDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.noShellArchivesDownloadJavaPrimaryPushBtn.setObjectName(
+            "noShellArchivesDownloadJavaPrimaryPushBtn"
+        )
+        self.horizontalLayout_8.addWidget(
+            self.noShellArchivesDownloadJavaPrimaryPushBtn
+        )
+        self.noShellArchivesManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.noShellArchivesSetJavaBtnWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noShellArchivesManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.noShellArchivesManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noShellArchivesManuallyAddJavaPrimaryPushBtn.setObjectName("noShellArchivesManuallyAddJavaPrimaryPushBtn")
-        self.horizontalLayout_8.addWidget(self.noShellArchivesManuallyAddJavaPrimaryPushBtn)
-        self.noShellArchivesAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.noShellArchivesSetJavaBtnWidget)
+        self.noShellArchivesManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.noShellArchivesManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "noShellArchivesManuallyAddJavaPrimaryPushBtn"
+        )
+        self.horizontalLayout_8.addWidget(
+            self.noShellArchivesManuallyAddJavaPrimaryPushBtn
+        )
+        self.noShellArchivesAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.noShellArchivesSetJavaBtnWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.noShellArchivesAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noShellArchivesAutoDetectJavaPrimaryPushBtn.setObjectName("noShellArchivesAutoDetectJavaPrimaryPushBtn")
-        self.horizontalLayout_8.addWidget(self.noShellArchivesAutoDetectJavaPrimaryPushBtn)
-        self.noShellArchivesJavaListPushBtn = PushButton(self.noShellArchivesSetJavaBtnWidget)
+        self.noShellArchivesAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.noShellArchivesAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "noShellArchivesAutoDetectJavaPrimaryPushBtn"
+        )
+        self.horizontalLayout_8.addWidget(
+            self.noShellArchivesAutoDetectJavaPrimaryPushBtn
+        )
+        self.noShellArchivesJavaListPushBtn = PushButton(
+            self.noShellArchivesSetJavaBtnWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesJavaListPushBtn.setSizePolicy(sizePolicy)
         self.noShellArchivesJavaListPushBtn.setMinimumSize(QSize(90, 0))
         self.noShellArchivesJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noShellArchivesJavaListPushBtn.setObjectName("noShellArchivesJavaListPushBtn")
+        self.noShellArchivesJavaListPushBtn.setObjectName(
+            "noShellArchivesJavaListPushBtn"
+        )
         self.horizontalLayout_8.addWidget(self.noShellArchivesJavaListPushBtn)
         spacerItem33 = QSpacerItem(127, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_8.addItem(spacerItem33)
         self.gridLayout_17.addWidget(self.noShellArchivesSetJavaBtnWidget, 1, 0, 1, 2)
-        self.noShellArchivesJavaInfoLabel = SubtitleLabel(self.noShellArchivesSetJavaWidget)
+        self.noShellArchivesJavaInfoLabel = SubtitleLabel(
+            self.noShellArchivesSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesJavaInfoLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesJavaInfoLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesJavaInfoLabel.setSizePolicy(sizePolicy)
         self.noShellArchivesJavaInfoLabel.setObjectName("noShellArchivesJavaInfoLabel")
         self.gridLayout_17.addWidget(self.noShellArchivesJavaInfoLabel, 0, 1, 1, 1)
-        self.noShellArchivesJavaSubtitleLabel = SubtitleLabel(self.noShellArchivesSetJavaWidget)
+        self.noShellArchivesJavaSubtitleLabel = SubtitleLabel(
+            self.noShellArchivesSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.noShellArchivesJavaSubtitleLabel.setObjectName("noShellArchivesJavaSubtitleLabel")
+        self.noShellArchivesJavaSubtitleLabel.setObjectName(
+            "noShellArchivesJavaSubtitleLabel"
+        )
         self.gridLayout_17.addWidget(self.noShellArchivesJavaSubtitleLabel, 0, 0, 1, 1)
         self.gridLayout_19.addWidget(self.noShellArchivesSetJavaWidget, 4, 2, 1, 3)
         self.noShellArchivesSetDeEncodingWidget = QWidget(self.noShellArchivesSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetDeEncodingWidget.setSizePolicy(sizePolicy)
         self.noShellArchivesSetDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.noShellArchivesSetDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.noShellArchivesSetDeEncodingWidget.setObjectName("noShellArchivesSetDeEncodingWidget")
+        self.noShellArchivesSetDeEncodingWidget.setObjectName(
+            "noShellArchivesSetDeEncodingWidget"
+        )
         self.gridLayout_16 = QGridLayout(self.noShellArchivesSetDeEncodingWidget)
         self.gridLayout_16.setObjectName("gridLayout_16")
-        self.noShellArchivesOutputDeEncodingComboBox = ComboBox(self.noShellArchivesSetDeEncodingWidget)
+        self.noShellArchivesOutputDeEncodingComboBox = ComboBox(
+            self.noShellArchivesSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.noShellArchivesOutputDeEncodingComboBox.setObjectName("noShellArchivesOutputDeEncodingComboBox")
-        self.gridLayout_16.addWidget(self.noShellArchivesOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.noShellArchivesInputDeEncodingComboBox = ComboBox(self.noShellArchivesSetDeEncodingWidget)
+        self.noShellArchivesOutputDeEncodingComboBox.setObjectName(
+            "noShellArchivesOutputDeEncodingComboBox"
+        )
+        self.gridLayout_16.addWidget(
+            self.noShellArchivesOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.noShellArchivesInputDeEncodingComboBox = ComboBox(
+            self.noShellArchivesSetDeEncodingWidget
+        )
         self.noShellArchivesInputDeEncodingComboBox.setText("")
-        self.noShellArchivesInputDeEncodingComboBox.setObjectName("noShellArchivesInputDeEncodingComboBox")
-        self.gridLayout_16.addWidget(self.noShellArchivesInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.noShellArchivesOutputDeEncodingLabel = StrongBodyLabel(self.noShellArchivesSetDeEncodingWidget)
+        self.noShellArchivesInputDeEncodingComboBox.setObjectName(
+            "noShellArchivesInputDeEncodingComboBox"
+        )
+        self.gridLayout_16.addWidget(
+            self.noShellArchivesInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.noShellArchivesOutputDeEncodingLabel = StrongBodyLabel(
+            self.noShellArchivesSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.noShellArchivesOutputDeEncodingLabel.setObjectName("noShellArchivesOutputDeEncodingLabel")
-        self.gridLayout_16.addWidget(self.noShellArchivesOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.noShellArchivesDeEncodingSubtitleLabel = SubtitleLabel(self.noShellArchivesSetDeEncodingWidget)
+        self.noShellArchivesOutputDeEncodingLabel.setObjectName(
+            "noShellArchivesOutputDeEncodingLabel"
+        )
+        self.gridLayout_16.addWidget(
+            self.noShellArchivesOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.noShellArchivesDeEncodingSubtitleLabel = SubtitleLabel(
+            self.noShellArchivesSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.noShellArchivesDeEncodingSubtitleLabel.setObjectName("noShellArchivesDeEncodingSubtitleLabel")
-        self.gridLayout_16.addWidget(self.noShellArchivesDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.noShellArchivesInputDeEncodingLabel = StrongBodyLabel(self.noShellArchivesSetDeEncodingWidget)
+        self.noShellArchivesDeEncodingSubtitleLabel.setObjectName(
+            "noShellArchivesDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_16.addWidget(
+            self.noShellArchivesDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.noShellArchivesInputDeEncodingLabel = StrongBodyLabel(
+            self.noShellArchivesSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.noShellArchivesInputDeEncodingLabel.setObjectName("noShellArchivesInputDeEncodingLabel")
-        self.gridLayout_16.addWidget(self.noShellArchivesInputDeEncodingLabel, 3, 0, 1, 1)
-        self.gridLayout_19.addWidget(self.noShellArchivesSetDeEncodingWidget, 6, 2, 1, 3)
+        self.noShellArchivesInputDeEncodingLabel.setObjectName(
+            "noShellArchivesInputDeEncodingLabel"
+        )
+        self.gridLayout_16.addWidget(
+            self.noShellArchivesInputDeEncodingLabel, 3, 0, 1, 1
+        )
+        self.gridLayout_19.addWidget(
+            self.noShellArchivesSetDeEncodingWidget, 6, 2, 1, 3
+        )
         self.noShellArchivesSetMemWidget = QWidget(self.noShellArchivesSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSetMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSetMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSetMemWidget.setSizePolicy(sizePolicy)
         self.noShellArchivesSetMemWidget.setMinimumSize(QSize(0, 85))
         self.noShellArchivesSetMemWidget.setMaximumSize(QSize(16777215, 85))
@@ -1545,48 +1745,70 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesMinMemLineEdit.setSizePolicy(sizePolicy)
         self.noShellArchivesMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.noShellArchivesMinMemLineEdit.setObjectName("noShellArchivesMinMemLineEdit")
+        self.noShellArchivesMinMemLineEdit.setObjectName(
+            "noShellArchivesMinMemLineEdit"
+        )
         self.gridLayout_15.addWidget(self.noShellArchivesMinMemLineEdit, 1, 1, 1, 1)
-        self.noShellArchivesMemSubtitleLabel = SubtitleLabel(self.noShellArchivesSetMemWidget)
+        self.noShellArchivesMemSubtitleLabel = SubtitleLabel(
+            self.noShellArchivesSetMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.noShellArchivesMemSubtitleLabel.setObjectName("noShellArchivesMemSubtitleLabel")
+        self.noShellArchivesMemSubtitleLabel.setObjectName(
+            "noShellArchivesMemSubtitleLabel"
+        )
         self.gridLayout_15.addWidget(self.noShellArchivesMemSubtitleLabel, 0, 1, 1, 1)
         self.noShellArchivesMaxMemLineEdit = LineEdit(self.noShellArchivesSetMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.noShellArchivesMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.noShellArchivesMaxMemLineEdit.setObjectName("noShellArchivesMaxMemLineEdit")
+        self.noShellArchivesMaxMemLineEdit.setObjectName(
+            "noShellArchivesMaxMemLineEdit"
+        )
         self.gridLayout_15.addWidget(self.noShellArchivesMaxMemLineEdit, 1, 3, 1, 1)
         self.noShellArchivesToSymbol = SubtitleLabel(self.noShellArchivesSetMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesToSymbol.setSizePolicy(sizePolicy)
         self.noShellArchivesToSymbol.setObjectName("noShellArchivesToSymbol")
         self.gridLayout_15.addWidget(self.noShellArchivesToSymbol, 1, 2, 1, 1)
         spacerItem34 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_15.addItem(spacerItem34, 1, 5, 1, 1)
         self.noShellArchivesMemUnitComboBox = ComboBox(self.noShellArchivesSetMemWidget)
-        self.noShellArchivesMemUnitComboBox.setObjectName("noShellArchivesMemUnitComboBox")
+        self.noShellArchivesMemUnitComboBox.setObjectName(
+            "noShellArchivesMemUnitComboBox"
+        )
         self.gridLayout_15.addWidget(self.noShellArchivesMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_19.addWidget(self.noShellArchivesSetMemWidget, 5, 2, 1, 3)
         self.verticalLayout_2.addWidget(self.noShellArchivesSetArgs)
-        self.noShellArchivesSave = CardWidget(self.noShellArchivesScrollAreaWidgetContents)
+        self.noShellArchivesSave = CardWidget(
+            self.noShellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSave.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSave.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSave.setSizePolicy(sizePolicy)
         self.noShellArchivesSave.setMinimumSize(QSize(0, 125))
         self.noShellArchivesSave.setMaximumSize(QSize(16777215, 125))
@@ -1597,7 +1819,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSaveTitle.setSizePolicy(sizePolicy)
         self.noShellArchivesSaveTitle.setObjectName("noShellArchivesSaveTitle")
         self.gridLayout_20.addWidget(self.noShellArchivesSaveTitle, 0, 1, 1, 1)
@@ -1605,25 +1829,43 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.noShellArchivesSaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
-        self.noShellArchivesSaveServerNameLineEdit.setObjectName("noShellArchivesSaveServerNameLineEdit")
-        self.gridLayout_20.addWidget(self.noShellArchivesSaveServerNameLineEdit, 1, 1, 1, 1)
+        self.noShellArchivesSaveServerNameLineEdit.setObjectName(
+            "noShellArchivesSaveServerNameLineEdit"
+        )
+        self.gridLayout_20.addWidget(
+            self.noShellArchivesSaveServerNameLineEdit, 1, 1, 1, 1
+        )
         spacerItem35 = QSpacerItem(20, 79, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_20.addItem(spacerItem35, 0, 0, 3, 1)
-        self.noShellArchivesSaveSaveServerPrimaryPushBtn = PrimaryPushButton(self.noShellArchivesSave)
+        self.noShellArchivesSaveSaveServerPrimaryPushBtn = PrimaryPushButton(
+            self.noShellArchivesSave
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noShellArchivesSaveSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.noShellArchivesSaveSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.noShellArchivesSaveSaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noShellArchivesSaveSaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
-        self.noShellArchivesSaveSaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.noShellArchivesSaveSaveServerPrimaryPushBtn.setObjectName("noShellArchivesSaveSaveServerPrimaryPushBtn")
-        self.gridLayout_20.addWidget(self.noShellArchivesSaveSaveServerPrimaryPushBtn, 2, 1, 1, 1)
+        self.noShellArchivesSaveSaveServerPrimaryPushBtn.setMaximumSize(
+            QSize(16777215, 30)
+        )
+        self.noShellArchivesSaveSaveServerPrimaryPushBtn.setObjectName(
+            "noShellArchivesSaveSaveServerPrimaryPushBtn"
+        )
+        self.gridLayout_20.addWidget(
+            self.noShellArchivesSaveSaveServerPrimaryPushBtn, 2, 1, 1, 1
+        )
         self.verticalLayout_2.addWidget(self.noShellArchivesSave)
-        self.noShellArchivesScrollArea.setWidget(self.noShellArchivesScrollAreaWidgetContents)
+        self.noShellArchivesScrollArea.setWidget(
+            self.noShellArchivesScrollAreaWidgetContents
+        )
         self.gridLayout_12.addWidget(self.noShellArchivesScrollArea, 1, 3, 1, 2)
         self.importNewServerStackWidget.addWidget(self.noShellArchives)
         self.shellArchives = QWidget()
@@ -1631,14 +1873,18 @@ class ConfigurePage(QWidget):
         self.gridLayout_30 = QGridLayout(self.shellArchives)
         self.gridLayout_30.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_30.setObjectName("gridLayout_30")
-        self.shellArchivesBackToMain = TransparentToolButton(FIF.PAGE_LEFT, self.shellArchives)
+        self.shellArchivesBackToMain = TransparentToolButton(
+            FIF.PAGE_LEFT, self.shellArchives
+        )
         self.shellArchivesBackToMain.setObjectName("shellArchivesBackToMain")
         self.gridLayout_30.addWidget(self.shellArchivesBackToMain, 0, 1, 1, 1)
         self.shellArchivesTitle = SubtitleLabel(self.shellArchives)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesTitle.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesTitle.setSizePolicy(sizePolicy)
         self.shellArchivesTitle.setObjectName("shellArchivesTitle")
         self.gridLayout_30.addWidget(self.shellArchivesTitle, 0, 2, 1, 1)
@@ -1654,15 +1900,21 @@ class ConfigurePage(QWidget):
         self.shellArchivesScrollArea.setObjectName("shellArchivesScrollArea")
         self.shellArchivesScrollAreaWidgetContents = QWidget()
         self.shellArchivesScrollAreaWidgetContents.setGeometry(QRect(0, 0, 450, 1191))
-        self.shellArchivesScrollAreaWidgetContents.setObjectName("shellArchivesScrollAreaWidgetContents")
+        self.shellArchivesScrollAreaWidgetContents.setObjectName(
+            "shellArchivesScrollAreaWidgetContents"
+        )
         self.verticalLayout_3 = QVBoxLayout(self.shellArchivesScrollAreaWidgetContents)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.shellArchivesImport = CardWidget(self.shellArchivesScrollAreaWidgetContents)
+        self.shellArchivesImport = CardWidget(
+            self.shellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesImport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesImport.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesImport.setSizePolicy(sizePolicy)
         self.shellArchivesImport.setMinimumSize(QSize(0, 150))
         self.shellArchivesImport.setMaximumSize(QSize(16777215, 150))
@@ -1675,7 +1927,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesImportStatus.setSizePolicy(sizePolicy)
         self.shellArchivesImportStatus.setMinimumSize(QSize(30, 30))
         self.shellArchivesImportStatus.setMaximumSize(QSize(30, 30))
@@ -1685,25 +1939,35 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesImportStatusText.setSizePolicy(sizePolicy)
-        self.shellArchivesImportStatusText.setObjectName("shellArchivesImportStatusText")
+        self.shellArchivesImportStatusText.setObjectName(
+            "shellArchivesImportStatusText"
+        )
         self.gridLayout_22.addWidget(self.shellArchivesImportStatusText, 1, 1, 1, 2)
         self.shellArchivesImportBtnWidget = QWidget(self.shellArchivesImport)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesImportBtnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesImportBtnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesImportBtnWidget.setSizePolicy(sizePolicy)
         self.shellArchivesImportBtnWidget.setObjectName("shellArchivesImportBtnWidget")
         self.horizontalLayout_3 = QHBoxLayout(self.shellArchivesImportBtnWidget)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.shellArchivesImportArchives = PrimaryPushButton(self.shellArchivesImportBtnWidget)
+        self.shellArchivesImportArchives = PrimaryPushButton(
+            self.shellArchivesImportBtnWidget
+        )
         self.shellArchivesImportArchives.setMinimumSize(QSize(110, 32))
         self.shellArchivesImportArchives.setMaximumSize(QSize(110, 32))
         self.shellArchivesImportArchives.setObjectName("shellArchivesImportArchives")
         self.horizontalLayout_3.addWidget(self.shellArchivesImportArchives)
-        self.shellArchivesImportFolder = PrimaryPushButton(self.shellArchivesImportBtnWidget)
+        self.shellArchivesImportFolder = PrimaryPushButton(
+            self.shellArchivesImportBtnWidget
+        )
         self.shellArchivesImportFolder.setMinimumSize(QSize(110, 32))
         self.shellArchivesImportFolder.setMaximumSize(QSize(110, 32))
         self.shellArchivesImportFolder.setObjectName("shellArchivesImportFolder")
@@ -1715,16 +1979,22 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesImportTitle.setSizePolicy(sizePolicy)
         self.shellArchivesImportTitle.setObjectName("shellArchivesImportTitle")
         self.gridLayout_22.addWidget(self.shellArchivesImportTitle, 0, 2, 1, 1)
         self.verticalLayout_3.addWidget(self.shellArchivesImport)
-        self.shellArchivesSelectShell = CardWidget(self.shellArchivesScrollAreaWidgetContents)
+        self.shellArchivesSelectShell = CardWidget(
+            self.shellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSelectShell.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSelectShell.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSelectShell.setSizePolicy(sizePolicy)
         self.shellArchivesSelectShell.setMinimumSize(QSize(0, 250))
         self.shellArchivesSelectShell.setObjectName("shellArchivesSelectShell")
@@ -1734,40 +2004,68 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSelectShellStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSelectShellStatus.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSelectShellStatus.setSizePolicy(sizePolicy)
         self.shellArchivesSelectShellStatus.setMinimumSize(QSize(30, 30))
         self.shellArchivesSelectShellStatus.setMaximumSize(QSize(30, 30))
-        self.shellArchivesSelectShellStatus.setObjectName("shellArchivesSelectShellStatus")
+        self.shellArchivesSelectShellStatus.setObjectName(
+            "shellArchivesSelectShellStatus"
+        )
         self.gridLayout_23.addWidget(self.shellArchivesSelectShellStatus, 0, 1, 1, 1)
         spacerItem40 = QSpacerItem(20, 279, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_23.addItem(spacerItem40, 0, 0, 3, 1)
-        self.shellArchivesSelectShellStatusText = BodyLabel(self.shellArchivesSelectShell)
+        self.shellArchivesSelectShellStatusText = BodyLabel(
+            self.shellArchivesSelectShell
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSelectShellStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSelectShellStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSelectShellStatusText.setSizePolicy(sizePolicy)
-        self.shellArchivesSelectShellStatusText.setObjectName("shellArchivesSelectShellStatusText")
-        self.gridLayout_23.addWidget(self.shellArchivesSelectShellStatusText, 1, 1, 1, 2)
-        self.shellArchivesSelectShellTitle = SubtitleLabel(self.shellArchivesSelectShell)
+        self.shellArchivesSelectShellStatusText.setObjectName(
+            "shellArchivesSelectShellStatusText"
+        )
+        self.gridLayout_23.addWidget(
+            self.shellArchivesSelectShellStatusText, 1, 1, 1, 2
+        )
+        self.shellArchivesSelectShellTitle = SubtitleLabel(
+            self.shellArchivesSelectShell
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSelectShellTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSelectShellTitle.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSelectShellTitle.setSizePolicy(sizePolicy)
-        self.shellArchivesSelectShellTitle.setObjectName("shellArchivesSelectShellTitle")
+        self.shellArchivesSelectShellTitle.setObjectName(
+            "shellArchivesSelectShellTitle"
+        )
         self.gridLayout_23.addWidget(self.shellArchivesSelectShellTitle, 0, 2, 1, 1)
-        self.shellArchivesSelectShellTreeWidget = TreeWidget(self.shellArchivesSelectShell)
-        self.shellArchivesSelectShellTreeWidget.setObjectName("shellArchivesSelectShellTreeWidget")
+        self.shellArchivesSelectShellTreeWidget = TreeWidget(
+            self.shellArchivesSelectShell
+        )
+        self.shellArchivesSelectShellTreeWidget.setObjectName(
+            "shellArchivesSelectShellTreeWidget"
+        )
         self.shellArchivesSelectShellTreeWidget.headerItem().setText(0, "1")
-        self.gridLayout_23.addWidget(self.shellArchivesSelectShellTreeWidget, 2, 1, 1, 2)
+        self.gridLayout_23.addWidget(
+            self.shellArchivesSelectShellTreeWidget, 2, 1, 1, 2
+        )
         self.verticalLayout_3.addWidget(self.shellArchivesSelectShell)
-        self.shellArchivesValidateArgs = CardWidget(self.shellArchivesScrollAreaWidgetContents)
+        self.shellArchivesValidateArgs = CardWidget(
+            self.shellArchivesScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgs.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgs.setMinimumSize(QSize(0, 630))
         self.shellArchivesValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -1776,280 +2074,498 @@ class ConfigurePage(QWidget):
         self.gridLayout_24.setObjectName("gridLayout_24")
         spacerItem41 = QSpacerItem(20, 102, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_24.addItem(spacerItem41, 0, 0, 21, 1)
-        self.shellArchivesValidateArgsJavaWidget = QWidget(self.shellArchivesValidateArgs)
+        self.shellArchivesValidateArgsJavaWidget = QWidget(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
-        self.shellArchivesValidateArgsJavaWidget.setObjectName("shellArchivesValidateArgsJavaWidget")
+        self.shellArchivesValidateArgsJavaWidget.setObjectName(
+            "shellArchivesValidateArgsJavaWidget"
+        )
         self.gridLayout_26 = QGridLayout(self.shellArchivesValidateArgsJavaWidget)
         self.gridLayout_26.setObjectName("gridLayout_26")
         self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
-            self.shellArchivesValidateArgsJavaWidget)
+            self.shellArchivesValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+            self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_26.addWidget(self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.shellArchivesValidateArgsJavaSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsJavaWidget)
+            "shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_26.addWidget(
+            self.shellArchivesValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.shellArchivesValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.shellArchivesValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsJavaSubtitleLabel.setObjectName("shellArchivesValidateArgsJavaSubtitleLabel")
-        self.gridLayout_26.addWidget(self.shellArchivesValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
-        self.shellArchivesValidateArgsJavaListPushBtn = PushButton(self.shellArchivesValidateArgsJavaWidget)
+        self.shellArchivesValidateArgsJavaSubtitleLabel.setObjectName(
+            "shellArchivesValidateArgsJavaSubtitleLabel"
+        )
+        self.gridLayout_26.addWidget(
+            self.shellArchivesValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
+        )
+        self.shellArchivesValidateArgsJavaListPushBtn = PushButton(
+            self.shellArchivesValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
-        self.shellArchivesValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.shellArchivesValidateArgsJavaListPushBtn.setObjectName("shellArchivesValidateArgsJavaListPushBtn")
-        self.gridLayout_26.addWidget(self.shellArchivesValidateArgsJavaListPushBtn, 3, 2, 1, 1)
+        self.shellArchivesValidateArgsJavaListPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.shellArchivesValidateArgsJavaListPushBtn.setObjectName(
+            "shellArchivesValidateArgsJavaListPushBtn"
+        )
+        self.gridLayout_26.addWidget(
+            self.shellArchivesValidateArgsJavaListPushBtn, 3, 2, 1, 1
+        )
         self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
-            self.shellArchivesValidateArgsJavaWidget)
+            self.shellArchivesValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+            self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
+        self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_26.addWidget(self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
+            "shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_26.addWidget(
+            self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
         self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
-            self.shellArchivesValidateArgsJavaWidget)
+            self.shellArchivesValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+            self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
+        self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
-            "shellArchivesValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_26.addWidget(self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.shellArchivesValidateArgsJavaTextEdit = TextEdit(self.shellArchivesValidateArgsJavaWidget)
-        self.shellArchivesValidateArgsJavaTextEdit.setObjectName("shellArchivesValidateArgsJavaTextEdit")
-        self.gridLayout_26.addWidget(self.shellArchivesValidateArgsJavaTextEdit, 2, 0, 2, 1)
-        self.gridLayout_24.addWidget(self.shellArchivesValidateArgsJavaWidget, 5, 2, 1, 3)
-        self.shellArchivesValidateArgsDeEncodingWidget = QWidget(self.shellArchivesValidateArgs)
+            "shellArchivesValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_26.addWidget(
+            self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.shellArchivesValidateArgsJavaTextEdit = TextEdit(
+            self.shellArchivesValidateArgsJavaWidget
+        )
+        self.shellArchivesValidateArgsJavaTextEdit.setObjectName(
+            "shellArchivesValidateArgsJavaTextEdit"
+        )
+        self.gridLayout_26.addWidget(
+            self.shellArchivesValidateArgsJavaTextEdit, 2, 0, 2, 1
+        )
+        self.gridLayout_24.addWidget(
+            self.shellArchivesValidateArgsJavaWidget, 5, 2, 1, 3
+        )
+        self.shellArchivesValidateArgsDeEncodingWidget = QWidget(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
-        self.shellArchivesValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.shellArchivesValidateArgsDeEncodingWidget.setObjectName("shellArchivesValidateArgsDeEncodingWidget")
+        self.shellArchivesValidateArgsDeEncodingWidget.setMaximumSize(
+            QSize(16777215, 122)
+        )
+        self.shellArchivesValidateArgsDeEncodingWidget.setObjectName(
+            "shellArchivesValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_27 = QGridLayout(self.shellArchivesValidateArgsDeEncodingWidget)
         self.gridLayout_27.setObjectName("gridLayout_27")
         self.shellArchivesValidateArgsOutputDeEncodingComboBox = ComboBox(
-            self.shellArchivesValidateArgsDeEncodingWidget)
+            self.shellArchivesValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+            self.shellArchivesValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsOutputDeEncodingComboBox.setObjectName(
-            "shellArchivesValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_27.addWidget(self.shellArchivesValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.shellArchivesValidateArgsInputDeEncodingComboBox = ComboBox(self.shellArchivesValidateArgsDeEncodingWidget)
+            "shellArchivesValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_27.addWidget(
+            self.shellArchivesValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.shellArchivesValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.shellArchivesValidateArgsDeEncodingWidget
+        )
         self.shellArchivesValidateArgsInputDeEncodingComboBox.setText("")
         self.shellArchivesValidateArgsInputDeEncodingComboBox.setObjectName(
-            "shellArchivesValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_27.addWidget(self.shellArchivesValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
+            "shellArchivesValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_27.addWidget(
+            self.shellArchivesValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
         self.shellArchivesValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
-            self.shellArchivesValidateArgsDeEncodingWidget)
+            self.shellArchivesValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+            self.shellArchivesValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsOutputDeEncodingLabel.setObjectName(
-            "shellArchivesValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_27.addWidget(self.shellArchivesValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
+            "shellArchivesValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_27.addWidget(
+            self.shellArchivesValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
         self.shellArchivesValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
-            self.shellArchivesValidateArgsDeEncodingWidget)
+            self.shellArchivesValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+            self.shellArchivesValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsDeEncodingSubtitleLabel.setObjectName(
-            "shellArchivesValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_27.addWidget(self.shellArchivesValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
+            "shellArchivesValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_27.addWidget(
+            self.shellArchivesValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
         self.shellArchivesValidateArgsInputDeEncodingLabel = StrongBodyLabel(
-            self.shellArchivesValidateArgsDeEncodingWidget)
+            self.shellArchivesValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+            self.shellArchivesValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsInputDeEncodingLabel.setObjectName(
-            "shellArchivesValidateArgsInputDeEncodingLabel")
-        self.gridLayout_27.addWidget(self.shellArchivesValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
-        self.gridLayout_24.addWidget(self.shellArchivesValidateArgsDeEncodingWidget, 8, 2, 1, 3)
-        self.shellArchivesValidateArgsJVMArgWidget = QWidget(self.shellArchivesValidateArgs)
+            "shellArchivesValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_27.addWidget(
+            self.shellArchivesValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
+        self.gridLayout_24.addWidget(
+            self.shellArchivesValidateArgsDeEncodingWidget, 8, 2, 1, 3
+        )
+        self.shellArchivesValidateArgsJVMArgWidget = QWidget(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.shellArchivesValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.shellArchivesValidateArgsJVMArgWidget.setObjectName("shellArchivesValidateArgsJVMArgWidget")
+        self.shellArchivesValidateArgsJVMArgWidget.setObjectName(
+            "shellArchivesValidateArgsJVMArgWidget"
+        )
         self.gridLayout_25 = QGridLayout(self.shellArchivesValidateArgsJVMArgWidget)
         self.gridLayout_25.setObjectName("gridLayout_25")
-        self.shellArchivesValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.shellArchivesValidateArgsJVMArgWidget)
-        self.shellArchivesValidateArgsJVMArgPlainTextEdit.setObjectName("shellArchivesValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_25.addWidget(self.shellArchivesValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.shellArchivesValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsJVMArgWidget)
+        self.shellArchivesValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.shellArchivesValidateArgsJVMArgWidget
+        )
+        self.shellArchivesValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "shellArchivesValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_25.addWidget(
+            self.shellArchivesValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.shellArchivesValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.shellArchivesValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsJVMArgSubtitleLabel.setObjectName("shellArchivesValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_25.addWidget(self.shellArchivesValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
-        self.gridLayout_24.addWidget(self.shellArchivesValidateArgsJVMArgWidget, 9, 2, 1, 3)
-        self.shellArchivesValidateArgsStatus = PixmapLabel(self.shellArchivesValidateArgs)
+        self.shellArchivesValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "shellArchivesValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_25.addWidget(
+            self.shellArchivesValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
+        self.gridLayout_24.addWidget(
+            self.shellArchivesValidateArgsJVMArgWidget, 9, 2, 1, 3
+        )
+        self.shellArchivesValidateArgsStatus = PixmapLabel(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsStatus.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.shellArchivesValidateArgsStatus.setMaximumSize(QSize(30, 30))
-        self.shellArchivesValidateArgsStatus.setObjectName("shellArchivesValidateArgsStatus")
+        self.shellArchivesValidateArgsStatus.setObjectName(
+            "shellArchivesValidateArgsStatus"
+        )
         self.gridLayout_24.addWidget(self.shellArchivesValidateArgsStatus, 0, 2, 1, 1)
-        self.shellArchivesValidateArgsMemWidget = QWidget(self.shellArchivesValidateArgs)
+        self.shellArchivesValidateArgsMemWidget = QWidget(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.shellArchivesValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
-        self.shellArchivesValidateArgsMemWidget.setObjectName("shellArchivesValidateArgsMemWidget")
+        self.shellArchivesValidateArgsMemWidget.setObjectName(
+            "shellArchivesValidateArgsMemWidget"
+        )
         self.gridLayout_28 = QGridLayout(self.shellArchivesValidateArgsMemWidget)
         self.gridLayout_28.setObjectName("gridLayout_28")
-        self.shellArchivesValidateArgsMinMemLineEdit = LineEdit(self.shellArchivesValidateArgsMemWidget)
+        self.shellArchivesValidateArgsMinMemLineEdit = LineEdit(
+            self.shellArchivesValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.shellArchivesValidateArgsMinMemLineEdit.setObjectName("shellArchivesValidateArgsMinMemLineEdit")
-        self.gridLayout_28.addWidget(self.shellArchivesValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.shellArchivesValidateArgsMemSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsMemWidget)
+        self.shellArchivesValidateArgsMinMemLineEdit.setObjectName(
+            "shellArchivesValidateArgsMinMemLineEdit"
+        )
+        self.gridLayout_28.addWidget(
+            self.shellArchivesValidateArgsMinMemLineEdit, 1, 1, 1, 1
+        )
+        self.shellArchivesValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.shellArchivesValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsMemSubtitleLabel.setObjectName("shellArchivesValidateArgsMemSubtitleLabel")
-        self.gridLayout_28.addWidget(self.shellArchivesValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
-        self.shellArchivesValidateArgsMaxMemLineEdit = LineEdit(self.shellArchivesValidateArgsMemWidget)
+        self.shellArchivesValidateArgsMemSubtitleLabel.setObjectName(
+            "shellArchivesValidateArgsMemSubtitleLabel"
+        )
+        self.gridLayout_28.addWidget(
+            self.shellArchivesValidateArgsMemSubtitleLabel, 0, 1, 1, 1
+        )
+        self.shellArchivesValidateArgsMaxMemLineEdit = LineEdit(
+            self.shellArchivesValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.shellArchivesValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.shellArchivesValidateArgsMaxMemLineEdit.setObjectName("shellArchivesValidateArgsMaxMemLineEdit")
-        self.gridLayout_28.addWidget(self.shellArchivesValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
-        self.shellArchivesValidateArgsToSymbol = SubtitleLabel(self.shellArchivesValidateArgsMemWidget)
+        self.shellArchivesValidateArgsMaxMemLineEdit.setObjectName(
+            "shellArchivesValidateArgsMaxMemLineEdit"
+        )
+        self.gridLayout_28.addWidget(
+            self.shellArchivesValidateArgsMaxMemLineEdit, 1, 3, 1, 1
+        )
+        self.shellArchivesValidateArgsToSymbol = SubtitleLabel(
+            self.shellArchivesValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsToSymbol.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsToSymbol.setObjectName("shellArchivesValidateArgsToSymbol")
+        self.shellArchivesValidateArgsToSymbol.setObjectName(
+            "shellArchivesValidateArgsToSymbol"
+        )
         self.gridLayout_28.addWidget(self.shellArchivesValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem42 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_28.addItem(spacerItem42, 1, 5, 1, 1)
-        self.shellArchivesValidateArgsMemUnitComboBox = ComboBox(self.shellArchivesValidateArgsMemWidget)
-        self.shellArchivesValidateArgsMemUnitComboBox.setObjectName("shellArchivesValidateArgsMemUnitComboBox")
-        self.gridLayout_28.addWidget(self.shellArchivesValidateArgsMemUnitComboBox, 1, 4, 1, 1)
-        self.gridLayout_24.addWidget(self.shellArchivesValidateArgsMemWidget, 6, 2, 1, 3)
-        self.shellArchivesValidateArgsTitle = SubtitleLabel(self.shellArchivesValidateArgs)
+        self.shellArchivesValidateArgsMemUnitComboBox = ComboBox(
+            self.shellArchivesValidateArgsMemWidget
+        )
+        self.shellArchivesValidateArgsMemUnitComboBox.setObjectName(
+            "shellArchivesValidateArgsMemUnitComboBox"
+        )
+        self.gridLayout_28.addWidget(
+            self.shellArchivesValidateArgsMemUnitComboBox, 1, 4, 1, 1
+        )
+        self.gridLayout_24.addWidget(
+            self.shellArchivesValidateArgsMemWidget, 6, 2, 1, 3
+        )
+        self.shellArchivesValidateArgsTitle = SubtitleLabel(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsTitle.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsTitle.setObjectName("shellArchivesValidateArgsTitle")
+        self.shellArchivesValidateArgsTitle.setObjectName(
+            "shellArchivesValidateArgsTitle"
+        )
         self.gridLayout_24.addWidget(self.shellArchivesValidateArgsTitle, 0, 3, 1, 1)
-        self.shellArchivesValidateArgsCoreWidget = QWidget(self.shellArchivesValidateArgs)
+        self.shellArchivesValidateArgsCoreWidget = QWidget(
+            self.shellArchivesValidateArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesValidateArgsCoreWidget.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsCoreWidget.setObjectName("shellArchivesValidateArgsCoreWidget")
+        self.shellArchivesValidateArgsCoreWidget.setObjectName(
+            "shellArchivesValidateArgsCoreWidget"
+        )
         self.gridLayout_31 = QGridLayout(self.shellArchivesValidateArgsCoreWidget)
         self.gridLayout_31.setObjectName("gridLayout_31")
         self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
-            self.shellArchivesValidateArgsCoreWidget)
+            self.shellArchivesValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+            self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
         self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
-            "shellArchivesValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_31.addWidget(self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.shellArchivesValidateArgsCoreSubtitleLabel = SubtitleLabel(self.shellArchivesValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.shellArchivesValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsCoreSubtitleLabel.setObjectName("shellArchivesValidateArgsCoreSubtitleLabel")
-        self.gridLayout_31.addWidget(self.shellArchivesValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.shellArchivesValidateArgsCoreLineEdit = LineEdit(self.shellArchivesValidateArgsCoreWidget)
-        self.shellArchivesValidateArgsCoreLineEdit.setObjectName("shellArchivesValidateArgsCoreLineEdit")
-        self.gridLayout_31.addWidget(self.shellArchivesValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
-            self.shellArchivesValidateArgsCoreWidget)
+            "shellArchivesValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_31.addWidget(
+            self.shellArchivesValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.shellArchivesValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.shellArchivesValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+            self.shellArchivesValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.shellArchivesValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.shellArchivesValidateArgsCoreSubtitleLabel.setObjectName(
+            "shellArchivesValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_31.addWidget(
+            self.shellArchivesValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.shellArchivesValidateArgsCoreLineEdit = LineEdit(
+            self.shellArchivesValidateArgsCoreWidget
+        )
+        self.shellArchivesValidateArgsCoreLineEdit.setObjectName(
+            "shellArchivesValidateArgsCoreLineEdit"
+        )
+        self.gridLayout_31.addWidget(
+            self.shellArchivesValidateArgsCoreLineEdit, 1, 1, 1, 1
+        )
+        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
         self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_31.addWidget(self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
-        self.gridLayout_24.addWidget(self.shellArchivesValidateArgsCoreWidget, 7, 2, 1, 3)
+            "shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_31.addWidget(
+            self.shellArchivesValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
+        self.gridLayout_24.addWidget(
+            self.shellArchivesValidateArgsCoreWidget, 7, 2, 1, 3
+        )
         self.verticalLayout_3.addWidget(self.shellArchivesValidateArgs)
         self.shellArchivesSave = CardWidget(self.shellArchivesScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSave.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSave.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSave.setSizePolicy(sizePolicy)
         self.shellArchivesSave.setMinimumSize(QSize(0, 125))
         self.shellArchivesSave.setMaximumSize(QSize(16777215, 125))
@@ -2060,7 +2576,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSaveTitle.setSizePolicy(sizePolicy)
         self.shellArchivesSaveTitle.setObjectName("shellArchivesSaveTitle")
         self.gridLayout_29.addWidget(self.shellArchivesSaveTitle, 0, 1, 1, 1)
@@ -2068,25 +2586,43 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.shellArchivesSaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
-        self.shellArchivesSaveServerNameLineEdit.setObjectName("shellArchivesSaveServerNameLineEdit")
-        self.gridLayout_29.addWidget(self.shellArchivesSaveServerNameLineEdit, 1, 1, 1, 1)
+        self.shellArchivesSaveServerNameLineEdit.setObjectName(
+            "shellArchivesSaveServerNameLineEdit"
+        )
+        self.gridLayout_29.addWidget(
+            self.shellArchivesSaveServerNameLineEdit, 1, 1, 1, 1
+        )
         spacerItem43 = QSpacerItem(20, 79, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_29.addItem(spacerItem43, 0, 0, 3, 1)
-        self.shellArchivesSaveSaveServerPrimaryPushBtn = PrimaryPushButton(self.shellArchivesSave)
+        self.shellArchivesSaveSaveServerPrimaryPushBtn = PrimaryPushButton(
+            self.shellArchivesSave
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.shellArchivesSaveSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.shellArchivesSaveSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.shellArchivesSaveSaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.shellArchivesSaveSaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
-        self.shellArchivesSaveSaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.shellArchivesSaveSaveServerPrimaryPushBtn.setObjectName("shellArchivesSaveSaveServerPrimaryPushBtn")
-        self.gridLayout_29.addWidget(self.shellArchivesSaveSaveServerPrimaryPushBtn, 2, 1, 1, 1)
+        self.shellArchivesSaveSaveServerPrimaryPushBtn.setMaximumSize(
+            QSize(16777215, 30)
+        )
+        self.shellArchivesSaveSaveServerPrimaryPushBtn.setObjectName(
+            "shellArchivesSaveSaveServerPrimaryPushBtn"
+        )
+        self.gridLayout_29.addWidget(
+            self.shellArchivesSaveSaveServerPrimaryPushBtn, 2, 1, 1, 1
+        )
         self.verticalLayout_3.addWidget(self.shellArchivesSave)
-        self.shellArchivesScrollArea.setWidget(self.shellArchivesScrollAreaWidgetContents)
+        self.shellArchivesScrollArea.setWidget(
+            self.shellArchivesScrollAreaWidgetContents
+        )
         self.gridLayout_30.addWidget(self.shellArchivesScrollArea, 1, 2, 1, 2)
         spacerItem44 = QSpacerItem(20, 335, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_30.addItem(spacerItem44, 0, 0, 2, 1)
@@ -2099,22 +2635,36 @@ class ConfigurePage(QWidget):
         spacerItem45 = QSpacerItem(256, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_41.addItem(spacerItem45, 0, 3, 1, 1)
         self.serverArchiveSiteScrollArea = SmoothScrollArea(self.serverArchiveSite)
-        self.serverArchiveSiteScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.serverArchiveSiteScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.serverArchiveSiteScrollArea.setVerticalScrollBarPolicy(
+            Qt.ScrollBarAsNeeded
+        )
+        self.serverArchiveSiteScrollArea.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarAsNeeded
+        )
         self.serverArchiveSiteScrollArea.setWidgetResizable(True)
         self.serverArchiveSiteScrollArea.setAlignment(Qt.AlignCenter)
         self.serverArchiveSiteScrollArea.setObjectName("serverArchiveSiteScrollArea")
         self.serverArchiveSiteScrollAreaWidgetContents = QWidget()
-        self.serverArchiveSiteScrollAreaWidgetContents.setGeometry(QRect(0, 0, 450, 935))
-        self.serverArchiveSiteScrollAreaWidgetContents.setObjectName("serverArchiveSiteScrollAreaWidgetContents")
-        self.verticalLayout_6 = QVBoxLayout(self.serverArchiveSiteScrollAreaWidgetContents)
+        self.serverArchiveSiteScrollAreaWidgetContents.setGeometry(
+            QRect(0, 0, 450, 935)
+        )
+        self.serverArchiveSiteScrollAreaWidgetContents.setObjectName(
+            "serverArchiveSiteScrollAreaWidgetContents"
+        )
+        self.verticalLayout_6 = QVBoxLayout(
+            self.serverArchiveSiteScrollAreaWidgetContents
+        )
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.serverArchiveSiteImport = CardWidget(self.serverArchiveSiteScrollAreaWidgetContents)
+        self.serverArchiveSiteImport = CardWidget(
+            self.serverArchiveSiteScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteImport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteImport.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteImport.setSizePolicy(sizePolicy)
         self.serverArchiveSiteImport.setMinimumSize(QSize(0, 150))
         self.serverArchiveSiteImport.setMaximumSize(QSize(16777215, 150))
@@ -2127,38 +2677,58 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteImportStatus.setSizePolicy(sizePolicy)
         self.serverArchiveSiteImportStatus.setMinimumSize(QSize(30, 30))
         self.serverArchiveSiteImportStatus.setMaximumSize(QSize(30, 30))
-        self.serverArchiveSiteImportStatus.setObjectName("serverArchiveSiteImportStatus")
+        self.serverArchiveSiteImportStatus.setObjectName(
+            "serverArchiveSiteImportStatus"
+        )
         self.gridLayout_32.addWidget(self.serverArchiveSiteImportStatus, 0, 1, 1, 1)
         self.serverArchiveSiteImportStatusText = BodyLabel(self.serverArchiveSiteImport)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteImportStatusText.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteImportStatusText.setObjectName("serverArchiveSiteImportStatusText")
+        self.serverArchiveSiteImportStatusText.setObjectName(
+            "serverArchiveSiteImportStatusText"
+        )
         self.gridLayout_32.addWidget(self.serverArchiveSiteImportStatusText, 1, 1, 1, 2)
         self.serverArchiveSiteImportBtnWidget = QWidget(self.serverArchiveSiteImport)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteImportBtnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteImportBtnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteImportBtnWidget.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteImportBtnWidget.setObjectName("serverArchiveSiteImportBtnWidget")
+        self.serverArchiveSiteImportBtnWidget.setObjectName(
+            "serverArchiveSiteImportBtnWidget"
+        )
         self.horizontalLayout_9 = QHBoxLayout(self.serverArchiveSiteImportBtnWidget)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.serverArchiveSiteImportArchives = PrimaryPushButton(self.serverArchiveSiteImportBtnWidget)
+        self.serverArchiveSiteImportArchives = PrimaryPushButton(
+            self.serverArchiveSiteImportBtnWidget
+        )
         self.serverArchiveSiteImportArchives.setMinimumSize(QSize(110, 32))
         self.serverArchiveSiteImportArchives.setMaximumSize(QSize(110, 32))
-        self.serverArchiveSiteImportArchives.setObjectName("serverArchiveSiteImportArchives")
+        self.serverArchiveSiteImportArchives.setObjectName(
+            "serverArchiveSiteImportArchives"
+        )
         self.horizontalLayout_9.addWidget(self.serverArchiveSiteImportArchives)
-        self.serverArchiveSiteImportFolder = PrimaryPushButton(self.serverArchiveSiteImportBtnWidget)
+        self.serverArchiveSiteImportFolder = PrimaryPushButton(
+            self.serverArchiveSiteImportBtnWidget
+        )
         self.serverArchiveSiteImportFolder.setMinimumSize(QSize(110, 32))
         self.serverArchiveSiteImportFolder.setMaximumSize(QSize(110, 32))
-        self.serverArchiveSiteImportFolder.setObjectName("serverArchiveSiteImportFolder")
+        self.serverArchiveSiteImportFolder.setObjectName(
+            "serverArchiveSiteImportFolder"
+        )
         self.horizontalLayout_9.addWidget(self.serverArchiveSiteImportFolder)
         self.gridLayout_32.addWidget(self.serverArchiveSiteImportBtnWidget, 2, 1, 1, 2)
         spacerItem47 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -2167,16 +2737,22 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteImportTitle.setSizePolicy(sizePolicy)
         self.serverArchiveSiteImportTitle.setObjectName("serverArchiveSiteImportTitle")
         self.gridLayout_32.addWidget(self.serverArchiveSiteImportTitle, 0, 2, 1, 1)
         self.verticalLayout_6.addWidget(self.serverArchiveSiteImport)
-        self.serverArchiveSiteSetArgs = CardWidget(self.serverArchiveSiteScrollAreaWidgetContents)
+        self.serverArchiveSiteSetArgs = CardWidget(
+            self.serverArchiveSiteScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetArgs.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetArgs.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSetArgs.setMinimumSize(QSize(0, 630))
         self.serverArchiveSiteSetArgs.setMaximumSize(QSize(16777215, 630))
@@ -2189,254 +2765,440 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetJavaWidget.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSetJavaWidget.setMinimumSize(QSize(0, 120))
-        self.serverArchiveSiteSetJavaWidget.setObjectName("serverArchiveSiteSetJavaWidget")
+        self.serverArchiveSiteSetJavaWidget.setObjectName(
+            "serverArchiveSiteSetJavaWidget"
+        )
         self.gridLayout_35 = QGridLayout(self.serverArchiveSiteSetJavaWidget)
         self.gridLayout_35.setObjectName("gridLayout_35")
-        self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSetJavaWidget)
+        self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.serverArchiveSiteSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "serverArchiveSiteAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_35.addWidget(self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.serverArchiveSiteJavaSubtitleLabel = SubtitleLabel(self.serverArchiveSiteSetJavaWidget)
+            "serverArchiveSiteAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_35.addWidget(
+            self.serverArchiveSiteAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.serverArchiveSiteJavaSubtitleLabel = SubtitleLabel(
+            self.serverArchiveSiteSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteJavaSubtitleLabel.setObjectName("serverArchiveSiteJavaSubtitleLabel")
-        self.gridLayout_35.addWidget(self.serverArchiveSiteJavaSubtitleLabel, 0, 0, 1, 1)
-        self.serverArchiveSiteJavaListPushBtn = PushButton(self.serverArchiveSiteSetJavaWidget)
+        self.serverArchiveSiteJavaSubtitleLabel.setObjectName(
+            "serverArchiveSiteJavaSubtitleLabel"
+        )
+        self.gridLayout_35.addWidget(
+            self.serverArchiveSiteJavaSubtitleLabel, 0, 0, 1, 1
+        )
+        self.serverArchiveSiteJavaListPushBtn = PushButton(
+            self.serverArchiveSiteSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteJavaListPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteJavaListPushBtn.setMinimumSize(QSize(108, 31))
         self.serverArchiveSiteJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.serverArchiveSiteJavaListPushBtn.setObjectName("serverArchiveSiteJavaListPushBtn")
+        self.serverArchiveSiteJavaListPushBtn.setObjectName(
+            "serverArchiveSiteJavaListPushBtn"
+        )
         self.gridLayout_35.addWidget(self.serverArchiveSiteJavaListPushBtn, 3, 2, 1, 1)
-        self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSetJavaWidget)
+        self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.serverArchiveSiteSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "serverArchiveSiteManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_35.addWidget(self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.serverArchiveSiteDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSetJavaWidget)
+            "serverArchiveSiteManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_35.addWidget(
+            self.serverArchiveSiteManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.serverArchiveSiteDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.serverArchiveSiteSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.serverArchiveSiteDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.serverArchiveSiteDownloadJavaPrimaryPushBtn.setObjectName("serverArchiveSiteDownloadJavaPrimaryPushBtn")
-        self.gridLayout_35.addWidget(self.serverArchiveSiteDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.serverArchiveSiteJavaTextEdit = TextEdit(self.serverArchiveSiteSetJavaWidget)
-        self.serverArchiveSiteJavaTextEdit.setObjectName("serverArchiveSiteJavaTextEdit")
+        self.serverArchiveSiteDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.serverArchiveSiteDownloadJavaPrimaryPushBtn.setObjectName(
+            "serverArchiveSiteDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_35.addWidget(
+            self.serverArchiveSiteDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.serverArchiveSiteJavaTextEdit = TextEdit(
+            self.serverArchiveSiteSetJavaWidget
+        )
+        self.serverArchiveSiteJavaTextEdit.setObjectName(
+            "serverArchiveSiteJavaTextEdit"
+        )
         self.gridLayout_35.addWidget(self.serverArchiveSiteJavaTextEdit, 2, 0, 2, 1)
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetJavaWidget, 5, 2, 1, 3)
-        self.serverArchiveSiteSetDeEncodingWidget = QWidget(self.serverArchiveSiteSetArgs)
+        self.serverArchiveSiteSetDeEncodingWidget = QWidget(
+            self.serverArchiveSiteSetArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetDeEncodingWidget.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSetDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.serverArchiveSiteSetDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.serverArchiveSiteSetDeEncodingWidget.setObjectName("serverArchiveSiteSetDeEncodingWidget")
+        self.serverArchiveSiteSetDeEncodingWidget.setObjectName(
+            "serverArchiveSiteSetDeEncodingWidget"
+        )
         self.gridLayout_36 = QGridLayout(self.serverArchiveSiteSetDeEncodingWidget)
         self.gridLayout_36.setObjectName("gridLayout_36")
-        self.serverArchiveSiteOutputDeEncodingComboBox = ComboBox(self.serverArchiveSiteSetDeEncodingWidget)
+        self.serverArchiveSiteOutputDeEncodingComboBox = ComboBox(
+            self.serverArchiveSiteSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteOutputDeEncodingComboBox.setObjectName("serverArchiveSiteOutputDeEncodingComboBox")
-        self.gridLayout_36.addWidget(self.serverArchiveSiteOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.serverArchiveSiteInputDeEncodingComboBox = ComboBox(self.serverArchiveSiteSetDeEncodingWidget)
+        self.serverArchiveSiteOutputDeEncodingComboBox.setObjectName(
+            "serverArchiveSiteOutputDeEncodingComboBox"
+        )
+        self.gridLayout_36.addWidget(
+            self.serverArchiveSiteOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.serverArchiveSiteInputDeEncodingComboBox = ComboBox(
+            self.serverArchiveSiteSetDeEncodingWidget
+        )
         self.serverArchiveSiteInputDeEncodingComboBox.setText("")
-        self.serverArchiveSiteInputDeEncodingComboBox.setObjectName("serverArchiveSiteInputDeEncodingComboBox")
-        self.gridLayout_36.addWidget(self.serverArchiveSiteInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.serverArchiveSiteOutputDeEncodingLabel = StrongBodyLabel(self.serverArchiveSiteSetDeEncodingWidget)
+        self.serverArchiveSiteInputDeEncodingComboBox.setObjectName(
+            "serverArchiveSiteInputDeEncodingComboBox"
+        )
+        self.gridLayout_36.addWidget(
+            self.serverArchiveSiteInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.serverArchiveSiteOutputDeEncodingLabel = StrongBodyLabel(
+            self.serverArchiveSiteSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteOutputDeEncodingLabel.setObjectName("serverArchiveSiteOutputDeEncodingLabel")
-        self.gridLayout_36.addWidget(self.serverArchiveSiteOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.serverArchiveSiteDeEncodingSubtitleLabel = SubtitleLabel(self.serverArchiveSiteSetDeEncodingWidget)
+        self.serverArchiveSiteOutputDeEncodingLabel.setObjectName(
+            "serverArchiveSiteOutputDeEncodingLabel"
+        )
+        self.gridLayout_36.addWidget(
+            self.serverArchiveSiteOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.serverArchiveSiteDeEncodingSubtitleLabel = SubtitleLabel(
+            self.serverArchiveSiteSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteDeEncodingSubtitleLabel.setObjectName("serverArchiveSiteDeEncodingSubtitleLabel")
-        self.gridLayout_36.addWidget(self.serverArchiveSiteDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.serverArchiveSiteInputDeEncodingLabel = StrongBodyLabel(self.serverArchiveSiteSetDeEncodingWidget)
+        self.serverArchiveSiteDeEncodingSubtitleLabel.setObjectName(
+            "serverArchiveSiteDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_36.addWidget(
+            self.serverArchiveSiteDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.serverArchiveSiteInputDeEncodingLabel = StrongBodyLabel(
+            self.serverArchiveSiteSetDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteInputDeEncodingLabel.setObjectName("serverArchiveSiteInputDeEncodingLabel")
-        self.gridLayout_36.addWidget(self.serverArchiveSiteInputDeEncodingLabel, 3, 0, 1, 1)
-        self.gridLayout_34.addWidget(self.serverArchiveSiteSetDeEncodingWidget, 8, 2, 1, 3)
+        self.serverArchiveSiteInputDeEncodingLabel.setObjectName(
+            "serverArchiveSiteInputDeEncodingLabel"
+        )
+        self.gridLayout_36.addWidget(
+            self.serverArchiveSiteInputDeEncodingLabel, 3, 0, 1, 1
+        )
+        self.gridLayout_34.addWidget(
+            self.serverArchiveSiteSetDeEncodingWidget, 8, 2, 1, 3
+        )
         self.serverArchiveSiteSetJVMArgWidget = QWidget(self.serverArchiveSiteSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetJVMArgWidget.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSetJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.serverArchiveSiteSetJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.serverArchiveSiteSetJVMArgWidget.setObjectName("serverArchiveSiteSetJVMArgWidget")
+        self.serverArchiveSiteSetJVMArgWidget.setObjectName(
+            "serverArchiveSiteSetJVMArgWidget"
+        )
         self.gridLayout_37 = QGridLayout(self.serverArchiveSiteSetJVMArgWidget)
         self.gridLayout_37.setObjectName("gridLayout_37")
-        self.serverArchiveSiteJVMArgPlainTextEdit = PlainTextEdit(self.serverArchiveSiteSetJVMArgWidget)
-        self.serverArchiveSiteJVMArgPlainTextEdit.setObjectName("serverArchiveSiteJVMArgPlainTextEdit")
-        self.gridLayout_37.addWidget(self.serverArchiveSiteJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.serverArchiveSiteJVMArgSubtitleLabel = SubtitleLabel(self.serverArchiveSiteSetJVMArgWidget)
+        self.serverArchiveSiteJVMArgPlainTextEdit = PlainTextEdit(
+            self.serverArchiveSiteSetJVMArgWidget
+        )
+        self.serverArchiveSiteJVMArgPlainTextEdit.setObjectName(
+            "serverArchiveSiteJVMArgPlainTextEdit"
+        )
+        self.gridLayout_37.addWidget(
+            self.serverArchiveSiteJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.serverArchiveSiteJVMArgSubtitleLabel = SubtitleLabel(
+            self.serverArchiveSiteSetJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteJVMArgSubtitleLabel.setObjectName("serverArchiveSiteJVMArgSubtitleLabel")
-        self.gridLayout_37.addWidget(self.serverArchiveSiteJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.serverArchiveSiteJVMArgSubtitleLabel.setObjectName(
+            "serverArchiveSiteJVMArgSubtitleLabel"
+        )
+        self.gridLayout_37.addWidget(
+            self.serverArchiveSiteJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetJVMArgWidget, 9, 2, 1, 3)
         self.serverArchiveSiteSetArgsStatus = PixmapLabel(self.serverArchiveSiteSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetArgsStatus.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSetArgsStatus.setMinimumSize(QSize(30, 30))
         self.serverArchiveSiteSetArgsStatus.setMaximumSize(QSize(30, 30))
-        self.serverArchiveSiteSetArgsStatus.setObjectName("serverArchiveSiteSetArgsStatus")
+        self.serverArchiveSiteSetArgsStatus.setObjectName(
+            "serverArchiveSiteSetArgsStatus"
+        )
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetArgsStatus, 0, 2, 1, 1)
         self.serverArchiveSiteSetMemWidget = QWidget(self.serverArchiveSiteSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetMemWidget.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSetMemWidget.setMinimumSize(QSize(0, 85))
         self.serverArchiveSiteSetMemWidget.setMaximumSize(QSize(16777215, 85))
-        self.serverArchiveSiteSetMemWidget.setObjectName("serverArchiveSiteSetMemWidget")
+        self.serverArchiveSiteSetMemWidget.setObjectName(
+            "serverArchiveSiteSetMemWidget"
+        )
         self.gridLayout_38 = QGridLayout(self.serverArchiveSiteSetMemWidget)
         self.gridLayout_38.setObjectName("gridLayout_38")
-        self.serverArchiveSiteMinMemLineEdit = LineEdit(self.serverArchiveSiteSetMemWidget)
+        self.serverArchiveSiteMinMemLineEdit = LineEdit(
+            self.serverArchiveSiteSetMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteMinMemLineEdit.setSizePolicy(sizePolicy)
         self.serverArchiveSiteMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.serverArchiveSiteMinMemLineEdit.setObjectName("serverArchiveSiteMinMemLineEdit")
+        self.serverArchiveSiteMinMemLineEdit.setObjectName(
+            "serverArchiveSiteMinMemLineEdit"
+        )
         self.gridLayout_38.addWidget(self.serverArchiveSiteMinMemLineEdit, 1, 1, 1, 1)
-        self.serverArchiveSiteMemSubtitleLabel = SubtitleLabel(self.serverArchiveSiteSetMemWidget)
+        self.serverArchiveSiteMemSubtitleLabel = SubtitleLabel(
+            self.serverArchiveSiteSetMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteMemSubtitleLabel.setObjectName("serverArchiveSiteMemSubtitleLabel")
+        self.serverArchiveSiteMemSubtitleLabel.setObjectName(
+            "serverArchiveSiteMemSubtitleLabel"
+        )
         self.gridLayout_38.addWidget(self.serverArchiveSiteMemSubtitleLabel, 0, 1, 1, 1)
-        self.serverArchiveSiteMaxMemLineEdit = LineEdit(self.serverArchiveSiteSetMemWidget)
+        self.serverArchiveSiteMaxMemLineEdit = LineEdit(
+            self.serverArchiveSiteSetMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.serverArchiveSiteMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.serverArchiveSiteMaxMemLineEdit.setObjectName("serverArchiveSiteMaxMemLineEdit")
+        self.serverArchiveSiteMaxMemLineEdit.setObjectName(
+            "serverArchiveSiteMaxMemLineEdit"
+        )
         self.gridLayout_38.addWidget(self.serverArchiveSiteMaxMemLineEdit, 1, 3, 1, 1)
-        self.serverArchiveSiteToSymbol = SubtitleLabel(self.serverArchiveSiteSetMemWidget)
+        self.serverArchiveSiteToSymbol = SubtitleLabel(
+            self.serverArchiveSiteSetMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteToSymbol.setSizePolicy(sizePolicy)
         self.serverArchiveSiteToSymbol.setObjectName("serverArchiveSiteToSymbol")
         self.gridLayout_38.addWidget(self.serverArchiveSiteToSymbol, 1, 2, 1, 1)
         spacerItem49 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_38.addItem(spacerItem49, 1, 5, 1, 1)
-        self.serverArchiveSiteMemUnitComboBox = ComboBox(self.serverArchiveSiteSetMemWidget)
-        self.serverArchiveSiteMemUnitComboBox.setObjectName("serverArchiveSiteMemUnitComboBox")
+        self.serverArchiveSiteMemUnitComboBox = ComboBox(
+            self.serverArchiveSiteSetMemWidget
+        )
+        self.serverArchiveSiteMemUnitComboBox.setObjectName(
+            "serverArchiveSiteMemUnitComboBox"
+        )
         self.gridLayout_38.addWidget(self.serverArchiveSiteMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetMemWidget, 6, 2, 1, 3)
-        self.serverArchiveSiteSetArgsTitle = SubtitleLabel(self.serverArchiveSiteSetArgs)
+        self.serverArchiveSiteSetArgsTitle = SubtitleLabel(
+            self.serverArchiveSiteSetArgs
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetArgsTitle.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteSetArgsTitle.setObjectName("serverArchiveSiteSetArgsTitle")
+        self.serverArchiveSiteSetArgsTitle.setObjectName(
+            "serverArchiveSiteSetArgsTitle"
+        )
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetArgsTitle, 0, 3, 1, 1)
         self.serverArchiveSiteSetCoreWidget = QWidget(self.serverArchiveSiteSetArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSetCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSetCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSetCoreWidget.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteSetCoreWidget.setObjectName("serverArchiveSiteSetCoreWidget")
+        self.serverArchiveSiteSetCoreWidget.setObjectName(
+            "serverArchiveSiteSetCoreWidget"
+        )
         self.gridLayout_39 = QGridLayout(self.serverArchiveSiteSetCoreWidget)
         self.gridLayout_39.setObjectName("gridLayout_39")
-        self.serverArchiveSiteDownloadCorePrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSetCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.serverArchiveSiteDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.serverArchiveSiteDownloadCorePrimaryPushBtn.setObjectName("serverArchiveSiteDownloadCorePrimaryPushBtn")
-        self.gridLayout_39.addWidget(self.serverArchiveSiteDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.serverArchiveSiteCoreSubtitleLabel = SubtitleLabel(self.serverArchiveSiteSetCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.serverArchiveSiteCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.serverArchiveSiteCoreSubtitleLabel.setObjectName("serverArchiveSiteCoreSubtitleLabel")
-        self.gridLayout_39.addWidget(self.serverArchiveSiteCoreSubtitleLabel, 0, 1, 1, 1)
-        self.serverArchiveSiteCoreLineEdit = LineEdit(self.serverArchiveSiteSetCoreWidget)
-        self.serverArchiveSiteCoreLineEdit.setObjectName("serverArchiveSiteCoreLineEdit")
-        self.gridLayout_39.addWidget(self.serverArchiveSiteCoreLineEdit, 1, 1, 1, 1)
-        self.serverArchiveSiteManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSetCoreWidget)
+        self.serverArchiveSiteDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.serverArchiveSiteSetCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.serverArchiveSiteDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.serverArchiveSiteDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.serverArchiveSiteDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.serverArchiveSiteDownloadCorePrimaryPushBtn.setObjectName(
+            "serverArchiveSiteDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_39.addWidget(
+            self.serverArchiveSiteDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.serverArchiveSiteCoreSubtitleLabel = SubtitleLabel(
+            self.serverArchiveSiteSetCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.serverArchiveSiteCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.serverArchiveSiteCoreSubtitleLabel.setObjectName(
+            "serverArchiveSiteCoreSubtitleLabel"
+        )
+        self.gridLayout_39.addWidget(
+            self.serverArchiveSiteCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.serverArchiveSiteCoreLineEdit = LineEdit(
+            self.serverArchiveSiteSetCoreWidget
+        )
+        self.serverArchiveSiteCoreLineEdit.setObjectName(
+            "serverArchiveSiteCoreLineEdit"
+        )
+        self.gridLayout_39.addWidget(self.serverArchiveSiteCoreLineEdit, 1, 1, 1, 1)
+        self.serverArchiveSiteManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.serverArchiveSiteSetCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.serverArchiveSiteManuallyAddCorePrimaryPushBtn.setObjectName(
-            "serverArchiveSiteManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_39.addWidget(self.serverArchiveSiteManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "serverArchiveSiteManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_39.addWidget(
+            self.serverArchiveSiteManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_34.addWidget(self.serverArchiveSiteSetCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_6.addWidget(self.serverArchiveSiteSetArgs)
-        self.serverArchiveSiteSave = CardWidget(self.serverArchiveSiteScrollAreaWidgetContents)
+        self.serverArchiveSiteSave = CardWidget(
+            self.serverArchiveSiteScrollAreaWidgetContents
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSave.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSave.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSave.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSave.setMinimumSize(QSize(0, 125))
         self.serverArchiveSiteSave.setMaximumSize(QSize(16777215, 125))
@@ -2447,7 +3209,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSaveTitle.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSaveTitle.setObjectName("serverArchiveSiteSaveTitle")
         self.gridLayout_40.addWidget(self.serverArchiveSiteSaveTitle, 0, 1, 1, 1)
@@ -2455,34 +3219,56 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteServerNameLineEdit.setSizePolicy(sizePolicy)
         self.serverArchiveSiteServerNameLineEdit.setMinimumSize(QSize(0, 30))
-        self.serverArchiveSiteServerNameLineEdit.setObjectName("serverArchiveSiteServerNameLineEdit")
-        self.gridLayout_40.addWidget(self.serverArchiveSiteServerNameLineEdit, 1, 1, 1, 1)
+        self.serverArchiveSiteServerNameLineEdit.setObjectName(
+            "serverArchiveSiteServerNameLineEdit"
+        )
+        self.gridLayout_40.addWidget(
+            self.serverArchiveSiteServerNameLineEdit, 1, 1, 1, 1
+        )
         spacerItem50 = QSpacerItem(20, 79, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_40.addItem(spacerItem50, 0, 0, 3, 1)
-        self.serverArchiveSiteSaveServerPrimaryPushBtn = PrimaryPushButton(self.serverArchiveSiteSave)
+        self.serverArchiveSiteSaveServerPrimaryPushBtn = PrimaryPushButton(
+            self.serverArchiveSiteSave
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteSaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.serverArchiveSiteSaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
-        self.serverArchiveSiteSaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.serverArchiveSiteSaveServerPrimaryPushBtn.setObjectName("serverArchiveSiteSaveServerPrimaryPushBtn")
-        self.gridLayout_40.addWidget(self.serverArchiveSiteSaveServerPrimaryPushBtn, 2, 1, 1, 1)
+        self.serverArchiveSiteSaveServerPrimaryPushBtn.setMaximumSize(
+            QSize(16777215, 30)
+        )
+        self.serverArchiveSiteSaveServerPrimaryPushBtn.setObjectName(
+            "serverArchiveSiteSaveServerPrimaryPushBtn"
+        )
+        self.gridLayout_40.addWidget(
+            self.serverArchiveSiteSaveServerPrimaryPushBtn, 2, 1, 1, 1
+        )
         self.verticalLayout_6.addWidget(self.serverArchiveSiteSave)
-        self.serverArchiveSiteScrollArea.setWidget(self.serverArchiveSiteScrollAreaWidgetContents)
+        self.serverArchiveSiteScrollArea.setWidget(
+            self.serverArchiveSiteScrollAreaWidgetContents
+        )
         self.gridLayout_41.addWidget(self.serverArchiveSiteScrollArea, 1, 2, 1, 2)
-        self.serverArchiveSiteBackToMain = TransparentToolButton(FIF.PAGE_LEFT, self.serverArchiveSite)
+        self.serverArchiveSiteBackToMain = TransparentToolButton(
+            FIF.PAGE_LEFT, self.serverArchiveSite
+        )
         self.serverArchiveSiteBackToMain.setObjectName("serverArchiveSiteBackToMain")
         self.gridLayout_41.addWidget(self.serverArchiveSiteBackToMain, 0, 1, 1, 1)
         self.serverArchiveSiteTitle = SubtitleLabel(self.serverArchiveSite)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverArchiveSiteTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverArchiveSiteTitle.sizePolicy().hasHeightForWidth()
+        )
         self.serverArchiveSiteTitle.setSizePolicy(sizePolicy)
         self.serverArchiveSiteTitle.setObjectName("serverArchiveSiteTitle")
         self.gridLayout_41.addWidget(self.serverArchiveSiteTitle, 0, 2, 1, 1)
@@ -2521,7 +3307,9 @@ class ConfigurePage(QWidget):
         self.MCSLv1ScrollArea.setObjectName("MCSLv1ScrollArea")
         self.MCSLv1ScrollAreaWidgetContents = QWidget()
         self.MCSLv1ScrollAreaWidgetContents.setGeometry(QRect(0, 0, 450, 935))
-        self.MCSLv1ScrollAreaWidgetContents.setObjectName("MCSLv1ScrollAreaWidgetContents")
+        self.MCSLv1ScrollAreaWidgetContents.setObjectName(
+            "MCSLv1ScrollAreaWidgetContents"
+        )
         self.verticalLayout_7 = QVBoxLayout(self.MCSLv1ScrollAreaWidgetContents)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
@@ -2540,7 +3328,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ImportStatusText.setSizePolicy(sizePolicy)
         self.MCSLv1ImportStatusText.setObjectName("MCSLv1ImportStatusText")
         self.gridLayout_33.addWidget(self.MCSLv1ImportStatusText, 1, 1, 1, 2)
@@ -2548,7 +3338,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ImportTitle.setSizePolicy(sizePolicy)
         self.MCSLv1ImportTitle.setObjectName("MCSLv1ImportTitle")
         self.gridLayout_33.addWidget(self.MCSLv1ImportTitle, 0, 2, 1, 1)
@@ -2558,7 +3350,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ImportStatus.setSizePolicy(sizePolicy)
         self.MCSLv1ImportStatus.setMinimumSize(QSize(30, 30))
         self.MCSLv1ImportStatus.setMaximumSize(QSize(30, 30))
@@ -2570,7 +3364,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ImportArchives.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ImportArchives.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ImportArchives.setSizePolicy(sizePolicy)
         self.MCSLv1ImportArchives.setMinimumSize(QSize(110, 32))
         self.MCSLv1ImportArchives.setMaximumSize(QSize(150, 32))
@@ -2581,7 +3377,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgs.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgs.setMinimumSize(QSize(0, 630))
         self.MCSLv1ValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -2594,143 +3392,255 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
         self.MCSLv1ValidateArgsJavaWidget.setObjectName("MCSLv1ValidateArgsJavaWidget")
         self.gridLayout_44 = QGridLayout(self.MCSLv1ValidateArgsJavaWidget)
         self.gridLayout_44.setObjectName("gridLayout_44")
-        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv1ValidateArgsJavaWidget)
+        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv1ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.MCSLv1ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsJavaWidget)
+            "MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_44.addWidget(
+            self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.MCSLv1ValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.MCSLv1ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsJavaSubtitleLabel.setObjectName("MCSLv1ValidateArgsJavaSubtitleLabel")
-        self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
-        self.MCSLv1ValidateArgsJavaListPushBtn = PushButton(self.MCSLv1ValidateArgsJavaWidget)
+        self.MCSLv1ValidateArgsJavaSubtitleLabel.setObjectName(
+            "MCSLv1ValidateArgsJavaSubtitleLabel"
+        )
+        self.gridLayout_44.addWidget(
+            self.MCSLv1ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MCSLv1ValidateArgsJavaListPushBtn = PushButton(
+            self.MCSLv1ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
         self.MCSLv1ValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv1ValidateArgsJavaListPushBtn.setObjectName("MCSLv1ValidateArgsJavaListPushBtn")
+        self.MCSLv1ValidateArgsJavaListPushBtn.setObjectName(
+            "MCSLv1ValidateArgsJavaListPushBtn"
+        )
         self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv1ValidateArgsJavaWidget)
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv1ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv1ValidateArgsJavaWidget)
+            "MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_44.addWidget(
+            self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv1ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.MCSLv1ValidateArgsJavaTextEdit = TextEdit(self.MCSLv1ValidateArgsJavaWidget)
-        self.MCSLv1ValidateArgsJavaTextEdit.setObjectName("MCSLv1ValidateArgsJavaTextEdit")
+        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_44.addWidget(
+            self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.MCSLv1ValidateArgsJavaTextEdit = TextEdit(
+            self.MCSLv1ValidateArgsJavaWidget
+        )
+        self.MCSLv1ValidateArgsJavaTextEdit.setObjectName(
+            "MCSLv1ValidateArgsJavaTextEdit"
+        )
         self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsJavaTextEdit, 2, 0, 2, 1)
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsJavaWidget, 5, 2, 1, 3)
         self.MCSLv1ValidateArgsDeEncodingWidget = QWidget(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.MCSLv1ValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.MCSLv1ValidateArgsDeEncodingWidget.setObjectName("MCSLv1ValidateArgsDeEncodingWidget")
+        self.MCSLv1ValidateArgsDeEncodingWidget.setObjectName(
+            "MCSLv1ValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_45 = QGridLayout(self.MCSLv1ValidateArgsDeEncodingWidget)
         self.gridLayout_45.setObjectName("gridLayout_45")
-        self.MCSLv1ValidateArgsOutputDeEncodingComboBox = ComboBox(self.MCSLv1ValidateArgsDeEncodingWidget)
+        self.MCSLv1ValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.MCSLv1ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.setObjectName("MCSLv1ValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.MCSLv1ValidateArgsInputDeEncodingComboBox = ComboBox(self.MCSLv1ValidateArgsDeEncodingWidget)
+        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "MCSLv1ValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_45.addWidget(
+            self.MCSLv1ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.MCSLv1ValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.MCSLv1ValidateArgsDeEncodingWidget
+        )
         self.MCSLv1ValidateArgsInputDeEncodingComboBox.setText("")
-        self.MCSLv1ValidateArgsInputDeEncodingComboBox.setObjectName("MCSLv1ValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.MCSLv1ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.MCSLv1ValidateArgsDeEncodingWidget)
+        self.MCSLv1ValidateArgsInputDeEncodingComboBox.setObjectName(
+            "MCSLv1ValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_45.addWidget(
+            self.MCSLv1ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.MCSLv1ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.MCSLv1ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsOutputDeEncodingLabel.setObjectName("MCSLv1ValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.MCSLv1ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsDeEncodingWidget)
+        self.MCSLv1ValidateArgsOutputDeEncodingLabel.setObjectName(
+            "MCSLv1ValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_45.addWidget(
+            self.MCSLv1ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.MCSLv1ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.MCSLv1ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.setObjectName("MCSLv1ValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.MCSLv1ValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.MCSLv1ValidateArgsDeEncodingWidget)
+        self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "MCSLv1ValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_45.addWidget(
+            self.MCSLv1ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MCSLv1ValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.MCSLv1ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsInputDeEncodingLabel.setObjectName("MCSLv1ValidateArgsInputDeEncodingLabel")
-        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
-        self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsDeEncodingWidget, 8, 2, 1, 3)
+        self.MCSLv1ValidateArgsInputDeEncodingLabel.setObjectName(
+            "MCSLv1ValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_45.addWidget(
+            self.MCSLv1ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
+        self.gridLayout_43.addWidget(
+            self.MCSLv1ValidateArgsDeEncodingWidget, 8, 2, 1, 3
+        )
         self.MCSLv1ValidateArgsJVMArgWidget = QWidget(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.MCSLv1ValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.MCSLv1ValidateArgsJVMArgWidget.setObjectName("MCSLv1ValidateArgsJVMArgWidget")
+        self.MCSLv1ValidateArgsJVMArgWidget.setObjectName(
+            "MCSLv1ValidateArgsJVMArgWidget"
+        )
         self.gridLayout_46 = QGridLayout(self.MCSLv1ValidateArgsJVMArgWidget)
         self.gridLayout_46.setObjectName("gridLayout_46")
-        self.MCSLv1ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.MCSLv1ValidateArgsJVMArgWidget)
-        self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setObjectName("MCSLv1ValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_46.addWidget(self.MCSLv1ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.MCSLv1ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsJVMArgWidget)
+        self.MCSLv1ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.MCSLv1ValidateArgsJVMArgWidget
+        )
+        self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "MCSLv1ValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_46.addWidget(
+            self.MCSLv1ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.MCSLv1ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.MCSLv1ValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsJVMArgSubtitleLabel.setObjectName("MCSLv1ValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_46.addWidget(self.MCSLv1ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.MCSLv1ValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "MCSLv1ValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_46.addWidget(
+            self.MCSLv1ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.MCSLv1ValidateArgsStatus = PixmapLabel(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsStatus.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.MCSLv1ValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -2740,58 +3650,90 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.MCSLv1ValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
         self.MCSLv1ValidateArgsMemWidget.setObjectName("MCSLv1ValidateArgsMemWidget")
         self.gridLayout_47 = QGridLayout(self.MCSLv1ValidateArgsMemWidget)
         self.gridLayout_47.setObjectName("gridLayout_47")
-        self.MCSLv1ValidateArgsMinMemLineEdit = LineEdit(self.MCSLv1ValidateArgsMemWidget)
+        self.MCSLv1ValidateArgsMinMemLineEdit = LineEdit(
+            self.MCSLv1ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSLv1ValidateArgsMinMemLineEdit.setObjectName("MCSLv1ValidateArgsMinMemLineEdit")
+        self.MCSLv1ValidateArgsMinMemLineEdit.setObjectName(
+            "MCSLv1ValidateArgsMinMemLineEdit"
+        )
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.MCSLv1ValidateArgsMemSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsMemWidget)
+        self.MCSLv1ValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.MCSLv1ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsMemSubtitleLabel.setObjectName("MCSLv1ValidateArgsMemSubtitleLabel")
-        self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
-        self.MCSLv1ValidateArgsMaxMemLineEdit = LineEdit(self.MCSLv1ValidateArgsMemWidget)
+        self.MCSLv1ValidateArgsMemSubtitleLabel.setObjectName(
+            "MCSLv1ValidateArgsMemSubtitleLabel"
+        )
+        self.gridLayout_47.addWidget(
+            self.MCSLv1ValidateArgsMemSubtitleLabel, 0, 1, 1, 1
+        )
+        self.MCSLv1ValidateArgsMaxMemLineEdit = LineEdit(
+            self.MCSLv1ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSLv1ValidateArgsMaxMemLineEdit.setObjectName("MCSLv1ValidateArgsMaxMemLineEdit")
+        self.MCSLv1ValidateArgsMaxMemLineEdit.setObjectName(
+            "MCSLv1ValidateArgsMaxMemLineEdit"
+        )
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
-        self.MCSLv1ValidateArgsToSymbol = SubtitleLabel(self.MCSLv1ValidateArgsMemWidget)
+        self.MCSLv1ValidateArgsToSymbol = SubtitleLabel(
+            self.MCSLv1ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsToSymbol.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsToSymbol.setObjectName("MCSLv1ValidateArgsToSymbol")
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem59 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_47.addItem(spacerItem59, 1, 5, 1, 1)
-        self.MCSLv1ValidateArgsMemUnitComboBox = ComboBox(self.MCSLv1ValidateArgsMemWidget)
-        self.MCSLv1ValidateArgsMemUnitComboBox.setObjectName("MCSLv1ValidateArgsMemUnitComboBox")
+        self.MCSLv1ValidateArgsMemUnitComboBox = ComboBox(
+            self.MCSLv1ValidateArgsMemWidget
+        )
+        self.MCSLv1ValidateArgsMemUnitComboBox.setObjectName(
+            "MCSLv1ValidateArgsMemUnitComboBox"
+        )
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsMemWidget, 6, 2, 1, 3)
         self.MCSLv1ValidateArgsTitle = SubtitleLabel(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsTitle.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsTitle.setObjectName("MCSLv1ValidateArgsTitle")
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsTitle, 0, 3, 1, 1)
@@ -2799,42 +3741,72 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsCoreWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsCoreWidget.setObjectName("MCSLv1ValidateArgsCoreWidget")
         self.gridLayout_48 = QGridLayout(self.MCSLv1ValidateArgsCoreWidget)
         self.gridLayout_48.setObjectName("gridLayout_48")
-        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.MCSLv1ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setObjectName("MCSLv1ValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.MCSLv1ValidateArgsCoreSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.MCSLv1ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsCoreSubtitleLabel.setObjectName("MCSLv1ValidateArgsCoreSubtitleLabel")
-        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.MCSLv1ValidateArgsCoreLineEdit = LineEdit(self.MCSLv1ValidateArgsCoreWidget)
-        self.MCSLv1ValidateArgsCoreLineEdit.setObjectName("MCSLv1ValidateArgsCoreLineEdit")
-        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.MCSLv1ValidateArgsCoreWidget)
+        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv1ValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "MCSLv1ValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_48.addWidget(
+            self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.MCSLv1ValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.MCSLv1ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSLv1ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.MCSLv1ValidateArgsCoreSubtitleLabel.setObjectName(
+            "MCSLv1ValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_48.addWidget(
+            self.MCSLv1ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.MCSLv1ValidateArgsCoreLineEdit = LineEdit(
+            self.MCSLv1ValidateArgsCoreWidget
+        )
+        self.MCSLv1ValidateArgsCoreLineEdit.setObjectName(
+            "MCSLv1ValidateArgsCoreLineEdit"
+        )
+        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsCoreLineEdit, 1, 1, 1, 1)
+        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv1ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_48.addWidget(
+            self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_7.addWidget(self.MCSLv1ValidateArgs)
         self.MCSLv1Save = CardWidget(self.MCSLv1ScrollAreaWidgetContents)
@@ -2852,7 +3824,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1SaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1SaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1SaveTitle.setSizePolicy(sizePolicy)
         self.MCSLv1SaveTitle.setObjectName("MCSLv1SaveTitle")
         self.gridLayout_50.addWidget(self.MCSLv1SaveTitle, 0, 1, 1, 1)
@@ -2860,7 +3834,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1SaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1SaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1SaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv1SaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.MCSLv1SaveServerNameLineEdit.setObjectName("MCSLv1SaveServerNameLineEdit")
@@ -2871,11 +3847,15 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv1SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv1SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv1SaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1SaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.MCSLv1SaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.MCSLv1SaveServerPrimaryPushBtn.setObjectName("MCSLv1SaveServerPrimaryPushBtn")
+        self.MCSLv1SaveServerPrimaryPushBtn.setObjectName(
+            "MCSLv1SaveServerPrimaryPushBtn"
+        )
         self.gridLayout_50.addWidget(self.MCSLv1SaveServerPrimaryPushBtn, 2, 1, 1, 1)
         self.verticalLayout_7.addWidget(self.MCSLv1Save)
         self.MCSLv1ScrollArea.setWidget(self.MCSLv1ScrollAreaWidgetContents)
@@ -2907,7 +3887,9 @@ class ConfigurePage(QWidget):
         self.MCSLv2ScrollArea.setObjectName("MCSLv2ScrollArea")
         self.MCSLv2ScrollAreaWidgetContents = QWidget()
         self.MCSLv2ScrollAreaWidgetContents.setGeometry(QRect(0, 0, 526, 935))
-        self.MCSLv2ScrollAreaWidgetContents.setObjectName("MCSLv2ScrollAreaWidgetContents")
+        self.MCSLv2ScrollAreaWidgetContents.setObjectName(
+            "MCSLv2ScrollAreaWidgetContents"
+        )
         self.verticalLayout_8 = QVBoxLayout(self.MCSLv2ScrollAreaWidgetContents)
         self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
@@ -2926,7 +3908,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ImportStatusText.setSizePolicy(sizePolicy)
         self.MCSLv2ImportStatusText.setObjectName("MCSLv2ImportStatusText")
         self.gridLayout_42.addWidget(self.MCSLv2ImportStatusText, 1, 1, 1, 2)
@@ -2934,7 +3918,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ImportTitle.setSizePolicy(sizePolicy)
         self.MCSLv2ImportTitle.setObjectName("MCSLv2ImportTitle")
         self.gridLayout_42.addWidget(self.MCSLv2ImportTitle, 0, 2, 1, 1)
@@ -2944,7 +3930,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ImportStatus.setSizePolicy(sizePolicy)
         self.MCSLv2ImportStatus.setMinimumSize(QSize(30, 30))
         self.MCSLv2ImportStatus.setMaximumSize(QSize(30, 30))
@@ -2956,7 +3944,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ImportArchives.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ImportArchives.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ImportArchives.setSizePolicy(sizePolicy)
         self.MCSLv2ImportArchives.setMinimumSize(QSize(110, 32))
         self.MCSLv2ImportArchives.setMaximumSize(QSize(150, 32))
@@ -2967,7 +3957,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgs.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgs.setMinimumSize(QSize(0, 630))
         self.MCSLv2ValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -2980,143 +3972,255 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
         self.MCSLv2ValidateArgsJavaWidget.setObjectName("MCSLv2ValidateArgsJavaWidget")
         self.gridLayout_52 = QGridLayout(self.MCSLv2ValidateArgsJavaWidget)
         self.gridLayout_52.setObjectName("gridLayout_52")
-        self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv2ValidateArgsJavaWidget)
+        self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv2ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.MCSLv2ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSLv2ValidateArgsJavaWidget)
+            "MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_52.addWidget(
+            self.MCSLv2ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.MCSLv2ValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.MCSLv2ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsJavaSubtitleLabel.setObjectName("MCSLv2ValidateArgsJavaSubtitleLabel")
-        self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
-        self.MCSLv2ValidateArgsJavaListPushBtn = PushButton(self.MCSLv2ValidateArgsJavaWidget)
+        self.MCSLv2ValidateArgsJavaSubtitleLabel.setObjectName(
+            "MCSLv2ValidateArgsJavaSubtitleLabel"
+        )
+        self.gridLayout_52.addWidget(
+            self.MCSLv2ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MCSLv2ValidateArgsJavaListPushBtn = PushButton(
+            self.MCSLv2ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
         self.MCSLv2ValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv2ValidateArgsJavaListPushBtn.setObjectName("MCSLv2ValidateArgsJavaListPushBtn")
+        self.MCSLv2ValidateArgsJavaListPushBtn.setObjectName(
+            "MCSLv2ValidateArgsJavaListPushBtn"
+        )
         self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
-        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv2ValidateArgsJavaWidget)
+        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv2ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
+        self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSLv2ValidateArgsJavaWidget)
+            "MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_52.addWidget(
+            self.MCSLv2ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv2ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.MCSLv2ValidateArgsJavaTextEdit = TextEdit(self.MCSLv2ValidateArgsJavaWidget)
-        self.MCSLv2ValidateArgsJavaTextEdit.setObjectName("MCSLv2ValidateArgsJavaTextEdit")
+        self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_52.addWidget(
+            self.MCSLv2ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.MCSLv2ValidateArgsJavaTextEdit = TextEdit(
+            self.MCSLv2ValidateArgsJavaWidget
+        )
+        self.MCSLv2ValidateArgsJavaTextEdit.setObjectName(
+            "MCSLv2ValidateArgsJavaTextEdit"
+        )
         self.gridLayout_52.addWidget(self.MCSLv2ValidateArgsJavaTextEdit, 2, 0, 2, 1)
         self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsJavaWidget, 5, 2, 1, 3)
         self.MCSLv2ValidateArgsDeEncodingWidget = QWidget(self.MCSLv2ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.MCSLv2ValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.MCSLv2ValidateArgsDeEncodingWidget.setObjectName("MCSLv2ValidateArgsDeEncodingWidget")
+        self.MCSLv2ValidateArgsDeEncodingWidget.setObjectName(
+            "MCSLv2ValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_53 = QGridLayout(self.MCSLv2ValidateArgsDeEncodingWidget)
         self.gridLayout_53.setObjectName("gridLayout_53")
-        self.MCSLv2ValidateArgsOutputDeEncodingComboBox = ComboBox(self.MCSLv2ValidateArgsDeEncodingWidget)
+        self.MCSLv2ValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.MCSLv2ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsOutputDeEncodingComboBox.setObjectName("MCSLv2ValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_53.addWidget(self.MCSLv2ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.MCSLv2ValidateArgsInputDeEncodingComboBox = ComboBox(self.MCSLv2ValidateArgsDeEncodingWidget)
+        self.MCSLv2ValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "MCSLv2ValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_53.addWidget(
+            self.MCSLv2ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.MCSLv2ValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.MCSLv2ValidateArgsDeEncodingWidget
+        )
         self.MCSLv2ValidateArgsInputDeEncodingComboBox.setText("")
-        self.MCSLv2ValidateArgsInputDeEncodingComboBox.setObjectName("MCSLv2ValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_53.addWidget(self.MCSLv2ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.MCSLv2ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.MCSLv2ValidateArgsDeEncodingWidget)
+        self.MCSLv2ValidateArgsInputDeEncodingComboBox.setObjectName(
+            "MCSLv2ValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_53.addWidget(
+            self.MCSLv2ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.MCSLv2ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.MCSLv2ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsOutputDeEncodingLabel.setObjectName("MCSLv2ValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_53.addWidget(self.MCSLv2ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.MCSLv2ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.MCSLv2ValidateArgsDeEncodingWidget)
+        self.MCSLv2ValidateArgsOutputDeEncodingLabel.setObjectName(
+            "MCSLv2ValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_53.addWidget(
+            self.MCSLv2ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.MCSLv2ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.MCSLv2ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsDeEncodingSubtitleLabel.setObjectName("MCSLv2ValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_53.addWidget(self.MCSLv2ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.MCSLv2ValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.MCSLv2ValidateArgsDeEncodingWidget)
+        self.MCSLv2ValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "MCSLv2ValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_53.addWidget(
+            self.MCSLv2ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MCSLv2ValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.MCSLv2ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsInputDeEncodingLabel.setObjectName("MCSLv2ValidateArgsInputDeEncodingLabel")
-        self.gridLayout_53.addWidget(self.MCSLv2ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
-        self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsDeEncodingWidget, 8, 2, 1, 3)
+        self.MCSLv2ValidateArgsInputDeEncodingLabel.setObjectName(
+            "MCSLv2ValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_53.addWidget(
+            self.MCSLv2ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
+        self.gridLayout_51.addWidget(
+            self.MCSLv2ValidateArgsDeEncodingWidget, 8, 2, 1, 3
+        )
         self.MCSLv2ValidateArgsJVMArgWidget = QWidget(self.MCSLv2ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.MCSLv2ValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.MCSLv2ValidateArgsJVMArgWidget.setObjectName("MCSLv2ValidateArgsJVMArgWidget")
+        self.MCSLv2ValidateArgsJVMArgWidget.setObjectName(
+            "MCSLv2ValidateArgsJVMArgWidget"
+        )
         self.gridLayout_54 = QGridLayout(self.MCSLv2ValidateArgsJVMArgWidget)
         self.gridLayout_54.setObjectName("gridLayout_54")
-        self.MCSLv2ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.MCSLv2ValidateArgsJVMArgWidget)
-        self.MCSLv2ValidateArgsJVMArgPlainTextEdit.setObjectName("MCSLv2ValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_54.addWidget(self.MCSLv2ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.MCSLv2ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.MCSLv2ValidateArgsJVMArgWidget)
+        self.MCSLv2ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.MCSLv2ValidateArgsJVMArgWidget
+        )
+        self.MCSLv2ValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "MCSLv2ValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_54.addWidget(
+            self.MCSLv2ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.MCSLv2ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.MCSLv2ValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsJVMArgSubtitleLabel.setObjectName("MCSLv2ValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_54.addWidget(self.MCSLv2ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.MCSLv2ValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "MCSLv2ValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_54.addWidget(
+            self.MCSLv2ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.MCSLv2ValidateArgsStatus = PixmapLabel(self.MCSLv2ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsStatus.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.MCSLv2ValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -3126,58 +4230,90 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.MCSLv2ValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
         self.MCSLv2ValidateArgsMemWidget.setObjectName("MCSLv2ValidateArgsMemWidget")
         self.gridLayout_55 = QGridLayout(self.MCSLv2ValidateArgsMemWidget)
         self.gridLayout_55.setObjectName("gridLayout_55")
-        self.MCSLv2ValidateArgsMinMemLineEdit = LineEdit(self.MCSLv2ValidateArgsMemWidget)
+        self.MCSLv2ValidateArgsMinMemLineEdit = LineEdit(
+            self.MCSLv2ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSLv2ValidateArgsMinMemLineEdit.setObjectName("MCSLv2ValidateArgsMinMemLineEdit")
+        self.MCSLv2ValidateArgsMinMemLineEdit.setObjectName(
+            "MCSLv2ValidateArgsMinMemLineEdit"
+        )
         self.gridLayout_55.addWidget(self.MCSLv2ValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.MCSLv2ValidateArgsMemSubtitleLabel = SubtitleLabel(self.MCSLv2ValidateArgsMemWidget)
+        self.MCSLv2ValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.MCSLv2ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsMemSubtitleLabel.setObjectName("MCSLv2ValidateArgsMemSubtitleLabel")
-        self.gridLayout_55.addWidget(self.MCSLv2ValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
-        self.MCSLv2ValidateArgsMaxMemLineEdit = LineEdit(self.MCSLv2ValidateArgsMemWidget)
+        self.MCSLv2ValidateArgsMemSubtitleLabel.setObjectName(
+            "MCSLv2ValidateArgsMemSubtitleLabel"
+        )
+        self.gridLayout_55.addWidget(
+            self.MCSLv2ValidateArgsMemSubtitleLabel, 0, 1, 1, 1
+        )
+        self.MCSLv2ValidateArgsMaxMemLineEdit = LineEdit(
+            self.MCSLv2ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSLv2ValidateArgsMaxMemLineEdit.setObjectName("MCSLv2ValidateArgsMaxMemLineEdit")
+        self.MCSLv2ValidateArgsMaxMemLineEdit.setObjectName(
+            "MCSLv2ValidateArgsMaxMemLineEdit"
+        )
         self.gridLayout_55.addWidget(self.MCSLv2ValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
-        self.MCSLv2ValidateArgsToSymbol = SubtitleLabel(self.MCSLv2ValidateArgsMemWidget)
+        self.MCSLv2ValidateArgsToSymbol = SubtitleLabel(
+            self.MCSLv2ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsToSymbol.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsToSymbol.setObjectName("MCSLv2ValidateArgsToSymbol")
         self.gridLayout_55.addWidget(self.MCSLv2ValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem65 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_55.addItem(spacerItem65, 1, 5, 1, 1)
-        self.MCSLv2ValidateArgsMemUnitComboBox = ComboBox(self.MCSLv2ValidateArgsMemWidget)
-        self.MCSLv2ValidateArgsMemUnitComboBox.setObjectName("MCSLv2ValidateArgsMemUnitComboBox")
+        self.MCSLv2ValidateArgsMemUnitComboBox = ComboBox(
+            self.MCSLv2ValidateArgsMemWidget
+        )
+        self.MCSLv2ValidateArgsMemUnitComboBox.setObjectName(
+            "MCSLv2ValidateArgsMemUnitComboBox"
+        )
         self.gridLayout_55.addWidget(self.MCSLv2ValidateArgsMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsMemWidget, 6, 2, 1, 3)
         self.MCSLv2ValidateArgsTitle = SubtitleLabel(self.MCSLv2ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsTitle.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsTitle.setObjectName("MCSLv2ValidateArgsTitle")
         self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsTitle, 0, 3, 1, 1)
@@ -3185,42 +4321,72 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsCoreWidget.setSizePolicy(sizePolicy)
         self.MCSLv2ValidateArgsCoreWidget.setObjectName("MCSLv2ValidateArgsCoreWidget")
         self.gridLayout_56 = QGridLayout(self.MCSLv2ValidateArgsCoreWidget)
         self.gridLayout_56.setObjectName("gridLayout_56")
-        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.MCSLv2ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.setObjectName("MCSLv2ValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_56.addWidget(self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.MCSLv2ValidateArgsCoreSubtitleLabel = SubtitleLabel(self.MCSLv2ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.MCSLv2ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsCoreSubtitleLabel.setObjectName("MCSLv2ValidateArgsCoreSubtitleLabel")
-        self.gridLayout_56.addWidget(self.MCSLv2ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.MCSLv2ValidateArgsCoreLineEdit = LineEdit(self.MCSLv2ValidateArgsCoreWidget)
-        self.MCSLv2ValidateArgsCoreLineEdit.setObjectName("MCSLv2ValidateArgsCoreLineEdit")
-        self.gridLayout_56.addWidget(self.MCSLv2ValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.MCSLv2ValidateArgsCoreWidget)
+        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv2ValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "MCSLv2ValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_56.addWidget(
+            self.MCSLv2ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.MCSLv2ValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.MCSLv2ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSLv2ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.MCSLv2ValidateArgsCoreSubtitleLabel.setObjectName(
+            "MCSLv2ValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_56.addWidget(
+            self.MCSLv2ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.MCSLv2ValidateArgsCoreLineEdit = LineEdit(
+            self.MCSLv2ValidateArgsCoreWidget
+        )
+        self.MCSLv2ValidateArgsCoreLineEdit.setObjectName(
+            "MCSLv2ValidateArgsCoreLineEdit"
+        )
+        self.gridLayout_56.addWidget(self.MCSLv2ValidateArgsCoreLineEdit, 1, 1, 1, 1)
+        self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSLv2ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
         self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_56.addWidget(self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_56.addWidget(
+            self.MCSLv2ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_51.addWidget(self.MCSLv2ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.verticalLayout_8.addWidget(self.MCSLv2ValidateArgs)
         self.MCSLv2Save = CardWidget(self.MCSLv2ScrollAreaWidgetContents)
@@ -3238,7 +4404,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2SaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2SaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2SaveTitle.setSizePolicy(sizePolicy)
         self.MCSLv2SaveTitle.setObjectName("MCSLv2SaveTitle")
         self.gridLayout_57.addWidget(self.MCSLv2SaveTitle, 0, 1, 1, 1)
@@ -3246,7 +4414,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2SaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2SaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2SaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv2SaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.MCSLv2SaveServerNameLineEdit.setObjectName("MCSLv2SaveServerNameLineEdit")
@@ -3257,11 +4427,15 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLv2SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSLv2SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSLv2SaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv2SaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.MCSLv2SaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.MCSLv2SaveServerPrimaryPushBtn.setObjectName("MCSLv2SaveServerPrimaryPushBtn")
+        self.MCSLv2SaveServerPrimaryPushBtn.setObjectName(
+            "MCSLv2SaveServerPrimaryPushBtn"
+        )
         self.gridLayout_57.addWidget(self.MCSLv2SaveServerPrimaryPushBtn, 2, 1, 1, 1)
         self.verticalLayout_8.addWidget(self.MCSLv2Save)
         self.MCSLv2ScrollArea.setWidget(self.MCSLv2ScrollAreaWidgetContents)
@@ -3315,7 +4489,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ImportTitle.setSizePolicy(sizePolicy)
         self.MSL3ImportTitle.setObjectName("MSL3ImportTitle")
         self.gridLayout_59.addWidget(self.MSL3ImportTitle, 0, 2, 1, 1)
@@ -3323,7 +4499,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ImportStatusText.setSizePolicy(sizePolicy)
         self.MSL3ImportStatusText.setObjectName("MSL3ImportStatusText")
         self.gridLayout_59.addWidget(self.MSL3ImportStatusText, 1, 1, 1, 2)
@@ -3331,7 +4509,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ImportStatus.setSizePolicy(sizePolicy)
         self.MSL3ImportStatus.setMinimumSize(QSize(30, 30))
         self.MSL3ImportStatus.setMaximumSize(QSize(30, 30))
@@ -3343,7 +4523,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ImportArchives.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ImportArchives.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ImportArchives.setSizePolicy(sizePolicy)
         self.MSL3ImportArchives.setMinimumSize(QSize(110, 32))
         self.MSL3ImportArchives.setMaximumSize(QSize(150, 32))
@@ -3354,7 +4536,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SelectServer.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SelectServer.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SelectServer.setSizePolicy(sizePolicy)
         self.MSL3SelectServer.setMinimumSize(QSize(0, 250))
         self.MSL3SelectServer.setObjectName("MSL3SelectServer")
@@ -3364,7 +4548,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SelectServerStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SelectServerStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SelectServerStatus.setSizePolicy(sizePolicy)
         self.MSL3SelectServerStatus.setMinimumSize(QSize(30, 30))
         self.MSL3SelectServerStatus.setMaximumSize(QSize(30, 30))
@@ -3376,7 +4562,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SelectServerStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SelectServerStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SelectServerStatusText.setSizePolicy(sizePolicy)
         self.MSL3SelectServerStatusText.setObjectName("MSL3SelectServerStatusText")
         self.gridLayout_68.addWidget(self.MSL3SelectServerStatusText, 1, 1, 1, 2)
@@ -3384,7 +4572,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SelectServerTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SelectServerTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SelectServerTitle.setSizePolicy(sizePolicy)
         self.MSL3SelectServerTitle.setObjectName("MSL3SelectServerTitle")
         self.gridLayout_68.addWidget(self.MSL3SelectServerTitle, 0, 2, 1, 1)
@@ -3397,7 +4587,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgs.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgs.setMinimumSize(QSize(0, 630))
         self.MSL3ValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -3408,112 +4600,196 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
         self.MSL3ValidateArgsJavaWidget.setObjectName("MSL3ValidateArgsJavaWidget")
         self.gridLayout_61 = QGridLayout(self.MSL3ValidateArgsJavaWidget)
         self.gridLayout_61.setObjectName("gridLayout_61")
-        self.MSL3ValidateArgsJavaListPushBtn = PushButton(self.MSL3ValidateArgsJavaWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
-        self.MSL3ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
-        self.MSL3ValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MSL3ValidateArgsJavaListPushBtn.setObjectName("MSL3ValidateArgsJavaListPushBtn")
-        self.gridLayout_61.addWidget(self.MSL3ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
-        self.MSL3ValidateArgsJavaTextEdit = TextEdit(self.MSL3ValidateArgsJavaWidget)
-        self.MSL3ValidateArgsJavaTextEdit.setObjectName("MSL3ValidateArgsJavaTextEdit")
-        self.gridLayout_61.addWidget(self.MSL3ValidateArgsJavaTextEdit, 2, 0, 2, 1)
-        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.MSL3ValidateArgsJavaWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName("MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_61.addWidget(self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MSL3ValidateArgsJavaWidget)
+        self.MSL3ValidateArgsJavaListPushBtn = PushButton(
+            self.MSL3ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MSL3ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MSL3ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
+        self.MSL3ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
+        self.MSL3ValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MSL3ValidateArgsJavaListPushBtn.setObjectName(
+            "MSL3ValidateArgsJavaListPushBtn"
+        )
+        self.gridLayout_61.addWidget(self.MSL3ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
+        self.MSL3ValidateArgsJavaTextEdit = TextEdit(self.MSL3ValidateArgsJavaWidget)
+        self.MSL3ValidateArgsJavaTextEdit.setObjectName("MSL3ValidateArgsJavaTextEdit")
+        self.gridLayout_61.addWidget(self.MSL3ValidateArgsJavaTextEdit, 2, 0, 2, 1)
+        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MSL3ValidateArgsJavaWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_61.addWidget(
+            self.MSL3ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MSL3ValidateArgsJavaWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_61.addWidget(self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MSL3ValidateArgsJavaWidget)
+            "MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_61.addWidget(
+            self.MSL3ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MSL3ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("MSL3ValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_61.addWidget(self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.MSL3ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MSL3ValidateArgsJavaWidget)
+        self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "MSL3ValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_61.addWidget(
+            self.MSL3ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.MSL3ValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.MSL3ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsJavaSubtitleLabel.setObjectName("MSL3ValidateArgsJavaSubtitleLabel")
+        self.MSL3ValidateArgsJavaSubtitleLabel.setObjectName(
+            "MSL3ValidateArgsJavaSubtitleLabel"
+        )
         self.gridLayout_61.addWidget(self.MSL3ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsJavaWidget, 5, 2, 1, 3)
         self.MSL3ValidateArgsDeEncodingWidget = QWidget(self.MSL3ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.MSL3ValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.MSL3ValidateArgsDeEncodingWidget.setObjectName("MSL3ValidateArgsDeEncodingWidget")
+        self.MSL3ValidateArgsDeEncodingWidget.setObjectName(
+            "MSL3ValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_62 = QGridLayout(self.MSL3ValidateArgsDeEncodingWidget)
         self.gridLayout_62.setObjectName("gridLayout_62")
-        self.MSL3ValidateArgsOutputDeEncodingComboBox = ComboBox(self.MSL3ValidateArgsDeEncodingWidget)
+        self.MSL3ValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.MSL3ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsOutputDeEncodingComboBox.setObjectName("MSL3ValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_62.addWidget(self.MSL3ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.MSL3ValidateArgsInputDeEncodingComboBox = ComboBox(self.MSL3ValidateArgsDeEncodingWidget)
+        self.MSL3ValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "MSL3ValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_62.addWidget(
+            self.MSL3ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.MSL3ValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.MSL3ValidateArgsDeEncodingWidget
+        )
         self.MSL3ValidateArgsInputDeEncodingComboBox.setText("")
-        self.MSL3ValidateArgsInputDeEncodingComboBox.setObjectName("MSL3ValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_62.addWidget(self.MSL3ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.MSL3ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.MSL3ValidateArgsDeEncodingWidget)
+        self.MSL3ValidateArgsInputDeEncodingComboBox.setObjectName(
+            "MSL3ValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_62.addWidget(
+            self.MSL3ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.MSL3ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.MSL3ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsOutputDeEncodingLabel.setObjectName("MSL3ValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_62.addWidget(self.MSL3ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.MSL3ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.MSL3ValidateArgsDeEncodingWidget)
+        self.MSL3ValidateArgsOutputDeEncodingLabel.setObjectName(
+            "MSL3ValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_62.addWidget(
+            self.MSL3ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.MSL3ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.MSL3ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsDeEncodingSubtitleLabel.setObjectName("MSL3ValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_62.addWidget(self.MSL3ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.MSL3ValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.MSL3ValidateArgsDeEncodingWidget)
+        self.MSL3ValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "MSL3ValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_62.addWidget(
+            self.MSL3ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MSL3ValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.MSL3ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsInputDeEncodingLabel.setObjectName("MSL3ValidateArgsInputDeEncodingLabel")
-        self.gridLayout_62.addWidget(self.MSL3ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
+        self.MSL3ValidateArgsInputDeEncodingLabel.setObjectName(
+            "MSL3ValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_62.addWidget(
+            self.MSL3ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsDeEncodingWidget, 8, 2, 1, 3)
         spacerItem73 = QSpacerItem(20, 102, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_60.addItem(spacerItem73, 0, 0, 21, 1)
@@ -3521,71 +4797,111 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.MSL3ValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
         self.MSL3ValidateArgsJVMArgWidget.setObjectName("MSL3ValidateArgsJVMArgWidget")
         self.gridLayout_63 = QGridLayout(self.MSL3ValidateArgsJVMArgWidget)
         self.gridLayout_63.setObjectName("gridLayout_63")
-        self.MSL3ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.MSL3ValidateArgsJVMArgWidget)
-        self.MSL3ValidateArgsJVMArgPlainTextEdit.setObjectName("MSL3ValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_63.addWidget(self.MSL3ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.MSL3ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.MSL3ValidateArgsJVMArgWidget)
+        self.MSL3ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.MSL3ValidateArgsJVMArgWidget
+        )
+        self.MSL3ValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "MSL3ValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_63.addWidget(
+            self.MSL3ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.MSL3ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.MSL3ValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsJVMArgSubtitleLabel.setObjectName("MSL3ValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_63.addWidget(self.MSL3ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.MSL3ValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "MSL3ValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_63.addWidget(
+            self.MSL3ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.MSL3ValidateArgsCoreWidget = QWidget(self.MSL3ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsCoreWidget.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsCoreWidget.setObjectName("MSL3ValidateArgsCoreWidget")
         self.gridLayout_65 = QGridLayout(self.MSL3ValidateArgsCoreWidget)
         self.gridLayout_65.setObjectName("gridLayout_65")
-        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.MSL3ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.setObjectName("MSL3ValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_65.addWidget(self.MSL3ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.MSL3ValidateArgsCoreSubtitleLabel = SubtitleLabel(self.MSL3ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.MSL3ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsCoreSubtitleLabel.setObjectName("MSL3ValidateArgsCoreSubtitleLabel")
-        self.gridLayout_65.addWidget(self.MSL3ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.MSL3ValidateArgsCoreLineEdit = LineEdit(self.MSL3ValidateArgsCoreWidget)
-        self.MSL3ValidateArgsCoreLineEdit.setObjectName("MSL3ValidateArgsCoreLineEdit")
-        self.gridLayout_65.addWidget(self.MSL3ValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.MSL3ValidateArgsCoreWidget)
+        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.MSL3ValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MSL3ValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "MSL3ValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_65.addWidget(
+            self.MSL3ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.MSL3ValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.MSL3ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.MSL3ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.MSL3ValidateArgsCoreSubtitleLabel.setObjectName(
+            "MSL3ValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_65.addWidget(self.MSL3ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
+        self.MSL3ValidateArgsCoreLineEdit = LineEdit(self.MSL3ValidateArgsCoreWidget)
+        self.MSL3ValidateArgsCoreLineEdit.setObjectName("MSL3ValidateArgsCoreLineEdit")
+        self.gridLayout_65.addWidget(self.MSL3ValidateArgsCoreLineEdit, 1, 1, 1, 1)
+        self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.MSL3ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "MSL3ValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_65.addWidget(self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "MSL3ValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_65.addWidget(
+            self.MSL3ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.MSL3ValidateArgsMemWidget = QWidget(self.MSL3ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.MSL3ValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
@@ -3596,47 +4912,67 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MSL3ValidateArgsMinMemLineEdit.setObjectName("MSL3ValidateArgsMinMemLineEdit")
+        self.MSL3ValidateArgsMinMemLineEdit.setObjectName(
+            "MSL3ValidateArgsMinMemLineEdit"
+        )
         self.gridLayout_64.addWidget(self.MSL3ValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.MSL3ValidateArgsMemSubtitleLabel = SubtitleLabel(self.MSL3ValidateArgsMemWidget)
+        self.MSL3ValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.MSL3ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MSL3ValidateArgsMemSubtitleLabel.setObjectName("MSL3ValidateArgsMemSubtitleLabel")
+        self.MSL3ValidateArgsMemSubtitleLabel.setObjectName(
+            "MSL3ValidateArgsMemSubtitleLabel"
+        )
         self.gridLayout_64.addWidget(self.MSL3ValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
         self.MSL3ValidateArgsMaxMemLineEdit = LineEdit(self.MSL3ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MSL3ValidateArgsMaxMemLineEdit.setObjectName("MSL3ValidateArgsMaxMemLineEdit")
+        self.MSL3ValidateArgsMaxMemLineEdit.setObjectName(
+            "MSL3ValidateArgsMaxMemLineEdit"
+        )
         self.gridLayout_64.addWidget(self.MSL3ValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
         self.MSL3ValidateArgsToSymbol = SubtitleLabel(self.MSL3ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsToSymbol.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsToSymbol.setObjectName("MSL3ValidateArgsToSymbol")
         self.gridLayout_64.addWidget(self.MSL3ValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem74 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_64.addItem(spacerItem74, 1, 5, 1, 1)
         self.MSL3ValidateArgsMemUnitComboBox = ComboBox(self.MSL3ValidateArgsMemWidget)
-        self.MSL3ValidateArgsMemUnitComboBox.setObjectName("MSL3ValidateArgsMemUnitComboBox")
+        self.MSL3ValidateArgsMemUnitComboBox.setObjectName(
+            "MSL3ValidateArgsMemUnitComboBox"
+        )
         self.gridLayout_64.addWidget(self.MSL3ValidateArgsMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsMemWidget, 6, 2, 1, 3)
         self.MSL3ValidateArgsTitle = SubtitleLabel(self.MSL3ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsTitle.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsTitle.setObjectName("MSL3ValidateArgsTitle")
         self.gridLayout_60.addWidget(self.MSL3ValidateArgsTitle, 0, 3, 1, 1)
@@ -3644,7 +4980,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3ValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3ValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3ValidateArgsStatus.setSizePolicy(sizePolicy)
         self.MSL3ValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.MSL3ValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -3666,7 +5004,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SaveTitle.setSizePolicy(sizePolicy)
         self.MSL3SaveTitle.setObjectName("MSL3SaveTitle")
         self.gridLayout_66.addWidget(self.MSL3SaveTitle, 0, 1, 1, 1)
@@ -3674,7 +5014,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.MSL3SaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.MSL3SaveServerNameLineEdit.setObjectName("MSL3SaveServerNameLineEdit")
@@ -3685,7 +5027,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MSL3SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MSL3SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MSL3SaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MSL3SaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.MSL3SaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
@@ -3715,7 +5059,9 @@ class ConfigurePage(QWidget):
         self.NullCraftScrollArea.setObjectName("NullCraftScrollArea")
         self.NullCraftScrollAreaWidgetContents = QWidget()
         self.NullCraftScrollAreaWidgetContents.setGeometry(QRect(0, 0, 450, 935))
-        self.NullCraftScrollAreaWidgetContents.setObjectName("NullCraftScrollAreaWidgetContents")
+        self.NullCraftScrollAreaWidgetContents.setObjectName(
+            "NullCraftScrollAreaWidgetContents"
+        )
         self.verticalLayout_10 = QVBoxLayout(self.NullCraftScrollAreaWidgetContents)
         self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
@@ -3723,7 +5069,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftImport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftImport.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftImport.setSizePolicy(sizePolicy)
         self.NullCraftImport.setMinimumSize(QSize(0, 150))
         self.NullCraftImport.setMaximumSize(QSize(16777215, 150))
@@ -3736,7 +5084,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftImportTitle.setSizePolicy(sizePolicy)
         self.NullCraftImportTitle.setObjectName("NullCraftImportTitle")
         self.gridLayout_69.addWidget(self.NullCraftImportTitle, 0, 2, 1, 1)
@@ -3744,7 +5094,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftImportStatusText.setSizePolicy(sizePolicy)
         self.NullCraftImportStatusText.setObjectName("NullCraftImportStatusText")
         self.gridLayout_69.addWidget(self.NullCraftImportStatusText, 1, 1, 1, 2)
@@ -3752,7 +5104,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftImportStatus.setSizePolicy(sizePolicy)
         self.NullCraftImportStatus.setMinimumSize(QSize(30, 30))
         self.NullCraftImportStatus.setMaximumSize(QSize(30, 30))
@@ -3764,7 +5118,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftImportArchives.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftImportArchives.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftImportArchives.setSizePolicy(sizePolicy)
         self.NullCraftImportArchives.setMinimumSize(QSize(110, 32))
         self.NullCraftImportArchives.setMaximumSize(QSize(150, 32))
@@ -3775,7 +5131,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgs.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgs.setMinimumSize(QSize(0, 630))
         self.NullCraftValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -3786,245 +5144,435 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
-        self.NullCraftValidateArgsJavaWidget.setObjectName("NullCraftValidateArgsJavaWidget")
+        self.NullCraftValidateArgsJavaWidget.setObjectName(
+            "NullCraftValidateArgsJavaWidget"
+        )
         self.gridLayout_72 = QGridLayout(self.NullCraftValidateArgsJavaWidget)
         self.gridLayout_72.setObjectName("gridLayout_72")
-        self.NullCraftValidateArgsJavaListPushBtn = PushButton(self.NullCraftValidateArgsJavaWidget)
+        self.NullCraftValidateArgsJavaListPushBtn = PushButton(
+            self.NullCraftValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
-        self.NullCraftValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.NullCraftValidateArgsJavaListPushBtn.setObjectName("NullCraftValidateArgsJavaListPushBtn")
-        self.gridLayout_72.addWidget(self.NullCraftValidateArgsJavaListPushBtn, 3, 2, 1, 1)
-        self.NullCraftValidateArgsJavaTextEdit = TextEdit(self.NullCraftValidateArgsJavaWidget)
-        self.NullCraftValidateArgsJavaTextEdit.setObjectName("NullCraftValidateArgsJavaTextEdit")
+        self.NullCraftValidateArgsJavaListPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.NullCraftValidateArgsJavaListPushBtn.setObjectName(
+            "NullCraftValidateArgsJavaListPushBtn"
+        )
+        self.gridLayout_72.addWidget(
+            self.NullCraftValidateArgsJavaListPushBtn, 3, 2, 1, 1
+        )
+        self.NullCraftValidateArgsJavaTextEdit = TextEdit(
+            self.NullCraftValidateArgsJavaWidget
+        )
+        self.NullCraftValidateArgsJavaTextEdit.setObjectName(
+            "NullCraftValidateArgsJavaTextEdit"
+        )
         self.gridLayout_72.addWidget(self.NullCraftValidateArgsJavaTextEdit, 2, 0, 2, 1)
-        self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.NullCraftValidateArgsJavaWidget)
+        self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.NullCraftValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_72.addWidget(self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
+            "NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_72.addWidget(
+            self.NullCraftValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
         self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
-            self.NullCraftValidateArgsJavaWidget)
+            self.NullCraftValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+            self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
+        self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_72.addWidget(self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.NullCraftValidateArgsJavaWidget)
+            "NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_72.addWidget(
+            self.NullCraftValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.NullCraftValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
+        self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
-            "NullCraftValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_72.addWidget(self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.NullCraftValidateArgsJavaSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsJavaWidget)
+            "NullCraftValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_72.addWidget(
+            self.NullCraftValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.NullCraftValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.NullCraftValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsJavaSubtitleLabel.setObjectName("NullCraftValidateArgsJavaSubtitleLabel")
-        self.gridLayout_72.addWidget(self.NullCraftValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
+        self.NullCraftValidateArgsJavaSubtitleLabel.setObjectName(
+            "NullCraftValidateArgsJavaSubtitleLabel"
+        )
+        self.gridLayout_72.addWidget(
+            self.NullCraftValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_71.addWidget(self.NullCraftValidateArgsJavaWidget, 5, 2, 1, 3)
         self.NullCraftValidateArgsDeEncodingWidget = QWidget(self.NullCraftValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.NullCraftValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.NullCraftValidateArgsDeEncodingWidget.setObjectName("NullCraftValidateArgsDeEncodingWidget")
+        self.NullCraftValidateArgsDeEncodingWidget.setObjectName(
+            "NullCraftValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_73 = QGridLayout(self.NullCraftValidateArgsDeEncodingWidget)
         self.gridLayout_73.setObjectName("gridLayout_73")
-        self.NullCraftValidateArgsOutputDeEncodingComboBox = ComboBox(self.NullCraftValidateArgsDeEncodingWidget)
+        self.NullCraftValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.NullCraftValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.NullCraftValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+            self.NullCraftValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsOutputDeEncodingComboBox.setObjectName(
-            "NullCraftValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_73.addWidget(self.NullCraftValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.NullCraftValidateArgsInputDeEncodingComboBox = ComboBox(self.NullCraftValidateArgsDeEncodingWidget)
+            "NullCraftValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_73.addWidget(
+            self.NullCraftValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.NullCraftValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.NullCraftValidateArgsDeEncodingWidget
+        )
         self.NullCraftValidateArgsInputDeEncodingComboBox.setText("")
-        self.NullCraftValidateArgsInputDeEncodingComboBox.setObjectName("NullCraftValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_73.addWidget(self.NullCraftValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.NullCraftValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.NullCraftValidateArgsDeEncodingWidget)
+        self.NullCraftValidateArgsInputDeEncodingComboBox.setObjectName(
+            "NullCraftValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_73.addWidget(
+            self.NullCraftValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.NullCraftValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.NullCraftValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsOutputDeEncodingLabel.setObjectName("NullCraftValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_73.addWidget(self.NullCraftValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.NullCraftValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsDeEncodingWidget)
+        self.NullCraftValidateArgsOutputDeEncodingLabel.setObjectName(
+            "NullCraftValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_73.addWidget(
+            self.NullCraftValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.NullCraftValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.NullCraftValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsDeEncodingSubtitleLabel.setObjectName("NullCraftValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_73.addWidget(self.NullCraftValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.NullCraftValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.NullCraftValidateArgsDeEncodingWidget)
+        self.NullCraftValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "NullCraftValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_73.addWidget(
+            self.NullCraftValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.NullCraftValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.NullCraftValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsInputDeEncodingLabel.setObjectName("NullCraftValidateArgsInputDeEncodingLabel")
-        self.gridLayout_73.addWidget(self.NullCraftValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
-        self.gridLayout_71.addWidget(self.NullCraftValidateArgsDeEncodingWidget, 8, 2, 1, 3)
+        self.NullCraftValidateArgsInputDeEncodingLabel.setObjectName(
+            "NullCraftValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_73.addWidget(
+            self.NullCraftValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
+        self.gridLayout_71.addWidget(
+            self.NullCraftValidateArgsDeEncodingWidget, 8, 2, 1, 3
+        )
         spacerItem80 = QSpacerItem(20, 102, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_71.addItem(spacerItem80, 0, 0, 21, 1)
         self.NullCraftValidateArgsJVMArgWidget = QWidget(self.NullCraftValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.NullCraftValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.NullCraftValidateArgsJVMArgWidget.setObjectName("NullCraftValidateArgsJVMArgWidget")
+        self.NullCraftValidateArgsJVMArgWidget.setObjectName(
+            "NullCraftValidateArgsJVMArgWidget"
+        )
         self.gridLayout_74 = QGridLayout(self.NullCraftValidateArgsJVMArgWidget)
         self.gridLayout_74.setObjectName("gridLayout_74")
-        self.NullCraftValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.NullCraftValidateArgsJVMArgWidget)
-        self.NullCraftValidateArgsJVMArgPlainTextEdit.setObjectName("NullCraftValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_74.addWidget(self.NullCraftValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.NullCraftValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsJVMArgWidget)
+        self.NullCraftValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.NullCraftValidateArgsJVMArgWidget
+        )
+        self.NullCraftValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "NullCraftValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_74.addWidget(
+            self.NullCraftValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.NullCraftValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.NullCraftValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsJVMArgSubtitleLabel.setObjectName("NullCraftValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_74.addWidget(self.NullCraftValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.NullCraftValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "NullCraftValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_74.addWidget(
+            self.NullCraftValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_71.addWidget(self.NullCraftValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.NullCraftValidateArgsCoreWidget = QWidget(self.NullCraftValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsCoreWidget.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsCoreWidget.setObjectName("NullCraftValidateArgsCoreWidget")
+        self.NullCraftValidateArgsCoreWidget.setObjectName(
+            "NullCraftValidateArgsCoreWidget"
+        )
         self.gridLayout_75 = QGridLayout(self.NullCraftValidateArgsCoreWidget)
         self.gridLayout_75.setObjectName("gridLayout_75")
-        self.NullCraftValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.NullCraftValidateArgsCoreWidget)
+        self.NullCraftValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.NullCraftValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
         self.NullCraftValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
-            "NullCraftValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_75.addWidget(self.NullCraftValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.NullCraftValidateArgsCoreSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsCoreWidget)
+            "NullCraftValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_75.addWidget(
+            self.NullCraftValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.NullCraftValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.NullCraftValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsCoreSubtitleLabel.setObjectName("NullCraftValidateArgsCoreSubtitleLabel")
-        self.gridLayout_75.addWidget(self.NullCraftValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.NullCraftValidateArgsCoreLineEdit = LineEdit(self.NullCraftValidateArgsCoreWidget)
-        self.NullCraftValidateArgsCoreLineEdit.setObjectName("NullCraftValidateArgsCoreLineEdit")
+        self.NullCraftValidateArgsCoreSubtitleLabel.setObjectName(
+            "NullCraftValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_75.addWidget(
+            self.NullCraftValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.NullCraftValidateArgsCoreLineEdit = LineEdit(
+            self.NullCraftValidateArgsCoreWidget
+        )
+        self.NullCraftValidateArgsCoreLineEdit.setObjectName(
+            "NullCraftValidateArgsCoreLineEdit"
+        )
         self.gridLayout_75.addWidget(self.NullCraftValidateArgsCoreLineEdit, 1, 1, 1, 1)
         self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
-            self.NullCraftValidateArgsCoreWidget)
+            self.NullCraftValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+            self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(
+            sizePolicy
+        )
+        self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(
+            QSize(90, 0)
+        )
         self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "NullCraftValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_75.addWidget(self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "NullCraftValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_75.addWidget(
+            self.NullCraftValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_71.addWidget(self.NullCraftValidateArgsCoreWidget, 7, 2, 1, 3)
         self.NullCraftValidateArgsMemWidget = QWidget(self.NullCraftValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.NullCraftValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
-        self.NullCraftValidateArgsMemWidget.setObjectName("NullCraftValidateArgsMemWidget")
+        self.NullCraftValidateArgsMemWidget.setObjectName(
+            "NullCraftValidateArgsMemWidget"
+        )
         self.gridLayout_76 = QGridLayout(self.NullCraftValidateArgsMemWidget)
         self.gridLayout_76.setObjectName("gridLayout_76")
-        self.NullCraftValidateArgsMinMemLineEdit = LineEdit(self.NullCraftValidateArgsMemWidget)
+        self.NullCraftValidateArgsMinMemLineEdit = LineEdit(
+            self.NullCraftValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.NullCraftValidateArgsMinMemLineEdit.setObjectName("NullCraftValidateArgsMinMemLineEdit")
-        self.gridLayout_76.addWidget(self.NullCraftValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.NullCraftValidateArgsMemSubtitleLabel = SubtitleLabel(self.NullCraftValidateArgsMemWidget)
+        self.NullCraftValidateArgsMinMemLineEdit.setObjectName(
+            "NullCraftValidateArgsMinMemLineEdit"
+        )
+        self.gridLayout_76.addWidget(
+            self.NullCraftValidateArgsMinMemLineEdit, 1, 1, 1, 1
+        )
+        self.NullCraftValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.NullCraftValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsMemSubtitleLabel.setObjectName("NullCraftValidateArgsMemSubtitleLabel")
-        self.gridLayout_76.addWidget(self.NullCraftValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
-        self.NullCraftValidateArgsMaxMemLineEdit = LineEdit(self.NullCraftValidateArgsMemWidget)
+        self.NullCraftValidateArgsMemSubtitleLabel.setObjectName(
+            "NullCraftValidateArgsMemSubtitleLabel"
+        )
+        self.gridLayout_76.addWidget(
+            self.NullCraftValidateArgsMemSubtitleLabel, 0, 1, 1, 1
+        )
+        self.NullCraftValidateArgsMaxMemLineEdit = LineEdit(
+            self.NullCraftValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.NullCraftValidateArgsMaxMemLineEdit.setObjectName("NullCraftValidateArgsMaxMemLineEdit")
-        self.gridLayout_76.addWidget(self.NullCraftValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
-        self.NullCraftValidateArgsToSymbol = SubtitleLabel(self.NullCraftValidateArgsMemWidget)
+        self.NullCraftValidateArgsMaxMemLineEdit.setObjectName(
+            "NullCraftValidateArgsMaxMemLineEdit"
+        )
+        self.gridLayout_76.addWidget(
+            self.NullCraftValidateArgsMaxMemLineEdit, 1, 3, 1, 1
+        )
+        self.NullCraftValidateArgsToSymbol = SubtitleLabel(
+            self.NullCraftValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsToSymbol.setSizePolicy(sizePolicy)
-        self.NullCraftValidateArgsToSymbol.setObjectName("NullCraftValidateArgsToSymbol")
+        self.NullCraftValidateArgsToSymbol.setObjectName(
+            "NullCraftValidateArgsToSymbol"
+        )
         self.gridLayout_76.addWidget(self.NullCraftValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem81 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_76.addItem(spacerItem81, 1, 5, 1, 1)
-        self.NullCraftValidateArgsMemUnitComboBox = ComboBox(self.NullCraftValidateArgsMemWidget)
-        self.NullCraftValidateArgsMemUnitComboBox.setObjectName("NullCraftValidateArgsMemUnitComboBox")
-        self.gridLayout_76.addWidget(self.NullCraftValidateArgsMemUnitComboBox, 1, 4, 1, 1)
+        self.NullCraftValidateArgsMemUnitComboBox = ComboBox(
+            self.NullCraftValidateArgsMemWidget
+        )
+        self.NullCraftValidateArgsMemUnitComboBox.setObjectName(
+            "NullCraftValidateArgsMemUnitComboBox"
+        )
+        self.gridLayout_76.addWidget(
+            self.NullCraftValidateArgsMemUnitComboBox, 1, 4, 1, 1
+        )
         self.gridLayout_71.addWidget(self.NullCraftValidateArgsMemWidget, 6, 2, 1, 3)
         self.NullCraftValidateArgsTitle = SubtitleLabel(self.NullCraftValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsTitle.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsTitle.setObjectName("NullCraftValidateArgsTitle")
         self.gridLayout_71.addWidget(self.NullCraftValidateArgsTitle, 0, 3, 1, 1)
@@ -4032,7 +5580,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftValidateArgsStatus.setSizePolicy(sizePolicy)
         self.NullCraftValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.NullCraftValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -4043,7 +5593,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftSave.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftSave.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftSave.setSizePolicy(sizePolicy)
         self.NullCraftSave.setMinimumSize(QSize(0, 125))
         self.NullCraftSave.setMaximumSize(QSize(16777215, 125))
@@ -4054,7 +5606,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftSaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftSaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftSaveTitle.setSizePolicy(sizePolicy)
         self.NullCraftSaveTitle.setObjectName("NullCraftSaveTitle")
         self.gridLayout_77.addWidget(self.NullCraftSaveTitle, 0, 1, 1, 1)
@@ -4062,10 +5616,14 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftSaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftSaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftSaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.NullCraftSaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
-        self.NullCraftSaveServerNameLineEdit.setObjectName("NullCraftSaveServerNameLineEdit")
+        self.NullCraftSaveServerNameLineEdit.setObjectName(
+            "NullCraftSaveServerNameLineEdit"
+        )
         self.gridLayout_77.addWidget(self.NullCraftSaveServerNameLineEdit, 1, 1, 1, 1)
         spacerItem82 = QSpacerItem(20, 79, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_77.addItem(spacerItem82, 0, 0, 3, 1)
@@ -4073,11 +5631,15 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftSaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.NullCraftSaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.NullCraftSaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.NullCraftSaveServerPrimaryPushBtn.setObjectName("NullCraftSaveServerPrimaryPushBtn")
+        self.NullCraftSaveServerPrimaryPushBtn.setObjectName(
+            "NullCraftSaveServerPrimaryPushBtn"
+        )
         self.gridLayout_77.addWidget(self.NullCraftSaveServerPrimaryPushBtn, 2, 1, 1, 1)
         self.verticalLayout_10.addWidget(self.NullCraftSave)
         self.NullCraftScrollArea.setWidget(self.NullCraftScrollAreaWidgetContents)
@@ -4093,7 +5655,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.NullCraftTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.NullCraftTitle.sizePolicy().hasHeightForWidth()
+        )
         self.NullCraftTitle.setSizePolicy(sizePolicy)
         self.NullCraftTitle.setObjectName("NullCraftTitle")
         self.gridLayout_78.addWidget(self.NullCraftTitle, 0, 3, 1, 1)
@@ -4128,7 +5692,9 @@ class ConfigurePage(QWidget):
         self.MCSM8ScrollArea.setObjectName("MCSM8ScrollArea")
         self.MCSM8ScrollAreaWidgetContents = QWidget()
         self.MCSM8ScrollAreaWidgetContents.setGeometry(QRect(0, 0, 450, 1191))
-        self.MCSM8ScrollAreaWidgetContents.setObjectName("MCSM8ScrollAreaWidgetContents")
+        self.MCSM8ScrollAreaWidgetContents.setObjectName(
+            "MCSM8ScrollAreaWidgetContents"
+        )
         self.verticalLayout_11 = QVBoxLayout(self.MCSM8ScrollAreaWidgetContents)
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
@@ -4149,7 +5715,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ImportTitle.setSizePolicy(sizePolicy)
         self.MCSM8ImportTitle.setObjectName("MCSM8ImportTitle")
         self.gridLayout_70.addWidget(self.MCSM8ImportTitle, 0, 2, 1, 1)
@@ -4157,7 +5725,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ImportStatusText.setSizePolicy(sizePolicy)
         self.MCSM8ImportStatusText.setObjectName("MCSM8ImportStatusText")
         self.gridLayout_70.addWidget(self.MCSM8ImportStatusText, 1, 1, 1, 2)
@@ -4165,7 +5735,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ImportStatus.setSizePolicy(sizePolicy)
         self.MCSM8ImportStatus.setMinimumSize(QSize(30, 30))
         self.MCSM8ImportStatus.setMaximumSize(QSize(30, 30))
@@ -4177,7 +5749,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ImportArchives.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ImportArchives.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ImportArchives.setSizePolicy(sizePolicy)
         self.MCSM8ImportArchives.setMinimumSize(QSize(110, 32))
         self.MCSM8ImportArchives.setMaximumSize(QSize(150, 32))
@@ -4188,7 +5762,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SelectServer.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SelectServer.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SelectServer.setSizePolicy(sizePolicy)
         self.MCSM8SelectServer.setMinimumSize(QSize(0, 250))
         self.MCSM8SelectServer.setObjectName("MCSM8SelectServer")
@@ -4198,7 +5774,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SelectServerStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SelectServerStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SelectServerStatus.setSizePolicy(sizePolicy)
         self.MCSM8SelectServerStatus.setMinimumSize(QSize(30, 30))
         self.MCSM8SelectServerStatus.setMaximumSize(QSize(30, 30))
@@ -4210,7 +5788,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SelectServerStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SelectServerStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SelectServerStatusText.setSizePolicy(sizePolicy)
         self.MCSM8SelectServerStatusText.setObjectName("MCSM8SelectServerStatusText")
         self.gridLayout_79.addWidget(self.MCSM8SelectServerStatusText, 1, 1, 1, 2)
@@ -4218,7 +5798,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SelectServerTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SelectServerTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SelectServerTitle.setSizePolicy(sizePolicy)
         self.MCSM8SelectServerTitle.setObjectName("MCSM8SelectServerTitle")
         self.gridLayout_79.addWidget(self.MCSM8SelectServerTitle, 0, 2, 1, 1)
@@ -4231,7 +5813,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgs.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgs.setMinimumSize(QSize(0, 630))
         self.MCSM8ValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -4242,114 +5826,200 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
         self.MCSM8ValidateArgsJavaWidget.setObjectName("MCSM8ValidateArgsJavaWidget")
         self.gridLayout_81 = QGridLayout(self.MCSM8ValidateArgsJavaWidget)
         self.gridLayout_81.setObjectName("gridLayout_81")
-        self.MCSM8ValidateArgsJavaListPushBtn = PushButton(self.MCSM8ValidateArgsJavaWidget)
+        self.MCSM8ValidateArgsJavaListPushBtn = PushButton(
+            self.MCSM8ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
         self.MCSM8ValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM8ValidateArgsJavaListPushBtn.setObjectName("MCSM8ValidateArgsJavaListPushBtn")
+        self.MCSM8ValidateArgsJavaListPushBtn.setObjectName(
+            "MCSM8ValidateArgsJavaListPushBtn"
+        )
         self.gridLayout_81.addWidget(self.MCSM8ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
         self.MCSM8ValidateArgsJavaTextEdit = TextEdit(self.MCSM8ValidateArgsJavaWidget)
-        self.MCSM8ValidateArgsJavaTextEdit.setObjectName("MCSM8ValidateArgsJavaTextEdit")
+        self.MCSM8ValidateArgsJavaTextEdit.setObjectName(
+            "MCSM8ValidateArgsJavaTextEdit"
+        )
         self.gridLayout_81.addWidget(self.MCSM8ValidateArgsJavaTextEdit, 2, 0, 2, 1)
-        self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsJavaWidget)
+        self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSM8ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_81.addWidget(self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsJavaWidget)
+            "MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_81.addWidget(
+            self.MCSM8ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSM8ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_81.addWidget(self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsJavaWidget)
+            "MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_81.addWidget(
+            self.MCSM8ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSM8ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("MCSM8ValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_81.addWidget(self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.MCSM8ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSM8ValidateArgsJavaWidget)
+        self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "MCSM8ValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_81.addWidget(
+            self.MCSM8ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.MCSM8ValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.MCSM8ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsJavaSubtitleLabel.setObjectName("MCSM8ValidateArgsJavaSubtitleLabel")
-        self.gridLayout_81.addWidget(self.MCSM8ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
+        self.MCSM8ValidateArgsJavaSubtitleLabel.setObjectName(
+            "MCSM8ValidateArgsJavaSubtitleLabel"
+        )
+        self.gridLayout_81.addWidget(
+            self.MCSM8ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsJavaWidget, 5, 2, 1, 3)
         self.MCSM8ValidateArgsDeEncodingWidget = QWidget(self.MCSM8ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.MCSM8ValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.MCSM8ValidateArgsDeEncodingWidget.setObjectName("MCSM8ValidateArgsDeEncodingWidget")
+        self.MCSM8ValidateArgsDeEncodingWidget.setObjectName(
+            "MCSM8ValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_82 = QGridLayout(self.MCSM8ValidateArgsDeEncodingWidget)
         self.gridLayout_82.setObjectName("gridLayout_82")
-        self.MCSM8ValidateArgsOutputDeEncodingComboBox = ComboBox(self.MCSM8ValidateArgsDeEncodingWidget)
+        self.MCSM8ValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.MCSM8ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsOutputDeEncodingComboBox.setObjectName("MCSM8ValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_82.addWidget(self.MCSM8ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.MCSM8ValidateArgsInputDeEncodingComboBox = ComboBox(self.MCSM8ValidateArgsDeEncodingWidget)
+        self.MCSM8ValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "MCSM8ValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_82.addWidget(
+            self.MCSM8ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.MCSM8ValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.MCSM8ValidateArgsDeEncodingWidget
+        )
         self.MCSM8ValidateArgsInputDeEncodingComboBox.setText("")
-        self.MCSM8ValidateArgsInputDeEncodingComboBox.setObjectName("MCSM8ValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_82.addWidget(self.MCSM8ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.MCSM8ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.MCSM8ValidateArgsDeEncodingWidget)
+        self.MCSM8ValidateArgsInputDeEncodingComboBox.setObjectName(
+            "MCSM8ValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_82.addWidget(
+            self.MCSM8ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.MCSM8ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.MCSM8ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsOutputDeEncodingLabel.setObjectName("MCSM8ValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_82.addWidget(self.MCSM8ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.MCSM8ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.MCSM8ValidateArgsDeEncodingWidget)
+        self.MCSM8ValidateArgsOutputDeEncodingLabel.setObjectName(
+            "MCSM8ValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_82.addWidget(
+            self.MCSM8ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.MCSM8ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.MCSM8ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsDeEncodingSubtitleLabel.setObjectName("MCSM8ValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_82.addWidget(self.MCSM8ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.MCSM8ValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.MCSM8ValidateArgsDeEncodingWidget)
+        self.MCSM8ValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "MCSM8ValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_82.addWidget(
+            self.MCSM8ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MCSM8ValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.MCSM8ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsInputDeEncodingLabel.setObjectName("MCSM8ValidateArgsInputDeEncodingLabel")
-        self.gridLayout_82.addWidget(self.MCSM8ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
+        self.MCSM8ValidateArgsInputDeEncodingLabel.setObjectName(
+            "MCSM8ValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_82.addWidget(
+            self.MCSM8ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsDeEncodingWidget, 8, 2, 1, 3)
         spacerItem91 = QSpacerItem(20, 102, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_80.addItem(spacerItem91, 0, 0, 21, 1)
@@ -4357,71 +6027,117 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.MCSM8ValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.MCSM8ValidateArgsJVMArgWidget.setObjectName("MCSM8ValidateArgsJVMArgWidget")
+        self.MCSM8ValidateArgsJVMArgWidget.setObjectName(
+            "MCSM8ValidateArgsJVMArgWidget"
+        )
         self.gridLayout_83 = QGridLayout(self.MCSM8ValidateArgsJVMArgWidget)
         self.gridLayout_83.setObjectName("gridLayout_83")
-        self.MCSM8ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.MCSM8ValidateArgsJVMArgWidget)
-        self.MCSM8ValidateArgsJVMArgPlainTextEdit.setObjectName("MCSM8ValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_83.addWidget(self.MCSM8ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.MCSM8ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.MCSM8ValidateArgsJVMArgWidget)
+        self.MCSM8ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.MCSM8ValidateArgsJVMArgWidget
+        )
+        self.MCSM8ValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "MCSM8ValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_83.addWidget(
+            self.MCSM8ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.MCSM8ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.MCSM8ValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsJVMArgSubtitleLabel.setObjectName("MCSM8ValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_83.addWidget(self.MCSM8ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.MCSM8ValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "MCSM8ValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_83.addWidget(
+            self.MCSM8ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.MCSM8ValidateArgsCoreWidget = QWidget(self.MCSM8ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsCoreWidget.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsCoreWidget.setObjectName("MCSM8ValidateArgsCoreWidget")
         self.gridLayout_84 = QGridLayout(self.MCSM8ValidateArgsCoreWidget)
         self.gridLayout_84.setObjectName("gridLayout_84")
-        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.setObjectName("MCSM8ValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_84.addWidget(self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.MCSM8ValidateArgsCoreSubtitleLabel = SubtitleLabel(self.MCSM8ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.MCSM8ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsCoreSubtitleLabel.setObjectName("MCSM8ValidateArgsCoreSubtitleLabel")
-        self.gridLayout_84.addWidget(self.MCSM8ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.MCSM8ValidateArgsCoreLineEdit = LineEdit(self.MCSM8ValidateArgsCoreWidget)
-        self.MCSM8ValidateArgsCoreLineEdit.setObjectName("MCSM8ValidateArgsCoreLineEdit")
-        self.gridLayout_84.addWidget(self.MCSM8ValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.MCSM8ValidateArgsCoreWidget)
+        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSM8ValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "MCSM8ValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_84.addWidget(
+            self.MCSM8ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.MCSM8ValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.MCSM8ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSM8ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.MCSM8ValidateArgsCoreSubtitleLabel.setObjectName(
+            "MCSM8ValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_84.addWidget(
+            self.MCSM8ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.MCSM8ValidateArgsCoreLineEdit = LineEdit(self.MCSM8ValidateArgsCoreWidget)
+        self.MCSM8ValidateArgsCoreLineEdit.setObjectName(
+            "MCSM8ValidateArgsCoreLineEdit"
+        )
+        self.gridLayout_84.addWidget(self.MCSM8ValidateArgsCoreLineEdit, 1, 1, 1, 1)
+        self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSM8ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_84.addWidget(self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_84.addWidget(
+            self.MCSM8ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.MCSM8ValidateArgsMemWidget = QWidget(self.MCSM8ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.MCSM8ValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
@@ -4432,47 +6148,69 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSM8ValidateArgsMinMemLineEdit.setObjectName("MCSM8ValidateArgsMinMemLineEdit")
+        self.MCSM8ValidateArgsMinMemLineEdit.setObjectName(
+            "MCSM8ValidateArgsMinMemLineEdit"
+        )
         self.gridLayout_85.addWidget(self.MCSM8ValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.MCSM8ValidateArgsMemSubtitleLabel = SubtitleLabel(self.MCSM8ValidateArgsMemWidget)
+        self.MCSM8ValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.MCSM8ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM8ValidateArgsMemSubtitleLabel.setObjectName("MCSM8ValidateArgsMemSubtitleLabel")
+        self.MCSM8ValidateArgsMemSubtitleLabel.setObjectName(
+            "MCSM8ValidateArgsMemSubtitleLabel"
+        )
         self.gridLayout_85.addWidget(self.MCSM8ValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
         self.MCSM8ValidateArgsMaxMemLineEdit = LineEdit(self.MCSM8ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSM8ValidateArgsMaxMemLineEdit.setObjectName("MCSM8ValidateArgsMaxMemLineEdit")
+        self.MCSM8ValidateArgsMaxMemLineEdit.setObjectName(
+            "MCSM8ValidateArgsMaxMemLineEdit"
+        )
         self.gridLayout_85.addWidget(self.MCSM8ValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
         self.MCSM8ValidateArgsToSymbol = SubtitleLabel(self.MCSM8ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsToSymbol.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsToSymbol.setObjectName("MCSM8ValidateArgsToSymbol")
         self.gridLayout_85.addWidget(self.MCSM8ValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem92 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_85.addItem(spacerItem92, 1, 5, 1, 1)
-        self.MCSM8ValidateArgsMemUnitComboBox = ComboBox(self.MCSM8ValidateArgsMemWidget)
-        self.MCSM8ValidateArgsMemUnitComboBox.setObjectName("MCSM8ValidateArgsMemUnitComboBox")
+        self.MCSM8ValidateArgsMemUnitComboBox = ComboBox(
+            self.MCSM8ValidateArgsMemWidget
+        )
+        self.MCSM8ValidateArgsMemUnitComboBox.setObjectName(
+            "MCSM8ValidateArgsMemUnitComboBox"
+        )
         self.gridLayout_85.addWidget(self.MCSM8ValidateArgsMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsMemWidget, 6, 2, 1, 3)
         self.MCSM8ValidateArgsTitle = SubtitleLabel(self.MCSM8ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsTitle.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsTitle.setObjectName("MCSM8ValidateArgsTitle")
         self.gridLayout_80.addWidget(self.MCSM8ValidateArgsTitle, 0, 3, 1, 1)
@@ -4480,7 +6218,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8ValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8ValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8ValidateArgsStatus.setSizePolicy(sizePolicy)
         self.MCSM8ValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.MCSM8ValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -4502,7 +6242,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SaveTitle.setSizePolicy(sizePolicy)
         self.MCSM8SaveTitle.setObjectName("MCSM8SaveTitle")
         self.gridLayout_86.addWidget(self.MCSM8SaveTitle, 0, 1, 1, 1)
@@ -4510,7 +6252,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.MCSM8SaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.MCSM8SaveServerNameLineEdit.setObjectName("MCSM8SaveServerNameLineEdit")
@@ -4521,11 +6265,15 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM8SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM8SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM8SaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM8SaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.MCSM8SaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.MCSM8SaveServerPrimaryPushBtn.setObjectName("MCSM8SaveServerPrimaryPushBtn")
+        self.MCSM8SaveServerPrimaryPushBtn.setObjectName(
+            "MCSM8SaveServerPrimaryPushBtn"
+        )
         self.gridLayout_86.addWidget(self.MCSM8SaveServerPrimaryPushBtn, 2, 1, 1, 1)
         self.verticalLayout_11.addWidget(self.MCSM8Save)
         self.MCSM8ScrollArea.setWidget(self.MCSM8ScrollAreaWidgetContents)
@@ -4548,7 +6296,9 @@ class ConfigurePage(QWidget):
         self.MCSM9ScrollArea.setObjectName("MCSM9ScrollArea")
         self.MCSM9ScrollAreaWidgetContents = QWidget()
         self.MCSM9ScrollAreaWidgetContents.setGeometry(QRect(0, 0, 506, 1191))
-        self.MCSM9ScrollAreaWidgetContents.setObjectName("MCSM9ScrollAreaWidgetContents")
+        self.MCSM9ScrollAreaWidgetContents.setObjectName(
+            "MCSM9ScrollAreaWidgetContents"
+        )
         self.verticalLayout_12 = QVBoxLayout(self.MCSM9ScrollAreaWidgetContents)
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
@@ -4569,7 +6319,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ImportTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ImportTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ImportTitle.setSizePolicy(sizePolicy)
         self.MCSM9ImportTitle.setObjectName("MCSM9ImportTitle")
         self.gridLayout_88.addWidget(self.MCSM9ImportTitle, 0, 2, 1, 1)
@@ -4577,7 +6329,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ImportStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ImportStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ImportStatusText.setSizePolicy(sizePolicy)
         self.MCSM9ImportStatusText.setObjectName("MCSM9ImportStatusText")
         self.gridLayout_88.addWidget(self.MCSM9ImportStatusText, 1, 1, 1, 2)
@@ -4585,7 +6339,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ImportStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ImportStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ImportStatus.setSizePolicy(sizePolicy)
         self.MCSM9ImportStatus.setMinimumSize(QSize(30, 30))
         self.MCSM9ImportStatus.setMaximumSize(QSize(30, 30))
@@ -4597,7 +6353,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ImportArchives.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ImportArchives.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ImportArchives.setSizePolicy(sizePolicy)
         self.MCSM9ImportArchives.setMinimumSize(QSize(110, 32))
         self.MCSM9ImportArchives.setMaximumSize(QSize(150, 32))
@@ -4608,7 +6366,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SelectServer.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SelectServer.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SelectServer.setSizePolicy(sizePolicy)
         self.MCSM9SelectServer.setMinimumSize(QSize(0, 250))
         self.MCSM9SelectServer.setObjectName("MCSM9SelectServer")
@@ -4618,7 +6378,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SelectServerStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SelectServerStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SelectServerStatus.setSizePolicy(sizePolicy)
         self.MCSM9SelectServerStatus.setMinimumSize(QSize(30, 30))
         self.MCSM9SelectServerStatus.setMaximumSize(QSize(30, 30))
@@ -4630,7 +6392,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SelectServerStatusText.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SelectServerStatusText.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SelectServerStatusText.setSizePolicy(sizePolicy)
         self.MCSM9SelectServerStatusText.setObjectName("MCSM9SelectServerStatusText")
         self.gridLayout_89.addWidget(self.MCSM9SelectServerStatusText, 1, 1, 1, 2)
@@ -4638,7 +6402,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SelectServerTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SelectServerTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SelectServerTitle.setSizePolicy(sizePolicy)
         self.MCSM9SelectServerTitle.setObjectName("MCSM9SelectServerTitle")
         self.gridLayout_89.addWidget(self.MCSM9SelectServerTitle, 0, 2, 1, 1)
@@ -4651,7 +6417,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgs.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgs.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgs.setMinimumSize(QSize(0, 630))
         self.MCSM9ValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -4662,114 +6430,200 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsJavaWidget.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsJavaWidget.setMinimumSize(QSize(0, 120))
         self.MCSM9ValidateArgsJavaWidget.setObjectName("MCSM9ValidateArgsJavaWidget")
         self.gridLayout_91 = QGridLayout(self.MCSM9ValidateArgsJavaWidget)
         self.gridLayout_91.setObjectName("gridLayout_91")
-        self.MCSM9ValidateArgsJavaListPushBtn = PushButton(self.MCSM9ValidateArgsJavaWidget)
+        self.MCSM9ValidateArgsJavaListPushBtn = PushButton(
+            self.MCSM9ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
         self.MCSM9ValidateArgsJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM9ValidateArgsJavaListPushBtn.setObjectName("MCSM9ValidateArgsJavaListPushBtn")
+        self.MCSM9ValidateArgsJavaListPushBtn.setObjectName(
+            "MCSM9ValidateArgsJavaListPushBtn"
+        )
         self.gridLayout_91.addWidget(self.MCSM9ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
         self.MCSM9ValidateArgsJavaTextEdit = TextEdit(self.MCSM9ValidateArgsJavaWidget)
-        self.MCSM9ValidateArgsJavaTextEdit.setObjectName("MCSM9ValidateArgsJavaTextEdit")
+        self.MCSM9ValidateArgsJavaTextEdit.setObjectName(
+            "MCSM9ValidateArgsJavaTextEdit"
+        )
         self.gridLayout_91.addWidget(self.MCSM9ValidateArgsJavaTextEdit, 2, 0, 2, 1)
-        self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsJavaWidget)
+        self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSM9ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn")
-        self.gridLayout_91.addWidget(self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
-        self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsJavaWidget)
+            "MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn"
+        )
+        self.gridLayout_91.addWidget(
+            self.MCSM9ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
+        )
+        self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSM9ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
         self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn")
-        self.gridLayout_91.addWidget(self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
-        self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsJavaWidget)
+            "MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn"
+        )
+        self.gridLayout_91.addWidget(
+            self.MCSM9ValidateArgsManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1
+        )
+        self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn = PrimaryPushButton(
+            self.MCSM9ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName("MCSM9ValidateArgsDownloadJavaPrimaryPushBtn")
-        self.gridLayout_91.addWidget(self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
-        self.MCSM9ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSM9ValidateArgsJavaWidget)
+        self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.setCursor(
+            QCursor(Qt.PointingHandCursor)
+        )
+        self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
+            "MCSM9ValidateArgsDownloadJavaPrimaryPushBtn"
+        )
+        self.gridLayout_91.addWidget(
+            self.MCSM9ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
+        )
+        self.MCSM9ValidateArgsJavaSubtitleLabel = SubtitleLabel(
+            self.MCSM9ValidateArgsJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsJavaSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsJavaSubtitleLabel.setObjectName("MCSM9ValidateArgsJavaSubtitleLabel")
-        self.gridLayout_91.addWidget(self.MCSM9ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
+        self.MCSM9ValidateArgsJavaSubtitleLabel.setObjectName(
+            "MCSM9ValidateArgsJavaSubtitleLabel"
+        )
+        self.gridLayout_91.addWidget(
+            self.MCSM9ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsJavaWidget, 5, 2, 1, 3)
         self.MCSM9ValidateArgsDeEncodingWidget = QWidget(self.MCSM9ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.MCSM9ValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.MCSM9ValidateArgsDeEncodingWidget.setObjectName("MCSM9ValidateArgsDeEncodingWidget")
+        self.MCSM9ValidateArgsDeEncodingWidget.setObjectName(
+            "MCSM9ValidateArgsDeEncodingWidget"
+        )
         self.gridLayout_92 = QGridLayout(self.MCSM9ValidateArgsDeEncodingWidget)
         self.gridLayout_92.setObjectName("gridLayout_92")
-        self.MCSM9ValidateArgsOutputDeEncodingComboBox = ComboBox(self.MCSM9ValidateArgsDeEncodingWidget)
+        self.MCSM9ValidateArgsOutputDeEncodingComboBox = ComboBox(
+            self.MCSM9ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsOutputDeEncodingComboBox.setObjectName("MCSM9ValidateArgsOutputDeEncodingComboBox")
-        self.gridLayout_92.addWidget(self.MCSM9ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.MCSM9ValidateArgsInputDeEncodingComboBox = ComboBox(self.MCSM9ValidateArgsDeEncodingWidget)
+        self.MCSM9ValidateArgsOutputDeEncodingComboBox.setObjectName(
+            "MCSM9ValidateArgsOutputDeEncodingComboBox"
+        )
+        self.gridLayout_92.addWidget(
+            self.MCSM9ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
+        )
+        self.MCSM9ValidateArgsInputDeEncodingComboBox = ComboBox(
+            self.MCSM9ValidateArgsDeEncodingWidget
+        )
         self.MCSM9ValidateArgsInputDeEncodingComboBox.setText("")
-        self.MCSM9ValidateArgsInputDeEncodingComboBox.setObjectName("MCSM9ValidateArgsInputDeEncodingComboBox")
-        self.gridLayout_92.addWidget(self.MCSM9ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.MCSM9ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(self.MCSM9ValidateArgsDeEncodingWidget)
+        self.MCSM9ValidateArgsInputDeEncodingComboBox.setObjectName(
+            "MCSM9ValidateArgsInputDeEncodingComboBox"
+        )
+        self.gridLayout_92.addWidget(
+            self.MCSM9ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
+        )
+        self.MCSM9ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
+            self.MCSM9ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsOutputDeEncodingLabel.setObjectName("MCSM9ValidateArgsOutputDeEncodingLabel")
-        self.gridLayout_92.addWidget(self.MCSM9ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.MCSM9ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(self.MCSM9ValidateArgsDeEncodingWidget)
+        self.MCSM9ValidateArgsOutputDeEncodingLabel.setObjectName(
+            "MCSM9ValidateArgsOutputDeEncodingLabel"
+        )
+        self.gridLayout_92.addWidget(
+            self.MCSM9ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
+        )
+        self.MCSM9ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
+            self.MCSM9ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsDeEncodingSubtitleLabel.setObjectName("MCSM9ValidateArgsDeEncodingSubtitleLabel")
-        self.gridLayout_92.addWidget(self.MCSM9ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.MCSM9ValidateArgsInputDeEncodingLabel = StrongBodyLabel(self.MCSM9ValidateArgsDeEncodingWidget)
+        self.MCSM9ValidateArgsDeEncodingSubtitleLabel.setObjectName(
+            "MCSM9ValidateArgsDeEncodingSubtitleLabel"
+        )
+        self.gridLayout_92.addWidget(
+            self.MCSM9ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
+        )
+        self.MCSM9ValidateArgsInputDeEncodingLabel = StrongBodyLabel(
+            self.MCSM9ValidateArgsDeEncodingWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsInputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsInputDeEncodingLabel.setObjectName("MCSM9ValidateArgsInputDeEncodingLabel")
-        self.gridLayout_92.addWidget(self.MCSM9ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
+        self.MCSM9ValidateArgsInputDeEncodingLabel.setObjectName(
+            "MCSM9ValidateArgsInputDeEncodingLabel"
+        )
+        self.gridLayout_92.addWidget(
+            self.MCSM9ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
+        )
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsDeEncodingWidget, 8, 2, 1, 3)
         spacerItem99 = QSpacerItem(20, 102, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_90.addItem(spacerItem99, 0, 0, 21, 1)
@@ -4777,71 +6631,117 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.MCSM9ValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.MCSM9ValidateArgsJVMArgWidget.setObjectName("MCSM9ValidateArgsJVMArgWidget")
+        self.MCSM9ValidateArgsJVMArgWidget.setObjectName(
+            "MCSM9ValidateArgsJVMArgWidget"
+        )
         self.gridLayout_93 = QGridLayout(self.MCSM9ValidateArgsJVMArgWidget)
         self.gridLayout_93.setObjectName("gridLayout_93")
-        self.MCSM9ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(self.MCSM9ValidateArgsJVMArgWidget)
-        self.MCSM9ValidateArgsJVMArgPlainTextEdit.setObjectName("MCSM9ValidateArgsJVMArgPlainTextEdit")
-        self.gridLayout_93.addWidget(self.MCSM9ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.MCSM9ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(self.MCSM9ValidateArgsJVMArgWidget)
+        self.MCSM9ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
+            self.MCSM9ValidateArgsJVMArgWidget
+        )
+        self.MCSM9ValidateArgsJVMArgPlainTextEdit.setObjectName(
+            "MCSM9ValidateArgsJVMArgPlainTextEdit"
+        )
+        self.gridLayout_93.addWidget(
+            self.MCSM9ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
+        )
+        self.MCSM9ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
+            self.MCSM9ValidateArgsJVMArgWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsJVMArgSubtitleLabel.setObjectName("MCSM9ValidateArgsJVMArgSubtitleLabel")
-        self.gridLayout_93.addWidget(self.MCSM9ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
+        self.MCSM9ValidateArgsJVMArgSubtitleLabel.setObjectName(
+            "MCSM9ValidateArgsJVMArgSubtitleLabel"
+        )
+        self.gridLayout_93.addWidget(
+            self.MCSM9ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
+        )
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.MCSM9ValidateArgsCoreWidget = QWidget(self.MCSM9ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsCoreWidget.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsCoreWidget.setObjectName("MCSM9ValidateArgsCoreWidget")
         self.gridLayout_94 = QGridLayout(self.MCSM9ValidateArgsCoreWidget)
         self.gridLayout_94.setObjectName("gridLayout_94")
-        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
-        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.setObjectName("MCSM9ValidateArgsDownloadCorePrimaryPushBtn")
-        self.gridLayout_94.addWidget(self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
-        self.MCSM9ValidateArgsCoreSubtitleLabel = SubtitleLabel(self.MCSM9ValidateArgsCoreWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
-        self.MCSM9ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsCoreSubtitleLabel.setObjectName("MCSM9ValidateArgsCoreSubtitleLabel")
-        self.gridLayout_94.addWidget(self.MCSM9ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
-        self.MCSM9ValidateArgsCoreLineEdit = LineEdit(self.MCSM9ValidateArgsCoreWidget)
-        self.MCSM9ValidateArgsCoreLineEdit.setObjectName("MCSM9ValidateArgsCoreLineEdit")
-        self.gridLayout_94.addWidget(self.MCSM9ValidateArgsCoreLineEdit, 1, 1, 1, 1)
-        self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.MCSM9ValidateArgsCoreWidget)
+        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSM9ValidateArgsCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth())
+            self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
+            "MCSM9ValidateArgsDownloadCorePrimaryPushBtn"
+        )
+        self.gridLayout_94.addWidget(
+            self.MCSM9ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
+        )
+        self.MCSM9ValidateArgsCoreSubtitleLabel = SubtitleLabel(
+            self.MCSM9ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSM9ValidateArgsCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.MCSM9ValidateArgsCoreSubtitleLabel.setObjectName(
+            "MCSM9ValidateArgsCoreSubtitleLabel"
+        )
+        self.gridLayout_94.addWidget(
+            self.MCSM9ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
+        )
+        self.MCSM9ValidateArgsCoreLineEdit = LineEdit(self.MCSM9ValidateArgsCoreWidget)
+        self.MCSM9ValidateArgsCoreLineEdit.setObjectName(
+            "MCSM9ValidateArgsCoreLineEdit"
+        )
+        self.gridLayout_94.addWidget(self.MCSM9ValidateArgsCoreLineEdit, 1, 1, 1, 1)
+        self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.MCSM9ValidateArgsCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
-            "MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn")
-        self.gridLayout_94.addWidget(self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
+            "MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn"
+        )
+        self.gridLayout_94.addWidget(
+            self.MCSM9ValidateArgsManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1
+        )
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsCoreWidget, 7, 2, 1, 3)
         self.MCSM9ValidateArgsMemWidget = QWidget(self.MCSM9ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsMemWidget.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsMemWidget.setMinimumSize(QSize(0, 85))
         self.MCSM9ValidateArgsMemWidget.setMaximumSize(QSize(16777215, 85))
@@ -4852,47 +6752,69 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSM9ValidateArgsMinMemLineEdit.setObjectName("MCSM9ValidateArgsMinMemLineEdit")
+        self.MCSM9ValidateArgsMinMemLineEdit.setObjectName(
+            "MCSM9ValidateArgsMinMemLineEdit"
+        )
         self.gridLayout_95.addWidget(self.MCSM9ValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.MCSM9ValidateArgsMemSubtitleLabel = SubtitleLabel(self.MCSM9ValidateArgsMemWidget)
+        self.MCSM9ValidateArgsMemSubtitleLabel = SubtitleLabel(
+            self.MCSM9ValidateArgsMemWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSM9ValidateArgsMemSubtitleLabel.setObjectName("MCSM9ValidateArgsMemSubtitleLabel")
+        self.MCSM9ValidateArgsMemSubtitleLabel.setObjectName(
+            "MCSM9ValidateArgsMemSubtitleLabel"
+        )
         self.gridLayout_95.addWidget(self.MCSM9ValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
         self.MCSM9ValidateArgsMaxMemLineEdit = LineEdit(self.MCSM9ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSM9ValidateArgsMaxMemLineEdit.setObjectName("MCSM9ValidateArgsMaxMemLineEdit")
+        self.MCSM9ValidateArgsMaxMemLineEdit.setObjectName(
+            "MCSM9ValidateArgsMaxMemLineEdit"
+        )
         self.gridLayout_95.addWidget(self.MCSM9ValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
         self.MCSM9ValidateArgsToSymbol = SubtitleLabel(self.MCSM9ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsToSymbol.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsToSymbol.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsToSymbol.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsToSymbol.setObjectName("MCSM9ValidateArgsToSymbol")
         self.gridLayout_95.addWidget(self.MCSM9ValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem100 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_95.addItem(spacerItem100, 1, 5, 1, 1)
-        self.MCSM9ValidateArgsMemUnitComboBox = ComboBox(self.MCSM9ValidateArgsMemWidget)
-        self.MCSM9ValidateArgsMemUnitComboBox.setObjectName("MCSM9ValidateArgsMemUnitComboBox")
+        self.MCSM9ValidateArgsMemUnitComboBox = ComboBox(
+            self.MCSM9ValidateArgsMemWidget
+        )
+        self.MCSM9ValidateArgsMemUnitComboBox.setObjectName(
+            "MCSM9ValidateArgsMemUnitComboBox"
+        )
         self.gridLayout_95.addWidget(self.MCSM9ValidateArgsMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsMemWidget, 6, 2, 1, 3)
         self.MCSM9ValidateArgsTitle = SubtitleLabel(self.MCSM9ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsTitle.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsTitle.setObjectName("MCSM9ValidateArgsTitle")
         self.gridLayout_90.addWidget(self.MCSM9ValidateArgsTitle, 0, 3, 1, 1)
@@ -4900,7 +6822,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9ValidateArgsStatus.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9ValidateArgsStatus.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9ValidateArgsStatus.setSizePolicy(sizePolicy)
         self.MCSM9ValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.MCSM9ValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -4922,7 +6846,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SaveTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SaveTitle.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SaveTitle.setSizePolicy(sizePolicy)
         self.MCSM9SaveTitle.setObjectName("MCSM9SaveTitle")
         self.gridLayout_96.addWidget(self.MCSM9SaveTitle, 0, 1, 1, 1)
@@ -4930,7 +6856,9 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SaveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SaveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SaveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.MCSM9SaveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.MCSM9SaveServerNameLineEdit.setObjectName("MCSM9SaveServerNameLineEdit")
@@ -4941,11 +6869,15 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSM9SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.MCSM9SaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.MCSM9SaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSM9SaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.MCSM9SaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.MCSM9SaveServerPrimaryPushBtn.setObjectName("MCSM9SaveServerPrimaryPushBtn")
+        self.MCSM9SaveServerPrimaryPushBtn.setObjectName(
+            "MCSM9SaveServerPrimaryPushBtn"
+        )
         self.gridLayout_96.addWidget(self.MCSM9SaveServerPrimaryPushBtn, 2, 1, 1, 1)
         self.verticalLayout_12.addWidget(self.MCSM9Save)
         self.MCSM9ScrollArea.setWidget(self.MCSM9ScrollAreaWidgetContents)
@@ -5034,9 +6966,13 @@ class ConfigurePage(QWidget):
         self.extendedMinMemLineEdit.setPlaceholderText("整数")
         self.extendedMaxMemLineEdit.setPlaceholderText("整数")
         self.extendedServerNameLineEdit.setPlaceholderText("不能包含非法字符")
-        self.extendedOutputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"])
+        self.extendedOutputDeEncodingComboBox.addItems(
+            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
         self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
-        self.extendedInputDeEncodingComboBox.addItems(["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"])
+        self.extendedInputDeEncodingComboBox.addItems(
+            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
         self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
         self.extendedMemUnitComboBox.addItems(["M", "G"])
         self.extendedMemUnitComboBox.setCurrentIndex(0)
@@ -5066,7 +7002,9 @@ class ConfigurePage(QWidget):
         self.noShellArchivesMemSubtitleLabel.setText("内存:")
         self.noShellArchivesToSymbol.setText("~")
         self.noShellArchivesSaveTitle.setText("4. 完成导入")
-        self.noShellArchivesSaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
+        self.noShellArchivesSaveServerNameLineEdit.setPlaceholderText(
+            "设置服务器昵称，不能包含非法字符"
+        )
         self.noShellArchivesSaveSaveServerPrimaryPushBtn.setText("导入！")
         self.shellArchivesTitle.setText("导入 含开服脚本的 完整的 服务器 压缩包/文件夹")
         self.shellArchivesImportStatusText.setText("[状态文本]")
@@ -5080,10 +7018,14 @@ class ConfigurePage(QWidget):
         self.shellArchivesValidateArgsJavaListPushBtn.setText("Java列表")
         self.shellArchivesValidateArgsManuallyAddJavaPrimaryPushBtn.setText("手动导入")
         self.shellArchivesValidateArgsDownloadJavaPrimaryPushBtn.setText("下载Java")
-        self.shellArchivesValidateArgsOutputDeEncodingLabel.setText("控制台输出编码（优先级高于全局设置）")
+        self.shellArchivesValidateArgsOutputDeEncodingLabel.setText(
+            "控制台输出编码（优先级高于全局设置）"
+        )
         self.shellArchivesValidateArgsDeEncodingSubtitleLabel.setText("编码设置：")
         self.shellArchivesValidateArgsInputDeEncodingLabel.setText("指令输入编码（优先级高于全局设置）")
-        self.shellArchivesValidateArgsJVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
+        self.shellArchivesValidateArgsJVMArgPlainTextEdit.setPlaceholderText(
+            "可选，用一个空格分组"
+        )
         self.shellArchivesValidateArgsJVMArgSubtitleLabel.setText("JVM参数：")
         self.shellArchivesValidateArgsMemSubtitleLabel.setText("内存:")
         self.shellArchivesValidateArgsToSymbol.setText("~")
@@ -5263,10 +7205,19 @@ class ConfigurePage(QWidget):
         self.MCSM9SaveServerPrimaryPushBtn.setText("导入！")
         self.MCSM9Title.setText("导入 MCSManager 9 的服务器")
         self.importNewServerTypeComboBox.addItems(
-            ["选择一项", "导入 不含开服脚本的 完整的 服务器", "导入 含开服脚本的 完整的 服务器",
-             "导入 服务器 存档(没有开服脚本、没有服务器核心)", "导入 MCSL 1 的服务器", "导入 MCSL 2 的服务器",
-             "导入 MSL 的服务器", "导入 灵工艺我的世界「轻」开服器 的服务器", "导入 MCSManager 8 的服务器",
-             "导入 MCSManager 9 的服务器"])
+            [
+                "选择一项",
+                "导入 不含开服脚本的 完整的 服务器",
+                "导入 含开服脚本的 完整的 服务器",
+                "导入 服务器 存档(没有开服脚本、没有服务器核心)",
+                "导入 MCSL 1 的服务器",
+                "导入 MCSL 2 的服务器",
+                "导入 MSL 的服务器",
+                "导入 灵工艺我的世界「轻」开服器 的服务器",
+                "导入 MCSManager 8 的服务器",
+                "导入 MCSManager 9 的服务器",
+            ]
+        )
 
         # 引导页绑定
         self.noobNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
@@ -5307,7 +7258,10 @@ class ConfigurePage(QWidget):
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
         self.goBtn.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(self.importNewServerTypeComboBox.currentIndex()))
+            lambda: self.importNewServerStackWidget.setCurrentIndex(
+                self.importNewServerTypeComboBox.currentIndex()
+            )
+        )
 
         self.noobNewServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
@@ -5372,7 +7326,9 @@ class ConfigurePage(QWidget):
             selectedJavaPath = selectedJavaPath.replace("/", "\\")
             if v := javaDetector.getJavaVersion(selectedJavaPath):
                 currentJavaPaths = configureServerVariables.javaPath
-                if (java := javaDetector.Java(selectedJavaPath, v)) not in currentJavaPaths:
+                if (
+                    java := javaDetector.Java(selectedJavaPath, v)
+                ) not in currentJavaPaths:
                     currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
                     javaDetector.sortJavaList(currentJavaPaths)
                     InfoBar.success(
@@ -5433,14 +7389,16 @@ class ConfigurePage(QWidget):
 
         savedJavaList = javaDetector.loadJavaList()
         invaildJavaList = []
-        javaList = javaDetector.combineJavaList(savedJavaList, _JavaPaths,invaild=invaildJavaList)
+        javaList = javaDetector.combineJavaList(
+            savedJavaList, _JavaPaths, invaild=invaildJavaList
+        )
         javaDetector.sortJavaList(javaList, reverse=False)
         configureServerVariables.javaPath = javaList
         javaDetector.saveJavaList(javaList)
         for java in invaildJavaList:
             InfoBar.error(
                 title=f"Java: {java.version} 已失效",
-                content=f"位于{java.path}的{java.version}已失效"
+                content=f"位于{java.path}的{java.version}已失效",
             )
 
     @pyqtSlot(int)
@@ -5510,22 +7468,22 @@ class ConfigurePage(QWidget):
 
         # 是否为空
         if (
-                minMemLineEditItems[currentNewServerType].text() != ""
-                and maxMemLineEditItems[currentNewServerType].text() != ""
+            minMemLineEditItems[currentNewServerType].text() != ""
+            and maxMemLineEditItems[currentNewServerType].text() != ""
         ):
             # 是否是数字
             if (
-                    minMemLineEditItems[currentNewServerType].text().isdigit()
-                    and maxMemLineEditItems[currentNewServerType].text().isdigit()
+                minMemLineEditItems[currentNewServerType].text().isdigit()
+                and maxMemLineEditItems[currentNewServerType].text().isdigit()
             ):
                 # 是否为整数
                 if (
-                        int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
-                        and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                    int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                    and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
                 ):
                     # 是否为整数
                     if int(minMemLineEditItems[currentNewServerType].text()) <= int(
-                            maxMemLineEditItems[currentNewServerType].text()
+                        maxMemLineEditItems[currentNewServerType].text()
                     ):
                         # 设!
                         configureServerVariables.minMem = int(
@@ -5548,8 +7506,8 @@ class ConfigurePage(QWidget):
     def checkCoreSet(self):
         """检查核心设置"""
         if (
-                configureServerVariables.corePath != ""
-                and configureServerVariables.coreFileName != ""
+            configureServerVariables.corePath != ""
+            and configureServerVariables.coreFileName != ""
         ):
             return "核心检查: 正常", 0
         else:
@@ -5586,8 +7544,8 @@ class ConfigurePage(QWidget):
 
         for i in range(len(illegalServerNameList)):
             if (
-                    illegalServerNameList[i]
-                    == serverNameLineEditItems[currentNewServerType].text()
+                illegalServerNameList[i]
+                == serverNameLineEditItems[currentNewServerType].text()
             ):
                 errText += "，名称与操作系统冲突"
                 isError = 1
@@ -5596,8 +7554,8 @@ class ConfigurePage(QWidget):
                 isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
             if (
-                    not eachIllegalServerCharacter
-                        in serverNameLineEditItems[currentNewServerType].text()
+                not eachIllegalServerCharacter
+                in serverNameLineEditItems[currentNewServerType].text()
             ):
                 pass
             else:
@@ -5753,9 +7711,11 @@ class ConfigurePage(QWidget):
             w.yesSignal.connect(self.confirmForgeServer)
             w.cancelButton.setText("我再看看")
             w.exec()
-    
+
     def confirmForgeServer(self):
-        w = MessageBox("这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self)
+        w = MessageBox(
+            "这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self
+        )
         w.yesButton.setText("是")
         w.cancelButton.setText("不是")
         w.cancelSignal.connect(self.saveNewServer)
@@ -5798,14 +7758,14 @@ class ConfigurePage(QWidget):
         # 写入全局配置
         try:
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
                 globalServerListFile.close()
 
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as newGlobalServerListFile:
                 # 添加新的
                 globalServerList["MCSLServerList"].append(serverConfig)
@@ -5819,9 +7779,9 @@ class ConfigurePage(QWidget):
         try:
             if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
                 with open(
-                        f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
-                        "w+",
-                        encoding="utf-8",
+                    f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
+                    "w+",
+                    encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
             else:
@@ -5886,7 +7846,6 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
             if configureServerVariables.serverType == "forge":
-                
                 self.installingForgeStateToolTip = StateToolTip(
                     "正在安装Forge", "请稍后...", self
                 )
@@ -5894,7 +7853,12 @@ class ConfigurePage(QWidget):
                     self.installingForgeStateToolTip.getSuitablePos()
                 )
                 self.installingForgeStateToolTip.show()
-                # ForgeInstaller(cwd=f"Servers//{configureServerVariables.serverName}",file=)
+                ForgeInstaller(
+                    cwd=f"Servers//{configureServerVariables.serverName}",
+                    file=configureServerVariables.coreFileName,
+                    java=configureServerVariables.selectedJavaPath,
+                    logDecode=settingsController.fileSettings["outputDeEncoding"],
+                )
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:
