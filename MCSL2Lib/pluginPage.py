@@ -35,6 +35,7 @@ from qfluentwidgets import (
     TitleLabel,
     InfoBarPosition,
     InfoBar,
+    FluentIcon as FIF
 )
 
 from MCSL2Lib.singleton import Singleton
@@ -150,9 +151,10 @@ class PluginPage(QWidget):
 
         self.subTitleLabel.setText("添加属于你的插件，让你的MCSL2更加强大！")
         self.titleLabel.setText("插件")
-        self.refreshPluginListBtn.setText("刷新列表")
-        self.installPluginBtn.setText("安装插件")
-        # self.refreshPluginListBtn.clicked.connect(self.parent().initPluginSystem)
+        self.refreshPluginListBtn.setText("刷新")
+        self.installPluginBtn.setText("安装")
+        self.refreshPluginListBtn.setIcon(FIF.UPDATE)
+        self.installPluginBtn.setIcon(FIF.ZIP_FOLDER)
         self.refreshPluginListBtn.clicked.connect(
             lambda: InfoBar.success(
                 title="成功",

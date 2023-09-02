@@ -22,38 +22,41 @@ class FastMirrorVersionListWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(160, 50))
-        self.setMaximumSize(QSize(160, 50))
+        self.setFixedSize(QSize(140, 50))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.versionBtn = PushButton(self)
-        self.versionBtn.setStyleSheet(
-            GlobalMCSL2Variables.darkFastMirrorDownloadBtnStyleSheet
-            if isDarkTheme()
-            else GlobalMCSL2Variables.lightFastMirrorDownloadBtnStyleSheet
-        )
-        self.horizontalLayout.addWidget(self.versionBtn)
-        # self.versionBtn.setObjectName("versionBtn")
-        # self.versionBtn.setText("[版本]")
+        self.versionLabel = BodyLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.versionLabel.sizePolicy().hasHeightForWidth())
+        self.versionLabel.setSizePolicy(sizePolicy)
+        self.versionLabel.setAlignment(Qt.AlignCenter)
+        self.versionLabel.setObjectName("versionLabel")
+        self.horizontalLayout.addWidget(self.versionLabel)
+        # self.versionLabel.setObjectName("versionLabel")
+        # self.versionLabel.setText("[版本]")
 
 
 class FastMirrorCoreListWidget(CardWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setObjectName("coreListWidget")
+        # self.setObjectName("coreListWidget")
 
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Fixed, QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(180, 57))
-        self.setMaximumSize(QSize(180, 57))
+        self.setFixedSize(QSize(180, 57))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
-
         self.coreTagWidget = QWidget(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Fixed, QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
@@ -70,23 +73,24 @@ class FastMirrorCoreListWidget(CardWidget):
             "}"
         )
         self.coreTagWidget.setObjectName("coreTagWidget")
-
         self.gridLayout = QGridLayout(self.coreTagWidget)
         self.gridLayout.setObjectName("gridLayout")
-
         self.coreTag = BodyLabel(self.coreTagWidget)
         self.coreTag.setAlignment(Qt.AlignCenter)
         self.coreTag.setObjectName("coreTag")
-
         self.gridLayout.addWidget(self.coreTag, 0, 0, 1, 1)
         self.horizontalLayout.addWidget(self.coreTagWidget)
-        self.coreName = PushButton(self)
-        self.coreName.setStyleSheet(
-            GlobalMCSL2Variables.darkFastMirrorDownloadBtnStyleSheet
-            if isDarkTheme()
-            else GlobalMCSL2Variables.lightFastMirrorDownloadBtnStyleSheet
+        self.coreName = BodyLabel(self)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Expanding, QSizePolicy.Expanding
         )
-        # self.coreName.setObjectName("coreName")
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.coreName.sizePolicy().hasHeightForWidth())
+        self.coreName.setSizePolicy(sizePolicy)
+        self.coreName.setAlignment(Qt.AlignCenter)
+        self.coreName.setObjectName("coreName")
+        self.horizontalLayout.addWidget(self.coreName)
 
         self.horizontalLayout.addWidget(self.coreName)
 

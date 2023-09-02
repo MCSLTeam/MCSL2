@@ -1141,7 +1141,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aboutContentWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aboutContentWidget.sizePolicy().hasHeightForWidth()
+        )
         self.aboutContentWidget.setSizePolicy(sizePolicy)
         self.aboutContentWidget.setObjectName("aboutContentWidget")
 
@@ -1154,7 +1156,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openOfficialWeb.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openOfficialWeb.sizePolicy().hasHeightForWidth()
+        )
         self.openOfficialWeb.setSizePolicy(sizePolicy)
         self.openOfficialWeb.setObjectName("openOfficialWeb")
 
@@ -1168,7 +1172,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openSourceCodeRepo.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openSourceCodeRepo.sizePolicy().hasHeightForWidth()
+        )
         self.openSourceCodeRepo.setSizePolicy(sizePolicy)
         self.openSourceCodeRepo.setObjectName("openSourceCodeRepo")
 
@@ -1195,7 +1201,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.generateSysReport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.generateSysReport.sizePolicy().hasHeightForWidth()
+        )
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
 
@@ -1206,7 +1214,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.augSponsorsBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.augSponsorsBtn.sizePolicy().hasHeightForWidth()
+        )
         self.augSponsorsBtn.setSizePolicy(sizePolicy)
         self.augSponsorsBtn.setObjectName("augSponsorsBtn")
 
@@ -1493,9 +1503,12 @@ class SettingsPage(QWidget):
             )
         )
         self.augSponsorsBtn.clicked.connect(self.showAfDianSponsors)
-        
+
         self.refreshSettingsInterface()
         self.selectThemeColorBtn.colorChanged.connect(setThemeColor)
+        self.checkUpdateBtn.setIcon(FIF.UPDATE)
+        self.generateSysReport.setIcon(FIF.COPY)
+        self.augSponsorsBtn.setIcon(FIF.PEOPLE)
 
     def readSettings(self, firstLoad):
         """
@@ -1737,6 +1750,7 @@ class SettingsPage(QWidget):
         w.titleLabel.setParent(None)
         w.contentLabel.setParent(None)
         w.show()
+
 
 class CheckUpdateThread(QThread):
     """

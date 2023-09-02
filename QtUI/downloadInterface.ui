@@ -38,8 +38,8 @@
    </item>
    <item row="1" column="2" rowspan="2" colspan="2">
     <widget class="QWidget" name="titleLimitWidget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
        <widget class="TitleLabel" name="titleLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -52,7 +52,20 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="1">
+       <widget class="TransparentPushButton" name="openDownloadFolderBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>打开下载文件夹</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
        <widget class="StrongBodyLabel" name="subTitleLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -364,8 +377,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>700</width>
-                <height>318</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -405,8 +418,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>700</width>
-                <height>318</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -446,8 +459,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>700</width>
-                <height>318</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -487,8 +500,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>700</width>
-                <height>318</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -528,8 +541,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>700</width>
-                <height>318</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -576,6 +589,11 @@
   <customwidget>
    <class>PushButton</class>
    <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TransparentPushButton</class>
+   <extends>PushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>

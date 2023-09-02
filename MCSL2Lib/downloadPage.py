@@ -13,7 +13,7 @@
 """
 Download page with FastMirror and MCSLAPI.
 """
-from os import path as ospath, remove
+from os import path as ospath, remove, startfile
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
@@ -38,6 +38,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
     StateToolTip,
+    TransparentPushButton,
 )
 
 from MCSL2Lib.DownloadProgressWidget import DownloadMessageBox
@@ -89,10 +90,8 @@ class DownloadPage(QWidget):
         self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
         self.titleLimitWidget = QWidget(self)
         self.titleLimitWidget.setObjectName("titleLimitWidget")
-
-        self.verticalLayout = QVBoxLayout(self.titleLimitWidget)
-        self.verticalLayout.setObjectName("verticalLayout")
-
+        self.gridLayout_4 = QGridLayout(self.titleLimitWidget)
+        self.gridLayout_4.setObjectName("gridLayout_4")
         self.titleLabel = TitleLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -100,20 +99,24 @@ class DownloadPage(QWidget):
         sizePolicy.setHeightForWidth(self.titleLabel.sizePolicy().hasHeightForWidth())
         self.titleLabel.setSizePolicy(sizePolicy)
         self.titleLabel.setObjectName("titleLabel")
-
-        self.verticalLayout.addWidget(self.titleLabel)
+        self.gridLayout_4.addWidget(self.titleLabel, 0, 0, 1, 1)
+        self.openDownloadFolderBtn = TransparentPushButton(self.titleLimitWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.openDownloadFolderBtn.sizePolicy().hasHeightForWidth())
+        self.openDownloadFolderBtn.setSizePolicy(sizePolicy)
+        self.openDownloadFolderBtn.setObjectName("openDownloadFolderBtn")
+        self.gridLayout_4.addWidget(self.openDownloadFolderBtn, 0, 1, 1, 1)
         self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
-
-        self.verticalLayout.addWidget(self.subTitleLabel)
+        self.gridLayout_4.addWidget(self.subTitleLabel, 1, 0, 1, 2)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem1, 0, 2, 1, 1)
@@ -534,6 +537,7 @@ class DownloadPage(QWidget):
         self.buildSubtitleLabel.setText("构建列表")
         self.refreshFastMirrorAPIBtn.setText("刷新")
         self.refreshMCSLAPIBtn.setText("刷新")
+        self.openDownloadFolderBtn.setText("打开下载文件夹")
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.MCSLAPIPivot.addItem(
@@ -615,6 +619,8 @@ class DownloadPage(QWidget):
         self.scrollAreaSpacer = QSpacerItem(
             20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
         )
+        self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
+        self.openDownloadFolderBtn.clicked.connect(lambda: startfile(f".\\MCSL2\\Downloads\\"))
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
@@ -929,10 +935,10 @@ class DownloadPage(QWidget):
             fastMirrorCoreListWidget.coreName.setText(
                 downloadVariables.FastMirrorAPIDict["name"][i]
             )
-            fastMirrorCoreListWidget.coreName.setObjectName(
+            fastMirrorCoreListWidget.setObjectName(
                 downloadVariables.FastMirrorAPIDict["name"][i]
             )
-            fastMirrorCoreListWidget.coreName.clicked.connect(
+            fastMirrorCoreListWidget.clicked.connect(
                 self.fastMirrorCoreNameProcessor
             )
             self.coreListLayout.addWidget(fastMirrorCoreListWidget)
@@ -967,9 +973,9 @@ class DownloadPage(QWidget):
                     downloadVariables.selectedName
                 )
             ][i]
-            fastMirrorMCVersionsListWidget.versionBtn.setText(MCVersion)
-            fastMirrorMCVersionsListWidget.versionBtn.setObjectName(MCVersion)
-            fastMirrorMCVersionsListWidget.versionBtn.clicked.connect(
+            fastMirrorMCVersionsListWidget.versionLabel.setText(MCVersion)
+            fastMirrorMCVersionsListWidget.setObjectName(MCVersion)
+            fastMirrorMCVersionsListWidget.clicked.connect(
                 self.fastMirrorMCVersionProcessor
             )
             self.versionLayout.addWidget(fastMirrorMCVersionsListWidget)

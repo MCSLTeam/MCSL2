@@ -51,11 +51,13 @@ from qfluentwidgets import (
     TextEdit,
     PixmapLabel,
     BodyLabel,
+    StateToolTip,
 )
 
 from MCSL2Lib import javaDetector
 from MCSL2Lib.interfaceController import ChildStackedWidget
 from MCSL2Lib.serverController import MojangEula
+from MCSL2Lib.serverInstaller import ForgeInstaller
 from MCSL2Lib.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
@@ -5748,7 +5750,7 @@ class ConfigurePage(QWidget):
             )
             w = MessageBox(title, content, self)
             w.yesButton.setText("无误，添加")
-            w.yesSignal.connect(self.saveNewServer)
+            w.yesSignal.connect(self.confirmForgeServer)
             w.cancelButton.setText("我再看看")
             w.exec()
     
@@ -5756,12 +5758,13 @@ class ConfigurePage(QWidget):
         w = MessageBox("这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self)
         w.yesButton.setText("是")
         w.cancelButton.setText("不是")
-        w.yesSignal.connect(self.saveNewServer)
+        w.cancelSignal.connect(self.saveNewServer)
         w.yesSignal.connect(self.setForge)
         w.exec()
 
     def setForge(self):
         configureServerVariables.serverType = "forge"
+        self.saveNewServer()
 
     def saveNewServer(self):
         """真正的保存服务器函数"""
@@ -5882,6 +5885,16 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
+            if configureServerVariables.serverType == "forge":
+                
+                self.installingForgeStateToolTip = StateToolTip(
+                    "正在安装Forge", "请稍后...", self
+                )
+                self.installingForgeStateToolTip.move(
+                    self.installingForgeStateToolTip.getSuitablePos()
+                )
+                self.installingForgeStateToolTip.show()
+                # ForgeInstaller(cwd=f"Servers//{configureServerVariables.serverName}",file=)
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:

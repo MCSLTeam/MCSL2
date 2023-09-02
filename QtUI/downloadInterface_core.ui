@@ -77,41 +77,24 @@
     </widget>
    </item>
    <item>
-    <widget class="PushButton" name="coreName">
-     <property name="styleSheet">
-      <string notr="true">PushButton {
-    color: black;
-    background-color: transparent;
-    border: none;
-    border-radius: 5px;
-    /* font: 14px 'Segoe UI', 'Microsoft YaHei'; */
-    padding: 5px 12px 6px 12px;
-    outline: none;
-    margin: 0;
-}
-PushButton:hover {
-    background-color: rgba(0, 0, 0, 9);
-    border: none;
-}
-PushButton:pressed {
-    color: rgba(0, 0, 0, 0.63);
-    background: rgba(249, 249, 249, 0.3);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.073);
-}</string>
+    <widget class="BodyLabel" name="coreName">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="text">
       <string>[名称]</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>PushButton</class>
-   <extends>QPushButton</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
   <customwidget>
    <class>CardWidget</class>
    <extends>QFrame</extends>
