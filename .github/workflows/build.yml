@@ -17,7 +17,7 @@ jobs:
           - x86
           - arm64
         mcsl2version: 
-          - 2.2.1.2
+          - 2.2.2.0
 
     runs-on: ${{ matrix.os }}
 
@@ -99,7 +99,7 @@ jobs:
           - x86
           - arm64
         mcsl2version: 
-          - 2.2.1.2
+          - 2.2.2.0
 
     runs-on: ${{ matrix.os }}
 
@@ -185,7 +185,7 @@ jobs:
     strategy:
       matrix:
         mcsl2version: 
-          - 2.2.1.2
+          - 2.2.2.0
 
     steps:
 
