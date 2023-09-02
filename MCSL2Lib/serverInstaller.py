@@ -250,7 +250,7 @@ class ForgeInstaller(Installer):
         fileFile = ZipFile(fileName, mode="r")
         try:
             _profile = fileFile.read("install_profile.json")
-        except KeyError:
+        except:
             return False
         if "forge" not in json.loads(_profile).get("versionInfo", {}).get("id"):
             return False
