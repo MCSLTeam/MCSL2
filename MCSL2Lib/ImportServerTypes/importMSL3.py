@@ -21,8 +21,10 @@ from qfluentwidgets import (
     PlainTextEdit,
     StrongBodyLabel,
     PushButton,
-    TextEdit
+    TextEdit,
 )
+from MCSL2Lib.variables import GlobalMCSL2Variables
+
 
 class MSL3(QWidget):
     def __init__(self):
@@ -641,3 +643,7 @@ class MSL3(QWidget):
         self.MSL3SaveTitle.setText("4. 完成导入")
         self.MSL3SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.MSL3SaveServerPrimaryPushBtn.setText("导入！")
+
+        self.MSL3ScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )

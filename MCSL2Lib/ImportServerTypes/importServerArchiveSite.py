@@ -16,18 +16,19 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF,
     CardWidget,
-    TreeWidget,
     ComboBox,
     LineEdit,
     PlainTextEdit,
     StrongBodyLabel,
     PushButton,
-    TextEdit
+    TextEdit,
 )
+from MCSL2Lib.variables import GlobalMCSL2Variables
+
 
 class ServerArchiveSite(QWidget):
     def __init__(self):
-        super().__init__()        
+        super().__init__()
         self.setObjectName("serverArchiveSite")
         self.gridLayout_41 = QGridLayout(self)
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -647,9 +648,7 @@ class ServerArchiveSite(QWidget):
             self.serverArchiveSiteScrollAreaWidgetContents
         )
         self.gridLayout_41.addWidget(self.serverArchiveSiteScrollArea, 1, 2, 1, 2)
-        self.serverArchiveSiteBackToMain = TransparentToolButton(
-            FIF.PAGE_LEFT, self
-        )
+        self.serverArchiveSiteBackToMain = TransparentToolButton(FIF.PAGE_LEFT, self)
         self.serverArchiveSiteBackToMain.setObjectName("serverArchiveSiteBackToMain")
         self.gridLayout_41.addWidget(self.serverArchiveSiteBackToMain, 0, 1, 1, 1)
         self.serverArchiveSiteTitle = SubtitleLabel(self)
@@ -690,3 +689,7 @@ class ServerArchiveSite(QWidget):
         self.serverArchiveSiteServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.serverArchiveSiteSaveServerPrimaryPushBtn.setText("导入！")
         self.serverArchiveSiteTitle.setText("导入 服务器 存档 压缩包/文件夹")
+
+        self.serverArchiveSiteScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )

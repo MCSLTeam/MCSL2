@@ -24,6 +24,7 @@ from qfluentwidgets import (
     PushButton,
     TextEdit,
 )
+from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class ShellArchives(QWidget):
@@ -802,3 +803,7 @@ class ShellArchives(QWidget):
         self.shellArchivesSaveTitle.setText("4. 完成导入")
         self.shellArchivesSaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.shellArchivesSaveSaveServerPrimaryPushBtn.setText("导入！")
+
+        self.shellArchivesScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )

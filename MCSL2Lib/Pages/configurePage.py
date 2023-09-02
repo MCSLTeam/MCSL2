@@ -1411,33 +1411,6 @@ class ConfigurePage(QWidget):
         self.extendedNewServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
-        self.noShellArchivesScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.shellArchivesScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.serverArchiveSiteScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSLv1ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSLv2ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MSL3ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.NullCraftScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSM8ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSM9ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
 
         self.settingsRunner_newServerType()
         self.importNewServerBtn.setEnabled(False)

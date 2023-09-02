@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QSizePolicy,
     QVBoxLayout,
-    QHBoxLayout
+    QHBoxLayout,
 )
 from PyQt5.QtCore import QSize, Qt, QRect
 from qfluentwidgets import (
@@ -21,8 +21,11 @@ from qfluentwidgets import (
     PlainTextEdit,
     StrongBodyLabel,
     PushButton,
-    TreeWidget
+    TreeWidget,
 )
+from MCSL2Lib.variables import GlobalMCSL2Variables
+
+
 class NoShellArchives(QWidget):
     def __init__(self):
         super().__init__()
@@ -44,9 +47,7 @@ class NoShellArchives(QWidget):
         self.gridLayout_12.addWidget(self.noShellArchivesTitle, 0, 3, 1, 1)
         spacerItem27 = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_12.addItem(spacerItem27, 0, 0, 2, 1)
-        self.noShellArchivesBackToMain = TransparentToolButton(
-            FIF.PAGE_LEFT, self
-        )
+        self.noShellArchivesBackToMain = TransparentToolButton(FIF.PAGE_LEFT, self)
         self.noShellArchivesBackToMain.setObjectName("noShellArchivesBackToMain")
         self.gridLayout_12.addWidget(self.noShellArchivesBackToMain, 0, 1, 1, 1)
         spacerItem28 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -686,3 +687,7 @@ class NoShellArchives(QWidget):
             "设置服务器昵称，不能包含非法字符"
         )
         self.noShellArchivesSaveSaveServerPrimaryPushBtn.setText("导入！")
+
+        self.noShellArchivesScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )

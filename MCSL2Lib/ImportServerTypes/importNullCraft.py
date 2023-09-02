@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QSizePolicy,
     QVBoxLayout,
-    QHBoxLayout,
 )
 from PyQt5.QtCore import QSize, Qt, QRect
 from qfluentwidgets import (
@@ -16,14 +15,15 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF,
     CardWidget,
-    TreeWidget,
     ComboBox,
     LineEdit,
     PlainTextEdit,
     StrongBodyLabel,
     PushButton,
-    TextEdit
+    TextEdit,
 )
+from MCSL2Lib.variables import GlobalMCSL2Variables
+
 
 class NullCraft(QWidget):
     def __init__(self):
@@ -656,3 +656,7 @@ class NullCraft(QWidget):
         self.NullCraftSaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.NullCraftSaveServerPrimaryPushBtn.setText("导入！")
         self.NullCraftTitle.setText("导入 灵工艺我的世界「轻」开服器 的服务器")
+
+        self.NullCraftScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )

@@ -21,8 +21,10 @@ from qfluentwidgets import (
     PlainTextEdit,
     StrongBodyLabel,
     PushButton,
-    TextEdit
+    TextEdit,
 )
+from MCSL2Lib.variables import GlobalMCSL2Variables
+
 
 class MCSM9(QWidget):
     def __init__(self):
@@ -657,3 +659,7 @@ class MCSM9(QWidget):
         self.MCSM9SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.MCSM9SaveServerPrimaryPushBtn.setText("导入！")
         self.MCSM9Title.setText("导入 MCSManager 9 的服务器")
+
+        self.MCSM9ScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
