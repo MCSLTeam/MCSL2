@@ -124,10 +124,18 @@ class ForgeInstaller(Installer):
         # 打开Installer压缩包
         # 读取version.json
         zipfile = ZipFile(os.path.join(self.cwd, self.file), mode="r")
-        versionJson = zipfile.read("version.json")
-        versionInfo = json.loads(versionJson)
-        self.mcVersion = McVersion(versionInfo["inheritsFrom"])
-        self.forgeVersion = versionInfo["id"]
+        _ = zipfile.read("install_profile.json")
+        _profile = json.loads(_)
+        if (versionInfo := _profile.get("versionInfo", {})).get("id", "").startswith("forge"):
+            self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
+            self.forgeVersion = versionInfo["id"].replace(self.mcVersion, "").replace("-","")
+
+        elif "forge" in versionInfo.get("version", ""):
+            self.mcVersion = McVersion(versionInfo["id"].split("-")[0])
+            self.forgeVersion = versionInfo["id"].replace(self.mcVersion, "").replace("-", "")
+
+        else:
+            raise InstallerError("Invalid forge installer")
 
     @warning("该方法还未完善,目前仅支持1.13以上的Forge安装,且还未测试")
     def install(self):
@@ -235,15 +243,10 @@ class ForgeInstaller(Installer):
         判断是否可能为Forge安装器
         """
         fileFile = ZipFile(fileName, mode="r")
-        # 判断是否有version.json
         try:
-            fileFile.getinfo("version.json")
+            _profile = fileFile.read("install_profile.json")
         except KeyError:
             return False
-        # 判断是否有install_profile.json
-        try:
-            fileFile.getinfo("install_profile.json")
-        except KeyError:
+        if "forge" not in json.loads(_profile).get("versionInfo", {}).get("id"):
             return False
-
         return True
