@@ -15,9 +15,10 @@ These are the built-in functions of MCSL2. They are just for solving the circula
 """
 import enum
 import functools
+import inspect
 from json import loads, dumps
 from os import makedirs, path as ospath
-from types import TracebackType
+from types import TracebackType, MethodType
 from typing import Type
 
 import aria2p
@@ -127,6 +128,28 @@ def obsolete(text: str):
         return wrapper
 
     return decorator
+
+
+def private(func):
+    # 获取函数所属的类名
+    class_name = func.__qualname__.split('.')[0]
+
+    # 定义一个包装函数
+    def wrapper(*args, **kwargs):
+        # 获取调用函数的栈帧
+        frame = inspect.currentframe().f_back
+        # 获取调用函数的类名
+        caller_class = frame.f_locals.get('self', None).__class__.__name__
+        # 如果调用函数的类名和函数所属的类名相同，说明是在类的内部调用
+        if caller_class == class_name:
+            # 调用原始函数
+            return func(*args, **kwargs)
+        else:
+            # 抛出异常
+            raise PermissionError(f"{func.__name__} is a private method of {class_name}")
+
+    # 返回包装函数
+    return wrapper
 
 
 def isDarkTheme():
