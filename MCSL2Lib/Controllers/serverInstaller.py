@@ -1,4 +1,6 @@
 import os.path
+import shutil
+import sys
 from json import loads, dumps
 from os import path as ospath, name as osname
 from typing import Optional
@@ -7,7 +9,7 @@ from zipfile import ZipFile
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.publicFunctions import warning, private
+from MCSL2Lib.publicFunctions import warning
 from MCSL2Lib.variables import ConfigureServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -133,6 +135,7 @@ class ForgeInstaller(Installer):
     def getInstallerData(self, jarFile):
         # 打开Installer压缩包
         # 读取version.json
+
         with ZipFile(
                 jarFile,
                 mode="r",
@@ -180,6 +183,9 @@ class ForgeInstaller(Installer):
         """
         安装1.12版本及以上的Forge
         """
+        print("PlanB entered")
+        # sys.setprofile(profile_func)
+        # 获取文件打开进程的数量
         if not installed:
             # set forge runtime java path
             if self.java is None:
@@ -187,11 +193,16 @@ class ForgeInstaller(Installer):
                     self.java = configureServerVariables.javaPath[0]
                 except IndexError:
                     raise InstallerError("No Java path found")
+            # copy tmp file of forge installer
+            shutil.copyfile(
+                ospath.join(self.cwd, self.file),
+                ospath.join(self.cwd, self.file + ".tmp"),
+            )
 
             process = QProcess()
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
-            process.setArguments(["-jar", self.file, "--installServer"])
+            process.setArguments(["-jar", self.file + ".tmp", "--installServer"])
             process.readyReadStandardOutput.connect(
                 lambda: self._installerLogHandler("ForgeInstaller::PlanB")
             )
@@ -199,6 +210,10 @@ class ForgeInstaller(Installer):
             self.workingProcess = process
             self.workingProcess.start()
         else:
+            print("PlanB::forge installed callback entered")
+            # 删除tmp
+            os.remove(ospath.join(self.cwd, self.file + ".tmp"))
+
             if self.workingProcess.exitCode() == 0:
                 # 判断系统，分别读取run.bat和run.sh
                 if osname == "nt":
@@ -265,6 +280,7 @@ class ForgeInstaller(Installer):
                 self.installFinished.emit(True)
             else:
                 self.installFinished.emit(False)
+                sys.setprofile(lambda *args, **kwargs: None)
                 raise InstallerError(
                     f"Forge installer exited with code {self.workingProcess.exitCode()}"
                 )
