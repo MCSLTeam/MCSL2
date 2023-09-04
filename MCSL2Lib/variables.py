@@ -366,9 +366,31 @@ class SettingsVariables:
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
         self.themeList = ["auto", "dark", "light"]
 
+
 @Singleton
 class MCSLv1ImportVariables:
-    """设置相关"""
+    """MCSL 1 导入"""
 
     def __init__(self):
         self.executableFilePath: str = ""
+        self.executableFileDir: str = ""
+        self.commandStr: str = ""
+        self.java: str = ""
+        self.minMem: int = 0
+        self.maxMem: int = 0
+        self.coreFileName: str = "server.jar"
+        self.jvmArg: list[str] = [
+            "-XX:+UnlockExperimentalVMOptions",
+            "-XX:+DisableExplicitGC",
+            "-XX:+AlwaysPreTouch",
+            "-XX:+ParallelRefProcEnabled",
+        ]
+        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+
+    def resetToDefault(self):
+        self.executableFilePath: str = ""
+        self.executableFileDir: str = ""
+        self.commandStr: str = ""
+        self.java: str = ""
+        self.minMem: int = 0
+        self.maxMem: int = 0

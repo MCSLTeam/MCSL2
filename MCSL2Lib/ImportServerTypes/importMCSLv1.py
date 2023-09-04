@@ -1,5 +1,6 @@
 from os import getcwd
-from PyQt5.QtCore import QSize, Qt, QRect
+from re import search
+from PyQt5.QtCore import pyqtSlot, QSize, Qt, QRect, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QWidget,
@@ -26,10 +27,12 @@ from qfluentwidgets import (
     PushButton,
     TextEdit,
     InfoBarPosition,
-    InfoBar
+    InfoBar,
+    StateToolTip,
 )
 
 from MCSL2Lib.variables import GlobalMCSL2Variables, MCSLv1ImportVariables
+
 importVariables = MCSLv1ImportVariables()
 
 
@@ -637,43 +640,157 @@ class MCSLv1(QWidget):
         )
 
         self.MCSLv1ScrollArea.setFrameShape(QFrame.NoFrame)
-        # self.MCSLv1ImportArchives.clicked.connect()
+        self.MCSLv1ImportArchives.clicked.connect(self._importMCSLv1)
         self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
         self.MCSLv1ValidateArgsStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
         self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
         self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
         self.MCSLv1ValidateArgs.setEnabled(False)
         self.MCSLv1Save.setEnabled(False)
-        
+        self.MCSLv1ValidateArgsMemUnitComboBox.addItems(["M", "G"])
+        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems(
+            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
+        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems(
+            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+        )
 
-    def _MCSLv1Import_Func(self):
-        tmpCorePath = str(
+    def _importMCSLv1(self):
+        tmpExecutablePath = str(
             QFileDialog.getOpenFileName(self, "选择MCSL 1.x主程序", getcwd(), "*.exe")[0]
         ).replace("/", "\\")
-        if tmpCorePath != "":
-            configureServerVariables.corePath = tmpCorePath
-            configureServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
+        if tmpExecutablePath != "":
+            importVariables.executableFilePath = tmpExecutablePath
             InfoBar.success(
-                title="已添加",
-                content=f"核心文件名：{configureServerVariables.coreFileName}",
+                title="已选择",
+                content=tmpExecutablePath.split("\\")[-1],
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
                 duration=3000,
                 parent=self,
             )
+            self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
+            self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
+            self._initValidateArgs()
         else:
             InfoBar.warning(
-                title="未添加",
-                content="你并没有选择服务器核心。",
+                title="未选择",
+                content="",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
                 duration=3000,
                 parent=self,
             )
+            self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
+            self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
 
-    def _MCSLv1ValidateArgs_Func(self):
-        pass
+    def _initValidateArgs(self):
+        self.getMCSLv1ConfigurationStateToolTip = StateToolTip(
+            "读取MCSL 1", "请稍后，正在读取MCSL 1的配置...", self
+        )
+        self.getMCSLv1ConfigurationStateToolTip.move(
+            self.getMCSLv1ConfigurationStateToolTip.getSuitablePos()
+        )
+        self.getMCSLv1ConfigurationStateToolTip.show()
+        self.getMCSLv1ConfigurationThread = GetMCSLv1ConfigurationThread(self)
+        self.getMCSLv1ConfigurationThread.successSignal.connect(self._afterInitValidateArgs)
+        self.getMCSLv1ConfigurationThread.start()
+
+    @pyqtSlot(bool)
+    def _afterInitValidateArgs(self, successSignal):
+        if successSignal:
+            self.MCSLv1ValidateArgsStatus.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
+            self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
+            self.getMCSLv1ConfigurationStateToolTip.setContent("读取完毕！")
+            self.getMCSLv1ConfigurationStateToolTip.setState(True)
+            self.getMCSLv1ConfigurationStateToolTip = None
+            self.MCSLv1ValidateArgs.setEnabled(True)
+            self.MCSLv1Save.setEnabled(True)
+            self.MCSLv1ValidateArgsJavaTextEdit.setPlainText(importVariables.java)
+            self.MCSLv1ValidateArgsMinMemLineEdit.setText(str(importVariables.minMem))
+            self.MCSLv1ValidateArgsMaxMemLineEdit.setText(str(importVariables.maxMem))
+            self.MCSLv1ValidateArgsMemUnitComboBox.setCurrentIndex(0)
+            self.MCSLv1ValidateArgsCoreLineEdit.setText(importVariables.coreFileName)
+            
+            totalJVMArg = ""
+            for arg in importVariables.jvmArg:
+                totalJVMArg += f"{arg} "
+            totalJVMArg = totalJVMArg.strip()
+            self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setPlainText(totalJVMArg)
+
     def _MCSLv1Save_Func(self):
         pass
+
+
+class GetMCSLv1ConfigurationThread(QThread):
+    successSignal = pyqtSignal(bool)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        importVariables.executableFileDir = importVariables.executableFilePath.replace(
+            importVariables.executableFilePath.split("\\")[-1], ""
+        )
+
+    def run(self):
+        stat = self.way_ReadINI()
+        if not stat:
+            importVariables.resetToDefault()
+            stat2 = self.way_ReadCommand()
+            if not stat2:
+                self.successSignal.emit(False)
+            else:
+                self.successSignal.emit(True)
+        else:
+            self.successSignal.emit(True)
+
+    def way_ReadINI(self) -> bool:
+        """读ini法"""
+        try:
+            with open(
+                f"{importVariables.executableFileDir}\\config\\javapath.ini",
+                "r",
+                encoding="utf-8",
+            ) as java:
+                importVariables.java = java.read().replace("javaw.exe", "java.exe")
+            with open(
+                f"{importVariables.executableFileDir}\\config\\minmem.ini",
+                "r",
+                encoding="utf-8",
+            ) as minMem:
+                importVariables.minMem = int(minMem.read())
+            with open(
+                f"{importVariables.executableFileDir}\\config\\maxmem.ini",
+                "r",
+                encoding="utf-8",
+            ) as maxMem:
+                importVariables.maxMem = int(maxMem.read())
+            return True
+        except Exception:
+            return False
+
+    def way_ReadCommand(self) -> bool:
+        """
+        读batch脚本法
+        """
+        try:
+            with open(
+                f"{importVariables.executableFileDir}\\server\\command.bat",
+                "r",
+                encoding="utf-8",
+            ) as MCSLv1CmdFile:
+                importVariables.commandStr = MCSLv1CmdFile.read()
+            importVariables.java = (
+                importVariables.commandStr.split("javaw.exe")[0].replace('"', "")
+                + "java.exe"
+            )
+            importVariables.minMem = search(
+                r"-Xms(\d+M)", importVariables.commandStr[0]
+            ).group(1)
+            importVariables.maxMem = search(
+                r"-Xmx(\d+M)", importVariables.commandStr[0]
+            ).group(1)
+            return True
+        except Exception:
+            return False
