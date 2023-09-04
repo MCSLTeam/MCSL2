@@ -14,6 +14,7 @@
 Main entry.
 """
 import time
+from types import FrameType
 
 begin = time.time()
 print(f"{time.time() - begin}MCSL2: Importing...")
@@ -30,10 +31,18 @@ from qfluentwidgets import FluentTranslator
 
 print(f"{time.time() - begin}MCSL2: PyQt imported")
 from MCSL2Lib.publicFunctions import initializeMCSL2
+
 print(f"{time.time() - begin}MCSL2: initializeMCSL2 imported")
 
 MAIN_VERSION = Version("2.2.1.0")
 BUILD_VERSION = Version("0.0.1.0")
+
+
+def profile_func(frame: FrameType, event, arg):
+    # 打印函数名
+    if "event" not in (a := frame.f_code.co_name).lower() and "angle" not in a.lower() and "C:\\" not in (b:= frame.f_code.co_filename) and "site-packages" not in b and "frozen" not in b:
+        print(f"{a} || {b} || {frame.f_lineno}")
+
 
 if __name__ == "__main__":
     # 初始化
