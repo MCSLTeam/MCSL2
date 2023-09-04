@@ -1,4 +1,6 @@
+from os import getcwd
 from PyQt5.QtCore import QSize, Qt, QRect
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -6,6 +8,7 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QVBoxLayout,
     QFrame,
+    QFileDialog,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -22,9 +25,12 @@ from qfluentwidgets import (
     StrongBodyLabel,
     PushButton,
     TextEdit,
+    InfoBarPosition,
+    InfoBar
 )
 
-from MCSL2Lib.variables import GlobalMCSL2Variables
+from MCSL2Lib.variables import GlobalMCSL2Variables, MCSLv1ImportVariables
+importVariables = MCSLv1ImportVariables()
 
 
 class MCSLv1(QWidget):
@@ -631,3 +637,43 @@ class MCSLv1(QWidget):
         )
 
         self.MCSLv1ScrollArea.setFrameShape(QFrame.NoFrame)
+        # self.MCSLv1ImportArchives.clicked.connect()
+        self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
+        self.MCSLv1ValidateArgsStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
+        self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
+        self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
+        self.MCSLv1ValidateArgs.setEnabled(False)
+        self.MCSLv1Save.setEnabled(False)
+        
+
+    def _MCSLv1Import_Func(self):
+        tmpCorePath = str(
+            QFileDialog.getOpenFileName(self, "选择MCSL 1.x主程序", getcwd(), "*.exe")[0]
+        ).replace("/", "\\")
+        if tmpCorePath != "":
+            configureServerVariables.corePath = tmpCorePath
+            configureServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
+            InfoBar.success(
+                title="已添加",
+                content=f"核心文件名：{configureServerVariables.coreFileName}",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+        else:
+            InfoBar.warning(
+                title="未添加",
+                content="你并没有选择服务器核心。",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+    def _MCSLv1ValidateArgs_Func(self):
+        pass
+    def _MCSLv1Save_Func(self):
+        pass

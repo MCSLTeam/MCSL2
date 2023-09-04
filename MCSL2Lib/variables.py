@@ -365,3 +365,10 @@ class SettingsVariables:
         self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
         self.themeList = ["auto", "dark", "light"]
+
+@Singleton
+class MCSLv1ImportVariables:
+    """设置相关"""
+
+    def __init__(self):
+        self.executableFilePath: str = ""

@@ -1413,6 +1413,33 @@ class ConfigurePage(QWidget):
         self.extendedNewServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+        self.noShellArchives.noShellArchivesBackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.shellArchives.shellArchivesBackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.serverArchiveSite.serverArchiveSiteBackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.MCSLv1.MCSLv1BackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.MCSLv2.MCSLv2BackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.MSL3.MSL3BackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.NullCraft.NullCraftBackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.MCSM8.MCSM8BackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
+        self.MCSM9.MCSM9BackToMain.clicked.connect(
+            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        )
 
         self.settingsRunner_newServerType()
         # self.importNewServerBtn.setEnabled(False)
