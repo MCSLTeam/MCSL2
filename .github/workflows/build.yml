@@ -16,8 +16,6 @@ jobs:
           - x64
           - x86
           - arm64
-        mcsl2version: 
-          - 2.2.2.0
 
     runs-on: ${{ matrix.os }}
 
@@ -43,30 +41,7 @@ jobs:
 
       - name: Build on Windows
         run: >
-          python -m nuitka
-          --standalone
-          --clang
-          --msvc=latest
-          --enable-plugin=pyqt5
-          --disable-plugin=multiprocessing
-          --nofollow-import-to=scipy
-          --nofollow-import-to=numpy
-          --output-dir=build
-          --assume-yes-for-downloads
-          --windows-icon-from-ico=MCSL2.ico
-          --disable-console
-          --company-name="MCSL Team"
-          --product-name="MCSL 2"
-          --file-version=${{ matrix.mcsl2version }}
-          --product-version=${{ matrix.mcsl2version }}
-          --windows-file-description="MC Server Launcher 2"
-          --include-data-dir=MCSL2/Aria2=MCSL2/Aria2
-          --follow-import-to=Adapters
-          --follow-import-to=MCSL2Lib
-          --copyright="Copyright ©MCSL Team. All right reserved."
-          --lto=no
-          --remove-output
-          MCSL2.py
+          python nuitka_build.py --github -y
 
       - name: Delete Useless Files and Compress with upx
         run: |
@@ -98,8 +73,6 @@ jobs:
           - x64
           - x86
           - arm64
-        mcsl2version: 
-          - 2.2.2.0
 
     runs-on: ${{ matrix.os }}
 
@@ -125,34 +98,11 @@ jobs:
       - name: Install Dependencies for Linux
         run: |
           sudo apt-get install -y libfuse2
-          sudo apt-get install -y ccache
           sudo apt-get install -y upx-ucl
 
       - name: Build on Linux
         run: >
-          python -m nuitka
-          --clang
-          --msvc=latest
-          --standalone
-          --enable-plugin=pyqt5
-          --disable-plugin=multiprocessing
-          --nofollow-import-to=scipy
-          --nofollow-import-to=numpy
-          --assume-yes-for-downloads
-          --disable-console
-          --follow-import-to=Adapters
-          --follow-import-to=MCSL2Lib
-          --lto=no
-          --output-dir=build
-          --linux-icon=MCSL2.ico
-          --company-name="MCSL Team"
-          --product-name="MCSL 2"
-          --file-version=${{ matrix.mcsl2version }}
-          --product-version=${{ matrix.mcsl2version }}
-          --file-description="MC Server Launcher 2"
-          --remove-output
-          --copyright="Copyright ©MCSL Team. All right reserved."
-          MCSL2.py
+          python nuitka_build.py --github -y
 
       - name: Delete Useless Files and Compress with upx
         run: |
