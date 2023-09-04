@@ -37,7 +37,6 @@ from qfluentwidgets import (
 )
 
 from Adapters.Plugin import PluginManager
-from MCSL2 import begin
 from MCSL2Lib.Controllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
@@ -272,7 +271,6 @@ class Window(MSFluentWindow):
 
             self.splashScreen.finish()
 
-            print(f"所有页面加载完毕:{time.time() - begin}秒")
 
         initializeAria2Configuration()
 
@@ -285,9 +283,7 @@ class Window(MSFluentWindow):
     def onPageLoaded(self, pageType, targetObj, flag):
         t = time.time()
         setattr(self, targetObj, pageType(self))
-        print(f"{targetObj}初始化完毕，耗时{time.time() - t}秒")
         setattr(loaded, flag, True)
-        print(f"{targetObj}加载完毕")
         if loaded.allPageLoaded():
             self.initNavigation()
             serverHelper.loadAtLaunch()
@@ -299,7 +295,6 @@ class Window(MSFluentWindow):
             sys.excepthook = self.catchExceptions
             self.startAria2Client()
             self.splashScreen.finish()
-            print(f"所有页面加载完毕:{time.time() - begin}秒")
             self.update()
 
     @pyqtSlot(bool)
