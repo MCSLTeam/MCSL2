@@ -52,6 +52,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
+from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.publicFunctions import readGlobalServerConfig, isDarkTheme
@@ -713,42 +714,45 @@ class ServerManagerPage(QWidget):
             self.verticalLayout.itemAt(i).widget().deleteLater()
         # 读取全局设置
         globalConfig = readGlobalServerConfig()
+        if len(globalConfig):
+            # 添加新的
+            for i in range(len(globalConfig)):
+                self.tmpSingleServerWidget = singleServerManager()
+                self.tmpSingleServerWidget.mem.setText(
+                    f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}"
+                )
+                self.tmpSingleServerWidget.coreFileName.setText(
+                    f"{globalConfig[i]['core_file_name']}"
+                )
+                self.tmpSingleServerWidget.javaPath.setText(
+                    f"{globalConfig[i]['java_path']}"
+                )
+                self.tmpSingleServerWidget.serverName.setText(f"{globalConfig[i]['name']}")
+                self.tmpSingleServerWidget.Icon.setPixmap(
+                    QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}")
+                )
+                self.tmpSingleServerWidget.Icon.setFixedSize(QSize(60, 60))
 
-        # 添加新的
-        for i in range(len(globalConfig)):
-            self.tmpSingleServerWidget = singleServerManager()
-            self.tmpSingleServerWidget.mem.setText(
-                f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}"
-            )
-            self.tmpSingleServerWidget.coreFileName.setText(
-                f"{globalConfig[i]['core_file_name']}"
-            )
-            self.tmpSingleServerWidget.javaPath.setText(
-                f"{globalConfig[i]['java_path']}"
-            )
-            self.tmpSingleServerWidget.serverName.setText(f"{globalConfig[i]['name']}")
-            self.tmpSingleServerWidget.Icon.setPixmap(
-                QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}")
-            )
-            self.tmpSingleServerWidget.Icon.setFixedSize(QSize(60, 60))
+                self.tmpSingleServerWidget.selectBtn.clicked.connect(
+                    self.scrollAreaProcessor
+                )
 
-            self.tmpSingleServerWidget.selectBtn.clicked.connect(
-                self.scrollAreaProcessor
-            )
+                self.tmpSingleServerWidget.editBtn.clicked.connect(self.scrollAreaProcessor)
 
-            self.tmpSingleServerWidget.editBtn.clicked.connect(self.scrollAreaProcessor)
+                self.tmpSingleServerWidget.deleteBtn.clicked.connect(
+                    self.scrollAreaProcessor
+                )
 
-            self.tmpSingleServerWidget.deleteBtn.clicked.connect(
-                self.scrollAreaProcessor
-            )
+                self.tmpSingleServerWidget.selectBtn.setObjectName(f"selectBtn{str(i)}")
+                self.tmpSingleServerWidget.editBtn.setObjectName(f"editBtn{str(i)}")
+                self.tmpSingleServerWidget.deleteBtn.setObjectName(f"deleteBtn{str(i)}")
+                self.verticalLayout.addWidget(self.tmpSingleServerWidget)
 
-            self.tmpSingleServerWidget.selectBtn.setObjectName(f"selectBtn{str(i)}")
-            self.tmpSingleServerWidget.editBtn.setObjectName(f"editBtn{str(i)}")
-            self.tmpSingleServerWidget.deleteBtn.setObjectName(f"deleteBtn{str(i)}")
-            self.verticalLayout.addWidget(self.tmpSingleServerWidget)
-
-        # 重新设置布局
-        self.verticalLayout.addItem(self.serversScrollAreaSpacer)
+            # 重新设置布局
+            self.verticalLayout.addItem(self.serversScrollAreaSpacer)
+        else:
+            noServerWidget = NoServerWidget()
+            self.verticalLayout.addWidget(noServerWidget)
 
     # 判断第几个
     def scrollAreaProcessor(self):

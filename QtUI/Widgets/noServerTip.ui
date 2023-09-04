@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MCSLAPILoadingError</class>
- <widget class="CardWidget" name="MCSLAPILoadingError">
+ <class>noServerWidget</class>
+ <widget class="CardWidget" name="noServerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -117,7 +117,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>69</width>
+          <width>50</width>
           <height>15</height>
          </size>
         </property>
@@ -132,7 +132,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>加载失败。请尝试刷新，如果仍然失败，请汇报此Bug。</string>
+         <string>好像还没有添加过的服务器欸。先去“新建”页新建一个？</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -149,7 +149,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>50</width>
           <height>15</height>
          </size>
         </property>

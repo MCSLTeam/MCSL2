@@ -599,7 +599,7 @@ class Window(MSFluentWindow):
         # 终端
         ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
         if settingsController.fileSettings["clearConsoleWhenStopServer"]:
-            ServerHandler().AServer.serverProcess.finished.connect(
+            ServerHandler().serverClosed.connect(
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
 
