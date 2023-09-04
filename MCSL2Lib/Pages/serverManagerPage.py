@@ -29,6 +29,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QHBoxLayout,
     QFileDialog,
+    QStackedWidget,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -51,14 +52,15 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
-from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
+
+# from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.publicFunctions import readGlobalServerConfig, isDarkTheme
 from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
-from MCSL2Lib.Resources.icons import * # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401
 
 editServerVariables = EditServerVariables()
 settingsController = SettingsController()
@@ -119,7 +121,7 @@ class ServerManagerPage(QWidget):
         self.subTitleLabel.setObjectName("subTitleLabel")
 
         self.gridLayout_2.addWidget(self.subTitleLabel, 1, 0, 1, 1)
-        self.stackedWidget = ChildStackedWidget(self.titleLimitWidget)
+        self.stackedWidget = QStackedWidget(self.titleLimitWidget)
         self.stackedWidget.setObjectName("stackedWidget")
 
         self.serversPage = QWidget()
@@ -1368,7 +1370,7 @@ class ServerManagerPage(QWidget):
             "input_encoding": editServerVariables.consoleInputDeEncoding,
             "icon": editServerVariables.icon,
             "server_type": editServerVariables.serverType,
-            "extra_data": editServerVariables.extraData
+            "extra_data": editServerVariables.extraData,
         }
         # 复制核心
         try:

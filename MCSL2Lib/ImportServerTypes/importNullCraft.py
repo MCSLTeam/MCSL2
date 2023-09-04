@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QSizePolicy,
     QVBoxLayout,
+    QFrame,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -661,3 +662,5 @@ class NullCraft(QWidget):
         self.NullCraftScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+
+        self.NullCraftScrollArea.setFrameShape(QFrame.NoFrame)

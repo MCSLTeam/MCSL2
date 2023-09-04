@@ -29,6 +29,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QFrame,
     QFileDialog,
+    QStackedWidget,
 )
 from qfluentwidgets import (
     ComboBox,
@@ -50,7 +51,8 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
-from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
+
+# from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.Controllers.serverController import MojangEula
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import SettingsController
@@ -126,7 +128,7 @@ class ConfigurePage(QWidget):
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 1, 1)
         spacerItem = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 0, 2, 1, 1)
-        self.newServerStackedWidget = ChildStackedWidget(self)
+        self.newServerStackedWidget = QStackedWidget(self)
         self.newServerStackedWidget.setObjectName("newServerStackedWidget")
 
         self.guideNewServerPage = QWidget()
@@ -1150,7 +1152,7 @@ class ConfigurePage(QWidget):
         self.gridLayout_21.addWidget(self.importTitleWidget, 0, 1, 1, 1)
         spacerItem19 = QSpacerItem(20, 406, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_21.addItem(spacerItem19, 0, 0, 2, 1)
-        self.importNewServerStackWidget = ChildStackedWidget(self.importNewServerPage)
+        self.importNewServerStackWidget = QStackedWidget(self.importNewServerPage)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1413,7 +1415,7 @@ class ConfigurePage(QWidget):
         )
 
         self.settingsRunner_newServerType()
-        self.importNewServerBtn.setEnabled(False)
+        # self.importNewServerBtn.setEnabled(False)
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
@@ -1442,7 +1444,7 @@ class ConfigurePage(QWidget):
             if v := javaDetector.getJavaVersion(selectedJavaPath):
                 currentJavaPaths = configureServerVariables.javaPath
                 if (
-                        java := javaDetector.Java(selectedJavaPath, v)
+                    java := javaDetector.Java(selectedJavaPath, v)
                 ) not in currentJavaPaths:
                     currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
                     javaDetector.sortJavaList(currentJavaPaths)
@@ -1583,22 +1585,22 @@ class ConfigurePage(QWidget):
 
         # 是否为空
         if (
-                minMemLineEditItems[currentNewServerType].text() != ""
-                and maxMemLineEditItems[currentNewServerType].text() != ""
+            minMemLineEditItems[currentNewServerType].text() != ""
+            and maxMemLineEditItems[currentNewServerType].text() != ""
         ):
             # 是否是数字
             if (
-                    minMemLineEditItems[currentNewServerType].text().isdigit()
-                    and maxMemLineEditItems[currentNewServerType].text().isdigit()
+                minMemLineEditItems[currentNewServerType].text().isdigit()
+                and maxMemLineEditItems[currentNewServerType].text().isdigit()
             ):
                 # 是否为整数
                 if (
-                        int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
-                        and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                    int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                    and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
                 ):
                     # 是否为整数
                     if int(minMemLineEditItems[currentNewServerType].text()) <= int(
-                            maxMemLineEditItems[currentNewServerType].text()
+                        maxMemLineEditItems[currentNewServerType].text()
                     ):
                         # 设!
                         configureServerVariables.minMem = int(
@@ -1621,8 +1623,8 @@ class ConfigurePage(QWidget):
     def checkCoreSet(self):
         """检查核心设置"""
         if (
-                configureServerVariables.corePath != ""
-                and configureServerVariables.coreFileName != ""
+            configureServerVariables.corePath != ""
+            and configureServerVariables.coreFileName != ""
         ):
             return "核心检查: 正常", 0
         else:
@@ -1659,8 +1661,8 @@ class ConfigurePage(QWidget):
 
         for i in range(len(illegalServerNameList)):
             if (
-                    illegalServerNameList[i]
-                    == serverNameLineEditItems[currentNewServerType].text()
+                illegalServerNameList[i]
+                == serverNameLineEditItems[currentNewServerType].text()
             ):
                 errText += "，名称与操作系统冲突"
                 isError = 1
@@ -1669,8 +1671,8 @@ class ConfigurePage(QWidget):
                 isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
             if (
-                    not eachIllegalServerCharacter
-                        in serverNameLineEditItems[currentNewServerType].text()
+                not eachIllegalServerCharacter
+                in serverNameLineEditItems[currentNewServerType].text()
             ):
                 pass
             else:
@@ -1828,7 +1830,6 @@ class ConfigurePage(QWidget):
             w.exec()
 
     def confirmForgeServer(self):
-
         w = MessageBox(
             "这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self
         )
@@ -1874,7 +1875,7 @@ class ConfigurePage(QWidget):
             "input_encoding": configureServerVariables.consoleInputDeEncoding,
             "icon": "Grass.png",
             "server_type": configureServerVariables.serverType,
-            "extra_data": configureServerVariables.extraData
+            "extra_data": configureServerVariables.extraData,
         }
 
         # 新建文件夹
@@ -1883,14 +1884,14 @@ class ConfigurePage(QWidget):
         # 写入全局配置
         try:
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
                 globalServerListFile.close()
 
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as newGlobalServerListFile:
                 # 添加新的
                 globalServerList["MCSLServerList"].append(serverConfig)
@@ -1904,9 +1905,9 @@ class ConfigurePage(QWidget):
         try:
             if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
                 with open(
-                        f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
-                        "w+",
-                        encoding="utf-8",
+                    f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
+                    "w+",
+                    encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
             else:
@@ -1984,7 +1985,9 @@ class ConfigurePage(QWidget):
                     java=configureServerVariables.selectedJavaPath,
                     logDecode=settingsController.fileSettings["outputDeEncoding"],
                 )
-                configureServerVariables.extraData["forge_version"] = self.forgeInstaller.forgeVersion
+                configureServerVariables.extraData[
+                    "forge_version"
+                ] = self.forgeInstaller.forgeVersion
                 self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
                 self.forgeInstaller.asyncInstall()
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
@@ -2029,14 +2032,14 @@ class ConfigurePage(QWidget):
         rmtree(f"Servers//{configureServerVariables.serverName}")
         # 删除全局配置
         with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
         ) as globalServerListFile:
             # old
             globalServerList = loads(globalServerListFile.read())
             globalServerListFile.close()
 
         with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as newGlobalServerListFile:
             # 删除新的
             globalServerList["MCSLServerList"].pop()

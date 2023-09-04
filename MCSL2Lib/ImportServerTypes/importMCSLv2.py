@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QSizePolicy,
     QVBoxLayout,
+    QFrame,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -628,3 +629,5 @@ class MCSLv2(QWidget):
         self.MCSLv2ScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+
+        self.MCSLv2ScrollArea.setFrameShape(QFrame.NoFrame)

@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QVBoxLayout,
     QHBoxLayout,
+    QFrame,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -808,3 +809,4 @@ class ShellArchives(QWidget):
         self.shellArchivesScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
+        self.shellArchivesScrollArea.setFrameShape(QFrame.NoFrame)
