@@ -17,5 +17,9 @@ to access the network normally.
 
 from requests import Session
 
-Session = Session()
-Session.trust_env = False
+class Session(Session):
+    def __init__(self):
+        super().__init__()
+        #: Trust environment settings for proxy configuration, default
+        #: authentication and similar.
+        self.trust_env = False

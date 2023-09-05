@@ -1766,7 +1766,7 @@ class CheckUpdateThread(QThread):
 
     def run(self):
         try:
-            latestVerInfo = Session.get(
+            latestVerInfo = Session().get(
                 f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={GlobalMCSL2Variables.MCSL2Version}"
             ).text.split("|")
             self.isUpdate.emit(latestVerInfo)
@@ -1788,7 +1788,7 @@ class FetchUpdateIntroThread(QThread):
 
     def run(self):
         try:
-            intro = f"""{Session.get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
+            intro = f"""{Session().get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
             self.content.emit(intro)
         except Exception as e:
             self.content.emit(["奇怪，怎么获取信息失败了？\n检查一下网络，或者反馈给开发者？"])

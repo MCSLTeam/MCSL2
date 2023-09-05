@@ -48,7 +48,7 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorJsons(downloadAPIUrl):
         data = []
         try:
-            apiData = loads(Session.get(downloadAPIUrl).text)
+            apiData = loads(Session().get(downloadAPIUrl).text)
         except Exception:
             return -2
         try:
@@ -81,7 +81,7 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorCoreVersionJsons(downloadAPIUrl):
         builds = []
         try:
-            apiData = loads(Session.get(downloadAPIUrl).text)
+            apiData = loads(Session().get(downloadAPIUrl).text)
         except Exception:
             return -2
         try:

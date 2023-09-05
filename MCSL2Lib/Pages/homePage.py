@@ -193,7 +193,7 @@ class GetNoticeThread(QThread):
 
     def run(self):
         try:
-            notice = f"公告: \n{Session.get('http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice').text}"
+            notice = f"公告: \n{Session().get('http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice').text}"
             self.notice.emit(notice)
         except Exception as e:
             self.notice.emit("网络连接失败，无法获取公告。")

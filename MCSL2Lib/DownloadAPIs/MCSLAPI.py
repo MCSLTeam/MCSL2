@@ -79,7 +79,7 @@ class MCSLAPIDownloadURLParser:
         downloadFileFormats = []
         downloadFileNames = []
         try:
-            DownloadJson = Session.get(RefreshUrl).text
+            DownloadJson = Session().get(RefreshUrl).text
         except Exception as e:
             return -2, -2, -2, -2
         try:
