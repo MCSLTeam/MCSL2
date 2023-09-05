@@ -174,13 +174,13 @@ class Aria2Controller:
 
     @classmethod
     def download(
-            cls,
-            uri,
-            info_get: Optional[Callable[[dict], None]] = None,
-            stopped: Optional[Callable[[int], None]] = None,
-            extraData: Optional[tuple] = None,
-            watch=True,
-            interval=0.1
+        cls,
+        uri,
+        info_get: Optional[Callable[[dict], None]] = None,
+        stopped: Optional[Callable[[int], None]] = None,
+        extraData: Optional[tuple] = None,
+        watch=True,
+        interval=0.1,
     ) -> str:
         """
         Download a file from uri
@@ -202,12 +202,12 @@ class Aria2Controller:
                 info_get=info_get,
                 stopped=stopped,
                 interval=interval,
-                extraData=extraData
+                extraData=extraData,
             )
         return gid
 
     @classmethod
-    def getWatcher(cls, gid) -> 'DownloadWatcher':
+    def getWatcher(cls, gid) -> "DownloadWatcher":
         """
         get the DownloadWatcher of the download task
         """
@@ -290,7 +290,9 @@ class Aria2Controller:
         download: Download
         rv = {
             "connections": download.connections,
-            "speed": download.download_speed_string() if download.status == 'active' else download.status,
+            "speed": download.download_speed_string()
+            if download.status == "active"
+            else download.status,
             "progress": download.progress_string(),
             "status": download.status,
             "totalLength": download.total_length_string(),
@@ -378,7 +380,9 @@ class Aria2Controller:
             cls.aria2Process = QProcess()
             cls.aria2Process.startDetached(Aria2Program, ConfigCommand)
             cls.aria2Process.waitForStarted()
-            cls._aria2 = API(Client(host="http://localhost", port=cls._port, secret="", timeout=0.1))
+            cls._aria2 = API(
+                Client(host="http://localhost", port=cls._port, secret="", timeout=0.1)
+            )
             if cls.testAria2Service():
                 return True
             else:
@@ -444,6 +448,7 @@ class Aria2BootThread(QThread):
     """
     Aria2启动线程
     """
+
     loaded = pyqtSignal(bool)
 
     def __init__(self, parent=None):
@@ -499,13 +504,13 @@ class DownloadWatcher(QObject):
     downloadStop = pyqtSignal(list)
 
     def __init__(
-            self,
-            gid,
-            info_get: Optional[Callable[[dict], None]],
-            stopped: Optional[Callable[[list], None]],
-            interval=0.1,
-            extraData: Optional[tuple] = None,
-            parent: Optional[QObject] = None
+        self,
+        gid,
+        info_get: Optional[Callable[[dict], None]],
+        stopped: Optional[Callable[[list], None]],
+        interval=0.1,
+        extraData: Optional[tuple] = None,
+        parent: Optional[QObject] = None,
     ) -> None:
         """
         uris: a list of download urls
@@ -524,12 +529,17 @@ class DownloadWatcher(QObject):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.updateDownloadInfo)
-        self.timer.singleShot(int(1000 * self._interval), lambda: self.timer.start(int(self._interval * 1000)))
+        self.timer.singleShot(
+            int(1000 * self._interval),
+            lambda: self.timer.start(int(self._interval * 1000)),
+        )
 
     def updateDownloadInfo(self):
-        if (status := Aria2Controller.getDownloadsStatus(self._gid))[
-            "status"
-        ] not in ["complete", "error", "removed"]:
+        if (status := Aria2Controller.getDownloadsStatus(self._gid))["status"] not in [
+            "complete",
+            "error",
+            "removed",
+        ]:
             self.onDownloadInfoGet.emit(status)
         elif status["status"] == "complete":
             self.timer.stop()
@@ -577,10 +587,8 @@ class DownloadWatcher(QObject):
 
 
 def initializeAria2Configuration():
-    Aria2Thread = str(settingsController.fileSettings['aria2Thread'])
-    with open(
-            r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8"
-    ) as Aria2ConfigFile:
+    Aria2Thread = str(settingsController.fileSettings["aria2Thread"])
+    with open(r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8") as Aria2ConfigFile:
         Aria2ConfigFile.write(
             "file-allocation=none\n"
             "continue=true\n"
@@ -597,9 +605,7 @@ def initializeAria2Configuration():
             "rpc-listen-port=6800\n"
             "force-save=false"
         )
-    with open(
-            r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8"
-    ) as Aria2SessionFile:
+    with open(r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8") as Aria2SessionFile:
         Aria2SessionFile.write("")
 
 
@@ -642,7 +648,12 @@ class DL_EntryManager(QObject):
         向文件中添加一条记录
         """
         cls.fileExisted()
-        print("新增记录:", json.dumps({entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True))
+        print(
+            "新增记录:",
+            json.dumps(
+                {entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True
+            ),
+        )
         with open(cls.file, "r", encoding="utf-8") as f:
             data = json.load(f)
         data[entryName] = entryData
@@ -692,7 +703,8 @@ class DL_EntryManager(QObject):
                 except:
                     pass
         else:
-            if autoDelete: cls.entries.pop(coreName)
+            if autoDelete:
+                cls.entries.pop(coreName)
         return False
 
     @classmethod

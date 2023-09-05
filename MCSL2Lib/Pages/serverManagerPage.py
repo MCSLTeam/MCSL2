@@ -11,7 +11,7 @@
 #
 ################################################################################
 """
-Manage exist Minecraft servers.
+Manage exists Minecraft servers.
 """
 
 from json import dump, loads, dumps
@@ -57,7 +57,7 @@ from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.publicFunctions import readGlobalServerConfig, isDarkTheme
+from MCSL2Lib.utils import readGlobalServerConfig, isDarkTheme
 from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.Controllers.settingsController import SettingsController

@@ -19,7 +19,7 @@ from platform import system
 from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
-from MCSL2Lib.publicFunctions import initializeMCSL2
+from MCSL2Lib.utils import initializeMCSL2
 
 
 if __name__ == "__main__":

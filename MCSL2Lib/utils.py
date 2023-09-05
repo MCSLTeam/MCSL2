@@ -18,7 +18,7 @@ import functools
 import inspect
 from json import loads, dumps
 from os import makedirs, path as ospath
-from types import TracebackType, MethodType
+from types import TracebackType
 from typing import Type
 
 import aria2p
