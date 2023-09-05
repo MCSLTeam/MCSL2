@@ -73,25 +73,8 @@ class MCSL2FileUpdater:
             else False
         )
 
-    def rename(self):
-        '''重命名，在下载后调用'''
-        if not self.devMode:
-            rename(self.oldExecutableFileName, f"{self.oldExecutableFileName}.old")
-        else:
-            return
-
-    def deleteOldMCSL2(self):
-        '''删除旧的，在更新重启后调用'''
-        if not self.devMode:
-            try:
-                remove(f"{self.oldExecutableFileName}.old")
-            except Exception:
-                pass
-        else:
-            return
-
     def download(self):
-        '''下载，首先调用'''
+        """下载，首先调用"""
         if not self.devMode:
             Aria2Controller.download(
                 uri=self.updateSite,
@@ -101,13 +84,30 @@ class MCSL2FileUpdater:
         else:
             return
 
+    def rename(self):
+        """重命名，在下载后调用"""
+        if not self.devMode:
+            rename(self.oldExecutableFileName, f"{self.oldExecutableFileName}.old")
+        else:
+            return
+
     def moveFile(self):
-        '''移动下载后的文件，重命名后调用'''
+        """移动下载后的文件，重命名后调用"""
         move(
             f"MCSL2/Downloads/MCSL2{self.updateExtSuffix}",
             f"MCSL2{self.updateExtSuffix}",
         )
 
     def restart(self):
-        '''重启，在移动文件后调用'''
+        """重启，在移动文件后调用"""
         execl(self.oldExecutableFileName, self.oldExecutableFileName, *sys.argv)
+
+    def deleteOldMCSL2(self):
+        """删除旧的，在更新重启后调用"""
+        if not self.devMode:
+            try:
+                remove(f"{self.oldExecutableFileName}.old")
+            except Exception:
+                pass
+        else:
+            return
