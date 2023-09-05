@@ -1472,7 +1472,7 @@ class ServerManagerPage(QWidget):
             exit1Msg += f"\n{e}"
 
         if exitCode == 0:
-            if editServerVariables.serverType == "forge":
+            if editServerVariables.serverType == "forge" and editServerVariables.serverName != editServerVariables.oldServerName:
                 self.installingForgeStateToolTip = StateToolTip(
                     "安装Forge", "请稍后，正在安装...", self
                 )
@@ -1505,6 +1505,7 @@ class ServerManagerPage(QWidget):
                 duration=3000,
                 parent=self,
             )
+            self.editServerBackPushBtn.click()
         else:
             InfoBar.error(
                 title="失败",
