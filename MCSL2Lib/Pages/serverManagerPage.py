@@ -49,6 +49,7 @@ from qfluentwidgets import (
     MessageBox,
     InfoBar,
     InfoBarPosition,
+    StateToolTip,
 )
 
 from MCSL2Lib.Controllers import javaDetector
@@ -727,7 +728,9 @@ class ServerManagerPage(QWidget):
                 self.tmpSingleServerWidget.javaPath.setText(
                     f"{globalConfig[i]['java_path']}"
                 )
-                self.tmpSingleServerWidget.serverName.setText(f"{globalConfig[i]['name']}")
+                self.tmpSingleServerWidget.serverName.setText(
+                    f"{globalConfig[i]['name']}"
+                )
                 self.tmpSingleServerWidget.Icon.setPixmap(
                     QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}")
                 )
@@ -737,7 +740,9 @@ class ServerManagerPage(QWidget):
                     self.scrollAreaProcessor
                 )
 
-                self.tmpSingleServerWidget.editBtn.clicked.connect(self.scrollAreaProcessor)
+                self.tmpSingleServerWidget.editBtn.clicked.connect(
+                    self.scrollAreaProcessor
+                )
 
                 self.tmpSingleServerWidget.deleteBtn.clicked.connect(
                     self.scrollAreaProcessor
@@ -815,19 +820,14 @@ class ServerManagerPage(QWidget):
         globalConfig: list = readGlobalServerConfig()
         delServerName = globalConfig[index]["name"]
 
-        i = InfoBar.warning(
-            title="警告",
-            content=f"正在删除服务器\"{globalConfig[index]['name']}\"，可能需要一点时间...",
-            orient=Qt.Horizontal,
-            isClosable=False,
-            position=InfoBarPosition.TOP,
-            duration=-1,
-            parent=self,
+        self.deletingServerStateToolTip = StateToolTip("删除服务器", "请稍后，正在删除...", self)
+        self.deletingServerStateToolTip.move(
+            self.deletingServerStateToolTip.getSuitablePos()
         )
+        self.deletingServerStateToolTip.show()
 
         # 使用多线程防止假死
         self.thread = DeleteServerThread(index=index, delServerName=delServerName)
-        self.thread.killWarning.connect(i.setParent)
         self.thread.exit1Msg.connect(self.deleteServer_Step4)
         self.thread.start()
 
@@ -835,25 +835,13 @@ class ServerManagerPage(QWidget):
     def deleteServer_Step4(self, exit1Msg):
         """删除服务器步骤4：弹窗提示删除成功或失败"""
         if exit1Msg == "":
-            InfoBar.success(
-                title="提示",
-                content=f"删除服务器成功！",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=1000,
-                parent=self,
-            )
+            self.deletingServerStateToolTip.setContent("删除完毕。")
+            self.deletingServerStateToolTip.setState(True)
+            self.deletingServerStateToolTip = None
         else:
-            InfoBar.error(
-                title="错误",
-                content=f"删除服务器失败！{exit1Msg}",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=1000,
-                parent=self,
-            )
+            self.deletingServerStateToolTip.setContent(f"怪，删除失败！\n{exit1Msg}")
+            self.deletingServerStateToolTip.setState(True)
+            self.deletingServerStateToolTip = None
         self.refreshServers()
 
     def compareDeleteServerName(self, name, LineEditText):
@@ -1536,7 +1524,6 @@ class DeleteServerThread(QThread):
     使用多线程防止假死
     """
 
-    killWarning = pyqtSignal(type(None))
     exitCode = pyqtSignal(int)
     exit1Msg = pyqtSignal(str)
 
@@ -1570,5 +1557,4 @@ class DeleteServerThread(QThread):
             self.exitCode.emit(1)
             exit1Msg += f"\n{e}"
 
-        self.killWarning.emit(None)
         self.exit1Msg.emit(exit1Msg)
