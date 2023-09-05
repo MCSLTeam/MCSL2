@@ -9,9 +9,10 @@ from zipfile import ZipFile
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.variables import ConfigureServerVariables
+from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
+editServerVariables = EditServerVariables()
 settingsController = SettingsController()
 
 
@@ -120,7 +121,15 @@ class Installer(QObject):
 
 
 class ForgeInstaller(Installer):
-    def __init__(self, serverPath, file, java=None, installerPath=None, logDecode="utf-8"):
+    def __init__(
+        self,
+        serverPath,
+        file,
+        isEditing: Optional[str] = "",
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
+    ):
         super().__init__(serverPath, file, logDecode)
         self._profile = None
         self.version = None
@@ -129,22 +138,27 @@ class ForgeInstaller(Installer):
         self.java = java
         self.serverPath = serverPath
         self.installPlan = 0
+        self.isEditing = int(isEditing) if isEditing != "" else None
 
-        self.getInstallerData(os.path.join(serverPath, file) if installerPath is None else installerPath)
+        self.getInstallerData(
+            os.path.join(serverPath, file) if installerPath is None else installerPath
+        )
         if self._mcVersion >= McVersion("1.17"):
             self.installPlan = 1
         elif self._mcVersion >= McVersion("1.8"):
             self.installPlan = 0
         else:
-            raise InstallerError(f"不支持的自动安装版本:{self._mcVersion}的forge\nMCSL2支持1.8往后的所有forge安装")
+            raise InstallerError(
+                f"不支持的自动安装版本:{self._mcVersion}的forge\nMCSL2支持1.8往后的所有forge安装"
+            )
 
     def getInstallerData(self, jarFile):
         # 打开Installer压缩包
         # 读取version.json
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -155,7 +169,12 @@ class ForgeInstaller(Installer):
                 raise InstallerError("Invalid Forge installer")
 
     def checkInstaller(self) -> bool:
-        if (versionInfo := self._profile.get("versionInfo", {})).get("id", "").lower().startswith("forge"):
+        if (
+            (versionInfo := self._profile.get("versionInfo", {}))
+            .get("id", "")
+            .lower()
+            .startswith("forge")
+        ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = (
                 versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
@@ -191,7 +210,11 @@ class ForgeInstaller(Installer):
             # set forge runtime java path
             if self.java is None:
                 try:
-                    self.java = configureServerVariables.javaPath[0]
+                    self.java = (
+                        configureServerVariables.selectedJavaPath
+                        if self.isEditing is None
+                        else editServerVariables.selectedJavaPath
+                    )
                 except IndexError:
                     raise InstallerError("No Java path found")
             # copy tmp file of forge installer
@@ -206,7 +229,9 @@ class ForgeInstaller(Installer):
             process.setArguments(["-jar", self.file + ".tmp", "--installServer"])
             process.readyReadStandardOutput.connect(
                 lambda: self._installerLogHandler(
-                    "ForgeInstaller::PlanB" if self.installPlan == 1 else "ForgeInstaller::PlanA"
+                    "ForgeInstaller::PlanB"
+                    if self.installPlan == 1
+                    else "ForgeInstaller::PlanA"
                 )
             )
             process.finished.connect(lambda a, b: self.asyncInstall(True))
@@ -219,9 +244,8 @@ class ForgeInstaller(Installer):
             os.remove(ospath.join(self.cwd, self.file + ".tmp"))
 
             if self.workingProcess.exitCode() == 0:
-
-                if self.installPlan == 1:  # 1.17以上版本: PlanB
-
+                # 1.17以上版本: PlanB
+                if self.installPlan == 1:
                     # 判断系统，分别读取run.bat和run.sh
                     if osname == "nt":
                         with open(ospath.join(self.cwd, "run.bat"), mode="r") as f:
@@ -231,49 +255,61 @@ class ForgeInstaller(Installer):
                             run = f.readlines()
                     # 找到java命令
                     try:
-                        command = list(filter(lambda x: x.startswith("java"), run)).pop()
+                        command = list(
+                            filter(lambda x: x.startswith("java"), run)
+                        ).pop()
                     except IndexError:
                         raise InstallerError("No java command found")
 
                     # 构造forge启动参数
                     try:
                         forgeArgs = list(
-                            filter(lambda x: x.startswith("@libraries"), command.split(" "))
+                            filter(
+                                lambda x: x.startswith("@libraries"), command.split(" ")
+                            )
                         ).pop()
                     except IndexError:
                         raise InstallerError("bad forge run script")
-                    
-                    forgeArgs = [forgeArgs] # 转成列表，与下面相一致
 
-                else:  # 1.17以下版本: PlanA
+                    forgeArgs = [forgeArgs]  # 转成列表，与下面相一致
+
+                # 1.17以下版本: PlanA
+                else:
                     for entry in self._profile["libraries"]:
                         if entry["name"].startswith("net.minecraftforge:forge:"):
-                            coreFile = entry["downloads"]["artifact"]["path"].replace("-universal", "")
+                            coreFile = entry["downloads"]["artifact"]["path"].replace(
+                                "-universal", ""
+                            )
                             forgeArgs = ["-jar", ospath.basename(coreFile).strip()]
                             break
-                    configureServerVariables.jvmArg.extend(forgeArgs)
-                # configureServerVariables.extraData["forge_version"] = self.forgeVersion
+                    if self.isEditing is None:
+                        configureServerVariables.jvmArg.extend(forgeArgs)
+                    else:
+                        editServerVariables.jvmArg.extend(forgeArgs)
                 # 写入全局配置
                 try:
                     with open(
-                            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
                     ) as globalServerListFile:
                         # old
                         globalServerList = loads(globalServerListFile.read())
                     d = globalServerList["MCSLServerList"][
                         len(globalServerList["MCSLServerList"]) - 1
-                        ]
-                    print(d)
+                        if self.isEditing is None
+                        else self.isEditing
+                    ]
                     d["jvm_arg"].extend(forgeArgs)
                     d.update(
                         {
                             "server_type": "forge",
                         }
                     )
-                    globalServerList["MCSLServerList"].pop(-1)
+                    globalServerList["MCSLServerList"].pop(
+                        -1 if self.isEditing is None else self.isEditing
+                    )
                     globalServerList["MCSLServerList"].append(d)
                     with open(
-                            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                        r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
                     ) as newGlobalServerListFile:
                         newGlobalServerListFile.write(dumps(globalServerList, indent=4))
                 except Exception as e:
@@ -285,9 +321,9 @@ class ForgeInstaller(Installer):
                         "onlySaveGlobalServerConfig"
                     ]:
                         with open(
-                                ospath.join(self.cwd, "MCSL2ServerConfig.json"),
-                                mode="w+",
-                                encoding="utf-8",
+                            ospath.join(self.cwd, "MCSL2ServerConfig.json"),
+                            mode="w+",
+                            encoding="utf-8",
                         ) as f:
                             f.write(dumps(d, indent=4))
                 except Exception as e:

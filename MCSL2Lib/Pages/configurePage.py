@@ -1987,15 +1987,6 @@ class ConfigurePage(QWidget):
             serverVariables.serverName = tmpServerName
 
         if exitCode == 0:
-            InfoBar.success(
-                title="成功",
-                content=exit0Msg,
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
             if configureServerVariables.serverType == "forge":
                 self.installingForgeStateToolTip = StateToolTip(
                     "安装Forge", "请稍后，正在安装...", self
@@ -2019,6 +2010,16 @@ class ConfigurePage(QWidget):
                 except Exception as e:
                     self.afterInstallingForge(False, e.args)
                     self.addNewServerRollback()
+            else:
+                InfoBar.success(
+                    title="成功",
+                    content=exit0Msg,
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:

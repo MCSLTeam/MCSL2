@@ -53,6 +53,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
+from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
@@ -1335,9 +1336,23 @@ class ServerManagerPage(QWidget):
                 )
                 w = MessageBox(title, content, self)
                 w.yesButton.setText("无误，覆盖")
-                w.yesSignal.connect(self.saveEditedServer)
+                w.yesSignal.connect(self.confirmForgeServer)
                 w.cancelButton.setText("我再看看")
                 w.exec()
+
+    def confirmForgeServer(self):
+        if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
+            w = MessageBox(
+                "这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self
+            )
+            w.yesButton.setText("是")
+            w.cancelButton.setText("不是")
+            # 如果选yes
+            if w.exec() == 1:
+                editServerVariables.serverType = "forge"
+                self.saveEditedServer()
+        else:
+            self.saveEditedServer()
 
     def saveEditedServer(self):
         """真正的保存服务器函数"""
@@ -1457,7 +1472,31 @@ class ServerManagerPage(QWidget):
             exit1Msg += f"\n{e}"
 
         if exitCode == 0:
-            InfoBar.success(
+            if editServerVariables.serverType == "forge":
+                self.installingForgeStateToolTip = StateToolTip(
+                    "安装Forge", "请稍后，正在安装...", self
+                )
+                self.installingForgeStateToolTip.move(
+                    self.installingForgeStateToolTip.getSuitablePos()
+                )
+                self.installingForgeStateToolTip.show()
+                try:
+                    self.forgeInstaller = ForgeInstaller(
+                        serverPath=f"Servers//{editServerVariables.serverName}",
+                        file=editServerVariables.coreFileName,
+                        java=editServerVariables.selectedJavaPath,
+                        logDecode=settingsController.fileSettings["outputDeEncoding"],
+                        isEditing=self.serverIndex
+                    )
+                    editServerVariables.extraData[
+                        "forge_version"
+                    ] = self.forgeInstaller.forgeVersion
+                    self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                    self.forgeInstaller.asyncInstall()
+                except Exception as e:
+                    self.afterInstallingForge(False, e.args)
+            else:
+                InfoBar.success(
                 title="成功",
                 content=exit0Msg,
                 orient=Qt.Horizontal,
@@ -1492,6 +1531,21 @@ class ServerManagerPage(QWidget):
             editServerVariables.consoleInputDeEncoding
         )
         editServerVariables.oldIcon = editServerVariables.icon
+
+    @pyqtSlot(bool)
+    def afterInstallingForge(self, installFinished, args=...):
+        if installFinished:
+            self.installingForgeStateToolTip.setContent("安装成功！")
+            self.installingForgeStateToolTip.setState(True)
+            self.installingForgeStateToolTip = None
+        else:
+            self.installingForgeStateToolTip.setContent(f"怪，安装失败！{args if args is not ... else ''}")
+            self.installingForgeStateToolTip.setState(True)
+            self.installingForgeStateToolTip = None
+            print(self.__class__.__name__, "回滚")
+        if hasattr(self, "forgeInstaller"):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
+            del self.forgeInstaller
+        editServerVariables.resetToDefault()  # 重置
 
     def checkDuplicateConfig(self):
         """
