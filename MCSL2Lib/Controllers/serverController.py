@@ -293,6 +293,7 @@ class ServerLauncher:
 
         # add "nogui" arg
         self.jvmArg.append("nogui")
+        print(self.jvmArg)
 
     def launch(self):
         """启动进程"""
