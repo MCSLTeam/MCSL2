@@ -15,7 +15,7 @@ Settings controller, for editing MCSL2's configurations.
 """
 
 from json import dumps, loads
-from os import path as ospath
+from os import path as osp
 
 from MCSL2Lib.singleton import Singleton
 
@@ -31,8 +31,8 @@ class SettingsController:
 
     def _readSettings(self, firstLoad):
         """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
-        if ospath.exists(r"./MCSL2/MCSL2_Config.json"):
-            if ospath.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
+        if osp.exists(r"./MCSL2/MCSL2_Config.json"):
+            if osp.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
                 with open(
                     r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8"
                 ) as readConfig:

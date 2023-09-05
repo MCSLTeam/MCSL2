@@ -14,7 +14,7 @@
 Configure new server page.
 """
 from json import loads, dumps
-from os import getcwd, mkdir, remove, path as ospath
+from os import getcwd, mkdir, remove, path as osp
 from shutil import copy, rmtree
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
@@ -1524,9 +1524,9 @@ class ConfigurePage(QWidget):
     @pyqtSlot(list)
     def autoDetectJavaFinished(self, _JavaPaths: list):
         """自动查找Java结果处理"""
-        if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+        if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
             remove("MCSL2/AutoDetectJavaHistory.txt")
-        if ospath.exists("MCSL2/AutoDetectJavaHistory.json"):
+        if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
         savedJavaList = javaDetector.loadJavaList()
@@ -2057,7 +2057,7 @@ class ConfigurePage(QWidget):
 
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
-        if ospath.exists(serverDir := f"Servers//{configureServerVariables.serverName}"):  # 防止出现重复回滚的操作
+        if osp.exists(serverDir := f"Servers//{configureServerVariables.serverName}"):  # 防止出现重复回滚的操作
             # 删除文件夹
             rmtree(serverDir)
             # 删除全局配置

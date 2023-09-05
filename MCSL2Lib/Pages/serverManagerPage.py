@@ -15,7 +15,7 @@ Manage exists Minecraft servers.
 """
 
 from json import dump, loads, dumps
-from os import getcwd, rename, path as ospath, remove
+from os import getcwd, rename, path as osp, remove
 from shutil import copy, rmtree
 
 from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal, QThread
@@ -1093,9 +1093,9 @@ class ServerManagerPage(QWidget):
     @pyqtSlot(list)
     def autoDetectJavaFinished(self, _JavaPaths: list):
         """自动查找Java结果处理"""
-        if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+        if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
             remove("MCSL2/AutoDetectJavaHistory.txt")
-        if ospath.exists("MCSL2/AutoDetectJavaHistory.json"):
+        if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
         with open(
@@ -1396,10 +1396,10 @@ class ServerManagerPage(QWidget):
                 )
                 w2.exec()
             elif (
-                ospath.getsize(
+                osp.getsize(
                     f"Servers//{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
                 )
-                != ospath.getsize(
+                != osp.getsize(
                     f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
                 )
                 and editServerVariables.coreFileName

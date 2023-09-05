@@ -16,7 +16,7 @@ An auto-detect Java function.
 
 import json
 from os import listdir, remove
-from os import path as ospath
+from os import path as osp
 from platform import system
 from re import search
 
@@ -109,10 +109,10 @@ def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     # construct _Match function
     if "windows" in system().lower():
         def Match(P, F):
-            return ospath.join(P, F).endswith(r"bin\java.exe")
+            return osp.join(P, F).endswith(r"bin\java.exe")
     else:
         def Match(P, F):
-            return ospath.join(P, F).endswith(r"bin/java")
+            return osp.join(P, F).endswith(r"bin/java")
 
     processes = searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
     rv = []
@@ -130,12 +130,12 @@ def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
 def searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     processes = []
     if FuzzySearch:
-        if ospath.isfile(Path) or "x86_64-linux-gnu" in Path:
+        if osp.isfile(Path) or "x86_64-linux-gnu" in Path:
             return processes
         try:
             for File in listdir(Path):
-                _Path = ospath.join(Path, File)
-                if ospath.isfile(_Path):
+                _Path = osp.join(Path, File)
+                if osp.isfile(_Path):
                     if _Match(Path, File):
                         process = QProcess()
                         process.start(_Path, ["-version"])
@@ -169,7 +169,7 @@ def detectJava(FuzzySearch=True):
     if "windows" in system().lower():
         for i in range(65, 91):
             Path = chr(i) + ":\\"
-            if ospath.exists(Path):
+            if osp.exists(Path):
                 JavaPathList.extend(
                     searchFile(Path, "java", "exe", FuzzySearch, JavaVersionMatcher)
                 )
@@ -181,7 +181,7 @@ def detectJava(FuzzySearch=True):
 
 
 def checkJavaAvailability(java: Java):
-    if ospath.exists(java.path):
+    if osp.exists(java.path):
         process = QProcess()
         process.start(java.path, ["-version"])
         process.waitForFinished()
@@ -199,12 +199,12 @@ def loadJavaList():
     """
 
     # 兼容
-    if ospath.exists("MCSL2/AutoDetectJavaHistory.txt"):
+    if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
         remove("MCSL2/AutoDetectJavaHistory.txt")
-    if ospath.exists("MCSL2/AutoDetectJavaHistory.json"):
+    if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
         remove("MCSL2/AutoDetectJavaHistory.json")
 
-    if not ospath.exists("MCSL2/MCSL2_DetectedJava.json"):
+    if not osp.exists("MCSL2/MCSL2_DetectedJava.json"):
         return []
     with open(
             "MCSL2/MCSL2_DetectedJava.json", "r", encoding="utf-8"

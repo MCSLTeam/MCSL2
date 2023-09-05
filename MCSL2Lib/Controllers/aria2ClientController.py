@@ -18,7 +18,7 @@ import json
 import subprocess
 import time
 from os import getcwd, mkdir, remove
-from os import path as ospath
+from os import path as osp
 from platform import system
 from shutil import which
 from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
@@ -90,12 +90,12 @@ class Aria2Controller:
     def checkAria2(cls):
         cls.checkPlatform()
         if cls.systemType == "Windows":
-            if not ospath.exists(r"MCSL2/Aria2/aria2c.exe"):
+            if not osp.exists(r"MCSL2/Aria2/aria2c.exe"):
                 cls.aria2cStatus = False
             else:
                 cls.aria2cStatus = True
         elif cls.systemType == "macOS":
-            if not ospath.exists(r"/usr/local/bin/aria2c"):
+            if not osp.exists(r"/usr/local/bin/aria2c"):
                 cls.aria2cStatus = False
             else:
                 cls.aria2cStatus = True
@@ -126,12 +126,13 @@ class Aria2Controller:
                 InstallAria2 = Popen("brew install aria2", stdout=PIPE, shell=True)
                 self.aria2cStatus = True
             else:
-                CallMCSL2Dialog(
-                    Tip="InstallAria2Failed",
-                    OtherTextArg=None,
-                    isNeededTwoButtons=0,
-                    ButtonArg=None,
-                )
+                # CallMCSL2Dialog(
+                #     Tip="InstallAria2Failed",
+                #     OtherTextArg=None,
+                #     isNeededTwoButtons=0,
+                #     ButtonArg=None,
+                # )
+                pass
         except Exception as e:
             print(e)
 
@@ -370,7 +371,7 @@ class Aria2Controller:
                 Aria2Program = "aria2c"
             else:
                 Aria2Program = "aria2c"
-            path = ospath.join(getcwd(), "MCSL2", "Downloads")
+            path = osp.join(getcwd(), "MCSL2", "Downloads")
             ConfigCommand = [
                 "--conf-path=MCSL2/Aria2/aria2.conf",
                 "--input-file=MCSL2/Aria2/aria2.session",
@@ -623,9 +624,9 @@ class DL_EntryManager(QObject):
         """
         在对文件进行操作前检查文件是否存在，如果不存在则创建文件,确保文件操作不会出错
         """
-        if not ospath.exists(ospath.join("MCSL2", "Downloads")):
-            mkdir(ospath.join("MCSL2", "Downloads"))
-        if not ospath.exists(DL_EntryManager.file):
+        if not osp.exists(osp.join("MCSL2", "Downloads")):
+            mkdir(osp.join("MCSL2", "Downloads"))
+        if not osp.exists(DL_EntryManager.file):
             with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
                 f.write("{}")
 
@@ -665,7 +666,7 @@ class DL_EntryManager(QObject):
         """
         添加核心文件的记录
         """
-        coreFileName = ospath.join(cls.path, coreName)
+        coreFileName = osp.join(cls.path, coreName)
         # 计算md5
         with open(coreFileName, "rb") as f:
             md5 = hashlib.md5(f.read()).hexdigest()
@@ -689,8 +690,8 @@ class DL_EntryManager(QObject):
         :param originMd5: 原始md5
         :param autoDelete: 如果文件不完整是否自动删除核心文件
         """
-        coreFileName = ospath.join(cls.path, coreName)
-        if ospath.exists(coreFileName):
+        coreFileName = osp.join(cls.path, coreName)
+        if osp.exists(coreFileName):
             # 计算md5
             with open(coreFileName, "rb") as f:
                 fileMd5 = hashlib.md5(f.read()).hexdigest()

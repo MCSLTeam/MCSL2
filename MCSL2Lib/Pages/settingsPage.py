@@ -63,6 +63,7 @@ from qfluentwidgets import (
 
 from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.updateController import CheckUpdateThread, FetchUpdateIntroThread
 from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
 from MCSL2Lib.utils import openWebUrl
 from MCSL2Lib.singleton import Singleton
@@ -1751,44 +1752,3 @@ class SettingsPage(QWidget):
         w.contentLabel.setParent(None)
         w.show()
 
-
-class CheckUpdateThread(QThread):
-    """
-    检查更新的网络连接线程\n
-    使用多线程防止假死
-    """
-
-    isUpdate = pyqtSignal(list)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName("CheckUpdateThread")
-
-    def run(self):
-        try:
-            latestVerInfo = Session().get(
-                f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={GlobalMCSL2Variables.MCSL2Version}"
-            ).text.split("|")
-            self.isUpdate.emit(latestVerInfo)
-        except Exception as e:
-            self.isUpdate.emit(["Failed"])
-
-
-class FetchUpdateIntroThread(QThread):
-    """
-    获取更新介绍的网络连接线程\n
-    使用多线程防止假死
-    """
-
-    content = pyqtSignal(str)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName("FetchUpdateIntroThread")
-
-    def run(self):
-        try:
-            intro = f"""{Session().get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
-            self.content.emit(intro)
-        except Exception as e:
-            self.content.emit(["奇怪，怎么获取信息失败了？\n检查一下网络，或者反馈给开发者？"])

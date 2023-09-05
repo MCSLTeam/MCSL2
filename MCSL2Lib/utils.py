@@ -17,7 +17,7 @@ import enum
 import functools
 import inspect
 from json import loads, dumps
-from os import makedirs, path as ospath
+from os import makedirs, path as osp
 from types import TracebackType
 from typing import Type
 
@@ -73,16 +73,16 @@ def initializeMCSL2():
 
     folders = ["Servers", "Plugins", "MCSL2", "MCSL2/Aria2", "MCSL2/Downloads"]
     for folder in folders:
-        if not ospath.exists(folder):
+        if not osp.exists(folder):
             makedirs(folder)
 
-    if not ospath.exists(r"./MCSL2/MCSL2_Config.json"):
+    if not osp.exists(r"./MCSL2/MCSL2_Config.json"):
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
             config.write(dumps(configTemplate, indent=4))
-    if ospath.getsize(r"./MCSL2/MCSL2_Config.json") == 0:
+    if osp.getsize(r"./MCSL2/MCSL2_Config.json") == 0:
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
             config.write(dumps(configTemplate, indent=4))
-    if not ospath.exists(r"./MCSL2/MCSL2_ServerList.json"):
+    if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
                 r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:

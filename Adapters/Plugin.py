@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from json import loads
-from os import walk, getcwd, path as ospath, startfile
+from os import walk, getcwd, path as osp, startfile
 from shutil import rmtree
 from threading import Thread
 from typing import List
@@ -228,8 +228,8 @@ class PluginManager(BasePluginManager):
             elif plugin.icon[0] == ":":
                 self.pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
             else:
-                url = ospath.dirname(ospath.abspath(__file__))  # 文件夹
-                url = ospath.abspath(ospath.join(url, ".."))
+                url = osp.dirname(osp.abspath(__file__))  # 文件夹
+                url = osp.abspath(osp.join(url, ".."))
                 self.pluginWidget.pluginIcon.setPixmap(
                     QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
                 )

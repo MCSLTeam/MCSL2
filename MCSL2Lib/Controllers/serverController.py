@@ -17,7 +17,7 @@ Communicate with Minecraft servers.
 
 from datetime import datetime
 from json import dumps
-from os import path as ospath
+from os import path as osp
 from typing import List, Optional
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlot
@@ -301,7 +301,7 @@ class ServerLauncher:
             javaPath=self.javaPath,
             processArgs=self.jvmArg,
             workingDirectory=str(
-                ospath.realpath(f"Servers//{serverVariables.serverName}")
+                osp.realpath(f"Servers//{serverVariables.serverName}")
             ),
         )
 

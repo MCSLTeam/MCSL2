@@ -13,7 +13,7 @@
 """
 Download page with FastMirror and MCSLAPI.
 """
-from os import path as ospath, remove, startfile
+from os import path as osp, remove, startfile
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
@@ -1061,10 +1061,10 @@ class DownloadPage(QWidget):
             pass
 
     def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
-        if ospath.exists(
-                ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
-        ) and not ospath.exists(
-            ospath.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
+        if osp.exists(
+                osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
+        ) and not osp.exists(
+            osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
         ):
             if settingsController.fileSettings["saveSameFileException"] == "ask":
                 w = MessageBox("提示", "您要下载的文件已存在。请选择操作。", self)

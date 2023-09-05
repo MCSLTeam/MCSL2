@@ -14,11 +14,10 @@
 Minecraft Forge Servers Installer.
 """
 
-import os.path
 import shutil
 import sys
 from json import loads, dumps
-from os import path as ospath, name as osname
+from os import path as osp, name as osname
 from typing import Optional
 from zipfile import ZipFile
 
@@ -157,7 +156,7 @@ class ForgeInstaller(Installer):
         self.isEditing = int(isEditing) if isEditing != "" else None
 
         self.getInstallerData(
-            os.path.join(serverPath, file) if installerPath is None else installerPath
+            osp.join(serverPath, file) if installerPath is None else installerPath
         )
         if self._mcVersion >= McVersion("1.17"):
             self.installPlan = 1
@@ -235,8 +234,8 @@ class ForgeInstaller(Installer):
                     raise InstallerError("No Java path found")
             # copy tmp file of forge installer
             shutil.copyfile(
-                ospath.join(self.cwd, self.file),
-                ospath.join(self.cwd, self.file + ".tmp"),
+                osp.join(self.cwd, self.file),
+                osp.join(self.cwd, self.file + ".tmp"),
             )
 
             process = QProcess()
@@ -257,17 +256,17 @@ class ForgeInstaller(Installer):
         else:
             print("PlanB::forge installed callback entered")
             # 删除tmp
-            os.remove(ospath.join(self.cwd, self.file + ".tmp"))
+            os.remove(osp.join(self.cwd, self.file + ".tmp"))
 
             if self.workingProcess.exitCode() == 0:
                 # 1.17以上版本: PlanB
                 if self.installPlan == 1:
                     # 判断系统，分别读取run.bat和run.sh
                     if osname == "nt":
-                        with open(ospath.join(self.cwd, "run.bat"), mode="r") as f:
+                        with open(osp.join(self.cwd, "run.bat"), mode="r") as f:
                             run = f.readlines()
                     else:
-                        with open(ospath.join(self.cwd, "run.sh"), mode="r") as f:
+                        with open(osp.join(self.cwd, "run.sh"), mode="r") as f:
                             run = f.readlines()
                     # 找到java命令
                     try:
@@ -296,7 +295,7 @@ class ForgeInstaller(Installer):
                             coreFile = entry["downloads"]["artifact"]["path"].replace(
                                 "-universal", ""
                             )
-                            forgeArgs = ["-jar", ospath.basename(coreFile).strip()]
+                            forgeArgs = ["-jar", osp.basename(coreFile).strip()]
                             break
                     if self.isEditing is None:
                         configureServerVariables.jvmArg.extend(forgeArgs)
@@ -337,7 +336,7 @@ class ForgeInstaller(Installer):
                         "onlySaveGlobalServerConfig"
                     ]:
                         with open(
-                            ospath.join(self.cwd, "MCSL2ServerConfig.json"),
+                            osp.join(self.cwd, "MCSL2ServerConfig.json"),
                             mode="w+",
                             encoding="utf-8",
                         ) as f:
