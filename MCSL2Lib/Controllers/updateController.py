@@ -59,11 +59,12 @@ class MCSL2FileUpdater:
         self.oldExecutableFileName = sys.executable
         self.updateOSPrefix = "Windows" if osname == "nt" else "Linux"
         self.updateExtSuffix = ".exe" if osname == "nt" else ".bin"
-        if "32" in architecture:
+        self.updateArchitecturePrefix: str = ""
+        if "32" in architecture()[0]:
             self.updateArchitecturePrefix = f"{self.updateOSPrefix}-x86"
-        elif "64" in architecture:
+        elif "64" in architecture()[0]:
             self.updateArchitecturePrefix = f"{self.updateOSPrefix}-x64"
-        elif "32" in architecture:
+        elif "32" in architecture()[0]:
             self.updateArchitecturePrefix = f"{self.updateOSPrefix}-arm64"
         self.updateSite = f"http://shenjack.top:5100/LxHTT/MCSL2_Update/media/branch/master/{self.updateArchitecturePrefix}/MCSL2{self.updateExtSuffix}"
         self.devMode = (
@@ -99,8 +100,10 @@ class MCSL2FileUpdater:
         )
 
     def restart(self):
-        """重启，在移动文件后调用"""
-        execl(self.oldExecutableFileName, self.oldExecutableFileName, *sys.argv)
+        """重启，在移动文件后调用(此代码在开发时不起作用)"""
+        if not self.devMode:
+            execl(self.oldExecutableFileName, self.oldExecutableFileName, *sys.argv)
+            sys.exit()
 
     def deleteOldMCSL2(self):
         """删除旧的，在更新重启后调用"""
