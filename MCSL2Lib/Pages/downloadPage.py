@@ -1045,6 +1045,7 @@ class DownloadPage(QWidget):
             position=InfoBarPosition.TOP_RIGHT,
             parent=self
         )
+        self.downloadingInfoBar.setCustomBackgroundColor('white', '#202020')
         showDownloadMsgBoxBtn = PushButton()
         showDownloadMsgBoxBtn.setText("恢复")
         showDownloadMsgBoxBtn.clicked.connect(self.downloadingBox.show)
