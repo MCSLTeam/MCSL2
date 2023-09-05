@@ -32,11 +32,9 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Widgets.selectJavaWidget import singleSelectJavaWidget
-from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
-@Singleton
 class SelectJavaPage(QWidget):
     """适用于新建服务器时的选择Java页面"""
 
