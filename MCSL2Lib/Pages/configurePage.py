@@ -1751,12 +1751,10 @@ class ConfigurePage(QWidget):
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
             else:
-                configureServerVariables.jvmArg.append(
-                    "-Dlog4j2.formatMsgNoLookups=true"
-                )
+                configureServerVariables.jvmArg= ["-Dlog4j2.formatMsgNoLookups=true"]
                 return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         elif currentNewServerType == 1:
-            configureServerVariables.jvmArg.append("-Dlog4j2.formatMsgNoLookups=true")
+            configureServerVariables.jvmArg= ["-Dlog4j2.formatMsgNoLookups=true"]
             return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
 
     def checkMemUnitSet(self, currentNewServerType):
@@ -1965,7 +1963,7 @@ class ConfigurePage(QWidget):
             tmpServerName = serverVariables.serverName
             serverVariables.serverName = configureServerVariables.serverName
             MinecraftEulaInfoBar = InfoBar(
-                icon=FIF.GITHUB,
+                icon=FIF.INFO,
                 title="功能提醒",
                 content="您开启了“创建时自动同意服务器的Eula”功能。\n如需要查看Minecraft Eula，请点击右边的按钮。",
                 orient=Qt.Horizontal,
@@ -1974,6 +1972,7 @@ class ConfigurePage(QWidget):
                 position=InfoBarPosition.TOP,
                 parent=self,
             )
+            MinecraftEulaInfoBar.setCustomBackgroundColor('white', '#202020')
             MinecraftEulaInfoBar.addWidget(
                 HyperlinkButton(
                     url="https://aka.ms/MinecraftEULA",
