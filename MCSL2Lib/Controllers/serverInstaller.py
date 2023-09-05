@@ -9,7 +9,6 @@ from zipfile import ZipFile
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.publicFunctions import warning
 from MCSL2Lib.variables import ConfigureServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -129,8 +128,15 @@ class ForgeInstaller(Installer):
         self._forgeVersion = None
         self.java = java
         self.serverPath = serverPath
+        self.installPlan = 0
 
         self.getInstallerData(os.path.join(serverPath, file) if installerPath is None else installerPath)
+        if self._mcVersion >= McVersion("1.17"):
+            self.installPlan = 1
+        elif self._mcVersion >= McVersion("1.8"):
+            self.installPlan = 0
+        else:
+            raise InstallerError(f"不支持的自动安装版本:{self._mcVersion}的forge\nMCSL2支持1.8往后的所有forge安装")
 
     def getInstallerData(self, jarFile):
         # 打开Installer压缩包
@@ -140,19 +146,28 @@ class ForgeInstaller(Installer):
                 jarFile,
                 mode="r",
         ) as zipfile:
-            _ = zipfile.read("install_profile.json")
+            try:
+                _ = zipfile.read("install_profile.json")
+            except KeyError:
+                _ = zipfile.read("version.json")
             self._profile = loads(_)  # type: dict
             if not self.checkInstaller():
                 raise InstallerError("Invalid Forge installer")
 
     def checkInstaller(self) -> bool:
-        if (versionInfo := self._profile.get("versionInfo", {})).get("id", "").startswith("forge"):
+        if (versionInfo := self._profile.get("versionInfo", {})).get("id", "").lower().startswith("forge"):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = (
                 versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
             )
             return True
-        elif "forge" in (version := self._profile.get("version", "")):
+        elif "forge" in (version := self._profile.get("version", "")).lower():
+            self._mcVersion = McVersion(version.split("-")[0])
+            self._forgeVersion = version.replace(str(self._mcVersion), "").replace(
+                "-", ""
+            )
+            return True
+        elif "forge" in (version := self._profile.get("id", "")).lower():
             self._mcVersion = McVersion(version.split("-")[0])
             self._forgeVersion = version.replace(str(self._mcVersion), "").replace(
                 "-", ""
@@ -161,31 +176,17 @@ class ForgeInstaller(Installer):
         else:
             return False
 
-    @warning("该方法还未完善,目前仅支持1.12以上的Forge安装,且还未测试")
-    def asyncInstall(self):
+    def asyncInstall(self, installed=False):
         """
         安装Forge
-        若为1.12以上版本,则使用PlanB
-        若为1.12以下版本,则使用PlanA
+        若为1.17以上版本,则使用PlanB
+        若为1.17以下版本,则使用PlanA
 
         若安装过程中出现错误,则抛出InstallerError
         """
         print(self.__class__.__name__, self._mcVersion)
         print(self.__class__.__name__, self._forgeVersion)
-        if self._mcVersion >= McVersion("1.12"):
-            print("PlanB")
-            self.__installPlanB()
-        else:
-            print("PlanA")
-            self.__installPlanA()
 
-    def __installPlanB(self, installed=False):
-        """
-        安装1.12版本及以上的Forge
-        """
-        print("PlanB entered")
-        # sys.setprofile(profile_func)
-        # 获取文件打开进程的数量
         if not installed:
             # set forge runtime java path
             if self.java is None:
@@ -204,38 +205,53 @@ class ForgeInstaller(Installer):
             process.setProgram(self.java)
             process.setArguments(["-jar", self.file + ".tmp", "--installServer"])
             process.readyReadStandardOutput.connect(
-                lambda: self._installerLogHandler("ForgeInstaller::PlanB")
+                lambda: self._installerLogHandler(
+                    "ForgeInstaller::PlanB" if self.installPlan == 1 else "ForgeInstaller::PlanA"
+                )
             )
-            process.finished.connect(lambda a, b: self.__installPlanB(True))
+            process.finished.connect(lambda a, b: self.asyncInstall(True))
             self.workingProcess = process
             self.workingProcess.start()
+
         else:
             print("PlanB::forge installed callback entered")
             # 删除tmp
             os.remove(ospath.join(self.cwd, self.file + ".tmp"))
 
             if self.workingProcess.exitCode() == 0:
-                # 判断系统，分别读取run.bat和run.sh
-                if osname == "nt":
-                    with open(ospath.join(self.cwd, "run.bat"), mode="r") as f:
-                        run = f.readlines()
-                else:
-                    with open(ospath.join(self.cwd, "run.sh"), mode="r") as f:
-                        run = f.readlines()
-                # 找到java命令
-                try:
-                    command = list(filter(lambda x: x.startswith("java"), run)).pop()
-                except IndexError:
-                    raise InstallerError("No java command found")
 
-                try:
-                    forgeArgs = list(
-                        filter(lambda x: x.startswith("@libraries"), command.split(" "))
-                    ).pop()
-                except IndexError:
-                    raise InstallerError("bad forge run script")
+                if self.installPlan == 1:  # 1.17以上版本: PlanB
 
-                configureServerVariables.jvmArg.append(forgeArgs)
+                    # 判断系统，分别读取run.bat和run.sh
+                    if osname == "nt":
+                        with open(ospath.join(self.cwd, "run.bat"), mode="r") as f:
+                            run = f.readlines()
+                    else:
+                        with open(ospath.join(self.cwd, "run.sh"), mode="r") as f:
+                            run = f.readlines()
+                    # 找到java命令
+                    try:
+                        command = list(filter(lambda x: x.startswith("java"), run)).pop()
+                    except IndexError:
+                        raise InstallerError("No java command found")
+
+                    # 构造forge启动参数
+                    try:
+                        forgeArgs = list(
+                            filter(lambda x: x.startswith("@libraries"), command.split(" "))
+                        ).pop()
+                    except IndexError:
+                        raise InstallerError("bad forge run script")
+                    
+                    forgeArgs = [forgeArgs] # 转成列表，与下面相一致
+
+                else:  # 1.17以下版本: PlanA
+                    for entry in self._profile["libraries"]:
+                        if entry["name"].startswith("net.minecraftforge:forge:"):
+                            coreFile = entry["downloads"]["artifact"]["path"].replace("-universal", "")
+                            forgeArgs = ["-jar", ospath.basename(coreFile).strip()]
+                            break
+                    configureServerVariables.jvmArg.extend(forgeArgs)
                 # configureServerVariables.extraData["forge_version"] = self.forgeVersion
                 # 写入全局配置
                 try:
@@ -248,7 +264,7 @@ class ForgeInstaller(Installer):
                         len(globalServerList["MCSLServerList"]) - 1
                         ]
                     print(d)
-                    d["jvm_arg"].append(forgeArgs)
+                    d["jvm_arg"].extend(forgeArgs)
                     d.update(
                         {
                             "server_type": "forge",
@@ -284,12 +300,6 @@ class ForgeInstaller(Installer):
                 raise InstallerError(
                     f"Forge installer exited with code {self.workingProcess.exitCode()}"
                 )
-
-    def __installPlanA(self):
-        """
-        安装1.12版本以下的Forge
-        """
-        pass
 
     @classmethod
     def isPossibleForgeInstaller(cls, fileName: str) -> bool:

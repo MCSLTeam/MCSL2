@@ -13,7 +13,6 @@
 """
 Configure new server page.
 """
-
 from json import loads, dumps
 from os import getcwd, mkdir, remove, path as ospath
 from shutil import copy, rmtree
@@ -51,7 +50,6 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
-
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.Controllers.serverController import MojangEula
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
@@ -1471,7 +1469,7 @@ class ConfigurePage(QWidget):
             if v := javaDetector.getJavaVersion(selectedJavaPath):
                 currentJavaPaths = configureServerVariables.javaPath
                 if (
-                    java := javaDetector.Java(selectedJavaPath, v)
+                        java := javaDetector.Java(selectedJavaPath, v)
                 ) not in currentJavaPaths:
                     currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
                     javaDetector.sortJavaList(currentJavaPaths)
@@ -1612,22 +1610,22 @@ class ConfigurePage(QWidget):
 
         # 是否为空
         if (
-            minMemLineEditItems[currentNewServerType].text() != ""
-            and maxMemLineEditItems[currentNewServerType].text() != ""
+                minMemLineEditItems[currentNewServerType].text() != ""
+                and maxMemLineEditItems[currentNewServerType].text() != ""
         ):
             # 是否是数字
             if (
-                minMemLineEditItems[currentNewServerType].text().isdigit()
-                and maxMemLineEditItems[currentNewServerType].text().isdigit()
+                    minMemLineEditItems[currentNewServerType].text().isdigit()
+                    and maxMemLineEditItems[currentNewServerType].text().isdigit()
             ):
                 # 是否为整数
                 if (
-                    int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
-                    and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                        int(minMemLineEditItems[currentNewServerType].text()) % 1 == 0
+                        and int(maxMemLineEditItems[currentNewServerType].text()) % 1 == 0
                 ):
                     # 是否为整数
                     if int(minMemLineEditItems[currentNewServerType].text()) <= int(
-                        maxMemLineEditItems[currentNewServerType].text()
+                            maxMemLineEditItems[currentNewServerType].text()
                     ):
                         # 设!
                         configureServerVariables.minMem = int(
@@ -1650,8 +1648,8 @@ class ConfigurePage(QWidget):
     def checkCoreSet(self):
         """检查核心设置"""
         if (
-            configureServerVariables.corePath != ""
-            and configureServerVariables.coreFileName != ""
+                configureServerVariables.corePath != ""
+                and configureServerVariables.coreFileName != ""
         ):
             return "核心检查: 正常", 0
         else:
@@ -1688,8 +1686,8 @@ class ConfigurePage(QWidget):
 
         for i in range(len(illegalServerNameList)):
             if (
-                illegalServerNameList[i]
-                == serverNameLineEditItems[currentNewServerType].text()
+                    illegalServerNameList[i]
+                    == serverNameLineEditItems[currentNewServerType].text()
             ):
                 errText += "，名称与操作系统冲突"
                 isError = 1
@@ -1698,8 +1696,8 @@ class ConfigurePage(QWidget):
                 isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
             if (
-                not eachIllegalServerCharacter
-                in serverNameLineEditItems[currentNewServerType].text()
+                    not eachIllegalServerCharacter
+                        in serverNameLineEditItems[currentNewServerType].text()
             ):
                 pass
             else:
@@ -1911,14 +1909,14 @@ class ConfigurePage(QWidget):
         # 写入全局配置
         try:
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
                 globalServerListFile.close()
 
             with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as newGlobalServerListFile:
                 # 添加新的
                 globalServerList["MCSLServerList"].append(serverConfig)
@@ -1932,9 +1930,9 @@ class ConfigurePage(QWidget):
         try:
             if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
                 with open(
-                    f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
-                    "w+",
-                    encoding="utf-8",
+                        f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
+                        "w+",
+                        encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
             else:
@@ -2006,17 +2004,21 @@ class ConfigurePage(QWidget):
                     self.installingForgeStateToolTip.getSuitablePos()
                 )
                 self.installingForgeStateToolTip.show()
-                self.forgeInstaller = ForgeInstaller(
-                    serverPath=f"Servers//{configureServerVariables.serverName}",
-                    file=configureServerVariables.coreFileName,
-                    java=configureServerVariables.selectedJavaPath,
-                    logDecode=settingsController.fileSettings["outputDeEncoding"],
-                )
-                configureServerVariables.extraData[
-                    "forge_version"
-                ] = self.forgeInstaller.forgeVersion
-                self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
-                self.forgeInstaller.asyncInstall()
+                try:
+                    self.forgeInstaller = ForgeInstaller(
+                        serverPath=f"Servers//{configureServerVariables.serverName}",
+                        file=configureServerVariables.coreFileName,
+                        java=configureServerVariables.selectedJavaPath,
+                        logDecode=settingsController.fileSettings["outputDeEncoding"],
+                    )
+                    configureServerVariables.extraData[
+                        "forge_version"
+                    ] = self.forgeInstaller.forgeVersion
+                    self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                    self.forgeInstaller.asyncInstall()
+                except Exception as e:
+                    self.afterInstallingForge(False, e.args)
+                    self.addNewServerRollback()
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:
@@ -2055,33 +2057,36 @@ class ConfigurePage(QWidget):
 
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
-        # 删除文件夹
-        rmtree(f"Servers//{configureServerVariables.serverName}")
-        # 删除全局配置
-        with open(
-            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-        ) as globalServerListFile:
-            # old
-            globalServerList = loads(globalServerListFile.read())
-            globalServerListFile.close()
+        if ospath.exists(serverDir := f"Servers//{configureServerVariables.serverName}"):  # 防止出现重复回滚的操作
+            # 删除文件夹
+            rmtree(serverDir)
+            # 删除全局配置
+            with open(
+                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            ) as globalServerListFile:
+                # old
+                globalServerList = loads(globalServerListFile.read())
+                globalServerListFile.close()
 
-        with open(
-            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-        ) as newGlobalServerListFile:
-            # 删除新的
-            globalServerList["MCSLServerList"].pop()
-            newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+            with open(
+                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+            ) as newGlobalServerListFile:
+                # 删除新的
+                globalServerList["MCSLServerList"].pop()
+                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
 
     @pyqtSlot(bool)
-    def afterInstallingForge(self, installFinished):
+    def afterInstallingForge(self, installFinished, args=...):
         if installFinished:
             self.installingForgeStateToolTip.setContent("安装成功！")
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
         else:
-            self.installingForgeStateToolTip.setContent("怪，安装失败！")
+            self.installingForgeStateToolTip.setContent(f"怪，安装失败！{args if args is not ... else ''}")
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
             self.addNewServerRollback()
             print(self.__class__.__name__, "回滚")
-        del self.forgeInstaller
+        if hasattr(self, "forgeInstaller"):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
+            del self.forgeInstaller
+        configureServerVariables.resetToDefault()  # 重置
