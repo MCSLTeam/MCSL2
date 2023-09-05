@@ -14,8 +14,8 @@ jobs:
           - windows-latest
         architecture:
           - x64
-          - x86
-          - arm64
+          # - x86
+          # - arm64
 
     runs-on: ${{ matrix.os }}
 
@@ -71,8 +71,8 @@ jobs:
           - ubuntu-latest
         architecture:
           - x64
-          - x86
-          - arm64
+          # - x86
+          # - arm64
 
     runs-on: ${{ matrix.os }}
 
