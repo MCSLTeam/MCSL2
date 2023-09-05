@@ -19,13 +19,13 @@ def get_version() -> Tuple[Version, Version]:
 
 def gen_compiler() -> CompilerHelper:
     vers = get_version()
+    # for lib-not-dr 0.1.x
     compiler = CompilerHelper(
         src_file=Path("./MCSL2.py"),
         python_cmd=sys.executable,
         use_ccache=True,
         use_clang=True,
         use_msvc=True,
-        # use_mingw=True,
         use_lto=False,
         standalone=True,
         enable_console=False,
@@ -69,16 +69,18 @@ if __name__ == "__main__":
         sys.argv.remove("--output")
         sys.argv.remove(compiler.output_path.as_posix())
 
-    print(compiler.as_markdown())
-
-    print(f"```bash\n{compiler.gen_subprocess_cmd()}\n```")
 
     if is_github:
         from pprint import pprint
-
+        
+        print(compiler.as_markdown(200))
         pprint(compiler.option())
     else:
+        print(compiler.as_markdown())
+        
         compiler.output_path = Path(f"./build/nuitka-{platform.system().lower()}")
+    
+    print(f"```bash\n{compiler.gen_subprocess_cmd()}\n```")
 
     # 确认是否需要编译
     # 如果包含 -y 参数 则直接编译
