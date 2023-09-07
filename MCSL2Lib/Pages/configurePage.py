@@ -63,6 +63,7 @@ from MCSL2Lib.ImportServerTypes.importNoShellArchives import NoShellArchives
 from MCSL2Lib.ImportServerTypes.importNullCraft import NullCraft
 from MCSL2Lib.ImportServerTypes.importServerArchiveSite import ServerArchiveSite
 from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
+from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
@@ -523,6 +524,24 @@ class ConfigurePage(QWidget):
         )
 
         self.gridLayout_5.addWidget(self.noobManuallyAddCorePrimaryPushBtn, 1, 1, 1, 1)
+
+        self.noobAddCoreFromDownloadedPrimaryPushBtn = PrimaryPushButton(
+            self.noobSetCoreWidget
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.noobAddCoreFromDownloadedPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.setMinimumSize(QSize(90, 0))
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.setObjectName(
+            "noobAddCoreFromDownloadedPrimaryPushBtn"
+        )
+
+        self.gridLayout_5.addWidget(self.noobAddCoreFromDownloadedPrimaryPushBtn, 1, 2, 1, 1)
+
         self.noobCoreSubtitleLabel = SubtitleLabel(self.noobSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1290,6 +1309,7 @@ class ConfigurePage(QWidget):
         self.noobMemSubtitleLabel.setText("内存:")
         self.noobDownloadCorePrimaryPushBtn.setText("下载核心")
         self.noobManuallyAddCorePrimaryPushBtn.setText("手动导入")
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.setText("从下载的核心中导入")
         self.noobCoreSubtitleLabel.setText("核心：")
         self.noobServerNameSubtitleLabel.setText("服务器名称：")
         self.noobSaveServerPrimaryPushBtn.setText("保存！")
@@ -1384,6 +1404,7 @@ class ConfigurePage(QWidget):
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntry)
         self.noobSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # 进阶模式绑定
@@ -1751,10 +1772,10 @@ class ConfigurePage(QWidget):
                 return "JVM参数检查：正常（手动设置）", 0
             # 没写
             else:
-                configureServerVariables.jvmArg= ["-Dlog4j2.formatMsgNoLookups=true"]
+                configureServerVariables.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
                 return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
         elif currentNewServerType == 1:
-            configureServerVariables.jvmArg= ["-Dlog4j2.formatMsgNoLookups=true"]
+            configureServerVariables.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
             return "JVM参数检查：正常（无手动参数，自动启用log4j2防护）", 0
 
     def checkMemUnitSet(self, currentNewServerType):
@@ -2054,6 +2075,15 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
+
+    def showDownloadEntry(self):
+        """显示下载入口"""
+        self.downloadEntry = DownloadEntryBox(self)
+        if self.downloadEntry.exec() == 1:
+            print(list(map(lambda x: x.text(), self.downloadEntry.entryView.selectedItems())))
+
+        del self.downloadEntry
+        self.downloadEntry = None
 
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""

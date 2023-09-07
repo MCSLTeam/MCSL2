@@ -175,13 +175,13 @@ class Aria2Controller:
 
     @classmethod
     def download(
-        cls,
-        uri,
-        info_get: Optional[Callable[[dict], None]] = None,
-        stopped: Optional[Callable[[int], None]] = None,
-        extraData: Optional[tuple] = None,
-        watch=True,
-        interval=0.1,
+            cls,
+            uri,
+            info_get: Optional[Callable[[dict], None]] = None,
+            stopped: Optional[Callable[[int], None]] = None,
+            extraData: Optional[tuple] = None,
+            watch=True,
+            interval=0.1,
     ) -> str:
         """
         Download a file from uri
@@ -505,13 +505,13 @@ class DownloadWatcher(QObject):
     downloadStop = pyqtSignal(list)
 
     def __init__(
-        self,
-        gid,
-        info_get: Optional[Callable[[dict], None]],
-        stopped: Optional[Callable[[list], None]],
-        interval=0.1,
-        extraData: Optional[tuple] = None,
-        parent: Optional[QObject] = None,
+            self,
+            gid,
+            info_get: Optional[Callable[[dict], None]],
+            stopped: Optional[Callable[[list], None]],
+            interval=0.1,
+            extraData: Optional[tuple] = None,
+            parent: Optional[QObject] = None,
     ) -> None:
         """
         uris: a list of download urls
@@ -746,6 +746,21 @@ class DL_EntryManager(QObject):
         for entryName in cls.entries.keys():
             if cls.tryGetEntry(entryName) is None:
                 rv.pop(entryName)
+        print(list(cls.entries.keys()))
+        print(list(rv.keys()))
+        return rv
+
+    @classmethod
+    def getEntriesList(cls):
+        """
+        获取所有正确的记录的列表
+        "name", "type", "mc_version", "build_version", ...
+        """
+        rv = []
+        for entryName, entryData in cls.GetEntries().items():
+            e = entryData.copy()
+            e.update({"name": entryName})
+            rv.append(e)
         return rv
 
     def __new__(cls, *args, **kwargs):
