@@ -41,6 +41,7 @@ from MCSL2Lib.Controllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
     Aria2BootThread,
+    DL_EntryWorkThread,
 )
 from MCSL2Lib.Controllers.serverController import (
     MinecraftServerResMonitorUtil,
@@ -69,7 +70,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
-from MCSL2Lib.Resources.icons import * # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401
 
 serverVariables = ServerVariables()
 settingsController = SettingsController()
@@ -271,7 +272,6 @@ class Window(MSFluentWindow):
 
             self.splashScreen.finish()
 
-
         initializeAria2Configuration()
 
         self.initSafeQuitController()
@@ -335,6 +335,8 @@ class Window(MSFluentWindow):
             a0.ignore()
             return
         try:
+            DL_EntryWorkThread.quit()
+            DL_EntryWorkThread.wait()
             if Aria2Controller.shutDown():
                 super().closeEvent(a0)
         finally:

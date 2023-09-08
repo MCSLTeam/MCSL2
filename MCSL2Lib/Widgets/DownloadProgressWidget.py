@@ -34,7 +34,7 @@ from qfluentwidgets import (
     SubtitleLabel, MessageBox,
 )
 
-from MCSL2Lib.Controllers.aria2ClientController import DL_EntryManager
+from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
 
 
 class DownloadProgressWidget(QWidget):
@@ -288,7 +288,12 @@ class DownloadMessageBox(MessageBox):
         if dl is not None:
             if dl.status == "complete":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-                DL_EntryManager.addCoreEntry(filename, data)
+                DL_EntryController().work.emit(
+                    ("addCoreEntry", {
+                        "coreName": filename,
+                        "extraData": data
+                    })
+                )
             elif dl.status == "error":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
                 print(dl.error_code, dl.error_message, dl.files)
