@@ -540,7 +540,7 @@ class ConfigurePage(QWidget):
             "noobAddCoreFromDownloadedPrimaryPushBtn"
         )
 
-        self.gridLayout_5.addWidget(self.noobAddCoreFromDownloadedPrimaryPushBtn, 1, 2, 1, 1)
+        self.gridLayout_5.addWidget(self.noobAddCoreFromDownloadedPrimaryPushBtn, 1, 3, 1, 1)
 
         self.noobCoreSubtitleLabel = SubtitleLabel(self.noobSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -959,6 +959,16 @@ class ConfigurePage(QWidget):
         self.extendedCoreSubtitleLabel.setObjectName("extendedCoreSubtitleLabel")
 
         self.gridLayout_8.addWidget(self.extendedCoreSubtitleLabel, 0, 1, 1, 1)
+        self.extendedAddCoreFromDownloadedPrimaryPushBtn = PrimaryPushButton(self.extendedSetCoreWidget)
+        self.extendedAddCoreFromDownloadedPrimaryPushBtn.setObjectName("extendedAddCoreFromDownloadedPrimaryPushBtn")
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.extendedAddCoreFromDownloadedPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.extendedAddCoreFromDownloadedPrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.gridLayout_8.addWidget(self.extendedAddCoreFromDownloadedPrimaryPushBtn, 1, 3, 1, 1)
         self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
             self.extendedSetCoreWidget
         )
@@ -1330,6 +1340,7 @@ class ConfigurePage(QWidget):
         self.extendedToSymbol.setText("~")
         self.extendedDownloadCorePrimaryPushBtn.setText("下载核心")
         self.extendedManuallyAddCorePrimaryPushBtn.setText("手动导入")
+        self.extendedAddCoreFromDownloadedPrimaryPushBtn.setText("从下载的核心中导入")
         self.extendedCoreSubtitleLabel.setText("核心：")
         self.extendedDeEncodingSubtitleLabel.setText("编码设置：")
         self.extendedOutputDeEncodingLabel.setText("控制台输出编码（优先级高于全局设置）")
@@ -1414,6 +1425,7 @@ class ConfigurePage(QWidget):
         self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
+        self.extendedAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntries)
         self.extendedSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # 导入法绑定

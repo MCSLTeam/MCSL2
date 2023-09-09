@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>710</width>
-    <height>548</height>
+    <height>549</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -424,8 +424,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>611</width>
-            <height>394</height>
+            <width>594</width>
+            <height>453</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout">
@@ -698,18 +698,18 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <spacer name="noobCoreSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+              <item row="1" column="3">
+               <widget class="PrimaryPushButton" name="noobAddCoreFromDownloadedPrimaryPushBtn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
+                <property name="text">
+                 <string>从下载的核心中导入</string>
                 </property>
-               </spacer>
+               </widget>
               </item>
               <item row="1" column="1">
                <widget class="PrimaryPushButton" name="noobManuallyAddCorePrimaryPushBtn">
@@ -727,6 +727,38 @@
                 </property>
                 <property name="text">
                  <string>手动导入</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="5">
+               <spacer name="noobCoreSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="1" column="2">
+               <widget class="PrimaryPushButton" name="noobDownloadCorePrimaryPushBtn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>90</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>下载核心</string>
                 </property>
                </widget>
               </item>
@@ -872,10 +904,10 @@
             <x>0</x>
             <y>0</y>
             <width>594</width>
-            <height>589</height>
+            <height>730</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="noobNewServerScrollAreaVerticalLayout_2">
+          <layout class="QVBoxLayout" name="extendedNewServerScrollAreaVerticalLayout">
            <item>
             <widget class="QWidget" name="extendedSetJavaWidget" native="true">
              <property name="sizePolicy">
@@ -1122,7 +1154,20 @@
               </sizepolicy>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
-              <item row="1" column="3">
+              <item row="0" column="1">
+               <widget class="SubtitleLabel" name="extendedCoreSubtitleLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>核心：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="4">
                <spacer name="extendedCoreSpacer">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1134,25 +1179,6 @@
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item row="1" column="2">
-               <widget class="PrimaryPushButton" name="extendedDownloadCorePrimaryPushBtn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>90</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>下载核心</string>
-                </property>
-               </widget>
               </item>
               <item row="1" column="1">
                <widget class="PrimaryPushButton" name="extendedManuallyAddCorePrimaryPushBtn">
@@ -1173,8 +1199,27 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="SubtitleLabel" name="extendedCoreSubtitleLabel">
+              <item row="1" column="2">
+               <widget class="PrimaryPushButton" name="extendedDownloadCorePrimaryPushBtn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>90</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>下载核心</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="PrimaryPushButton" name="extendedAddCoreFromDownloadedPrimaryPushBtn">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -1182,7 +1227,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>核心：</string>
+                 <string>从下载的核心中导入</string>
                 </property>
                </widget>
               </item>
@@ -1681,7 +1726,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>472</width>
+                <width>500</width>
                 <height>1141</height>
                </rect>
               </property>
@@ -2548,7 +2593,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>450</width>
                 <height>1191</height>
                </rect>
               </property>
@@ -3427,7 +3472,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>450</width>
                 <height>935</height>
                </rect>
               </property>
@@ -4289,7 +4334,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>450</width>
                 <height>935</height>
                </rect>
               </property>
@@ -5052,7 +5097,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>531</width>
                 <height>935</height>
                </rect>
               </property>
@@ -5841,7 +5886,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>459</width>
                 <height>1191</height>
                </rect>
               </property>
@@ -6698,7 +6743,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>450</width>
                 <height>935</height>
                </rect>
               </property>
@@ -7532,7 +7577,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>450</width>
                 <height>1191</height>
                </rect>
               </property>
@@ -8386,7 +8431,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>408</width>
+                <width>502</width>
                 <height>1191</height>
                </rect>
               </property>
