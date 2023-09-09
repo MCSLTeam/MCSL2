@@ -956,18 +956,22 @@ class DL_EntryManager(QObject):
         self.mutex.unlock()
         rv = entries_snapshot.copy()
 
-        # 检查记录一致性
-        with open(self.file, "r") as f:
-            fileRecordedEntries = json.load(f)
-
-        if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成
-            print("记录不一致,重新计算各条目完整性,并更新本地记录")
-            for entryName in entries_snapshot.keys():
-                if self.tryGetEntry(entryName, check, autoDelete) is None:
-                    rv.pop(entryName)
-            self.flush()
-        else:
-            print("记录一致,无需重新计算各条目完整性")
+        # # 检查记录一致性
+        # with open(self.file, "r") as f:
+        #     fileRecordedEntries = json.load(f)
+        #
+        # if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成
+        #     print("记录不一致,重新计算各条目完整性,并更新本地记录")
+        #     for entryName in entries_snapshot.keys():
+        #         if self.tryGetEntry(entryName, check, autoDelete) is None:
+        #             rv.pop(entryName)
+        #     self.flush()
+        for entryName in entries_snapshot.keys():
+            if self.tryGetEntry(entryName, check, autoDelete) is None:
+                rv.pop(entryName)
+        self.flush()
+        # else:
+        #     print("记录一致,无需重新计算各条目完整性")
         return rv
 
     # @pyqtSlot(bool, bool)

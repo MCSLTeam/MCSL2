@@ -151,6 +151,7 @@ def private(func):
     # 返回包装函数
     return wrapper
 
+
 def isDarkTheme():
     if settingsController.fileSettings["theme"] == "auto":
         return currentTheme() == "Dark"
