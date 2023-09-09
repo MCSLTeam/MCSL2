@@ -43,6 +43,9 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
 
+        self.entryView.setHorizontalHeaderLabels(['名称', '类型', 'MC版本', '构建版本'])
+        self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.entryView)
 
@@ -71,9 +74,7 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.verticalHeader().hide()
         self.entryView.setHorizontalHeaderLabels(['名称', '类型', 'MC版本', '构建版本'])
 
-        if self.entryView.rowCount() == 0:  # resize header view
-            self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
-        else:
+        if self.entryView.rowCount() != 0:  # resize header view
             self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
             self.entryView.resizeRowsToContents()
         self.yesButton.setDisabled(True)
