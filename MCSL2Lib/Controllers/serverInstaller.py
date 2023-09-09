@@ -19,7 +19,7 @@ import shutil
 import sys
 from json import loads, dumps
 from os import path as osp, name as osname, remove
-from typing import Optional
+from typing import Optional, Tuple, Any
 from zipfile import ZipFile
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
@@ -354,10 +354,15 @@ class ForgeInstaller(Installer):
                 )
 
     @classmethod
-    def isPossibleForgeInstaller(cls, fileName: str) -> Optional[Tuple]:
+    def isPossibleForgeInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
         """
         判断是否可能为Forge安装器
+        若是,则返回一个元组,包含mcVersion和forgeVersion : # type:McVersion, str
+        若不是,则返回None
         """
+        if osp.getsize(fileName) > 10_000 * 1024:  # 若文件大于10MB,则几乎不可能是Forge安装器
+            return None
+
         fileFile = ZipFile(fileName, mode="r")
         try:
             _profile = json.loads(fileFile.read("install_profile.json"))
