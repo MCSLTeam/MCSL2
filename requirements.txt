@@ -2,7 +2,7 @@
 PyQt5==5.15.9
 pyqt5-stubs>=5.15.6.0
 pyqt5-tools==5.15.9.3.3
-PyQt-Fluent-Widgets[full]>=1.1.9
+PyQt-Fluent-Widgets[full]>=1.2.0
 
 # web
 requests>=2.31.0
