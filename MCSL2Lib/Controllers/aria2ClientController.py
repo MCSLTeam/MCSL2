@@ -827,7 +827,7 @@ class DL_EntryManager(QObject):
                 except KeyError:
                     pass
         self.flush()
-        print("读取记录:", self.entries)
+        print("读取记录:", len(self.entries),"条")
         self.onReadEntries.emit(self.entries)
         return self.entries
 
@@ -951,13 +951,23 @@ class DL_EntryManager(QObject):
         """
         获取所有正确的记录
         """
-        rv = self.entries.copy()
         self.mutex.lock()
         entries_snapshot = self.entries.copy()
         self.mutex.unlock()
-        for entryName in entries_snapshot.keys():
-            if self.tryGetEntry(entryName, check, autoDelete) is None:
-                rv.pop(entryName)
+        rv = entries_snapshot.copy()
+
+        # 检查记录一致性
+        with open(self.file, "r") as f:
+            fileRecordedEntries = json.load(f)
+
+        if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成
+            print("记录不一致,重新计算各条目完整性,并更新本地记录")
+            for entryName in entries_snapshot.keys():
+                if self.tryGetEntry(entryName, check, autoDelete) is None:
+                    rv.pop(entryName)
+            self.flush()
+        else:
+            print("记录一致,无需重新计算各条目完整性")
         return rv
 
     # @pyqtSlot(bool, bool)
@@ -1017,10 +1027,8 @@ def set_entries(_):
     entries = _
 
 
-print(time.perf_counter())
 # entries = DL_EntryManager(entries, entries_mutex).read()
 (controller := DL_EntryController()).resultReady.connect(
     lambda d: set_entries(d)
 )
 controller.work.emit(("read", {}))
-print(time.perf_counter())

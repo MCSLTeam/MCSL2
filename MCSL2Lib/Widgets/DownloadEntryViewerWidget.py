@@ -1,7 +1,7 @@
 import typing
 
 from PyQt5.QtCore import QAbstractListModel, QModelIndex
-from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy
+from PyQt5.QtWidgets import QTableWidgetItem
 from qfluentwidgets import MessageBoxBase, SubtitleLabel, TableWidget
 
 from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController

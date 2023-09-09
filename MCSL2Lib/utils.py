@@ -53,7 +53,7 @@ configTemplate = {
     "checkUpdateOnStart": False,
     "lastServer": "",
     "nodeMCSLAPI": "https://hardbin.com",
-    "enableExperimentalFeatures": False
+    "enableExperimentalFeatures": False,
 }
 
 
@@ -150,7 +150,6 @@ def private(func):
 
     # 返回包装函数
     return wrapper
-
 
 def isDarkTheme():
     if settingsController.fileSettings["theme"] == "auto":
