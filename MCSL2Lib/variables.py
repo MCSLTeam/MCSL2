@@ -41,7 +41,16 @@ class ConfigureServerVariables:
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.serverType = ""
-        self.extraData = {}
+        self.extraData = {} 
+        """
+        self.extraData maybe like this:
+        
+        self.extraData = {
+            'mc_version' : ...,
+            'build_version' : ...,
+            ...
+        }
+        """
 
     def resetToDefault(self):
         self.minMem: int

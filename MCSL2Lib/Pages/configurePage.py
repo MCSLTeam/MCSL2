@@ -1404,7 +1404,7 @@ class ConfigurePage(QWidget):
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
-        self.noobAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntry)
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntries)
         self.noobSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # 进阶模式绑定
@@ -1601,13 +1601,47 @@ class ConfigurePage(QWidget):
         else:
             InfoBar.warning(
                 title="未添加",
-                content="你并没有选择服务器核心。",
+                content=f"你并没有选择服务器核心。\n当前核心:{'未添加' if not (a:=configureServerVariables.coreFileName) else a}",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
                 duration=3000,
                 parent=self,
             )
+        
+    def showDownloadEntries(self):
+        """显示下载条目"""
+        self.downloadEntry = DownloadEntryBox(self)
+        if self.downloadEntry.exec() == 1:
+            coreName,coreType,mcVersion,buildVersion=[e.text() for e in self.downloadEntry.entryView.selectedItems()]
+            configureServerVariables.corePath = osp.join("MCSL2","Downloads",coreName)
+            configureServerVariables.coreFileName=coreName
+            configureServerVariables.serverType=coreType.lower()
+            configureServerVariables.extraData={
+                "mc_version":mcVersion,
+                "build_version":buildVersion
+            }
+            InfoBar.success(
+                title="已添加",
+                content=f"核心文件名：{configureServerVariables.coreFileName}\n类型:{coreType}\nMC版本:{mcVersion}\n构建版本:{buildVersion}",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+        else:
+            InfoBar.warning(
+                title="未添加",
+                content=f"你并没有选择服务器核心。\n当前核心:{'未添加' if not (a:=configureServerVariables.coreFileName) else a}",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+        del self.downloadEntry
+        self.downloadEntry = None
 
     def checkJavaSet(self):
         """检查Java设置"""
@@ -1869,30 +1903,84 @@ class ConfigurePage(QWidget):
             )
             w = MessageBox(title, content, self)
             w.yesButton.setText("无误，添加")
-            w.yesSignal.connect(self.confirmForgeServer)
+            w.yesSignal.connect(self.preNewServerDispatcher)
             w.cancelButton.setText("我再看看")
             w.exec()
 
-    def confirmForgeServer(self):
-        w = MessageBox(
-            "这是不是一个Forge服务器？", "由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self
-        )
-        w.yesButton.setText("是")
-        w.cancelButton.setText("不是")
-        # 如果选yes
-        if w.exec() == 1:
-            configureServerVariables.serverType = "forge"
-        self.saveNewServer()
+    def preNewServerDispatcher(self):
+        """
+        在self.saveNewServer() >>前<< (pre)，处理不同serverType而引起的差异性!
+        """
+        serverType = configureServerVariables.serverType
 
-    # def setForge(self):
-    #     self.forgeInstaller = ForgeInstaller(
-    #         serverPath=f"Servers//{configureServerVariables.serverName}",
-    #         file=configureServerVariables.coreFileName,
-    #         java=configureServerVariables.selectedJavaPath,
-    #         logDecode=settingsController.fileSettings["outputDeEncoding"],
-    #     )
-    #     self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
-    #     configureServerVariables.extraData["forge_version"] = self.forgeInstaller.forgeVersion
+        # serverType dispatcher: 总的处理关于serverType不同而引起的新建服务器前的差异性!
+        if serverType == "forge": # case 1
+            w = MessageBox(
+                "这是Forge安装器","是否需要自动安装Forge服务端？",self
+            )
+            w.yesButton.setText("是")
+            w.cancelButton.setText("不需要")
+            # 如果选no
+            if w.exec() == 0: 
+                configureServerVariables.serverType=""
+                configureServerVariables.extraData={}
+
+        elif serverType == "vanilla": # case 2
+
+            pass
+
+        else:
+            if (t := ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)) is not None:
+                mcVersion,forgeVersion=t
+                w = MessageBox(
+                    "这是不是一个Forge服务器？", f"检测到可能为{mcVersion}版本的Forge：{forgeVersion}\n另外,由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。", self
+                )
+                w.yesButton.setText("是")
+                w.cancelButton.setText("不是")
+                # 如果选yes
+                if w.exec() == 1:
+                    configureServerVariables.serverType = "forge"
+
+        self.saveNewServer()  # 真正执行保存服务器
+
+    def postNewServerDispatcher(self,exit0Msg=""):
+        """
+        在self.saveNewServer() >>后<< (post)，处理不同serverType而引起的差异性!
+        其实通常是在self.saveNewServer()复制完核心后执行的，用于处理类似forge安装等
+        """
+        if configureServerVariables.serverType == "forge":
+            self.installingForgeStateToolTip = StateToolTip(
+                "安装Forge", "请稍后，正在安装...", self
+            )
+            self.installingForgeStateToolTip.move(
+                self.installingForgeStateToolTip.getSuitablePos()
+            )
+            self.installingForgeStateToolTip.show()
+            try:
+                self.forgeInstaller = ForgeInstaller(
+                    serverPath=f"Servers//{configureServerVariables.serverName}",
+                    file=configureServerVariables.coreFileName,
+                    java=configureServerVariables.selectedJavaPath,
+                    logDecode=settingsController.fileSettings["outputDeEncoding"],
+                )
+                configureServerVariables.extraData[
+                    "forge_version"
+                ] = self.forgeInstaller.forgeVersion
+                self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                self.forgeInstaller.asyncInstall()
+            except Exception as e:
+                self.afterInstallingForge(False, e.args)
+                self.addNewServerRollback()
+        else:
+            InfoBar.success(
+                title="成功",
+                content=exit0Msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
 
     def saveNewServer(self):
         """真正的保存服务器函数"""
@@ -1923,7 +2011,19 @@ class ConfigurePage(QWidget):
         }
 
         # 新建文件夹
-        mkdir(f"Servers//{configureServerVariables.serverName}")
+        try:
+            mkdir(f"Servers//{configureServerVariables.serverName}")
+        except FileExistsError:
+            InfoBar.error(
+                title="失败",
+                content="已存在同名服务器!,请更改服务器名",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
 
         # 写入全局配置
         try:
@@ -2007,39 +2107,9 @@ class ConfigurePage(QWidget):
             serverVariables.serverName = tmpServerName
 
         if exitCode == 0:
-            if configureServerVariables.serverType == "forge":
-                self.installingForgeStateToolTip = StateToolTip(
-                    "安装Forge", "请稍后，正在安装...", self
-                )
-                self.installingForgeStateToolTip.move(
-                    self.installingForgeStateToolTip.getSuitablePos()
-                )
-                self.installingForgeStateToolTip.show()
-                try:
-                    self.forgeInstaller = ForgeInstaller(
-                        serverPath=f"Servers//{configureServerVariables.serverName}",
-                        file=configureServerVariables.coreFileName,
-                        java=configureServerVariables.selectedJavaPath,
-                        logDecode=settingsController.fileSettings["outputDeEncoding"],
-                    )
-                    configureServerVariables.extraData[
-                        "forge_version"
-                    ] = self.forgeInstaller.forgeVersion
-                    self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
-                    self.forgeInstaller.asyncInstall()
-                except Exception as e:
-                    self.afterInstallingForge(False, e.args)
-                    self.addNewServerRollback()
-            else:
-                InfoBar.success(
-                    title="成功",
-                    content=exit0Msg,
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self,
-                )
+            
+            self.postNewServerDispatcher(exit0Msg=exit0Msg) # 后处理各种应serverType不同而引起的差异性，例如serverType==forge时，需要执行自动安装等等...
+
             if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:
@@ -2076,14 +2146,6 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
-    def showDownloadEntry(self):
-        """显示下载入口"""
-        self.downloadEntry = DownloadEntryBox(self)
-        if self.downloadEntry.exec() == 1:
-            print(list(map(lambda x: x.text(), self.downloadEntry.entryView.selectedItems())))
-
-        del self.downloadEntry
-        self.downloadEntry = None
 
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
