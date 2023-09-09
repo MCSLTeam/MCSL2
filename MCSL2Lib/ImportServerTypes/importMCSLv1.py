@@ -1,3 +1,4 @@
+from json import dumps, loads
 from os import getcwd
 from re import search
 from PyQt5.QtCore import pyqtSlot, QSize, Qt, QRect, QThread, pyqtSignal
@@ -30,10 +31,12 @@ from qfluentwidgets import (
     InfoBar,
     StateToolTip,
 )
-
+from MCSL2Lib.Controllers.settingsController import SettingsController
+from shutil import copytree
 from MCSL2Lib.variables import GlobalMCSL2Variables, MCSLv1ImportVariables
 
 importVariables = MCSLv1ImportVariables()
+settingsController = SettingsController()
 
 
 class MCSLv1(QWidget):
@@ -640,13 +643,14 @@ class MCSLv1(QWidget):
         )
 
         self.MCSLv1ScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLv1ImportArchives.clicked.connect(self._importMCSLv1)
+        self.MCSLv1ImportArchives.clicked.connect(self._import)
         self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
         self.MCSLv1ValidateArgsStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
         self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
         self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
         self.MCSLv1ValidateArgs.setEnabled(False)
         self.MCSLv1Save.setEnabled(False)
+        self.MCSLv1ImportStatusText.setText("未选择")
         self.MCSLv1ValidateArgsMemUnitComboBox.addItems(["M", "G"])
         self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems(
             ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
@@ -654,37 +658,37 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems(
             ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
         )
+        self.MCSLv1SaveServerNameLineEdit.textChanged.connect(
+            lambda: self.MCSLv1SaveServerPrimaryPushBtn.setEnabled(
+                self.MCSLv1SaveServerNameLineEdit.text() != ""
+            )
+        )
+        self.MCSLv1SaveServerPrimaryPushBtn.clicked.connect(self._save)
+        # self.MCSLv1ValidateArgsMemUnitComboBox.currentIndexChanged.connect(self.setMem)
 
-    def _importMCSLv1(self):
+    def _rollBackImport(self):
+        self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
+        self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
+        self.MCSLv1ValidateArgs.setEnabled(False)
+        self.MCSLv1Save.setEnabled(False)
+        self.MCSLv1ImportStatusText.setText("未选择")
+
+    def _import(self):
         tmpExecutablePath = str(
             QFileDialog.getOpenFileName(self, "选择MCSL 1.x主程序", getcwd(), "*.exe")[0]
         ).replace("/", "\\")
         if tmpExecutablePath != "":
             importVariables.executableFilePath = tmpExecutablePath
-            InfoBar.success(
-                title="已选择",
-                content=tmpExecutablePath.split("\\")[-1],
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
             self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
             self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
+            self.MCSLv1ImportStatusText.setText(
+                f"已选择：{importVariables.executableFilePath}"
+            )
             self._initValidateArgs()
         else:
-            InfoBar.warning(
-                title="未选择",
-                content="",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
             self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
             self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
+            self._rollBackImport()
 
     def _initValidateArgs(self):
         self.getMCSLv1ConfigurationStateToolTip = StateToolTip(
@@ -695,7 +699,9 @@ class MCSLv1(QWidget):
         )
         self.getMCSLv1ConfigurationStateToolTip.show()
         self.getMCSLv1ConfigurationThread = GetMCSLv1ConfigurationThread(self)
-        self.getMCSLv1ConfigurationThread.successSignal.connect(self._afterInitValidateArgs)
+        self.getMCSLv1ConfigurationThread.successSignal.connect(
+            self._afterInitValidateArgs
+        )
         self.getMCSLv1ConfigurationThread.start()
 
     @pyqtSlot(bool)
@@ -706,22 +712,165 @@ class MCSLv1(QWidget):
             self.getMCSLv1ConfigurationStateToolTip.setContent("读取完毕！")
             self.getMCSLv1ConfigurationStateToolTip.setState(True)
             self.getMCSLv1ConfigurationStateToolTip = None
-            self.MCSLv1ValidateArgs.setEnabled(True)
-            self.MCSLv1Save.setEnabled(True)
             self.MCSLv1ValidateArgsJavaTextEdit.setPlainText(importVariables.java)
             self.MCSLv1ValidateArgsMinMemLineEdit.setText(str(importVariables.minMem))
             self.MCSLv1ValidateArgsMaxMemLineEdit.setText(str(importVariables.maxMem))
             self.MCSLv1ValidateArgsMemUnitComboBox.setCurrentIndex(0)
             self.MCSLv1ValidateArgsCoreLineEdit.setText(importVariables.coreFileName)
-            
             totalJVMArg = ""
             for arg in importVariables.jvmArg:
                 totalJVMArg += f"{arg} "
             totalJVMArg = totalJVMArg.strip()
             self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setPlainText(totalJVMArg)
+            self.MCSLv1ValidateArgs.setEnabled(True)
+            self.MCSLv1Save.setEnabled(True)
+            InfoBar.warning(
+                title="警告",
+                content="MCSL 1的代码太shit了，请仔细检查服务器配置！",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+        else:
+            self.getMCSLv1ConfigurationStateToolTip.setContent("读取失败！")
+            self.getMCSLv1ConfigurationStateToolTip.setState(True)
+            self.getMCSLv1ConfigurationStateToolTip = None
+            self._rollBackImport()
 
-    def _MCSLv1Save_Func(self):
-        pass
+    def _rollBackInitValidateArgs(self):
+        self.MCSLv1ValidateArgsStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))
+        self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
+        self.MCSLv1ValidateArgsJavaTextEdit.setPlainText("")
+        self.MCSLv1ValidateArgsMinMemLineEdit.setText("")
+        self.MCSLv1ValidateArgsMaxMemLineEdit.setText("")
+        self.MCSLv1ValidateArgsMemUnitComboBox.setCurrentIndex(0)
+        self.MCSLv1ValidateArgsCoreLineEdit.setText("")
+        self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setPlainText("")
+
+    def _save(self):
+        importVariables.serverName = self.MCSLv1SaveServerNameLineEdit.text()
+        exit0Msg = f'导入MCSL 1服务器"{importVariables.serverName}"成功！'
+        exit1Msg = f'导入MCSL 1服务器"{importVariables.serverName}"失败！'
+        exitCode = 0
+
+        # 检查JVM参数防止意外无法启动服务器
+        for arg in importVariables.jvmArg:
+            if arg == "" or arg == " ":
+                importVariables.jvmArg.pop(importVariables.jvmArg.index(arg))
+
+        serverConfig = {
+            "name": importVariables.serverName,
+            "core_file_name": importVariables.coreFileName,
+            "java_path": importVariables.java,
+            "min_memory": importVariables.minMem,
+            "max_memory": importVariables.maxMem,
+            "memory_unit": importVariables.memUnit,
+            "jvm_arg": importVariables.jvmArg,
+            "output_decoding": importVariables.consoleOutputDeEncoding,
+            "input_encoding": importVariables.consoleInputDeEncoding,
+            "icon": "Grass.png",
+            "server_type": "",
+            "extra_data": {},
+        }
+
+        # 复制文件夹
+        try:
+            copytree(
+                importVariables.executableFileDir,
+                f"Servers//{importVariables.serverName}",
+            )
+        except Exception:
+            InfoBar.error(
+                title="失败",
+                content="已存在同名服务器!,请更改服务器名",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 写入全局配置
+        try:
+            with open(
+                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            ) as globalServerListFile:
+                # old
+                globalServerList = loads(globalServerListFile.read())
+                globalServerListFile.close()
+
+            with open(
+                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+            ) as newGlobalServerListFile:
+                # 添加新的
+                globalServerList["MCSLServerList"].append(serverConfig)
+                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+            exitCode = 0
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+
+        # 写入单独配置
+        try:
+            if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
+                with open(
+                    f"Servers//{importVariables.serverName}//MCSL2ServerConfig.json",
+                    "w+",
+                    encoding="utf-8",
+                ) as serverListFile:
+                    serverListFile.write(dumps(serverConfig, indent=4))
+            else:
+                InfoBar.info(
+                    title="功能提醒",
+                    content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+            exitCode = 0
+        except Exception as e:
+            exitCode = 1
+            exit1Msg += f"\n{e}"
+
+        if exitCode == 0:
+            InfoBar.success(
+                title="成功",
+                content=exit0Msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
+                importVariables.resetToDefault()
+                self._rollBackInitValidateArgs()
+                self._rollBackImport()
+                InfoBar.info(
+                    title="功能提醒",
+                    content="”新建服务器后立刻清空相关设置项“已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+
+        else:
+            InfoBar.error(
+                title="失败",
+                content=exit1Msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
 
 
 class GetMCSLv1ConfigurationThread(QThread):

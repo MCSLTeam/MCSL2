@@ -388,6 +388,8 @@ class MCSLv1ImportVariables:
         self.minMem: int = 0
         self.maxMem: int = 0
         self.coreFileName: str = "server.jar"
+        self.serverName: str = ""
+        self.memUnit: str = ""
         self.jvmArg: list[str] = [
             "-XX:+UnlockExperimentalVMOptions",
             "-XX:+DisableExplicitGC",
@@ -395,6 +397,9 @@ class MCSLv1ImportVariables:
             "-XX:+ParallelRefProcEnabled",
         ]
         self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.memUnitList = ["M", "G"]
+        self.consoleOutputDeEncoding: str = "follow"
+        self.consoleInputDeEncoding: str = "follow"
 
     def resetToDefault(self):
         self.executableFilePath: str = ""
@@ -403,3 +408,7 @@ class MCSLv1ImportVariables:
         self.java: str = ""
         self.minMem: int = 0
         self.maxMem: int = 0
+        self.serverName: str = ""
+        self.memUnit: str = ""
+        self.consoleOutputDeEncoding: str = "follow"
+        self.consoleInputDeEncoding: str = "follow"
