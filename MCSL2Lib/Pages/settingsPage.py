@@ -21,6 +21,7 @@ from platform import (
     architecture as systemArchitecture,
     version as systemVersion,
     release as systemRelease,
+    python_version as pythonVersion
 )
 from typing import Union
 
@@ -63,7 +64,10 @@ from qfluentwidgets import (
 
 from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.Controllers.updateController import CheckUpdateThread, FetchUpdateIntroThread
+from MCSL2Lib.Controllers.updateController import (
+    CheckUpdateThread,
+    FetchUpdateIntroThread,
+)
 from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
 from MCSL2Lib.utils import openWebUrl
 from MCSL2Lib.singleton import Singleton
@@ -1715,11 +1719,17 @@ class SettingsPage(QWidget):
             duration=1500,
             parent=self,
         )
+        sysInfo = (
+            f"{systemType()} {'11' if int(systemVersion().split('.')[-1]) >= 22000 else '10'} {systemVersion()}"
+            if systemType() == "Windows" and systemRelease() == "10"
+            else f"{systemType()} {systemRelease()}"
+        )
         report = (
             f"MCSL2系统报告：\n"
             f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n"
+            f"Python版本：{pythonVersion()}\n"
             f"MCSL2版本：{GlobalMCSL2Variables.MCSL2Version}\n"
-            f"操作系统：{systemType()}{systemRelease()} {systemVersion()}\n"
+            f"操作系统：{sysInfo}\n"
             f"架构：{systemArchitecture()[0]}\n"
             f"内存占用：{str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))}MB"
         )
@@ -1751,4 +1761,3 @@ class SettingsPage(QWidget):
         w.titleLabel.setParent(None)
         w.contentLabel.setParent(None)
         w.show()
-
