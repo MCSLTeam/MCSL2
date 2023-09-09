@@ -22,9 +22,9 @@ from os import path as osp
 from platform import system
 from shutil import which
 from subprocess import PIPE, STDOUT, CalledProcessError, check_output, Popen
-from typing import Optional, Callable
+from typing import Optional, Callable, Dict
 
-from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer
+from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer, QMutex
 from aria2p import Client, API, Download
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
@@ -175,13 +175,13 @@ class Aria2Controller:
 
     @classmethod
     def download(
-        cls,
-        uri,
-        info_get: Optional[Callable[[dict], None]] = None,
-        stopped: Optional[Callable[[int], None]] = None,
-        extraData: Optional[tuple] = None,
-        watch=True,
-        interval=0.1,
+            cls,
+            uri,
+            info_get: Optional[Callable[[dict], None]] = None,
+            stopped: Optional[Callable[[int], None]] = None,
+            extraData: Optional[tuple] = None,
+            watch=True,
+            interval=0.1,
     ) -> str:
         """
         Download a file from uri
@@ -505,13 +505,13 @@ class DownloadWatcher(QObject):
     downloadStop = pyqtSignal(list)
 
     def __init__(
-        self,
-        gid,
-        info_get: Optional[Callable[[dict], None]],
-        stopped: Optional[Callable[[list], None]],
-        interval=0.1,
-        extraData: Optional[tuple] = None,
-        parent: Optional[QObject] = None,
+            self,
+            gid,
+            info_get: Optional[Callable[[dict], None]],
+            stopped: Optional[Callable[[list], None]],
+            interval=0.1,
+            extraData: Optional[tuple] = None,
+            parent: Optional[QObject] = None,
     ) -> None:
         """
         uris: a list of download urls
@@ -610,87 +610,290 @@ def initializeAria2Configuration():
         Aria2SessionFile.write("")
 
 
+entries = {}
+entries_mutex = QMutex()
+
+
+# class DL_EntryManager(QObject):
+#     """
+#     下载记录管理器,用于管理下载记录:获取下载记录,检查记录完整性,删除不完整的记录,添加记录等
+#     # >>> 注意：本类方法全部是类方法,请勿将本类实例化!<<<
+#     """
+#
+#     file = "MCSL2//Downloads//download_entries.json"
+#     path = "MCSL2//Downloads"
+#
+#     @staticmethod
+#     def fileExisted():
+#         """
+#         在对文件进行操作前检查文件是否存在，如果不存在则创建文件,确保文件操作不会出错
+#         """
+#         if not osp.exists(osp.join("MCSL2", "Downloads")):
+#             mkdir(osp.join("MCSL2", "Downloads"))
+#         if not osp.exists(DL_EntryManager.file):
+#             with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
+#                 f.write("{}")
+#
+#     @staticmethod
+#     def read(check=True, autoDelete=True):
+#         DL_EntryManager.fileExisted()
+#         with open(DL_EntryManager.file) as f:
+#             rv = json.load(f)
+#         for coreName, coreData in rv.copy().items():
+#             if check and not DL_EntryManager.checkCoreEntry(coreName, coreData["md5"], autoDelete):
+#                 print("删除不完整的核心文件记录:", coreName)
+#                 rv.pop(coreName)
+#         return rv
+#
+#     entries = {}
+#
+#     @classmethod
+#     def addEntry(cls, entryName: str, entryData: dict):
+#         """
+#         向文件中添加一条记录
+#         """
+#         print(
+#             "新增记录:",
+#             json.dumps(
+#                 {entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True
+#             ),
+#         )
+#         cls.entries.update({entryName: entryData})
+#         cls.flush()
+#
+#     @classmethod
+#     def addCoreEntry(cls, coreName: str, extraData: dict):
+#         """
+#         添加核心文件的记录
+#         """
+#         coreFileName = osp.join(cls.path, coreName)
+#         # 计算md5
+#         with open(coreFileName, "rb") as f:
+#             md5 = hashlib.md5(f.read()).hexdigest()
+#         extraData.update({"md5": md5})
+#         cls.addEntry(coreName, extraData)
+#
+#     @classmethod
+#     def popCoreEntry(cls, coreName: str, autoDelete=True) -> Dict:
+#         """
+#         删除核心文件的记录并返回删除的记录的原条目，如果autoDelete为True则同时删除核心文件
+#         """
+#         if coreName in cls.entries.keys():
+#             rv = cls.entries.pop(coreName)
+#             if autoDelete:
+#                 try:
+#                     remove(osp.join(cls.path, coreName))
+#                 except:
+#                     pass
+#             cls.flush()
+#             return {coreName: rv}
+#         else:
+#             return {}
+#
+#     @classmethod
+#     def flush(cls):
+#         """
+#         将文件中的数据写入文件
+#         """
+#         cls.fileExisted()
+#         with open(cls.file, "w", encoding="utf-8") as f:
+#             json.dump(cls.entries, f, indent=4, ensure_ascii=False, sort_keys=True)
+#
+#     @classmethod
+#     def checkCoreEntry(cls, coreName: str, originMd5: str, autoDelete=False):
+#         """
+#         检查核心文件的完整性
+#         :param coreName: 核心文件名
+#         :param originMd5: 原始md5
+#         :param autoDelete: 如果文件不完整是否自动删除核心文件
+#         """
+#         coreFileName = osp.join(cls.path, coreName)
+#         if osp.exists(coreFileName):
+#             # 计算md5
+#             with open(coreFileName, "rb") as f:
+#                 fileMd5 = hashlib.md5(f.read()).hexdigest()
+#             if fileMd5 == originMd5:
+#                 return True
+#             if autoDelete:
+#                 try:  # 删除文件和记录
+#                     remove(coreFileName)
+#                     cls.entries.pop(coreName)
+#                 except:
+#                     pass
+#         else:
+#             if autoDelete:
+#                 cls.entries.pop(coreName)
+#         return False
+#
+#     @classmethod
+#     def check(cls, autoDelete=False):
+#         """
+#         检查所有核心文件的完整性
+#         :param autoDelete: 如果文件不完整是否自动删除核心文件
+#         """
+#         for coreName, coreData in cls.entries.items():
+#             if not cls.checkCoreEntry(coreName, coreData["md5"], autoDelete):
+#                 return False
+#         cls.flush()
+#         return True
+#
+#     @classmethod
+#     def cleanUnavailable(cls):
+#         """
+#         清理所有无效记录（包括本地文件）
+#         """
+#         cls.check(True)
+#
+#     @classmethod
+#     def tryGetEntry(cls, entryName: str, check=True, autoDelete=True):
+#         """
+#         尝试获取一条记录，如果记录不完整则返回None
+#         """
+#         if not check:
+#             return cls.entries.get(entryName, None)
+#         # 检查记录完整性
+#         if cls.checkCoreEntry(entryName, cls.entries[entryName]["md5"], autoDelete):
+#             return cls.entries[entryName]
+#         else:
+#             return None
+#
+#     @classmethod
+#     def GetEntries(cls, check=True, autoDelete=True):
+#         """
+#         获取所有正确的记录
+#         """
+#         rv = cls.entries.copy()
+#         for entryName in cls.entries.keys():
+#             if cls.tryGetEntry(entryName, check, autoDelete) is None:
+#                 rv.pop(entryName)
+#         return rv
+#
+#     @classmethod
+#     def getEntriesList(cls, check=True, autoDelete=True):
+#         """
+#         获取所有正确的记录的列表
+#         "name", "type", "mc_version", "build_version", ...
+#         """
+#         rv = []
+#         for entryName, entryData in cls.GetEntries(check, autoDelete).items():
+#             e = entryData.copy()
+#             e.update({"name": entryName})
+#             rv.append(e)
+#         return rv
+#
+#     def __new__(cls, *args, **kwargs):
+#         raise Exception("请勿实例化本类,请使用类方法!")
+#
+# time.perf_counter()
+# DL_EntryManager.entries = DL_EntryManager.read(check=False)
+# DL_EntryManager.flush()
+
+
 class DL_EntryManager(QObject):
     """
     下载记录管理器,用于管理下载记录:获取下载记录,检查记录完整性,删除不完整的记录,添加记录等
-    # >>> 注意：本类方法全部是类方法,请勿将本类实例化!<<<
+    # >>> 注意：请用DL_EntryController来调用此类中的方法!!(异步)<<<
     """
-
+    onGetEntries = pyqtSignal(list)
+    onReadEntries = pyqtSignal(dict)
     file = "MCSL2//Downloads//download_entries.json"
     path = "MCSL2//Downloads"
 
-    @staticmethod
-    def fileExisted():
+    def __init__(self, _entries, mutex: QMutex):
+        super().__init__()
+        self.entries = _entries
+        self.mutex = mutex
+
+    def fileExisted(self):
         """
         在对文件进行操作前检查文件是否存在，如果不存在则创建文件,确保文件操作不会出错
         """
         if not osp.exists(osp.join("MCSL2", "Downloads")):
             mkdir(osp.join("MCSL2", "Downloads"))
         if not osp.exists(DL_EntryManager.file):
+            print("创建下载记录文件:", DL_EntryManager.file)
             with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
                 f.write("{}")
 
-    @staticmethod
-    def read():
-        DL_EntryManager.fileExisted()
-        with open(DL_EntryManager.file) as f:
-            rv = json.load(f)
-        for coreName, coreData in rv.copy().items():
-            if not DL_EntryManager.checkCoreEntry(coreName, coreData["md5"]):
+    def read(self, check=True, autoDelete=True):
+        self.fileExisted()
+        with open(DL_EntryManager.file, "r") as f:
+            self.entries = json.load(f)
+        for coreName, coreData in self.entries.copy().items():
+            if check and not self.checkCoreEntry(coreName, coreData["md5"], autoDelete):
                 print("删除不完整的核心文件记录:", coreName)
-                rv.pop(coreName)
-        return rv
+                try:
+                    self.entries.pop(coreName)
+                except KeyError:
+                    pass
+        self.flush()
+        print("读取记录:", len(self.entries),"条")
+        self.onReadEntries.emit(self.entries)
+        return self.entries
 
-    entries = {}
-
-    @classmethod
-    def addEntry(cls, entryName: str, entryData: dict):
+    def addEntry(self, entryName: str, entryData: dict):
         """
         向文件中添加一条记录
         """
-        cls.fileExisted()
         print(
             "新增记录:",
             json.dumps(
                 {entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True
             ),
         )
-        with open(cls.file, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        data[entryName] = entryData
-        with open(cls.file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False, sort_keys=True)
+        self.mutex.lock()
+        self.entries.update({entryName: entryData})
+        self.mutex.unlock()
+        self.flush()
 
-    @classmethod
-    def addCoreEntry(cls, coreName: str, extraData: dict):
+    # @pyqtSlot(str, dict)
+    def addCoreEntry(self, coreName: str, extraData: dict):
         """
         添加核心文件的记录
         """
-        coreFileName = osp.join(cls.path, coreName)
+        coreFileName = osp.join(self.path, coreName)
         # 计算md5
         with open(coreFileName, "rb") as f:
             md5 = hashlib.md5(f.read()).hexdigest()
         extraData.update({"md5": md5})
-        cls.addEntry(coreName, extraData)
+        self.addEntry(coreName, extraData)
 
-    @classmethod
-    def flush(cls):
+    def popCoreEntry(self, coreName: str, autoDelete=True) -> Dict:
+        """
+        删除核心文件的记录并返回删除的记录的原条目，如果autoDelete为True则同时删除核心文件
+        """
+        if coreName in self.entries.keys():
+            self.mutex.lock()
+            rv = self.entries.pop(coreName)
+            self.mutex.unlock()
+            if autoDelete:
+                try:
+                    remove(osp.join(self.path, coreName))
+                except:
+                    pass
+            self.flush()
+            return {coreName: rv}
+        else:
+            return {}
+
+    def flush(self):
         """
         将文件中的数据写入文件
         """
-        cls.fileExisted()
-        with open(cls.file, "w", encoding="utf-8") as f:
-            json.dump(cls.entries, f, indent=4, ensure_ascii=False, sort_keys=True)
+        self.fileExisted()
+        self.mutex.lock()
+        with open(self.file, "w", encoding="utf-8") as f:
+            json.dump(self.entries, f, indent=4, ensure_ascii=False, sort_keys=True)
+        self.mutex.unlock()
 
-    @classmethod
-    def checkCoreEntry(cls, coreName: str, originMd5: str, autoDelete=False):
+    def checkCoreEntry(self, coreName: str, originMd5: str, autoDelete=False):
         """
         检查核心文件的完整性
         :param coreName: 核心文件名
         :param originMd5: 原始md5
         :param autoDelete: 如果文件不完整是否自动删除核心文件
         """
-        coreFileName = osp.join(cls.path, coreName)
+        coreFileName = osp.join(self.path, coreName)
         if osp.exists(coreFileName):
             # 计算md5
             with open(coreFileName, "rb") as f:
@@ -700,57 +903,136 @@ class DL_EntryManager(QObject):
             if autoDelete:
                 try:  # 删除文件和记录
                     remove(coreFileName)
-                    cls.entries.pop(coreName)
+                    self.mutex.lock()
+                    self.entries.pop(coreName)
+                    self.mutex.unlock()
                 except:
                     pass
         else:
             if autoDelete:
-                cls.entries.pop(coreName)
+                self.mutex.lock()
+                self.entries.pop(coreName)
+                self.mutex.unlock()
         return False
 
-    @classmethod
-    def check(cls, autoDelete=False):
+    def check(self, autoDelete=False):
         """
         检查所有核心文件的完整性
         :param autoDelete: 如果文件不完整是否自动删除核心文件
         """
-        for coreName, coreData in cls.entries.items():
-            if not cls.checkCoreEntry(coreName, coreData["md5"], autoDelete):
+        self.mutex.lock()
+        entries_snapshot = self.entries.copy()
+        self.mutex.unlock()
+        for coreName, coreData in entries_snapshot.items():
+            if not self.checkCoreEntry(coreName, coreData["md5"], autoDelete):
                 return False
-        cls.flush()
+        self.flush()
         return True
 
-    @classmethod
-    def cleanUnavailable(cls):
+    def cleanUnavailable(self):
         """
         清理所有无效记录（包括本地文件）
         """
-        cls.check(True)
+        self.check(True)
 
-    @classmethod
-    def tryGetEntry(cls, entryName: str, autoDelete=True):
+    def tryGetEntry(self, entryName: str, check=True, autoDelete=True):
         """
         尝试获取一条记录，如果记录不完整则返回None
         """
-        if cls.checkCoreEntry(entryName, cls.entries[entryName]["md5"], autoDelete):
-            return cls.entries[entryName]
+        if not check:
+            return self.entries.get(entryName, None)
+        # 检查记录完整性
+        if self.checkCoreEntry(entryName, self.entries[entryName]["md5"], autoDelete):
+            return self.entries[entryName]
         else:
             return None
 
-    @classmethod
-    def GetEntries(cls):
+    def GetEntries(self, check=True, autoDelete=True):
         """
         获取所有正确的记录
         """
-        rv = cls.entries.copy()
-        for entryName in cls.entries.keys():
-            if cls.tryGetEntry(entryName) is None:
+        self.mutex.lock()
+        entries_snapshot = self.entries.copy()
+        self.mutex.unlock()
+        rv = entries_snapshot.copy()
+
+        # # 检查记录一致性
+        # with open(self.file, "r") as f:
+        #     fileRecordedEntries = json.load(f)
+        #
+        # if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成
+        #     print("记录不一致,重新计算各条目完整性,并更新本地记录")
+        #     for entryName in entries_snapshot.keys():
+        #         if self.tryGetEntry(entryName, check, autoDelete) is None:
+        #             rv.pop(entryName)
+        #     self.flush()
+        for entryName in entries_snapshot.keys():
+            if self.tryGetEntry(entryName, check, autoDelete) is None:
                 rv.pop(entryName)
+        self.flush()
+        # else:
+        #     print("记录一致,无需重新计算各条目完整性")
         return rv
 
-    def __new__(cls, *args, **kwargs):
-        raise Exception("请勿实例化本类,请使用类方法!")
+    # @pyqtSlot(bool, bool)
+    def getEntriesList(self, check=True, autoDelete=True):
+        """
+        获取所有正确的记录的列表
+        "name", "type", "mc_version", "build_version", ...
+        """
+        rv = []
+        for entryName, entryData in self.GetEntries(check, autoDelete).items():
+            e = entryData.copy()
+            e.update({"name": entryName})
+            rv.append(e)
+        self.onGetEntries.emit(rv)
+        return rv
+
+    def asyncDispatcher(self, info):
+        method, kwargs = info
+        getattr(self, method)(**kwargs)
+
+    # def __new__(cls, *args, **kwargs):
+    #     raise Exception("请勿实例化本类,请使用类方法!")
 
 
-DL_EntryManager.entries = DL_EntryManager.read()
-DL_EntryManager.flush()
+DL_EntryWorkThread = QThread()
+DL_EntryWorkThread.start()
+
+
+class DL_EntryController(QObject):
+    """
+    用于在线程中执行DL_EntryManager中的函数:
+    1.controller = DL_EntryController()
+    2.controller.resultReady.connect(...)
+    3.controller.work.emit((<method:str>,<kwargs>:dict))
+    """
+    work = pyqtSignal(object)
+    resultReady = pyqtSignal(object)
+
+    def __init__(self):
+        super().__init__()
+        global entries, entries_mutex
+        self.mutex = entries_mutex
+        self.entries = entries
+        self.worker = DL_EntryManager(self.entries, self.mutex)
+        self.workerThread = DL_EntryWorkThread
+
+        self.worker.moveToThread(self.workerThread)
+
+        self.resultReady.connect(lambda _: self.worker.deleteLater())
+        self.work.connect(self.worker.asyncDispatcher)
+        self.worker.onGetEntries.connect(lambda l: self.resultReady.emit(l))
+        self.worker.onReadEntries.connect(lambda d: self.resultReady.emit(d))
+
+
+def set_entries(_):
+    global entries
+    entries = _
+
+
+# entries = DL_EntryManager(entries, entries_mutex).read()
+(controller := DL_EntryController()).resultReady.connect(
+    lambda d: set_entries(d)
+)
+controller.work.emit(("read", {}))

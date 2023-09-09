@@ -53,7 +53,7 @@ configTemplate = {
     "checkUpdateOnStart": False,
     "lastServer": "",
     "nodeMCSLAPI": "https://hardbin.com",
-    "enableExperimentalFeatures": False
+    "enableExperimentalFeatures": False,
 }
 
 
