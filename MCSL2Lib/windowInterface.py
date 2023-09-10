@@ -621,8 +621,10 @@ class Window(MSFluentWindow):
             )
             w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
             w.exec()
-        else:
+            firstTry = ServerLauncher().startServer()
+        if firstTry:
             self.switchTo(self.consoleInterface)
+            self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
             self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
