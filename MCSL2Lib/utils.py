@@ -22,7 +22,7 @@ from types import TracebackType
 from typing import Type
 
 import aria2p
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, QObject, pyqtSignal
 from PyQt5.QtGui import QDesktopServices
 from darkdetect import theme as currentTheme
 
@@ -55,6 +55,18 @@ configTemplate = {
     "nodeMCSLAPI": "https://hardbin.com",
     "enableExperimentalFeatures": False,
 }
+
+
+class Task(QObject):
+    work = pyqtSignal(dict)
+    resultReady = pyqtSignal(object)
+
+    def __init__(self):
+        super().__init__()
+        # self.work.connect(self.task)
+
+    def task(self, **kwargs):
+        raise NotImplementedError
 
 
 def readGlobalServerConfig() -> list:

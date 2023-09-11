@@ -14,7 +14,6 @@
 Minecraft Forge Servers Installer.
 """
 import json
-from ast import Tuple
 import shutil
 import sys
 from json import loads, dumps
@@ -22,9 +21,11 @@ from os import path as osp, name as osname, remove
 from typing import Optional, Tuple, Any
 from zipfile import ZipFile
 
-from PyQt5.QtCore import QProcess, QObject, pyqtSignal
+from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QTimer, QThread, QUrl, QFile, QIODevice
+from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply, QNetworkAccessManager
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.utils import Task
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -34,6 +35,52 @@ settingsController = SettingsController()
 
 class InstallerError(Exception):
     pass
+
+
+installerThread = QThread()
+installerThread.start()
+
+
+class DownloadServerTask(Task):
+    def __init__(self, mcVersion: str, serverPath: str):
+        super().__init__()
+        self.mcVersion = mcVersion
+        self.serverPath = serverPath
+        self.work.connect(self.task)
+
+    def task(self, **kwargs):
+        print(f"{self.thread().currentThreadId()=}")
+        url = f"https://bmclapi2.bangbang93.com/version/{self.mcVersion}/server"
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.76"
+        }
+        print(url)
+        try:
+            # with requests.get(url=url, headers=headers) as req:
+            #     with open(osp.join(self.serverPath, f"minecraft_server.{self.mcVersion}.jar"), mode="wb") as f:
+            #         f.write(req.content)
+            # self.resultReady.emit(True)
+            request = QNetworkRequest(QUrl(url))
+            request.setRawHeader(b"User-Agent", headers["User-Agent"].encode())
+            QNetworkReply().finished.connect(lambda: self.resultReady.emit(True))
+        except Exception as e:
+            self.resultReady.emit(False)
+
+
+# def task(mcVer, path):
+#     url = f"https://bmclapi2.bangbang93.com/version/{mcVer}/server"
+#     headers = {
+#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.76"
+#     }
+#     print(url)
+#     try:
+#         with requests.get(url=url, stream=True, headers=headers) as req:
+#             with open(osp.join(path, f"minecraft_server.{mcVer}.jar"), mode="wb") as f:
+#                 for chunk in req.iter_content(chunk_size=8192):
+#                     f.write(chunk)
+#         return True
+#     except Exception:
+#         return False
 
 
 class McVersion:
@@ -105,15 +152,33 @@ class Installer(QObject):
         :param file: The name of the installer
         """
         super().__init__()
+        self._cancelTimer = QTimer()
         self.cwd = cwd
         self.file = file
         self.logDecode = logDecode
         self.workingProcess: Optional[QProcess] = None
         self.logPartialData = b""
         self.installerLogOutput.connect(print)
+        self.cancelled = False
+        # self.workThread = QThread()
+        # self.workThread.start()
 
     def asyncInstall(self):
         raise NotImplementedError
+
+    def cancelInstall(self, cancelled=False):
+        self.cancelled = True
+        if not cancelled:
+            print("试图关闭ForgeInstaller...")
+            if self.workingProcess is not None:
+                self.workingProcess.terminate()
+                self._cancelTimer.setSingleShot(True)
+                self._cancelTimer.timeout.connect(lambda: self.cancelInstall(True))  # 设置超时时间
+        else:
+            print("关闭ForgeInstaller超时,正在强制关闭...")
+            self.workingProcess.kill()
+            self._cancelTimer.stop()
+            self._cancelTimer.deleteLater()
 
     def _installerLogHandler(self, prefix: str = ""):
         newData = self.workingProcess.readAllStandardOutput().data()
@@ -123,9 +188,12 @@ class Installer(QObject):
             lines.pop()
         )  # The last element might be incomplete, so keep it in the buffer
 
+        _ = []
         for line in lines:
             newOutput = line.decode(self.logDecode, errors="replace")
-            self.installerLogOutput.emit(">>".join([prefix, newOutput]))
+            _.append(">>".join([prefix, newOutput]))
+
+        self.installerLogOutput.emit("\n".join(_))
 
     def __enter__(self):
         return self
@@ -135,18 +203,26 @@ class Installer(QObject):
             self.workingProcess.kill()
             self.workingProcess = None
 
+    # def __del__(self):
+    #     self.workThread.quit()
+    #     self.workThread.wait()
+
 
 class ForgeInstaller(Installer):
+    downloadServerProgress = pyqtSignal(str)
+    downloadServerFinished = pyqtSignal(bool)
+
     def __init__(
-        self,
-        serverPath,
-        file,
-        isEditing: Optional[str] = "",
-        java=None,
-        installerPath=None,
-        logDecode="utf-8",
+            self,
+            serverPath,
+            file,
+            isEditing: Optional[str] = "",
+            java=None,
+            installerPath=None,
+            logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
+        self._reply = None
         self._profile = None
         self.version = None
         self._mcVersion = None
@@ -155,6 +231,7 @@ class ForgeInstaller(Installer):
         self.serverPath = serverPath
         self.installPlan = 0
         self.isEditing = int(isEditing) if isEditing != "" else None
+        self._manager = QNetworkAccessManager()
 
         self.getInstallerData(
             osp.join(serverPath, file) if installerPath is None else installerPath
@@ -173,8 +250,8 @@ class ForgeInstaller(Installer):
         # 读取version.json
 
         with ZipFile(
-            jarFile,
-            mode="r",
+                jarFile,
+                mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -186,10 +263,10 @@ class ForgeInstaller(Installer):
 
     def checkInstaller(self) -> bool:
         if (
-            (versionInfo := self._profile.get("versionInfo", {}))
-            .get("id", "")
-            .lower()
-            .startswith("forge")
+                (versionInfo := self._profile.get("versionInfo", {}))
+                        .get("id", "")
+                        .lower()
+                        .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = (
@@ -211,7 +288,36 @@ class ForgeInstaller(Installer):
         else:
             return False
 
-    def asyncInstall(self, installed=False):
+    # TODO 重写下载器,等待缝合到ForgeInstaller中
+    def onServerDownload(self):
+        self._manager.finished.connect(self.onServerDownloadFinished)
+        url = QUrl(f'https://bmclapi2.bangbang93.com/version/{self._mcVersion}/server')
+        request = QNetworkRequest(url)
+        request.setHeader(QNetworkRequest.UserAgentHeader,
+                          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0")
+        # 设置自动跟随重定向
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        self._reply = self._manager.get(request)
+        self._reply.downloadProgress.connect(self.onServerDownloadProgress)
+        # 连接重定向信号，打印重定向后的URL
+        self._reply.redirected.connect(lambda url: print(f"Redirected to {url}"))
+        print("正在下载")
+
+    def onServerDownloadProgress(self, bytesReceived, bytesTotal):
+        percent = bytesReceived * 100 / bytesTotal
+        self.downloadServerProgress.emit(f'(正在下载核心... {percent:.0f}%)')
+
+    def onServerDownloadFinished(self):
+        data = self._reply.readAll()
+        file = QFile(osp.join(self.serverPath, f"minecraft_server.{self._mcVersion}.jar"))
+        if file.open(QIODevice.WriteOnly):
+            file.write(data)
+            file.close()
+        self.downloadServerFinished.emit(True)
+        self._reply.deleteLater()
+        self._manager.deleteLater()
+
+    def asyncInstall(self):
         """
         安装Forge
         若为1.17以上版本,则使用PlanB
@@ -221,6 +327,21 @@ class ForgeInstaller(Installer):
         """
         print(self.__class__.__name__, self._mcVersion)
         print(self.__class__.__name__, self._forgeVersion)
+        print(f"{self.thread().currentThreadId()=}")
+        if self.cancelled:
+            self.installFinished.emit(False)
+            return
+        self.__asyncInstallRoutine()
+
+    def __asyncInstallRoutine(self):
+        if self._mcVersion >= McVersion("1.17"):
+            pass
+        else:
+            # 预下载核心并安装...
+            self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
+            self.onServerDownload()
+
+    def __asyncInstall(self, installed=False):
 
         if not installed:
             # set forge runtime java path
@@ -239,6 +360,10 @@ class ForgeInstaller(Installer):
                 osp.join(self.cwd, self.file + ".tmp"),
             )
 
+            if self.cancelled:  # 如果取消了安装,则不创建QProcess安装进程
+                self.installFinished.emit(False)
+                return
+
             process = QProcess()
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
@@ -250,11 +375,13 @@ class ForgeInstaller(Installer):
                     else "ForgeInstaller::PlanA"
                 )
             )
-            process.finished.connect(lambda a, b: self.asyncInstall(True))
+            process.finished.connect(lambda a, b: self.__asyncInstall(True))
             self.workingProcess = process
             self.workingProcess.start()
 
         else:
+            self._cancelTimer: QTimer
+            self._cancelTimer.stop()
             print("PlanB::forge installed callback entered")
             # 删除tmp
             remove(osp.join(self.cwd, self.file + ".tmp"))
@@ -305,7 +432,7 @@ class ForgeInstaller(Installer):
                 # 写入全局配置
                 try:
                     with open(
-                        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
                     ) as globalServerListFile:
                         # old
                         globalServerList = loads(globalServerListFile.read())
@@ -325,7 +452,7 @@ class ForgeInstaller(Installer):
                     )
                     globalServerList["MCSLServerList"].append(d)
                     with open(
-                        r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
                     ) as newGlobalServerListFile:
                         newGlobalServerListFile.write(dumps(globalServerList, indent=4))
                 except Exception as e:
@@ -337,9 +464,9 @@ class ForgeInstaller(Installer):
                         "onlySaveGlobalServerConfig"
                     ]:
                         with open(
-                            osp.join(self.cwd, "MCSL2ServerConfig.json"),
-                            mode="w+",
-                            encoding="utf-8",
+                                osp.join(self.cwd, "MCSL2ServerConfig.json"),
+                                mode="w+",
+                                encoding="utf-8",
                         ) as f:
                             f.write(dumps(d, indent=4))
                 except Exception as e:
@@ -368,32 +495,39 @@ class ForgeInstaller(Installer):
             _profile = json.loads(fileFile.read("install_profile.json"))
         except:
             return None
-        
+
         if (
-            (versionInfo := _profile.get("versionInfo", {}))
-            .get("id", "")
-            .lower()
-            .startswith("forge")
+                (versionInfo := _profile.get("versionInfo", {}))
+                        .get("id", "")
+                        .lower()
+                        .startswith("forge")
         ):
             _mcVersion = McVersion(versionInfo["id"].split("-")[0])
             _forgeVersion = (
                 versionInfo["id"].replace((_mcVersion), "").replace("-", "")
             )
-            return _mcVersion,_forgeVersion
+            return _mcVersion, _forgeVersion
         elif "forge" in (version := _profile.get("version", "")).lower():
             _mcVersion = McVersion(version.split("-")[0])
             _forgeVersion = version.replace(str(_mcVersion), "").replace(
                 "-", ""
             )
-            return _mcVersion,_forgeVersion
+            return _mcVersion, _forgeVersion
         elif "forge" in (version := _profile.get("id", "")).lower():
             _mcVersion = McVersion(version.split("-")[0])
             _forgeVersion = version.replace(str(_mcVersion), "").replace(
                 "-", ""
             )
-            return _mcVersion,_forgeVersion
+            return _mcVersion, _forgeVersion
         else:
             return None
+
+    def cancelInstall(self, cancelled=False):
+        super().cancelInstall(cancelled)
+        self._reply: QNetworkReply
+        if self._reply is not None and self._reply.isRunning():
+            self._reply.abort()
+            self._reply.deleteLater()
 
     @property
     def forgeVersion(self):
