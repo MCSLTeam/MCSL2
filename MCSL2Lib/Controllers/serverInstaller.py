@@ -16,16 +16,17 @@ Minecraft Forge Servers Installer.
 import json
 import shutil
 import sys
+from enum import Enum
 from json import loads, dumps
-from os import path as osp, name as osname, remove
+from os import path as osp, name as osname, remove, makedirs
 from typing import Optional, Tuple, Any
 from zipfile import ZipFile
 
-from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QTimer, QThread, QUrl, QFile, QIODevice
+from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QTimer, QThread, QFile, QIODevice
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply, QNetworkAccessManager
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.utils import Task
+from MCSL2Lib.utils import ServerUrl
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -39,48 +40,6 @@ class InstallerError(Exception):
 
 installerThread = QThread()
 installerThread.start()
-
-
-class DownloadServerTask(Task):
-    def __init__(self, mcVersion: str, serverPath: str):
-        super().__init__()
-        self.mcVersion = mcVersion
-        self.serverPath = serverPath
-        self.work.connect(self.task)
-
-    def task(self, **kwargs):
-        print(f"{self.thread().currentThreadId()=}")
-        url = f"https://bmclapi2.bangbang93.com/version/{self.mcVersion}/server"
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.76"
-        }
-        print(url)
-        try:
-            # with requests.get(url=url, headers=headers) as req:
-            #     with open(osp.join(self.serverPath, f"minecraft_server.{self.mcVersion}.jar"), mode="wb") as f:
-            #         f.write(req.content)
-            # self.resultReady.emit(True)
-            request = QNetworkRequest(QUrl(url))
-            request.setRawHeader(b"User-Agent", headers["User-Agent"].encode())
-            QNetworkReply().finished.connect(lambda: self.resultReady.emit(True))
-        except Exception as e:
-            self.resultReady.emit(False)
-
-
-# def task(mcVer, path):
-#     url = f"https://bmclapi2.bangbang93.com/version/{mcVer}/server"
-#     headers = {
-#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.76"
-#     }
-#     print(url)
-#     try:
-#         with requests.get(url=url, stream=True, headers=headers) as req:
-#             with open(osp.join(path, f"minecraft_server.{mcVer}.jar"), mode="wb") as f:
-#                 for chunk in req.iter_content(chunk_size=8192):
-#                     f.write(chunk)
-#         return True
-#     except Exception:
-#         return False
 
 
 class McVersion:
@@ -212,6 +171,10 @@ class ForgeInstaller(Installer):
     downloadServerProgress = pyqtSignal(str)
     downloadServerFinished = pyqtSignal(bool)
 
+    class InstallPlan(Enum):
+        PlanA = 0
+        PlanB = 1
+
     def __init__(
             self,
             serverPath,
@@ -222,24 +185,25 @@ class ForgeInstaller(Installer):
             logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
-        self._reply = None
-        self._profile = None
-        self.version = None
-        self._mcVersion = None
-        self._forgeVersion = None
         self.java = java
         self.serverPath = serverPath
-        self.installPlan = 0
         self.isEditing = int(isEditing) if isEditing != "" else None
+
+        self._mcVersion = None
+        self._profile = None
+        self._forgeVersion = None
         self._manager = QNetworkAccessManager()
+        self._reply = None
+        self._serverJarTargetPath = ""
+        self._serverJarFileName = ""
 
         self.getInstallerData(
             osp.join(serverPath, file) if installerPath is None else installerPath
         )
         if self._mcVersion >= McVersion("1.17"):
-            self.installPlan = 1
+            self.installPlan = ForgeInstaller.InstallPlan.PlanB
         elif self._mcVersion >= McVersion("1.8"):
-            self.installPlan = 0
+            self.installPlan = ForgeInstaller.InstallPlan.PlanA
         else:
             raise InstallerError(
                 f"不支持的自动安装版本:{self._mcVersion}的forge\nMCSL2支持1.8往后的所有forge安装"
@@ -289,9 +253,14 @@ class ForgeInstaller(Installer):
             return False
 
     # TODO 重写下载器,等待缝合到ForgeInstaller中
-    def onServerDownload(self):
+    def onServerDownload(self, cwd, file):
+
+        # 设置核心下载位置
+        self._serverJarTargetPath = cwd
+        self._serverJarFileName = file
+
         self._manager.finished.connect(self.onServerDownloadFinished)
-        url = QUrl(f'https://bmclapi2.bangbang93.com/version/{self._mcVersion}/server')
+        url = ServerUrl.getBmclapiUrl(str(self._mcVersion))
         request = QNetworkRequest(url)
         request.setHeader(QNetworkRequest.UserAgentHeader,
                           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0")
@@ -302,14 +271,15 @@ class ForgeInstaller(Installer):
         # 连接重定向信号，打印重定向后的URL
         self._reply.redirected.connect(lambda url: print(f"Redirected to {url}"))
         print("正在下载")
+        self.downloadServerProgress.emit("(正在下载核心... 0%) 使用BMCLAPI下载")
 
     def onServerDownloadProgress(self, bytesReceived, bytesTotal):
         percent = bytesReceived * 100 / bytesTotal
-        self.downloadServerProgress.emit(f'(正在下载核心... {percent:.0f}%)')
+        self.downloadServerProgress.emit(f'(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载')
 
     def onServerDownloadFinished(self):
         data = self._reply.readAll()
-        file = QFile(osp.join(self.serverPath, f"minecraft_server.{self._mcVersion}.jar"))
+        file = QFile(osp.join(self._serverJarTargetPath, self._serverJarFileName))
         if file.open(QIODevice.WriteOnly):
             file.write(data)
             file.close()
@@ -334,12 +304,24 @@ class ForgeInstaller(Installer):
         self.__asyncInstallRoutine()
 
     def __asyncInstallRoutine(self):
-        if self._mcVersion >= McVersion("1.17"):
-            pass
-        else:
+        if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
+            makedirs(name=
+                     (cwd := osp.join(
+                         self.cwd,
+                         "libraries",
+                         "net",
+                         "minecraft",
+                         "server",
+                         str(self._mcVersion)
+                     )),
+                     exist_ok=True)
+            self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
+            print(cwd)
+            self.onServerDownload(cwd, f"server-{self._mcVersion}.jar")
+        elif self.installPlan == ForgeInstaller.InstallPlan.PlanA:
             # 预下载核心并安装...
             self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
-            self.onServerDownload()
+            self.onServerDownload(self.cwd, f"minecraft_server.{self._mcVersion}.jar")
 
     def __asyncInstall(self, installed=False):
 
@@ -371,7 +353,7 @@ class ForgeInstaller(Installer):
             process.readyReadStandardOutput.connect(
                 lambda: self._installerLogHandler(
                     "ForgeInstaller::PlanB"
-                    if self.installPlan == 1
+                    if self.installPlan == ForgeInstaller.InstallPlan.PlanB
                     else "ForgeInstaller::PlanA"
                 )
             )
@@ -388,7 +370,7 @@ class ForgeInstaller(Installer):
 
             if self.workingProcess.exitCode() == 0:
                 # 1.17以上版本: PlanB
-                if self.installPlan == 1:
+                if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
                     # 判断系统，分别读取run.bat和run.sh
                     if osname == "nt":
                         with open(osp.join(self.cwd, "run.bat"), mode="r") as f:
