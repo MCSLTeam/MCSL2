@@ -349,7 +349,8 @@ class ForgeInstaller(Installer):
             process = QProcess()
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
-            process.setArguments(["-jar", self.file + ".tmp", "--installServer"])
+            process.setArguments(
+                ["-jar", self.file + ".tmp", "--mirror", "https://bmclapi2.bangbang93.com/maven/", "--installServer"])
             process.readyReadStandardOutput.connect(
                 lambda: self._installerLogHandler(
                     "ForgeInstaller::PlanB"
