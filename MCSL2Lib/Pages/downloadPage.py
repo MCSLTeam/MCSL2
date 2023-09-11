@@ -948,7 +948,15 @@ class DownloadPage(QWidget):
     def fastMirrorCoreNameProcessor(self):
         downloadVariables.selectedName = self.sender().objectName()
         self.initFastMirrorMCVersionsListWidget()
-
+        try:
+            self.buildLayout.removeItem(self.scrollAreaSpacer)
+        except AttributeError:
+            pass
+        try:
+            for i in reversed(range(self.buildLayout.count())):
+                self.buildLayout.itemAt(i).widget().deleteLater()
+        except AttributeError:
+            pass
     def initFastMirrorMCVersionsListWidget(self):
         try:
             self.versionLayout.removeItem(self.scrollAreaSpacer)
