@@ -41,6 +41,7 @@ from qfluentwidgets import (
     TransparentPushButton,
 )
 
+from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.DownloadAPIs.FastMirrorAPI import (
     FetchFastMirrorAPIThreadFactory,
@@ -101,6 +102,7 @@ class DownloadPage(QWidget):
         self.titleLabel.setSizePolicy(sizePolicy)
         self.titleLabel.setObjectName("titleLabel")
         self.gridLayout_4.addWidget(self.titleLabel, 0, 0, 1, 1)
+
         self.openDownloadFolderBtn = TransparentPushButton(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -109,6 +111,16 @@ class DownloadPage(QWidget):
         self.openDownloadFolderBtn.setSizePolicy(sizePolicy)
         self.openDownloadFolderBtn.setObjectName("openDownloadFolderBtn")
         self.gridLayout_4.addWidget(self.openDownloadFolderBtn, 0, 1, 1, 1)
+
+        self.openDownloadEntriesBtn = TransparentPushButton(self.titleLimitWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.openDownloadEntriesBtn.sizePolicy().hasHeightForWidth())
+        self.openDownloadEntriesBtn.setSizePolicy(sizePolicy)
+        self.openDownloadEntriesBtn.setObjectName("openDownloadEntriesBtn")
+        self.gridLayout_4.addWidget(self.openDownloadEntriesBtn, 0, 2, 1, 1)
+
         self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -539,6 +551,7 @@ class DownloadPage(QWidget):
         self.refreshFastMirrorAPIBtn.setText("刷新")
         self.refreshMCSLAPIBtn.setText("刷新")
         self.openDownloadFolderBtn.setText("打开下载文件夹")
+        self.openDownloadEntriesBtn.setText("打开下载记录")
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.MCSLAPIPivot.addItem(
@@ -622,6 +635,11 @@ class DownloadPage(QWidget):
         )
         self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
         self.openDownloadFolderBtn.clicked.connect(lambda: startfile(f".\\MCSL2\\Downloads\\"))
+
+        self.openDownloadEntriesBtn.setIcon(FIF.MENU)
+        self.openDownloadEntriesBtn.clicked.connect(lambda :{
+            DownloadEntryBox(self).exec()
+        })
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):

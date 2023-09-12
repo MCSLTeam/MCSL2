@@ -60,9 +60,10 @@ from MCSL2Lib.Pages.selectJavaPage import SelectJavaPage
 from MCSL2Lib.Pages.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.Pages.serverManagerPage import ServerManagerPage
 from MCSL2Lib.Pages.settingsPage import SettingsPage
+from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
-from MCSL2Lib.utils import isDarkTheme, exceptionFilter, ExceptionFilterMode
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.utils import isDarkTheme, exceptionFilter, ExceptionFilterMode
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
@@ -70,7 +71,6 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
-from MCSL2Lib.Resources.icons import *  # noqa: F401
 
 serverVariables = ServerVariables()
 settingsController = SettingsController()
@@ -214,13 +214,14 @@ class Window(MSFluentWindow):
 
     def __init__(self):
         super().__init__()
+        # 读取程序设置，不放在第一位就会爆炸！
+        settingsController.initialize(firstLoad=True)
+        self.setTheme()
+        self.initWindow()
+
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
 
-        # 读取程序设置，不放在第一位就会爆炸！
-        settingsController.initialize(firstLoad=True)
-
-        self.setTheme()
         if experiment := settingsController.fileSettings.get("enableExperimentalFeatures", False):
             print("实验性功能已启用")
             print("实验性功能：", experiment)
@@ -244,7 +245,7 @@ class Window(MSFluentWindow):
             for loader in loaders:
                 loader.start()
 
-            self.initWindow()
+            # self.initWindow()
         else:
 
             # 定义子页面
@@ -260,7 +261,7 @@ class Window(MSFluentWindow):
             self.selectJavaPage = SelectJavaPage(self)
             self.selectNewJavaPage = SelectNewJavaPage(self)
 
-            self.initWindow()
+            # self.initWindow()
 
             self.initNavigation()
 
@@ -271,6 +272,7 @@ class Window(MSFluentWindow):
             self.initPluginSystem()
 
             self.splashScreen.finish()
+            self.splashScreen.deleteLater()
 
         initializeAria2Configuration()
 
@@ -295,6 +297,7 @@ class Window(MSFluentWindow):
             sys.excepthook = self.catchExceptions
             self.startAria2Client()
             self.splashScreen.finish()
+            self.splashScreen.deleteLater()
             self.update()
 
     @pyqtSlot(bool)
@@ -419,13 +422,17 @@ class Window(MSFluentWindow):
         self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
+        # create splash screen
         self.splashScreen = SplashScreen(self.windowIcon(), self)
         self.splashScreen.setIconSize(QSize(106, 106))
         self.splashScreen.raise_()
+
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        self.resize(w // 2, h // 2)
+        self.resize(w // 2, h // 1.5)
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
+        self.show()
+        QApplication.processEvents()
 
     def setTheme(self):
         configThemeList = ["dark", "light"]
@@ -652,6 +659,11 @@ class Window(MSFluentWindow):
             GlobalMCSL2Variables.isLoadFinished = True
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
+        if a1.type() == QEvent.Resize:
+            # 打印改变后的窗口大小
+
+            print(f"窗口大小改变->{self.width()}x{self.height()}")
+
         if not GlobalMCSL2Variables.isLoadFinished:
             return super().eventFilter(a0, a1)
 
