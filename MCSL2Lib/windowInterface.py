@@ -213,11 +213,15 @@ class Window(MSFluentWindow):
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
+
         super().__init__()
         # 读取程序设置，不放在第一位就会爆炸！
         settingsController.initialize(firstLoad=True)
         self.setTheme()
         self.initWindow()
+        print(time.perf_counter())
+        self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
+        self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
@@ -418,9 +422,8 @@ class Window(MSFluentWindow):
 
     def initWindow(self):
         """初始化窗口"""
+
         self.setWindowIcon(QIcon(":/built-InIcons/MCSL2.png"))
-        self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
-        self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
         # create splash screen
         self.splashScreen = SplashScreen(self.windowIcon(), self)

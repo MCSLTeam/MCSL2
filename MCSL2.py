@@ -15,11 +15,31 @@ Main entry.
 """
 import os
 import sys
+import traceback
 from platform import system
-from PyQt5.QtCore import Qt, QLocale
+
+from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
+
 from MCSL2Lib.utils import initializeMCSL2
+
+
+class MCSL2Application(QApplication):
+    def __init__(self, argv):
+        super().__init__(argv)
+
+    def notify(self, a0: QObject, a1: QEvent) -> bool:
+        try:
+            done = super().notify(a0, a1)
+            return done
+        except Exception as e:
+            tracebackFormat = traceback.format_exception(e)
+            tracebackString = "".join(tracebackFormat)
+            print(
+                f"Application catch an exception in event loop:\n{tracebackString}\n\nQObject:{a0.objectName()}\nEvent:{a1.type()}"
+            )
+            return False
 
 
 if __name__ == "__main__":
@@ -46,7 +66,7 @@ if __name__ == "__main__":
     os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
 
     # 启动
-    app = QApplication(sys.argv)
+    app = MCSL2Application(sys.argv)
     translator = FluentTranslator(QLocale())
     app.installTranslator(translator)
     from MCSL2Lib.windowInterface import Window
