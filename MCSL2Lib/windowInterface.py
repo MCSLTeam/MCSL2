@@ -617,11 +617,12 @@ class Window(MSFluentWindow):
         if not firstTry:
             w = MessageBox(
                 title="提示",
-                content="你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，请尝试再次开启服务器",
+                content="你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。",
                 parent=self,
             )
             w.yesButton.setText("同意")
-            w.yesSignal.connect(lambda: MojangEula().acceptEula())
+            w.yesSignal.connect(MojangEula().acceptEula)
+            w.yesSignal.connect(self.startServer)
             w.cancelButton.setText("拒绝")
             eulaBtn = HyperlinkButton(
                 url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK
@@ -630,6 +631,7 @@ class Window(MSFluentWindow):
             w.exec()
         else:
             self.switchTo(self.consoleInterface)
+            self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
             self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)

@@ -20,7 +20,7 @@ from enum import Enum
 from json import loads, dumps
 from os import path as osp, name as osname, remove, makedirs
 from typing import Optional, Tuple, Any
-from zipfile import ZipFile
+from zipfile import BadZipFile, ZipFile
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QTimer, QThread, QFile, QIODevice
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply, QNetworkAccessManager
@@ -472,8 +472,10 @@ class ForgeInstaller(Installer):
         """
         if osp.getsize(fileName) > 10_000 * 1024:  # 若文件大于10MB,则几乎不可能是Forge安装器
             return None
-
-        fileFile = ZipFile(fileName, mode="r")
+        try:
+            fileFile = ZipFile(fileName, mode="r")
+        except BadZipFile:
+            return None
         try:
             _profile = json.loads(fileFile.read("install_profile.json"))
         except:
