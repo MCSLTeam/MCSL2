@@ -373,7 +373,9 @@ class ConsolePage(QWidget):
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
-        serverOutput = serverOutput[:-1].replace("[38;2;170;170;170m", "").replace("[38;2;255;170;0m", "").replace("[38;2;255;255;255m", "").replace("[0m", "").replace("[38;2;255;255;85m", "").replace("[38;2;255;255;255m", "").replace("[3m", "")
+        serverOutput = serverOutput[:-1].replace("[38;2;170;170;170m", "").replace("[38;2;255;170;0m", "").replace(
+            "[38;2;255;255;255m", "").replace("[0m", "").replace("[38;2;255;255;85m", "").replace("[38;2;255;255;255m",
+                                                                                                  "").replace("[3m", "")
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
             serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
@@ -442,21 +444,46 @@ class ConsolePage(QWidget):
                 parent=self,
             )
         if (
-            "logged in with entity id" in serverOutput
-            or " left the game" in serverOutput
+                "logged in with entity id" in serverOutput
+                or " left the game" in serverOutput
         ):
             self.recordPlayers(serverOutput)
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
-            self.playersList.append(str(str(serverOutput).split("INFO]: ")[1].split("[/")[0]))
+            try:
+                self.playersList.append(str(str(serverOutput).split("INFO]: ")[1].split("[/")[0]))
+                return
+            except Exception:
+                pass
+
+            try:  # 若不成功，尝试提取玩家名字
+                # [11:49:05] [Server thread/INFO] [minecraft/PlayerList]: Ares_Connor[/127.0.0.1:63854] logged in with entity id 229 at (7.258252218995321, 65.0, 11.09627995098097)
+                # 提取玩家名字
+                name = serverOutput
+                name = name.split("]: ")[1].split("[/")[0]
+                self.playersList.append(name)
+            except Exception as e:
+                print("extract player name failed","onRecordPlayers::login", serverOutput)
+                print(e)
+
         elif " left the game" in serverOutput:
             try:
                 self.playersList.pop(
                     self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0]))
                 )
+                return
             except Exception:
                 pass
+
+            try:  # 若不成功，尝试提取玩家名字
+                # [11:53:52] [Server thread/INFO] [minecraft/DedicatedServer]: Ares_Connor left the game
+                name = serverOutput
+                name = name.split("]: ")[1].split(" left the game")[0].strip()
+                self.playersList.pop(self.playersList.index(name))
+            except Exception as e:
+                print("extract player name failed","onRecordPlayers::logout", serverOutput)
+                print(e)
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
