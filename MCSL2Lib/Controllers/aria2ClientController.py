@@ -28,6 +28,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer, QMutex
 from aria2p import Client, API, Download
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.utils import workingThreads
 
 settingsController = SettingsController()
 
@@ -827,7 +828,7 @@ class DL_EntryManager(QObject):
                 except KeyError:
                     pass
         self.flush()
-        print("读取记录:", len(self.entries),"条")
+        print("读取记录:", len(self.entries), "条")
         self.onReadEntries.emit(self.entries)
         return self.entries
 
@@ -996,8 +997,7 @@ class DL_EntryManager(QObject):
     #     raise Exception("请勿实例化本类,请使用类方法!")
 
 
-DL_EntryWorkThread = QThread()
-DL_EntryWorkThread.start()
+workingThreads.register("DL_Entry")
 
 
 class DL_EntryController(QObject):
@@ -1016,9 +1016,7 @@ class DL_EntryController(QObject):
         self.mutex = entries_mutex
         self.entries = entries
         self.worker = DL_EntryManager(self.entries, self.mutex)
-        self.workerThread = DL_EntryWorkThread
-
-        self.worker.moveToThread(self.workerThread)
+        self.worker.moveToThread(workingThreads.getThread("DL_Entry"))
 
         self.resultReady.connect(lambda _: self.worker.deleteLater())
         self.work.connect(self.worker.asyncDispatcher)

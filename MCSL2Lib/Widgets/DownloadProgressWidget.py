@@ -13,6 +13,7 @@
 """
 Download Progress Widget.
 """
+from os import path
 from typing import Optional
 
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
@@ -288,12 +289,13 @@ class DownloadMessageBox(MessageBox):
         if dl is not None:
             if dl.status == "complete":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-                DL_EntryController().work.emit(
-                    ("addCoreEntry", {
-                        "coreName": filename,
-                        "extraData": data
-                    })
-                )
+                if path.exists(filename):  # 防止有时候aria2抽风...
+                    DL_EntryController().work.emit(
+                        ("addCoreEntry", {
+                            "coreName": filename,
+                            "extraData": data
+                        })
+                    )
             elif dl.status == "error":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
                 print(dl.error_code, dl.error_message, dl.files)

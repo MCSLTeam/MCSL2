@@ -26,7 +26,7 @@ from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QTimer, QThread, QFile, 
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply, QNetworkAccessManager
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.utils import ServerUrl
+from MCSL2Lib.utils import ServerUrl, workingThreads
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -36,10 +36,6 @@ settingsController = SettingsController()
 
 class InstallerError(Exception):
     pass
-
-
-installerThread = QThread()
-installerThread.start()
 
 
 class McVersion:

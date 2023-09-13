@@ -41,7 +41,6 @@ from MCSL2Lib.Controllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
     Aria2BootThread,
-    DL_EntryWorkThread,
 )
 from MCSL2Lib.Controllers.serverController import (
     MinecraftServerResMonitorUtil,
@@ -63,7 +62,7 @@ from MCSL2Lib.Pages.settingsPage import SettingsPage
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.utils import isDarkTheme, exceptionFilter, ExceptionFilterMode
+from MCSL2Lib.utils import isDarkTheme, exceptionFilter, ExceptionFilterMode, workingThreads
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
@@ -342,8 +341,7 @@ class Window(MSFluentWindow):
             a0.ignore()
             return
         try:
-            DL_EntryWorkThread.quit()
-            DL_EntryWorkThread.wait()
+            workingThreads.closeAllThreads()
             if Aria2Controller.shutDown():
                 super().closeEvent(a0)
         finally:
