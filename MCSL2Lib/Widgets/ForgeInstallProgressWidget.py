@@ -15,12 +15,13 @@ class ForgeInstallerProgressBox(MessageBoxBase):
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.forgeLogViewer)
 
-        self.yesButton.setText('取消安装')
-        self.cancelButton.setText('隐藏')
+        self.cancelButton.setText('取消安装')
+        self.yesButton.setText('隐藏')
 
         self.widget.setMinimumWidth(550)
         self.widget.setMinimumHeight(600)
         self.widget.setContentsMargins(0, 0, 0, 0)
+        self.yesButton.clicked.connect(self.hide)
         # self.yesButton.setDisabled(True)
 
     def __del__(self):
