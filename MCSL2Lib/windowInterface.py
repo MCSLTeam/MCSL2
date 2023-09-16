@@ -17,7 +17,7 @@ import sys
 from traceback import format_exception
 from types import TracebackType
 from typing import Type
-
+from platform import system
 from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget
@@ -444,7 +444,9 @@ class Window(MSFluentWindow):
                     configThemeList.index(settingsController.fileSettings["theme"])
                 ]
             )
-        self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
+        
+        if "windows" in system().lower():
+            self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
     def initSafeQuitController(self):
