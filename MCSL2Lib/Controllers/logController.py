@@ -67,9 +67,10 @@ class MCSL2Logger:
         caller_info = self.getCallerInfo()
         self.logger.debug(self._template(caller_info, msg))
 
-    def critical(self, msg: str):
+    def critical(self, exc: Optional[Exception] = None, msg: Optional[str] = ""):
         caller_info = self.getCallerInfo()
-        self.logger.critical(self._template(caller_info, msg))
+        excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
+        self.logger.critical(self._template(caller_info, f"{msg}\n{excStr}"))
 
 
 # Example usage
