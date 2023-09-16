@@ -5,6 +5,7 @@ from os import path as osp
 from typing import Optional
 from traceback import format_exception
 from MCSL2Lib.singleton import Singleton
+from PyQt5.QtCore import pyqtSlot
 
 @Singleton
 class MCSL2Logger:
@@ -72,6 +73,9 @@ class MCSL2Logger:
         excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
         self.logger.critical(self._template(caller_info, f"{msg}\n{excStr}"))
 
+    # @pyqtSlot(str)
+    def processOutput(self, msg: str):
+        self.info(msg)
 
 # Example usage
 # logger = MCSL2Logger()

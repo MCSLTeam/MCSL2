@@ -33,6 +33,10 @@ from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
 
+from MCSL2Lib.Controllers.logController import MCSL2Logger
+
+MCSLLogger = MCSL2Logger()
+
 settingsController = SettingsController()
 
 configTemplate = {
@@ -110,7 +114,7 @@ def configurationCompleter():
             pass
         else:
             missingKeys = set(configTemplate.keys()) - set(configContent.keys())
-            print(f">>> 警告:缺失配置{missingKeys}，正在使用默认配置补全。")
+            MCSLLogger.warning(f"缺失配置{missingKeys}，正在使用默认配置补全。")
             for key in missingKeys:
                 configContent[key] = configTemplate[key]
     with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
@@ -122,7 +126,7 @@ def warning(text: str):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            print(">>> 警告:", func.__name__, text)
+            MCSLLogger.warning(f"警告: {func.__name__} {text}")
             return func(*args, **kwargs)
 
         return wrapper
@@ -134,7 +138,7 @@ def obsolete(text: str):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            print(">>> 此函数已过时: ", func.__name__, text)
+            MCSLLogger.warning(f"此函数已过时: {func.__name__} {text}")
             return func(*args, **kwargs)
 
         return wrapper
@@ -191,7 +195,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.PASS
     if isinstance(
-            value, aria2p.client.ClientException
+            value, aria2p.ClientException
     ) and "Active Download not found for GID" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
@@ -309,4 +313,4 @@ class FileOpener:
         elif system == "Linux":
             Popen(["xdg-open", _filePath])
         else:
-            print("Unsupported operating system")
+            pass

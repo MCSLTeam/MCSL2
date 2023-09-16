@@ -21,6 +21,9 @@ from platform import system
 from re import search
 
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
+from MCSL2Lib.Controllers.logController import MCSL2Logger
+
+MCSLLogger = MCSL2Logger()
 
 foundJava = []
 isNeedFuzzySearch = True
@@ -253,7 +256,7 @@ def combineJavaList(original: list, l: list,invaild:...,check=True):
         for e in s1 - s2:
             if not checkJavaAvailability(e):
                 s.remove(e)
-                print(e, "已失效")
+                MCSLLogger.warning(f"{e}已失效")
                 if isinstance(invaild,list):
                     invaild.append(e)
     return list(s)

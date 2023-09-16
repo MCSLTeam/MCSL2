@@ -23,7 +23,9 @@ from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 
 from MCSL2Lib.utils import initializeMCSL2
+from MCSL2Lib.Controllers.logController import MCSL2Logger
 
+MCSLLogger = MCSL2Logger()
 
 class MCSL2Application(QApplication):
     def __init__(self, argv):
@@ -33,12 +35,8 @@ class MCSL2Application(QApplication):
         try:
             done = super().notify(a0, a1)
             return done
-        except Exception as e:
-            tracebackFormat = traceback.format_exception(e)
-            tracebackString = "".join(tracebackFormat)
-            print(
-                f"Application catch an exception in event loop:\n{tracebackString}\n\nQObject:{a0.objectName()}\nEvent:{a1.type()}"
-            )
+        except Exception:
+            MCSLLogger.critical(exc=Exception)
             return False
 
 

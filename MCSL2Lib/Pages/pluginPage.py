@@ -36,7 +36,9 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF
 )
+from MCSL2Lib.Controllers.logController import MCSL2Logger
 
+MCSLLogger = MCSL2Logger()
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -216,5 +218,5 @@ class InstallPluginThread(QThread):
             pluginArchive.close()
             self.success.emit()
         except Exception as e:
-            print(Exception().with_traceback())
+            MCSLLogger.error(exc=Exception)
             self.failed.emit()

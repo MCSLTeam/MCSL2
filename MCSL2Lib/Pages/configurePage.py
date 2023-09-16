@@ -72,7 +72,9 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+from MCSL2Lib.Controllers.logController import MCSL2Logger
 
+MCSLLogger = MCSL2Logger()
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
@@ -2213,7 +2215,7 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
             self.addNewServerRollback()
-            print(self.__class__.__name__, "回滚")
+            MCSLLogger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(self, "forgeInstaller"):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
             del self.forgeInstaller
         configureServerVariables.resetToDefault()  # 重置
