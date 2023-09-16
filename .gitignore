@@ -7,6 +7,7 @@ poetry.lock
 Tools/OfflineBuild/**
 Servers/**
 MCSL2/Downloads/**
+MCSL2/Logs/**
 MCSL2/MCSL2_Config.json
 MCSL2/Aria2/aria2.conf
 MCSL2/Aria2/aria2.session

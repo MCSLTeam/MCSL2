@@ -83,10 +83,10 @@ def initializeMCSL2():
     初始化程序
     """
 
-    folders = ["Servers", "Plugins", "MCSL2", "MCSL2/Aria2", "MCSL2/Downloads"]
+    folders = ["Servers", "Plugins", "MCSL2", "MCSL2/Aria2", "MCSL2/Downloads", "MCSL2/Logs"]
     for folder in folders:
         if not osp.exists(folder):
-            makedirs(folder)
+            makedirs(folder, exist_ok=True)
 
     if not osp.exists(r"./MCSL2/MCSL2_Config.json"):
         with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
