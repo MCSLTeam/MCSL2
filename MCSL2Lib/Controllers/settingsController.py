@@ -19,7 +19,6 @@ from os import path as osp
 
 from MCSL2Lib.singleton import Singleton
 
-
 @Singleton
 class SettingsController:
     def __init__(self):

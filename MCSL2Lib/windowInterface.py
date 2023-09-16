@@ -49,7 +49,7 @@ from MCSL2Lib.Controllers.serverController import (
     ServerLauncher,
 )
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consolePage import ConsolePage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
@@ -77,7 +77,7 @@ configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 settingsVariables = SettingsVariables()
-MCSLLogger = MCSL2Logger()
+
 
 pageLoadConfig = [
     {
@@ -226,7 +226,7 @@ class Window(MSFluentWindow):
         self.pluginManager: PluginManager = PluginManager()
 
         if experiment := settingsController.fileSettings.get("enableExperimentalFeatures", False):
-            MCSLLogger.warning(f"实验性功能已设置为{experiment}")
+            MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
             self.homeInterface = None
             self.configureInterface = None
             self.downloadInterface = None
@@ -362,11 +362,11 @@ class Window(MSFluentWindow):
         mode = exceptionFilter(ty, value, _traceback)
 
         if mode == ExceptionFilterMode.PASS:
-            MCSLLogger.info(f"忽略了异常：{ty} {value} {_traceback}")
+            MCSL2Logger.info(f"忽略了异常：{ty} {value} {_traceback}")
             return
 
         elif mode == ExceptionFilterMode.RAISE:
-            MCSLLogger.error(f"捕捉到异常：{ty} {value} {_traceback}")
+            MCSL2Logger.error(f"捕捉到异常：{ty} {value} {_traceback}")
             return self.oldHook(ty, value, _traceback)
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:

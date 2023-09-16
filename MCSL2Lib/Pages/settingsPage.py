@@ -62,7 +62,6 @@ from qfluentwidgets import (
     setThemeColor,
 )
 
-from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Controllers.updateController import (
     CheckUpdateThread,
@@ -72,7 +71,7 @@ from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
 from MCSL2Lib.utils import openWebUrl
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
-
+from MCSL2Lib.utils import MCSL2Logger
 settingsController = SettingsController()
 settingsVariables = SettingsVariables()
 
@@ -1531,12 +1530,14 @@ class SettingsPage(QWidget):
         self.settingsChanged.emit(
             settingsController.unSavedSettings != settingsController.fileSettings
         )
+        MCSL2Logger.info(f"修改设置：{str({Setting: Status})}")
 
     def giveUpSettings(self):
         """放弃所有未保存的设置"""
         self.refreshSettingsInterface()
         settingsController._giveUpSettings()
         self.settingsChanged.emit(False)
+        MCSL2Logger.info("放弃了设置更改")
 
     def saveSettings(self):
         """保存设置"""
@@ -1552,6 +1553,7 @@ class SettingsPage(QWidget):
             duration=3000,
             parent=self,
         )
+        MCSL2Logger.info("保存设置到文件")
 
     def refreshSettingsInterface(self):
         """刷新设置页"""

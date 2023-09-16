@@ -27,11 +27,11 @@ from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger
 
 settingsController = SettingsController()
 serverVariables = ServerVariables()
-MCSLLogger = MCSL2Logger()
+
 
 @Singleton
 class ServerHelper(QObject):
@@ -103,7 +103,7 @@ class ServerHandler(QObject):
         self.workingDirectory: str = ""
         self.partialData: str = b""
         self.AServer = None
-        self.serverLogOutput.connect(MCSLLogger.processOutput)
+        self.serverLogOutput.connect(MCSL2Logger.processOutput)
         self.Server = self.getServerProcess()
 
     def getServerProcess(self) -> Server:
@@ -293,7 +293,7 @@ class ServerLauncher:
 
         # add "nogui" arg
         self.jvmArg.append("nogui")
-        MCSLLogger.info(f"生成JVM参数：\n{self.jvmArg}")
+        MCSL2Logger.info(f"生成JVM参数：\n{self.jvmArg}")
 
     def launch(self):
         """启动进程"""

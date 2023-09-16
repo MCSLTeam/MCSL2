@@ -23,9 +23,8 @@ from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 
 from MCSL2Lib.utils import initializeMCSL2
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger
 
-MCSLLogger = MCSL2Logger()
 
 class MCSL2Application(QApplication):
     def __init__(self, argv):
@@ -36,7 +35,7 @@ class MCSL2Application(QApplication):
             done = super().notify(a0, a1)
             return done
         except Exception:
-            MCSLLogger.critical(exc=Exception)
+            MCSL2Logger.critical(exc=Exception)
             return False
 
 

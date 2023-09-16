@@ -29,9 +29,9 @@ from aria2p import Client, API, Download
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.utils import workingThreads
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger
 
-MCSLLogger = MCSL2Logger()
+
 
 settingsController = SettingsController()
 
@@ -138,7 +138,7 @@ class Aria2Controller:
                 # )
                 pass
         except Exception:
-            MCSLLogger.error(exc=Exception)
+            MCSL2Logger.error(exc=Exception)
 
     def LinuxInstallAria2(self):
         if which("apt"):
@@ -152,7 +152,7 @@ class Aria2Controller:
         try:
             Popen(cmd, check=True)
         except CalledProcessError:
-            MCSLLogger.error(exc=CalledProcessError)
+            MCSL2Logger.error(exc=CalledProcessError)
             return False
         return True
 
@@ -315,7 +315,7 @@ class Aria2Controller:
         * normally, this function is only used by Class:DownloadWatcher
         """
         try:
-            MCSLLogger.info(f"Aria2下载已暂停: {cls._aria2.client.pause(gid)}")
+            MCSL2Logger.info(f"Aria2下载已暂停: {cls._aria2.client.pause(gid)}")
             cls._downloadTasks.pop(gid)
         except:
             pass
@@ -326,7 +326,7 @@ class Aria2Controller:
         Resume a download task by gid
         * normally, this function is only used by Class:DownloadWatcher
         """
-        MCSLLogger.info(f"Aria2下载已恢复: {cls._aria2.client.unpause(gid)}")
+        MCSL2Logger.info(f"Aria2下载已恢复: {cls._aria2.client.unpause(gid)}")
         cls._downloadTasks.update({gid: cls._aria2.get_download(gid).files})
 
     @classmethod
@@ -336,7 +336,7 @@ class Aria2Controller:
         * normally, this function is only used by Class:DownloadWatcher
         """
         try:
-            MCSLLogger.info(f"Aria2下载已取消: {cls._aria2.client.remove(gid)}")
+            MCSL2Logger.info(f"Aria2下载已取消: {cls._aria2.client.remove(gid)}")
         finally:
             if gid in cls._downloadTasks.keys():
                 cls._downloadTasks.pop(gid)
@@ -421,7 +421,7 @@ class Aria2Controller:
             # command = 'tasklist | findstr "aria2c"'
             # result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
             # if result.stdout != "":
-                # MCSLLogger.info("已杀死aria2进程")
+                # MCSL2Logger.info("已杀死aria2进程")
             subprocess.run("taskkill /f /im aria2c.exe", text=True, shell=True)
         elif cls._osType == "macOS":
             subprocess.run("killall aria2c", text=True, shell=True)
@@ -471,7 +471,7 @@ class Aria2BootThread(QThread):
         except Exception:
             self.loaded.emit(False)
         finally:
-            MCSLLogger.info(f"启动Aria2耗时: {time.time() - time_time}")
+            MCSL2Logger.info(f"启动Aria2耗时: {time.time() - time_time}")
 
 
 ###################
@@ -551,19 +551,19 @@ class DownloadWatcher(QObject):
             self.onDownloadInfoGet.emit(status)
             dl = Aria2Controller.downloadCompletedHandler(self._gid, False)
             self.downloadStop.emit([dl, self._extraData])
-            MCSLLogger.success("下载完成")
+            MCSL2Logger.success("下载完成")
         elif status["status"] == "error":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
             dl = Aria2Controller.downloadCompletedHandler(self._gid, True)
             self.downloadStop.emit([dl, self._extraData])
-            MCSLLogger.warning("下载失败")
+            MCSL2Logger.warning("下载失败")
         elif status["status"] == "removed":
             self.timer.stop()
             self.onDownloadInfoGet.emit(status)
             dl = Aria2Controller.downloadCompletedHandler(self._gid, True)
             self.downloadStop.emit([dl, self._extraData])
-            MCSLLogger.info("下载被取消")
+            MCSL2Logger.info("下载被取消")
 
     def stopDownload(self):
         Aria2Controller.pauseDownloadTask(self._gid)
@@ -815,7 +815,7 @@ class DL_EntryManager(QObject):
         if not osp.exists(osp.join("MCSL2", "Downloads")):
             mkdir(osp.join("MCSL2", "Downloads"))
         if not osp.exists(DL_EntryManager.file):
-            MCSLLogger.info(f"创建下载记录文件: {DL_EntryManager.file}")
+            MCSL2Logger.info(f"创建下载记录文件: {DL_EntryManager.file}")
             with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
                 f.write("{}")
 
@@ -825,13 +825,13 @@ class DL_EntryManager(QObject):
             self.entries = json.load(f)
         for coreName, coreData in self.entries.copy().items():
             if check and not self.checkCoreEntry(coreName, coreData["md5"], autoDelete):
-                MCSLLogger.info(f"删除不完整的核心文件记录: {coreName}")
+                MCSL2Logger.info(f"删除不完整的核心文件记录: {coreName}")
                 try:
                     self.entries.pop(coreName)
                 except KeyError:
                     pass
         self.flush()
-        MCSLLogger.info(f"读取下载记录: {len(self.entries)}条")
+        MCSL2Logger.info(f"读取下载记录: {len(self.entries)}条")
         self.onReadEntries.emit(self.entries)
         return self.entries
 
@@ -842,7 +842,7 @@ class DL_EntryManager(QObject):
         json.dumps(
                 {entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True
             )
-        MCSLLogger.success(f"新增记录: {entryName}: {entryData}")
+        MCSL2Logger.success(f"新增记录: {entryName}: {entryData}")
         self.mutex.lock()
         self.entries.update({entryName: entryData})
         self.mutex.unlock()

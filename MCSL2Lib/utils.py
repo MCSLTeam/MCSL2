@@ -33,9 +33,10 @@ from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
 
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.Controllers.logController import _MCSL2Logger
 
-MCSLLogger = MCSL2Logger()
+
+MCSL2Logger = _MCSL2Logger()
 
 settingsController = SettingsController()
 
@@ -114,7 +115,7 @@ def configurationCompleter():
             pass
         else:
             missingKeys = set(configTemplate.keys()) - set(configContent.keys())
-            MCSLLogger.warning(f"缺失配置{missingKeys}，正在使用默认配置补全。")
+            MCSL2Logger.warning(f"缺失配置{missingKeys}，正在使用默认配置补全。")
             for key in missingKeys:
                 configContent[key] = configTemplate[key]
     with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
@@ -126,7 +127,7 @@ def warning(text: str):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            MCSLLogger.warning(f"警告: {func.__name__} {text}")
+            MCSL2Logger.warning(f"警告: {func.__name__} {text}")
             return func(*args, **kwargs)
 
         return wrapper
@@ -138,7 +139,7 @@ def obsolete(text: str):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            MCSLLogger.warning(f"此函数已过时: {func.__name__} {text}")
+            MCSL2Logger.warning(f"此函数已过时: {func.__name__} {text}")
             return func(*args, **kwargs)
 
         return wrapper

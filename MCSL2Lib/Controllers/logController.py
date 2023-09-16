@@ -5,15 +5,26 @@ from os import path as osp
 from typing import Optional
 from traceback import format_exception
 from MCSL2Lib.singleton import Singleton
-from PyQt5.QtCore import pyqtSlot
+from datetime import datetime
+from os import getpid
+from platform import (
+    system as systemType,
+    architecture as systemArchitecture,
+    version as systemVersion,
+    release as systemRelease,
+    python_version as pythonVersion
+)
+from psutil import Process
+
 
 @Singleton
-class MCSL2Logger:
+class _MCSL2Logger:
     def __init__(self):
+        self.time = datetime.now().strftime('%Y-%m-%d_%H-%M')
         self.logger = loguru_logger
         self.logger.add(
             self._getLogFile(),
-            rotation="30 s",
+            rotation="1 day",
             retention="14 days",
             level="DEBUG",
             enqueue=True,
@@ -24,10 +35,24 @@ class MCSL2Logger:
             encoding="utf-8",
             format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
         )
+        
+        sysInfo = (
+            f"{systemType()} {'11' if int(systemVersion().split('.')[-1]) >= 22000 else '10'} {systemVersion()}"
+            if systemType() == "Windows" and systemRelease() == "10"
+            else f"{systemType()} {systemRelease()}"
+        )
+        report = (
+            f"\nMCSL2 - 日志\n本次启动时刻：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n"
+            f"Python版本：{pythonVersion()}\n"
+            f"操作系统：{sysInfo}\n"
+            f"架构：{systemArchitecture()[0]}\n"
+            f"内存占用：{str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))}MB"
+        )
+        self.info(report)
 
     def _getLogFile(self) -> str:
         return osp.join(
-            "MCSL2/Logs", f"{datetime.now().strftime('%Y-%m-%d_%H-%M')}.log"
+            "MCSL2/Logs", f"MCSL2_{self.time}.log"
         )
 
     def _template(self, caller_info, msg) -> str:
@@ -76,6 +101,7 @@ class MCSL2Logger:
     # @pyqtSlot(str)
     def processOutput(self, msg: str):
         self.info(msg)
+
 
 # Example usage
 # logger = MCSL2Logger()

@@ -46,9 +46,9 @@ from MCSL2Lib.Controllers.serverController import ServerHandler, readServerPrope
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger
 
-MCSLLogger = MCSL2Logger()
+
 serverVariables = ServerVariables()
 
 
@@ -466,7 +466,7 @@ class ConsolePage(QWidget):
                 name = name.split("]: ")[1].split("[/")[0]
                 self.playersList.append(name)
             except Exception as e:
-                MCSLLogger.error(f"extract player name failed","onRecordPlayers::login {serverOutput}", exc=e)
+                MCSL2Logger.error(f"extract player name failed","onRecordPlayers::login {serverOutput}", exc=e)
 
         elif " left the game" in serverOutput:
             try:
@@ -483,7 +483,7 @@ class ConsolePage(QWidget):
                 name = name.split("]: ")[1].split(" left the game")[0].strip()
                 self.playersList.pop(self.playersList.index(name))
             except Exception as e:
-                MCSLLogger.error(f"extract player name failed","onRecordPlayers::logout {serverOutput}", exc=e)
+                MCSL2Logger.error(f"extract player name failed","onRecordPlayers::logout {serverOutput}", exc=e)
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""

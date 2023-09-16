@@ -36,12 +36,12 @@ from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply, QNetworkAccessManage
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.utils import ServerUrl, workingThreads
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
-from MCSL2Lib.Controllers.logController import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger
 
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 settingsController = SettingsController()
-MCSLLogger = MCSL2Logger()
+
 
 
 class InstallerError(Exception):
@@ -123,7 +123,7 @@ class Installer(QObject):
         self.logDecode = logDecode
         self.workingProcess: Optional[QProcess] = None
         self.logPartialData = b""
-        self.installerLogOutput.connect(MCSLLogger.processOutput)
+        self.installerLogOutput.connect(MCSL2Logger.processOutput)
         self.cancelled = False
         # self.workThread = QThread()
         # self.workThread.start()
@@ -134,7 +134,7 @@ class Installer(QObject):
     def cancelInstall(self, cancelled=False):
         self.cancelled = True
         if not cancelled:
-            MCSLLogger.warning("试图关闭ForgeInstaller...")
+            MCSL2Logger.warning("试图关闭ForgeInstaller...")
             if self.workingProcess is not None:
                 self.workingProcess.terminate()
                 self._cancelTimer.setSingleShot(True)
@@ -142,7 +142,7 @@ class Installer(QObject):
                     lambda: self.cancelInstall(True)
                 )  # 设置超时时间
         else:
-            MCSLLogger.error("关闭ForgeInstaller超时,正在强制关闭...")
+            MCSL2Logger.error("关闭ForgeInstaller超时,正在强制关闭...")
             self.workingProcess.kill()
             self._cancelTimer.stop()
             self._cancelTimer.deleteLater()
@@ -279,14 +279,14 @@ class ForgeInstaller(Installer):
         self._reply.downloadProgress.connect(self.onServerDownloadProgress)
         # 连接重定向信号，打印重定向后的URL
         self._reply.redirected.connect(
-            lambda url: MCSLLogger.info(f"Redirected to {url}")
+            lambda url: MCSL2Logger.info(f"Redirected to {url}")
         )
-        MCSLLogger.info("(正在下载核心... 0%) 使用BMCLAPI下载")
+        MCSL2Logger.info("(正在下载核心... 0%) 使用BMCLAPI下载")
         self.downloadServerProgress.emit("(正在下载核心... 0%) 使用BMCLAPI下载")
 
     def onServerDownloadProgress(self, bytesReceived, bytesTotal):
         percent = bytesReceived * 100 / bytesTotal
-        MCSLLogger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
+        MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
         self.downloadServerProgress.emit(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
 
     def onServerDownloadFinished(self):
@@ -307,9 +307,9 @@ class ForgeInstaller(Installer):
 
         若安装过程中出现错误,则抛出InstallerError
         """
-        MCSLLogger.debug(f"Forge安装：{self.__class__.__name__}{self._mcVersion}")
-        MCSLLogger.debug(f"Forge安装：{self.__class__.__name__}, {self._forgeVersion}")
-        MCSLLogger.debug(f"Forge安装：{self.thread().currentThreadId()=}")
+        MCSL2Logger.debug(f"Forge安装：{self.__class__.__name__}{self._mcVersion}")
+        MCSL2Logger.debug(f"Forge安装：{self.__class__.__name__}, {self._forgeVersion}")
+        MCSL2Logger.debug(f"Forge安装：{self.thread().currentThreadId()=}")
         if self.cancelled:
             self.installFinished.emit(False)
             return
@@ -331,7 +331,7 @@ class ForgeInstaller(Installer):
                 exist_ok=True,
             )
             self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
-            MCSLLogger.debug(f"Forge安装：{cwd}")
+            MCSL2Logger.debug(f"Forge安装：{cwd}")
             self.onServerDownload(cwd, f"server-{self._mcVersion}.jar")
         elif self.installPlan == ForgeInstaller.InstallPlan.PlanA:
             # 预下载核心并安装...
@@ -386,7 +386,7 @@ class ForgeInstaller(Installer):
         else:
             self._cancelTimer: QTimer
             self._cancelTimer.stop()
-            MCSLLogger.success("PlanB::forge installed callback entered")
+            MCSL2Logger.success("PlanB::forge installed callback entered")
             # 删除tmp
             remove(osp.join(self.cwd, self.file + ".tmp"))
 
