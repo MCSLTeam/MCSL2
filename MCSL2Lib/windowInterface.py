@@ -14,11 +14,10 @@
 The main window of MCSL2.
 """
 import sys
-import time
 from traceback import format_exception
 from types import TracebackType
 from typing import Type
-
+from platform import system
 from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget
@@ -50,6 +49,7 @@ from MCSL2Lib.Controllers.serverController import (
     ServerLauncher,
 )
 from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consolePage import ConsolePage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
@@ -77,6 +77,7 @@ configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 settingsVariables = SettingsVariables()
+
 
 pageLoadConfig = [
     {
@@ -218,7 +219,6 @@ class Window(MSFluentWindow):
         settingsController.initialize(firstLoad=True)
         self.setTheme()
         self.initWindow()
-        print(time.perf_counter())
         self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
@@ -226,8 +226,7 @@ class Window(MSFluentWindow):
         self.pluginManager: PluginManager = PluginManager()
 
         if experiment := settingsController.fileSettings.get("enableExperimentalFeatures", False):
-            print("实验性功能已启用")
-            print("实验性功能：", experiment)
+            MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
             self.homeInterface = None
             self.configureInterface = None
             self.downloadInterface = None
@@ -286,7 +285,6 @@ class Window(MSFluentWindow):
 
     @pyqtSlot(object, str, str)
     def onPageLoaded(self, pageType, targetObj, flag):
-        t = time.time()
         setattr(self, targetObj, pageType(self))
         setattr(loaded, flag, True)
         if loaded.allPageLoaded():
@@ -364,11 +362,11 @@ class Window(MSFluentWindow):
         mode = exceptionFilter(ty, value, _traceback)
 
         if mode == ExceptionFilterMode.PASS:
-            print("忽略了异常：", ty, value, _traceback)
+            MCSL2Logger.info(f"忽略了异常：{ty} {value} {_traceback}")
             return
 
         elif mode == ExceptionFilterMode.RAISE:
-            print("捕捉到异常：", ty, value, _traceback)
+            MCSL2Logger.error(f"捕捉到异常：{ty} {value} {_traceback}")
             return self.oldHook(ty, value, _traceback)
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
@@ -446,7 +444,9 @@ class Window(MSFluentWindow):
                     configThemeList.index(settingsController.fileSettings["theme"])
                 ]
             )
-        self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
+        
+        if "windows" in system().lower():
+            self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
     def initSafeQuitController(self):
@@ -662,10 +662,6 @@ class Window(MSFluentWindow):
             GlobalMCSL2Variables.isLoadFinished = True
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-        if a1.type() == QEvent.Resize:
-            # 打印改变后的窗口大小
-
-            print(f"窗口大小改变->{self.width()}x{self.height()}")
 
         if not GlobalMCSL2Variables.isLoadFinished:
             return super().eventFilter(a0, a1)

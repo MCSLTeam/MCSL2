@@ -63,6 +63,9 @@ from MCSL2Lib.singleton import Singleton
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.utils import readGlobalServerConfig, isDarkTheme
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
+from MCSL2Lib.utils import MCSL2Logger
+
+
 
 editServerVariables = EditServerVariables()
 settingsController = SettingsController()
@@ -1543,7 +1546,7 @@ class ServerManagerPage(QWidget):
             self.installingForgeStateToolTip.setContent(f"怪，安装失败！{args if args is not ... else ''}")
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
-            print(self.__class__.__name__, "回滚")
+            MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(self, "forgeInstaller"):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
             del self.forgeInstaller
         editServerVariables.resetToDefault()  # 重置

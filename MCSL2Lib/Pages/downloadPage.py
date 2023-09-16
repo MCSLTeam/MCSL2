@@ -13,7 +13,7 @@
 """
 Download page with FastMirror and MCSLAPI.
 """
-from os import path as osp, remove, startfile
+from os import path as osp, remove
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
@@ -55,11 +55,15 @@ from MCSL2Lib.Widgets.FastMirrorWidgets import (
 from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.Widgets.loadingTipWidget import MCSLAPILoadingErrorWidget, MCSLAPILoadingWidget
+from MCSL2Lib.Widgets.loadingTipWidget import (
+    MCSLAPILoadingErrorWidget,
+    MCSLAPILoadingWidget,
+)
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.Resources.icons import * # noqa: F401
+from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.utils import FileOpener  # noqa: F401
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
     DownloadVariables,
@@ -107,7 +111,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openDownloadFolderBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openDownloadFolderBtn.sizePolicy().hasHeightForWidth()
+        )
         self.openDownloadFolderBtn.setSizePolicy(sizePolicy)
         self.openDownloadFolderBtn.setObjectName("openDownloadFolderBtn")
         self.gridLayout_4.addWidget(self.openDownloadFolderBtn, 0, 1, 1, 1)
@@ -116,7 +122,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openDownloadEntriesBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openDownloadEntriesBtn.sizePolicy().hasHeightForWidth()
+        )
         self.openDownloadEntriesBtn.setSizePolicy(sizePolicy)
         self.openDownloadEntriesBtn.setObjectName("openDownloadEntriesBtn")
         self.gridLayout_4.addWidget(self.openDownloadEntriesBtn, 0, 2, 1, 1)
@@ -125,7 +133,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -634,12 +644,14 @@ class DownloadPage(QWidget):
             20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
         )
         self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
-        self.openDownloadFolderBtn.clicked.connect(lambda: startfile(f".\\MCSL2\\Downloads\\"))
+        self.openDownloadFolderBtn.clicked.connect(
+            lambda: FileOpener().openFileChecker(f".\\MCSL2\\Downloads\\")
+        )
 
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)
-        self.openDownloadEntriesBtn.clicked.connect(lambda :{
-            DownloadEntryBox(self).exec()
-        })
+        self.openDownloadEntriesBtn.clicked.connect(
+            lambda: {DownloadEntryBox(self).exec()}
+        )
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
@@ -674,18 +686,18 @@ class DownloadPage(QWidget):
             if downloadVariables.MCSLAPIDownloadUrlDict:
                 idx = self.MCSLAPIStackedWidget.currentIndex()
                 if (
-                        str(
-                            downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                                "downloadFileTitles"
-                            ]
-                        )
-                        != "-2"
-                        or str(
-                    downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                        "downloadFileTitles"
-                    ]
-                )
-                        != "-1"
+                    str(
+                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
+                            "downloadFileTitles"
+                        ]
+                    )
+                    != "-2"
+                    or str(
+                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
+                            "downloadFileTitles"
+                        ]
+                    )
+                    != "-1"
                 ):
                     self.initMCSLAPIDownloadWidget(n=idx)
                 else:
@@ -720,10 +732,10 @@ class DownloadPage(QWidget):
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
         idx = self.MCSLAPIStackedWidget.currentIndex()
         if (
-                str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-                != "-2"
-                or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-                != "-1"
+            str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
+            != "-2"
+            or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
+            != "-1"
         ):
             self.initMCSLAPIDownloadWidget(n=idx)
         else:
@@ -868,15 +880,15 @@ class DownloadPage(QWidget):
         self.refreshMCSLAPIBtn.setEnabled(True)
         try:
             if (
-                    type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
-                    == list
+                type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
+                == list
             ):
                 for i in range(
-                        len(
-                            downloadVariables.MCSLAPIDownloadUrlDict[n][
-                                "downloadFileTitles"
-                            ]
-                        )
+                    len(
+                        downloadVariables.MCSLAPIDownloadUrlDict[n][
+                            "downloadFileTitles"
+                        ]
+                    )
                 ):
                     self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
@@ -931,7 +943,12 @@ class DownloadPage(QWidget):
         ][idx2]
         # 判断文件是否存在
         # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
-        self.checkDownloadFileExists(fileName, fileFormat, uri, (fileName+"."+fileFormat, "coreName", "MCVer", "buildVer"))
+        self.checkDownloadFileExists(
+            fileName,
+            fileFormat,
+            uri,
+            (fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"),
+        )
 
     def initFastMirrorCoreListWidget(self):
         """FastMirror核心列表"""
@@ -957,9 +974,7 @@ class DownloadPage(QWidget):
             fastMirrorCoreListWidget.setObjectName(
                 downloadVariables.FastMirrorAPIDict["name"][i]
             )
-            fastMirrorCoreListWidget.clicked.connect(
-                self.fastMirrorCoreNameProcessor
-            )
+            fastMirrorCoreListWidget.clicked.connect(self.fastMirrorCoreNameProcessor)
             self.coreListLayout.addWidget(fastMirrorCoreListWidget)
         self.coreListLayout.addSpacerItem(self.scrollAreaSpacer)
 
@@ -975,6 +990,7 @@ class DownloadPage(QWidget):
                 self.buildLayout.itemAt(i).widget().deleteLater()
         except AttributeError:
             pass
+
     def initFastMirrorMCVersionsListWidget(self):
         try:
             self.versionLayout.removeItem(self.scrollAreaSpacer)
@@ -986,13 +1002,13 @@ class DownloadPage(QWidget):
         except AttributeError:
             pass
         for i in range(
-                len(
-                    downloadVariables.FastMirrorAPIDict["mc_versions"][
-                        list(downloadVariables.FastMirrorAPIDict["name"]).index(
-                            downloadVariables.selectedName
-                        )
-                    ]
-                )
+            len(
+                downloadVariables.FastMirrorAPIDict["mc_versions"][
+                    list(downloadVariables.FastMirrorAPIDict["name"]).index(
+                        downloadVariables.selectedName
+                    )
+                ]
+            )
         ):
             fastMirrorMCVersionsListWidget = FastMirrorVersionListWidget(self)
             MCVersion = downloadVariables.FastMirrorAPIDict["mc_versions"][
@@ -1056,9 +1072,17 @@ class DownloadPage(QWidget):
         fileFormat = "jar"
         uri = f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}"
         # 判断文件是否存在
-        self.checkDownloadFileExists(fileName, fileFormat, uri,
-                                     (f"{fileName}.jar", downloadVariables.selectedName, downloadVariables.selectedMCVersion,
-                                      buildVer))
+        self.checkDownloadFileExists(
+            fileName,
+            fileFormat,
+            uri,
+            (
+                f"{fileName}.jar",
+                downloadVariables.selectedName,
+                downloadVariables.selectedMCVersion,
+                buildVer,
+            ),
+        )
 
     def hideDownloadHelper(self):
         self.downloadingInfoBar = InfoBar(
@@ -1069,9 +1093,9 @@ class DownloadPage(QWidget):
             isClosable=False,
             duration=-1,
             position=InfoBarPosition.TOP_RIGHT,
-            parent=self
+            parent=self,
         )
-        self.downloadingInfoBar.setCustomBackgroundColor('white', '#202020')
+        self.downloadingInfoBar.setCustomBackgroundColor("white", "#202020")
         showDownloadMsgBoxBtn = PushButton()
         showDownloadMsgBoxBtn.setText("恢复")
         showDownloadMsgBoxBtn.clicked.connect(self.downloadingBox.show)
@@ -1086,9 +1110,11 @@ class DownloadPage(QWidget):
         except:
             pass
 
-    def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
+    def checkDownloadFileExists(
+        self, fileName, fileFormat, uri, extraData: tuple
+    ) -> bool:
         if osp.exists(
-                osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
+            osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
         ) and not osp.exists(
             osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
         ):
@@ -1104,7 +1130,7 @@ class DownloadPage(QWidget):
                 )
                 w.exec()
             elif (
-                    settingsController.fileSettings["saveSameFileException"] == "overwrite"
+                settingsController.fileSettings["saveSameFileException"] == "overwrite"
             ):
                 InfoBar.warning(
                     title="警告",
@@ -1131,18 +1157,26 @@ class DownloadPage(QWidget):
             self.downloadFile(fileName, fileFormat, uri, extraData)
 
     def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
-        self.downloadingBox = DownloadMessageBox(f"{fileName}.{fileFormat}", parent=self)
-        self.downloadingBox.DownloadWidget().closeBoxBtnFinished.clicked.connect(self.downloadingBox.close)
-        self.downloadingBox.DownloadWidget().closeBoxBtnFailed.clicked.connect(self.downloadingBox.close)
+        self.downloadingBox = DownloadMessageBox(
+            f"{fileName}.{fileFormat}", parent=self
+        )
+        self.downloadingBox.DownloadWidget().closeBoxBtnFinished.clicked.connect(
+            self.downloadingBox.close
+        )
+        self.downloadingBox.DownloadWidget().closeBoxBtnFailed.clicked.connect(
+            self.downloadingBox.close
+        )
         gid = Aria2Controller.download(
             uri=uri,
             watch=True,
             info_get=self.downloadingBox.onInfoGet,
             stopped=self.downloadingBox.onDownloadFinished,
             interval=0.2,
-            extraData=extraData
+            extraData=extraData,
         )
-        self.downloadingBox.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+        self.downloadingBox.canceled.connect(
+            lambda: Aria2Controller.cancelDownloadTask(gid)
+        )
         self.downloadingBox.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
             if x

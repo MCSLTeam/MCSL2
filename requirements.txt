@@ -8,8 +8,9 @@ PyQt-Fluent-Widgets[full]>=1.2.0
 requests>=2.31.0
 aria2p==0.11.3
 
-# env
+# tools
 psutil==5.9.5
+loguru==0.7.2
 
 # utils
 zstandard>=0.21.0

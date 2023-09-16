@@ -27,6 +27,7 @@ from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables
+from MCSL2Lib.utils import MCSL2Logger
 
 settingsController = SettingsController()
 serverVariables = ServerVariables()
@@ -102,7 +103,7 @@ class ServerHandler(QObject):
         self.workingDirectory: str = ""
         self.partialData: str = b""
         self.AServer = None
-        self.serverLogOutput.connect(print)
+        self.serverLogOutput.connect(MCSL2Logger.info)
         self.Server = self.getServerProcess()
 
     def getServerProcess(self) -> Server:
@@ -209,7 +210,6 @@ class ServerHandler(QObject):
             return False
         return self.Server.serverProcess.state() == QProcess.Running
 
-
 @Singleton
 class MojangEula:
     """有关Mojang Eula的部分。"""
@@ -293,7 +293,7 @@ class ServerLauncher:
 
         # add "nogui" arg
         self.jvmArg.append("nogui")
-        print(self.jvmArg)
+        MCSL2Logger.info(f"生成JVM参数：\n{self.jvmArg}")
 
     def launch(self):
         """启动进程"""

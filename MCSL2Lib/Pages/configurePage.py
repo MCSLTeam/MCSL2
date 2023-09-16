@@ -72,6 +72,8 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+from MCSL2Lib.utils import MCSL2Logger
+
 
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
@@ -1988,8 +1990,8 @@ class ConfigurePage(QWidget):
 
                 # init installerLogViewer
                 self.installerLogViewer = ForgeInstallerProgressBox(self.forgeInstaller.installerLogOutput, self)
-                self.installerLogViewer.yesButton.clicked.connect(lambda: self.forgeInstaller.cancelInstall())
-                self.installerLogViewer.cancelButton.clicked.connect(lambda: self.installerLogViewer.hide())
+                self.installerLogViewer.cancelButton.clicked.connect(self.forgeInstaller.cancelInstall)
+                self.installerLogViewer.yesButton.clicked.connect(self.hideForgeInstallerHelper)
                 self.installerLogViewer.setModal(True)
                 self.forgeInstaller.downloadServerProgress.connect(lambda text:{
                     self.installerLogViewer.titleLabel.setText(f"Forge安装器{text}"),
@@ -2213,7 +2215,27 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
             self.addNewServerRollback()
-            print(self.__class__.__name__, "回滚")
+            MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(self, "forgeInstaller"):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
             del self.forgeInstaller
         configureServerVariables.resetToDefault()  # 重置
+
+    
+    def hideForgeInstallerHelper(self):
+        self.installingForgeInfoBar = InfoBar(
+            icon=FIF.DEVELOPER_TOOLS,
+            title="已隐藏安装Forge窗口",
+            content="仍在安装中，点击按钮恢复窗口...",
+            orient=Qt.Horizontal,
+            isClosable=False,
+            duration=-1,
+            position=InfoBarPosition.TOP_RIGHT,
+            parent=self,
+        )
+        self.installingForgeInfoBar.setCustomBackgroundColor("white", "#202020")
+        showForgeInstallMsgBoxBtn = PushButton()
+        showForgeInstallMsgBoxBtn.setText("恢复")
+        showForgeInstallMsgBoxBtn.clicked.connect(self.installerLogViewer.show)
+        showForgeInstallMsgBoxBtn.clicked.connect(self.installingForgeInfoBar.close)
+        self.installingForgeInfoBar.addWidget(showForgeInstallMsgBoxBtn)
+        self.installingForgeInfoBar.show()

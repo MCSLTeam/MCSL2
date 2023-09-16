@@ -34,8 +34,9 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SubtitleLabel, MessageBox,
 )
-
+from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
+
 
 
 class DownloadProgressWidget(QWidget):
@@ -298,7 +299,7 @@ class DownloadMessageBox(MessageBox):
                     )
             elif dl.status == "error":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-                print(dl.error_code, dl.error_message, dl.files)
+                MCSL2Logger.error(f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         else:
