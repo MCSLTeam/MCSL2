@@ -73,11 +73,11 @@ class MCSL2Logger:
 
 
 # Example usage
-logger = MCSL2Logger()
-logger.info("This is an info message.")
-logger.warning("This is a warning message.")
-logger.success("This is a success message.")
-logger.error(msg="This is an error message.", exc=TypeError("Test"))
-logger.trace("This is an trace message.")
-logger.debug("This is a debug message.")
-logger.critical("This is an critical message.")
+# logger = MCSL2Logger()
+# logger.info("This is an info message.")
+# logger.warning("This is a warning message.")
+# logger.success("This is a success message.")
+# logger.error(msg="This is an error message.", exc=TypeError("Test"))
+# logger.trace("This is an trace message.")
+# logger.debug("This is a debug message.")
+# logger.critical("This is an critical message.")
