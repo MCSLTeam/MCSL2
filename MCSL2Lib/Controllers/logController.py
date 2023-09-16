@@ -1,4 +1,4 @@
-from inspect import getframeinfo, getmodulename, currentframe
+from inspect import getframeinfo, getmodulename, currentframe, stack
 from datetime import datetime
 from loguru import logger as loguru_logger
 from os import path as osp
@@ -12,7 +12,7 @@ from platform import (
     architecture as systemArchitecture,
     version as systemVersion,
     release as systemRelease,
-    python_version as pythonVersion
+    python_version as pythonVersion,
 )
 from psutil import Process
 
@@ -20,7 +20,7 @@ from psutil import Process
 @Singleton
 class _MCSL2Logger:
     def __init__(self):
-        self.time = datetime.now().strftime('%Y-%m-%d_%H-%M')
+        self.time = datetime.now().strftime("%Y-%m-%d_%H-%M")
         self.logger = loguru_logger
         self.logger.add(
             self._getLogFile(),
@@ -35,7 +35,7 @@ class _MCSL2Logger:
             encoding="utf-8",
             format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
         )
-        
+
         sysInfo = (
             f"{systemType()} {'11' if int(systemVersion().split('.')[-1]) >= 22000 else '10'} {systemVersion()}"
             if systemType() == "Windows" and systemRelease() == "10"
@@ -51,56 +51,82 @@ class _MCSL2Logger:
         self.info(report)
 
     def _getLogFile(self) -> str:
-        return osp.join(
-            "MCSL2/Logs", f"MCSL2_{self.time}.log"
-        )
+        return osp.join("MCSL2/Logs", f"MCSL2_{self.time}.log")
 
     def _template(self, caller_info, msg) -> str:
         return f"{caller_info['module']}.{caller_info['function']}, at line {caller_info['line']} | {msg}"
 
-    def getCallerInfo(self) -> dict:
+    def info(self, msg: str):
         frame = getframeinfo(currentframe().f_back)
-        moduleName = getmodulename(frame.filename)
-        return {
-            "module": moduleName,
+        caller_info = {
+            "module": getmodulename(frame.filename),
             "filename": frame.filename,
             "line": frame.lineno,
             "function": frame.function,
         }
-
-    def info(self, msg: str):
-        caller_info = self.getCallerInfo()
         self.logger.info(self._template(caller_info, msg))
 
     def warning(self, msg: str):
-        caller_info = self.getCallerInfo()
+        frame = getframeinfo(currentframe().f_back)
+        caller_info = {
+            "module": getmodulename(frame.filename),
+            "filename": frame.filename,
+            "line": frame.lineno,
+            "function": frame.function,
+        }
         self.logger.warning(self._template(caller_info, msg))
 
     def success(self, msg: str):
-        caller_info = self.getCallerInfo()
+        frame = getframeinfo(currentframe().f_back)
+        caller_info = {
+            "module": getmodulename(frame.filename),
+            "filename": frame.filename,
+            "line": frame.lineno,
+            "function": frame.function,
+        }
         self.logger.success(self._template(caller_info, msg))
 
     def error(self, exc: Optional[Exception] = None, msg: Optional[str] = ""):
-        caller_info = self.getCallerInfo()
+        frame = getframeinfo(currentframe().f_back)
+        caller_info = {
+            "module": getmodulename(frame.filename),
+            "filename": frame.filename,
+            "line": frame.lineno,
+            "function": frame.function,
+        }
         excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
         self.logger.error(self._template(caller_info, f"{msg}\n{excStr}"))
 
     def trace(self, msg: str):
-        caller_info = self.getCallerInfo()
+        frame = getframeinfo(currentframe().f_back)
+        caller_info = {
+            "module": getmodulename(frame.filename),
+            "filename": frame.filename,
+            "line": frame.lineno,
+            "function": frame.function,
+        }
         self.logger.trace(self._template(caller_info, msg))
 
     def debug(self, msg: str):
-        caller_info = self.getCallerInfo()
+        frame = getframeinfo(currentframe().f_back)
+        caller_info = {
+            "module": getmodulename(frame.filename),
+            "filename": frame.filename,
+            "line": frame.lineno,
+            "function": frame.function,
+        }
         self.logger.debug(self._template(caller_info, msg))
 
     def critical(self, exc: Optional[Exception] = None, msg: Optional[str] = ""):
-        caller_info = self.getCallerInfo()
+        frame = getframeinfo(currentframe().f_back)
+        caller_info = {
+            "module": getmodulename(frame.filename),
+            "filename": frame.filename,
+            "line": frame.lineno,
+            "function": frame.function,
+        }
         excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
         self.logger.critical(self._template(caller_info, f"{msg}\n{excStr}"))
-
-    # @pyqtSlot(str)
-    def processOutput(self, msg: str):
-        self.info(msg)
 
 
 # Example usage

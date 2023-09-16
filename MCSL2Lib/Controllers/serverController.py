@@ -103,7 +103,7 @@ class ServerHandler(QObject):
         self.workingDirectory: str = ""
         self.partialData: str = b""
         self.AServer = None
-        self.serverLogOutput.connect(MCSL2Logger.processOutput)
+        self.serverLogOutput.connect(MCSL2Logger.info)
         self.Server = self.getServerProcess()
 
     def getServerProcess(self) -> Server:

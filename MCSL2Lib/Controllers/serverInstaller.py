@@ -123,7 +123,7 @@ class Installer(QObject):
         self.logDecode = logDecode
         self.workingProcess: Optional[QProcess] = None
         self.logPartialData = b""
-        self.installerLogOutput.connect(MCSL2Logger.processOutput)
+        self.installerLogOutput.connect(MCSL2Logger.info)
         self.cancelled = False
         # self.workThread = QThread()
         # self.workThread.start()
