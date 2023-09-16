@@ -1,19 +1,15 @@
-from inspect import getframeinfo, getmodulename, getsourcefile, currentframe
+from inspect import getframeinfo, getmodulename, currentframe
 from datetime import datetime
 from loguru import logger as loguru_logger
-from loguru._logger import Logger
-from loguru._logger import Core as _Core
 from os import path as osp
 from typing import Optional
 from traceback import format_exception
-# from colorama import 
-# from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.singleton import Singleton
 
-# @Singleton
+@Singleton
 class MCSL2Logger:
     def __init__(self):
         self.logger = loguru_logger
-        # self.logger.remove()
         self.logger.add(
             self._getLogFile(),
             rotation="30 s",
