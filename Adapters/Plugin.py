@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from json import loads
-from os import walk, getcwd, path as osp, startfile
+from os import walk, getcwd, path as osp
 from shutil import rmtree
 from threading import Thread
 from typing import List
@@ -13,7 +13,7 @@ from qfluentwidgets import MessageBox, LineEdit, InfoBar, InfoBarPosition
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
-from MCSL2Lib.utils import isDarkTheme
+from MCSL2Lib.utils import isDarkTheme, FileOpener
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
@@ -103,6 +103,7 @@ class PluginManager(BasePluginManager):
         self.pluginsScrollAreaSpacer = QSpacerItem(
             20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
         )
+        self.isOpenedFolder: int = 0
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         """禁用插件"""
@@ -250,7 +251,7 @@ class PluginManager(BasePluginManager):
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: startfile(f".\\Plugins\\{instance}\\")
+                lambda instance: FileOpener().openFileChecker(f".\\Plugins\\{instance}\\")
             )
             self.pluginWidget.deleteBtn.selfClicked.connect(
                 lambda instance: self.deletePlugin(

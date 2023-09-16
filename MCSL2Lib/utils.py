@@ -25,6 +25,10 @@ from typing import Type, Optional, Iterable, Callable, Dict, List
 import aria2p
 from PyQt5.QtCore import QUrl, QThread
 from PyQt5.QtGui import QDesktopServices
+
+from subprocess import Popen 
+from platform import system as sysinfo
+
 from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.settingsController import SettingsController
@@ -286,3 +290,23 @@ class workingThreads:
 
     def __call__(self, *args, **kwargs):
         raise RuntimeError("This class is not allowed to be instantiated.")
+
+class FileOpener:
+
+    def openFileChecker(self, filePath):
+        if not self.isOpenedFolder:
+            self._openFileFolder(filePath)
+            self.isOpenedFolder = 1
+        else:
+            self.isOpenedFolder = 0
+
+    def _openFileFolder(_filePath):
+        system = sysinfo()
+        if system == "Windows":
+            Popen(["start", _filePath], shell=True)
+        elif system == "Darwin":
+            Popen(["open", _filePath])
+        elif system == "Linux":
+            Popen(["xdg-open", _filePath])
+        else:
+            print("Unsupported operating system")
