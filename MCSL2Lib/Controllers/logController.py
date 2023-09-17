@@ -20,7 +20,7 @@ from psutil import Process
 @Singleton
 class _MCSL2Logger:
     def __init__(self):
-        self.time = datetime.now().strftime("%Y-%m-%d_%H-%M")
+        self.time = datetime.now().strftime("%Y-%m-%d_%H")
         self.logger = loguru_logger
         self.logger.add(
             self._getLogFile(),
