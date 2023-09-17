@@ -428,7 +428,7 @@ class Window(MSFluentWindow):
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        self.resize(w // 2, h // 1.5)
+        self.resize(w // 2, int(h // 1.5))
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
