@@ -18,7 +18,16 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 from platform import system
-from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSlot, QSize, pyqtSignal, QThread
+from PyQt5.QtCore import (
+    QEvent,
+    QObject,
+    Qt,
+    QTimer,
+    pyqtSlot,
+    QSize,
+    pyqtSignal,
+    QThread,
+)
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget
 from qfluentwidgets import (
@@ -31,7 +40,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     MessageBox,
     HyperlinkButton,
-    MSFluentWindow,
+    FluentWindow,
     SplashScreen,
 )
 
@@ -62,7 +71,12 @@ from MCSL2Lib.Pages.settingsPage import SettingsPage
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.utils import isDarkTheme, exceptionFilter, ExceptionFilterMode, workingThreads
+from MCSL2Lib.utils import (
+    isDarkTheme,
+    exceptionFilter,
+    ExceptionFilterMode,
+    workingThreads,
+)
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
@@ -80,50 +94,46 @@ settingsVariables = SettingsVariables()
 
 
 pageLoadConfig = [
+    {"type": HomePage, "targetObj": "homeInterface", "flag": "homeInterfaceLoaded"},
     {
-        'type': HomePage,
-        'targetObj': 'homeInterface',
-        'flag': 'homeInterfaceLoaded'
+        "type": ConsolePage,
+        "targetObj": "consoleInterface",
+        "flag": "consoleInterfaceLoaded",
     },
     {
-        'type': ConsolePage,
-        'targetObj': 'consoleInterface',
-        'flag': 'consoleInterfaceLoaded'
+        "type": PluginPage,
+        "targetObj": "pluginsInterface",
+        "flag": "pluginsInterfaceLoaded",
     },
     {
-        'type': PluginPage,
-        'targetObj': 'pluginsInterface',
-        'flag': 'pluginsInterfaceLoaded'
+        "type": SettingsPage,
+        "targetObj": "settingsInterface",
+        "flag": "settingsInterfaceLoaded",
     },
     {
-        'type': SettingsPage,
-        'targetObj': 'settingsInterface',
-        'flag': 'settingsInterfaceLoaded'
+        "type": ServerManagerPage,
+        "targetObj": "serverManagerInterface",
+        "flag": "serverManagerInterfaceLoaded",
     },
     {
-        'type': ServerManagerPage,
-        'targetObj': 'serverManagerInterface',
-        'flag': 'serverManagerInterfaceLoaded'
+        "type": SelectNewJavaPage,
+        "targetObj": "selectNewJavaPage",
+        "flag": "selectNewJavaPageLoaded",
     },
     {
-        'type': SelectNewJavaPage,
-        'targetObj': 'selectNewJavaPage',
-        'flag': 'selectNewJavaPageLoaded'
+        "type": SelectJavaPage,
+        "targetObj": "selectJavaPage",
+        "flag": "selectJavaPageLoaded",
     },
     {
-        'type': SelectJavaPage,
-        'targetObj': 'selectJavaPage',
-        'flag': 'selectJavaPageLoaded'
+        "type": DownloadPage,
+        "targetObj": "downloadInterface",
+        "flag": "downloadInterfaceLoaded",
     },
     {
-        'type': DownloadPage,
-        'targetObj': 'downloadInterface',
-        'flag': 'downloadInterfaceLoaded'
-    },
-    {
-        'type': ConfigurePage,
-        'targetObj': 'configureInterface',
-        'flag': 'configureInterfaceLoaded'
+        "type": ConfigurePage,
+        "targetObj": "configureInterface",
+        "flag": "configureInterfaceLoaded",
     },
 ]
 
@@ -147,42 +157,40 @@ class InterfaceLoaded(QObject):
 
     def canInitNavigation(self):
         return (
-                self.homeInterfaceLoaded
-                and self.configureInterfaceLoaded
-                and self.downloadInterfaceLoaded
-                and self.consoleInterfaceLoaded
-                and self.pluginsInterfaceLoaded
-                and self.settingsInterfaceLoaded
-                and self.serverManagerInterfaceLoaded
+            self.homeInterfaceLoaded
+            and self.configureInterfaceLoaded
+            and self.downloadInterfaceLoaded
+            and self.consoleInterfaceLoaded
+            and self.pluginsInterfaceLoaded
+            and self.settingsInterfaceLoaded
+            and self.serverManagerInterfaceLoaded
         )
 
     def canInitQtSlot(self):
         return (
-                self.configureInterfaceLoaded
-                and self.selectJavaPageLoaded
-                and self.homeInterfaceLoaded
-                and self.serverManagerInterfaceLoaded
-                and self.consoleInterfaceLoaded
-                and self.selectNewJavaPageLoaded
-                and self.downloadInterfaceLoaded
+            self.configureInterfaceLoaded
+            and self.selectJavaPageLoaded
+            and self.homeInterfaceLoaded
+            and self.serverManagerInterfaceLoaded
+            and self.consoleInterfaceLoaded
+            and self.selectNewJavaPageLoaded
+            and self.downloadInterfaceLoaded
         )
 
     def canInitPluginSystem(self):
-        return (
-            self.pluginsInterfaceLoaded
-        )
+        return self.pluginsInterfaceLoaded
 
     def allPageLoaded(self):
         return (
-                self.homeInterfaceLoaded
-                and self.configureInterfaceLoaded
-                and self.downloadInterfaceLoaded
-                and self.consoleInterfaceLoaded
-                and self.pluginsInterfaceLoaded
-                and self.settingsInterfaceLoaded
-                and self.serverManagerInterfaceLoaded
-                and self.selectJavaPageLoaded
-                and self.selectNewJavaPageLoaded
+            self.homeInterfaceLoaded
+            and self.configureInterfaceLoaded
+            and self.downloadInterfaceLoaded
+            and self.consoleInterfaceLoaded
+            and self.pluginsInterfaceLoaded
+            and self.settingsInterfaceLoaded
+            and self.serverManagerInterfaceLoaded
+            and self.selectJavaPageLoaded
+            and self.selectNewJavaPageLoaded
         )
 
 
@@ -192,7 +200,9 @@ loaded = InterfaceLoaded()
 class PageLoader(QThread):
     loadFinished = pyqtSignal(object, str, str)
 
-    def __init__(self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None):
+    def __init__(
+        self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None
+    ):
         super().__init__()
         self.pageType = pageType
         self.targetObj = targetObj
@@ -207,13 +217,12 @@ class PageLoader(QThread):
 
 
 @Singleton
-class Window(MSFluentWindow):
+class Window(FluentWindow):
     """程序主窗口"""
 
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
-
         super().__init__()
         # 读取程序设置，不放在第一位就会爆炸！
         settingsController.initialize(firstLoad=True)
@@ -225,7 +234,9 @@ class Window(MSFluentWindow):
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
 
-        if experiment := settingsController.fileSettings.get("enableExperimentalFeatures", False):
+        if experiment := settingsController.fileSettings.get(
+            "enableExperimentalFeatures", False
+        ):
             MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
             self.homeInterface = None
             self.configureInterface = None
@@ -241,7 +252,12 @@ class Window(MSFluentWindow):
             # 页面加载器
             loaders = []
             for config in pageLoadConfig:
-                loader = PageLoader(config['type'], config['targetObj'], config['flag'], self.onPageLoaded)
+                loader = PageLoader(
+                    config["type"],
+                    config["targetObj"],
+                    config["flag"],
+                    self.onPageLoaded,
+                )
                 loaders.append(loader)
 
             for loader in loaders:
@@ -249,7 +265,6 @@ class Window(MSFluentWindow):
 
             # self.initWindow()
         else:
-
             # 定义子页面
             self.homeInterface = HomePage(self)
             self.configureInterface = ConfigurePage(self)
@@ -281,7 +296,9 @@ class Window(MSFluentWindow):
         self.initSafeQuitController()
 
         loaded.mainWindowInited = True
-        GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
+        GlobalMCSL2Variables.isLoadFinished = (
+            False if not loaded.allPageLoaded() else True
+        )
 
     @pyqtSlot(object, str, str)
     def onPageLoaded(self, pageType, targetObj, flag):
@@ -350,7 +367,7 @@ class Window(MSFluentWindow):
         process.kill()
 
     def catchExceptions(
-            self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
     ):
         """
         全局捕获异常，并弹窗显示
@@ -396,14 +413,14 @@ class Window(MSFluentWindow):
 
     def initNavigation(self):
         """初始化导航栏"""
-        self.addSubInterface(
-            self.homeInterface, FIF.HOME, "主页", selectedIcon=FIF.HOME_FILL
-        )
+        self.addSubInterface(self.homeInterface, FIF.HOME, "主页")
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, "新建")
         self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, "管理")
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, "下载")
         self.addSubInterface(self.consoleInterface, FIF.COMMAND_PROMPT, "终端")
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, "插件")
+        self.navigationInterface.addSeparator()
+        self.navigationInterface.setExpandWidth(200)
         self.addSubInterface(
             self.settingsInterface,
             FIF.SETTING,
@@ -444,7 +461,7 @@ class Window(MSFluentWindow):
                     configThemeList.index(settingsController.fileSettings["theme"])
                 ]
             )
-        
+
         if "windows" in system().lower():
             self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
@@ -662,25 +679,24 @@ class Window(MSFluentWindow):
             GlobalMCSL2Variables.isLoadFinished = True
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-
         if not GlobalMCSL2Variables.isLoadFinished:
             return super().eventFilter(a0, a1)
 
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if len(
-                            GlobalMCSL2Variables.userCommandHistory
+                        GlobalMCSL2Variables.userCommandHistory
                     ) and GlobalMCSL2Variables.upT > -len(
                         GlobalMCSL2Variables.userCommandHistory
                     ):
@@ -692,12 +708,12 @@ class Window(MSFluentWindow):
                         return True
             elif a1.key() == Qt.Key_Down:
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                            len(GlobalMCSL2Variables.userCommandHistory)
-                            and GlobalMCSL2Variables.upT < 0
+                        len(GlobalMCSL2Variables.userCommandHistory)
+                        and GlobalMCSL2Variables.upT < 0
                     ):
                         GlobalMCSL2Variables.upT += 1
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
@@ -706,8 +722,8 @@ class Window(MSFluentWindow):
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                            len(GlobalMCSL2Variables.userCommandHistory)
-                            and GlobalMCSL2Variables.upT == 0
+                        len(GlobalMCSL2Variables.userCommandHistory)
+                        and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
