@@ -1,5 +1,15 @@
 # By shenjackyuanjie start from 20230818
 # 求求 github action 大哥放我一马 能直接跑
+# 显灵了! 能跑!
+
+"""
+请各位修改之前一定要 @一下我 (shenjackyuanjie)
+我也没找到啥时候把版本号丢到 variable 里面的
+但是我谢谢你
+要么发个 PR, 要么在群里 @一下 shenjack
+反正一定跟我说一声
+2023 09 17
+"""
 
 import sys
 import time
@@ -8,18 +18,21 @@ import subprocess
 
 from typing import Tuple
 from pathlib import Path
-from MCSL2Lib.variables import GlobalMCSL2Variables
+from MCSL2Lib import VERSION, BUILD_VERSION  # 修改为直接放在 __init__ 里
 from lib_not_dr.nuitka.compile import CompilerHelper
 from lib_not_dr.types.version import Version
 
 
 def get_version() -> Tuple[Version, Version]:
-    return (Version(GlobalMCSL2Variables.MCSL2Version), Version("0.0.1.0"))
+    # 尽量不要写死在构建脚本里
+    return (Version(VERSION), Version(BUILD_VERSION))
 
 
 def gen_compiler() -> CompilerHelper:
     vers = get_version()
     # for lib-not-dr 0.1.x
+    # 0.2 估计要大改,反正先这样再说
+    # 我 0.2 估计近一段时间反正出不来
     compiler = CompilerHelper(
         src_file=Path("./MCSL2.py"),
         python_cmd=sys.executable,
