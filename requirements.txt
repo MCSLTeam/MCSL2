@@ -16,7 +16,7 @@ loguru==0.7.2
 zstandard>=0.21.0
 
 # builder
-nuitka>=1.8
+nuitka>=1.8.1
 imageio>=2.31.3
-lib-not-dr>=0.1.5, <=0.2.0
+lib-not-dr>=0.1.6, <=0.2.0
 
