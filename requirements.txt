@@ -9,14 +9,14 @@ requests>=2.31.0
 aria2p==0.11.3
 
 # tools
-psutil==5.9.5
+psutil=>5.9.5, <=5.10.0
 loguru==0.7.2
 
 # utils
 zstandard>=0.21.0
 
 # builder
-nuitka>=1.8.1
+nuitka>=1.8.2
 imageio>=2.31.3
 lib-not-dr>=0.1.6, <=0.2.0
 
