@@ -9,7 +9,7 @@ requests>=2.31.0
 aria2p==0.11.3
 
 # tools
-psutil=>5.9.5, <=5.10.0
+psutil==5.9.5
 loguru==0.7.2
 
 # utils
