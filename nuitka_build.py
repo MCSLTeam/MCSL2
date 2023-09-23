@@ -59,7 +59,6 @@ def gen_compiler() -> CompilerHelper:
             ("MCSL2/Aria2", "MCSL2/Aria2"),
         ],
         enable_plugin=["pyqt5"],
-        disable_plugin=["multiprocessing"],
     )
     return compiler
 

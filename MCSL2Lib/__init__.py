@@ -15,9 +15,8 @@
 为了解决本地构建测试时缺少一些东西不能测试构建的问题
 所以直接把一些参数放到这里来
 """
+from .variables import GlobalMCSL2Variables
 
-_version_ = "2.2.2.1"
-
-VERSION = _version_
+VERSION = GlobalMCSL2Variables.MCSL2Version
 
 BUILD_VERSION = "0.1.0.0"
