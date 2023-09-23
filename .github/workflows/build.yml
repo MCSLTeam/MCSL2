@@ -135,7 +135,7 @@ jobs:
     strategy:
       matrix:
         mcsl2version: 
-          - 2.2.2.0
+          - 2.2.2.1
 
     steps:
 
