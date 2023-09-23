@@ -47,8 +47,6 @@ jobs:
         run: |
           cmd /K rmdir /s /q .\build\MCSL2.dist\zstandard
           cmd /K del /f /q .\build\MCSL2.dist\_asyncio.pyd
-          cmd /K del /f /q .\build\MCSL2.dist\_multiprocessing.pyd
-          cmd /K del /f /q .\build\MCSL2.dist\_queue.pyd
           cmd /K del /f /q .\build\MCSL2.dist\pyexpat.pyd
           cmd /K del /f /q .\build\MCSL2.dist\qt5qml.dll
           cmd /K del /f /q .\build\MCSL2.dist\qt5qmlmodels.dll
