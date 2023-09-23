@@ -41,7 +41,7 @@ def gen_compiler() -> CompilerHelper:
         use_msvc=True,
         use_lto=False,
         standalone=True,
-        enable_console=False,
+        enable_console=True,
         show_progress=True,
         download_confirm=True,
         remove_output=True,
