@@ -72,7 +72,6 @@ if __name__ == "__main__":
         compiler.use_ccache = False
         compiler.show_memory = False
         compiler.show_progress = False
-        compiler.enable_console = False
         compiler.output_path = Path("./build")
         sys.argv.remove("--github")
 
