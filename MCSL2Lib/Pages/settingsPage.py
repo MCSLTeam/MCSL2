@@ -15,17 +15,10 @@ Settings page.
 """
 
 from datetime import datetime
-from os import getpid
-from platform import (
-    system as systemType,
-    architecture as systemArchitecture,
-    version as systemVersion,
-    release as systemRelease,
-    python_version as pythonVersion
-)
+from platform import system as systemType
 from typing import Union
 
-from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QThread, pyqtSlot
+from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QWidget,
@@ -39,7 +32,6 @@ from PyQt5.QtWidgets import (
     QSlider,
     QApplication,
 )
-from psutil import Process
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
@@ -67,6 +59,7 @@ from MCSL2Lib.Controllers.updateController import (
     CheckUpdateThread,
     FetchUpdateIntroThread,
 )
+from MCSL2Lib.Controllers.logController import genSysReport
 from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
 from MCSL2Lib.utils import openWebUrl
 from MCSL2Lib.singleton import Singleton
@@ -1721,19 +1714,10 @@ class SettingsPage(QWidget):
             duration=1500,
             parent=self,
         )
-        sysInfo = (
-            f"{systemType()} {'11' if int(systemVersion().split('.')[-1]) >= 22000 else '10'} {systemVersion()}"
-            if systemType() == "Windows" and systemRelease() == "10"
-            else f"{systemType()} {systemRelease()}"
-        )
         report = (
             f"MCSL2系统报告：\n"
             f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n"
-            f"Python版本：{pythonVersion()}\n"
-            f"MCSL2版本：{GlobalMCSL2Variables.MCSL2Version}\n"
-            f"操作系统：{sysInfo}\n"
-            f"架构：{systemArchitecture()[0]}\n"
-            f"内存占用：{str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))}MB"
+            f"{genSysReport()}"
         )
 
         title = "MC Server Launcher 2系统报告"
