@@ -10,6 +10,9 @@
  - 优化MCSL2系统报告功能  
  - 现在同意Eula后会自动开启服务器[#122](https://github.com/MCSLTeam/MCSL2/pull/122)
  - 对所有的Forge安装采用了[BMCLAPI加速](https://bmclapidoc.bangbang93.com/)
+
+### 提示  
+最近MCSLAPI可能暂停服务
 ___
 
 ### 其他下载地址（官方分流）
