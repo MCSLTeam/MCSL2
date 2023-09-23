@@ -53,12 +53,12 @@ def gen_compiler() -> CompilerHelper:
         copy_right="Copyright ©MCSL Team. All right reserved.",
         icon_path=Path("./MCSL2.ico"),
         no_follow_import=["numpy", "scipy"],
-        follow_import=["Adapters"],
+        follow_import=["Adapters", "loguru"],
         include_packages=["MCSL2Lib"],
         include_data_dir=[
             ("MCSL2/Aria2", "MCSL2/Aria2"),
         ],
-        enable_plugin=["pyqt5"],
+        enable_plugin=["pyqt5", "multiprocessing"],
     )
     return compiler
 
@@ -72,6 +72,7 @@ if __name__ == "__main__":
         compiler.use_ccache = False
         compiler.show_memory = False
         compiler.show_progress = False
+        compiler.enable_console = False
         compiler.output_path = Path("./build")
         sys.argv.remove("--github")
 
