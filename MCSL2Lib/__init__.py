@@ -18,4 +18,4 @@ from .variables import GlobalMCSL2Variables
 
 VERSION = GlobalMCSL2Variables.MCSL2Version
 
-BUILD_VERSION = "0.1.0.0"
+BUILD_VERSION = "0.1.1.0"
