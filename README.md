@@ -39,11 +39,11 @@ ___
 
 ## 用到的开源项目
 
-[![Python](https://img.shields.io/badge/python-3.8.0-blue.svg?style=for-the-badge "Python")](https://python.org)
+[![Python](https://img.shields.io/badge/python-3.8-blue.svg?style=for-the-badge "Python")](https://python.org)
 [![PyQt5](https://img.shields.io/badge/pyqt5-latest-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
 [![Nuitka](https://img.shields.io/badge/nuitka-latest-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
 [![PyQt-Fluent-Widgets](https://img.shields.io/badge/qfluentwidgets-latest-green.svg?style=for-the-badge "PyQt-Fluent-Widgets")](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)
-[![lib-not-dr](https://img.shields.io/badge/lib_not_dr-latest-green.svg?style=for-the-badge "lib-not-dr")](https://github.com/shenjackyuanjie/lib-not-dr)
+[![lib-not-dr](https://img.shields.io/badge/lib_not_dr-0.1.x-green.svg?style=for-the-badge "lib-not-dr")](https://github.com/shenjackyuanjie/lib-not-dr)
 ___
 
 ## 相关链接
@@ -74,7 +74,7 @@ ___
 ## 开发文档
 
 ~~其实我就不知道该写啥好~~  
-本项目基于Python 3.8.0开发。
+本项目基于 Python 3.8 开发。
 
 ### 1.克隆本仓库
 
