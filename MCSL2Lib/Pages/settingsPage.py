@@ -54,6 +54,7 @@ from qfluentwidgets import (
     setThemeColor,
 )
 
+from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Controllers.updateController import (
     CheckUpdateThread,
@@ -1292,7 +1293,7 @@ class SettingsPage(QWidget):
         self.alwaysRunAsAdministratorSwitchBtn.setOnText("已开启")
         self.alwaysRunAsAdministratorSwitchBtn.setOffText("已关闭")
         self.currentVerTitle.setText("当前版本：")
-        self.currentVerLabel.setText(GlobalMCSL2Variables.MCSL2Version)
+        self.currentVerLabel.setText(MCSL2Version)
         self.checkUpdateBtn.setText("检查更新")
         self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
         self.checkUpdateOnStartSwitchBtn.setText("已关闭")

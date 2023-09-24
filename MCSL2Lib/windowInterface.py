@@ -45,6 +45,7 @@ from qfluentwidgets import (
 )
 
 from Adapters.Plugin import PluginManager
+from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
@@ -228,7 +229,7 @@ class Window(FluentWindow):
         settingsController.initialize(firstLoad=True)
         self.setTheme()
         self.initWindow()
-        self.setWindowTitle(f"MCSL {GlobalMCSL2Variables.MCSL2Version}")
+        self.setWindowTitle(f"MCSL {MCSL2VERSION}")
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
 
         self.oldHook = sys.excepthook

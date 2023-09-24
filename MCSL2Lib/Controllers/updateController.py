@@ -1,4 +1,5 @@
 from PyQt5.QtCore import QThread, pyqtSignal
+from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.variables import GlobalMCSL2Variables
@@ -25,7 +26,7 @@ class CheckUpdateThread(QThread):
             latestVerInfo = (
                 Session()
                 .get(
-                    f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={GlobalMCSL2Variables.MCSL2Version}"
+                    f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={MCSL2Version}"
                 )
                 .text.split("|")
             )
