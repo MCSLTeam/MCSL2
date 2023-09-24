@@ -130,7 +130,8 @@ if __name__ == "__main__":
         subprocess.run(compiler.gen_subprocess_cmd())
         print("Compile Done!")
         print(
-            f"Compile Time: {time.time_ns() - start_time} ns ({(time.time_ns() - start_time) / 1000_000_000} s)"
+            f"===Compile Time: {time.time_ns() - start_time} ns "
+            f"({(time.time_ns() - start_time) / 1000_000_000} s)==="
         )
 
     sys.exit(0)
