@@ -19,6 +19,7 @@ import hashlib
 import inspect
 from json import loads, dumps
 from os import makedirs, path as osp
+from platform import system as systemType
 from types import TracebackType
 from typing import Type, Optional, Iterable, Callable, Dict, List
 import aria2p
@@ -301,6 +302,9 @@ class workingThreads:
 
 
 class FileOpener:
+    def __init__(self):
+        self.isOpenedFolder: bool = False
+
     def openFileChecker(self, filePath):
         if not self.isOpenedFolder:
             self._openFileFolder(filePath)
@@ -308,7 +312,7 @@ class FileOpener:
         else:
             self.isOpenedFolder = 0
 
-    def _openFileFolder(_filePath):
+    def _openFileFolder(self, _filePath):
         system = systemType()
         if system == "Windows":
             Popen(["start", _filePath], shell=True)
