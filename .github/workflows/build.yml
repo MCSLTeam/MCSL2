@@ -14,7 +14,6 @@ jobs:
           - windows-latest
         architecture:
           - x64
-          - x86
           - arm64
 
     runs-on: ${{ matrix.os }}
@@ -33,24 +32,25 @@ jobs:
             requirements.txt
 
       - name: Update Pip and Install Requirements
+        shell: pwsh
         run: |
-          python -m pip install pip setuptools -U
+          python -m pip install -U pip setuptools
           python -m pip install -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
 
       - name: Build on Windows
-        run: >
-          python nuitka_build.py --github -y
+        run: python nuitka_build.py --github
 
       - name: Delete Useless Files and Compress with upx
+        shell: pwsh
         run: |
-          cmd /K rmdir /s /q .\build\MCSL2.dist\zstandard
-          cmd /K del /f /q .\build\MCSL2.dist\_asyncio.pyd
-          cmd /K del /f /q .\build\MCSL2.dist\pyexpat.pyd
-          cmd /K del /f /q .\build\MCSL2.dist\qt5qml.dll
-          cmd /K del /f /q .\build\MCSL2.dist\qt5qmlmodels.dll
-          cmd /K del /f /q .\build\MCSL2.dist\qt5quick.dll
+          Remove-Item -Force -Recurse .\build\MCSL2.dist\zstandard
+          Remove-Item -Force -Recurse .\build\MCSL2.dist\_asyncio.pyd
+          Remove-Item -Force -Recurse .\build\MCSL2.dist\pyexpat.pyd
+          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qml.dll
+          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qmlmodels.dll
+          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5quick.dll
           .\upx.exe -9 build/MCSL2.dist/_ctypes.pyd build/MCSL2.dist/_decimal.pyd build/MCSL2.dist/_elementtree.pyd build/MCSL2.dist/_lzma.pyd build/MCSL2.dist/_overlapped.pyd build/MCSL2.dist/_socket.pyd build/MCSL2.dist/_ssl.pyd build/MCSL2.dist/_win32sysloader.pyd build/MCSL2.dist/libffi-7.dll build/MCSL2.dist/libcrypto-1_1.dll build/MCSL2.dist/libssl-1_1.dll build/MCSL2.dist/MCSL2.exe build/MCSL2.dist/python38.dll build/MCSL2.dist/pythoncom38.dll build/MCSL2.dist/pywintypes38.dll build/MCSL2.dist/qt5core.dll build/MCSL2.dist/qt5dbus.dll build/MCSL2.dist/qt5gui.dll build/MCSL2.dist/qt5multimedia.dll build/MCSL2.dist/qt5network.dll build/MCSL2.dist/qt5printsupport.dll build/MCSL2.dist/qt5svg.dll build/MCSL2.dist/qt5websockets.dll build/MCSL2.dist/qt5widgets.dll build/MCSL2.dist/qt5xml.dll build/MCSL2.dist/select.pyd build/MCSL2.dist/unicodedata.pyd build/MCSL2.dist/win32api.pyd build/MCSL2.dist/win32gui.pyd build/MCSL2.dist/win32print.pyd
 
       - name: Upload Artifacts
@@ -69,7 +69,6 @@ jobs:
           - ubuntu-latest
         architecture:
           - x64
-          - x86
           - arm64
 
     runs-on: ${{ matrix.os }}
@@ -87,8 +86,9 @@ jobs:
             requirements.txt
 
       - name: Update Pip and Install Requirements
+        shell: pwsh
         run: |
-          python -m pip install pip setuptools -U
+          python -m pip install -U pip setuptools
           python -m pip install -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
@@ -99,8 +99,7 @@ jobs:
           sudo apt-get install -y upx-ucl
 
       - name: Build on Linux
-        run: >
-          python nuitka_build.py --github -y
+        run: python nuitka_build.py --github
 
       - name: Delete Useless Files and Compress with upx
         run: |

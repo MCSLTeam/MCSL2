@@ -14,17 +14,31 @@
 import sys
 import time
 import platform
+import traceback
 import subprocess
 
 from typing import Tuple
 from pathlib import Path
-from MCSL2Lib import VERSION, BUILD_VERSION  # 修改为直接放在 __init__ 里
 from lib_not_dr.nuitka.compile import CompilerHelper
 from lib_not_dr.types.version import Version
 
 
 def get_version() -> Tuple[Version, Version]:
     # 尽量不要写死在构建脚本里
+    # 用点邪门的方法
+    VERSION = ""
+    BUILD_VERSION = ""
+    try:
+        with open('./MCSL2Lib/__init__.py', 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                if line.startswith("VERSION"):
+                    VERSION = line.strip('BUILD_VERSION = "')[:-2]
+                if line.startswith("BUILD_VERSION"):
+                    BUILD_VERSION = line.strip('BUILD_VERSION = "')[:-2]
+    except:
+        # 尽量不导入
+        traceback.print_exc()
+        from MCSL2Lib import VERSION, BUILD_VERSION
     return (Version(VERSION), Version(BUILD_VERSION))
 
 
@@ -116,7 +130,8 @@ if __name__ == "__main__":
         subprocess.run(compiler.gen_subprocess_cmd())
         print("Compile Done!")
         print(
-            f"Compile Time: {time.time_ns() - start_time} ns ({(time.time_ns() - start_time) / 1000_000_000} s)"
+            f"===Compile Time: {time.time_ns() - start_time} ns "
+            f"({(time.time_ns() - start_time) / 1000_000_000} s)==="
         )
 
     sys.exit(0)

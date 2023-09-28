@@ -15,7 +15,6 @@ Main entry.
 """
 import os
 import sys
-import traceback
 from platform import system
 
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
@@ -34,8 +33,8 @@ class MCSL2Application(QApplication):
         try:
             done = super().notify(a0, a1)
             return done
-        except Exception:
-            MCSL2Logger.critical(exc=Exception)
+        except Exception as e:
+            MCSL2Logger.critical(e)
             return False
 
 

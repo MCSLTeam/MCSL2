@@ -14,8 +14,9 @@
 """
 MCSL2运行支持库
 """
-from .variables import GlobalMCSL2Variables
 
-VERSION = GlobalMCSL2Variables.MCSL2Version
+VERSION = "2.2.2.1"
+MCSL2VERSION = VERSION
+# 烦死了！直接从这里引用就行啊喂！
 
-BUILD_VERSION = "0.1.0.0"
+BUILD_VERSION = "0.2.0.0"
