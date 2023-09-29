@@ -14,7 +14,7 @@
 Widget Template for Quick Menu.
 """
 from PyQt5.QtCore import QRect, QSize, Qt
-from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QVBoxLayout, QFrame
 from qfluentwidgets import (
     BodyLabel,
     ComboBox,
@@ -113,7 +113,7 @@ class playersController(QWidget):
         self.verticalLayout.addWidget(self.playersTip)
         self.tipSmoothScrollArea.setWidget(self.tipScrollAreaWidgetContents)
         self.gridLayout.addWidget(self.tipSmoothScrollArea, 1, 0, 1, 2)
-
+        self.tipSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.tipSmoothScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
