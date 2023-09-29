@@ -13,7 +13,7 @@
 """
 Settings page.
 """
-
+from .. import MCSL2VERSION
 from datetime import datetime
 from platform import system as systemType
 from typing import Union
@@ -1293,7 +1293,7 @@ class SettingsPage(QWidget):
         self.alwaysRunAsAdministratorSwitchBtn.setOnText("已开启")
         self.alwaysRunAsAdministratorSwitchBtn.setOffText("已关闭")
         self.currentVerTitle.setText("当前版本：")
-        self.currentVerLabel.setText(MCSL2Version)
+        self.currentVerLabel.setText(MCSL2VERSION)
         self.checkUpdateBtn.setText("检查更新")
         self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
         self.checkUpdateOnStartSwitchBtn.setText("已关闭")
