@@ -649,9 +649,7 @@ class DownloadPage(QWidget):
         )
 
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)
-        self.openDownloadEntriesBtn.clicked.connect(
-            lambda: {DownloadEntryBox(self).exec()}
-        )
+        self.openDownloadEntriesBtn.clicked.connect(lambda: DownloadEntryBox(self).exec())
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
