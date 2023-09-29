@@ -34,9 +34,9 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SubtitleLabel, MessageBox,
 )
-from MCSL2Lib.utils import MCSL2Logger
-from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
 
+from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
+from MCSL2Lib.utils import MCSL2Logger
 
 
 class DownloadProgressWidget(QWidget):
@@ -290,7 +290,7 @@ class DownloadMessageBox(MessageBox):
         if dl is not None:
             if dl.status == "complete":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-                if path.exists(filename):  # 防止有时候aria2抽风...
+                if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
                     DL_EntryController().work.emit(
                         ("addCoreEntry", {
                             "coreName": filename,
