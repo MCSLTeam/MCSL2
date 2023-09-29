@@ -13,7 +13,6 @@
 """
 Settings page.
 """
-from .. import MCSL2VERSION
 from datetime import datetime
 from platform import system as systemType
 from typing import Union
