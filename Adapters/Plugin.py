@@ -8,7 +8,13 @@ from typing import List
 
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
-from qfluentwidgets import MessageBox, LineEdit, InfoBar, InfoBarPosition
+from qfluentwidgets import (
+    MessageBox,
+    LineEdit,
+    InfoBar,
+    InfoBarPosition,
+    FluentIcon as FIF,
+)
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.Resources.icons import *  # noqa: F401
@@ -213,22 +219,27 @@ class PluginManager(BasePluginManager):
             pluginsVerticalLayout.itemAt(i).widget().setParent(None)
 
         for pluginName, plugin in self.allPlugins.items():
-            self.pluginWidget = singlePluginWidget()
-
-            # 设置信息
-            self.pluginWidget.pluginName.setText(f"{plugin.pluginName}")
-            self.pluginWidget.pluginVer.setText(f"版本:   {plugin.version}")
-            self.pluginWidget.pluginAuthor.setText(f"作者:   {plugin.author}")
-            self.pluginWidget.pluginTip.setText(f"注释:   {plugin.description}")
-
+            self.pluginWidget = singlePluginWidget(icon=plugin.icon)
             # 设置图标
             if plugin.icon is None:
+                # 无图标
                 self.pluginWidget.pluginIcon.setPixmap(
                     QPixmap(":/built-InIcons/MCSL2.png")
                 )
             elif plugin.icon[0] == ":":
+                # 内置图标
                 self.pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
+            elif plugin.icon.startswith("FIF.") or plugin.icon.startswith(
+                "FluentIcon."
+            ):
+                # qfluentwidgets控件库图标
+                self.pluginWidget.setPluginIcon(
+                    getattr(
+                        FIF, plugin.icon.replace("FIF.", "").replace("FluentIcon.", "")
+                    )
+                )
             else:
+                # 文件图标
                 url = osp.dirname(osp.abspath(__file__))  # 文件夹
                 url = osp.abspath(osp.join(url, ".."))
                 self.pluginWidget.pluginIcon.setPixmap(
@@ -242,6 +253,12 @@ class PluginManager(BasePluginManager):
             self.pluginWidget.deleteBtn.setObjectName(f"deleteBtn_{pluginName}")
             self.pluginWidget.setObjectName(f"pluginWidget_{pluginName}")
 
+            # 设置信息
+            self.pluginWidget.pluginName.setText(f"{plugin.pluginName}")
+            self.pluginWidget.pluginVer.setText(f"版本:   {plugin.version}")
+            self.pluginWidget.pluginAuthor.setText(f"作者:   {plugin.author}")
+            self.pluginWidget.pluginTip.setText(f"注释:   {plugin.description}")
+
             # 设置槽函数
             self.pluginWidget.SwitchButton.selfCheckedChanged.connect(
                 lambda instance, checked: {
@@ -251,7 +268,9 @@ class PluginManager(BasePluginManager):
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: FileOpener().openFileChecker(f".\\Plugins\\{instance}\\")
+                lambda instance: FileOpener().openFileChecker(
+                    f".\\Plugins\\{instance}\\"
+                )
             )
             self.pluginWidget.deleteBtn.selfClicked.connect(
                 lambda instance: self.deletePlugin(

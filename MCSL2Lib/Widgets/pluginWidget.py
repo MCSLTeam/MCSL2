@@ -23,7 +23,9 @@ from qfluentwidgets import (
     SwitchButton,
     TransparentToolButton,
     FluentIcon as FIF,
+    IconWidget
 )
+from PyQt5.QtGui import QPixmap
 
 
 class PluginSwitchButton(SwitchButton):
@@ -51,7 +53,7 @@ class PluginOperationButton(TransparentToolButton):
 class singlePluginWidget(CardWidget):
     """单独的插件Widget模板"""
 
-    def __init__(self):
+    def __init__(self, icon: str = None):
         super().__init__()
 
         self.setObjectName("singlePluginWidget")
@@ -63,13 +65,13 @@ class singlePluginWidget(CardWidget):
         self.setSizePolicy(sizePolicy)
         self.setMinimumSize(QSize(524, 150))
         self.setMaximumSize(QSize(16777215, 150))
-        self.setWindowTitle("")
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
 
         spacerItem = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.pluginIcon = PixmapLabel(self)
+        isFIF = icon.startswith("FIF.") or icon.startswith("FluentIcon.")
+        self.pluginIcon = PixmapLabel(self) if not isFIF else IconWidget(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -147,3 +149,9 @@ class singlePluginWidget(CardWidget):
 
         self.SwitchButton.setOnText("已启用")
         self.SwitchButton.setOffText("已禁用")
+
+    def setPluginIcon(self, icon):
+        if type(self.pluginIcon) == PixmapLabel:
+            self.pluginIcon.setPixmap(QPixmap(icon))
+        else:
+            self.pluginIcon.setIcon(icon)
