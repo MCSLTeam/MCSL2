@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy,
     QFrame,
-    QCompleter
+    QCompleter,
 )
 from qfluentwidgets import (
     CardWidget,
@@ -41,7 +41,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
 )
-
+from re import search, sub
 from MCSL2Lib.Controllers.serverController import ServerHandler, readServerProperties
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.singleton import Singleton
@@ -300,7 +300,9 @@ class ConsolePage(QWidget):
         self.banPlayers.clicked.connect(self.initQuickMenu_BanOrPardon)
         self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
         self.killServer.clicked.connect(self.runQuickMenu_KillServer)
-        intellisense = QCompleter(GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit)
+        intellisense = QCompleter(
+            GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit
+        )
         intellisense.setCaseSensitivity(Qt.CaseInsensitive)
         self.commandLineEdit.setCompleter(intellisense)
         self.commandLineEdit.setClearButtonEnabled(True)
@@ -310,7 +312,9 @@ class ConsolePage(QWidget):
     @pyqtSlot(float)
     def setMemView(self, mem):
         self.serverMemLabel.setText(f"内存：{round(mem, 2)}{serverVariables.memUnit}")
-        self.serverMemProgressRing.setValue(int(int(mem) / serverVariables.maxMem * 100))
+        self.serverMemProgressRing.setValue(
+            int(int(mem) / serverVariables.maxMem * 100)
+        )
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
@@ -375,9 +379,52 @@ class ConsolePage(QWidget):
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
-        serverOutput = serverOutput[:-1].replace("[38;2;170;170;170m", "").replace("[38;2;255;170;0m", "").replace(
-            "[38;2;255;255;255m", "").replace("[0m", "").replace("[38;2;255;255;85m", "").replace("[38;2;255;255;255m",
-                                                                                                  "").replace("[3m", "")
+        serverOutput = (
+            serverOutput[:-1]
+            .replace("[38;2;170;170;170m", "")
+            .replace("[38;2;255;170;0m", "")
+            .replace("[38;2;255;255;255m", "")
+            .replace("[0m", "")
+            .replace("[38;2;255;255;85m", "")
+            .replace("[38;2;255;255;255m", "")
+            .replace("[3m", "")
+            .replace("[m[", "[")
+            .replace("[32m", "")
+            .replace("Preparing spawn area", "准备生成点区域中")
+            .replace("main/INFO", "主类/信息")
+            .replace("main/WARN", "主类/警告")
+            .replace("main/ERROR", "主类/错误")
+            .replace("main/FATAL", "主类/致命错误")
+            .replace("main/DEBUG", "主类/调试信息")
+            .replace("INFO", "信息")
+            .replace("WARN", "警告")
+            .replace("ERROR", "错误")
+            .replace("FATAL", "致命错误")
+            .replace("DEBUG", "调试信息")
+            .replace("Server thread", "服务器线程")
+            .replace("Server-Worker", "服务器工作进程")
+            .replace("DEBUG", "调试信息")
+            .replace("Forge Version Check", "Forge版本检查")
+            .replace("ModLauncher running: args", "ModLauncher运行中: 参数")
+            .replace("All chunks are saved", "所有区块已保存")
+            .replace("Saving the game (this may take a moment!)", "保存游戏存档中（可能需要一些时间）")
+            .replace("Saved the game", "已保存游戏存档")
+        )
+        if (
+            "Disabling terminal, you're running in an unsupported environment."
+            in serverOutput
+        ):
+            return
+        if (
+            "Advanced terminal features are not available in this environment"
+            in serverOutput
+        ):
+            return
+        if (
+            "Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream"
+            in serverOutput
+        ):
+            return
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
             serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
@@ -399,10 +446,12 @@ class ConsolePage(QWidget):
         self.serverOutput.setReadOnly(True)
         self.serverOutput.setReadOnly(True)
         self.serverOutput.setReadOnly(True)
-        if " INFO]: Done" in serverOutput:
+        if search(r"(?=.*Done)(?=.*!)", serverOutput):
             fmt.setForeground(QBrush(color[3]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
-            self.serverOutput.appendPlainText("[MCSL2 | 提示]：服务器启动完毕！")
+            self.serverOutput.appendPlainText(
+                "[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为127.0.0.1。\n[MCSL2 | 提示]：如果外网开服或使用了内网穿透等服务，连接地址为你的相关服务地址。"
+            )
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
@@ -413,11 +462,11 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             InfoBar.success(
                 title="提示",
-                content="服务器启动完毕！",
+                content="服务器启动完毕！\n如果本机开服，IP 地址为127.0.0.1。\n如果外网开服或使用了内网穿透等服务，连接地址为你的相关服务地址。",
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
-                duration=2222,
+                duration=5000,
                 parent=self,
             )
             readServerProperties()
@@ -446,15 +495,17 @@ class ConsolePage(QWidget):
                 parent=self,
             )
         if (
-                "logged in with entity id" in serverOutput
-                or " left the game" in serverOutput
+            "logged in with entity id" in serverOutput
+            or " left the game" in serverOutput
         ):
             self.recordPlayers(serverOutput)
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
             try:
-                self.playersList.append(str(str(serverOutput).split("INFO]: ")[1].split("[/")[0]))
+                self.playersList.append(
+                    str(str(serverOutput).split("INFO]: ")[1].split("[/")[0])
+                )
                 return
             except Exception:
                 pass
@@ -466,12 +517,22 @@ class ConsolePage(QWidget):
                 name = name.split("]: ")[1].split("[/")[0]
                 self.playersList.append(name)
             except Exception as e:
-                MCSL2Logger.error(f"extract player name failed","onRecordPlayers::login {serverOutput}", exc=e)
+                MCSL2Logger.error(
+                    f"extract player name failed",
+                    "onRecordPlayers::login {serverOutput}",
+                    exc=e,
+                )
 
         elif " left the game" in serverOutput:
             try:
                 self.playersList.pop(
-                    self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0]))
+                    self.playersList.index(
+                        str(
+                            str(serverOutput)
+                            .split("INFO]: ")[1]
+                            .split(" left the game")[0]
+                        )
+                    )
                 )
                 return
             except Exception:
@@ -483,7 +544,11 @@ class ConsolePage(QWidget):
                 name = name.split("]: ")[1].split(" left the game")[0].strip()
                 self.playersList.pop(self.playersList.index(name))
             except Exception as e:
-                MCSL2Logger.error(f"extract player name failed","onRecordPlayers::logout {serverOutput}", exc=e)
+                MCSL2Logger.error(
+                    f"extract player name failed",
+                    "onRecordPlayers::logout {serverOutput}",
+                    exc=e,
+                )
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
@@ -541,7 +606,11 @@ class ConsolePage(QWidget):
                 )
             except ValueError:
                 self.difficulty.setCurrentIndex(
-                    int(textDiffiultyList.index(serverVariables.serverProperties["difficulty"]))
+                    int(
+                        textDiffiultyList.index(
+                            serverVariables.serverProperties["difficulty"]
+                        )
+                    )
                 )
             except Exception:
                 pass
@@ -550,7 +619,9 @@ class ConsolePage(QWidget):
 
     def runQuickMenu_Difficulty(self):
         textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
-        self.sendCommand(f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}")
+        self.sendCommand(
+            f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}"
+        )
 
     def initQuickMenu_GameMode(self):
         """快捷菜单-游戏模式"""
@@ -579,7 +650,9 @@ class ConsolePage(QWidget):
 
     def runQuickMenu_GameMode(self, gamemode: int, player: str):
         gameModeList = ["survival", "creative", "adventure", "spectator"]
-        ServerHandler().sendCommand(command=f"gamemode {gameModeList[gamemode]} {player}")
+        ServerHandler().sendCommand(
+            command=f"gamemode {gameModeList[gamemode]} {player}"
+        )
 
     def initQuickMenu_WhiteList(self):
         """快捷菜单-白名单"""
