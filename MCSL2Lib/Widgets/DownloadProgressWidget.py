@@ -261,6 +261,8 @@ class DownloadMessageBox(MessageBox):
         widget.cancelBtn.clicked.connect(self.canceled.emit)
         widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
         widget.PrimaryPushButton.clicked.connect(self.hide)
+        self.DownloadWidget().closeBoxBtnFinished.clicked.connect(self.close)
+        self.DownloadWidget().closeBoxBtnFailed.clicked.connect(self.close)
 
     def DownloadWidget(self):
         return self.downloadProgressWidget
