@@ -1158,6 +1158,7 @@ class DownloadPage(QWidget):
         self.downloadingBox = DownloadMessageBox(
             f"{fileName}.{fileFormat}", parent=self
         )
+        self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(self.hideDownloadHelper)
         self.downloadingBox.DownloadWidget().closeBoxBtnFinished.clicked.connect(
             self.downloadingBox.close
         )
