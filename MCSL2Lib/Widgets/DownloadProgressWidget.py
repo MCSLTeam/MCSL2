@@ -320,7 +320,10 @@ class DownloadMessageBox(MessageBox):
         else:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadProgressWidget.downloading = False
-        self.parent().downloadFinishedHelper()
+        try:
+            self.parent().downloadFinishedHelper()
+        except Exception:
+            pass
 
     def setFileName(self, name):
         self.downloadProgressWidget.fileName.setText(name)
