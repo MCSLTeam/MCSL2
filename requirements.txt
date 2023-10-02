@@ -2,7 +2,7 @@
 PyQt5==5.15.9
 pyqt5-stubs>=5.15.6.0
 pyqt5-tools==5.15.9.3.3
-PyQt-Fluent-Widgets[full]>=1.2.0
+PyQt-Fluent-Widgets[full]>=1.2.2
 
 # web
 requests>=2.31.0
@@ -16,7 +16,7 @@ loguru==0.7.2
 zstandard>=0.21.0
 
 # builder
-nuitka>=1.8.2
+nuitka>=1.8.3
 imageio>=2.31.3
 lib-not-dr>=0.1.7, <=0.2.0
 
