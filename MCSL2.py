@@ -50,17 +50,6 @@ if __name__ == "__main__":
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     QApplication.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 
-    # 适配Linux特殊情况
-    if system().lower() == "linux":
-        try:
-            if os.environ["XDG_SESSION_TYPE"].lower() != "x11":
-                os.environ["QT_QPA_PLATFORM"] = "wayland"
-            else:
-                pass
-        except:
-            pass
-    os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "auto"
-
     # 启动
     app = MCSL2Application(sys.argv)
     translator = FluentTranslator(QLocale())
