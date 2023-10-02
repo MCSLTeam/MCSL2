@@ -155,7 +155,7 @@ class ServerHandler(QObject):
 
         for line in lines:
             newOutput = line.decode(serverVariables.outputDecoding, errors="replace")
-            self.serverLogOutput.emit(newOutput)
+            self.serverLogOutput.emit(newOutput[:-1])
 
     def startServer(self, javaPath: str, processArgs: List[str], workingDirectory: str):
         """
