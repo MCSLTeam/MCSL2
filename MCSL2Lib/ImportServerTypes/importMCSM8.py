@@ -662,8 +662,4 @@ class MCSM8(QWidget):
         self.MCSM8SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.MCSM8SaveServerPrimaryPushBtn.setText("导入！")
 
-        self.MCSM8ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-
         self.MCSM8ScrollArea.setFrameShape(QFrame.NoFrame)

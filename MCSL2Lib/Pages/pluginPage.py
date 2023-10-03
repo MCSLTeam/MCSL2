@@ -146,10 +146,6 @@ class PluginPage(QWidget):
 
         self.setObjectName("PluginsInterface")
 
-        self.pluginsSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-
         self.subTitleLabel.setText("添加属于你的插件，让你的MCSL2更加强大！")
         self.titleLabel.setText("插件")
         self.refreshPluginListBtn.setText("刷新")

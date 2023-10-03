@@ -85,7 +85,6 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
-
 serverVariables = ServerVariables()
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
@@ -221,8 +220,6 @@ class PageLoader(QThread):
 class Window(FluentWindow):
     """程序主窗口"""
 
-    __slots__ = {}
-
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
@@ -242,16 +239,15 @@ class Window(FluentWindow):
         # ):
         #     MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
 
-        self.homeInterface = None
-        self.configureInterface = None
-        self.downloadInterface = None
-        self.consoleInterface = None
-        self.pluginsInterface = None
-        self.settingsInterface = None
-        self.serverManagerInterface = None
-
-        self.selectJavaPage = None
-        self.selectNewJavaPage = None
+        self.homeInterface = None  # type: HomePage
+        self.configureInterface = None  # type: ConfigurePage
+        self.downloadInterface = None  # type: DownloadPage
+        self.consoleInterface = None  # type: ConsolePage
+        self.pluginsInterface = None  # type: PluginPage
+        self.settingsInterface = None  # type: SettingsPage
+        self.serverManagerInterface = None  # type: ServerManagerPage
+        self.selectJavaPage = None  # type: SelectJavaPage
+        self.selectNewJavaPage = None  # type: SelectNewJavaPage
 
         # 页面加载器
         loaders = []

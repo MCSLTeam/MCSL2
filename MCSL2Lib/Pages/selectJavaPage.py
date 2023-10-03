@@ -113,9 +113,6 @@ class SelectJavaPage(QWidget):
         self.subTitleLabel.setText("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。")
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.javaSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
 
     def refreshPage(self, JavaPath):
         """刷新Java列表"""

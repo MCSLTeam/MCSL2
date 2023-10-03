@@ -638,10 +638,6 @@ class MCSLv1(QWidget):
         self.MCSLv1SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.MCSLv1SaveServerPrimaryPushBtn.setText("导入！")
 
-        self.MCSLv1ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-
         self.MCSLv1ScrollArea.setFrameShape(QFrame.NoFrame)
         self.MCSLv1ImportArchives.clicked.connect(self._import)
         self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/not.svg"))

@@ -606,30 +606,6 @@ class DownloadPage(QWidget):
             self.MCSLAPIBungeeCordScrollAreaLayout,
             self.MCSLAPIOfficialCoreScrollAreaLayout,
         ]
-        self.MCSLAPIJavaScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSLAPISpigotScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSLAPIPaperScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSLAPIBungeeCordScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.MCSLAPIOfficialCoreScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.coreListSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.versionSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.buildScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         self.MCSLAPIJavaScrollArea.setFrameShape(QFrame.NoFrame)
         self.MCSLAPISpigotScrollArea.setFrameShape(QFrame.NoFrame)
         self.MCSLAPIPaperScrollArea.setFrameShape(QFrame.NoFrame)

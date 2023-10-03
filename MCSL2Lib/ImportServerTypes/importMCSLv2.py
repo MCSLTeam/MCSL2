@@ -626,8 +626,4 @@ class MCSLv2(QWidget):
         self.MCSLv2SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.MCSLv2SaveServerPrimaryPushBtn.setText("导入！")
 
-        self.MCSLv2ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-
         self.MCSLv2ScrollArea.setFrameShape(QFrame.NoFrame)

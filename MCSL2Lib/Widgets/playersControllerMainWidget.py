@@ -114,9 +114,6 @@ class playersController(QWidget):
         self.tipSmoothScrollArea.setWidget(self.tipScrollAreaWidgetContents)
         self.gridLayout.addWidget(self.tipSmoothScrollArea, 1, 0, 1, 2)
         self.tipSmoothScrollArea.setFrameShape(QFrame.NoFrame)
-        self.tipSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
 
         self.who.setPlaceholderText("填写玩家名或目标选择器")
         self.targetSelectorTip.setText(

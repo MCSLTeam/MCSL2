@@ -1442,12 +1442,6 @@ class ConfigurePage(QWidget):
             )
         )
 
-        self.noobNewServerScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-        self.extendedNewServerScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         # self.noShellArchives.noShellArchivesBackToMain.clicked.connect(
         #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
         # )

@@ -15,6 +15,7 @@ Settings page.
 """
 from datetime import datetime
 from platform import system as systemType
+import sys
 from typing import Union
 
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot

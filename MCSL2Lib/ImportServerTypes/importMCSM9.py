@@ -662,8 +662,4 @@ class MCSM9(QWidget):
         self.MCSM9SaveServerPrimaryPushBtn.setText("导入！")
         self.MCSM9Title.setText("导入 MCSManager 9 的服务器")
 
-        self.MCSM9ScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
-
         self.MCSM9ScrollArea.setFrameShape(QFrame.NoFrame)

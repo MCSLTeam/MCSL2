@@ -626,13 +626,7 @@ class ServerManagerPage(QWidget):
         self.editSaveServerPrimaryPushBtn.setText("保存！")
         self.editServerBackPushBtn.clicked.connect(self.goBack)
         self.serversSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.serversSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         self.editServerScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.editServerScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
 
         self.editJavaTextEdit.setPlaceholderText("写错了就启动不了了（悲")
         self.editMinMemLineEdit.setPlaceholderText("整数")

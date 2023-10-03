@@ -806,7 +806,4 @@ class ShellArchives(QWidget):
         self.shellArchivesSaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.shellArchivesSaveSaveServerPrimaryPushBtn.setText("导入！")
 
-        self.shellArchivesScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         self.shellArchivesScrollArea.setFrameShape(QFrame.NoFrame)

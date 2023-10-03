@@ -18,7 +18,7 @@ import sys
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
-
+from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
 
@@ -37,6 +37,9 @@ class MCSL2Application(QApplication):
 
 
 if __name__ == "__main__":
+    tracer = VizTracer()
+    tracer.enable_thread_tracing()
+    tracer.start()
     # 初始化
     initializeMCSL2()
 
@@ -57,3 +60,5 @@ if __name__ == "__main__":
     w = Window()
     w.show()
     app.exec_()
+    tracer.stop()
+    tracer.save()

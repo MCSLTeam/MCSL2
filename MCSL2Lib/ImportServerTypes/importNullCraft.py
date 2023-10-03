@@ -659,8 +659,5 @@ class NullCraft(QWidget):
         self.NullCraftSaveServerPrimaryPushBtn.setText("导入！")
         self.NullCraftTitle.setText("导入 灵工艺我的世界「轻」开服器 的服务器")
 
-        self.NullCraftScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
 
         self.NullCraftScrollArea.setFrameShape(QFrame.NoFrame)

@@ -692,7 +692,4 @@ class ServerArchiveSite(QWidget):
         self.serverArchiveSiteSaveServerPrimaryPushBtn.setText("导入！")
         self.serverArchiveSiteTitle.setText("导入 服务器 存档 压缩包/文件夹")
 
-        self.serverArchiveSiteScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         self.serverArchiveSiteScrollArea.setFrameShape(QFrame.NoFrame)

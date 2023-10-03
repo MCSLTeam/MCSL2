@@ -52,6 +52,3 @@ class ExceptionWidget(QWidget):
         self.exceptionLabel.setWordWrap(True)
         self.verticalLayout_2.addWidget(self.exceptionLabel)
         self.exceptionScrollArea.setWidget(self.exceptionScrollAreaWidgetContents)
-        self.exceptionScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )

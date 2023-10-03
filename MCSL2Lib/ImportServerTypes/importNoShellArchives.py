@@ -690,7 +690,4 @@ class NoShellArchives(QWidget):
         )
         self.noShellArchivesSaveSaveServerPrimaryPushBtn.setText("导入！")
 
-        self.noShellArchivesScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         self.noShellArchivesScrollArea.setFrameShape(QFrame.NoFrame)
