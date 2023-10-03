@@ -21,7 +21,7 @@ ___
 [![Version](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
 [![Issues](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
 [![Website](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.com.cn)
-[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40mcsl.com.cn-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)   
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40vip.qq.com-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)   
 ___
 
 ## What can MCSL2 do?
