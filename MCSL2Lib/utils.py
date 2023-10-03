@@ -17,18 +17,23 @@ import enum
 import functools
 import hashlib
 import inspect
+import sqlite3  # dont delete this
 from json import loads, dumps
 from os import makedirs, path as osp
 from platform import system as systemType
+from subprocess import Popen
 from types import TracebackType
 from typing import Type, Optional, Iterable, Callable, Dict, List
+
 import aria2p
 from PyQt5.QtCore import QUrl, QThread
 from PyQt5.QtGui import QDesktopServices
-from subprocess import Popen
 from darkdetect import theme as currentTheme
-from MCSL2Lib.Controllers.settingsController import SettingsController
+
 from MCSL2Lib.Controllers.logController import _MCSL2Logger
+from MCSL2Lib.Controllers.settingsController import SettingsController
+
+var = sqlite3.version
 
 MCSL2Logger = _MCSL2Logger()
 
@@ -70,7 +75,7 @@ class ServerUrl:
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
     with open(
-        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
     ) as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
     return globalServerList
@@ -101,7 +106,7 @@ def initializeMCSL2():
             config.write(dumps(configTemplate, indent=4))
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
-            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
@@ -190,7 +195,7 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
@@ -198,7 +203,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.PASS
     if isinstance(
-        value, aria2p.ClientException
+            value, aria2p.ClientException
     ) and "Active Download not found for GID" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
@@ -214,7 +219,7 @@ def exceptionFilter(
 
 
 def checkSHA1(
-    fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
+        fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
 ) -> List[Dict]:
     """
     检查文件的SHA1值是否正确
