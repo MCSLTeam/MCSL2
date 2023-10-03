@@ -17,7 +17,8 @@ import enum
 import functools
 import hashlib
 import inspect
-import sqlite3  # dont delete this
+# import sqlite3  # dont delete this
+# added in nuitka_build
 from json import loads, dumps
 from os import makedirs, path as osp
 from platform import system as systemType
@@ -32,8 +33,6 @@ from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.logController import _MCSL2Logger
 from MCSL2Lib.Controllers.settingsController import SettingsController
-
-var = sqlite3.version
 
 MCSL2Logger = _MCSL2Logger()
 

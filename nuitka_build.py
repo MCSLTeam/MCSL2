@@ -68,7 +68,7 @@ def gen_compiler() -> CompilerHelper:
         icon_path=Path("./MCSL2.ico"),
         no_follow_import=["numpy", "scipy"],
         follow_import=["Adapters", "loguru"],
-        include_packages=["MCSL2Lib"],
+        include_packages=["MCSL2Lib", 'sqlite3'],
         include_data_dir=[
             ("MCSL2/Aria2", "MCSL2/Aria2"),
         ],
