@@ -24,12 +24,12 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
 )
 from qfluentwidgets import (
-    SmoothScrollArea,
     StrongBodyLabel,
     TitleLabel,
     TransparentToolButton,
     FluentIcon as FIF,
 )
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 from MCSL2Lib.Widgets.selectJavaWidget import singleSelectJavaWidget
 from MCSL2Lib.variables import GlobalMCSL2Variables
@@ -84,7 +84,7 @@ class SelectJavaPage(QWidget):
         self.titleLabel.setObjectName("titleLabel")
 
         self.gridLayout_2.addWidget(self.titleLabel, 0, 1, 1, 1)
-        self.javaSmoothScrollArea = SmoothScrollArea(self.titleLimitWidget)
+        self.javaSmoothScrollArea = MySmoothScrollArea(self.titleLimitWidget)
         self.javaSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.javaSmoothScrollArea.setWidgetResizable(True)
         self.javaSmoothScrollArea.setObjectName("javaSmoothScrollArea")

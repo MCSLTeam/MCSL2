@@ -249,9 +249,9 @@ class DownloadMessageBox(MessageBox):
         self.pauseSwitch = False
         self.fileName = fileName
         self.downloadProgressWidget = DownloadProgressWidget()
-        self.titleLabel.setParent(None)
-        self.contentLabel.setParent(None)
-        self.buttonGroup.setParent(None)
+        self.titleLabel.deleteLater()
+        self.contentLabel.deleteLater()
+        self.buttonGroup.deleteLater()
         self.downloadProgressWidget.fileName.setText(self.fileName)
         self.textLayout.addWidget(
             self.downloadProgressWidget.downloadProgressMainWidget

@@ -20,8 +20,8 @@ from qfluentwidgets import (
     ComboBox,
     LineEdit,
     StrongBodyLabel,
-    SmoothScrollArea,
 )
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -56,7 +56,7 @@ class playersController(QWidget):
         self.mode.setObjectName("mode")
 
         self.gridLayout.addWidget(self.mode, 0, 1, 1, 1)
-        self.tipSmoothScrollArea = SmoothScrollArea(self.playersControllerMainWidget)
+        self.tipSmoothScrollArea = MySmoothScrollArea(self.playersControllerMainWidget)
         self.tipSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.tipSmoothScrollArea.setWidgetResizable(True)
         self.tipSmoothScrollArea.setObjectName("tipSmoothScrollArea")

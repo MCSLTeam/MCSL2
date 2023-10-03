@@ -39,7 +39,6 @@ from qfluentwidgets import (
     PlainTextEdit,
     PrimaryPushButton,
     PushButton,
-    SmoothScrollArea,
     StrongBodyLabel,
     SubtitleLabel,
     TextEdit,
@@ -56,7 +55,8 @@ from MCSL2Lib.Controllers import javaDetector
 from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.Resources.icons import *  # noqa: F401
+from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea  # noqa: F401
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.singleton import Singleton
@@ -135,7 +135,7 @@ class ServerManagerPage(QWidget):
         self.verticalLayout_2 = QVBoxLayout(self.serversPage)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
 
-        self.serversSmoothScrollArea = SmoothScrollArea(self.serversPage)
+        self.serversSmoothScrollArea = MySmoothScrollArea(self.serversPage)
         self.serversSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.serversSmoothScrollArea.setFrameShadow(QFrame.Plain)
         self.serversSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -161,7 +161,7 @@ class ServerManagerPage(QWidget):
         self.gridLayout_3 = QGridLayout(self.editServerPage)
         self.gridLayout_3.setObjectName("gridLayout_3")
 
-        self.editServerScrollArea = SmoothScrollArea(self.editServerPage)
+        self.editServerScrollArea = MySmoothScrollArea(self.editServerPage)
         self.editServerScrollArea.setFrameShape(QFrame.NoFrame)
         self.editServerScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.editServerScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -703,19 +703,23 @@ class ServerManagerPage(QWidget):
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
-        """刷新服务器列表触发"""
         if currentChanged == 2:
             self.refreshServers()
         else:
+            self.releaseMemory()
+
+    def releaseMemory(self):
+        try:
+            self.verticalLayout.removeItem(self.serversScrollAreaSpacer)
+            for i in reversed(range(self.verticalLayout.count())):
+                self.verticalLayout.itemAt(i).widget().deleteLater()
+            MCSL2Logger.info("性能优化：释放服务器管理页内存")
+        except Exception:
             pass
 
     def refreshServers(self):
         """刷新服务器列表主逻辑"""
-        # 先把旧的清空，但是必须先删除Spacer
-        self.verticalLayout.removeItem(self.serversScrollAreaSpacer)
-
-        for i in reversed(range(self.verticalLayout.count())):
-            self.verticalLayout.itemAt(i).widget().deleteLater()
+        self.releaseMemory()
         # 读取全局设置
         globalConfig = readGlobalServerConfig()
         if len(globalConfig):
@@ -1276,7 +1280,7 @@ class ServerManagerPage(QWidget):
         if dupCode:
             w = MessageBox(title="失败", content="都没改就不需要保存了，退出即可", parent=self)
             w.yesButton.setText("好好好")
-            w.cancelButton.setParent(None)
+            w.cancelButton.deleteLater()
             w.exec()
         else:
             # 检查
@@ -1318,7 +1322,8 @@ class ServerManagerPage(QWidget):
                 content = f"{totalResultMsg}\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
                 w = MessageBox(title, content, self)
                 w.yesButton.setText("好的")
-                w.cancelButton.setParent(None)
+                w.yesSignal.connect(w.deleteLater)
+                w.cancelButton.deleteLater()
                 w.exec()
             else:
                 totalJVMArg: str = "\n".join(editServerVariables.jvmArg)

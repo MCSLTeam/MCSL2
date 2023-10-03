@@ -29,13 +29,13 @@ from PyQt5.QtWidgets import (
 from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
-    SmoothScrollArea,
     StrongBodyLabel,
     TitleLabel,
     InfoBarPosition,
     InfoBar,
     FluentIcon as FIF
 )
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 from MCSL2Lib.utils import MCSL2Logger
 
 
@@ -112,7 +112,7 @@ class PluginPage(QWidget):
         self.titleLabel.setObjectName("titleLabel")
 
         self.gridLayout_2.addWidget(self.titleLabel, 0, 0, 1, 1)
-        self.pluginsSmoothScrollArea = SmoothScrollArea(self.titleLimitWidget)
+        self.pluginsSmoothScrollArea = MySmoothScrollArea(self.titleLimitWidget)
         self.pluginsSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.pluginsSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.pluginsSmoothScrollArea.setWidgetResizable(True)

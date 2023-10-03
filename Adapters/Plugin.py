@@ -216,7 +216,7 @@ class PluginManager(BasePluginManager):
             pass
 
         for i in reversed(range(pluginsVerticalLayout.count())):
-            pluginsVerticalLayout.itemAt(i).widget().setParent(None)
+            pluginsVerticalLayout.itemAt(i).widget().deleteLater()
 
         for pluginName, plugin in self.allPlugins.items():
             self.pluginWidget = singlePluginWidget(icon=plugin.icon)

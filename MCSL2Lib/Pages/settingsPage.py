@@ -40,7 +40,6 @@ from qfluentwidgets import (
     PrimaryPushButton,
     RadioButton,
     Slider,
-    SmoothScrollArea,
     StrongBodyLabel,
     SwitchButton,
     TitleLabel,
@@ -51,6 +50,7 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF,
     setThemeColor,
+    SmoothScrollBar
 )
 
 from MCSL2Lib import MCSL2VERSION
@@ -65,6 +65,7 @@ from MCSL2Lib.utils import openWebUrl
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.utils import MCSL2Logger
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 settingsController = SettingsController()
 settingsVariables = SettingsVariables()
 
@@ -77,7 +78,6 @@ class SettingsPage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.tmpParent = self
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
 
@@ -135,33 +135,44 @@ class SettingsPage(QWidget):
         self.horizontalLayout.addWidget(self.giveUpBtn)
         self.gridLayout_2.addWidget(self.saveSettingsBtnWidget, 0, 1, 2, 1)
         self.gridLayout_3.addWidget(self.titleLimitWidget, 1, 1, 1, 2)
-        self.settingsSmoothScrollArea = SmoothScrollArea(self)
-        self.settingsSmoothScrollArea.setFrameShape(QFrame.NoFrame)
-        self.settingsSmoothScrollArea.setFrameShadow(QFrame.Plain)
-        self.settingsSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.settingsSmoothScrollArea.setSizeAdjustPolicy(
-            QAbstractScrollArea.AdjustToContents
-        )
-        self.settingsSmoothScrollArea.setWidgetResizable(True)
-        self.settingsSmoothScrollArea.setObjectName("settingsSmoothScrollArea")
+        self.settingsChanged.connect(self.saveSettingsBtnWidget.setVisible)
+        self.saveBtn.clicked.connect(self.saveSettings)
+        self.giveUpBtn.clicked.connect(self.giveUpSettings)
+        self.setObjectName("settingInterface")
+        
+        self.isChanged = 1
+        self.initReal()
 
-        self.settingsScrollAreaWidgetContents = QWidget()
-        self.settingsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 653, 1625))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.settingsScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
-        self.settingsScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.settingsScrollAreaWidgetContents.setObjectName(
-            "settingsScrollAreaWidgetContents"
-        )
+    def initReal(self):
+        if not self.isChanged:
+            return
+        if self.isChanged == 1:
+            self.settingsSmoothScrollArea = MySmoothScrollArea(self)
+            self.settingsSmoothScrollArea.setFrameShape(QFrame.NoFrame)
+            self.settingsSmoothScrollArea.setFrameShadow(QFrame.Plain)
+            self.settingsSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+            self.settingsSmoothScrollArea.setSizeAdjustPolicy(
+                QAbstractScrollArea.AdjustToContents
+            )
+            self.settingsSmoothScrollArea.setWidgetResizable(True)
+            self.settingsSmoothScrollArea.setObjectName("settingsSmoothScrollArea")
 
-        self.verticalLayout = QVBoxLayout(self.settingsScrollAreaWidgetContents)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
+            self.settingsScrollAreaWidgetContents = QWidget()
+            self.settingsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 653, 1625))
+            sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(
+                self.settingsScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
+            )
+            self.settingsScrollAreaWidgetContents.setSizePolicy(sizePolicy)
+            self.settingsScrollAreaWidgetContents.setObjectName(
+                "settingsScrollAreaWidgetContents"
+            )
 
+            self.verticalLayout = QVBoxLayout(self.settingsScrollAreaWidgetContents)
+            self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+            self.verticalLayout.setObjectName("verticalLayout")
         self.serverSettings = CardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1229,8 +1240,8 @@ class SettingsPage(QWidget):
 
         self.gridLayout_5.addWidget(self.aboutTitle, 0, 2, 1, 1)
         self.verticalLayout.addWidget(self.about)
-        spacerItem31 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem31)
+        self.spacerItem31 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalLayout.addItem(self.spacerItem31)
         self.settingsSmoothScrollArea.setWidget(self.settingsScrollAreaWidgetContents)
         self.gridLayout_3.addWidget(self.settingsSmoothScrollArea, 2, 1, 1, 1)
 
@@ -1312,9 +1323,6 @@ class SettingsPage(QWidget):
         )
         self.aboutTitle.setText("关于")
         self.aria2ThreadSlider.setValue(8)
-        self.settingsSmoothScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
         self.newServerTypeComboBox.addItems(["初始（简易+进阶+导入）", "简易模式", "进阶模式", "导入"])
         self.newServerTypeComboBox.setCurrentIndex(0)
         self.downloadSourceComboBox.addItems(["FastMirror", "MCSLAPI"])
@@ -1343,20 +1351,40 @@ class SettingsPage(QWidget):
         self.clearConsoleWhenStopServerSwitchBtn.setOnText("已开启")
         self.clearConsoleWhenStopServerSwitchBtn.setOffText("已关闭")
 
-        self.setObjectName("settingInterface")
-
         self.alwaysAskSaveDirectoryCheckBox.setEnabled(False)
         self.alwaysRunAsAdministratorSwitchBtn.setEnabled(False)
         self.startOnStartupSwitchBtn.setEnabled(False)
 
-        self.checkUpdateBtn.clicked.connect(lambda: self.checkUpdate(parent=self))
+        self.checkUpdateBtn.setIcon(FIF.UPDATE)
+        self.generateSysReport.setIcon(FIF.COPY)
+        self.augSponsorsBtn.setIcon(FIF.PEOPLE)
+        self.disconn()
+        self.conn()
+        self.isChanged = 0
 
-        self.generateSysReport.clicked.connect(self.generateSystemReport)
+    @pyqtSlot(int)
+    def onPageChangedRefresh(self, currentChanged):
+        if currentChanged == 6:
+            self.initReal()
+        else:
+            try:
+                self.disconn()
+                self.isChanged = 2
+                self.verticalLayout.removeItem(self.spacerItem31)
+                self.about.deleteLater()
+                self.updateSettings.deleteLater()
+                self.softwareSettings.deleteLater()
+                self.consoleSettings.deleteLater()
+                self.downloadSettings.deleteLater()
+                self.configureSettings.deleteLater()
+                self.serverSettings.deleteLater()
+                # self.verticalLayout.deleteLater()
+                # self.settingsSmoothScrollArea.verticalScrollBar().deleteLater()
+            except Exception:
+                pass
+            MCSL2Logger.info("性能优化：释放设置页内存")
 
-        self.settingsChanged.connect(self.saveSettingsBtnWidget.setVisible)
-        self.saveBtn.clicked.connect(self.saveSettings)
-        self.giveUpBtn.clicked.connect(self.giveUpSettings)
-
+    def conn(self):
         # serverSettings
         self.autoRunLastServerSwitchBtn.checkedChanged.connect(
             lambda: self.changeSettings(
@@ -1501,11 +1529,60 @@ class SettingsPage(QWidget):
         )
         self.augSponsorsBtn.clicked.connect(self.showAfDianSponsors)
 
-        self.refreshSettingsInterface()
         self.selectThemeColorBtn.colorChanged.connect(setThemeColor)
-        self.checkUpdateBtn.setIcon(FIF.UPDATE)
-        self.generateSysReport.setIcon(FIF.COPY)
-        self.augSponsorsBtn.setIcon(FIF.PEOPLE)
+
+        self.checkUpdateBtn.clicked.connect(lambda: self.checkUpdate(parent=self))
+
+        self.generateSysReport.clicked.connect(self.generateSystemReport)
+        self.refreshSettingsInterface()
+
+    def disconn(self):
+        try:
+            # serverSettings
+            self.autoRunLastServerSwitchBtn.checkedChanged.disconnect()
+            self.acceptAllMojangEulaSwitchBtn.checkedChanged.disconnect()
+            self.sendStopInsteadOfKillSwitchBtn.checkedChanged.disconnect()
+            self.restartServerWhenCrashedSwitchBtn.checkedChanged.disconnect()
+
+            # configureSettings
+            self.newServerTypeComboBox.currentIndexChanged.disconnect()
+            self.onlySaveGlobalServerConfigSwitchBtn.checkedChanged.disconnect()
+            self.clearAllNewServerConfigInProgramSwitchBtn.checkedChanged.disconnect()
+
+            # downloadSettings
+            self.downloadSourceComboBox.currentIndexChanged.disconnect()
+            self.alwaysAskSaveDirectoryCheckBox.clicked.disconnect()
+            self.aria2ThreadSlider.valueChanged.disconnect()
+            self.saveSameFileExceptionToAsk.clicked.disconnect()
+            self.saveSameFileExceptionToOverwrite.clicked.disconnect()
+            self.saveSameFileExceptionToStop.clicked.disconnect()
+
+            # consoleSettings
+            self.outputDeEncodingComboBox.currentIndexChanged.disconnect()
+            self.inputDeEncodingComboBox.currentIndexChanged.disconnect()
+            self.quickMenuSwitchBtn.checkedChanged.disconnect()
+            self.quickMenuSwitchBtn.checkedChanged.disconnect()
+            self.clearConsoleWhenStopServerSwitchBtn.checkedChanged.disconnect()
+
+            # softwareSettings
+            self.themeComboBox.currentIndexChanged.disconnect()
+            self.selectThemeColorBtn.colorChanged.disconnect()
+            self.alwaysRunAsAdministratorSwitchBtn.checkedChanged.disconnect()
+            self.startOnStartupSwitchBtn.checkedChanged.disconnect()
+
+            # updateSettings
+            self.checkUpdateOnStartSwitchBtn.checkedChanged.disconnect()
+            self.augSponsorsBtn.clicked.disconnect()
+
+            self.selectThemeColorBtn.colorChanged.disconnect()
+            
+            self.checkUpdateBtn.clicked.disconnect()
+
+            self.generateSysReport.clicked.disconnect()
+        except TypeError:
+            pass
+        except RuntimeError:
+            pass
 
     def readSettings(self, firstLoad):
         """
@@ -1658,7 +1735,6 @@ class SettingsPage(QWidget):
             duration=3000,
             parent=parent,
         )
-        self.tmpParent = parent
         self.thread_checkUpdate = CheckUpdateThread(self)
         self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
         self.thread_checkUpdate.start()
@@ -1743,7 +1819,8 @@ class SettingsPage(QWidget):
     def showAfDianSponsors(self):
         w = MessageBox("", "", self)
         w.textLayout.addWidget(MCSL2Sponsors())
-        w.cancelButton.setParent(None)
-        w.titleLabel.setParent(None)
-        w.contentLabel.setParent(None)
+        w.cancelButton.deleteLater()
+        w.titleLabel.deleteLater()
+        w.contentLabel.deleteLater()
+        w.yesSignal.connect(w.deleteLater)
         w.show()

@@ -43,7 +43,6 @@ from qfluentwidgets import (
     FluentWindow,
     SplashScreen,
 )
-
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.aria2ClientController import (
@@ -222,6 +221,8 @@ class PageLoader(QThread):
 class Window(FluentWindow):
     """程序主窗口"""
 
+    __slots__ = {}
+
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
@@ -236,62 +237,35 @@ class Window(FluentWindow):
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
 
-        if experiment := settingsController.fileSettings.get(
-            "enableExperimentalFeatures", False
-        ):
-            MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
-            self.homeInterface = None
-            self.configureInterface = None
-            self.downloadInterface = None
-            self.consoleInterface = None
-            self.pluginsInterface = None
-            self.settingsInterface = None
-            self.serverManagerInterface = None
+        # if experiment := settingsController.fileSettings.get(
+        #     "enableExperimentalFeatures", False
+        # ):
+        #     MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
 
-            self.selectJavaPage = None
-            self.selectNewJavaPage = None
+        self.homeInterface = None
+        self.configureInterface = None
+        self.downloadInterface = None
+        self.consoleInterface = None
+        self.pluginsInterface = None
+        self.settingsInterface = None
+        self.serverManagerInterface = None
 
-            # 页面加载器
-            loaders = []
-            for config in pageLoadConfig:
-                loader = PageLoader(
-                    config["type"],
-                    config["targetObj"],
-                    config["flag"],
-                    self.onPageLoaded,
-                )
-                loaders.append(loader)
+        self.selectJavaPage = None
+        self.selectNewJavaPage = None
 
-            for loader in loaders:
-                loader.start()
+        # 页面加载器
+        loaders = []
+        for config in pageLoadConfig:
+            loader = PageLoader(
+                config["type"],
+                config["targetObj"],
+                config["flag"],
+                self.onPageLoaded,
+            )
+            loaders.append(loader)
 
-            # self.initWindow()
-        else:
-            # 定义子页面
-            self.homeInterface = HomePage(self)
-            self.configureInterface = ConfigurePage(self)
-            self.downloadInterface = DownloadPage(self)
-            self.consoleInterface = ConsolePage(self)
-            self.pluginsInterface = PluginPage(self)
-            self.settingsInterface = SettingsPage(self)
-            self.serverManagerInterface = ServerManagerPage(self)
-
-            # 定义隐藏的子页面
-            self.selectJavaPage = SelectJavaPage(self)
-            self.selectNewJavaPage = SelectNewJavaPage(self)
-
-            # self.initWindow()
-
-            self.initNavigation()
-
-            self.initQtSlot()
-
-            serverHelper.loadAtLaunch()
-
-            self.initPluginSystem()
-
-            self.splashScreen.finish()
-            self.splashScreen.deleteLater()
+        for loader in loaders:
+            loader.start()
 
         initializeAria2Configuration()
 
@@ -323,7 +297,15 @@ class Window(FluentWindow):
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
         if flag:
-            pass
+            InfoBar.success(
+                title="Aria2下载引擎启动成功。",
+                content="",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
         else:
             InfoBar.error(
                 title="Aria2下载引擎启动失败",
@@ -396,7 +378,7 @@ class Window(FluentWindow):
             box = MessageBox("程序出现异常", tracebackString, parent=self)
             box.yesButton.setText("确认并复制到剪切板")
             box.cancelButton.setText("知道了")
-            box.contentLabel.setParent(None)
+            box.contentLabel.deleteLater()
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
             box.yesSignal.connect(
                 lambda: QApplication.clipboard().setText(tracebackString)
@@ -455,10 +437,13 @@ class Window(FluentWindow):
     def mySetTheme(self):
         setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
         if "windows" in system().lower():
-            if int(systemVersion().split('.')[-1]) >= 22000:
+            if int(systemVersion().split(".")[-1]) >= 22000:
                 self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
             else:
-                self.windowEffect.setAcrylicEffect(self.winId(), gradientColor="F2F2F2" if isDarkTheme() else "F2F2F299")
+                self.windowEffect.setAcrylicEffect(
+                    self.winId(),
+                    gradientColor="F2F2F2" if isDarkTheme() else "F2F2F299",
+                )
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
     def initSafeQuitController(self):
@@ -566,9 +551,6 @@ class Window(FluentWindow):
         # 设置器
         serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)
         # 管理服务器
-        self.stackedWidget.currentChanged.connect(
-            self.serverManagerInterface.onPageChangedRefresh
-        )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
@@ -619,9 +601,15 @@ class Window(FluentWindow):
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
 
-        # 下载
+        # 性能优化
+        self.stackedWidget.currentChanged.connect(
+            self.serverManagerInterface.onPageChangedRefresh
+        )
         self.stackedWidget.currentChanged.connect(
             self.downloadInterface.onPageChangedRefresh
+        )
+        self.stackedWidget.currentChanged.connect(
+            self.settingsInterface.onPageChangedRefresh
         )
 
     def startServer(self):

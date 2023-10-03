@@ -13,7 +13,6 @@ from qfluentwidgets import (
     PixmapLabel,
     SubtitleLabel,
     PrimaryPushButton,
-    SmoothScrollArea,
     TransparentToolButton,
     FluentIcon as FIF,
     CardWidget,
@@ -25,6 +24,7 @@ from qfluentwidgets import (
     PushButton,
     TextEdit,
 )
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -53,7 +53,7 @@ class ShellArchives(QWidget):
         self.gridLayout_30.addItem(spacerItem36, 0, 3, 1, 1)
         spacerItem37 = QSpacerItem(20, 299, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.gridLayout_30.addItem(spacerItem37, 1, 1, 1, 1)
-        self.shellArchivesScrollArea = SmoothScrollArea(self)
+        self.shellArchivesScrollArea = MySmoothScrollArea(self)
         self.shellArchivesScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.shellArchivesScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.shellArchivesScrollArea.setWidgetResizable(True)

@@ -12,7 +12,6 @@ from qfluentwidgets import (
     PixmapLabel,
     SubtitleLabel,
     PrimaryPushButton,
-    SmoothScrollArea,
     TransparentToolButton,
     FluentIcon as FIF,
     CardWidget,
@@ -24,6 +23,7 @@ from qfluentwidgets import (
     PushButton,
     TextEdit,
 )
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -37,7 +37,7 @@ class MCSM9(QWidget):
         self.gridLayout_97.setObjectName("gridLayout_97")
         spacerItem95 = QSpacerItem(20, 340, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.gridLayout_97.addItem(spacerItem95, 1, 2, 1, 1)
-        self.MCSM9ScrollArea = SmoothScrollArea(self)
+        self.MCSM9ScrollArea = MySmoothScrollArea(self)
         self.MCSM9ScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.MCSM9ScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.MCSM9ScrollArea.setWidgetResizable(True)

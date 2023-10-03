@@ -12,7 +12,6 @@ from qfluentwidgets import (
     PixmapLabel,
     SubtitleLabel,
     PrimaryPushButton,
-    SmoothScrollArea,
     TransparentToolButton,
     FluentIcon as FIF,
     CardWidget,
@@ -23,6 +22,7 @@ from qfluentwidgets import (
     PushButton,
     TextEdit,
 )
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -35,7 +35,7 @@ class NullCraft(QWidget):
         self.gridLayout_78 = QGridLayout(self)
         self.gridLayout_78.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_78.setObjectName("gridLayout_78")
-        self.NullCraftScrollArea = SmoothScrollArea(self)
+        self.NullCraftScrollArea = MySmoothScrollArea(self)
         self.NullCraftScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.NullCraftScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.NullCraftScrollArea.setWidgetResizable(True)

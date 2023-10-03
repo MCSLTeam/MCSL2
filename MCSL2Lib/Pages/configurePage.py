@@ -36,7 +36,6 @@ from qfluentwidgets import (
     PlainTextEdit,
     PrimaryPushButton,
     PushButton,
-    SmoothScrollArea,
     StrongBodyLabel,
     SubtitleLabel,
     TitleLabel,
@@ -54,17 +53,18 @@ from MCSL2Lib.Controllers import javaDetector
 from MCSL2Lib.Controllers.serverController import MojangEula
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
-from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
-from MCSL2Lib.ImportServerTypes.importMCSM8 import MCSM8
-from MCSL2Lib.ImportServerTypes.importMCSM9 import MCSM9
-from MCSL2Lib.ImportServerTypes.importMSL3 import MSL3
-from MCSL2Lib.ImportServerTypes.importNoShellArchives import NoShellArchives
-from MCSL2Lib.ImportServerTypes.importNullCraft import NullCraft
-from MCSL2Lib.ImportServerTypes.importServerArchiveSite import ServerArchiveSite
-from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
+# from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
+# from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
+# from MCSL2Lib.ImportServerTypes.importMCSM8 import MCSM8
+# from MCSL2Lib.ImportServerTypes.importMCSM9 import MCSM9
+# from MCSL2Lib.ImportServerTypes.importMSL3 import MSL3
+# from MCSL2Lib.ImportServerTypes.importNoShellArchives import NoShellArchives
+# from MCSL2Lib.ImportServerTypes.importNullCraft import NullCraft
+# from MCSL2Lib.ImportServerTypes.importServerArchiveSite import ServerArchiveSite
+# from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.ForgeInstallProgressWidget import ForgeInstallerProgressBox
+from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     GlobalMCSL2Variables,
@@ -274,7 +274,7 @@ class ConfigurePage(QWidget):
         self.noobNewServerGridLayout = QGridLayout(self.noobNewServerPage)
         self.noobNewServerGridLayout.setObjectName("noobNewServerGridLayout")
 
-        self.noobNewServerScrollArea = SmoothScrollArea(self.noobNewServerPage)
+        self.noobNewServerScrollArea = MySmoothScrollArea(self.noobNewServerPage)
         self.noobNewServerScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.noobNewServerScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.noobNewServerScrollArea.setWidgetResizable(True)
@@ -685,7 +685,7 @@ class ConfigurePage(QWidget):
         spacerItem10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem10)
         self.gridLayout_2.addWidget(self.extendedTitleWidget, 0, 1, 1, 1)
-        self.extendedNewServerScrollArea = SmoothScrollArea(self.extendedNewServerPage)
+        self.extendedNewServerScrollArea = MySmoothScrollArea(self.extendedNewServerPage)
         self.extendedNewServerScrollArea.setFrameShape(QFrame.NoFrame)
         self.extendedNewServerScrollArea.setVerticalScrollBarPolicy(
             Qt.ScrollBarAsNeeded
@@ -1259,32 +1259,33 @@ class ConfigurePage(QWidget):
         self.gridLayout_11.addItem(spacerItem25, 0, 0, 1, 6)
         self.importNewServerStackWidget.addWidget(self.importNewServerFirstGuide)
 
-        self.noShellArchives = NoShellArchives()
-        self.importNewServerStackWidget.addWidget(self.noShellArchives)
+        # self.noShellArchives = NoShellArchives()
+        # self.importNewServerStackWidget.addWidget(self.noShellArchives)
 
-        self.shellArchives = ShellArchives()
-        self.importNewServerStackWidget.addWidget(self.shellArchives)
+        # self.shellArchives = ShellArchives()
+        # self.importNewServerStackWidget.addWidget(self.shellArchives)
 
-        self.serverArchiveSite = ServerArchiveSite()
-        self.importNewServerStackWidget.addWidget(self.serverArchiveSite)
+        # self.serverArchiveSite = ServerArchiveSite()
+        # self.importNewServerStackWidget.addWidget(self.serverArchiveSite)
 
-        self.MCSLv1 = MCSLv1()
-        self.importNewServerStackWidget.addWidget(self.MCSLv1)
+        # self.MCSLv1 = MCSLv1()
+        # self.importNewServerStackWidget.addWidget(self.MCSLv1)
 
-        self.MCSLv2 = MCSLv2()
-        self.importNewServerStackWidget.addWidget(self.MCSLv2)
+        # self.MCSLv2 = MCSLv2()
+        # self.importNewServerStackWidget.addWidget(self.MCSLv2)
 
-        self.MSL3 = MSL3()
-        self.importNewServerStackWidget.addWidget(self.MSL3)
+        # self.MSL3 = MSL3()
+        # self.importNewServerStackWidget.addWidget(self.MSL3)
 
-        self.NullCraft = NullCraft()
-        self.importNewServerStackWidget.addWidget(self.NullCraft)
+        # self.NullCraft = NullCraft()
+        # self.importNewServerStackWidget.addWidget(self.NullCraft)
 
-        self.MCSM8 = MCSM8()
-        self.importNewServerStackWidget.addWidget(self.MCSM8)
+        # self.MCSM8 = MCSM8()
+        # self.importNewServerStackWidget.addWidget(self.MCSM8)
 
-        self.MCSM9 = MCSM9()
-        self.importNewServerStackWidget.addWidget(self.MCSM9)
+        # self.MCSM9 = MCSM9()
+        # self.importNewServerStackWidget.addWidget(self.MCSM9)
+
         self.gridLayout_21.addWidget(self.importNewServerStackWidget, 1, 1, 1, 1)
         self.newServerStackedWidget.addWidget(self.importNewServerPage)
         self.gridLayout.addWidget(self.newServerStackedWidget, 2, 2, 1, 1)
@@ -1447,36 +1448,36 @@ class ConfigurePage(QWidget):
         self.extendedNewServerScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
-        self.noShellArchives.noShellArchivesBackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.shellArchives.shellArchivesBackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.serverArchiveSite.serverArchiveSiteBackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.MCSLv1.MCSLv1BackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.MCSLv2.MCSLv2BackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.MSL3.MSL3BackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.NullCraft.NullCraftBackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.MCSM8.MCSM8BackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
-        self.MCSM9.MCSM9BackToMain.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        )
+        # self.noShellArchives.noShellArchivesBackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.shellArchives.shellArchivesBackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.serverArchiveSite.serverArchiveSiteBackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.MCSLv1.MCSLv1BackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.MCSLv2.MCSLv2BackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.MSL3.MSL3BackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.NullCraft.NullCraftBackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.MCSM8.MCSM8BackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
+        # self.MCSM9.MCSM9BackToMain.clicked.connect(
+        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
+        # )
 
         self.settingsRunner_newServerType()
-        # self.importNewServerBtn.setEnabled(False)
+        self.importNewServerBtn.setEnabled(False)
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
@@ -1898,7 +1899,7 @@ class ConfigurePage(QWidget):
             content = f"{totalResultMsg}\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
             w = MessageBox(title, content, self)
             w.yesButton.setText("好的")
-            w.cancelButton.setParent(None)
+            w.cancelButton.deleteLater()
             w.exec()
         else:
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
