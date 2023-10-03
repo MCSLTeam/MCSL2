@@ -1158,12 +1158,7 @@ class DownloadPage(QWidget):
         self.downloadingBox = DownloadMessageBox(
             f"{fileName}.{fileFormat}", parent=self
         )
-        self.downloadingBox.DownloadWidget().closeBoxBtnFinished.clicked.connect(
-            self.downloadingBox.close
-        )
-        self.downloadingBox.DownloadWidget().closeBoxBtnFailed.clicked.connect(
-            self.downloadingBox.close
-        )
+        self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(self.hideDownloadHelper)
         gid = Aria2Controller.download(
             uri=uri,
             watch=True,

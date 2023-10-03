@@ -380,7 +380,7 @@ class ConsolePage(QWidget):
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
         serverOutput = (
-            serverOutput[:-1]
+            serverOutput
             .replace("[38;2;170;170;170m", "")
             .replace("[38;2;255;170;0m", "")
             .replace("[38;2;255;255;255m", "")

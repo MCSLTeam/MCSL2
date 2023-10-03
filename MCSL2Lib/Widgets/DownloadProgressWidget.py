@@ -32,7 +32,8 @@ from qfluentwidgets import (
     ProgressBar,
     PushButton,
     StrongBodyLabel,
-    SubtitleLabel, MessageBox,
+    SubtitleLabel,
+    MessageBox,
 )
 
 from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
@@ -40,7 +41,6 @@ from MCSL2Lib.utils import MCSL2Logger
 
 
 class DownloadProgressWidget(QWidget):
-
     def __init__(self):
         super().__init__()
 
@@ -51,7 +51,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadProgressMainWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadProgressMainWidget.sizePolicy().hasHeightForWidth()
+        )
         self.downloadProgressMainWidget.setSizePolicy(sizePolicy)
         self.downloadProgressMainWidget.setMinimumSize(QSize(321, 241))
         self.downloadProgressMainWidget.setObjectName("downloadProgressMainWidget")
@@ -72,7 +74,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileSizeTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.fileSizeTitle.sizePolicy().hasHeightForWidth()
+        )
         self.fileSizeTitle.setSizePolicy(sizePolicy)
         self.fileSizeTitle.setObjectName("fileSizeTitle")
 
@@ -85,7 +89,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ProgressWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.ProgressWidget.sizePolicy().hasHeightForWidth()
+        )
         self.ProgressWidget.setSizePolicy(sizePolicy)
         self.ProgressWidget.setMinimumSize(QSize(315, 40))
         self.ProgressWidget.setMaximumSize(QSize(16777215, 40))
@@ -129,7 +135,9 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileNameTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.fileNameTitle.sizePolicy().hasHeightForWidth()
+        )
         self.fileNameTitle.setSizePolicy(sizePolicy)
         self.fileNameTitle.setObjectName("fileNameTitle")
 
@@ -245,14 +253,16 @@ class DownloadMessageBox(MessageBox):
         self.contentLabel.setParent(None)
         self.buttonGroup.setParent(None)
         self.downloadProgressWidget.fileName.setText(self.fileName)
-        self.textLayout.addWidget(self.downloadProgressWidget.downloadProgressMainWidget)
+        self.textLayout.addWidget(
+            self.downloadProgressWidget.downloadProgressMainWidget
+        )
 
         widget = self.downloadProgressWidget
         widget.cancelBtn.clicked.connect(self.canceled.emit)
         widget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
         widget.PrimaryPushButton.clicked.connect(self.hide)
-
-        widget.PrimaryPushButton.clicked.connect(parent.hideDownloadHelper)
+        self.DownloadWidget().closeBoxBtnFinished.clicked.connect(self.close)
+        self.DownloadWidget().closeBoxBtnFailed.clicked.connect(self.close)
 
     def DownloadWidget(self):
         return self.downloadProgressWidget
@@ -289,23 +299,31 @@ class DownloadMessageBox(MessageBox):
 
         if dl is not None:
             if dl.status == "complete":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-                if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                    1
+                )
+                if path.exists(
+                    path.join("MCSL2", "Downloads", filename)
+                ):  # 防止有时候aria2抽风...
                     DL_EntryController().work.emit(
-                        ("addCoreEntry", {
-                            "coreName": filename,
-                            "extraData": data
-                        })
+                        ("addCoreEntry", {"coreName": filename, "extraData": data})
                     )
             elif dl.status == "error":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                    2
+                )
                 MCSL2Logger.error(f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                    2
+                )
         else:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadProgressWidget.downloading = False
-        self.parent().downloadFinishedHelper()
+        try:
+            self.parent().downloadFinishedHelper()
+        except Exception:
+            pass
 
     def setFileName(self, name):
         self.downloadProgressWidget.fileName.setText(name)

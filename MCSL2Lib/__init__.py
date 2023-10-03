@@ -15,7 +15,7 @@
 MCSL2运行支持库
 """
 
-VERSION = "2.2.2.1"
+VERSION = "2.2.2.2"
 MCSL2VERSION = VERSION
 # 烦死了！直接从这里引用就行啊喂！
 
