@@ -78,6 +78,7 @@ from MCSL2Lib.utils import (
     ExceptionFilterMode,
     workingThreads,
 )
+from platform import version as systemVersion
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
@@ -227,7 +228,7 @@ class Window(FluentWindow):
         super().__init__()
         # 读取程序设置，不放在第一位就会爆炸！
         settingsController.initialize(firstLoad=True)
-        self.setTheme()
+        self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(f"MCSL {MCSL2VERSION}")
         self.titleBar.setAttribute(Qt.WA_StyledBackground)
@@ -451,20 +452,13 @@ class Window(FluentWindow):
         self.show()
         QApplication.processEvents()
 
-    def setTheme(self):
-        configThemeList = ["dark", "light"]
-        qfluentwidgetsThemeList = [Theme.DARK, Theme.LIGHT]
-        if settingsController.fileSettings["theme"] == "auto":
-            setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
-        else:
-            setTheme(
-                qfluentwidgetsThemeList[
-                    configThemeList.index(settingsController.fileSettings["theme"])
-                ]
-            )
-
+    def mySetTheme(self):
+        setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
         if "windows" in system().lower():
-            self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
+            if int(systemVersion().split('.')[-1]) >= 22000:
+                self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
+            else:
+                self.windowEffect.setAcrylicEffect(self.winId(), gradientColor="F2F2F2" if isDarkTheme() else "F2F2F299")
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
     def initSafeQuitController(self):

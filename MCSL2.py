@@ -13,9 +13,7 @@
 """
 Main entry.
 """
-import os
 import sys
-from platform import system
 
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
