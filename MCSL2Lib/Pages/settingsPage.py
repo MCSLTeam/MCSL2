@@ -79,6 +79,7 @@ class SettingsPage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.tmpParent = self
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
 
@@ -1736,6 +1737,7 @@ class SettingsPage(QWidget):
             duration=3000,
             parent=parent,
         )
+        self.tmpParent = parent
         self.thread_checkUpdate = CheckUpdateThread(self)
         self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
         self.thread_checkUpdate.start()
