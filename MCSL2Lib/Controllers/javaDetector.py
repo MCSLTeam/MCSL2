@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 An auto-detect Java function.
-'''
+"""
 
 import json
 from os import listdir, remove
@@ -22,7 +22,6 @@ from re import search
 
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
 from MCSL2Lib.utils import MCSL2Logger
-
 
 
 foundJava = []
@@ -58,10 +57,7 @@ class Java:
 
     @property
     def json(self):
-        return {
-            "Path": self.path,
-            "Version": self.version
-        }
+        return {"Path": self.path, "Version": self.version}
 
     def __hash__(self):
         return hash((self._path, self._version))
@@ -111,9 +107,12 @@ def findStr(s):
 def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     # construct _Match function
     if "windows" in system().lower():
+
         def Match(P, F):
             return osp.join(P, F).endswith(r"bin\java.exe")
+
     else:
+
         def Match(P, F):
             return osp.join(P, F).endswith(r"bin/java")
 
@@ -209,24 +208,20 @@ def loadJavaList():
 
     if not osp.exists("MCSL2/MCSL2_DetectedJava.json"):
         return []
-    with open(
-            "MCSL2/MCSL2_DetectedJava.json", "r", encoding="utf-8"
-    ) as f:
+    with open("MCSL2/MCSL2_DetectedJava.json", "r", encoding="utf-8") as f:
         foundedJava = json.load(f)
         l = [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
         return l
 
 
 def saveJavaList(l: list):
-    with open(
-            "MCSL2/MCSL2_DetectedJava.json", "w", encoding="utf-8"
-    ) as f:
+    with open("MCSL2/MCSL2_DetectedJava.json", "w", encoding="utf-8") as f:
         json.dump(
             {"java": [j.json for j in l]},
             f,
             ensure_ascii=False,
             sort_keys=True,
-            indent=4
+            indent=4,
         )
 
 
@@ -244,7 +239,7 @@ def sortedJavaList(l: list, reverse=False):
     return sorted(l, key=lambda x: x.version, reverse=reverse)
 
 
-def combineJavaList(original: list, l: list,invaild:...,check=True):
+def combineJavaList(original: list, l: list, invaild: ..., check=True):
     """
     合并两个List[Java]
     invaild为引用输出(list)
@@ -257,7 +252,7 @@ def combineJavaList(original: list, l: list,invaild:...,check=True):
             if not checkJavaAvailability(e):
                 s.remove(e)
                 MCSL2Logger.warning(f"{e}已失效")
-                if isinstance(invaild,list):
+                if isinstance(invaild, list):
                     invaild.append(e)
     return list(s)
 

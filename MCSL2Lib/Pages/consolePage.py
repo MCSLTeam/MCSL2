@@ -324,49 +324,12 @@ class ConsolePage(QWidget):
     def colorConsoleText(self, serverOutput):
         readServerProperties()
         fmt = QTextCharFormat()
+        # fmt: off
         greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "提示"]
-        orangeText = [
-            "WARN",
-            "Warning",
-            "warn",
-            "alert",
-            "ALERT",
-            "Alert",
-            "CAUTION",
-            "Caution",
-            "警告",
-        ]
-        redText = [
-            "ERR",
-            "Err",
-            "Fatal",
-            "FATAL",
-            "Critical",
-            "Danger",
-            "DANGER",
-            "错",
-            "at java",
-            "at net",
-            "at oolloo",
-            "Caused by",
-            "at sun",
-        ]
-        blueText = [
-            "DEBUG",
-            "Debug",
-            "debug",
-            "调试",
-            "TEST",
-            "Test",
-            "Unknown command",
-            "MCSL2",
-        ]
-        color = [
-            QColor(52, 185, 96),
-            QColor(196, 139, 33),
-            QColor(214, 39, 21),
-            QColor(22, 122, 232),
-        ]
+        orangeText = ["WARN", "Warning", "warn", "alert", "ALERT", "Alert", "CAUTION", "Caution","警告"]
+        redText = ["ERR", "Err", "Fatal", "FATAL", "Critical", "Danger", "DANGER", "错", "at java", "at net", "at oolloo", "Caused by", "at sun"]
+        blueText = ["DEBUG", "Debug", "debug", "调试", "TEST", "Test", "Unknown command", "MCSL2"]
+        color = [QColor(52, 185, 96), QColor(196, 139, 33), QColor(214, 39, 21), QColor(22, 122, 232)]
         for keyword in greenText:
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[0]))
@@ -412,20 +375,11 @@ class ConsolePage(QWidget):
             .replace("Saving the game (this may take a moment!)", "保存游戏存档中（可能需要一些时间）")
             .replace("Saved the game", "已保存游戏存档")
         )
-        if (
-            "Disabling terminal, you're running in an unsupported environment."
-            in serverOutput
-        ):
+        if "Disabling terminal, you're running in an unsupported environment." in serverOutput:
             return
-        if (
-            "Advanced terminal features are not available in this environment"
-            in serverOutput
-        ):
+        if "Advanced terminal features are not available in this environment" in serverOutput:
             return
-        if (
-            "Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream"
-            in serverOutput
-        ):
+        if "Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream"in serverOutput:
             return
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
@@ -517,7 +471,8 @@ class ConsolePage(QWidget):
             except Exception:
                 pass
 
-            try:  # 若不成功，尝试提取玩家名字
+            try: 
+                # 若不成功，尝试提取玩家名字
                 # [11:49:05] [Server thread/INFO] [minecraft/PlayerList]: Ares_Connor[/127.0.0.1:63854] logged in with entity id 229 at (7.258252218995321, 65.0, 11.09627995098097)
                 # 提取玩家名字
                 name = serverOutput
@@ -532,15 +487,8 @@ class ConsolePage(QWidget):
 
         elif " left the game" in serverOutput:
             try:
-                self.playersList.pop(
-                    self.playersList.index(
-                        str(
-                            str(serverOutput)
-                            .split("INFO]: ")[1]
-                            .split(" left the game")[0]
-                        )
-                    )
-                )
+                # fmt: off
+                self.playersList.pop(self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0])))
                 return
             except Exception:
                 pass
