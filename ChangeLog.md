@@ -3,7 +3,7 @@
  - 开服完成提示  
  - (插件系统)可调用`FluentIcon.xxx`  
  - 托盘图标  
- - 记住上次窗口大小
+ - 记住上次窗口大小[#126](https://github.com/MCSLTeam/MCSL2/discussions/126)  
 
 ### 修复  
  - 下载列表不反应问题  
