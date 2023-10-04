@@ -23,11 +23,13 @@ class DownloadEntryBox(MessageBoxBase):
         self.titleLabel = SubtitleLabel("下载项(正在加载...)", self)
         self.entryView = TableWidget(self)
 
-        self.entryView.setWordWrap(False)
+        self.viewLayout.addWidget(self.titleLabel)
+        self.viewLayout.addWidget(self.entryView)
 
+        self.entryView.setWordWrap(False)
+        self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.widget.setMinimumSize(QSize(620, 300))
         self.widget.setMaximumSize(QSize(16777215, 16777215))
-
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(0)
@@ -37,12 +39,6 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setMinimumSize(QSize(620, 300))
         self.entryView.setMaximumSize(QSize(16777215, 16777215))
 
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(5)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.entryView.sizePolicy().hasHeightForWidth())
-        self.entryView.setSizePolicy(sizePolicy)
-
         (controller := DL_EntryController()).resultReady.connect(self.updateEntries)
         controller.work.emit(("getEntriesList", {"check": True, "autoDelete": False}))
 
@@ -50,6 +46,12 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setSelectionBehavior(self.entryView.SelectRows)
         self.entryView.setSelectionMode(self.entryView.SingleSelection)
         self.entryView.horizontalHeader().sectionClicked.connect(self.onSectionClicked)
+
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(5)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.entryView.sizePolicy().hasHeightForWidth())
+        self.entryView.setSizePolicy(sizePolicy)
 
         self.entryView.itemSelectionChanged.connect(
             lambda: self.yesButton.setEnabled(True)
@@ -59,18 +61,12 @@ class DownloadEntryBox(MessageBoxBase):
         self.columnSortOrder = [True] * 5
 
         self.entryView.setHorizontalHeaderLabels(["名称", "类型", "MC版本", "构建版本"])
-        self.entryView.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeMode.Stretch
-        )
-
-        self.viewLayout.addWidget(self.titleLabel)
-        self.viewLayout.addWidget(self.entryView)
+        self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.yesButton.setText("选择")
         self.cancelButton.setText("取消")
 
         self.yesButton.setDisabled(True)
-        # self.widget.setStyleSheet('MessageBoxBase{background:rgb(32,32,32)}')
 
     def getSelectedEntry(self):
         return list(map(lambda x: x.text(), self.entryView.selectedItems()))
