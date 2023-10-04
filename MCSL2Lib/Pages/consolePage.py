@@ -322,6 +322,7 @@ class ConsolePage(QWidget):
 
     @pyqtSlot(str)
     def colorConsoleText(self, serverOutput):
+        readServerProperties()
         fmt = QTextCharFormat()
         greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "提示"]
         orangeText = [
@@ -380,12 +381,13 @@ class ConsolePage(QWidget):
                 fmt.setForeground(QBrush(color[3]))
         self.serverOutput.mergeCurrentCharFormat(fmt)
         serverOutput = (
-            serverOutput
-            .replace("[38;2;170;170;170m", "")
+            serverOutput.replace("[38;2;170;170;170m", "")
             .replace("[38;2;255;170;0m", "")
             .replace("[38;2;255;255;255m", "")
             .replace("[0m", "")
             .replace("[38;2;255;255;85m", "")
+            .replace("[38;2;255;255;0m", "")
+            .replace("[38;2;255;85;85m", "")
             .replace("[38;2;255;255;255m", "")
             .replace("[3m", "")
             .replace("[m[", "[")
@@ -449,8 +451,14 @@ class ConsolePage(QWidget):
         if search(r"(?=.*Done)(?=.*!)", serverOutput):
             fmt.setForeground(QBrush(color[3]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
+            try:
+                ip = serverVariables.serverProperties["server-ip"]
+                ip = "127.0.0.1" if ip == "" else ip
+            except KeyError:
+                ip = "127.0.0.1"
+            port = serverVariables.serverProperties.get("server-port", 25565)
             self.serverOutput.appendPlainText(
-                "[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为127.0.0.1。\n[MCSL2 | 提示]：如果外网开服或使用了内网穿透等服务，连接地址为你的相关服务地址。"
+                f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为{ip}，端口为{port}。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"
             )
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
@@ -462,14 +470,13 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             InfoBar.success(
                 title="提示",
-                content="服务器启动完毕！\n如果本机开服，IP 地址为127.0.0.1。\n如果外网开服或使用了内网穿透等服务，连接地址为你的相关服务地址。",
+                content=f"[MCSL2 | 提示]：服务器启动完毕！\n如果本机开服，IP 地址为{ip}，端口为{port}。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。",
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
                 duration=5000,
                 parent=self,
             )
-            readServerProperties()
             self.initQuickMenu_Difficulty()
         if "�" in serverOutput:
             fmt.setForeground(QBrush(color[1]))
