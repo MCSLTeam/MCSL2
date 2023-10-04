@@ -29,7 +29,7 @@ from PyQt5.QtCore import (
     QThread,
 )
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QSystemTrayIcon
 from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
@@ -42,6 +42,8 @@ from qfluentwidgets import (
     HyperlinkButton,
     FluentWindow,
     SplashScreen,
+    SystemTrayMenu,
+    Action,
 )
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import MCSL2VERSION
@@ -215,6 +217,27 @@ class PageLoader(QThread):
         # 强行切换上下文,留给UI线程进行刷新
         self.yieldCurrentThread()
         self.loadFinished.emit(self.pageType, self.targetObj, self.flag)
+
+
+class SystemTrayIcon(QSystemTrayIcon):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setIcon(parent.windowIcon())
+        self.setToolTip("MCServerLauncher 2")
+        self.menu = SystemTrayMenu(self)
+        self.minimizeAction = Action(text="最小化", triggered=self.parent().minimize)
+        self.exitAction = Action(text="退出MCSL2", triggered=self.parent().close)
+        self.exitAction.setIcon(FIF.CLOSE)
+        self.menu.addActions([self.minimizeAction, self.exitAction])
+        self.setContextMenu(self.menu)
+        self.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
+
+    def iconActivated(self,reason):
+        if reason == QSystemTrayIcon.DoubleClick:
+            if self.parent().isMinimized():
+                self.parent().myShow()
+            else:
+                self.parent().minimize()
 
 
 @Singleton
@@ -428,6 +451,8 @@ class Window(FluentWindow):
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
+        self.systemTrayIcon = SystemTrayIcon(self)
+        self.systemTrayIcon.show()
 
     def mySetTheme(self):
         setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
@@ -748,3 +773,18 @@ class Window(FluentWindow):
                     duration=3000,
                     parent=self.homeInterface,
                 )
+
+    def minimize(self):
+        self.showMinimized()
+        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
+        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
+        self.systemTrayIcon.minimizeAction = Action(text="显示窗口", triggered=self.myShow)
+        self.systemTrayIcon.menu.addActions([self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction])
+
+    def myShow(self):
+        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
+        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
+        self.systemTrayIcon.minimizeAction = Action(text="最小化", triggered=self.minimize)
+        self.systemTrayIcon.menu.addActions([self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction])
+        self.showNormal()
+        self.activateWindow()

@@ -27,7 +27,7 @@ from MCSL2Lib.utils import MCSL2Logger
 class MCSL2Application(QApplication):
     def __init__(self, argv):
         super().__init__(argv)
-
+    
     def notify(self, a0: QObject, a1: QEvent) -> bool:
         try:
             done = super().notify(a0, a1)
