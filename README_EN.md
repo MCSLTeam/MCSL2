@@ -24,26 +24,27 @@ ___
 [![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40vip.qq.com-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)   
 ___
 
-## What can MCSL2 do?
+## What can MCSL2 do?  
 
-~~Can help you very easily open a Minecraft: Java Edition game server.~~ XD
-
-- **💻 Simple and beautiful interface**: Written with Qt5 framework, collocate with QSS，powered by rounded corners（
-- **🎞️ Multiple servers can be managed**: With a MCSL2, the servers are all yours!
-- **⏬ All-in-One download service**: Powered by FastMirror、MCSLAPI, with the Aria2 download engine, speed fly!
-- **⚡ Quickly configure a server**: A few options to quickly configure a new server!
-- **✅ Automatic find Java**: Tired of manually flipping through directories? Automatically find Java can help you solve it!
-- **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful!
-
+- **💻 Simple and beautiful interface**: Written with PyQt5, and a fluent design widgets library[PyQt-Fluent-Widgets](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)  
+- **🎞️ Multiple servers can be managed**: Multi-server centralized management, more efficient operation and maintenance  
+- **⏬ All-in-One download service**: Download a variety of resources from FastMirror and MCSLAPI with Aria2.  
+- **⚡ Quickly add a server**: A few options to quickly add a new server!
+- **✅ Automatic find Java**: Automatically find the vast majority of Java without manual selection.  
+- **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful.  
 ___
 
 ## Used open-source project
 
-[![Python](https://img.shields.io/badge/python-3.8-blue.svg?style=for-the-badge "Python")](https://python.org)
-[![PyQt5](https://img.shields.io/badge/pyqt5-latest-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
-[![Nuitka](https://img.shields.io/badge/nuitka-latest-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
-[![PyQt-Fluent-Widgets](https://img.shields.io/badge/qfluentwidgets-latest-green.svg?style=for-the-badge "PyQt-Fluent-Widgets")](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)
-[![lib-not-dr](https://img.shields.io/badge/lib_not_dr-0.1.x-green.svg?style=for-the-badge "lib-not-dr")](https://github.com/shenjackyuanjie/lib-not-dr)
+`Python` 3.8.0  
+`Nuitka` Latest  
+`requests` Latest
+`PyQt5` 5.15.9
+`PyQt-Fluent-Widgets` Latest
+`aria2p` Latest
+`lib-not-dr` 0.1.7
+`loguru` 0.7.2
+`psutil` 5.9.5
 ___
 
 ## Related link
@@ -57,8 +58,7 @@ ___
 ## Special Thanks
 
 - 维度前端: https://www.df100.ltd
-- ZCloud: https://ztsin.cn/
-- Xiexilin: https://xiexilin.com/
+- Z_Tsin: https://ztsin.cn/
 - FiveCDN公益加速: https://cdn.5-5.site
 - WB-Block: https://wb-block.top
 - shenjack: http://shenjack.top:81
