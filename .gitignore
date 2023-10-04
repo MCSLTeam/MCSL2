@@ -16,6 +16,7 @@ MCSL2/MCSL2_ServerList.json
 Plugins/**
 pdm.lock
 pdm.toml
+Icons/icons_rc.py
 __pycache__/**
 MCSL2Lib/__pycache__/**
 MCSL2Lib/Controllers/__pycache__/**
