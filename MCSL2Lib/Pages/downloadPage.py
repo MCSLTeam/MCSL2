@@ -670,12 +670,12 @@ class DownloadPage(QWidget):
             pass
 
     def releaseMCSLAPIMemory(self):
-        for layout in self.MCSLAPILayoutList:
             try:
-                layout.removeItem(self.scrollAreaSpacer)
+                for layout in self.MCSLAPILayoutList:
+                    layout.removeItem(self.scrollAreaSpacer)
+                    for i in reversed(range(layout.count())):
+                        layout.itemAt(i).widget().deleteLater()
                 MCSL2Logger.info("性能优化：释放MCSLAPI内存")
-                for i in reversed(range(layout.count())):
-                    layout.itemAt(i).widget().deleteLater()
             except AttributeError:
                 pass
 
