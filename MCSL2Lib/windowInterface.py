@@ -338,6 +338,7 @@ class Window(FluentWindow):
             )
 
     def closeEvent(self, a0) -> None:
+        settingsController._saveSettings()
         if ServerHandler().isServerRunning():
             box = MessageBox("是否退出MCSL2？", "服务器正在运行。\n\n请在退出前先关闭服务器。", parent=self)
             box.yesButton.setText("取消")
@@ -447,7 +448,10 @@ class Window(FluentWindow):
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        self.resize(w // 2, int(h // 1.5))
+        if settingsController.fileSettings["lastWindowSize"][0] is settingsController.fileSettings["lastWindowSize"][1] is None:
+            self.resize(int(w // 1.5), int(h // 1.5))
+        else:
+            self.resize(settingsController.fileSettings["lastWindowSize"][0], settingsController.fileSettings["lastWindowSize"][1])
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
@@ -788,3 +792,7 @@ class Window(FluentWindow):
         self.systemTrayIcon.menu.addActions([self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction])
         self.showNormal()
         self.activateWindow()
+
+    def resizeEvent(self, e):
+        settingsController._changeSettings({"lastWindowSize": [e.size().width(), e.size().height()]})
+        return super().resizeEvent(e)
