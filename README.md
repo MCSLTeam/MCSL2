@@ -26,14 +26,12 @@ ___
 
 ## 他能干什么？  
 
-~~可以帮助你非常方便的开启一个Java版Minecraft服务器。（废话文学~~
-
-- **💻 简洁美观的界面**： 采用Qt编写，配合自己搓的QSS，由圆角强势驱动（
-- **🎞️ 可管理多服务器**： 一个MCSL2，服务器尽在掌控之中！
-- **⏬ 一站式下载服务**： 由FastMirror、MCSLAPI强力驱动，配合Aria2下载引擎，速度飞起！
-- **⚡ 快速配置服务器**： 几个选项，即可快速配置一个新服务器！
-- **✅ 自动查找Java**： 厌倦了手动翻目录？自动查找Java帮你解决！
-- **🔧 拓展工具系统**： 使用各种拓展工具，让你的MCSL2更加强大！
+- **💻 简洁美观的界面**： 采用Qt编写，圆角Fluent样式，完美融入Win11
+- **🎞️ 可管理多服务器**： 多服务器集中管理，运维更高效
+- **⏬ 一站式下载服务**： 使用Aria2c从FastMirror、MCSLAPI等API下载各类常用核心
+- **⚡ 快速配置服务器**： 几个选项，即可快速配置一个新服务器
+- **✅ 自动查找Java**： 自动查找绝大多数Java，无需手动选择
+- **🔧 拓展工具(插件)系统**： 可以从市场下载各类拓展工具(插件)
 
 ___
 
@@ -58,7 +56,6 @@ ___
 
 - 维度前端: https://www.df100.ltd  
 - Z_Tsin: https://ztsin.cn/  
-- Xiexilin: https://xiexilin.com/  
 - FiveCDN公益加速: https://cdn.5-5.site  
 - WB-Block: https://wb-block.top  
 - shenjack: http://shenjack.top:81
@@ -73,7 +70,6 @@ ___
 
 ## 开发文档
 
-~~其实我就不知道该写啥好~~  
 本项目基于 Python 3.8 开发。
 
 ### 1.克隆本仓库
@@ -93,5 +89,3 @@ pip install -r requirements.txt
 ```bash
 pip3 install -r requirements.txt
 ```
-
-### ~~摆烂~~ **开始开发**
