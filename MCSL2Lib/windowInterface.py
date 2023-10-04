@@ -85,6 +85,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+
 serverVariables = ServerVariables()
 settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()

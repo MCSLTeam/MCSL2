@@ -18,6 +18,7 @@ import sys
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
+from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
 # from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
@@ -42,7 +43,7 @@ if __name__ == "__main__":
     # tracer.start()
     # 初始化
     initializeMCSL2()
-
+    deleteOldMCSL2()
     # 高DPI适配
     QApplication.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough
@@ -62,3 +63,4 @@ if __name__ == "__main__":
     app.exec_()
     # tracer.stop()
     # tracer.save()
+    sys.exit()

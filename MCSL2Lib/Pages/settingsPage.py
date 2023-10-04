@@ -59,12 +59,12 @@ from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Controllers.updateController import (
     CheckUpdateThread,
     FetchUpdateIntroThread,
+    MCSL2FileUpdater,
 )
 from MCSL2Lib.Controllers.logController import genSysReport
 from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
-from MCSL2Lib.utils import openWebUrl
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
+from MCSL2Lib.variables import SettingsVariables
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 settingsController = SettingsController()
@@ -1754,11 +1754,9 @@ class SettingsPage(QWidget):
             self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
             self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
             self.thread_fetchUpdateIntro.start()
-            w.yesSignal.connect(
-                lambda: openWebUrl(Url="https://github.com/MCSLTeam/MCSL2")
-            )
+            w.yesSignal.connect(lambda: self.window().switchTo(self))
+            w.yesSignal.connect(MCSL2FileUpdater(self).downloadUpdate)
             w.exec()
-
         elif latestVerInfo[0] == "false":  # 已是最新版
             InfoBar.success(
                 title="无需更新",

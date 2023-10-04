@@ -62,6 +62,7 @@ configTemplate = {
     "lastServer": "",
     "nodeMCSLAPI": "https://hardbin.com",
     "enableExperimentalFeatures": False,
+    "oldExecuteable": "",
 }
 
 
