@@ -367,11 +367,9 @@ class Window(FluentWindow):
             return self.oldHook(ty, value, _traceback)
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
-            tracebackFormat = format_exception(ty, value, _traceback)
-            tracebackString = "".join(tracebackFormat)
-            exceptionWidget = ExceptionWidget()
-            exceptionWidget.exceptionLabel.setText(tracebackString)
-            box = MessageBox("程序出现异常", tracebackString, parent=self)
+            tracebackString = "".join(format_exception(ty, value, _traceback))
+            exceptionWidget = ExceptionWidget(tracebackString)
+            box = MessageBox("程序出现异常", "", self)
             box.yesButton.setText("确认并复制到剪切板")
             box.cancelButton.setText("知道了")
             box.contentLabel.deleteLater()
