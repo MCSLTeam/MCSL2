@@ -60,7 +60,7 @@ from MCSL2Lib.Controllers.serverController import (
     ServerLauncher,
 )
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.utils import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger, obsolete
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consolePage import ConsolePage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
@@ -232,7 +232,7 @@ class SystemTrayIcon(QSystemTrayIcon):
         self.setContextMenu(self.menu)
         self.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
 
-    def iconActivated(self,reason):
+    def iconActivated(self, reason):
         if reason == QSystemTrayIcon.DoubleClick:
             if self.parent().isMinimized():
                 self.parent().myShow()
@@ -448,10 +448,17 @@ class Window(FluentWindow):
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        if settingsController.fileSettings["lastWindowSize"][0] is settingsController.fileSettings["lastWindowSize"][1] is None:
+        if (
+            settingsController.fileSettings["lastWindowSize"][0]
+            is settingsController.fileSettings["lastWindowSize"][1]
+            is None
+        ):
             self.resize(int(w // 1.5), int(h // 1.5))
         else:
-            self.resize(settingsController.fileSettings["lastWindowSize"][0], settingsController.fileSettings["lastWindowSize"][1])
+            self.resize(
+                settingsController.fileSettings["lastWindowSize"][0],
+                settingsController.fileSettings["lastWindowSize"][1],
+            )
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
@@ -624,17 +631,13 @@ class Window(FluentWindow):
             ServerHandler().serverClosed.connect(
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
-
+        # fmt: off
+        self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
         # 性能优化
-        self.stackedWidget.currentChanged.connect(
-            self.serverManagerInterface.onPageChangedRefresh
-        )
-        self.stackedWidget.currentChanged.connect(
-            self.downloadInterface.onPageChangedRefresh
-        )
-        self.stackedWidget.currentChanged.connect(
-            self.settingsInterface.onPageChangedRefresh
-        )
+        self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
+        self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
+        self.stackedWidget.currentChanged.connect(self.settingsInterface.onPageChangedRefresh)
+        # fmt: on
 
     def startServer(self):
         """启动服务器总函数，直接放这里得了"""
@@ -783,16 +786,22 @@ class Window(FluentWindow):
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
         self.systemTrayIcon.minimizeAction = Action(text="显示窗口", triggered=self.myShow)
-        self.systemTrayIcon.menu.addActions([self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction])
+        self.systemTrayIcon.menu.addActions(
+            [self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction]
+        )
 
     def myShow(self):
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
         self.systemTrayIcon.minimizeAction = Action(text="最小化", triggered=self.minimize)
-        self.systemTrayIcon.menu.addActions([self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction])
+        self.systemTrayIcon.menu.addActions(
+            [self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction]
+        )
         self.showNormal()
         self.activateWindow()
 
     def resizeEvent(self, e):
-        settingsController._changeSettings({"lastWindowSize": [e.size().width(), e.size().height()]})
+        settingsController._changeSettings(
+            {"lastWindowSize": [e.size().width(), e.size().height()]}
+        )
         return super().resizeEvent(e)
