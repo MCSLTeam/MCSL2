@@ -279,13 +279,6 @@ class ConsolePage(QWidget):
             lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
         )
         self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
         self.sendCommandButton.clicked.connect(
             lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
@@ -394,14 +387,6 @@ class ConsolePage(QWidget):
                 parent=self,
             )
         self.serverOutput.appendPlainText(serverOutput)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
-        self.serverOutput.setReadOnly(True)
         if search(r"(?=.*Done)(?=.*!)", serverOutput):
             fmt.setForeground(QBrush(color[3]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
@@ -414,14 +399,6 @@ class ConsolePage(QWidget):
             self.serverOutput.appendPlainText(
                 self.tr("[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。")
             )
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
             InfoBar.success(
                 title=self.tr("提示"),
                 content=self.tr("服务器启动完毕！\n如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),
@@ -438,14 +415,6 @@ class ConsolePage(QWidget):
             self.serverOutput.appendPlainText(
                 self.tr("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")
             )
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
-            self.serverOutput.setReadOnly(True)
             InfoBar.warning(
                 title=self.tr("警告"),
                 content=self.tr("服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。\n请尝试更换编码。"),
