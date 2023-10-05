@@ -144,16 +144,16 @@ class PluginPage(QWidget):
 
         self.setObjectName("PluginsInterface")
 
-        self.subTitleLabel.setText("添加属于你的插件，让你的MCSL2更加强大！")
-        self.titleLabel.setText("插件")
-        self.refreshPluginListBtn.setText("刷新")
-        self.installPluginBtn.setText("安装")
+        self.subTitleLabel.setText(self.tr("添加属于你的插件，让你的MCSL2更加强大！"))
+        self.titleLabel.setText(self.tr("插件"))
+        self.refreshPluginListBtn.setText(self.tr("刷新"))
+        self.installPluginBtn.setText(self.tr("安装"))
         self.refreshPluginListBtn.setIcon(FIF.UPDATE)
         self.installPluginBtn.setIcon(FIF.ZIP_FOLDER)
         self.refreshPluginListBtn.clicked.connect(
             lambda: InfoBar.success(
-                title="成功",
-                content="刷新完毕",
+                title=self.tr("成功"),
+                content=self.tr("刷新完毕"),
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.BOTTOM_LEFT,
@@ -165,7 +165,7 @@ class PluginPage(QWidget):
 
     def installPlugin(self):
         GlobalMCSL2Variables.installingPluginArchiveDirectory = (
-            str(QFileDialog.getOpenFileName(self, "选择插件压缩包", getcwd(), "Zip压缩包(*.zip)")[
+            str(QFileDialog.getOpenFileName(self, self.tr("选择插件压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)"))[
                 0
             ]).replace("/", "\\")
         )
@@ -173,8 +173,8 @@ class PluginPage(QWidget):
             self.installPluginThread = InstallPluginThread(self)
             self.installPluginThread.success.connect(
                 lambda: InfoBar.success(
-                    title="成功安装",
-                    content=f"可能需要重启以生效",
+                    title=self.tr("成功安装"),
+                    content=self.tr("可能需要重启以生效"),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.BOTTOM_LEFT,
@@ -184,7 +184,7 @@ class PluginPage(QWidget):
             )
             self.installPluginThread.failed.connect(
                 lambda: InfoBar.error(
-                    title="安装失败",
+                    title=self.tr("安装失败"),
                     content="",
                     orient=Qt.Horizontal,
                     isClosable=True,
