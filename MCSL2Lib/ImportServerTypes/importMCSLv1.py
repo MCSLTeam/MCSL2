@@ -32,7 +32,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from shutil import copytree
-from MCSL2Lib.variables import GlobalMCSL2Variables, MCSLv1ImportVariables
+from MCSL2Lib.variables import MCSLv1ImportVariables
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 importVariables = MCSLv1ImportVariables()
@@ -614,29 +614,29 @@ class MCSLv1(QWidget):
         self.verticalLayout_7.addWidget(self.MCSLv1Save)
         self.MCSLv1ScrollArea.setWidget(self.MCSLv1ScrollAreaWidgetContents)
         self.gridLayout_49.addWidget(self.MCSLv1ScrollArea, 1, 3, 1, 2)
-        self.MCSLv1Title.setText("导入 MCSL 1的服务器")
-        self.MCSLv1ImportStatusText.setText("[状态文本]")
-        self.MCSLv1ImportTitle.setText("1. 选择MCSL 1主程序")
-        self.MCSLv1ImportArchives.setText("选择主程序")
-        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setText("自动查找Java")
+        self.MCSLv1Title.setText(self.tr("导入 MCSL 1的服务器"))
+        self.MCSLv1ImportStatusText.setText(self.tr("[状态文本]"))
+        self.MCSLv1ImportTitle.setText(self.tr("1. 选择MCSL 1主程序"))
+        self.MCSLv1ImportArchives.setText(self.tr("选择主程序"))
+        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setText(self.tr("自动查找Java"))
         self.MCSLv1ValidateArgsJavaSubtitleLabel.setText("Java:")
-        self.MCSLv1ValidateArgsJavaListPushBtn.setText("Java列表")
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setText("手动导入")
-        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setText("下载Java")
-        self.MCSLv1ValidateArgsOutputDeEncodingLabel.setText("控制台输出编码（优先级高于全局设置）")
-        self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.setText("编码设置：")
-        self.MCSLv1ValidateArgsInputDeEncodingLabel.setText("指令输入编码（优先级高于全局设置）")
-        self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.MCSLv1ValidateArgsJVMArgSubtitleLabel.setText("JVM参数：")
-        self.MCSLv1ValidateArgsMemSubtitleLabel.setText("内存:")
+        self.MCSLv1ValidateArgsJavaListPushBtn.setText(self.tr("Java列表"))
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setText(self.tr("手动导入"))
+        self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setText(self.tr("下载Java"))
+        self.MCSLv1ValidateArgsOutputDeEncodingLabel.setText(self.tr("控制台输出编码（优先级高于全局设置）"))
+        self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.setText(self.tr("编码设置："))
+        self.MCSLv1ValidateArgsInputDeEncodingLabel.setText(self.tr("指令输入编码（优先级高于全局设置）"))
+        self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
+        self.MCSLv1ValidateArgsJVMArgSubtitleLabel.setText(self.tr("JVM参数："))
+        self.MCSLv1ValidateArgsMemSubtitleLabel.setText(self.tr("内存:"))
         self.MCSLv1ValidateArgsToSymbol.setText("~")
-        self.MCSLv1ValidateArgsTitle.setText("2. 确认参数")
-        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setText("下载核心")
-        self.MCSLv1ValidateArgsCoreSubtitleLabel.setText("核心：")
-        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setText("重新导入")
-        self.MCSLv1SaveTitle.setText("3. 完成导入")
-        self.MCSLv1SaveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
-        self.MCSLv1SaveServerPrimaryPushBtn.setText("导入！")
+        self.MCSLv1ValidateArgsTitle.setText(self.tr("2. 确认参数"))
+        self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setText(self.tr("下载核心"))
+        self.MCSLv1ValidateArgsCoreSubtitleLabel.setText(self.tr("核心："))
+        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setText(self.tr("重新导入"))
+        self.MCSLv1SaveTitle.setText(self.tr("3. 完成导入"))
+        self.MCSLv1SaveServerNameLineEdit.setPlaceholderText(self.tr("设置服务器昵称，不能包含非法字符"))
+        self.MCSLv1SaveServerPrimaryPushBtn.setText(self.tr("导入！"))
 
         self.MCSLv1ScrollArea.setFrameShape(QFrame.NoFrame)
         self.MCSLv1ImportArchives.clicked.connect(self._import)
@@ -646,13 +646,13 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
         self.MCSLv1ValidateArgs.setEnabled(False)
         self.MCSLv1Save.setEnabled(False)
-        self.MCSLv1ImportStatusText.setText("未选择")
+        self.MCSLv1ImportStatusText.setText(self.tr("未选择"))
         self.MCSLv1ValidateArgsMemUnitComboBox.addItems(["M", "G"])
         self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems(
-            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
         )
         self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems(
-            ["跟随全局", "UTF-8", "GB18030", "ANSI(推荐)"]
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
         )
         self.MCSLv1SaveServerNameLineEdit.textChanged.connect(
             lambda: self.MCSLv1SaveServerPrimaryPushBtn.setEnabled(
@@ -667,18 +667,18 @@ class MCSLv1(QWidget):
         self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
         self.MCSLv1ValidateArgs.setEnabled(False)
         self.MCSLv1Save.setEnabled(False)
-        self.MCSLv1ImportStatusText.setText("未选择")
+        self.MCSLv1ImportStatusText.setText(self.tr("未选择"))
 
     def _import(self):
         tmpExecutablePath = str(
-            QFileDialog.getOpenFileName(self, "选择MCSL 1.x主程序", getcwd(), "*.exe")[0]
+            QFileDialog.getOpenFileName(self, self.tr("选择MCSL 1.x主程序"), getcwd(), self.tr("可执行文件(*.exe)"))[0]
         ).replace("/", "\\")
         if tmpExecutablePath != "":
             importVariables.executableFilePath = tmpExecutablePath
             self.MCSLv1ImportStatus.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
             self.MCSLv1ImportStatus.setFixedSize(QSize(30, 30))
             self.MCSLv1ImportStatusText.setText(
-                f"已选择：{importVariables.executableFilePath}"
+                self.tr("已选择：") + importVariables.executableFilePath
             )
             self._initValidateArgs()
         else:
@@ -688,7 +688,7 @@ class MCSLv1(QWidget):
 
     def _initValidateArgs(self):
         self.getMCSLv1ConfigurationStateToolTip = StateToolTip(
-            "读取MCSL 1", "请稍后，正在读取MCSL 1的配置...", self
+            self.tr("读取MCSL 1"), self.tr("请稍后，正在读取MCSL 1的配置..."), self
         )
         self.getMCSLv1ConfigurationStateToolTip.move(
             self.getMCSLv1ConfigurationStateToolTip.getSuitablePos()
@@ -705,7 +705,7 @@ class MCSLv1(QWidget):
         if successSignal:
             self.MCSLv1ValidateArgsStatus.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
             self.MCSLv1ValidateArgsStatus.setFixedSize(QSize(30, 30))
-            self.getMCSLv1ConfigurationStateToolTip.setContent("读取完毕！")
+            self.getMCSLv1ConfigurationStateToolTip.setContent(self.tr("读取完毕！"))
             self.getMCSLv1ConfigurationStateToolTip.setState(True)
             self.getMCSLv1ConfigurationStateToolTip = None
             self.MCSLv1ValidateArgsJavaTextEdit.setPlainText(importVariables.java)
@@ -721,8 +721,8 @@ class MCSLv1(QWidget):
             self.MCSLv1ValidateArgs.setEnabled(True)
             self.MCSLv1Save.setEnabled(True)
             InfoBar.warning(
-                title="警告",
-                content="MCSL 1的代码太shit了，请仔细检查服务器配置！",
+                title=self.tr("警告"),
+                content=self.tr("MCSL 1的代码太shit了，请仔细检查服务器配置！"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -730,7 +730,7 @@ class MCSLv1(QWidget):
                 parent=self,
             )
         else:
-            self.getMCSLv1ConfigurationStateToolTip.setContent("读取失败！")
+            self.getMCSLv1ConfigurationStateToolTip.setContent(self.tr("读取失败！"))
             self.getMCSLv1ConfigurationStateToolTip.setState(True)
             self.getMCSLv1ConfigurationStateToolTip = None
             self._rollBackImport()
@@ -747,8 +747,8 @@ class MCSLv1(QWidget):
 
     def _save(self):
         importVariables.serverName = self.MCSLv1SaveServerNameLineEdit.text()
-        exit0Msg = f'导入MCSL 1服务器"{importVariables.serverName}"成功！'
-        exit1Msg = f'导入MCSL 1服务器"{importVariables.serverName}"失败！'
+        exit0Msg = self.tr("导入MCSL 1服务器") + importVariables.serverName + self.tr("成功！")
+        exit1Msg = self.tr("导入MCSL 1服务器") + importVariables.serverName + self.tr("失败！")
         exitCode = 0
 
         # 检查JVM参数防止意外无法启动服务器
@@ -779,8 +779,8 @@ class MCSLv1(QWidget):
             )
         except Exception:
             InfoBar.error(
-                title="失败",
-                content="已存在同名服务器!,请更改服务器名",
+                title=self.tr("失败"),
+                content=self.tr("已存在同名服务器!,请更改服务器名"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -820,8 +820,8 @@ class MCSLv1(QWidget):
                     serverListFile.write(dumps(serverConfig, indent=4))
             else:
                 InfoBar.info(
-                    title="功能提醒",
-                    content=f"您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。",
+                    title=self.tr("功能提醒"),
+                    content=self.tr("您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -835,7 +835,7 @@ class MCSLv1(QWidget):
 
         if exitCode == 0:
             InfoBar.success(
-                title="成功",
+                title=self.tr("成功"),
                 content=exit0Msg,
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -848,8 +848,8 @@ class MCSLv1(QWidget):
                 self._rollBackInitValidateArgs()
                 self._rollBackImport()
                 InfoBar.info(
-                    title="功能提醒",
-                    content="”新建服务器后立刻清空相关设置项“已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。",
+                    title=self.tr("功能提醒"),
+                    content=self.tr("“新建服务器后立刻清空相关设置项”已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。"),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -859,7 +859,7 @@ class MCSLv1(QWidget):
 
         else:
             InfoBar.error(
-                title="失败",
+                title=self.tr("失败"),
                 content=exit1Msg,
                 orient=Qt.Horizontal,
                 isClosable=True,

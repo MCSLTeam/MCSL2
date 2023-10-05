@@ -1247,111 +1247,70 @@ class SettingsPage(QWidget):
         self.settingsSmoothScrollArea.setWidget(self.settingsScrollAreaWidgetContents)
         self.gridLayout_3.addWidget(self.settingsSmoothScrollArea, 2, 1, 1, 1)
 
-        self.titleLabel.setText("设置")
-        self.subTitleLabel.setText("自定义你的MCSL2。")
-        self.autoRunLastServerTitle.setText("启动时自动运行上次运行的服务器")
-        self.autoRunLastServerSwitchBtn.setText("已关闭")
-        self.autoRunLastServerSwitchBtn.setOnText("已开启")
-        self.autoRunLastServerSwitchBtn.setOffText("已关闭")
-        self.serverSettingsTitle.setText("服务器设置")
-        self.acceptAllMojangEulaTitle.setText("创建时自动同意服务器的Eula")
-        self.acceptAllMojangEulaSwitchBtn.setText("已关闭")
-        self.acceptAllMojangEulaSwitchBtn.setOnText("已开启")
-        self.acceptAllMojangEulaSwitchBtn.setOffText("已关闭")
-        self.sendStopInsteadOfKillTitle.setText("安全关闭服务器而不是结束进程（慎点）")
-        self.sendStopInsteadOfKillSwitchBtn.setText("已开启")
-        self.sendStopInsteadOfKillSwitchBtn.setOnText("已开启")
-        self.sendStopInsteadOfKillSwitchBtn.setOffText("已关闭")
-        self.restartServerWhenCrashedTitle.setText("当前开启的服务器崩溃自动重启")
-        self.restartServerWhenCrashedSwitchBtn.setText("已关闭")
-        self.restartServerWhenCrashedSwitchBtn.setOnText("已开启")
-        self.restartServerWhenCrashedSwitchBtn.setOffText("已关闭")
-        self.onlySaveGlobalServerConfigTitle.setText("只保存全局服务器设置")
-        self.onlySaveGlobalServerConfigSwitchBtn.setText("已关闭")
-        self.onlySaveGlobalServerConfigSwitchBtn.setOnText("已开启")
-        self.onlySaveGlobalServerConfigSwitchBtn.setOffText("已关闭")
-        self.configureSettingsTitle.setText("新建服务器设置")
-        self.newServerTypeTitle.setText("新建服务器引导方式")
-        self.downloadSettingsTitle.setText("下载设置")
-        self.alwaysAskSaveDirectoryInfo.setText("          不勾选，则保存到MCSL2/Downloads文件夹。")
-        self.alwaysAskSaveDirectoryCheckBox.setText("总是询问保存路径")
+        self.titleLabel.setText(self.tr("设置"))
+        self.subTitleLabel.setText(self.tr("自定义你的MCSL2。"))
+        self.autoRunLastServerTitle.setText(self.tr("启动时自动运行上次运行的服务器"))
+        self.serverSettingsTitle.setText(self.tr("服务器设置"))
+        self.acceptAllMojangEulaTitle.setText(self.tr("创建时自动同意服务器的Eula"))
+        self.sendStopInsteadOfKillTitle.setText(self.tr("安全关闭服务器而不是结束进程（慎点）"))
+        self.restartServerWhenCrashedTitle.setText(self.tr("当前开启的服务器崩溃自动重启"))
+        self.onlySaveGlobalServerConfigTitle.setText(self.tr("只保存全局服务器设置"))
+        self.configureSettingsTitle.setText(self.tr("新建服务器设置"))
+        self.newServerTypeTitle.setText(self.tr("新建服务器引导方式"))
+        self.downloadSettingsTitle.setText(self.tr("下载设置"))
+        self.alwaysAskSaveDirectoryInfo.setText(self.tr("          不勾选，则保存到MCSL2/Downloads文件夹。"))
+        self.alwaysAskSaveDirectoryCheckBox.setText(self.tr("总是询问保存路径"))
         self.aria2ThreadTitle.setText(
-            "Aria2下载引擎线程数 (不建议大于64)"
+            self.tr("Aria2下载引擎线程数 (不建议大于64)")
             if "windows" in systemType().lower()
-            else "Aria2下载引擎线程数"
+            else self.tr("Aria2下载引擎线程数")
         )
-        self.saveSameFileExceptionTitle.setText("保存路径存在同名文件的处理")
-        self.saveSameFileExceptionToAsk.setText("询问")
-        self.saveSameFileExceptionToOverwrite.setText("覆盖")
-        self.saveSameFileExceptionToStop.setText("停止")
-        self.downloadSourceTitle.setText("下载源")
-        self.quickMenuTitle.setText("快捷菜单")
-        self.quickMenuSwitchBtn.setText("已开启")
-        self.quickMenuSwitchBtn.setOnText("已开启")
-        self.quickMenuSwitchBtn.setOffText("已关闭")
-        self.consoleSettingsTitle.setText("终端设置")
-        self.inputDeEncodingTitle.setText("指令输入编码（优先级低于服务器配置设置）")
-        self.outputDeEncodingTitle.setText("控制台输出编码（优先级低于服务器配置设置）")
-        self.startOnStartupTitle.setText("开机自启动")
-        self.startOnStartupSwitchBtn.setText("已关闭")
-        self.startOnStartupSwitchBtn.setOnText("已开启")
-        self.startOnStartupSwitchBtn.setOffText("已关闭")
-        self.softwareSettingsTitle.setText("软件设置")
-        self.themeTitle.setText("主题")
-        self.themeColorTitle.setText("主题颜色")
-        self.selectThemeColorBtn.setText("选取颜色")
-        self.alwaysRunAsAdministratorTitle.setText("总是以管理员身份运行")
-        self.alwaysRunAsAdministratorSwitchBtn.setText("已关闭")
-        self.alwaysRunAsAdministratorSwitchBtn.setOnText("已开启")
-        self.alwaysRunAsAdministratorSwitchBtn.setOffText("已关闭")
-        self.currentVerTitle.setText("当前版本：")
+        self.saveSameFileExceptionTitle.setText(self.tr("保存路径存在同名文件的处理"))
+        self.saveSameFileExceptionToAsk.setText(self.tr("询问"))
+        self.saveSameFileExceptionToOverwrite.setText(self.tr("覆盖"))
+        self.saveSameFileExceptionToStop.setText(self.tr("停止"))
+        self.downloadSourceTitle.setText(self.tr("下载源"))
+        self.quickMenuTitle.setText(self.tr("快捷菜单"))
+        self.consoleSettingsTitle.setText(self.tr("终端设置"))
+        self.inputDeEncodingTitle.setText(self.tr("指令输入编码（优先级低于服务器配置设置）"))
+        self.outputDeEncodingTitle.setText(self.tr("控制台输出编码（优先级低于服务器配置设置）"))
+        self.startOnStartupTitle.setText(self.tr("开机自启动"))
+        self.softwareSettingsTitle.setText(self.tr("软件设置"))
+        self.themeTitle.setText(self.tr("主题"))
+        self.themeColorTitle.setText(self.tr("主题颜色"))
+        self.selectThemeColorBtn.setText(self.tr("选取颜色"))
+        self.alwaysRunAsAdministratorTitle.setText(self.tr("总是以管理员身份运行"))
+        self.currentVerTitle.setText(self.tr("当前版本："))
         self.currentVerLabel.setText(MCSL2VERSION)
-        self.checkUpdateBtn.setText("检查更新")
-        self.checkUpdateOnStartTitle.setText("启动时自动检查更新")
-        self.checkUpdateOnStartSwitchBtn.setText("已关闭")
-        self.checkUpdateOnStartSwitchBtn.setOnText("已开启")
-        self.checkUpdateOnStartSwitchBtn.setOffText("已关闭")
-        self.updateSettingsTitle.setText("更新")
-        self.generateSysReport.setText("系统报告")
-        self.augSponsorsBtn.setText("8月赞助者名单")
+        self.checkUpdateBtn.setText(self.tr("检查更新"))
+        self.checkUpdateOnStartTitle.setText(self.tr("启动时自动检查更新"))
+        self.updateSettingsTitle.setText(self.tr("更新"))
+        self.generateSysReport.setText(self.tr("系统报告"))
+        self.augSponsorsBtn.setText(self.tr("8月赞助者名单"))
         self.aboutContent.setText(
-            "MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
-            "任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n"
-            "但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n"
-            "明显辨识度。\n"
-            "\n"
-            "Copyright ©MCSL Team. All right reserved.\n"
-            ""
+            self.tr("MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n")
+            + self.tr("任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n")
+            + self.tr("但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n")
+            + self.tr("明显辨识度。\n")
+            + self.tr("\n")
+            + self.tr("Copyright ©MCSL Team. All right reserved.\n")
+            + self.tr("")
         )
-        self.aboutTitle.setText("关于")
+        self.aboutTitle.setText(self.tr("关于"))
         self.aria2ThreadSlider.setValue(8)
-        self.newServerTypeComboBox.addItems(["初始（简易+进阶+导入）", "简易模式", "进阶模式", "导入"])
+        self.newServerTypeComboBox.addItems([self.tr("初始（简易+进阶+导入）"), self.tr("简易模式"), self.tr("进阶模式"), self.tr("导入")])
         self.newServerTypeComboBox.setCurrentIndex(0)
-        self.downloadSourceComboBox.addItems(["FastMirror", "MCSLAPI"])
+        self.downloadSourceComboBox.addItems([self.tr("FastMirror"), self.tr("MCSLAPI")])
         self.downloadSourceComboBox.setCurrentIndex(0)
         self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
         self.aria2ThreadSlider.valueChanged.connect(
             lambda: self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
         )
-        self.outputDeEncodingComboBox.addItems(["UTF-8", "GB18030", "ANSI(推荐)"])
+        self.outputDeEncodingComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
         self.outputDeEncodingComboBox.setCurrentIndex(0)
-        self.inputDeEncodingComboBox.addItems(
-            ["跟随控制台输出", "UTF-8", "GB18030", "ANSI(推荐)"]
-        )
-        self.inputDeEncodingComboBox.setCurrentIndex(0)
-        self.themeComboBox.addItems(["自动", "深色", "浅色"])
-        self.saveBtn.setText("保存")
-        self.giveUpBtn.setText("放弃")
-        self.themeComboBox.setCurrentIndex(0)
         self.saveSettingsBtnWidget.setVisible(False)
-        self.clearAllNewServerConfigInProgramTitle.setText("*(强迫症)新建服务器后立刻清空相关设置项")
-        self.clearAllNewServerConfigInProgramSwitchBtn.setText("已关闭")
-        self.clearAllNewServerConfigInProgramSwitchBtn.setOnText("已开启")
-        self.clearAllNewServerConfigInProgramSwitchBtn.setOffText("已关闭")
-        self.clearConsoleWhenStopServerTitle.setText("*(强迫症)关闭服务器后立刻清空终端")
-        self.clearConsoleWhenStopServerSwitchBtn.setText("已关闭")
-        self.clearConsoleWhenStopServerSwitchBtn.setOnText("已开启")
-        self.clearConsoleWhenStopServerSwitchBtn.setOffText("已关闭")
+        self.clearAllNewServerConfigInProgramTitle.setText(self.tr("*(强迫症)新建服务器后立刻清空相关设置项"))
+        self.clearConsoleWhenStopServerTitle.setText(self.tr("*(强迫症)关闭服务器后立刻清空终端"))
 
         self.alwaysAskSaveDirectoryCheckBox.setEnabled(False)
         self.alwaysRunAsAdministratorSwitchBtn.setEnabled(False)
@@ -1617,8 +1576,8 @@ class SettingsPage(QWidget):
         self.refreshSettingsInterface()
         self.settingsChanged.emit(False)
         InfoBar.success(
-            title="已保存",
-            content=f"部分设置需要重启生效。",
+            title=self.tr("已保存"),
+            content=self.tr("部分设置需要重启生效。"),
             orient=Qt.Horizontal,
             isClosable=True,
             position=InfoBarPosition.TOP,
@@ -1725,9 +1684,9 @@ class SettingsPage(QWidget):
         """
         self.checkUpdateBtn.setEnabled(False)  # 防止爆炸
         if parent != self:
-            title = "触发自定义设置-开始检查更新..."
+            title = self.tr("触发自定义设置-开始检查更新...")
         else:
-            title = "开始检查更新..."
+            title = self.tr("开始检查更新...")
         InfoBar.info(
             title=title,
             content="",
@@ -1746,11 +1705,11 @@ class SettingsPage(QWidget):
     def showUpdateMsg(self, latestVerInfo):
         """如果需要更新，显示弹窗；不需要则弹出提示"""
         if latestVerInfo[0] == "true":  # 需要更新
-            title = f"有新版本：{latestVerInfo[4]}"
-            w = MessageBox(title, "更新介绍加载中...", parent=self.tmpParent)
+            title = self.tr("发现新版本：") + latestVerInfo[4]
+            w = MessageBox(title, self.tr("更新介绍加载中..."), parent=self.tmpParent)
             w.contentLabel.setTextFormat(Qt.MarkdownText)
-            w.yesButton.setText("更新")
-            w.cancelButton.setText("关闭")
+            w.yesButton.setText(self.tr("更新"))
+            w.cancelButton.setText(self.tr("关闭"))
             self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
             self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
             self.thread_fetchUpdateIntro.start()
@@ -1759,8 +1718,8 @@ class SettingsPage(QWidget):
             w.exec()
         elif latestVerInfo[0] == "false":  # 已是最新版
             InfoBar.success(
-                title="无需更新",
-                content="已是最新版本",
+                title=self.tr("无需更新"),
+                content=self.tr("已是最新版本"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
@@ -1769,8 +1728,8 @@ class SettingsPage(QWidget):
             )
         else:
             InfoBar.error(
-                title="检查更新失败",
-                content="尝试自己检查一下网络？",
+                title=self.tr("检查更新失败"),
+                content=self.tr("尝试自己检查一下网络？"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
@@ -1783,7 +1742,7 @@ class SettingsPage(QWidget):
     def generateSystemReport(self):
         """创建系统报告"""
         InfoBar.info(
-            title="开始生成系统报告...",
+            title=self.tr("开始生成系统报告..."),
             content="",
             orient=Qt.Horizontal,
             isClosable=True,
@@ -1792,22 +1751,24 @@ class SettingsPage(QWidget):
             parent=self,
         )
         report = (
-            f"MCSL2系统报告：\n"
-            f"生成时间：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n"
-            f"{genSysReport()}"
+            self.tr("MCSL2系统报告：\n")
+            + self.tr("生成时间：")
+            + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            + "\n"
+            + genSysReport()
         )
 
-        title = "MC Server Launcher 2系统报告"
+        title = self.tr("MC Server Launcher 2系统报告")
         w = MessageBox(
-            title, f"{report}\n----------------------------\n点击复制按钮以复制到剪贴板。", self
+            title, self.tr("{report}\n----------------------------\n点击复制按钮以复制到剪贴板。"), self
         )
-        w.yesButton.setText("复制")
-        w.cancelButton.setText("关闭")
+        w.yesButton.setText(self.tr("复制"))
+        w.cancelButton.setText(self.tr("关闭"))
         w.yesSignal.connect(lambda: QApplication.clipboard().setText(report))
         w.yesSignal.connect(
             lambda: InfoBar.success(
-                title="成功",
-                content="已复制到剪贴板",
+                title=self.tr("成功"),
+                content=self.tr("已复制到剪贴板"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,

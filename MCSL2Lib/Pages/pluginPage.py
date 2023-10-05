@@ -37,8 +37,6 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 from MCSL2Lib.utils import MCSL2Logger
-
-
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
@@ -167,7 +165,7 @@ class PluginPage(QWidget):
 
     def installPlugin(self):
         GlobalMCSL2Variables.installingPluginArchiveDirectory = (
-            str(QFileDialog.getOpenFileName(self, "选择.zip形式的插件", getcwd(), "*.zip")[
+            str(QFileDialog.getOpenFileName(self, "选择插件压缩包", getcwd(), "Zip压缩包(*.zip)")[
                 0
             ]).replace("/", "\\")
         )
@@ -181,7 +179,7 @@ class PluginPage(QWidget):
                     isClosable=True,
                     position=InfoBarPosition.BOTTOM_LEFT,
                     duration=3000,
-                    parent=PluginPage(),
+                    parent=self,
                 )
             )
             self.installPluginThread.failed.connect(
@@ -192,7 +190,7 @@ class PluginPage(QWidget):
                     isClosable=True,
                     position=InfoBarPosition.BOTTOM_LEFT,
                     duration=3000,
-                    parent=PluginPage(),
+                    parent=self,
                 )
             )
             self.installPluginThread.start()
@@ -214,5 +212,5 @@ class InstallPluginThread(QThread):
             pluginArchive.close()
             self.success.emit()
         except Exception as e:
-            MCSL2Logger.error(exc=Exception)
+            MCSL2Logger.error(exc=e)
             self.failed.emit()

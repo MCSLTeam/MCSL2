@@ -96,4 +96,4 @@ class singleMCSLAPIDownloadWidget(CardWidget):
         self.horizontalLayout.addWidget(self.MCSLAPIDownloadBtn)
         # self.fileTitle.setText("[文件标题]")
         # self.fileName.setText("[文件名]")
-        self.MCSLAPIDownloadBtn.setText("下载")
+        self.MCSLAPIDownloadBtn.setText(self.tr("下载"))

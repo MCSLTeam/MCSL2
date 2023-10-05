@@ -159,8 +159,8 @@ class singleSelectJavaWidget(CardWidget):
 
         self.gridLayout_2.addWidget(self.javaPath, 1, 1, 2, 1)
         self.gridLayout.addWidget(self.javaPathWidget, 1, 2, 1, 1)
-        self.finishSelectJavaBtn.setText("选择")
-        self.javaVerTitle.setText("Java版本:")
-        self.javaPathTitle.setText("Java路径:")
+        self.finishSelectJavaBtn.setText(self.tr("选择"))
+        self.javaVerTitle.setText(self.tr("Java版本:"))
+        self.javaPathTitle.setText(self.tr("Java路径:"))
         self.javaPixmapLabel.setPixmap(QPixmap(":/built-InIcons/Java.svg"))
         self.javaPixmapLabel.setFixedSize(QSize(50, 50))

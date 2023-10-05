@@ -282,12 +282,12 @@ class ForgeInstaller(Installer):
             lambda url: MCSL2Logger.info(f"Redirected to {url}")
         )
         MCSL2Logger.info("(正在下载核心... 0%) 使用BMCLAPI下载")
-        self.downloadServerProgress.emit("(正在下载核心... 0%) 使用BMCLAPI下载")
+        self.downloadServerProgress.emit(self.tr("(正在下载核心... 0%) 使用BMCLAPI下载"))
 
     def onServerDownloadProgress(self, bytesReceived, bytesTotal):
         percent = bytesReceived * 100 / bytesTotal
         MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
-        self.downloadServerProgress.emit(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
+        self.downloadServerProgress.emit(self.tr(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载"))
 
     def onServerDownloadFinished(self):
         data = self._reply.readAll()

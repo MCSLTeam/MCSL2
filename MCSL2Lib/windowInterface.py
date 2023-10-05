@@ -225,8 +225,8 @@ class SystemTrayIcon(QSystemTrayIcon):
         self.setIcon(parent.windowIcon())
         self.setToolTip("MCServerLauncher 2")
         self.menu = SystemTrayMenu(self)
-        self.minimizeAction = Action(text="最小化", triggered=self.parent().minimize)
-        self.exitAction = Action(text="退出MCSL2", triggered=self.parent().close)
+        self.minimizeAction = Action(text=self.tr("最小化"), triggered=self.parent().minimize)
+        self.exitAction = Action(text=self.tr("退出MCSL2"), triggered=self.parent().close)
         self.exitAction.setIcon(FIF.CLOSE)
         self.menu.addActions([self.minimizeAction, self.exitAction])
         self.setContextMenu(self.menu)
@@ -318,7 +318,7 @@ class Window(FluentWindow):
     def onAria2Loaded(self, flag: bool):
         if flag:
             InfoBar.success(
-                title="Aria2下载引擎启动成功。",
+                title=self.tr("Aria2下载引擎启动成功。"),
                 content="",
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -328,8 +328,8 @@ class Window(FluentWindow):
             )
         else:
             InfoBar.error(
-                title="Aria2下载引擎启动失败",
-                content="请检查是否安装了Aria2。",
+                title=self.tr("Aria2下载引擎启动失败"),
+                content=self.tr("请检查是否安装了Aria2。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -340,9 +340,9 @@ class Window(FluentWindow):
     def closeEvent(self, a0) -> None:
         settingsController._saveSettings()
         if ServerHandler().isServerRunning():
-            box = MessageBox("是否退出MCSL2？", "服务器正在运行。\n\n请在退出前先关闭服务器。", parent=self)
-            box.yesButton.setText("取消")
-            box.cancelButton.setText("安全关闭并退出")
+            box = MessageBox(self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"), parent=self)
+            box.yesButton.setText(self.tr("取消"))
+            box.cancelButton.setText(self.tr("安全关闭并退出"))
             box.cancelButton.setStyleSheet(
                 GlobalMCSL2Variables.darkWarnBtnStyleSheet
                 if isDarkTheme()
@@ -394,9 +394,9 @@ class Window(FluentWindow):
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
             tracebackString = "".join(format_exception(ty, value, _traceback))
             exceptionWidget = ExceptionWidget(tracebackString)
-            box = MessageBox("程序出现异常", "", self)
-            box.yesButton.setText("确认并复制到剪切板")
-            box.cancelButton.setText("知道了")
+            box = MessageBox(self.tr("程序出现异常"), "", self)
+            box.yesButton.setText(self.tr("确认并复制到剪切板"))
+            box.cancelButton.setText(self.tr("知道了"))
             box.contentLabel.deleteLater()
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
             box.yesSignal.connect(
@@ -416,18 +416,18 @@ class Window(FluentWindow):
 
     def initNavigation(self):
         """初始化导航栏"""
-        self.addSubInterface(self.homeInterface, FIF.HOME, "主页")
-        self.addSubInterface(self.configureInterface, FIF.ADD_TO, "新建")
-        self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, "管理")
-        self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, "下载")
-        self.addSubInterface(self.consoleInterface, FIF.COMMAND_PROMPT, "终端")
-        self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, "插件")
+        self.addSubInterface(self.homeInterface, FIF.HOME, self.tr("主页"))
+        self.addSubInterface(self.configureInterface, FIF.ADD_TO, self.tr("新建"))
+        self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, self.tr("管理"))
+        self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, self.tr("下载"))
+        self.addSubInterface(self.consoleInterface, FIF.COMMAND_PROMPT, self.tr("终端"))
+        self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, self.tr("插件"))
         self.navigationInterface.addSeparator()
         self.navigationInterface.setExpandWidth(200)
         self.addSubInterface(
             self.settingsInterface,
             FIF.SETTING,
-            "设置",
+            self.tr("设置"),
             position=NavigationItemPosition.BOTTOM,
         )
 
@@ -480,10 +480,10 @@ class Window(FluentWindow):
     def initSafeQuitController(self):
         # 安全退出控件
         self.exitingMsgBox = MessageBox(
-            "正在退出MCSL2", "安全关闭服务器中...\n\nMCSL2稍后将自行退出。", parent=self
+            self.tr("正在退出MCSL2"), self.tr("安全关闭服务器中...\n\nMCSL2稍后将自行退出。"), parent=self
         )
         self.exitingMsgBox.cancelButton.hide()
-        self.exitingMsgBox.yesButton.setText("强制结束服务器并退出")
+        self.exitingMsgBox.yesButton.setText(self.tr("强制结束服务器并退出"))
         self.exitingMsgBox.yesButton.setStyleSheet(
             GlobalMCSL2Variables.darkWarnBtnStyleSheet
             if isDarkTheme()
@@ -590,8 +590,8 @@ class Window(FluentWindow):
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: InfoBar.info(
-                title="切换到MCSLAPI",
-                content="因为FastMirror没有Java啊 (",
+                title=self.tr("切换到MCSLAPI"),
+                content=self.tr("因为FastMirror没有Java啊 ("),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -644,14 +644,14 @@ class Window(FluentWindow):
         firstTry = ServerLauncher().startServer()
         if not firstTry:
             w = MessageBox(
-                title="提示",
-                content="你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。",
+                title=self.tr("提示"),
+                content=self.tr("你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。"),
                 parent=self,
             )
-            w.yesButton.setText("同意")
+            w.yesButton.setText(self.tr("同意"))
             w.yesSignal.connect(MojangEula().acceptEula)
             w.yesSignal.connect(self.startServer)
-            w.cancelButton.setText("拒绝")
+            w.cancelButton.setText(self.tr("拒绝"))
             eulaBtn = HyperlinkButton(
                 url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK
             )
@@ -680,12 +680,12 @@ class Window(FluentWindow):
                 )
             )
             ServerHandler().serverClosed.connect(
-                lambda: self.consoleInterface.exitServer.setText("开启服务器")
+                lambda: self.consoleInterface.exitServer.setText(self.tr("开启服务器"))
             )
             self.consoleInterface.exitServer.clicked.connect(
                 self.consoleInterface.runQuickMenu_StopServer
             )
-            self.consoleInterface.exitServer.setText("关闭服务器")
+            self.consoleInterface.exitServer.setText(self.tr("关闭服务器"))
             GlobalMCSL2Variables.isLoadFinished = True
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
@@ -752,8 +752,8 @@ class Window(FluentWindow):
         if settingsController.fileSettings["autoRunLastServer"]:
             if startBtnStat:
                 InfoBar.info(
-                    title="MCSL2功能提醒",
-                    content="您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器...",
+                    title=self.tr("MCSL2功能提醒"),
+                    content=self.tr("您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -762,8 +762,8 @@ class Window(FluentWindow):
                 )
                 self.homeInterface.startServerBtn.click()
                 InfoBar.info(
-                    title="功能提醒",
-                    content="您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器...",
+                    title=self.tr("功能提醒"),
+                    content=self.tr("您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -772,8 +772,8 @@ class Window(FluentWindow):
                 )
             else:
                 InfoBar.info(
-                    title="功能提醒",
-                    content="虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。",
+                    title=self.tr("功能提醒"),
+                    content=self.tr("虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -785,7 +785,7 @@ class Window(FluentWindow):
         self.showMinimized()
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
-        self.systemTrayIcon.minimizeAction = Action(text="显示窗口", triggered=self.myShow)
+        self.systemTrayIcon.minimizeAction = Action(text=self.tr("显示窗口"), triggered=self.myShow)
         self.systemTrayIcon.menu.addActions(
             [self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction]
         )
@@ -793,7 +793,7 @@ class Window(FluentWindow):
     def myShow(self):
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
         self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
-        self.systemTrayIcon.minimizeAction = Action(text="最小化", triggered=self.minimize)
+        self.systemTrayIcon.minimizeAction = Action(text=self.tr("最小化"), triggered=self.minimize)
         self.systemTrayIcon.menu.addActions(
             [self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction]
         )

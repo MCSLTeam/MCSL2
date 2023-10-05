@@ -156,11 +156,11 @@ class HomePage(QWidget):
         self.gridLayout.addItem(spacerItem3, 0, 2, 1, 1)
         spacerItem4 = QSpacerItem(20, 300, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem4, 3, 2, 1, 1)
-        self.newServerBtn.setText("新建")
-        self.startServerBtn.setText("启动服务器：")
-        self.selectServerBtn.setText("选择")
-        self.titleLabel.setText("主页")
-        self.subTitleLabel.setText("获取公告中...")
+        self.newServerBtn.setText(self.tr("新建"))
+        self.startServerBtn.setText(self.tr("启动服务器："))
+        self.selectServerBtn.setText(self.tr("选择"))
+        self.titleLabel.setText(self.tr("主页"))
+        self.subTitleLabel.setText(self.tr("获取公告中..."))
 
         self.setObjectName("homeInterface")
 
@@ -175,7 +175,7 @@ class HomePage(QWidget):
     @pyqtSlot(str)
     def afterSelectedServer(self, serverName):
         """选择服务器后的处理"""
-        self.startServerBtn.setText(f"启动服务器：\n{serverName}")
+        self.startServerBtn.setText(self.tr("启动服务器：\n") + serverName)
 
 
 class GetNoticeThread(QThread):
@@ -193,8 +193,8 @@ class GetNoticeThread(QThread):
 
     def run(self):
         try:
-            notice = f"公告: \n{Session().get('http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice').text}"
+            notice = self.tr("公告: ") + Session().get('http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=notice').text
             self.notice.emit(notice)
-        except Exception as e:
-            self.notice.emit("网络连接失败，无法获取公告。")
+        except Exception:
+            self.notice.emit(self.tr("网络连接失败，无法获取公告。"))
         self.ringVisible.emit(False)

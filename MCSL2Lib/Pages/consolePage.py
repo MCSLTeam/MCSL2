@@ -41,7 +41,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
 )
-from re import search, sub
+from re import search
 from MCSL2Lib.Controllers.serverController import ServerHandler, readServerProperties
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.singleton import Singleton
@@ -258,22 +258,22 @@ class ConsolePage(QWidget):
 
         self.setObjectName("ConsoleInterface")
 
-        self.serverMemLabel.setText("内存： NaN")
-        self.serverCPULabel.setText("CPU占用：")
-        self.subTitleLabel.setText("直观地观察你的服务器的输出，资源占用等。")
-        self.titleLabel.setText("终端")
-        self.quickMenuTitleLabel.setText("快捷菜单：")
-        self.difficulty.addItems(["和平", "简单", "普通", "困难"])
-        self.gamemode.setText("游戏模式")
-        self.whiteList.setText("白名单")
-        self.op.setText("管理员")
-        self.kickPlayers.setText("踢人")
-        self.banPlayers.setText("封禁/解封")
-        self.saveServer.setText("保存存档")
-        self.exitServer.setText("关闭服务器")
-        self.killServer.setText("强制关闭")
-        self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送，不需要加/")
-        self.serverOutput.setPlaceholderText("请先开启服务器！不开服务器没有日志的喂")
+        self.serverMemLabel.setText(self.tr("内存： NaN"))
+        self.serverCPULabel.setText(self.tr("CPU占用："))
+        self.subTitleLabel.setText(self.tr("直观地观察你的服务器的输出，资源占用等。"))
+        self.titleLabel.setText(self.tr("终端"))
+        self.quickMenuTitleLabel.setText(self.tr("快捷菜单："))
+        self.difficulty.addItems([self.tr("和平"), self.tr("简单"), self.tr("普通"), self.tr("困难")])
+        self.gamemode.setText(self.tr("游戏模式"))
+        self.whiteList.setText(self.tr("白名单"))
+        self.op.setText(self.tr("管理员"))
+        self.kickPlayers.setText(self.tr("踢人"))
+        self.banPlayers.setText(self.tr("封禁/解封"))
+        self.saveServer.setText(self.tr("保存存档"))
+        self.exitServer.setText(self.tr("关闭服务器"))
+        self.killServer.setText(self.tr("强制关闭"))
+        self.commandLineEdit.setPlaceholderText(self.tr("在此输入指令，回车或点击右边按钮发送，不需要加/"))
+        self.serverOutput.setPlaceholderText(self.tr("请先开启服务器！不开服务器没有日志的喂"))
         self.sendCommandButton.setEnabled(False)
         self.commandLineEdit.textChanged.connect(
             lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
@@ -311,7 +311,7 @@ class ConsolePage(QWidget):
 
     @pyqtSlot(float)
     def setMemView(self, mem):
-        self.serverMemLabel.setText(f"内存：{round(mem, 2)}{serverVariables.memUnit}")
+        self.serverMemLabel.setText(self.tr("内存：") + str(round(mem, 2)) + serverVariables.memUnit)
         self.serverMemProgressRing.setValue(
             int(int(mem) / serverVariables.maxMem * 100)
         )
@@ -355,25 +355,25 @@ class ConsolePage(QWidget):
             .replace("[3m", "")
             .replace("[m[", "[")
             .replace("[32m", "")
-            .replace("Preparing spawn area", "准备生成点区域中")
-            .replace("main/INFO", "主类/信息")
-            .replace("main/WARN", "主类/警告")
-            .replace("main/ERROR", "主类/错误")
-            .replace("main/FATAL", "主类/致命错误")
-            .replace("main/DEBUG", "主类/调试信息")
-            .replace("INFO", "信息")
-            .replace("WARN", "警告")
-            .replace("ERROR", "错误")
-            .replace("FATAL", "致命错误")
-            .replace("DEBUG", "调试信息")
-            .replace("Server thread", "服务器线程")
-            .replace("Server-Worker", "服务器工作进程")
-            .replace("DEBUG", "调试信息")
-            .replace("Forge Version Check", "Forge版本检查")
-            .replace("ModLauncher running: args", "ModLauncher运行中: 参数")
-            .replace("All chunks are saved", "所有区块已保存")
-            .replace("Saving the game (this may take a moment!)", "保存游戏存档中（可能需要一些时间）")
-            .replace("Saved the game", "已保存游戏存档")
+            .replace("Preparing spawn area", self.tr("准备生成点区域中"))
+            .replace("main/INFO", self.tr("主类/信息"))
+            .replace("main/WARN", self.tr("主类/警告"))
+            .replace("main/ERROR", self.tr("主类/错误"))
+            .replace("main/FATAL", self.tr("主类/致命错误"))
+            .replace("main/DEBUG", self.tr("主类/调试信息"))
+            .replace("INFO", self.tr("信息"))
+            .replace("WARN", self.tr("警告"))
+            .replace("ERROR", self.tr("错误"))
+            .replace("FATAL", self.tr("致命错误"))
+            .replace("DEBUG", self.tr("调试信息"))
+            .replace("Server thread", self.tr("服务器线程"))
+            .replace("Server-Worker", self.tr("服务器工作进程"))
+            .replace("DEBUG", self.tr("调试信息"))
+            .replace("Forge Version Check", self.tr("Forge版本检查"))
+            .replace("ModLauncher running: args", self.tr("ModLauncher运行中: 参数"))
+            .replace("All chunks are saved", self.tr("所有区块已保存"))
+            .replace("Saving the game (this may take a moment!)", self.tr("保存游戏存档中（可能需要一些时间）"))
+            .replace("Saved the game", self.tr("已保存游戏存档"))
         )
         if "Disabling terminal, you're running in an unsupported environment." in serverOutput:
             return
@@ -383,10 +383,10 @@ class ConsolePage(QWidget):
             return
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
-            serverOutput = "[MCSL2 | 提示]：服务器正在启动，请稍后...\n" + serverOutput
+            serverOutput = self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后...\n") + serverOutput
             InfoBar.info(
-                title="提示",
-                content="服务器正在启动，请稍后...",
+                title=self.tr("提示"),
+                content=self.tr("服务器正在启动，请稍后..."),
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
@@ -412,7 +412,7 @@ class ConsolePage(QWidget):
                 ip = "127.0.0.1"
             port = serverVariables.serverProperties.get("server-port", 25565)
             self.serverOutput.appendPlainText(
-                f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为{ip}，端口为{port}。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"
+                self.tr("[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。")
             )
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
@@ -423,8 +423,8 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             InfoBar.success(
-                title="提示",
-                content=f"[MCSL2 | 提示]：服务器启动完毕！\n如果本机开服，IP 地址为{ip}，端口为{port}。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。",
+                title=self.tr("提示"),
+                content=self.tr("服务器启动完毕！\n如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
@@ -436,7 +436,7 @@ class ConsolePage(QWidget):
             fmt.setForeground(QBrush(color[1]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
             self.serverOutput.appendPlainText(
-                "[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。"
+                self.tr("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")
             )
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
@@ -447,8 +447,8 @@ class ConsolePage(QWidget):
             self.serverOutput.setReadOnly(True)
             self.serverOutput.setReadOnly(True)
             InfoBar.warning(
-                title="警告",
-                content="服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。\n请尝试更换编码。",
+                title=self.tr("警告"),
+                content=self.tr("服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。\n请尝试更换编码。"),
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
@@ -508,11 +508,11 @@ class ConsolePage(QWidget):
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
         w = MessageBox(
-            title="失败",
-            content="服务器并未开启，请先开启服务器。",
+            title=self.tr("失败"),
+            content=self.tr("服务器并未开启，请先开启服务器。"),
             parent=self,
         )
-        w.yesButton.setText("好")
+        w.yesButton.setText(self.tr("好"))
         w.cancelButton.deleteLater()
         w.exec()
 
@@ -527,11 +527,11 @@ class ConsolePage(QWidget):
                 pass
         else:
             w = MessageBox(
-                title="失败",
-                content="服务器并未开启，请先开启服务器。",
+                title=self.tr("失败"),
+                content=self.tr("服务器并未开启，请先开启服务器。"),
                 parent=self,
             )
-            w.yesButton.setText("好")
+            w.yesButton.setText(self.tr("好"))
             w.cancelButton.deleteLater()
             w.exec()
 
@@ -542,7 +542,7 @@ class ConsolePage(QWidget):
             self.playersControllerBtnEnabled.emit(False)
 
     def getKnownServerPlayers(self) -> str:
-        players = "无玩家加入"
+        players = self.tr("无玩家加入")
         if len(self.playersList):
             players = ""
             for player in self.playersList:
@@ -582,15 +582,13 @@ class ConsolePage(QWidget):
         """快捷菜单-游戏模式"""
         if ServerHandler().isServerRunning():
             gamemodeWidget = playersController()
-            gamemodeWidget.mode.addItems(["生存", "创造", "冒险", "旁观"])
+            gamemodeWidget.mode.addItems([self.tr("生存"), self.tr("创造"), self.tr("冒险"), self.tr("旁观")])
             gamemodeWidget.mode.setCurrentIndex(0)
-            gamemodeWidget.who.textChanged.connect(
-                lambda: self.lineEditChecker(text=gamemodeWidget.who.text())
-            )
+            gamemodeWidget.who.textChanged.connect(lambda: self.lineEditChecker(text=gamemodeWidget.who.text()))
             gamemodeWidget.playersTip.setText(self.getKnownServerPlayers())
-            w = MessageBox("服务器游戏模式", "设置服务器游戏模式", self)
-            w.yesButton.setText("确定")
-            w.cancelButton.setText("取消")
+            w = MessageBox(self.tr("服务器游戏模式"), self.tr("设置服务器游戏模式"), self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
             w.textLayout.addWidget(gamemodeWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
@@ -613,21 +611,21 @@ class ConsolePage(QWidget):
         """快捷菜单-白名单"""
         if ServerHandler().isServerRunning():
             whiteListWidget = playersController()
-            whiteListWidget.mode.addItems(["添加(add)", "删除(remove)"])
+            whiteListWidget.mode.addItems([self.tr("添加(add)"), self.tr("删除(remove)")])
             whiteListWidget.who.textChanged.connect(
                 lambda: self.lineEditChecker(text=whiteListWidget.who.text())
             )
             whiteListWidget.playersTip.setText(self.getKnownServerPlayers())
             content = (
-                "请确保服务器的白名单功能处于启用状态。\n"
-                "启用：/whitelist on\n"
-                "关闭：/whitelist off\n"
-                "列出当前白名单：/whitelist list\n"
-                "重新加载白名单：/whitelist reload"
+                self.tr("请确保服务器的白名单功能处于启用状态。\n")
+                + self.tr("启用：/whitelist on\n")
+                + self.tr("关闭：/whitelist off\n")
+                + self.tr("列出当前白名单：/whitelist list\n")
+                + self.tr("重新加载白名单：/whitelist reload")
             )
-            w = MessageBox("白名单", content, self)
-            w.yesButton.setText("确定")
-            w.cancelButton.setText("取消")
+            w = MessageBox(self.tr("白名单"), content, self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
             w.textLayout.addWidget(whiteListWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
@@ -648,15 +646,15 @@ class ConsolePage(QWidget):
         """快捷菜单-服务器管理员"""
         if ServerHandler().isServerRunning():
             opWidget = playersController()
-            opWidget.mode.addItems(["添加", "删除"])
+            opWidget.mode.addItems([self.tr("添加"), self.tr("删除")])
             opWidget.mode.setCurrentIndex(0)
             opWidget.who.textChanged.connect(
                 lambda: self.lineEditChecker(text=opWidget.who.text())
             )
             opWidget.playersTip.setText(self.getKnownServerPlayers())
-            w = MessageBox("服务器管理员", "添加或删除管理员", self)
-            w.yesButton.setText("确定")
-            w.cancelButton.setText("取消")
+            w = MessageBox(self.tr("服务器管理员"), self.tr("添加或删除管理员"), self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
             w.textLayout.addWidget(opWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
@@ -681,9 +679,9 @@ class ConsolePage(QWidget):
                 lambda: self.lineEditChecker(text=kickWidget.who.text())
             )
             kickWidget.playersTip.setText(self.getKnownServerPlayers())
-            w = MessageBox("踢出玩家", "踢出服务器中的玩家", self)
-            w.yesButton.setText("确定")
-            w.cancelButton.setText("取消")
+            w = MessageBox(self.tr("踢出玩家"), self.tr("踢出服务器中的玩家"), self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
             w.textLayout.addWidget(kickWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
@@ -700,15 +698,15 @@ class ConsolePage(QWidget):
         """快捷菜单-封禁或解禁玩家"""
         if ServerHandler().isServerRunning():
             banOrPardonWidget = playersController()
-            banOrPardonWidget.mode.addItems(["封禁", "解禁"])
+            banOrPardonWidget.mode.addItems([self.tr("封禁"), self.tr("解禁")])
             banOrPardonWidget.mode.setCurrentIndex(0)
             banOrPardonWidget.who.textChanged.connect(
                 lambda: self.lineEditChecker(text=banOrPardonWidget.who.text())
             )
             banOrPardonWidget.playersTip.setText(self.getKnownServerPlayers())
-            w = MessageBox("封禁或解禁玩家", "ban/pardon", self)
-            w.yesButton.setText("确定")
-            w.cancelButton.setText("取消")
+            w = MessageBox(self.tr("封禁或解禁玩家"), "ban/pardon", self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
             w.textLayout.addWidget(banOrPardonWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
             w.yesSignal.connect(
@@ -727,7 +725,7 @@ class ConsolePage(QWidget):
 
     def runQuickMenu_StopServer(self):
         if ServerHandler().isServerRunning():
-            box = MessageBox("正常关闭服务器", "你确定要关闭服务器吗？", self)
+            box = MessageBox(self.tr("正常关闭服务器"), self.tr("你确定要关闭服务器吗？"), self)
             box.yesSignal.connect(ServerHandler().stopServer)
             box.exec()
         else:
@@ -736,14 +734,14 @@ class ConsolePage(QWidget):
     def runQuickMenu_KillServer(self):
         """快捷菜单-强制关闭服务器"""
         if ServerHandler().isServerRunning():
-            w = MessageBox("强制关闭服务器", "确定要强制关闭服务器吗？\n有可能导致数据丢失！\n请确保存档已经保存！", self)
-            w.yesButton.setText("算了")
-            w.cancelButton.setText("强制关闭")
+            w = MessageBox(self.tr("强制关闭服务器"), self.tr("确定要强制关闭服务器吗？\n有可能导致数据丢失！\n请确保存档已经保存！"), self)
+            w.yesButton.setText(self.tr("算了"))
+            w.cancelButton.setText(self.tr("强制关闭"))
             w.cancelSignal.connect(lambda: ServerHandler().haltServer())
             w.cancelSignal.connect(
                 lambda: InfoBar.warning(
-                    title="警告",
-                    content="正在结束服务器...",
+                    title=self.tr("警告"),
+                    content=self.tr("正在结束服务器..."),
                     orient=Qt.Horizontal,
                     isClosable=False,
                     position=InfoBarPosition.TOP,
