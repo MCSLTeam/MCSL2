@@ -1781,6 +1781,9 @@ class SettingsPage(QWidget):
     def showAfDianSponsors(self):
         w = MessageBox("", "", self)
         w.textLayout.addWidget(MCSL2Sponsors())
+        w.cancelButton.setParent(None)
+        w.titleLabel.setParent(None)
+        w.contentLabel.setParent(None)
         w.cancelButton.deleteLater()
         w.titleLabel.deleteLater()
         w.contentLabel.deleteLater()

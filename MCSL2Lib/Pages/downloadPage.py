@@ -654,14 +654,17 @@ class DownloadPage(QWidget):
             if not id:
                 self.coreListLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.coreListLayout.count())):
+                    self.coreListLayout.itemAt(i).widget().setParent(None)
                     self.coreListLayout.itemAt(i).widget().deleteLater()
             elif id == 1:
                 self.versionLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.versionLayout.count())):
+                    self.versionLayout.itemAt(i).widget().setParent(None)
                     self.versionLayout.itemAt(i).widget().deleteLater()
             elif id == 2:
                 self.buildLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.buildLayout.count())):
+                    self.buildLayout.itemAt(i).widget().setParent(None)
                     self.buildLayout.itemAt(i).widget().deleteLater()
             else:
                 pass
@@ -674,6 +677,7 @@ class DownloadPage(QWidget):
                 for layout in self.MCSLAPILayoutList:
                     layout.removeItem(self.scrollAreaSpacer)
                     for i in reversed(range(layout.count())):
+                        layout.itemAt(i).widget().setParent(None)
                         layout.itemAt(i).widget().deleteLater()
                 MCSL2Logger.info("性能优化：释放MCSLAPI内存")
             except AttributeError:
@@ -731,6 +735,7 @@ class DownloadPage(QWidget):
                 except AttributeError:
                     pass
                 for i in reversed(range(layout.count())):
+                    layout.itemAt(i).widget().setParent(None)
                     layout.itemAt(i).widget().deleteLater()
                 layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
@@ -754,6 +759,7 @@ class DownloadPage(QWidget):
     def showMCSLAPIFailedWidget(self):
         layout = self.MCSLAPILayoutList[self.MCSLAPIStackedWidget.currentIndex()]
         for i2 in reversed(range(layout.count())):
+            layout.itemAt(i2).widget().setParent(None)
             layout.itemAt(i2).widget().deleteLater()
         layout.addWidget(MCSLAPILoadingErrorWidget())
         self.refreshMCSLAPIBtn.setEnabled(True)
@@ -835,6 +841,7 @@ class DownloadPage(QWidget):
                     title=self.tr("无法下载"), content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"), parent=self
                 )
                 box.yesSignal.connect(box.deleteLater)
+                box.cancelButton.setParent(None)
                 box.cancelButton.deleteLater()
                 box.exec()
                 return
@@ -968,6 +975,7 @@ class DownloadPage(QWidget):
             pass
         try:
             for i in reversed(range(self.buildLayout.count())):
+                self.buildLayout.itemAt(i).widget().setParent(None)
                 self.buildLayout.itemAt(i).widget().deleteLater()
         except AttributeError:
             pass
@@ -1033,6 +1041,7 @@ class DownloadPage(QWidget):
                     title=self.tr("无法下载"), content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"), parent=self
                 )
                 box.yesSignal.connect(box.deleteLater)
+                box.cancelButton.setParent(None)
                 box.cancelButton.deleteLater()
                 box.exec()
                 return

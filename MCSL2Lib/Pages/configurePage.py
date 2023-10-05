@@ -1914,6 +1914,7 @@ class ConfigurePage(QWidget):
             content = self.tr(totalResultMsg) + self.tr("\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。")
             w = MessageBox(title, content, self)
             w.yesButton.setText(self.tr("好的"))
+            w.cancelButton.setParent(None)
             w.cancelButton.deleteLater()
             w.exec()
         else:

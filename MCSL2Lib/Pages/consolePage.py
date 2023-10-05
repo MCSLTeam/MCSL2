@@ -513,6 +513,7 @@ class ConsolePage(QWidget):
             parent=self,
         )
         w.yesButton.setText(self.tr("好"))
+        w.cancelButton.setParent(None)
         w.cancelButton.deleteLater()
         w.exec()
 
@@ -674,6 +675,7 @@ class ConsolePage(QWidget):
         """快捷菜单-踢人"""
         if ServerHandler().isServerRunning():
             kickWidget = playersController()
+            kickWidget.mode.setParent(None)
             kickWidget.mode.deleteLater()
             kickWidget.who.textChanged.connect(
                 lambda: self.lineEditChecker(text=kickWidget.who.text())

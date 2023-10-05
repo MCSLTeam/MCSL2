@@ -708,6 +708,7 @@ class ServerManagerPage(QWidget):
         try:
             self.verticalLayout.removeItem(self.serversScrollAreaSpacer)
             for i in reversed(range(self.verticalLayout.count())):
+                self.verticalLayout.itemAt(i).widget().setParent(None)
                 self.verticalLayout.itemAt(i).widget().deleteLater()
             MCSL2Logger.info("性能优化：释放服务器管理页内存")
         except Exception:
@@ -1276,6 +1277,7 @@ class ServerManagerPage(QWidget):
         if dupCode:
             w = MessageBox(title=self.tr("失败"), content=self.tr("都没改就不需要保存了，退出即可"), parent=self)
             w.yesButton.setText(self.tr("好好好"))
+            w.cancelButton.setParent(None)
             w.cancelButton.deleteLater()
             w.exec()
         else:
@@ -1319,6 +1321,7 @@ class ServerManagerPage(QWidget):
                 w = MessageBox(title, content, self)
                 w.yesButton.setText(self.tr("好的"))
                 w.yesSignal.connect(w.deleteLater)
+                w.cancelButton.setParent(None)
                 w.cancelButton.deleteLater()
                 w.exec()
             else:
