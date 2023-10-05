@@ -6,12 +6,12 @@
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="228"/>
         <source>最小化</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimize</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="229"/>
         <source>退出MCSL2</source>
-        <translation type="unfinished"></translation>
+        <translation>Exit MCSL2</translation>
     </message>
 </context>
 <context>
@@ -19,121 +19,125 @@
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="320"/>
         <source>Aria2下载引擎启动成功。</source>
-        <translation type="unfinished"></translation>
+        <translation>Aria2 started successfully.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="330"/>
         <source>Aria2下载引擎启动失败</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to start Aria2</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="330"/>
         <source>请检查是否安装了Aria2。</source>
-        <translation type="unfinished"></translation>
+        <translation>Please check your Aria2 installation.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="343"/>
         <source>是否退出MCSL2？</source>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure to exit MCSL2?</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="343"/>
         <source>服务器正在运行。
 
 请在退出前先关闭服务器。</source>
-        <translation type="unfinished"></translation>
+        <translation>The Minecraft server is still running.
+
+Please stop the server first.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="344"/>
         <source>取消</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="345"/>
         <source>安全关闭并退出</source>
-        <translation type="unfinished"></translation>
+        <translation>Close server and exit securely</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="397"/>
         <source>程序出现异常</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="398"/>
         <source>确认并复制到剪切板</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy to clipboard</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="399"/>
         <source>知道了</source>
-        <translation type="unfinished"></translation>
+        <translation>Got it</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="422"/>
         <source>主页</source>
-        <translation type="unfinished"></translation>
+        <translation>Home</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="423"/>
         <source>新建</source>
-        <translation type="unfinished"></translation>
+        <translation>Configure</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="424"/>
         <source>管理</source>
-        <translation type="unfinished"></translation>
+        <translation>Manager</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="425"/>
         <source>下载</source>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="426"/>
         <source>终端</source>
-        <translation type="unfinished"></translation>
+        <translation>Console</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="427"/>
         <source>插件</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="430"/>
         <source>设置</source>
-        <translation type="unfinished"></translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="485"/>
         <source>正在退出MCSL2</source>
-        <translation type="unfinished"></translation>
+        <translation>Exiting</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="485"/>
         <source>安全关闭服务器中...
 
 MCSL2稍后将自行退出。</source>
-        <translation type="unfinished"></translation>
+        <translation>Shutting down server securely...
+
+MCSL2 will exit later.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="489"/>
         <source>强制结束服务器并退出</source>
-        <translation type="unfinished"></translation>
+        <translation>Kill the server and exit</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="594"/>
         <source>切换到MCSLAPI</source>
-        <translation type="unfinished"></translation>
+        <translation>Switch to MCSLAPI</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="594"/>
         <source>因为FastMirror没有Java啊 (</source>
-        <translation type="unfinished"></translation>
+        <translation>So that you can download Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="649"/>
         <source>提示</source>
-        <translation type="unfinished"></translation>
+        <translation>Alert</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="649"/>
@@ -141,43 +145,47 @@ MCSL2稍后将自行退出。</source>
 未同意，服务器将无法启动。
 可点击下方的按钮查看Eula。
 同意Eula后，服务器将会启动。</source>
-        <translation type="unfinished"></translation>
+        <translation>You have not agreed to Minecraft&apos;s EULA.
+If you do not agree, the server will not start.
+Click the button below to view the EULA.
+After the EULA is agreed, the server will start.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="654"/>
         <source>同意</source>
-        <translation type="unfinished"></translation>
+        <translation>Agree</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="657"/>
         <source>拒绝</source>
-        <translation type="unfinished"></translation>
+        <translation>Refuse</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="685"/>
         <source>开启服务器</source>
-        <translation type="unfinished"></translation>
+        <translation>Launch Server</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="691"/>
         <source>关闭服务器</source>
-        <translation type="unfinished"></translation>
+        <translation>Close Server</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="757"/>
         <source>MCSL2功能提醒</source>
-        <translation type="unfinished"></translation>
+        <translation>Function Alert</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="767"/>
         <source>您开启了“启动时自动运行上次运行的服务器”功能。
 正在启动上次运行的服务器...</source>
-        <translation type="unfinished"></translation>
+        <translation>You have enabled the function &quot;Run the last server automatically on startup&quot;.
+Starting the server...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="777"/>
         <source>功能提醒</source>
-        <translation type="unfinished"></translation>
+        <translation>Function Alert</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="777"/>
@@ -185,17 +193,20 @@ MCSL2稍后将自行退出。</source>
 但由于上次开启记录不存在，或上次开启的服务器已被删除，
 无法启动服务器。
 您仍然可以手动开启服务器。</source>
-        <translation type="unfinished"></translation>
+        <translation>Although you have the &quot;Run the last server automatically on startup&quot; function enabled,
+However, the last start record does not exist, or the last start server has been deleted,
+The server could not be started.
+You can still start the server manually.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="791"/>
         <source>显示窗口</source>
-        <translation type="unfinished"></translation>
+        <translation>Show</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/windowInterface.py" line="799"/>
         <source>最小化</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimize</translation>
     </message>
 </context>
 <context>
@@ -203,40 +214,45 @@ MCSL2稍后将自行退出。</source>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/serverController.py" line="118"/>
         <source>[MCSL2 | 提示]：服务器正在启动，请稍后...</source>
-        <translation type="unfinished"></translation>
+        <translation>[MCSL2 | HINT]：The server is launching, please wait...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/serverController.py" line="135"/>
         <source>[MCSL2 | 提示]：服务器崩溃！</source>
-        <translation type="unfinished"></translation>
+        <translation>[MCSL2 | HINT]：The server crashed!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/serverController.py" line="139"/>
         <source>[MCSL2 | 提示]：正在重新启动服务器...</source>
-        <translation type="unfinished"></translation>
+        <translation>[MCSL2 | HINT]：Restarting server...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/serverController.py" line="141"/>
         <source>[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。</source>
-        <translation type="unfinished"></translation>
+        <translation>[MCSL2 | HINT]：The server crashed, but seems to be killed.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/serverController.py" line="143"/>
         <source>[MCSL2 | 提示]：服务器已关闭！</source>
-        <translation type="unfinished"></translation>
+        <translation>[MCSL2 | HINT]：The server is closed!</translation>
     </message>
 </context>
 <context>
     <name>InstallPlan</name>
     <message>
-        <location filename="../../../MCSL2Lib/Controllers/serverInstaller.py" line="285"/>
+        <location filename="serverInstaller.py" line="285"/>
         <source>(正在下载核心... 0%) 使用BMCLAPI下载</source>
-        <translation type="unfinished"></translation>
+        <translation>(Downloading Core... 0%) with BMCLAPI</translation>
     </message>
     <message>
-        <location filename="../../../MCSL2Lib/Controllers/serverInstaller.py" line="290"/>
-        <source>(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载</source>
-        <translation type="unfinished"></translation>
+        <location filename="serverInstaller.py" line="290"/>
+        <source>(正在下载核心... </source>
+        <translation>(Downloading Core... </translation>
+    </message>
+    <message>
+        <location filename="serverInstaller.py" line="290"/>
+        <source>% 使用BMCLAPI下载</source>
+        <translation>% with BMCLAPI</translation>
     </message>
 </context>
 <context>
@@ -245,7 +261,8 @@ MCSL2稍后将自行退出。</source>
         <location filename="../../../MCSL2Lib/Controllers/updateController.py" line="58"/>
         <source>奇怪，怎么获取信息失败了？
 检查一下网络，或者反馈给开发者？</source>
-        <translation type="unfinished"></translation>
+        <translation>Get information failed.
+Check the Internet, or report this bug?</translation>
     </message>
 </context>
 <context>
@@ -253,23 +270,24 @@ MCSL2稍后将自行退出。</source>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/updateController.py" line="86"/>
         <source>无法更新</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to update</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/updateController.py" line="86"/>
         <source>MCSL2的Aria2可能未安装或启动失败。
 已尝试重新启动Aria2。</source>
-        <translation type="unfinished"></translation>
+        <translation>MCSL2&apos;s Aria2 is missing,or launch failed.
+Tried to restart Aria2.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/updateController.py" line="94"/>
         <source>正在下载更新</source>
-        <translation type="unfinished"></translation>
+        <translation>Downloading update</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Controllers/updateController.py" line="94"/>
         <source>下载结束后将自动重启。</source>
-        <translation type="unfinished"></translation>
+        <translation>MCSL2 will restart when download complete.</translation>
     </message>
 </context>
 <context>
@@ -2645,171 +2663,175 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="556"/>
         <source>下载</source>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="557"/>
         <source>Aria2引擎高速驱动！</source>
-        <translation type="unfinished"></translation>
+        <translation>Powered by Aria2!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="558"/>
         <source>核心列表</source>
-        <translation type="unfinished"></translation>
+        <translation>Core</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="559"/>
         <source>游戏版本</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="560"/>
         <source>构建列表</source>
-        <translation type="unfinished"></translation>
+        <translation>Build</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="562"/>
         <source>刷新</source>
-        <translation type="unfinished"></translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="563"/>
         <source>打开下载文件夹</source>
-        <translation type="unfinished"></translation>
+        <translation>Download Folder</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="564"/>
         <source>打开下载记录</source>
-        <translation type="unfinished"></translation>
+        <translation>Download History</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="567"/>
         <source>Java环境</source>
-        <translation type="unfinished"></translation>
+        <translation>Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="574"/>
         <source>Spigot核心</source>
-        <translation type="unfinished"></translation>
+        <translation>Spigot</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="581"/>
         <source>Paper核心</source>
-        <translation type="unfinished"></translation>
+        <translation>Paper</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="588"/>
         <source>BungeeCord代理</source>
-        <translation type="unfinished"></translation>
+        <translation>BungeeCord</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="595"/>
         <source>Vanilla核心</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanilla</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1040"/>
         <source>无法下载</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to download</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1040"/>
         <source>Aria2可能未安装或启动失败。
 已尝试重新启动Aria2。</source>
-        <translation type="unfinished"></translation>
+        <translation>Aria2 is missing,or launch failed.
+Tried to restart Aria2.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="876"/>
         <source>正在请求FastMirror API</source>
-        <translation type="unfinished"></translation>
+        <translation>Fetching FastMirror API</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="897"/>
         <source>加载中，请稍后...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading, please wait...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="897"/>
         <source>正在进一步请求FastMirror API</source>
-        <translation type="unfinished"></translation>
+        <translation>Continue fetching FastMirror API</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="929"/>
         <source>请求FastMirror API完毕！</source>
-        <translation type="unfinished"></translation>
+        <translation>Finished!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="934"/>
         <source>请求FastMirror API失败！</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="939"/>
         <source>错误</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="939"/>
         <source>获取FastMirror API失败！
 尝试检查网络后，请再尝试刷新。</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to fetch FastMirror API!
+Please check your Internet, and try again.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1066"/>
         <source>已隐藏下载窗口</source>
-        <translation type="unfinished"></translation>
+        <translation>Hid the download dialog</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1066"/>
         <source>仍在下载中，点击按钮恢复下载窗口...</source>
-        <translation type="unfinished"></translation>
+        <translation>Downloading, click the button to show the dialog...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1078"/>
         <source>恢复</source>
-        <translation type="unfinished"></translation>
+        <translation>Show</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1088"/>
         <source>下载完毕</source>
-        <translation type="unfinished"></translation>
+        <translation>Download Complete</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1101"/>
         <source>提示</source>
-        <translation type="unfinished"></translation>
+        <translation>Alert</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1101"/>
         <source>您要下载的文件已存在。请选择操作。</source>
-        <translation type="unfinished"></translation>
+        <translation>The file you want to download already exists. Please take your action.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1102"/>
         <source>停止下载</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1103"/>
         <source>覆盖文件</source>
-        <translation type="unfinished"></translation>
+        <translation>Overwrite</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1126"/>
         <source>警告</source>
-        <translation type="unfinished"></translation>
+        <translation>Warning</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1114"/>
         <source>MCSL2/Downloads文件夹存在同名文件。
 根据设置，已删除原文件并继续下载。</source>
-        <translation type="unfinished"></translation>
+        <translation>The MCSL2/Downloads folder contains files with the same name.
+According to the settings, the original file has been deleted and the download continues.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/downloadPage.py" line="1126"/>
         <source>MCSL2/Downloads文件夹存在同名文件。
 根据设置，已停止下载。</source>
-        <translation type="unfinished"></translation>
+        <translation>The MCSL2/Downloads folder contains files with the same name.
+According to the settings, the download has stopped.</translation>
     </message>
 </context>
 <context>
@@ -2817,12 +2839,12 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="196"/>
         <source>公告: </source>
-        <translation type="unfinished"></translation>
+        <translation>Notice: </translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="199"/>
         <source>网络连接失败，无法获取公告。</source>
-        <translation type="unfinished"></translation>
+        <translation>Network connection failed. Failed to get notice.</translation>
     </message>
 </context>
 <context>
@@ -2830,33 +2852,35 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="159"/>
         <source>新建</source>
-        <translation type="unfinished"></translation>
+        <translation>Configure</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="160"/>
         <source>启动服务器：</source>
-        <translation type="unfinished"></translation>
+        <translation>Launch Server:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="161"/>
         <source>选择</source>
-        <translation type="unfinished"></translation>
+        <translation>Select
+Server</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="162"/>
         <source>主页</source>
-        <translation type="unfinished"></translation>
+        <translation>Home</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="163"/>
         <source>获取公告中...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fetching notice...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/homePage.py" line="178"/>
         <source>启动服务器：
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Launch Server:
+</translation>
     </message>
 </context>
 <context>
@@ -2864,57 +2888,57 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="147"/>
         <source>添加属于你的插件，让你的MCSL2更加强大！</source>
-        <translation type="unfinished"></translation>
+        <translation>Use various kinds of extension to make your MCSL2 more powerful!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="148"/>
         <source>插件</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="149"/>
         <source>刷新</source>
-        <translation type="unfinished"></translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="150"/>
         <source>安装</source>
-        <translation type="unfinished"></translation>
+        <translation>Install</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="153"/>
         <source>成功</source>
-        <translation type="unfinished"></translation>
+        <translation>Success</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="153"/>
         <source>刷新完毕</source>
-        <translation type="unfinished"></translation>
+        <translation>Refreshed</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="167"/>
         <source>选择插件压缩包</source>
-        <translation type="unfinished"></translation>
+        <translation>Select plugin archive</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="167"/>
         <source>Zip压缩包(*.zip)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zip Archive(*.zip)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="174"/>
         <source>成功安装</source>
-        <translation type="unfinished"></translation>
+        <translation>Installed</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="174"/>
         <source>可能需要重启以生效</source>
-        <translation type="unfinished"></translation>
+        <translation>You may need to restart MCSL2 to take effect</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/pluginPage.py" line="185"/>
         <source>安装失败</source>
-        <translation type="unfinished"></translation>
+        <translation>Install Failed</translation>
     </message>
 </context>
 <context>
@@ -2922,7 +2946,7 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/selectJavaPage.py" line="112"/>
         <source>以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。</source>
-        <translation type="unfinished"></translation>
+        <translation>Here is everything known about Java, including what you added yourself, and what the program scanned. Please select.</translation>
     </message>
 </context>
 <context>
@@ -2930,147 +2954,147 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="605"/>
         <source>在此处，管理你所有的服务器。</source>
-        <translation type="unfinished"></translation>
+        <translation>Manage your servers here.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="606"/>
         <source>管理</source>
-        <translation type="unfinished"></translation>
+        <translation>Manager</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="607"/>
         <source>自动查找Java</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto Detect Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="608"/>
         <source>Java:</source>
-        <translation type="unfinished"></translation>
+        <translation>Java:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="609"/>
         <source>Java列表</source>
-        <translation type="unfinished"></translation>
+        <translation>Java List</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="610"/>
         <source>手动导入</source>
-        <translation type="unfinished"></translation>
+        <translation>Import Manually</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="611"/>
         <source>下载Java</source>
-        <translation type="unfinished"></translation>
+        <translation>Download Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="613"/>
         <source>内存:</source>
-        <translation type="unfinished"></translation>
+        <translation>Memory:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="614"/>
         <source>下载核心</source>
-        <translation type="unfinished"></translation>
+        <translation>Download Core</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="615"/>
         <source>核心：</source>
-        <translation type="unfinished"></translation>
+        <translation>Core:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="616"/>
         <source>重新导入</source>
-        <translation type="unfinished"></translation>
+        <translation>Re-import</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="617"/>
         <source>编码设置：</source>
-        <translation type="unfinished"></translation>
+        <translation>Encoding &amp; Decoding Settings:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="618"/>
         <source>控制台输出编码（优先级高于全局设置）</source>
-        <translation type="unfinished"></translation>
+        <translation>Console output decoding (has a Priority that higher than the global setting)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="619"/>
         <source>指令输入编码（优先级高于全局设置）</source>
-        <translation type="unfinished"></translation>
+        <translation>Console Input encoding (has a Priority that higher than the global setting)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="620"/>
         <source>JVM参数：</source>
-        <translation type="unfinished"></translation>
+        <translation>Java Virtual Machine Arguments:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="635"/>
         <source>可选，用一个空格分组</source>
-        <translation type="unfinished"></translation>
+        <translation>Optional, split with a &quot;space&quot;</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="622"/>
         <source>服务器图标：</source>
-        <translation type="unfinished"></translation>
+        <translation>Server Icon:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="623"/>
         <source>提示：此处设置的是服务器在MCSL2中显示的图标，不能代表服务器MOTD的图标。</source>
-        <translation type="unfinished"></translation>
+        <translation>Hint: The icon here stands for the icon in MCSL2, not the Motd icon.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1330"/>
         <source>服务器名称：</source>
-        <translation type="unfinished"></translation>
+        <translation>Server Name:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="634"/>
         <source>不能包含非法字符</source>
-        <translation type="unfinished"></translation>
+        <translation>Not allowed to contain illegal characters</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="626"/>
         <source>保存！</source>
-        <translation type="unfinished"></translation>
+        <translation>Save!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="631"/>
         <source>写错了就启动不了了（悲</source>
-        <translation type="unfinished"></translation>
+        <translation>Tf you write it wrong, the server won&apos;t start</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="633"/>
         <source>整数</source>
-        <translation type="unfinished"></translation>
+        <translation>Integer</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="639"/>
         <source>跟随全局</source>
-        <translation type="unfinished"></translation>
+        <translation>Follow global setting</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="639"/>
         <source>UTF-8</source>
-        <translation type="unfinished"></translation>
+        <translation>UTF-8</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="639"/>
         <source>GB18030</source>
-        <translation type="unfinished"></translation>
+        <translation>GB18030</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="639"/>
         <source>ANSI(推荐)</source>
-        <translation type="unfinished"></translation>
+        <translation>ANSI(Recommended)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="642"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="642"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="649"/>
@@ -3615,12 +3639,12 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Pages/settingsPage.py" line="1250"/>
         <source>设置</source>
-        <translation type="unfinished"></translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/settingsPage.py" line="1251"/>
         <source>自定义你的MCSL2。</source>
-        <translation type="unfinished"></translation>
+        <translation>Modify your MCSL2.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/settingsPage.py" line="1252"/>
@@ -3992,47 +4016,47 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="23"/>
         <source>下载项(正在加载...)</source>
-        <translation type="unfinished"></translation>
+        <translation>Download History(Loading...)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="87"/>
         <source>名称</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="87"/>
         <source>类型</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="87"/>
         <source>MC版本</source>
-        <translation type="unfinished"></translation>
+        <translation>MC Version</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="87"/>
         <source>构建版本</source>
-        <translation type="unfinished"></translation>
+        <translation>Build Version</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="66"/>
         <source>选择</source>
-        <translation type="unfinished"></translation>
+        <translation>Select</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="67"/>
         <source>取消</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="95"/>
         <source>下载项(共</source>
-        <translation type="unfinished"></translation>
+        <translation>Download History(</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadEntryViewerWidget.py" line="95"/>
         <source>项)</source>
-        <translation type="unfinished"></translation>
+        <translation>in total)</translation>
     </message>
 </context>
 <context>
@@ -4040,37 +4064,37 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="276"/>
         <source>继续</source>
-        <translation type="unfinished"></translation>
+        <translation>Continue</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="278"/>
         <source>暂停</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="338"/>
         <source>[文件大小]</source>
-        <translation type="unfinished"></translation>
+        <translation>[File size]</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="339"/>
         <source>[速度]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Speed]</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="340"/>
         <source>[ETA]</source>
-        <translation type="unfinished"></translation>
+        <translation>[ETA]</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="341"/>
         <source>NaN%</source>
-        <translation type="unfinished"></translation>
+        <translation>NaN%</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="343"/>
         <source>[文件名]</source>
-        <translation type="unfinished"></translation>
+        <translation>[File name]</translation>
     </message>
 </context>
 <context>
@@ -4078,57 +4102,57 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="227"/>
         <source>文件大小：</source>
-        <translation type="unfinished"></translation>
+        <translation>File size:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="228"/>
         <source>正在下载：</source>
-        <translation type="unfinished"></translation>
+        <translation>Downloading:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="229"/>
         <source>预计剩余时间：</source>
-        <translation type="unfinished"></translation>
+        <translation>ETA:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="230"/>
         <source>取消</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="231"/>
         <source>当前速度：</source>
-        <translation type="unfinished"></translation>
+        <translation>Speed:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="232"/>
         <source>暂停</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="233"/>
         <source>文件名：</source>
-        <translation type="unfinished"></translation>
+        <translation>File name:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="234"/>
         <source>隐藏</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="237"/>
         <source>关闭</source>
-        <translation type="unfinished"></translation>
+        <translation>Close</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="236"/>
         <source>下载完毕。</source>
-        <translation type="unfinished"></translation>
+        <translation>Download complete.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/DownloadProgressWidget.py" line="238"/>
         <source>下载失败或取消！</source>
-        <translation type="unfinished"></translation>
+        <translation>Download failed or canceled!</translation>
     </message>
 </context>
 <context>
@@ -4136,17 +4160,17 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/ForgeInstallProgressWidget.py" line="8"/>
         <source>Forge安装器(正在安装...)</source>
-        <translation type="unfinished"></translation>
+        <translation>Forge Installer(Installing...)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/ForgeInstallProgressWidget.py" line="18"/>
         <source>取消安装</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/ForgeInstallProgressWidget.py" line="19"/>
         <source>隐藏</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide</translation>
     </message>
 </context>
 <context>
@@ -4154,12 +4178,12 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/loadingTipWidget.py" line="123"/>
         <source>加载失败</source>
-        <translation type="unfinished"></translation>
+        <translation>Load failed</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/loadingTipWidget.py" line="124"/>
         <source>刷新</source>
-        <translation type="unfinished"></translation>
+        <translation>Refresh</translation>
     </message>
 </context>
 <context>
@@ -4167,7 +4191,7 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/loadingTipWidget.py" line="70"/>
         <source>加载中...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading...</translation>
     </message>
 </context>
 <context>
@@ -4175,7 +4199,7 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/loadingTipWidget.py" line="238"/>
         <source>加载失败。请尝试刷新，如果仍然失败，请汇报此Bug。</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading failed. Please try to refresh, if still failed, please report this bug.</translation>
     </message>
 </context>
 <context>
@@ -4183,7 +4207,7 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/loadingTipWidget.py" line="163"/>
         <source>加载中...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading...</translation>
     </message>
 </context>
 <context>
@@ -4191,7 +4215,7 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/noServerTip.py" line="95"/>
         <source>好像还没有添加过的服务器欸。先去“新建”页新建一个？</source>
-        <translation type="unfinished"></translation>
+        <translation>It seems that no server has been added. Go to the &quot;Configure&quot; page and create a new one?</translation>
     </message>
 </context>
 <context>
@@ -4199,46 +4223,50 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="118"/>
         <source>填写玩家名或目标选择器</source>
-        <translation type="unfinished"></translation>
+        <translation>Type a player&apos;s name or a target selector</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="119"/>
         <source>@p - 最近的玩家(在控制台可能无法使用)
 </source>
-        <translation type="unfinished"></translation>
+        <translation>@p - Nearest player(Not available in console)
+</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="119"/>
         <source>@r - 随机玩家
 </source>
-        <translation type="unfinished"></translation>
+        <translation>@r - Random player
+</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="119"/>
         <source>@a - 所有玩家
 </source>
-        <translation type="unfinished"></translation>
+        <translation>@a - All players
+</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="119"/>
         <source>@e - 所有实体(不包括死亡实体)
 </source>
-        <translation type="unfinished"></translation>
+        <translation>@e - All entities (excluding death entities)
+</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="119"/>
         <source>@s - 命令执行者(控制台不可用)</source>
-        <translation type="unfinished"></translation>
+        <translation>@s - Command executor(Not available in console)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="126"/>
         <source>当前在线玩家：(可能不准确)</source>
-        <translation type="unfinished"></translation>
+        <translation>Current online players: (may not be accurate)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/playersControllerMainWidget.py" line="127"/>
         <source>目标选择器提示:</source>
-        <translation type="unfinished"></translation>
+        <translation>Target selector prompt:</translation>
     </message>
 </context>
 <context>
@@ -4246,17 +4274,17 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/selectJavaWidget.py" line="148"/>
         <source>选择</source>
-        <translation type="unfinished"></translation>
+        <translation>Select</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/selectJavaWidget.py" line="149"/>
         <source>Java版本:</source>
-        <translation type="unfinished"></translation>
+        <translation>Java Version:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/selectJavaWidget.py" line="150"/>
         <source>Java路径:</source>
-        <translation type="unfinished"></translation>
+        <translation>Java Path:</translation>
     </message>
 </context>
 <context>
@@ -4264,32 +4292,32 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/serverManagerWidget.py" line="228"/>
         <source>核心：</source>
-        <translation type="unfinished"></translation>
+        <translation>Core:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/serverManagerWidget.py" line="229"/>
         <source>内存设置：</source>
-        <translation type="unfinished"></translation>
+        <translation>Memory:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/serverManagerWidget.py" line="230"/>
         <source>Java：</source>
-        <translation type="unfinished"></translation>
+        <translation>Java:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/serverManagerWidget.py" line="231"/>
         <source>选择</source>
-        <translation type="unfinished"></translation>
+        <translation>Select</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/serverManagerWidget.py" line="232"/>
         <source>编辑</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/serverManagerWidget.py" line="233"/>
         <source>删除</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete</translation>
     </message>
 </context>
 <context>
@@ -4297,7 +4325,7 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/singleMCSLAPIDownloadWidget.py" line="99"/>
         <source>下载</source>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
 </context>
 <context>
@@ -4305,12 +4333,12 @@ MC版本:</source>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/sponsorWidget.py" line="95"/>
         <source>非常感谢你们对MCSL2开发的鼓励与支持！</source>
-        <translation type="unfinished"></translation>
+        <translation>Thank you for supporting MCSL2&apos;s development very much!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Widgets/sponsorWidget.py" line="96"/>
         <source>爱发电 - 8月赞助者名单</source>
-        <translation type="unfinished"></translation>
+        <translation>AFDian - August Sponsors list</translation>
     </message>
 </context>
 </TS>

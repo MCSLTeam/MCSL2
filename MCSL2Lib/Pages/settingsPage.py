@@ -1760,7 +1760,7 @@ class SettingsPage(QWidget):
 
         title = self.tr("MC Server Launcher 2系统报告")
         w = MessageBox(
-            title, self.tr("{report}\n----------------------------\n点击复制按钮以复制到剪贴板。"), self
+            title, report + self.tr("\n----------------------------\n点击复制按钮以复制到剪贴板。"), self
         )
         w.yesButton.setText(self.tr("复制"))
         w.cancelButton.setText(self.tr("关闭"))

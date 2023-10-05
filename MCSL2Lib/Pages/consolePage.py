@@ -318,7 +318,7 @@ class ConsolePage(QWidget):
         readServerProperties()
         fmt = QTextCharFormat()
         # fmt: off
-        greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "提示"]
+        greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "HINT", "提示"]
         orangeText = ["WARN", "Warning", "warn", "alert", "ALERT", "Alert", "CAUTION", "Caution","警告"]
         redText = ["ERR", "Err", "Fatal", "FATAL", "Critical", "Danger", "DANGER", "错", "at java", "at net", "at oolloo", "Caused by", "at sun"]
         blueText = ["DEBUG", "Debug", "debug", "调试", "TEST", "Test", "Unknown command", "MCSL2"]
