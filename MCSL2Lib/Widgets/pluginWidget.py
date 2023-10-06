@@ -144,7 +144,9 @@ class singlePluginWidget(CardWidget):
         self.horizontalLayout.addWidget(self.openFolderButton)
         self.deleteBtn = PluginOperationButton(FIF.DELETE, self)
         self.deleteBtn.setObjectName("deleteBtn")
-
+        self.SwitchButton.setOffText("")
+        self.SwitchButton.setOnText("")
+        self.SwitchButton.setText("")
         self.horizontalLayout.addWidget(self.deleteBtn)
 
     def setPluginIcon(self, icon):

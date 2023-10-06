@@ -521,77 +521,77 @@ Tried to restart Aria2.</translation>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="605"/>
         <source>导入 MCSL 2的服务器</source>
-        <translation type="unfinished"></translation>
+        <translation>Import MCSL 2 Server</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="606"/>
         <source>[状态文本]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Status Text]</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="607"/>
         <source>1. 选择MCSL 2生成的MCSL2ServerConfig.json</source>
-        <translation type="unfinished"></translation>
+        <translation>1. Select MCSL2ServerConfig.json</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="608"/>
         <source>选择配置文件</source>
-        <translation type="unfinished"></translation>
+        <translation>Select Configuration</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="609"/>
         <source>自动查找Java</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto Detect Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="611"/>
         <source>Java列表</source>
-        <translation type="unfinished"></translation>
+        <translation>Java List</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="612"/>
         <source>手动导入</source>
-        <translation type="unfinished"></translation>
+        <translation>Import Manually</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="613"/>
         <source>下载Java</source>
-        <translation type="unfinished"></translation>
+        <translation>Download Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="614"/>
         <source>控制台输出编码（优先级高于全局设置）</source>
-        <translation type="unfinished"></translation>
+        <translation>Console output decoding (has a Priority that higher than the global setting)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="615"/>
         <source>编码设置：</source>
-        <translation type="unfinished"></translation>
+        <translation>Encoding &amp; Decoding Settings:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="616"/>
         <source>指令输入编码（优先级高于全局设置）</source>
-        <translation type="unfinished"></translation>
+        <translation>Console Input encoding (has a Priority that higher than the global setting)</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="617"/>
         <source>可选，用一个空格分组</source>
-        <translation type="unfinished"></translation>
+        <translation>Optional, split with a &quot;space&quot;</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="618"/>
         <source>JVM参数：</source>
-        <translation type="unfinished"></translation>
+        <translation>Java Virtual Machine Arguments:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="619"/>
         <source>内存:</source>
-        <translation type="unfinished"></translation>
+        <translation>Memory:</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="621"/>
         <source>2. 确认参数</source>
-        <translation type="unfinished"></translation>
+        <translation>2. Confirm Arguments</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="622"/>
@@ -616,7 +616,7 @@ Tried to restart Aria2.</translation>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="626"/>
         <source>设置服务器昵称，不能包含非法字符</source>
-        <translation type="unfinished"></translation>
+        <translation>Set the server name, not allowed to contain illegal characters</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/ImportServerTypes/importMCSLv2.py" line="627"/>
@@ -1485,23 +1485,24 @@ Tried to restart Aria2.</translation>
     <message>
         <location filename="../../../MCSL2Lib/Pages/configurePage.py" line="1312"/>
         <source>新建服务器</source>
-        <translation type="unfinished"></translation>
+        <translation>Configure New Server</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/configurePage.py" line="1313"/>
         <source>有3种方式供你选择。</source>
-        <translation type="unfinished"></translation>
+        <translation>There are 3 ways for you to select.</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/configurePage.py" line="1350"/>
         <source>简易模式</source>
-        <translation type="unfinished"></translation>
+        <translation>Noob Mode</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/configurePage.py" line="1315"/>
         <source>保留基础配置。
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Basic Configuration.
+</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/configurePage.py" line="1315"/>
@@ -3099,72 +3100,72 @@ Server</translation>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="649"/>
         <source>铁砧</source>
-        <translation type="unfinished"></translation>
+        <translation>Anvil</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="650"/>
         <source>布料</source>
-        <translation type="unfinished"></translation>
+        <translation>Cloth</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="651"/>
         <source>圆石</source>
-        <translation type="unfinished"></translation>
+        <translation>Cobble Stone</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="652"/>
         <source>命令方块</source>
-        <translation type="unfinished"></translation>
+        <translation>Command Block</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="653"/>
         <source>工作台</source>
-        <translation type="unfinished"></translation>
+        <translation>Carfting Table</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="654"/>
         <source>鸡蛋</source>
-        <translation type="unfinished"></translation>
+        <translation>Egg</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="655"/>
         <source>玻璃</source>
-        <translation type="unfinished"></translation>
+        <translation>Glass</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="656"/>
         <source>金块</source>
-        <translation type="unfinished"></translation>
+        <translation>Golden Block</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="657"/>
         <source>草方块</source>
-        <translation type="unfinished"></translation>
+        <translation>Grass</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="658"/>
         <source>草径</source>
-        <translation type="unfinished"></translation>
+        <translation>Grass Path</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="659"/>
         <source>Java</source>
-        <translation type="unfinished"></translation>
+        <translation>Java</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="660"/>
         <source>MCSL2</source>
-        <translation type="unfinished"></translation>
+        <translation>MCSL2</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="661"/>
         <source>Paper核心</source>
-        <translation type="unfinished"></translation>
+        <translation>Paper Core</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="662"/>
         <source>红石块</source>
-        <translation type="unfinished"></translation>
+        <translation>Redstone Block</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="663"/>
@@ -3554,32 +3555,32 @@ Server</translation>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1357"/>
         <source>是</source>
-        <translation type="unfinished"></translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1358"/>
         <source>不是</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1369"/>
         <source>修改服务器&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Edited server &quot;</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1368"/>
         <source>&quot;成功！</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot; successfully!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1369"/>
         <source>&quot;失败！</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot; failed!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1398"/>
         <source>提示</source>
-        <translation type="unfinished"></translation>
+        <translation>Hint</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1398"/>
@@ -3589,17 +3590,17 @@ Server</translation>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1399"/>
         <source>是的</source>
-        <translation type="unfinished"></translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1400"/>
         <source>不用</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1469"/>
         <source>功能提醒</source>
-        <translation type="unfinished"></translation>
+        <translation>Function Alert</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1469"/>
@@ -3611,27 +3612,27 @@ Server</translation>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1485"/>
         <source>安装Forge</source>
-        <translation type="unfinished"></translation>
+        <translation>Forge Installation</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1485"/>
         <source>请稍后，正在安装...</source>
-        <translation type="unfinished"></translation>
+        <translation>Installing, please wait a moment...</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1508"/>
         <source>成功</source>
-        <translation type="unfinished"></translation>
+        <translation>Success</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1548"/>
         <source>安装成功！</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation successfully!</translation>
     </message>
     <message>
         <location filename="../../../MCSL2Lib/Pages/serverManagerPage.py" line="1552"/>
         <source>怪，安装失败！</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation failed!</translation>
     </message>
 </context>
 <context>
