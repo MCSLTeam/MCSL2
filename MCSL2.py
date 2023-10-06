@@ -67,8 +67,8 @@ if __name__ == "__main__":
     app = MCSL2Application(sys.argv)
     # fluentTranslator = FluentTranslator(QLocale(QLocale.English))
     # mcslTranslator = MCSL2Translator(QLocale(QLocale.English))
-    fluentTranslator = FluentTranslator(QLocale())
-    # mcslTranslator = MCSL2Translator(QLocale())
+    fluentTranslator = FluentTranslator(QLocale(QLocale.Chinese))
+    # mcslTranslator = MCSL2Translator(QLocale(QLocale.Chinese))
     app.installTranslator(fluentTranslator)
     # app.installTranslator(mcslTranslator)
     from MCSL2Lib.windowInterface import Window
