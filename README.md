@@ -26,24 +26,25 @@ ___
 
 ## 他能干什么？  
 
-~~可以帮助你非常方便的开启一个Java版Minecraft服务器。（废话文学~~
-
-- **💻 简洁美观的界面**： 采用Qt编写，配合自己搓的QSS，由圆角强势驱动（
-- **🎞️ 可管理多服务器**： 一个MCSL2，服务器尽在掌控之中！
-- **⏬ 一站式下载服务**： 由FastMirror、MCSLAPI强力驱动，配合Aria2下载引擎，速度飞起！
-- **⚡ 快速配置服务器**： 几个选项，即可快速配置一个新服务器！
-- **✅ 自动查找Java**： 厌倦了手动翻目录？自动查找Java帮你解决！
-- **🔧 拓展工具系统**： 使用各种拓展工具，让你的MCSL2更加强大！
-
+- **💻 简洁美观的界面**： 采用PyQt5编写，采用Fluent Design设计风格的[PyQt-Fluent-Widgets](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)组件库  
+- **🎞️ 可管理多服务器**： 多服务器集中管理，运维更高效  
+- **⏬ 一站式下载服务**： 使用Aria2从FastMirror、MCSLAPI下载各类常用核心  
+- **⚡ 快速新建服务器**： 几个选项，即可快速新建一个新服务器  
+- **✅ 自动查找Java**： 自动查找绝大多数Java，无需手动选择。  
+- **🔧 自研插件系统**： 丰富MCSL2的功能。  
 ___
 
 ## 用到的开源项目
 
-[![Python](https://img.shields.io/badge/python-3.8-blue.svg?style=for-the-badge "Python")](https://python.org)
-[![PyQt5](https://img.shields.io/badge/pyqt5-latest-brightgreen.svg?style=for-the-badge "PyQt5")](https://pypi.org/project/PyQt5/)
-[![Nuitka](https://img.shields.io/badge/nuitka-latest-red.svg?style=for-the-badge "Nuitka")](https://nuitka.net)  
-[![PyQt-Fluent-Widgets](https://img.shields.io/badge/qfluentwidgets-latest-green.svg?style=for-the-badge "PyQt-Fluent-Widgets")](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)
-[![lib-not-dr](https://img.shields.io/badge/lib_not_dr-0.1.x-green.svg?style=for-the-badge "lib-not-dr")](https://github.com/shenjackyuanjie/lib-not-dr)
+`Python` 3.8.0  
+`Nuitka` 最新版  
+`requests` 最新版
+`PyQt5` 5.15.9
+`PyQt-Fluent-Widgets` 最新版
+`aria2p` 最新版
+`lib-not-dr` 0.1.7
+`loguru` 0.7.2
+`psutil` 5.9.5
 ___
 
 ## 相关链接
@@ -58,7 +59,6 @@ ___
 
 - 维度前端: https://www.df100.ltd  
 - Z_Tsin: https://ztsin.cn/  
-- Xiexilin: https://xiexilin.com/  
 - FiveCDN公益加速: https://cdn.5-5.site  
 - WB-Block: https://wb-block.top  
 - shenjack: http://shenjack.top:81
@@ -73,7 +73,6 @@ ___
 
 ## 开发文档
 
-~~其实我就不知道该写啥好~~  
 本项目基于 Python 3.8 开发。
 
 ### 1.克隆本仓库
@@ -93,5 +92,3 @@ pip install -r requirements.txt
 ```bash
 pip3 install -r requirements.txt
 ```
-
-### ~~摆烂~~ **开始开发**

@@ -20,7 +20,7 @@ class DownloadEntryBox(MessageBoxBase):
         super().__init__(parent)
         self.setMinimumSize(QSize(600, 0))
         self.setMaximumSize(QSize(16777215, 16777215))
-        self.titleLabel = SubtitleLabel("下载项(正在加载...)", self)
+        self.titleLabel = SubtitleLabel(self.tr("下载项(正在加载...)"), self)
         self.entryView = TableWidget(self)
 
         self.viewLayout.addWidget(self.titleLabel)
@@ -60,11 +60,11 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
 
-        self.entryView.setHorizontalHeaderLabels(["名称", "类型", "MC版本", "构建版本"])
+        self.entryView.setHorizontalHeaderLabels([self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")])
         self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-        self.yesButton.setText("选择")
-        self.cancelButton.setText("取消")
+        self.yesButton.setText(self.tr("选择"))
+        self.cancelButton.setText(self.tr("取消"))
 
         self.yesButton.setDisabled(True)
 
@@ -84,7 +84,7 @@ class DownloadEntryBox(MessageBoxBase):
                 i, 3, QTableWidgetItem(coreInfo.get("build_version"))
             )
         self.entryView.verticalHeader().hide()
-        self.entryView.setHorizontalHeaderLabels(["名称", "类型", "MC版本", "构建版本"])
+        self.entryView.setHorizontalHeaderLabels([self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")])
 
         if self.entryView.rowCount() != 0:  # resize header view
             self.entryView.horizontalHeader().setSectionResizeMode(
@@ -92,7 +92,7 @@ class DownloadEntryBox(MessageBoxBase):
             )
             self.entryView.resizeRowsToContents()
         self.yesButton.setDisabled(True)
-        self.titleLabel.setText(f"下载项(共{len(entries)}项)")
+        self.titleLabel.setText(self.tr("下载项(共") + str(len(entries)) + self.tr("项)"))
 
     def onSectionClicked(self, index: int):
         self.entryView.horizontalHeader().setSortIndicatorShown(True)

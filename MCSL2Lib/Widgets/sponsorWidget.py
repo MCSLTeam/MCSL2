@@ -92,8 +92,8 @@ class MCSL2Sponsors(QWidget):
 
         self.shuaibao.setText("帅宝")
         self.pgPING.setText("瓶盖PING")
-        self.thanksLabel.setText("非常感谢你们对MCSL2开发的鼓励与支持！")
-        self.afdTitle.setText("爱发电 - 8月赞助者名单")
+        self.thanksLabel.setText(self.tr("非常感谢你们对MCSL2开发的鼓励与支持！"))
+        self.afdTitle.setText(self.tr("爱发电 - 8月赞助者名单"))
         self.qqysq.setText("谦谦yaosiqian")
         self.skw.setText("SKWStudios")
         self.washtile.setText("Washtile645")

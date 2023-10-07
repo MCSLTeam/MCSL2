@@ -553,48 +553,48 @@ class DownloadPage(QWidget):
 
         self.setObjectName("DownloadInterface")
 
-        self.titleLabel.setText("下载")
-        self.subTitleLabel.setText("Aria2引擎高速驱动！")
-        self.coreListSubtitleLabel.setText("核心列表")
-        self.versionSubtitleLabel.setText("游戏版本")
-        self.buildSubtitleLabel.setText("构建列表")
-        self.refreshFastMirrorAPIBtn.setText("刷新")
-        self.refreshMCSLAPIBtn.setText("刷新")
-        self.openDownloadFolderBtn.setText("打开下载文件夹")
-        self.openDownloadEntriesBtn.setText("打开下载记录")
+        self.titleLabel.setText(self.tr("下载"))
+        self.subTitleLabel.setText(self.tr("Aria2引擎高速驱动！"))
+        self.coreListSubtitleLabel.setText(self.tr("核心列表"))
+        self.versionSubtitleLabel.setText(self.tr("游戏版本"))
+        self.buildSubtitleLabel.setText(self.tr("构建列表"))
+        self.refreshFastMirrorAPIBtn.setText(self.tr("刷新"))
+        self.refreshMCSLAPIBtn.setText(self.tr("刷新"))
+        self.openDownloadFolderBtn.setText(self.tr("打开下载文件夹"))
+        self.openDownloadEntriesBtn.setText(self.tr("打开下载记录"))
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIJava",
-            text="Java环境",
+            text=self.tr("Java环境"),
             onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
                 self.MCSLAPIJava
             ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPISpigot",
-            text="Spigot核心",
+            text=self.tr("Spigot核心"),
             onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
                 self.MCSLAPISpigot
             ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIPaper",
-            text="Paper核心",
+            text=self.tr("Paper核心"),
             onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
                 self.MCSLAPIPaper
             ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIBungeeCord",
-            text="BungeeCord代理",
+            text=self.tr("BungeeCord代理"),
             onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
                 self.MCSLAPIBungeeCord
             ),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIOfficialCore",
-            text="Vanilla核心",
+            text=self.tr("Vanilla核心"),
             onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
                 self.MCSLAPIOfficialCore
             ),
@@ -654,14 +654,17 @@ class DownloadPage(QWidget):
             if not id:
                 self.coreListLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.coreListLayout.count())):
+                    self.coreListLayout.itemAt(i).widget().setParent(None)
                     self.coreListLayout.itemAt(i).widget().deleteLater()
             elif id == 1:
                 self.versionLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.versionLayout.count())):
+                    self.versionLayout.itemAt(i).widget().setParent(None)
                     self.versionLayout.itemAt(i).widget().deleteLater()
             elif id == 2:
                 self.buildLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.buildLayout.count())):
+                    self.buildLayout.itemAt(i).widget().setParent(None)
                     self.buildLayout.itemAt(i).widget().deleteLater()
             else:
                 pass
@@ -670,12 +673,13 @@ class DownloadPage(QWidget):
             pass
 
     def releaseMCSLAPIMemory(self):
-        for layout in self.MCSLAPILayoutList:
             try:
-                layout.removeItem(self.scrollAreaSpacer)
+                for layout in self.MCSLAPILayoutList:
+                    layout.removeItem(self.scrollAreaSpacer)
+                    for i in reversed(range(layout.count())):
+                        layout.itemAt(i).widget().setParent(None)
+                        layout.itemAt(i).widget().deleteLater()
                 MCSL2Logger.info("性能优化：释放MCSLAPI内存")
-                for i in reversed(range(layout.count())):
-                    layout.itemAt(i).widget().deleteLater()
             except AttributeError:
                 pass
 
@@ -731,6 +735,7 @@ class DownloadPage(QWidget):
                 except AttributeError:
                     pass
                 for i in reversed(range(layout.count())):
+                    layout.itemAt(i).widget().setParent(None)
                     layout.itemAt(i).widget().deleteLater()
                 layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
@@ -754,6 +759,7 @@ class DownloadPage(QWidget):
     def showMCSLAPIFailedWidget(self):
         layout = self.MCSLAPILayoutList[self.MCSLAPIStackedWidget.currentIndex()]
         for i2 in reversed(range(layout.count())):
+            layout.itemAt(i2).widget().setParent(None)
             layout.itemAt(i2).widget().deleteLater()
         layout.addWidget(MCSLAPILoadingErrorWidget())
         self.refreshMCSLAPIBtn.setEnabled(True)
@@ -832,9 +838,10 @@ class DownloadPage(QWidget):
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(
-                    title="无法下载", content="Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。", parent=self
+                    title=self.tr("无法下载"), content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"), parent=self
                 )
                 box.yesSignal.connect(box.deleteLater)
+                box.cancelButton.setParent(None)
                 box.cancelButton.deleteLater()
                 box.exec()
                 return
@@ -867,7 +874,7 @@ class DownloadPage(QWidget):
             return
         else:
             self.getFastMirrorStateToolTip = StateToolTip(
-                "正在请求FastMirror API", "加载中，请稍后...", self
+                self.tr("正在请求FastMirror API"), self.tr("加载中，请稍后..."), self
             )
             self.getFastMirrorStateToolTip.move(
                 self.getFastMirrorStateToolTip.getSuitablePos()
@@ -888,7 +895,7 @@ class DownloadPage(QWidget):
             return
         else:
             self.getFastMirrorStateToolTip = StateToolTip(
-                "正在进一步请求FastMirror API", "加载中，请稍后...", self
+                self.tr("正在进一步请求FastMirror API"), self.tr("加载中，请稍后..."), self
             )
             self.getFastMirrorStateToolTip.move(
                 self.getFastMirrorStateToolTip.getSuitablePos()
@@ -902,12 +909,12 @@ class DownloadPage(QWidget):
         downloadVariables.FastMirrorAPIDict.clear()
         downloadVariables.FastMirrorAPIDict.update(_APIDict)
         if downloadVariables.FastMirrorAPIDict["name"] != -1:
-            self.getFastMirrorStateToolTip.setContent("请求FastMirror API完毕！")
+            self.getFastMirrorStateToolTip.setContent(self.tr("请求FastMirror API完毕！"))
             self.getFastMirrorStateToolTip.setState(True)
             self.getFastMirrorStateToolTip = None
             self.initFastMirrorCoreListWidget()
         else:
-            self.getFastMirrorStateToolTip.setContent("请求FastMirror API失败！")
+            self.getFastMirrorStateToolTip.setContent(self.tr("请求FastMirror API失败！"))
             self.getFastMirrorStateToolTip.setState(True)
             self.getFastMirrorStateToolTip = None
             self.showFastMirrorFailedTip()
@@ -919,19 +926,19 @@ class DownloadPage(QWidget):
         downloadVariables.FastMirrorAPICoreVersionDict.clear()
         downloadVariables.FastMirrorAPICoreVersionDict.update(_APICoreVersionDict)
         if downloadVariables.FastMirrorAPICoreVersionDict["name"] != -1:
-            self.getFastMirrorStateToolTip.setContent("请求FastMirror API完毕！")
+            self.getFastMirrorStateToolTip.setContent(self.tr("请求FastMirror API完毕！"))
             self.getFastMirrorStateToolTip.setState(True)
             self.getFastMirrorStateToolTip = None
             self.initFastMirrorCoreVersionListWidget()
         else:
-            self.getFastMirrorStateToolTip.setContent("请求FastMirror API失败！")
+            self.getFastMirrorStateToolTip.setContent(self.tr("请求FastMirror API失败！"))
             self.getFastMirrorStateToolTip.setState(True)
             self.getFastMirrorStateToolTip = None
 
     def showFastMirrorFailedTip(self):
         InfoBar.error(
-            title="错误",
-            content="获取FastMirror API失败！\n尝试检查网络后，请再尝试刷新。",
+            title=self.tr("错误"),
+            content=self.tr("获取FastMirror API失败！\n尝试检查网络后，请再尝试刷新。"),
             orient=Qt.Horizontal,
             isClosable=False,
             position=InfoBarPosition.TOP,
@@ -968,6 +975,7 @@ class DownloadPage(QWidget):
             pass
         try:
             for i in reversed(range(self.buildLayout.count())):
+                self.buildLayout.itemAt(i).widget().setParent(None)
                 self.buildLayout.itemAt(i).widget().deleteLater()
         except AttributeError:
             pass
@@ -1030,9 +1038,10 @@ class DownloadPage(QWidget):
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(
-                    title="无法下载", content="Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。", parent=self
+                    title=self.tr("无法下载"), content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"), parent=self
                 )
                 box.yesSignal.connect(box.deleteLater)
+                box.cancelButton.setParent(None)
                 box.cancelButton.deleteLater()
                 box.exec()
                 return
@@ -1056,8 +1065,8 @@ class DownloadPage(QWidget):
     def hideDownloadHelper(self):
         self.downloadingInfoBar = InfoBar(
             icon=FIF.DOWNLOAD,
-            title="已隐藏下载窗口",
-            content="仍在下载中，点击按钮恢复下载窗口...",
+            title=self.tr("已隐藏下载窗口"),
+            content=self.tr("仍在下载中，点击按钮恢复下载窗口..."),
             orient=Qt.Horizontal,
             isClosable=False,
             duration=-1,
@@ -1066,7 +1075,7 @@ class DownloadPage(QWidget):
         )
         self.downloadingInfoBar.setCustomBackgroundColor("white", "#202020")
         showDownloadMsgBoxBtn = PushButton()
-        showDownloadMsgBoxBtn.setText("恢复")
+        showDownloadMsgBoxBtn.setText(self.tr("恢复"))
         showDownloadMsgBoxBtn.clicked.connect(self.downloadingBox.show)
         showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.close)
         self.downloadingInfoBar.addWidget(showDownloadMsgBoxBtn)
@@ -1076,7 +1085,7 @@ class DownloadPage(QWidget):
         try:
             self.downloadingInfoBar.close()
             self.downloadingInfoBar.deleteLater()
-            InfoBar.success("下载完毕")
+            InfoBar.success(self.tr("下载完毕"))
         except:
             pass
 
@@ -1089,9 +1098,9 @@ class DownloadPage(QWidget):
             osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
         ):
             if settingsController.fileSettings["saveSameFileException"] == "ask":
-                w = MessageBox("提示", "您要下载的文件已存在。请选择操作。", self)
-                w.yesButton.setText("停止下载")
-                w.cancelButton.setText("覆盖文件")
+                w = MessageBox(self.tr("提示"), self.tr("您要下载的文件已存在。请选择操作。"), self)
+                w.yesButton.setText(self.tr("停止下载"))
+                w.cancelButton.setText(self.tr("覆盖文件"))
                 w.cancelSignal.connect(
                     lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
                 )
@@ -1103,8 +1112,8 @@ class DownloadPage(QWidget):
                 settingsController.fileSettings["saveSameFileException"] == "overwrite"
             ):
                 InfoBar.warning(
-                    title="警告",
-                    content="MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。",
+                    title=self.tr("警告"),
+                    content=self.tr("MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。"),
                     orient=Qt.Horizontal,
                     isClosable=False,
                     position=InfoBarPosition.TOP,
@@ -1115,8 +1124,8 @@ class DownloadPage(QWidget):
                 self.downloadFile(fileName, fileFormat, uri, extraData)
             elif settingsController.fileSettings["saveSameFileException"] == "stop":
                 InfoBar.warning(
-                    title="警告",
-                    content="MCSL2/Downloads文件夹存在同名文件。\n根据设置，已停止下载。",
+                    title=self.tr("警告"),
+                    content=self.tr("MCSL2/Downloads文件夹存在同名文件。\n根据设置，已停止下载。"),
                     orient=Qt.Horizontal,
                     isClosable=False,
                     position=InfoBarPosition.TOP,

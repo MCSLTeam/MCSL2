@@ -15,14 +15,12 @@ Exception Widget.
 """
 from PyQt5.QtCore import QRect, Qt, QSize
 from PyQt5.QtWidgets import QSizePolicy, QVBoxLayout, QWidget, QFrame
-from qfluentwidgets import SmoothScrollArea, BodyLabel
+from qfluentwidgets import BodyLabel
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
-
-from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class ExceptionWidget(QWidget):
-    def __init__(self):
+    def __init__(self, traceStr):
         super().__init__()
         self.exceptionScrollArea = MySmoothScrollArea(self)
         self.exceptionScrollArea.setGeometry(QRect(50, 10, 480, 150))
@@ -52,3 +50,4 @@ class ExceptionWidget(QWidget):
         self.exceptionLabel.setWordWrap(True)
         self.verticalLayout_2.addWidget(self.exceptionLabel)
         self.exceptionScrollArea.setWidget(self.exceptionScrollAreaWidgetContents)
+        self.exceptionLabel.setText(traceStr)

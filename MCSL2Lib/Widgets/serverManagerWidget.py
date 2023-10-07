@@ -225,11 +225,11 @@ class singleServerManager(CardWidget):
         self.gridLayout_3.addWidget(self.Icon, 0, 0, 1, 1)
         self.gridLayout.addWidget(self.widget, 1, 1, 2, 1)
 
-        self.coreFileNameTitle.setText("核心：")
-        self.memTitle.setText("内存设置：")
-        self.javaPathTitle.setText("Java：")
-        self.selectBtn.setText("选择")
-        self.editBtn.setText("编辑")
-        self.deleteBtn.setText("删除")
+        self.coreFileNameTitle.setText(self.tr("核心："))
+        self.memTitle.setText(self.tr("内存设置："))
+        self.javaPathTitle.setText(self.tr("Java："))
+        self.selectBtn.setText(self.tr("选择"))
+        self.editBtn.setText(self.tr("编辑"))
+        self.deleteBtn.setText(self.tr("删除"))
 
         self.serverName.setWordWrap(True)

@@ -33,7 +33,7 @@ class MCSLAPIDownloadURLParser:
 
     @staticmethod
     def parseDownloaderAPIUrl():
-        UrlArg = f"{settingsController.fileSettings['nodeMCSLAPI']}/ipns/mcslapiipfs.x-xh.cn/SharePoint"
+        UrlArg = f"{settingsController.fileSettings['nodeMCSLAPI']}/ipns/mcslapiipfs.x-xh.cn/Gitee"
         TypeArg = [
             "/JavaDownloadInfo.json",
             "/SpigotDownloadInfo.json",

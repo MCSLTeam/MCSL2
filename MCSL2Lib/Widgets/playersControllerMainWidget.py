@@ -115,13 +115,13 @@ class playersController(QWidget):
         self.gridLayout.addWidget(self.tipSmoothScrollArea, 1, 0, 1, 2)
         self.tipSmoothScrollArea.setFrameShape(QFrame.NoFrame)
 
-        self.who.setPlaceholderText("填写玩家名或目标选择器")
+        self.who.setPlaceholderText(self.tr("填写玩家名或目标选择器"))
         self.targetSelectorTip.setText(
-            "@p - 最近的玩家(在控制台可能无法使用)\n"
-            "@r - 随机玩家\n"
-            "@a - 所有玩家\n"
-            "@e - 所有实体(不包括死亡实体)\n"
-            "@s - 命令执行者(控制台不可用)"
+            self.tr("@p - 最近的玩家(在控制台可能无法使用)\n")
+            + self.tr("@r - 随机玩家\n")
+            + self.tr("@a - 所有玩家\n")
+            + self.tr("@e - 所有实体(不包括死亡实体)\n")
+            + self.tr("@s - 命令执行者(控制台不可用)")
         )
-        self.playersTipTitle.setText("当前在线玩家：(可能不准确)")
-        self.targetSelectorTipTitle.setText("目标选择器提示:")
+        self.playersTipTitle.setText(self.tr("当前在线玩家：(可能不准确)"))
+        self.targetSelectorTipTitle.setText(self.tr("目标选择器提示:"))

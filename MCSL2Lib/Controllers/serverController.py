@@ -116,7 +116,7 @@ class ServerHandler(QObject):
         self.AServer.serverProcess.setArguments(self.processArgs)
         self.AServer.serverProcess.setWorkingDirectory(self.workingDirectory)
         self.AServer.serverProcess.started.connect(
-            lambda: self.serverLogOutput.emit("[MCSL2 | 提示]：服务器正在启动，请稍后...")
+            lambda: self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
         )
         self.AServer.serverProcess.readyReadStandardOutput.connect(
             self.serverLogOutputHandler
@@ -132,15 +132,15 @@ class ServerHandler(QObject):
     def serverCrashed(self, exitCode):
         if exitCode:
             if exitCode != 62097:
-                self.serverLogOutput.emit(f"[MCSL2 | 提示]：服务器崩溃！")
+                self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：服务器崩溃！"))
                 if settingsController.fileSettings["restartServerWhenCrashed"]:
                     self.Server.serverProcess.waitForFinished()
                     self.Server.serverProcess.start()
-                    self.serverLogOutput.emit(f"[MCSL2 | 提示]：正在重新启动服务器...")
+                    self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：正在重新启动服务器..."))
             else:
-                self.serverLogOutput.emit(f"[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。")
+                self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。"))
         else:
-            self.serverLogOutput.emit(f"[MCSL2 | 提示]：服务器已关闭！")
+            self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：服务器已关闭！"))
 
     def serverLogOutputHandler(self):
         """

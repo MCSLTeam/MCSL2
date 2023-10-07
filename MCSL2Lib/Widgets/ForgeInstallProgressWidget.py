@@ -5,7 +5,7 @@ from qfluentwidgets import MessageBoxBase, SubtitleLabel, PlainTextEdit
 class ForgeInstallerProgressBox(MessageBoxBase):
     def __init__(self, textSignal: pyqtSignal, parent=None):
         super().__init__(parent)
-        self.titleLabel = SubtitleLabel('Forge安装器(正在安装...)', self)
+        self.titleLabel = SubtitleLabel(self.tr("Forge安装器(正在安装...)"), self)
         self.forgeLogViewer = PlainTextEdit(self)
         self.forgeLogViewer.setMaximumBlockCount(1000)
         self.textSignal = textSignal
@@ -15,8 +15,8 @@ class ForgeInstallerProgressBox(MessageBoxBase):
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.forgeLogViewer)
 
-        self.cancelButton.setText('取消安装')
-        self.yesButton.setText('隐藏')
+        self.cancelButton.setText(self.tr("取消安装"))
+        self.yesButton.setText(self.tr("隐藏"))
 
         self.widget.setMinimumWidth(550)
         self.widget.setMinimumHeight(600)

@@ -67,7 +67,7 @@ class LoadingTip(QWidget):
         self.gridLayout.addItem(spacerItem, 0, 0, 2, 1)
         spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 0, 2, 2, 1)
-        self.loadingText.setText("加载中...")
+        self.loadingText.setText(self.tr("加载中..."))
 
 
 class LoadFailedTip(QWidget):
@@ -120,8 +120,8 @@ class LoadFailedTip(QWidget):
         self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
         self.errPixmap.setFixedSize(QSize(80, 80))
 
-        self.loadFailedText.setText("加载失败")
-        self.refreshBtn.setText("刷新")
+        self.loadFailedText.setText(self.tr("加载失败"))
+        self.refreshBtn.setText(self.tr("刷新"))
 
 
 class MCSLAPILoadingWidget(QWidget):
@@ -160,7 +160,7 @@ class MCSLAPILoadingWidget(QWidget):
         self.gridLayout.addItem(spacerItem, 0, 0, 2, 1)
         spacerItem1 = QSpacerItem(270, 114, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 0, 2, 2, 1)
-        self.loadingText.setText("加载中...")
+        self.loadingText.setText(self.tr("加载中..."))
 
 
 class MCSLAPILoadingErrorWidget(QWidget):
@@ -235,6 +235,6 @@ class MCSLAPILoadingErrorWidget(QWidget):
         spacerItem3 = QSpacerItem(40, 15, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
         self.verticalLayout.addWidget(self.errTextWidget)
-        self.errText.setText("加载失败。请尝试刷新，如果仍然失败，请汇报此Bug。")
+        self.errText.setText(self.tr("加载失败。请尝试刷新，如果仍然失败，请汇报此Bug。"))
         self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
         self.errPixmap.setFixedSize(QSize(80, 80))

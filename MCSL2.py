@@ -15,9 +15,11 @@ Main entry.
 """
 import sys
 
-from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
+from PyQt5.QtCore import Qt, QLocale, QObject, QEvent, QTranslator
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
+from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
+
 # from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
@@ -36,13 +38,23 @@ class MCSL2Application(QApplication):
             return False
 
 
+class MCSL2Translator(QTranslator):
+
+    def __init__(self, locale: QLocale = None, parent=None):
+        super().__init__(parent=parent)
+        self.load(locale or QLocale())
+
+    def load(self, locale: QLocale):
+        super().load(f"i18n/{locale.name()}.qm")
+
+
 if __name__ == "__main__":
     # tracer = VizTracer()
     # tracer.enable_thread_tracing()
     # tracer.start()
     # 初始化
     initializeMCSL2()
-
+    deleteOldMCSL2()
     # 高DPI适配
     QApplication.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough
@@ -53,8 +65,12 @@ if __name__ == "__main__":
 
     # 启动
     app = MCSL2Application(sys.argv)
-    translator = FluentTranslator(QLocale())
-    app.installTranslator(translator)
+    # fluentTranslator = FluentTranslator(QLocale(QLocale.English))
+    # mcslTranslator = MCSL2Translator(QLocale(QLocale.English))
+    fluentTranslator = FluentTranslator(QLocale())
+    # mcslTranslator = MCSL2Translator(QLocale())
+    app.installTranslator(fluentTranslator)
+    # app.installTranslator(mcslTranslator)
     from MCSL2Lib.windowInterface import Window
 
     w = Window()
@@ -62,3 +78,4 @@ if __name__ == "__main__":
     app.exec_()
     # tracer.stop()
     # tracer.save()
+    sys.exit()

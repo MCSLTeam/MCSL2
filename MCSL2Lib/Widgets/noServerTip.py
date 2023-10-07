@@ -92,6 +92,6 @@ class NoServerWidget(QWidget):
         self.horizontalLayout.addItem(spacerItem3)
         self.verticalLayout.addWidget(self.errTextWidget)
 
-        self.errText.setText("好像还没有添加过的服务器欸。先去“新建”页新建一个？")
+        self.errText.setText(self.tr("好像还没有添加过的服务器欸。先去“新建”页新建一个？"))
         self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
         self.errPixmap.setFixedSize(QSize(80, 80))

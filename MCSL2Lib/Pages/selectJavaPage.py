@@ -32,7 +32,6 @@ from qfluentwidgets import (
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 from MCSL2Lib.Widgets.selectJavaWidget import singleSelectJavaWidget
-from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class SelectJavaPage(QWidget):
@@ -110,7 +109,7 @@ class SelectJavaPage(QWidget):
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem1, 0, 2, 1, 1)
-        self.subTitleLabel.setText("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。")
+        self.subTitleLabel.setText(self.tr("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。"))
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
 
@@ -132,14 +131,6 @@ class SelectJavaPage(QWidget):
             self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(self.backBtn.click)
             self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].path))
             self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].version))
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
-            self.tmpSingleJavaWidget.javaVer.setReadOnly(True)
             self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
 
     def scrollAreaProcessor(self, JavaPath):

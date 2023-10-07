@@ -147,9 +147,6 @@ class singlePluginWidget(CardWidget):
 
         self.horizontalLayout.addWidget(self.deleteBtn)
 
-        self.SwitchButton.setOnText("已启用")
-        self.SwitchButton.setOffText("已禁用")
-
     def setPluginIcon(self, icon):
         if type(self.pluginIcon) == PixmapLabel:
             self.pluginIcon.setPixmap(QPixmap(icon))
