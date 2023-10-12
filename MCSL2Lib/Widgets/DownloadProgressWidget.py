@@ -315,7 +315,7 @@ class DownloadMessageBox(MessageBox):
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
                     2
                 )
-                MCSL2Logger.error(f"{dl.error_code}{dl.error_message}{dl.files}")
+                MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
                     2
