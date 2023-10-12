@@ -28,7 +28,8 @@ from types import TracebackType
 from typing import Type, Optional, Iterable, Callable, Dict, List
 
 import aria2p
-from PyQt5.QtCore import QUrl, QThread
+import psutil
+from PyQt5.QtCore import QUrl, QThread, QThreadPool
 from PyQt5.QtGui import QDesktopServices
 from darkdetect import theme as currentTheme
 
@@ -113,6 +114,11 @@ def initializeMCSL2():
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
     configurationCompleter()
+
+    # set global thread pool
+    QThreadPool.globalInstance().setMaxThreadCount(
+        psutil.cpu_count(logical=True)
+    )
 
 
 def configurationCompleter():
