@@ -29,7 +29,7 @@ isNeedFuzzySearch = True
 # fmt: off
 MatchKeywords = {
     '1.', 'bin', 'cache', 'client', 'corretto', 'craft', 'data', 'download', 'eclipse',
-    'env', 'ext', 'file', 'forge', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre',
+    'env', 'ext', 'file', 'forge', 'fabric', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell',
     'jvm', 'launch', 'mc', 'microsoft', 'mod', 'mojang', 'net', 'netease', 'optifine',
     'oracle', 'path', 'program', 'roaming', 'run', 'runtime', 'server', 'software',
     'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr',
