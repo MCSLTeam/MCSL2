@@ -688,15 +688,18 @@ class DownloadPage(QWidget):
             MCSL2Logger.info("性能优化：释放FastMirror内存")
 
     def releaseMCSLAPIMemory(self):
-            try:
                 for layout in self.MCSLAPILayoutList:
                     layout.removeItem(self.scrollAreaSpacer)
                     for i in reversed(range(layout.count())):
-                        layout.itemAt(i).widget().setParent(None)
-                        layout.itemAt(i).widget().deleteLater()
+                        try:
+                            layout.itemAt(i).widget().setParent(None)
+                        except AttributeError:
+                            pass
+                        try:
+                            layout.itemAt(i).widget().deleteLater()
+                        except AttributeError:
+                            pass
                 MCSL2Logger.info("性能优化：释放MCSLAPI内存")
-            except AttributeError:
-                pass
 
     def refreshDownloads(self):
         """刷新下载页面主逻辑"""
