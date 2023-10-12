@@ -650,27 +650,42 @@ class DownloadPage(QWidget):
                 self.releaseMCSLAPIMemory()
 
     def releaseFMMemory(self, id=0):
-        try:
             if not id:
                 self.coreListLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.coreListLayout.count())):
-                    self.coreListLayout.itemAt(i).widget().setParent(None)
-                    self.coreListLayout.itemAt(i).widget().deleteLater()
+                    try:
+                        self.coreListLayout.itemAt(i).widget().setParent(None)
+                    except AttributeError:
+                        pass
+                    try:
+                        self.coreListLayout.itemAt(i).widget().deleteLater()
+                    except AttributeError:
+                        pass
             elif id == 1:
                 self.versionLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.versionLayout.count())):
-                    self.versionLayout.itemAt(i).widget().setParent(None)
-                    self.versionLayout.itemAt(i).widget().deleteLater()
+                    try:
+                        self.versionLayout.itemAt(i).widget().setParent(None)
+                    except AttributeError:
+                        pass
+                    try:
+                        self.versionLayout.itemAt(i).widget().deleteLater()
+                    except AttributeError:
+                        pass
             elif id == 2:
                 self.buildLayout.removeItem(self.scrollAreaSpacer)
                 for i in reversed(range(self.buildLayout.count())):
-                    self.buildLayout.itemAt(i).widget().setParent(None)
-                    self.buildLayout.itemAt(i).widget().deleteLater()
+                    try:
+                        self.buildLayout.itemAt(i).widget().setParent(None)
+                    except AttributeError:
+                        pass
+                    try:
+                        self.buildLayout.itemAt(i).widget().deleteLater()
+                    except AttributeError:
+                        pass
             else:
                 pass
             MCSL2Logger.info("性能优化：释放FastMirror内存")
-        except AttributeError:
-            pass
 
     def releaseMCSLAPIMemory(self):
             try:
@@ -952,6 +967,8 @@ class DownloadPage(QWidget):
     def initFastMirrorCoreListWidget(self):
         """FastMirror核心列表"""
         self.releaseFMMemory()
+        self.releaseFMMemory(1)
+        self.releaseFMMemory(2)
         for i in range(len(downloadVariables.FastMirrorAPIDict["name"])):
             fastMirrorCoreListWidget = FastMirrorCoreListWidget(self)
             fastMirrorCoreListWidget.coreTag.setText(
@@ -985,6 +1002,7 @@ class DownloadPage(QWidget):
 
     def initFastMirrorMCVersionsListWidget(self):
         self.releaseFMMemory(1)
+        self.releaseFMMemory(2)
         for i in range(
             len(
                 downloadVariables.FastMirrorAPIDict["mc_versions"][
