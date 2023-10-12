@@ -735,8 +735,11 @@ class DownloadPage(QWidget):
                 except AttributeError:
                     pass
                 for i in reversed(range(layout.count())):
-                    layout.itemAt(i).widget().setParent(None)
-                    layout.itemAt(i).widget().deleteLater()
+                    try:
+                        layout.itemAt(i).widget().setParent(None)
+                        layout.itemAt(i).widget().deleteLater()
+                    except AttributeError:
+                        pass
                 layout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
             self.refreshMCSLAPIBtn.setEnabled(False)
