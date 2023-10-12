@@ -81,7 +81,7 @@ class ServerManagerPage(QWidget):
         super().__init__(parent)
 
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
-        self.javaFindWorkThreadFactory.fuzzySearch = True
+        self.javaFindWorkThreadFactory.fSearch = True
         self.javaFindWorkThreadFactory.signalConnect = self.autoDetectJavaFinished
         self.javaFindWorkThreadFactory.finishSignalConnect = (
             self.onJavaFindWorkThreadFinished

@@ -25,9 +25,9 @@ from MCSL2Lib.utils import MCSL2Logger
 
 
 foundJava = []
-isNeedFuzzySearch = True
+fSearch = True
 # fmt: off
-MatchKeywords = {
+matchKeywords = {
     '1.', 'bin', 'cache', 'client', 'corretto', 'craft', 'data', 'download', 'eclipse',
     'env', 'ext', 'file', 'forge', 'fabric', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell',
     'jvm', 'launch', 'mc', 'microsoft', 'mod', 'mojang', 'net', 'netease', 'optifine',
@@ -73,9 +73,8 @@ class Java:
 def getJavaVersion(File):
     """
     获取Java版本，三端通用\n
-    有人问，为什么不Win32API读取文件：无法跨平台\n
-    有人问，为什么不读取Java安装目录下的release文件：万一没有呢\n
-    急死我了。 --LxHTT
+    为什么不Win32API读取文件：无法跨平台\n
+    为什么不读取Java安装目录下的release文件：万一没有呢
     """
     process = QProcess()
     process.start(File, ["-version"])
@@ -98,54 +97,54 @@ def findStr(s):
     for _s in excludedKeywords:
         if _s in s:
             return False
-    for _s in MatchKeywords:
+    for _s in matchKeywords:
         if _s in s:
             return True
     return False
 
 
-def searchFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
-    # construct _Match function
+def searchFile(path, keyword, ext, fSearch, _match):
+    # construct _match function
     if "windows" in system().lower():
 
-        def Match(P, F):
+        def match(P, F):
             return osp.join(P, F).endswith(r"bin\java.exe")
 
     else:
 
-        def Match(P, F):
+        def match(P, F):
             return osp.join(P, F).endswith(r"bin/java")
 
-    processes = searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, Match)
+    processes = searchingFile(path, keyword, ext, fSearch, match)
     rv = []
     for process in processes:
         process.waitForFinished()
         try:
-            if match := _Match(process.readAllStandardError().data().decode("utf-8")):
+            if match := _match(process.readAllStandardError().data().decode("utf-8")):
                 rv.append(Java(process.program(), match))
         except UnicodeDecodeError:
-            if match := _Match(process.readAllStandardError().data().decode("gbk")):
+            if match := _match(process.readAllStandardError().data().decode("gbk")):
                 rv.append(Java(process.program(), match))
     return rv
 
 
-def searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
+def searchingFile(path, keyword, ext, fSearch, _match):
     processes = []
-    if FuzzySearch:
-        if osp.isfile(Path) or "x86_64-linux-gnu" in Path:
+    if fSearch:
+        if osp.isfile(path) or "x86_64-linux-gnu" in path:
             return processes
         try:
-            for File in listdir(Path):
-                _Path = osp.join(Path, File)
+            for File in listdir(path):
+                _Path = osp.join(path, File)
                 if osp.isfile(_Path):
-                    if _Match(Path, File):
+                    if _match(path, File):
                         process = QProcess()
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
                     processes.extend(
                         searchingFile(
-                            _Path, FileKeyword, FileExtended, FuzzySearch, _Match
+                            _Path, keyword, ext, fSearch, _match
                         )
                     )
         except PermissionError:
@@ -155,7 +154,7 @@ def searchingFile(Path, FileKeyword, FileExtended, FuzzySearch, _Match):
     return processes
 
 
-def JavaVersionMatcher(s):
+def javaVersionMatcher(s):
     pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
     match = search(pattern, s)
     if match is not None:
@@ -165,21 +164,21 @@ def JavaVersionMatcher(s):
     return match
 
 
-def detectJava(FuzzySearch=True):
-    JavaPathList = []
+def detectJava(fSearch=True):
+    javaPathList = []
     foundJava.clear()
     if "windows" in system().lower():
         for i in range(65, 91):
-            Path = chr(i) + ":\\"
-            if osp.exists(Path):
-                JavaPathList.extend(
-                    searchFile(Path, "java", "exe", FuzzySearch, JavaVersionMatcher)
+            path = chr(i) + ":\\"
+            if osp.exists(path):
+                javaPathList.extend(
+                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
                 )
     else:
-        JavaPathList.extend(
-            searchFile("/usr/lib", "java", "", FuzzySearch, JavaVersionMatcher)
+        javaPathList.extend(
+            searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher)
         )
-    return JavaPathList
+    return javaPathList
 
 
 def checkJavaAvailability(java: Java):
@@ -189,7 +188,7 @@ def checkJavaAvailability(java: Java):
         process.waitForFinished()
         output = process.readAllStandardError().data().decode("utf-8")
         process.deleteLater()
-        matcher = JavaVersionMatcher(output)
+        matcher = javaVersionMatcher(output)
         if matcher == java.version:
             return True
     return False
@@ -261,9 +260,9 @@ class JavaFindWorkThread(QThread):
     foundJavaSignal = pyqtSignal(list)
     finishSignal = pyqtSignal(int)
 
-    def __init__(self, fuzzySearch=True, parent=None):
+    def __init__(self, fSearch=True, parent=None):
         super().__init__(parent)
-        self._fuzzy = fuzzySearch
+        self._f = fSearch
         self._sequenceNumber = 0
 
     @property
@@ -275,26 +274,26 @@ class JavaFindWorkThread(QThread):
         self._sequenceNumber = value
 
     def run(self):
-        self.foundJavaSignal.emit(detectJava(self._fuzzy))
+        self.foundJavaSignal.emit(detectJava(self._f))
         self.finishSignal.emit(self._sequenceNumber)
 
 
 class JavaFindWorkThreadFactory:
-    def __init__(self, fuzzySearch=True, parent=None):
+    def __init__(self, fSearch=True, parent=None):
         self._finishConnect = None
         self._connect = None
-        self._fuzzy = fuzzySearch
+        self._f = fSearch
         self._parent = parent
         self._instanceCounter = 0
         self._thread = None
 
     @property
-    def fuzzySearch(self):
-        return self._fuzzy
+    def fSearch(self):
+        return self._f
 
-    @fuzzySearch.setter
-    def fuzzySearch(self, value):
-        self._fuzzy = value
+    @fSearch.setter
+    def fSearch(self, value):
+        self._f = value
 
     @property
     def signalConnect(self):
@@ -314,7 +313,7 @@ class JavaFindWorkThreadFactory:
 
     def create(self):
         self._instanceCounter += 1
-        thread = JavaFindWorkThread(self._fuzzy, self._parent)
+        thread = JavaFindWorkThread(self._f, self._parent)
         thread.foundJavaSignal.connect(self._connect)
         thread.sequenceNumber = self._instanceCounter
         thread.finishSignal.connect(self._finishConnect)
