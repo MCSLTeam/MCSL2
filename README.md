@@ -38,13 +38,13 @@ ___
 
 `Python` 3.8.0  
 `Nuitka` 最新版  
-`requests` 最新版
-`PyQt5` 5.15.9
-`PyQt-Fluent-Widgets` 最新版
-`aria2p` 最新版
-`lib-not-dr` 0.1.7
-`loguru` 0.7.2
-`psutil` 5.9.5
+`requests` 最新版  
+`PyQt5` 5.15.9  
+`PyQt-Fluent-Widgets` 最新版  
+`aria2p` 最新版  
+`lib-not-dr` 0.1.7  
+`loguru` 0.7.2  
+`psutil` 5.9.5  
 ___
 
 ## 相关链接
