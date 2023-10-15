@@ -1216,7 +1216,7 @@ class SettingsPage(QWidget):
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
 
-        self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.generateSysReport, 1, 4, 1, 1)
         spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem30, 1, 5, 1, 2)
         self.sponsorsBtn = HyperlinkButton(
@@ -1231,7 +1231,7 @@ class SettingsPage(QWidget):
         self.sponsorsBtn.setSizePolicy(sizePolicy)
         self.sponsorsBtn.setObjectName("augSponsorsBtn")
 
-        self.gridLayout.addWidget(self.sponsorsBtn, 1, 4, 1, 1)
+        self.gridLayout.addWidget(self.sponsorsBtn, 1, 3, 1, 1)
         self.gridLayout_5.addWidget(self.aboutContentWidget, 2, 0, 1, 4)
         self.aboutIndicator = PrimaryPushButton(self.about)
         self.aboutIndicator.setFixedSize(QSize(3, 20))
