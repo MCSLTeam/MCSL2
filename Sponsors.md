@@ -4,6 +4,12 @@
 
 <!-- AFDIAN-ACTION:START -->
 
+<a href="https://afdian.net/u/6c405d2233e911ec8bd152540025c377">
+    <img src="https://pic1.afdiancdn.com/user/6c405d2233e911ec8bd152540025c377/avatar/a22733431cfea29fb1c88ba8980427e6_w960_h960_s79.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="Anshow" title="Anshow"/>
+</a>
+<a href="https://afdian.net/u/642b047a678b11ee972c5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-yellow.png?imageView2/1/w/120/h/120" width="40" height="40" alt="爱发电用户_TS9n" title="爱发电用户_TS9n"/>
+</a>
 <a href="https://afdian.net/u/db01e84c6f6411eb8f5452540025c377">
     <img src="https://pic1.afdiancdn.com/user/db01e84c6f6411eb8f5452540025c377/avatar/bd0e849e2830b3930cd49f131bc11fba_w672_h683_s47.jpg?imageView2/1/w/120/h/120" width="40" height="40" alt="shenjack" title="shenjack"/>
 </a>
@@ -11,7 +17,7 @@
     <img src="https://pic1.afdiancdn.com/user/8a5063b67b7211e9954852540025c377/avatar/9acace1647ac79eaced123638e873b73_w1080_h1080_s32.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="瓶盖PING" title="瓶盖PING"/>
 </a>
 <a href="https://afdian.net/u/fb956ee0967411eaaa5a52540025c377">
-    <img src="https://pic1.afdiancdn.com/user/fb956ee0967411eaaa5a52540025c377/avatar/b770acd9d3a3a9f7c4087e92b1d46ad4_w1080_h1080_s11.jpg?imageView2/1/w/120/h/120" width="40" height="40" alt="谦谦yaosiqian" title="谦谦yaosiqian"/>
+    <img src="https://pic1.afdiancdn.com/user/fb956ee0967411eaaa5a52540025c377/avatar/b770acd9d3a3a9f7c4087e92b1d46ad4_w1080_h1080_s11.jpg?imageView2/1/w/120/h/120" width="40" height="40" alt="谦谦" title="谦谦"/>
 </a>
 <a href="https://afdian.net/u/55c079ea268611eb9a4852540025c377">
     <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" height="40" alt="帅宝" title="帅宝"/>
