@@ -1160,7 +1160,7 @@ class SettingsPage(QWidget):
         self.gridLayout.setObjectName("gridLayout")
 
         self.openOfficialWeb = HyperlinkButton(
-            "https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.LINK
+            "https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.HOME
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1176,7 +1176,7 @@ class SettingsPage(QWidget):
             "https://www.github.com/MCSLTeam/MCSL2",
             "打开源码仓库",
             self.aboutContentWidget,
-            FIF.LINK,
+            FIF.GITHUB,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1196,7 +1196,7 @@ class SettingsPage(QWidget):
             "https://jq.qq.com/?_wv=1027&k=x2ISlviQ",
             "加入官方群聊",
             self.aboutContentWidget,
-            FIF.LINK,
+            FIF.CERTIFICATE,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
