@@ -62,7 +62,6 @@ from MCSL2Lib.Controllers.updateController import (
     MCSL2FileUpdater,
 )
 from MCSL2Lib.Controllers.logController import genSysReport
-from MCSL2Lib.Widgets.sponsorWidget import MCSL2Sponsors
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import SettingsVariables
 from MCSL2Lib.utils import MCSL2Logger
@@ -1220,17 +1219,19 @@ class SettingsPage(QWidget):
         self.gridLayout.addWidget(self.generateSysReport, 1, 3, 1, 1)
         spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem30, 1, 5, 1, 2)
-        self.augSponsorsBtn = PrimaryPushButton(self.aboutContentWidget)
+        self.sponsorsBtn = HyperlinkButton(
+            "https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md", "赞助者列表", self.aboutContentWidget, FIF.PEOPLE
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.augSponsorsBtn.sizePolicy().hasHeightForWidth()
+            self.sponsorsBtn.sizePolicy().hasHeightForWidth()
         )
-        self.augSponsorsBtn.setSizePolicy(sizePolicy)
-        self.augSponsorsBtn.setObjectName("augSponsorsBtn")
+        self.sponsorsBtn.setSizePolicy(sizePolicy)
+        self.sponsorsBtn.setObjectName("augSponsorsBtn")
 
-        self.gridLayout.addWidget(self.augSponsorsBtn, 1, 4, 1, 1)
+        self.gridLayout.addWidget(self.sponsorsBtn, 1, 4, 1, 1)
         self.gridLayout_5.addWidget(self.aboutContentWidget, 2, 0, 1, 4)
         self.aboutIndicator = PrimaryPushButton(self.about)
         self.aboutIndicator.setFixedSize(QSize(3, 20))
@@ -1286,7 +1287,7 @@ class SettingsPage(QWidget):
         self.checkUpdateOnStartTitle.setText(self.tr("启动时自动检查更新"))
         self.updateSettingsTitle.setText(self.tr("更新"))
         self.generateSysReport.setText(self.tr("系统报告"))
-        self.augSponsorsBtn.setText(self.tr("8月赞助者名单"))
+        self.sponsorsBtn.setText(self.tr("赞助者名单"))
         self.aboutContent.setText(
             self.tr("MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n")
             + self.tr("任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n")
@@ -1323,7 +1324,7 @@ class SettingsPage(QWidget):
 
         self.checkUpdateBtn.setIcon(FIF.UPDATE)
         self.generateSysReport.setIcon(FIF.COPY)
-        self.augSponsorsBtn.setIcon(FIF.PEOPLE)
+        self.sponsorsBtn.setIcon(FIF.PEOPLE)
         self.disconn()
         self.conn()
         self.isChanged = 0
@@ -1493,7 +1494,6 @@ class SettingsPage(QWidget):
                 "checkUpdateOnStart", self.checkUpdateOnStartSwitchBtn.isChecked()
             )
         )
-        self.augSponsorsBtn.clicked.connect(self.showAfDianSponsors)
 
         self.selectThemeColorBtn.colorChanged.connect(setThemeColor)
 
@@ -1538,7 +1538,6 @@ class SettingsPage(QWidget):
 
             # updateSettings
             self.checkUpdateOnStartSwitchBtn.checkedChanged.disconnect()
-            self.augSponsorsBtn.clicked.disconnect()
 
             self.selectThemeColorBtn.colorChanged.disconnect()
             
@@ -1782,15 +1781,3 @@ class SettingsPage(QWidget):
             )
         )
         w.exec()
-
-    def showAfDianSponsors(self):
-        w = MessageBox("", "", self)
-        w.textLayout.addWidget(MCSL2Sponsors())
-        w.cancelButton.setParent(None)
-        w.titleLabel.setParent(None)
-        w.contentLabel.setParent(None)
-        w.cancelButton.deleteLater()
-        w.titleLabel.deleteLater()
-        w.contentLabel.deleteLater()
-        w.yesSignal.connect(w.deleteLater)
-        w.show()
