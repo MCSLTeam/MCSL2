@@ -26,7 +26,6 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers.networkController import Session
-from MCSL2Lib.Widgets.Pagination import Pagination
 from MCSL2Lib.singleton import Singleton
 
 
@@ -42,6 +41,7 @@ class HomePage(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
+        self.setWindowTitle("")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -145,6 +145,7 @@ class HomePage(QWidget):
         self.selectServerBtn.setSizePolicy(sizePolicy)
         self.selectServerBtn.setFocusPolicy(Qt.NoFocus)
         self.selectServerBtn.setObjectName("selectServerBtn")
+        self.gridLayout_2.addWidget(self.selectServerBtn, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.home_btnWidget, 4, 3, 1, 1)
         spacerItem1 = QSpacerItem(400, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 4, 2, 1, 1)
