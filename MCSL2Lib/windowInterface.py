@@ -14,10 +14,12 @@
 The main window of MCSL2.
 """
 import sys
+from platform import system
+from platform import version as systemVersion
 from traceback import format_exception
 from types import TracebackType
 from typing import Type
-from platform import system
+
 from PyQt5.QtCore import (
     QEvent,
     QObject,
@@ -26,7 +28,7 @@ from PyQt5.QtCore import (
     pyqtSlot,
     QSize,
     pyqtSignal,
-    QThread,
+    QThread, QThreadPool,
 )
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget, QSystemTrayIcon
@@ -45,6 +47,7 @@ from qfluentwidgets import (
     SystemTrayMenu,
     Action,
 )
+
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.aria2ClientController import (
@@ -60,7 +63,6 @@ from MCSL2Lib.Controllers.serverController import (
     ServerLauncher,
 )
 from MCSL2Lib.Controllers.settingsController import SettingsController
-from MCSL2Lib.utils import MCSL2Logger, obsolete
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consolePage import ConsolePage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
@@ -73,13 +75,13 @@ from MCSL2Lib.Pages.settingsPage import SettingsPage
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.utils import (
     isDarkTheme,
     exceptionFilter,
     ExceptionFilterMode,
     workingThreads,
 )
-from platform import version as systemVersion
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
@@ -94,7 +96,6 @@ configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
 settingsVariables = SettingsVariables()
-
 
 pageLoadConfig = [
     {"type": HomePage, "targetObj": "homeInterface", "flag": "homeInterfaceLoaded"},
@@ -160,24 +161,24 @@ class InterfaceLoaded(QObject):
 
     def canInitNavigation(self):
         return (
-            self.homeInterfaceLoaded
-            and self.configureInterfaceLoaded
-            and self.downloadInterfaceLoaded
-            and self.consoleInterfaceLoaded
-            and self.pluginsInterfaceLoaded
-            and self.settingsInterfaceLoaded
-            and self.serverManagerInterfaceLoaded
+                self.homeInterfaceLoaded
+                and self.configureInterfaceLoaded
+                and self.downloadInterfaceLoaded
+                and self.consoleInterfaceLoaded
+                and self.pluginsInterfaceLoaded
+                and self.settingsInterfaceLoaded
+                and self.serverManagerInterfaceLoaded
         )
 
     def canInitQtSlot(self):
         return (
-            self.configureInterfaceLoaded
-            and self.selectJavaPageLoaded
-            and self.homeInterfaceLoaded
-            and self.serverManagerInterfaceLoaded
-            and self.consoleInterfaceLoaded
-            and self.selectNewJavaPageLoaded
-            and self.downloadInterfaceLoaded
+                self.configureInterfaceLoaded
+                and self.selectJavaPageLoaded
+                and self.homeInterfaceLoaded
+                and self.serverManagerInterfaceLoaded
+                and self.consoleInterfaceLoaded
+                and self.selectNewJavaPageLoaded
+                and self.downloadInterfaceLoaded
         )
 
     def canInitPluginSystem(self):
@@ -185,15 +186,15 @@ class InterfaceLoaded(QObject):
 
     def allPageLoaded(self):
         return (
-            self.homeInterfaceLoaded
-            and self.configureInterfaceLoaded
-            and self.downloadInterfaceLoaded
-            and self.consoleInterfaceLoaded
-            and self.pluginsInterfaceLoaded
-            and self.settingsInterfaceLoaded
-            and self.serverManagerInterfaceLoaded
-            and self.selectJavaPageLoaded
-            and self.selectNewJavaPageLoaded
+                self.homeInterfaceLoaded
+                and self.configureInterfaceLoaded
+                and self.downloadInterfaceLoaded
+                and self.consoleInterfaceLoaded
+                and self.pluginsInterfaceLoaded
+                and self.settingsInterfaceLoaded
+                and self.serverManagerInterfaceLoaded
+                and self.selectJavaPageLoaded
+                and self.selectNewJavaPageLoaded
         )
 
 
@@ -204,7 +205,7 @@ class PageLoader(QThread):
     loadFinished = pyqtSignal(object, str, str)
 
     def __init__(
-        self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None
+            self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None
     ):
         super().__init__()
         self.pageType = pageType
@@ -340,7 +341,8 @@ class Window(FluentWindow):
     def closeEvent(self, a0) -> None:
         settingsController._saveSettings()
         if ServerHandler().isServerRunning():
-            box = MessageBox(self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"), parent=self)
+            box = MessageBox(self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
+                             parent=self)
             box.yesButton.setText(self.tr("取消"))
             box.cancelButton.setText(self.tr("安全关闭并退出"))
             box.cancelButton.setStyleSheet(
@@ -360,6 +362,12 @@ class Window(FluentWindow):
 
             a0.ignore()
             return
+
+        # close thread pool
+        QThreadPool.globalInstance().clear()
+        QThreadPool.globalInstance().waitForDone()
+        QThreadPool.globalInstance().deleteLater()
+
         try:
             workingThreads.closeAllThreads()
             if Aria2Controller.shutDown():
@@ -372,7 +380,7 @@ class Window(FluentWindow):
         process.kill()
 
     def catchExceptions(
-        self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+            self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
     ):
         """
         全局捕获异常，并弹窗显示
@@ -452,9 +460,9 @@ class Window(FluentWindow):
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         if (
-            settingsController.fileSettings["lastWindowSize"][0]
-            is settingsController.fileSettings["lastWindowSize"][1]
-            is None
+                settingsController.fileSettings["lastWindowSize"][0]
+                is settingsController.fileSettings["lastWindowSize"][1]
+                is None
         ):
             self.resize(int(w // 1.5), int(h // 1.5))
         else:
@@ -648,7 +656,8 @@ class Window(FluentWindow):
         if not firstTry:
             w = MessageBox(
                 title=self.tr("提示"),
-                content=self.tr("你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。"),
+                content=self.tr(
+                    "你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。"),
                 parent=self,
             )
             w.yesButton.setText(self.tr("同意"))
@@ -698,18 +707,18 @@ class Window(FluentWindow):
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     if len(
-                        GlobalMCSL2Variables.userCommandHistory
+                            GlobalMCSL2Variables.userCommandHistory
                     ) and GlobalMCSL2Variables.upT > -len(
                         GlobalMCSL2Variables.userCommandHistory
                     ):
@@ -721,12 +730,12 @@ class Window(FluentWindow):
                         return True
             elif a1.key() == Qt.Key_Down:
                 if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
+                        self.stackedWidget.view.currentIndex() == 4
+                        and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT < 0
+                            len(GlobalMCSL2Variables.userCommandHistory)
+                            and GlobalMCSL2Variables.upT < 0
                     ):
                         GlobalMCSL2Variables.upT += 1
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
@@ -735,8 +744,8 @@ class Window(FluentWindow):
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT == 0
+                            len(GlobalMCSL2Variables.userCommandHistory)
+                            and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
@@ -776,7 +785,8 @@ class Window(FluentWindow):
             else:
                 InfoBar.info(
                     title=self.tr("功能提醒"),
-                    content=self.tr("虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"),
+                    content=self.tr(
+                        "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,

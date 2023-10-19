@@ -1969,7 +1969,7 @@ class ConfigurePage(QWidget):
                 mcVersion, forgeVersion = t
                 w = MessageBox(
                     self.tr("这是不是一个Forge服务器？"),
-                    self.tr("检测到可能为") + mcVersion + self.tr("版本的Forge：") + forgeVersion + self.tr("\n另外,由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"),
+                    self.tr("检测到可能为") + str(mcVersion) + self.tr("版本的Forge：") + forgeVersion + self.tr("\n另外,由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"),
                     self,
                 )
                 w.yesButton.setText(self.tr("是"))
