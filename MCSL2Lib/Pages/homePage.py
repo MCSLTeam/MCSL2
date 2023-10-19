@@ -145,7 +145,6 @@ class HomePage(QWidget):
         self.selectServerBtn.setSizePolicy(sizePolicy)
         self.selectServerBtn.setFocusPolicy(Qt.NoFocus)
         self.selectServerBtn.setObjectName("selectServerBtn")
-
         self.gridLayout_2.addWidget(self.selectServerBtn, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.home_btnWidget, 4, 3, 1, 1)
         spacerItem1 = QSpacerItem(400, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)

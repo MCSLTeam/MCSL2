@@ -227,7 +227,7 @@ class SystemTrayIcon(QSystemTrayIcon):
         self.setToolTip("MCServerLauncher 2")
         self.menu = SystemTrayMenu(self)
         self.minimizeAction = Action(text=self.tr("最小化"), triggered=self.parent().minimize)
-        self.exitAction = Action(text=self.tr("退出MCSL2"), triggered=self.parent().close)
+        self.exitAction = Action(text=self.tr("退出MCSL2"), triggered=sys.exit)
         self.exitAction.setIcon(FIF.CLOSE)
         self.menu.addActions([self.minimizeAction, self.exitAction])
         self.setContextMenu(self.menu)
