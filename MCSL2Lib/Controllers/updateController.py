@@ -7,7 +7,8 @@ from os import remove, name as osname, rename, execl
 from platform import architecture
 from shutil import move
 from qfluentwidgets import MessageBox, InfoBar, InfoBarPosition
-from MCSL2Lib.Controllers.settingsController import SettingsController, devMode
+from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.variables import GlobalMCSL2Variables
 
 settingsController = SettingsController()
 
@@ -18,7 +19,7 @@ class CheckUpdateThread(QThread):
     使用多线程防止假死
     """
 
-    isUpdate = pyqtSignal(list)
+    isUpdate = pyqtSignal(dict)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -26,36 +27,10 @@ class CheckUpdateThread(QThread):
 
     def run(self):
         try:
-            latestVerInfo = (
-                Session()
-                .get(
-                    f"http://api.2018k.cn/checkVersion?id=BCF5D58B4AE6471E98CFD5A56604560B&version={MCSL2VERSION}"
-                )
-                .text.split("|")
-            )
+            latestVerInfo = Session().get(f"https://mcsl.com.cn/api/checkUpdate").json()
             self.isUpdate.emit(latestVerInfo)
-        except Exception as e:
-            self.isUpdate.emit(["Failed"])
-
-
-class FetchUpdateIntroThread(QThread):
-    """
-    获取更新介绍的网络连接线程\n
-    使用多线程防止假死
-    """
-
-    content = pyqtSignal(str)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName("FetchUpdateIntroThread")
-
-    def run(self):
-        try:
-            intro = f"""{Session().get("http://api.2018k.cn/getExample?id=BCF5D58B4AE6471E98CFD5A56604560B&data=remark").text}"""
-            self.content.emit(intro)
-        except Exception as e:
-            self.content.emit([self.tr("奇怪，怎么获取信息失败了？\n检查一下网络，或者反馈给开发者？")])
+        except Exception:
+            self.isUpdate.emit({"latest": "", "update-log": ""})
 
 
 class MCSL2FileUpdater(QObject):
@@ -76,8 +51,7 @@ class MCSL2FileUpdater(QObject):
 
     def downloadUpdate(self):
         """下载，首先调用"""
-        global devMode
-        if not devMode:
+        if not GlobalMCSL2Variables.devMode:
             Aria2Controller.download(
                 uri=self.updateSite, watch=True, interval=0.2, stopped=self.renameUpdate
             )
@@ -103,8 +77,7 @@ class MCSL2FileUpdater(QObject):
 
     def renameUpdate(self):
         """重命名，在下载后调用"""
-        global devMode
-        if not devMode:
+        if not GlobalMCSL2Variables.devMode:
             rename(
                 settingsController.fileSettings["oldExecuteable"],
                 f"{settingsController.fileSettings['oldExecuteable']}.old",
@@ -122,10 +95,23 @@ class MCSL2FileUpdater(QObject):
         restart()
 
 
+def cmpVersion(newVer: str) -> bool:
+    """比较版本号"""
+    currentVer = MCSL2VERSION.split(".")
+    newVer = newVer.split(".")
+    isUpdate: bool = False
+    for i in range(0, 4):
+        if int(currentVer[i]) < int(newVer[i]):
+            isUpdate = True
+            break
+        else:
+            continue
+    return isUpdate
+
+
 def restart():
     """重启，在移动文件后调用(此代码在开发时不起作用)"""
-    global devMode
-    if not devMode:
+    if not GlobalMCSL2Variables.devMode:
         execl(
             settingsController.fileSettings["oldExecuteable"],
             settingsController.fileSettings["oldExecuteable"],
@@ -135,8 +121,7 @@ def restart():
 
 def deleteOldMCSL2():
     """删除旧的，在更新重启后调用"""
-    global devMode
-    if not devMode:
+    if not GlobalMCSL2Variables.devMode:
         try:
             remove(f"{sys.executable}.old")
         except Exception:

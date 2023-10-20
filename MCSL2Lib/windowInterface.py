@@ -249,8 +249,6 @@ class Window(FluentWindow):
 
     def __init__(self):
         super().__init__()
-        # 读取程序设置，不放在第一位就会爆炸！
-        settingsController.initialize(firstLoad=True)
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(f"MCSL {MCSL2VERSION}")

@@ -19,11 +19,12 @@ from PyQt5.QtCore import Qt, QLocale, QObject, QEvent, QTranslator
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
-
+from MCSL2Lib.Controllers.settingsController import SettingsController
 # from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
-
+from MCSL2Lib.variables import GlobalMCSL2Variables
+settingsController = SettingsController()
 
 class MCSL2Application(QApplication):
     def __init__(self, argv):
@@ -54,6 +55,16 @@ if __name__ == "__main__":
     # tracer.start()
     # 初始化
     initializeMCSL2()
+    # 确认开发模式防止出事
+    settingsController.initialize(firstLoad=True)
+    if (settingsController.fileSettings["oldExecuteable"] == "python"
+    or settingsController.fileSettings["oldExecuteable"] == "python.exe"
+    or settingsController.fileSettings["oldExecuteable"] == "py"
+    or settingsController.fileSettings["oldExecuteable"] == "py.exe"):
+        GlobalMCSL2Variables.devMode = True
+    else:
+        GlobalMCSL2Variables.devMode = False
+
     deleteOldMCSL2()
     # 高DPI适配
     QApplication.setHighDpiScaleFactorRoundingPolicy(

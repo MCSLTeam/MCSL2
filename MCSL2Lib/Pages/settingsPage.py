@@ -15,7 +15,6 @@ Settings page.
 """
 from datetime import datetime
 from platform import system as systemType
-import sys
 from typing import Union
 
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
@@ -51,21 +50,22 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF,
     setThemeColor,
-    SmoothScrollBar
+    SmoothScrollBar,
 )
 
 from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.settingsController import SettingsController
 from MCSL2Lib.Controllers.updateController import (
     CheckUpdateThread,
-    FetchUpdateIntroThread,
     MCSL2FileUpdater,
+    cmpVersion,
 )
 from MCSL2Lib.Controllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.variables import SettingsVariables
+from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
+
 settingsController = SettingsController()
 settingsVariables = SettingsVariables()
 
@@ -140,7 +140,7 @@ class SettingsPage(QWidget):
         self.saveBtn.clicked.connect(self.saveSettings)
         self.giveUpBtn.clicked.connect(self.giveUpSettings)
         self.setObjectName("settingInterface")
-        
+
         self.isChanged = 1
         self.initReal()
 
@@ -151,7 +151,9 @@ class SettingsPage(QWidget):
             self.settingsSmoothScrollArea = MySmoothScrollArea(self)
             self.settingsSmoothScrollArea.setFrameShape(QFrame.NoFrame)
             self.settingsSmoothScrollArea.setFrameShadow(QFrame.Plain)
-            self.settingsSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+            self.settingsSmoothScrollArea.setVerticalScrollBarPolicy(
+                Qt.ScrollBarAsNeeded
+            )
             self.settingsSmoothScrollArea.setSizeAdjustPolicy(
                 QAbstractScrollArea.AdjustToContents
             )
@@ -1220,14 +1222,15 @@ class SettingsPage(QWidget):
         spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem30, 1, 5, 1, 2)
         self.sponsorsBtn = HyperlinkButton(
-            "https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md", "赞助者列表", self.aboutContentWidget, FIF.PEOPLE
+            "https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md",
+            "赞助者列表",
+            self.aboutContentWidget,
+            FIF.PEOPLE,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.sponsorsBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.sponsorsBtn.sizePolicy().hasHeightForWidth())
         self.sponsorsBtn.setSizePolicy(sizePolicy)
         self.sponsorsBtn.setObjectName("augSponsorsBtn")
 
@@ -1243,7 +1246,9 @@ class SettingsPage(QWidget):
 
         self.gridLayout_5.addWidget(self.aboutTitle, 0, 2, 1, 1)
         self.verticalLayout.addWidget(self.about)
-        self.spacerItem31 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.spacerItem31 = QSpacerItem(
+            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+        )
         self.verticalLayout.addItem(self.spacerItem31)
         self.settingsSmoothScrollArea.setWidget(self.settingsScrollAreaWidgetContents)
         self.gridLayout_3.addWidget(self.settingsSmoothScrollArea, 2, 1, 1, 1)
@@ -1259,7 +1264,9 @@ class SettingsPage(QWidget):
         self.configureSettingsTitle.setText(self.tr("新建服务器设置"))
         self.newServerTypeTitle.setText(self.tr("新建服务器引导方式"))
         self.downloadSettingsTitle.setText(self.tr("下载设置"))
-        self.alwaysAskSaveDirectoryInfo.setText(self.tr("          不勾选，则保存到MCSL2/Downloads文件夹。"))
+        self.alwaysAskSaveDirectoryInfo.setText(
+            self.tr("          不勾选，则保存到MCSL2/Downloads文件夹。")
+        )
         self.alwaysAskSaveDirectoryCheckBox.setText(self.tr("总是询问保存路径"))
         self.aria2ThreadTitle.setText(
             self.tr("Aria2下载引擎线程数 (不建议大于64)")
@@ -1299,23 +1306,38 @@ class SettingsPage(QWidget):
         )
         self.aboutTitle.setText(self.tr("关于"))
         self.aria2ThreadSlider.setValue(8)
-        self.newServerTypeComboBox.addItems([self.tr("初始（简易+进阶+导入）"), self.tr("简易模式"), self.tr("进阶模式"), self.tr("导入")])
+        self.newServerTypeComboBox.addItems(
+            [self.tr("初始（简易+进阶+导入）"), self.tr("简易模式"), self.tr("进阶模式"), self.tr("导入")]
+        )
         self.newServerTypeComboBox.setCurrentIndex(0)
-        self.downloadSourceComboBox.addItems([self.tr("FastMirror"), self.tr("MCSLAPI")])
+        self.downloadSourceComboBox.addItems(
+            [self.tr("FastMirror"), self.tr("MCSLAPI")]
+        )
         self.downloadSourceComboBox.setCurrentIndex(0)
         self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
         self.aria2ThreadSlider.valueChanged.connect(
             lambda: self.aria2ThreadNum.setText(str(self.aria2ThreadSlider.value()))
         )
-        self.outputDeEncodingComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
+        self.outputDeEncodingComboBox.addItems(
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
+        )
         self.outputDeEncodingComboBox.setCurrentIndex(0)
-        self.inputDeEncodingComboBox.addItems([self.tr("跟随控制台输出"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
+        self.inputDeEncodingComboBox.addItems(
+            [
+                self.tr("跟随控制台输出"),
+                self.tr("UTF-8"),
+                self.tr("GB18030"),
+                self.tr("ANSI(推荐)"),
+            ]
+        )
         self.inputDeEncodingComboBox.setCurrentIndex(0)
         self.themeComboBox.addItems([self.tr("自动"), self.tr("深色"), self.tr("浅色")])
         self.saveBtn.setText(self.tr("保存"))
         self.giveUpBtn.setText(self.tr("放弃"))
         self.saveSettingsBtnWidget.setVisible(False)
-        self.clearAllNewServerConfigInProgramTitle.setText(self.tr("*(强迫症)新建服务器后立刻清空相关设置项"))
+        self.clearAllNewServerConfigInProgramTitle.setText(
+            self.tr("*(强迫症)新建服务器后立刻清空相关设置项")
+        )
         self.clearConsoleWhenStopServerTitle.setText(self.tr("*(强迫症)关闭服务器后立刻清空终端"))
 
         self.alwaysAskSaveDirectoryCheckBox.setEnabled(False)
@@ -1540,7 +1562,7 @@ class SettingsPage(QWidget):
             self.checkUpdateOnStartSwitchBtn.checkedChanged.disconnect()
 
             self.selectThemeColorBtn.colorChanged.disconnect()
-            
+
             self.checkUpdateBtn.clicked.disconnect()
 
             self.generateSysReport.clicked.disconnect()
@@ -1705,35 +1727,45 @@ class SettingsPage(QWidget):
         self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
         self.thread_checkUpdate.start()
 
-    @pyqtSlot(list)
+    @pyqtSlot(dict)
     def showUpdateMsg(self, latestVerInfo):
         """如果需要更新，显示弹窗；不需要则弹出提示"""
-        if latestVerInfo[0] == "true":  # 需要更新
-            title = self.tr("发现新版本：") + latestVerInfo[4]
-            w = MessageBox(title, self.tr("更新介绍加载中..."), parent=self.tmpParent)
-            w.contentLabel.setTextFormat(Qt.MarkdownText)
-            w.yesButton.setText(self.tr("更新"))
-            w.cancelButton.setText(self.tr("关闭"))
-            self.thread_fetchUpdateIntro = FetchUpdateIntroThread(self)
-            self.thread_fetchUpdateIntro.content.connect(w.contentLabel.setText)
-            self.thread_fetchUpdateIntro.start()
-            w.yesSignal.connect(lambda: self.window().switchTo(self))
-            w.yesSignal.connect(MCSL2FileUpdater(self).downloadUpdate)
-            w.exec()
-        elif latestVerInfo[0] == "false":  # 已是最新版
-            InfoBar.success(
-                title=self.tr("无需更新"),
-                content=self.tr("已是最新版本"),
+        if not len(latestVerInfo["latest"]):
+            InfoBar.error(
+                title=self.tr("检查更新失败"),
+                content=self.tr("尝试自己检查一下网络？"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
                 duration=2500,
                 parent=self.tmpParent,
             )
+            return
+        if cmpVersion(latestVerInfo["latest"]):
+            title = self.tr("发现新版本：") + latestVerInfo["latest"]
+            w = MessageBox(title, latestVerInfo["update-log"], parent=self.tmpParent)
+            w.yesButton.setText(self.tr("更新"))
+            w.cancelButton.setText(self.tr("关闭"))
+            if not GlobalMCSL2Variables.devMode:
+                w.yesSignal.connect(lambda: self.window().switchTo(self))
+                w.yesSignal.connect(MCSL2FileUpdater(self).downloadUpdate)
+            else:
+                w.yesSignal.connect(
+                    lambda: InfoBar.error(
+                        title=self.tr("不行"),
+                        content=self.tr("开发过程中更新会把你Python删掉的"),
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP_RIGHT,
+                        duration=2500,
+                        parent=self.tmpParent,
+                    )
+                )
+            w.exec()
         else:
-            InfoBar.error(
-                title=self.tr("检查更新失败"),
-                content=self.tr("尝试自己检查一下网络？"),
+            InfoBar.success(
+                title=self.tr("无需更新"),
+                content=self.tr("已是最新版本"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
@@ -1757,14 +1789,16 @@ class SettingsPage(QWidget):
         report = (
             self.tr("MCSL2系统报告：\n")
             + self.tr("生成时间：")
-            + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             + "\n"
             + genSysReport()
         )
 
         title = self.tr("MC Server Launcher 2系统报告")
         w = MessageBox(
-            title, report + self.tr("\n----------------------------\n点击复制按钮以复制到剪贴板。"), self
+            title,
+            report + self.tr("\n----------------------------\n点击复制按钮以复制到剪贴板。"),
+            self,
         )
         w.yesButton.setText(self.tr("复制"))
         w.cancelButton.setText(self.tr("关闭"))

@@ -17,10 +17,7 @@ Settings controller, for editing MCSL2's configurations.
 from json import dumps, loads
 from os import path as osp
 import sys
-
 from MCSL2Lib.singleton import Singleton
-
-devMode = False
 
 @Singleton
 class SettingsController:
@@ -33,7 +30,6 @@ class SettingsController:
 
     def _readSettings(self, firstLoad):
         """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
-        global devMode
         if osp.exists(r"./MCSL2/MCSL2_Config.json"):
             if osp.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
                 with open(
@@ -48,12 +44,6 @@ class SettingsController:
                         pass
                 self._changeSettings({"oldExecuteable": sys.executable.split("\\")[-1]})
                 self._saveSettings()
-                devMode = (
-                    True
-                    if self.fileSettings["oldExecuteable"].endswith("python")
-                    or self.fileSettings["oldExecuteable"].endswith("python.exe")
-                    else False
-                )
 
     def _changeSettings(self, setting: dict):
         self.unSavedSettings.update(setting)

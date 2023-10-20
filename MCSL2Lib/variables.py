@@ -160,7 +160,7 @@ class EditServerVariables:
 
 class GlobalMCSL2Variables:
     """需要被全局使用的变量"""
-
+    devMode = False
     scrollAreaViewportQss = "background-color: transparent;"
     MinecraftBuiltInCommand = [
         "advancement",
