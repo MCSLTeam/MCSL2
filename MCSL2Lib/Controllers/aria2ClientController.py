@@ -1017,6 +1017,7 @@ class DL_EntryController(QObject):
         self.mutex = entries_mutex
         self.entries = entries
         self.worker = DL_EntryManager(self.entries, self.mutex)
+        self.worker.read()
         self.worker.moveToThread(workingThreads.getThread("DL_Entry"))
 
         self.resultReady.connect(lambda _: self.worker.deleteLater())

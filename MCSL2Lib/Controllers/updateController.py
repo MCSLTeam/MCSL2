@@ -27,7 +27,7 @@ class CheckUpdateThread(QThread):
 
     def run(self):
         try:
-            latestVerInfo = Session().get(f"https://mcsl.com.cn/api/checkUpdate").json()
+            latestVerInfo = Session().get(f"https://api.mcsl.com.cn/checkUpdate").json()
             self.isUpdate.emit(latestVerInfo)
         except Exception:
             self.isUpdate.emit({"latest": "", "update-log": ""})
@@ -47,7 +47,7 @@ class MCSL2FileUpdater(QObject):
             self.updateArchitecturePrefix = f"{self.updateOSPrefix}-x64"
         else:
             self.updateArchitecturePrefix = f"{self.updateOSPrefix}-arm64"
-        self.updateSite = f"http://shenjack.top:5100/LxHTT/MCSL2_Update/media/branch/master/{self.updateArchitecturePrefix}/MCSL2{self.updateExtSuffix}"
+        self.updateSite = f"http://update.mcsl.com.cn/Update/{self.updateArchitecturePrefix}/MCSL2{self.updateExtSuffix}"
 
     def downloadUpdate(self):
         """下载，首先调用"""

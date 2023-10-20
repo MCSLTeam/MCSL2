@@ -22,12 +22,9 @@ class DownloadEntryBox(MessageBoxBase):
         self.setMaximumSize(QSize(16777215, 16777215))
         self.titleLabel = SubtitleLabel(self.tr("下载项(正在加载...)"), self)
         self.entryView = TableWidget(self)
-
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.entryView)
 
-        self.entryView.setWordWrap(False)
-        self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.widget.setMinimumSize(QSize(620, 300))
         self.widget.setMaximumSize(QSize(16777215, 16777215))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -36,22 +33,23 @@ class DownloadEntryBox(MessageBoxBase):
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
 
-        self.entryView.setMinimumSize(QSize(620, 300))
-        self.entryView.setMaximumSize(QSize(16777215, 16777215))
-
         (controller := DL_EntryController()).resultReady.connect(self.updateEntries)
         controller.work.emit(("getEntriesList", {"check": True, "autoDelete": False}))
 
+        self.entryView.setWordWrap(False)
+        self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.entryView.setMinimumSize(QSize(620, 300))
+        self.entryView.setMaximumSize(QSize(16777215, 16777215))
         self.entryView.setEditTriggers(self.entryView.NoEditTriggers)
         self.entryView.setSelectionBehavior(self.entryView.SelectRows)
         self.entryView.setSelectionMode(self.entryView.SingleSelection)
         self.entryView.horizontalHeader().sectionClicked.connect(self.onSectionClicked)
-
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.entryView.sizePolicy().hasHeightForWidth())
         self.entryView.setSizePolicy(sizePolicy)
+        # self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.entryView.itemSelectionChanged.connect(
             lambda: self.yesButton.setEnabled(True)
@@ -60,8 +58,9 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
 
-        self.entryView.setHorizontalHeaderLabels([self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")])
-        self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.entryView.setHorizontalHeaderLabels(
+            [self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")]
+        )
 
         self.yesButton.setText(self.tr("选择"))
         self.cancelButton.setText(self.tr("取消"))
@@ -84,13 +83,32 @@ class DownloadEntryBox(MessageBoxBase):
                 i, 3, QTableWidgetItem(coreInfo.get("build_version"))
             )
         self.entryView.verticalHeader().hide()
-        self.entryView.setHorizontalHeaderLabels([self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")])
+        self.entryView.setHorizontalHeaderLabels(
+            [self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")]
+        )
 
-        if self.entryView.rowCount() != 0:  # resize header view
-            self.entryView.horizontalHeader().setSectionResizeMode(
-                QHeaderView.ResizeMode.ResizeToContents
-            )
-            self.entryView.resizeRowsToContents()
+        self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.entryView.setMinimumSize(QSize(620, 300))
+        self.entryView.setMaximumSize(QSize(16777215, 16777215))
+        self.entryView.setEditTriggers(self.entryView.NoEditTriggers)
+        self.entryView.setSelectionBehavior(self.entryView.SelectRows)
+        self.entryView.setSelectionMode(self.entryView.SingleSelection)
+        self.entryView.horizontalHeader().sectionClicked.connect(self.onSectionClicked)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(5)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.entryView.sizePolicy().hasHeightForWidth())
+        self.entryView.setSizePolicy(sizePolicy)
+        self.entryView.resizeColumnToContents(3)
+        self.entryView.horizontalHeader().setSectionResizeMode(3, QHeaderView.Fixed)
+        self.entryView.resizeColumnToContents(2)
+        self.entryView.horizontalHeader().setSectionResizeMode(2, QHeaderView.Fixed)
+        self.entryView.resizeColumnToContents(1)
+        self.entryView.horizontalHeader().setSectionResizeMode(1, QHeaderView.Fixed)
+        self.entryView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.entryView.resizeRowsToContents()
+        self.entryView.setWordWrap(False)
+
         self.yesButton.setDisabled(True)
         self.titleLabel.setText(self.tr("下载项(共") + str(len(entries)) + self.tr("项)"))
 
