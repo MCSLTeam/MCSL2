@@ -36,21 +36,6 @@ class DownloadEntryBox(MessageBoxBase):
         (controller := DL_EntryController()).resultReady.connect(self.updateEntries)
         controller.work.emit(("getEntriesList", {"check": True, "autoDelete": False}))
 
-        self.entryView.setWordWrap(False)
-        self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.entryView.setMinimumSize(QSize(620, 300))
-        self.entryView.setMaximumSize(QSize(16777215, 16777215))
-        self.entryView.setEditTriggers(self.entryView.NoEditTriggers)
-        self.entryView.setSelectionBehavior(self.entryView.SelectRows)
-        self.entryView.setSelectionMode(self.entryView.SingleSelection)
-        self.entryView.horizontalHeader().sectionClicked.connect(self.onSectionClicked)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(5)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.entryView.sizePolicy().hasHeightForWidth())
-        self.entryView.setSizePolicy(sizePolicy)
-        # self.entryView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
         self.entryView.itemSelectionChanged.connect(
             lambda: self.yesButton.setEnabled(True)
         )
