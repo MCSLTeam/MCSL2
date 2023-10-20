@@ -480,10 +480,7 @@ class Window(FluentWindow):
             if int(systemVersion().split(".")[-1]) >= 22000:
                 self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
             else:
-                self.windowEffect.setAcrylicEffect(
-                    self.winId(),
-                    gradientColor="F2F2F2" if isDarkTheme() else "F2F2F299",
-                )
+                pass
         setThemeColor(str(settingsController.fileSettings["themeColor"]))
 
     def initSafeQuitController(self):
