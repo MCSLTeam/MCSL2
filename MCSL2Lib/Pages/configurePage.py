@@ -1604,6 +1604,8 @@ class ConfigurePage(QWidget):
                 + self.tr("的")
                 + str(java.version)
                 + self.tr("已失效"),
+                parent=self.window(),
+                duration=3000,
             )
 
     @pyqtSlot(int)
