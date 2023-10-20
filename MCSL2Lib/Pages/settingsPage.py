@@ -1740,6 +1740,7 @@ class SettingsPage(QWidget):
                 duration=2500,
                 parent=self.tmpParent,
             )
+            self.checkUpdateBtn.setEnabled(True)
             return
         if cmpVersion(latestVerInfo["latest"]):
             title = self.tr("发现新版本：") + latestVerInfo["latest"]
