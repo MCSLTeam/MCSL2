@@ -36,67 +36,29 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="2" rowspan="2" colspan="2">
-    <widget class="QWidget" name="titleLimitWidget" native="true">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="1">
-       <widget class="StrongBodyLabel" name="subTitleLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::MarkdownText</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="TitleLabel" name="titleLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Java</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="SmoothScrollArea" name="javaSmoothScrollArea">
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="javaScrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>658</width>
-           <height>469</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <layout class="QVBoxLayout" name="javaItemVerticalLayout"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-      <item row="0" column="0" rowspan="2">
-       <widget class="TransparentToolButton" name="backBtn"/>
-      </item>
-     </layout>
+   <item row="3" column="2">
+    <widget class="SmoothScrollArea" name="javaSmoothScrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="javaScrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>670</width>
+        <height>410</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="javaItemVerticalLayout"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item row="0" column="2">
@@ -114,6 +76,47 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="1" column="2" rowspan="2" colspan="2">
+    <widget class="QWidget" name="titleLimitWidget" native="true">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="TitleLabel" name="titleLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Java</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="TransparentToolButton" name="backBtn"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="StrongBodyLabel" name="subTitleLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。
+游戏版本1.16.5及以下的请使用Java 8
+游戏版本1.17~1.17.1的建议Java 17-18
+1.18及以上则使用Java 18-20</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
