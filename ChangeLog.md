@@ -9,12 +9,9 @@
  - 下载记录界面  
  - 选择Java提示  
  - 低版本Windows拖动卡顿  
-###### 暂无
 ___
 
 ### 其他下载地址（官方分流）
-
-[落雪无痕的SharePoint](https://lxhtt-my.sharepoint.com/:f:/g/personal/lxhtt_lxhtt_onmicrosoft_com/Er2XmdrCZkZGhXrk7EB2eyABTsO2Jfwbq3OYsdGkjUtMRA?e=DNjfA8)
 
 [蓝奏云1（密码MCSL）](https://lxht.lanzoum.com/b01edy9tg)
 
