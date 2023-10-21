@@ -50,7 +50,6 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF,
     setThemeColor,
-    SmoothScrollBar,
 )
 
 from MCSL2Lib import MCSL2VERSION
@@ -176,6 +175,7 @@ class SettingsPage(QWidget):
             self.verticalLayout = QVBoxLayout(self.settingsScrollAreaWidgetContents)
             self.verticalLayout.setContentsMargins(0, 0, 0, 0)
             self.verticalLayout.setObjectName("verticalLayout")
+            
         self.serverSettings = CardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1198,7 +1198,7 @@ class SettingsPage(QWidget):
             "https://jq.qq.com/?_wv=1027&k=x2ISlviQ",
             "加入官方群聊",
             self.aboutContentWidget,
-            FIF.CERTIFICATE,
+            FIF.HELP,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1218,7 +1218,7 @@ class SettingsPage(QWidget):
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
 
-        self.gridLayout.addWidget(self.generateSysReport, 1, 4, 1, 1)
+        self.gridLayout.addWidget(self.generateSysReport, 1, 5, 1, 1)
         spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem30, 1, 5, 1, 2)
         self.sponsorsBtn = HyperlinkButton(
@@ -1232,9 +1232,23 @@ class SettingsPage(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sponsorsBtn.sizePolicy().hasHeightForWidth())
         self.sponsorsBtn.setSizePolicy(sizePolicy)
-        self.sponsorsBtn.setObjectName("augSponsorsBtn")
+        self.sponsorsBtn.setObjectName("sponsorsBtn")
+
+        self.donateBtn = HyperlinkButton(
+            "https://afdian.net/a/MCSLTeam",
+            "赞助此项目",
+            self.aboutContentWidget,
+            FIF.CAFE,
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.donateBtn.sizePolicy().hasHeightForWidth())
+        self.donateBtn.setSizePolicy(sizePolicy)
+        self.donateBtn.setObjectName("donateBtn")
 
         self.gridLayout.addWidget(self.sponsorsBtn, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.donateBtn, 1, 4, 1, 1)
         self.gridLayout_5.addWidget(self.aboutContentWidget, 2, 0, 1, 4)
         self.aboutIndicator = PrimaryPushButton(self.about)
         self.aboutIndicator.setFixedSize(QSize(3, 20))
