@@ -3,6 +3,7 @@ venv/**
 poetry.lock
 .idea/**
 .vs/**
+.fleet/**
 .vscode/**
 Tools/OfflineBuild/**
 Servers/**
