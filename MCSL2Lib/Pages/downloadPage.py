@@ -65,7 +65,6 @@ from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.Resources.icons import *
 from MCSL2Lib.utils import FileOpener, MCSL2Logger  # noqa: F401
 from MCSL2Lib.variables import (
-    GlobalMCSL2Variables,
     DownloadVariables,
     SettingsVariables,
 )

@@ -62,7 +62,6 @@ configTemplate = {
     "startOnStartup": False,
     "checkUpdateOnStart": False,
     "lastServer": "",
-    "nodeMCSLAPI": "https://hardbin.com",
     "enableExperimentalFeatures": False,
     "oldExecuteable": "",
     "lastWindowSize": [None, None],
