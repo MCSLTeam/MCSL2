@@ -106,7 +106,7 @@
    <item row="2" column="2">
     <widget class="QStackedWidget" name="newServerStackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="guideNewServerPage">
       <layout class="QVBoxLayout" name="guideNewServerVerticalLayout">
@@ -424,7 +424,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>594</width>
+            <width>456</width>
             <height>453</height>
            </rect>
           </property>
@@ -903,7 +903,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>594</width>
+            <width>456</width>
             <height>730</height>
            </rect>
           </property>
@@ -1482,7 +1482,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="importNewServerFirstGuide">
           <property name="sizePolicy">
@@ -1726,162 +1726,11 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>500</width>
-                <height>1141</height>
+                <width>506</width>
+                <height>854</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_2">
-               <item>
-                <widget class="CardWidget" name="noShellArchivesImport">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>150</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>150</height>
-                  </size>
-                 </property>
-                 <layout class="QGridLayout" name="gridLayout_13">
-                  <item row="0" column="0" rowspan="3">
-                   <spacer name="horizontalSpacer_5">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="PixmapLabel" name="noShellArchivesImportStatus">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>30</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>30</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1" colspan="2">
-                   <widget class="BodyLabel" name="noShellArchivesImportStatusText">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>[状态文本]</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1" colspan="2">
-                   <widget class="QWidget" name="noShellArchivesImportBtnWidget" native="true">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_2">
-                     <item>
-                      <widget class="PrimaryPushButton" name="noShellArchivesImportArchives">
-                       <property name="minimumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>导入文件</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="PrimaryPushButton" name="noShellArchivesImportFolder">
-                       <property name="minimumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>导入文件夹</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item row="2" column="6" colspan="2">
-                   <spacer name="horizontalSpacer_6">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="0" column="2">
-                   <widget class="SubtitleLabel" name="noShellArchivesImportTitle">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>1. 导入文件/文件夹</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
                <item>
                 <widget class="CardWidget" name="noShellArchivesSelectCore">
                  <property name="sizePolicy">
@@ -2427,103 +2276,6 @@
                  </layout>
                 </widget>
                </item>
-               <item>
-                <widget class="CardWidget" name="noShellArchivesSave">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>125</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>125</height>
-                  </size>
-                 </property>
-                 <layout class="QGridLayout" name="gridLayout_20">
-                  <item row="0" column="1">
-                   <widget class="SubtitleLabel" name="noShellArchivesSaveTitle">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>4. 完成导入</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="LineEdit" name="noShellArchivesSaveServerNameLineEdit">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="placeholderText">
-                     <string>设置服务器昵称，不能包含非法字符</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0" rowspan="3">
-                   <spacer name="horizontalSpacer_10">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>79</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="PrimaryPushButton" name="noShellArchivesSaveSaveServerPrimaryPushBtn">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>130</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>导入！</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
               </layout>
              </widget>
             </widget>
@@ -2593,162 +2345,11 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>450</width>
-                <height>1191</height>
+                <width>506</width>
+                <height>1035</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <widget class="CardWidget" name="shellArchivesImport">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>150</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>150</height>
-                  </size>
-                 </property>
-                 <layout class="QGridLayout" name="gridLayout_22">
-                  <item row="0" column="0" rowspan="3">
-                   <spacer name="horizontalSpacer_11">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="PixmapLabel" name="shellArchivesImportStatus">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>30</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>30</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1" colspan="2">
-                   <widget class="BodyLabel" name="shellArchivesImportStatusText">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>[状态文本]</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1" colspan="2">
-                   <widget class="QWidget" name="shellArchivesImportBtnWidget" native="true">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                     <item>
-                      <widget class="PrimaryPushButton" name="shellArchivesImportArchives">
-                       <property name="minimumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>导入文件</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="PrimaryPushButton" name="shellArchivesImportFolder">
-                       <property name="minimumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>110</width>
-                         <height>32</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>导入文件夹</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item row="2" column="6" colspan="2">
-                   <spacer name="horizontalSpacer_12">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="0" column="2">
-                   <widget class="SubtitleLabel" name="shellArchivesImportTitle">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>1. 导入文件/文件夹</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
                <item>
                 <widget class="CardWidget" name="shellArchivesSelectShell">
                  <property name="sizePolicy">
@@ -3472,7 +3073,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>450</width>
+                <width>506</width>
                 <height>935</height>
                </rect>
               </property>
@@ -4334,7 +3935,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>450</width>
+                <width>506</width>
                 <height>935</height>
                </rect>
               </property>
@@ -5886,7 +5487,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>459</width>
+                <width>506</width>
                 <height>1191</height>
                </rect>
               </property>
@@ -6743,7 +6344,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>450</width>
+                <width>506</width>
                 <height>935</height>
                </rect>
               </property>
@@ -7577,7 +7178,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>450</width>
+                <width>506</width>
                 <height>1191</height>
                </rect>
               </property>
@@ -8431,7 +8032,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>502</width>
+                <width>506</width>
                 <height>1191</height>
                </rect>
               </property>

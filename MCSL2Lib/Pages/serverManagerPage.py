@@ -710,7 +710,6 @@ class ServerManagerPage(QWidget):
             for i in reversed(range(self.verticalLayout.count())):
                 self.verticalLayout.itemAt(i).widget().setParent(None)
                 self.verticalLayout.itemAt(i).widget().deleteLater()
-            MCSL2Logger.info("性能优化：释放服务器管理页内存")
         except Exception:
             pass
 

@@ -639,7 +639,6 @@ class Window(FluentWindow):
             )
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
-        # 性能优化
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
         self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
         self.stackedWidget.currentChanged.connect(self.settingsInterface.onPageChangedRefresh)

@@ -1385,7 +1385,6 @@ class SettingsPage(QWidget):
                 # self.settingsSmoothScrollArea.verticalScrollBar().deleteLater()
             except Exception:
                 pass
-            MCSL2Logger.info("性能优化：释放设置页内存")
 
     def conn(self):
         # serverSettings

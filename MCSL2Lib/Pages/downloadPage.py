@@ -684,7 +684,6 @@ class DownloadPage(QWidget):
                         pass
             else:
                 pass
-            MCSL2Logger.info("性能优化：释放FastMirror内存")
 
     def releaseMCSLAPIMemory(self):
                 for layout in self.MCSLAPILayoutList:
@@ -698,7 +697,6 @@ class DownloadPage(QWidget):
                             layout.itemAt(i).widget().deleteLater()
                         except AttributeError:
                             pass
-                MCSL2Logger.info("性能优化：释放MCSLAPI内存")
 
     def refreshDownloads(self):
         """刷新下载页面主逻辑"""
