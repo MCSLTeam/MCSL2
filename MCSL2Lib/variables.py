@@ -14,11 +14,9 @@
 These are the built-in variables of MCSL2.
 """
 
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.utils import readGlobalServerConfig, warning
 from MCSL2Lib.singleton import Singleton
-
-settingsController = SettingsController()
 
 
 @Singleton
@@ -355,9 +353,9 @@ class ServerVariables:
 
     def translateCoding(self):
         if self.outputDecoding == "follow":
-            self.outputDecoding = settingsController.fileSettings["outputDeEncoding"]
+            self.outputDecoding = cfg.get(cfg.outputDeEncoding)
         if self.inputEncoding == "follow":  # 跟随全局
-            self.inputEncoding = settingsController.fileSettings["inputDeEncoding"]
+            self.inputEncoding = cfg.get(cfg.inputDeEncoding)
             if self.inputEncoding == "follow":  # 跟随输出
                 self.inputEncoding = self.outputDecoding
 

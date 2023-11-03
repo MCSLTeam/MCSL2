@@ -53,7 +53,7 @@ from MCSL2Lib.Controllers import javaDetector
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.Controllers.serverController import MojangEula
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 
 # from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
 # from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
@@ -75,8 +75,6 @@ from MCSL2Lib.variables import (
 )
 from MCSL2Lib.utils import MCSL2Logger
 
-
-settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
 serverVariables = ServerVariables()
@@ -1498,7 +1496,7 @@ class ConfigurePage(QWidget):
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
             settingsVariables.newServerTypeList.index(
-                settingsController.fileSettings["newServerType"]
+                cfg.get(cfg.newServerType)
             )
         )
 
@@ -2000,7 +1998,7 @@ class ConfigurePage(QWidget):
                     serverPath=f"Servers//{configureServerVariables.serverName}",
                     file=configureServerVariables.coreFileName,
                     java=configureServerVariables.selectedJavaPath,
-                    logDecode=settingsController.fileSettings["outputDeEncoding"],
+                    logDecode=cfg.get(cfg.outputDeEncoding),
                 )
 
                 configureServerVariables.extraData[
@@ -2111,7 +2109,7 @@ class ConfigurePage(QWidget):
 
         # 写入单独配置
         try:
-            if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
+            if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 with open(
                     f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
                     "w+",
@@ -2144,7 +2142,7 @@ class ConfigurePage(QWidget):
             exit1Msg += f"\n{e}"
 
         # 自动同意Mojang Eula
-        if settingsController.fileSettings["acceptAllMojangEula"]:
+        if cfg.get(cfg.acceptAllMojangEula):
             tmpServerName = serverVariables.serverName
             serverVariables.serverName = configureServerVariables.serverName
             MinecraftEulaInfoBar = InfoBar(
@@ -2175,7 +2173,7 @@ class ConfigurePage(QWidget):
                 exit0Msg=exit0Msg
             )  # 后处理各种应serverType不同而引起的差异性，例如serverType==forge时，需要执行自动安装等等...
 
-            if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
+            if cfg.get(cfg.clearAllNewServerConfigInProgram):
                 configureServerVariables.resetToDefault()
                 if self.newServerStackedWidget.currentIndex() == 1:
                     self.noobJavaInfoLabel.setText(self.tr("[选择的Java的信息]"))

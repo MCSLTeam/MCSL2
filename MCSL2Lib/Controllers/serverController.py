@@ -23,13 +23,12 @@ from typing import List, Optional
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal, QThread, QTimer, pyqtSlot
 from psutil import NoSuchProcess, Process, AccessDenied
 
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables
 from MCSL2Lib.utils import MCSL2Logger
 
-settingsController = SettingsController()
 serverVariables = ServerVariables()
 
 
@@ -62,13 +61,7 @@ class ServerHelper(QObject):
         self.serverName.emit(readGlobalServerConfig()[index]["name"])
         self.startBtnStat.emit(True)
         # 防止和设置页冲突导致设置无效，得这样写，立刻保存变量以及文件
-        settingsController.unSavedSettings.update(
-            {"lastServer": readGlobalServerConfig()[index]["name"]}
-        )
-        settingsController.fileSettings.update(settingsController.unSavedSettings)
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
-            writeConfig.write(dumps(settingsController.fileSettings, indent=4))
-            writeConfig.close()
+        cfg.set(cfg.lastServer, readGlobalServerConfig()[index]["name"])
         self.backToHomePage.emit(0)
 
 
@@ -133,7 +126,7 @@ class ServerHandler(QObject):
         if exitCode:
             if exitCode != 62097:
                 self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：服务器崩溃！"))
-                if settingsController.fileSettings["restartServerWhenCrashed"]:
+                if cfg.get(cfg.restartServerWhenCrashed):
                     self.Server.serverProcess.waitForFinished()
                     self.Server.serverProcess.start()
                     self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：正在重新启动服务器..."))
@@ -174,7 +167,7 @@ class ServerHandler(QObject):
         停止服务器
         """
         if self.isServerRunning():
-            if settingsController.fileSettings["sendStopInsteadOfKill"]:
+            if cfg.get(cfg.sendStopInsteadOfKill):
                 self.Server.serverProcess.write(b"stop\n")
                 # self.Server.serverProcess.waitForFinished()
             else:
@@ -314,7 +307,7 @@ class readLastServerConfigThread(QThread):
 
     def run(self):
         # 不应该在这里直接启用启动服务器按钮，应先获取index补全服务器配置。
-        lastServerName = settingsController.fileSettings["lastServer"]
+        lastServerName = cfg.get(cfg.lastServer)
         if lastServerName != "":
             # 不加try小心服务器删了又得boom
             try:

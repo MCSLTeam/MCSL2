@@ -13,45 +13,118 @@
 """
 Settings controller, for editing MCSL2's configurations.
 """
+from platform import system as systemType
+from qfluentwidgets import (
+    QConfig,
+    ConfigItem,
+    OptionsConfigItem,
+    OptionsValidator,
+    qconfig,
+    RangeConfigItem,
+    RangeValidator,
+    BoolValidator,
+)
 
-from json import dumps, loads
-from os import path as osp
-import sys
-from MCSL2Lib.singleton import Singleton
+class Aria2Range(RangeConfigItem):
+    
+    @property
+    def range(self):
+        """ get the available range of config """
+        return (1, 128 if "windows" in systemType().lower() else 16)
 
-@Singleton
-class SettingsController:
-    def __init__(self):
-        self.fileSettings = {}  # 文件中的原始配置
-        self.unSavedSettings = {}  # 更改后的配置
 
-    def initialize(self, firstLoad):
-        self._readSettings(firstLoad)
+class Config(QConfig):
+    """MCSL2 Configuration"""
 
-    def _readSettings(self, firstLoad):
-        """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
-        if osp.exists(r"./MCSL2/MCSL2_Config.json"):
-            if osp.getsize(r"./MCSL2/MCSL2_Config.json") != 0:
-                with open(
-                    r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8"
-                ) as readConfig:
-                    # 从文件读取的配置
-                    self.fileSettings = loads(readConfig.read())
-                    # 多声明一份给修改设置的时候用
-                    if firstLoad:
-                        self.unSavedSettings = self.fileSettings
-                    else:
-                        pass
-                self._changeSettings({"oldExecuteable": sys.executable.split("\\")[-1]})
-                self._saveSettings()
+    # Server
+    autoRunLastServer = ConfigItem(
+        "Server", "autoRunLastServer", False, BoolValidator()
+    )
+    acceptAllMojangEula = ConfigItem(
+        "Server", "acceptAllMojangEula", False, BoolValidator()
+    )
+    sendStopInsteadOfKill = ConfigItem(
+        "Server", "sendStopInsteadOfKill", True, BoolValidator()
+    )
+    restartServerWhenCrashed = ConfigItem(
+        "Server", "restartServerWhenCrashed", False, BoolValidator()
+    )
+    # Configure server
 
-    def _changeSettings(self, setting: dict):
-        self.unSavedSettings.update(setting)
+    newServerType = OptionsConfigItem(
+        "ConfigureServer",
+        "newServerType",
+        "Default",
+        OptionsValidator(["Default", "Noob", "Extended", "Import"]),
+    )
+    onlySaveGlobalServerConfig = ConfigItem(
+        "ConfigureServer", "onlySaveGlobalServerConfig", False, BoolValidator()
+    )
+    clearAllNewServerConfigInProgram = ConfigItem(
+        "ConfigureServer", "clearAllNewServerConfigInProgram", False, BoolValidator()
+    )
 
-    def _giveUpSettings(self):
-        self.unSavedSettings = self.fileSettings.copy()
+    # Download
+    downloadSource = OptionsConfigItem(
+        "Download",
+        "downloadSource",
+        "FastMirror",
+        OptionsValidator(["FastMirror", "MCSLAPI"]),
+    )
+    alwaysAskSaveDirectory = ConfigItem(
+        "Download", "alwaysAskSaveDirectory", False, BoolValidator()
+    )
+    aria2Thread = Aria2Range(
+        "Download",
+        "aria2Thread",
+        8,
+        validator=RangeValidator(min=1, max=128 if "windows" in systemType().lower() else 16),
+    )
+    saveSameFileException = OptionsConfigItem(
+        "Download",
+        "saveSameFileException",
+        "ask",
+        OptionsValidator(["ask", "overwrite", "stop"]),
+    )
 
-    def _saveSettings(self):
-        self.fileSettings.update(self.unSavedSettings)
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as writeConfig:
-            writeConfig.write(dumps(self.fileSettings, indent=4))
+    # Console
+    outputDeEncoding = OptionsConfigItem(
+        "Console",
+        "outputDeEncoding",
+        "ansi",
+        OptionsValidator(["utf-8", "GB18030", "ansi"]),
+    )
+    inputDeEncoding = OptionsConfigItem(
+        "Console",
+        "inputDeEncoding",
+        "follow",
+        OptionsValidator(["follow", "utf-8", "GB18030", "ansi"]),
+    )
+    quickMenu = ConfigItem("Console", "quickMenu", True, BoolValidator())
+    clearConsoleWhenStopServer = ConfigItem(
+        "Console", "clearConsoleWhenStopServer", False, BoolValidator()
+    )
+    # Software
+    # themeMode = OptionsConfigItem(
+    # "QFluentWidgets", "ThemeMode", Theme.LIGHT, OptionsValidator(Theme), EnumSerializer(Theme))
+    # themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#009faa')
+    alwaysRunAsAdministrator = ConfigItem(
+        "Software", "alwaysRunAsAdministrator", False, BoolValidator()
+    )
+    startOnStartup = ConfigItem("Software", "startOnStartup", False, BoolValidator())
+    # Update
+    checkUpdateOnStart = ConfigItem(
+        "Update", "checkUpdateOnStart", False, BoolValidator()
+    )
+    # Other
+    enableExperimentalFeatures = ConfigItem(
+        "Other", "enableExperimentalFeatures", False, BoolValidator()
+    )
+    lastServer = ConfigItem("Other", "lastServer", "", "")
+    oldExecuteable = ConfigItem("Other", "oldExecuteable", "", "")
+    lastWindowSize = ConfigItem(
+        "Other", "lastWindowSize", [None, None]
+    )
+
+
+cfg = Config()

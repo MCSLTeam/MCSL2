@@ -54,21 +54,20 @@ from qfluentwidgets import (
 from MCSL2Lib.Controllers import javaDetector
 from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea  # noqa: F401
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.singleton import Singleton
+
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.utils import readGlobalServerConfig, isDarkTheme
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 from MCSL2Lib.utils import MCSL2Logger
 
 
-
 editServerVariables = EditServerVariables()
-settingsController = SettingsController()
 
 
 @Singleton
@@ -662,7 +661,7 @@ class ServerManagerPage(QWidget):
             self.tr("红石块"),
             self.tr("关闭的红石灯"),
             self.tr("打开的红石灯"),
-            self.tr("Spigot核心")
+            self.tr("Spigot核心"),
         ]
         self.editServerIcon.addItems(self.iconsList)
         self.editServerIcon.setMaxVisibleItems(5)
@@ -681,7 +680,7 @@ class ServerManagerPage(QWidget):
             w = MessageBox(
                 parent=self,
                 title=self.tr("是否要退出此页面?"),
-                content=self.tr("任何没有保存的修改都会消失！你确定要这么做吗？")
+                content=self.tr("任何没有保存的修改都会消失！你确定要这么做吗？"),
             )
             w.yesButton.setText(self.tr("取消"))
             w.cancelButton.setText(self.tr("退出"))
@@ -779,7 +778,7 @@ class ServerManagerPage(QWidget):
     def deleteServer_Step1(self, index):
         """删除服务器步骤1，询问是否删除"""
         globalConfig: list = readGlobalServerConfig()
-        title = self.tr("是否要删除服务器\"") + globalConfig[index]['name'] + self.tr("\"?")
+        title = self.tr('是否要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
         content = self.tr("此操作是不可逆的！你确定这么做吗？")
         w = MessageBox(title, content, self)
         w.yesButton.setText(self.tr("取消"))
@@ -795,8 +794,12 @@ class ServerManagerPage(QWidget):
     def deleteServer_Step2(self, index):
         """删除服务器步骤2：输入确认"""
         globalConfig: list = readGlobalServerConfig()
-        title = self.tr("你真的要删除服务器\"") + globalConfig[index]['name'] + self.tr("\"?")
-        content = self.tr("此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入\"") + globalConfig[index]['name'] + self.tr("\"，然后点击“删除”按钮：")
+        title = self.tr('你真的要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
+        content = (
+            self.tr('此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"')
+            + globalConfig[index]["name"]
+            + self.tr('"，然后点击“删除”按钮：')
+        )
         w2 = MessageBox(title, content, self)
         w2.yesButton.setText(self.tr("取消"))
         w2.cancelButton.setText(self.tr("删除"))
@@ -812,7 +815,9 @@ class ServerManagerPage(QWidget):
                 name=globalConfig[index]["name"], LineEditText=confirmLineEdit.text()
             )
         )
-        confirmLineEdit.setPlaceholderText(self.tr("在此输入\"") + globalConfig[index]['name'] + "\"")
+        confirmLineEdit.setPlaceholderText(
+            self.tr('在此输入"') + globalConfig[index]["name"] + '"'
+        )
         self.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
         w2.cancelSignal.connect(lambda: self.deleteServer_Step3(index=index))
         w2.textLayout.addWidget(confirmLineEdit)
@@ -823,7 +828,9 @@ class ServerManagerPage(QWidget):
         globalConfig: list = readGlobalServerConfig()
         delServerName = globalConfig[index]["name"]
 
-        self.deletingServerStateToolTip = StateToolTip(self.tr("删除服务器"), self.tr("请稍后，正在删除..."), self)
+        self.deletingServerStateToolTip = StateToolTip(
+            self.tr("删除服务器"), self.tr("请稍后，正在删除..."), self
+        )
         self.deletingServerStateToolTip.move(
             self.deletingServerStateToolTip.getSuitablePos()
         )
@@ -861,7 +868,9 @@ class ServerManagerPage(QWidget):
         self.javaFindWorkThreadFactory.create().start()
         self.serverIndex = index
         # 自动填充旧配置。在下方初始化变量之前不应调用任何的editServerVariables的属性
-        self.editServerSubtitleLabel.setText(self.tr("编辑服务器") + f"-{globalConfig[index]['name']}")
+        self.editServerSubtitleLabel.setText(
+            self.tr("编辑服务器") + f"-{globalConfig[index]['name']}"
+        )
         self.editJavaTextEdit.setText(globalConfig[index]["java_path"])
         self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
@@ -990,7 +999,9 @@ class ServerManagerPage(QWidget):
     def changeCore(self):
         """手动更换服务器核心"""
         tmpCorePath = str(
-            QFileDialog.getOpenFileName(self, self.tr("选择*.jar文件"), getcwd(), self.tr("Java可执行文件(*.jar)"))[0]
+            QFileDialog.getOpenFileName(
+                self, self.tr("选择*.jar文件"), getcwd(), self.tr("Java可执行文件(*.jar)")
+            )[0]
         ).replace("/", "\\")
         if tmpCorePath != "":
             editServerVariables.corePath = tmpCorePath
@@ -1036,7 +1047,9 @@ class ServerManagerPage(QWidget):
     def replaceJavaManually(self):
         """手动导入Java"""
         tmpJavaPath = str(
-            QFileDialog.getOpenFileName(self, self.tr("选择java.exe程序"), getcwd(), self.tr("Java主程序(java.exe)"))[0]
+            QFileDialog.getOpenFileName(
+                self, self.tr("选择java.exe程序"), getcwd(), self.tr("Java主程序(java.exe)")
+            )[0]
         )
         if tmpJavaPath != "":
             tmpJavaPath = tmpJavaPath.replace("/", "\\")
@@ -1046,7 +1059,13 @@ class ServerManagerPage(QWidget):
                     tmpNewJavaPath.append(javaDetector.Java(tmpJavaPath, v))
                     InfoBar.success(
                         title=self.tr("已添加"),
-                        content=self.tr("Java路径：" + tmpJavaPath + "\n版本：" + v + "\n但你还需要继续到Java列表中选取。"),
+                        content=self.tr(
+                            "Java路径："
+                            + tmpJavaPath
+                            + "\n版本："
+                            + v
+                            + "\n但你还需要继续到Java列表中选取。"
+                        ),
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
@@ -1101,7 +1120,7 @@ class ServerManagerPage(QWidget):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
         with open(
-                "MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8"
+            "MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8"
         ) as SaveFoundedJava:
             tmpNewJavaPath = editServerVariables.javaPath
             editServerVariables.javaPath = list(
@@ -1136,7 +1155,9 @@ class ServerManagerPage(QWidget):
         if sequenceNumber > 1:
             InfoBar.success(
                 title=self.tr("查找完毕"),
-                content=self.tr("一共搜索到了") + str(len(editServerVariables.javaPath)) + self.tr("个Java。\n请单击“Java列表”按钮查看、选择。"),
+                content=self.tr("一共搜索到了")
+                + str(len(editServerVariables.javaPath))
+                + self.tr("个Java。\n请单击“Java列表”按钮查看、选择。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1158,22 +1179,22 @@ class ServerManagerPage(QWidget):
 
         # 是否为空
         if (
-                self.editMinMemLineEdit.text() != ""
-                and self.editMaxMemLineEdit.text() != ""
+            self.editMinMemLineEdit.text() != ""
+            and self.editMaxMemLineEdit.text() != ""
         ):
             # 是否是数字
             if (
-                    self.editMinMemLineEdit.text().isdigit()
-                    and self.editMaxMemLineEdit.text().isdigit()
+                self.editMinMemLineEdit.text().isdigit()
+                and self.editMaxMemLineEdit.text().isdigit()
             ):
                 # 是否为整数
                 if (
-                        int(self.editMinMemLineEdit.text()) % 1 == 0
-                        and int(self.editMaxMemLineEdit.text()) % 1 == 0
+                    int(self.editMinMemLineEdit.text()) % 1 == 0
+                    and int(self.editMaxMemLineEdit.text()) % 1 == 0
                 ):
                     # 是否为整数
                     if int(self.editMinMemLineEdit.text()) <= int(
-                            self.editMaxMemLineEdit.text()
+                        self.editMaxMemLineEdit.text()
                     ):
                         # 设!
                         editServerVariables.minMem = int(self.editMinMemLineEdit.text())
@@ -1274,7 +1295,9 @@ class ServerManagerPage(QWidget):
         dupCode = self.checkDuplicateConfig()
         # 重复不保存
         if dupCode:
-            w = MessageBox(title=self.tr("失败"), content=self.tr("都没改就不需要保存了，退出即可"), parent=self)
+            w = MessageBox(
+                title=self.tr("失败"), content=self.tr("都没改就不需要保存了，退出即可"), parent=self
+            )
             w.yesButton.setText(self.tr("好好好"))
             w.cancelButton.setParent(None)
             w.cancelButton.deleteLater()
@@ -1316,7 +1339,11 @@ class ServerManagerPage(QWidget):
             # 如果出错
             if errCount != 0:
                 title = self.tr("创建服务器失败！有") + str(errCount) + self.tr("个问题。")
-                content = totalResultMsg + "\n----------------------------\n" + self.tr("请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。")
+                content = (
+                    totalResultMsg
+                    + "\n----------------------------\n"
+                    + self.tr("请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。")
+                )
                 w = MessageBox(title, content, self)
                 w.yesButton.setText(self.tr("好的"))
                 w.yesSignal.connect(w.deleteLater)
@@ -1327,19 +1354,48 @@ class ServerManagerPage(QWidget):
                 totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
                 title = self.tr("请再次检查你设置的参数是否有误：")
                 content = (
-                    totalResultMsg + "\n" +
-                    "----------------------------\n" +
-                    self.tr("Java：") + editServerVariables.selectedJavaPath + "\n" +
-                    self.tr("Java版本：") + editServerVariables.selectedJavaVersion + "\n" +
-                    self.tr("内存：") + str(editServerVariables.minMem) + editServerVariables.memUnit + "~" + 
-                    str(editServerVariables.maxMem) + editServerVariables.memUnit + "\n" +
-                    self.tr("服务器核心：") + editServerVariables.corePath + "\n" +
-                    self.tr("服务器核心文件名：") + editServerVariables.coreFileName + "\n" +
-                    self.tr("输出编码设置：") + self.editOutputDeEncodingComboBox.itemText(editServerVariables.consoleDeEncodingList.index(editServerVariables.consoleOutputDeEncoding)) + "\n" +
-                    self.tr("输入编码设置：") + self.editInputDeEncodingComboBox.itemText(editServerVariables.consoleDeEncodingList.index(editServerVariables.consoleInputDeEncoding)) + "\n" +
-                    self.tr("JVM参数：\n") +
-                    "    " + totalJVMArg + "\n" +
-                    self.tr("服务器名称：") + editServerVariables.serverName
+                    totalResultMsg
+                    + "\n"
+                    + "----------------------------\n"
+                    + self.tr("Java：")
+                    + editServerVariables.selectedJavaPath
+                    + "\n"
+                    + self.tr("Java版本：")
+                    + editServerVariables.selectedJavaVersion
+                    + "\n"
+                    + self.tr("内存：")
+                    + str(editServerVariables.minMem)
+                    + editServerVariables.memUnit
+                    + "~"
+                    + str(editServerVariables.maxMem)
+                    + editServerVariables.memUnit
+                    + "\n"
+                    + self.tr("服务器核心：")
+                    + editServerVariables.corePath
+                    + "\n"
+                    + self.tr("服务器核心文件名：")
+                    + editServerVariables.coreFileName
+                    + "\n"
+                    + self.tr("输出编码设置：")
+                    + self.editOutputDeEncodingComboBox.itemText(
+                        editServerVariables.consoleDeEncodingList.index(
+                            editServerVariables.consoleOutputDeEncoding
+                        )
+                    )
+                    + "\n"
+                    + self.tr("输入编码设置：")
+                    + self.editInputDeEncodingComboBox.itemText(
+                        editServerVariables.consoleDeEncodingList.index(
+                            editServerVariables.consoleInputDeEncoding
+                        )
+                    )
+                    + "\n"
+                    + self.tr("JVM参数：\n")
+                    + "    "
+                    + totalJVMArg
+                    + "\n"
+                    + self.tr("服务器名称：")
+                    + editServerVariables.serverName
                 )
                 w = MessageBox(title, content, self)
                 w.yesButton.setText(self.tr("无误，覆盖"))
@@ -1350,8 +1406,9 @@ class ServerManagerPage(QWidget):
     def confirmForgeServer(self):
         if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
             w = MessageBox(
-                self.tr("这是不是一个Forge服务器？"), self.tr("由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"),
-                self
+                self.tr("这是不是一个Forge服务器？"),
+                self.tr("由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"),
+                self,
             )
             w.yesButton.setText(self.tr("是"))
             w.cancelButton.setText(self.tr("不是"))
@@ -1394,7 +1451,9 @@ class ServerManagerPage(QWidget):
                     editServerVariables.corePath,
                     f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}",
                 )
-                w2 = MessageBox(title=self.tr("提示"), content=self.tr("是否需要删除旧的服务器核心？"), parent=self)
+                w2 = MessageBox(
+                    title=self.tr("提示"), content=self.tr("是否需要删除旧的服务器核心？"), parent=self
+                )
                 w2.yesButton.setText(self.tr("是的"))
                 w2.cancelButton.setText(self.tr("不用"))
                 w2.yesSignal.connect(
@@ -1404,14 +1463,14 @@ class ServerManagerPage(QWidget):
                 )
                 w2.exec()
             elif (
-                    osp.getsize(
-                        f"Servers//{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
-                    )
-                    != osp.getsize(
-                f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
-            )
-                    and editServerVariables.coreFileName
-                    == editServerVariables.oldCoreFileName
+                osp.getsize(
+                    f"Servers//{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
+                )
+                != osp.getsize(
+                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
+                )
+                and editServerVariables.coreFileName
+                == editServerVariables.oldCoreFileName
             ):
                 remove(
                     f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
@@ -1438,13 +1497,13 @@ class ServerManagerPage(QWidget):
         # 写入全局配置
         try:
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as globalServerListFile:
                 # old
                 globalServerList = loads(globalServerListFile.read())
 
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as newGlobalServerListFile:
                 # 添加新的
                 globalServerList["MCSLServerList"].pop(self.serverIndex)
@@ -1457,17 +1516,19 @@ class ServerManagerPage(QWidget):
 
         # 写入单独配置
         try:
-            if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
+            if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 with open(
-                        f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
-                        "w+",
-                        encoding="utf-8",
+                    f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
+                    "w+",
+                    encoding="utf-8",
                 ) as serverListFile:
                     serverListFile.write(dumps(serverConfig, indent=4))
             else:
                 InfoBar.info(
                     title=self.tr("功能提醒"),
-                    content=self.tr("您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"),
+                    content=self.tr(
+                        "您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -1480,7 +1541,10 @@ class ServerManagerPage(QWidget):
             exit1Msg += f"\n{e}"
 
         if exitCode == 0:
-            if editServerVariables.serverType == "forge" and editServerVariables.serverName != editServerVariables.oldServerName:
+            if (
+                editServerVariables.serverType == "forge"
+                and editServerVariables.serverName != editServerVariables.oldServerName
+            ):
                 self.installingForgeStateToolTip = StateToolTip(
                     self.tr("安装Forge"), self.tr("请稍后，正在安装..."), self
                 )
@@ -1493,13 +1557,15 @@ class ServerManagerPage(QWidget):
                         serverPath=f"Servers//{editServerVariables.serverName}",
                         file=editServerVariables.coreFileName,
                         java=editServerVariables.selectedJavaPath,
-                        logDecode=settingsController.fileSettings["outputDeEncoding"],
-                        isEditing=self.serverIndex
+                        logDecode=cfg.get(cfg.outputDeEncoding),
+                        isEditing=self.serverIndex,
                     )
                     editServerVariables.extraData[
                         "forge_version"
                     ] = self.forgeInstaller.forgeVersion
-                    self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                    self.forgeInstaller.installFinished.connect(
+                        self.afterInstallingForge
+                    )
                     self.forgeInstaller.asyncInstall()
                 except Exception as e:
                     self.afterInstallingForge(False, e.args)
@@ -1548,11 +1614,15 @@ class ServerManagerPage(QWidget):
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
         else:
-            self.installingForgeStateToolTip.setContent(self.tr("怪，安装失败！") + args if args is not ... else '')
+            self.installingForgeStateToolTip.setContent(
+                self.tr("怪，安装失败！") + args if args is not ... else ""
+            )
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
-        if hasattr(self, "forgeInstaller"):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
+        if hasattr(
+            self, "forgeInstaller"
+        ):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
             del self.forgeInstaller
         editServerVariables.resetToDefault()  # 重置
 
@@ -1561,19 +1631,19 @@ class ServerManagerPage(QWidget):
         检查更改前后是否有配置变化\n
         """
         return (
-                editServerVariables.oldMinMem == editServerVariables.minMem
-                and editServerVariables.oldMaxMem == editServerVariables.maxMem
-                and editServerVariables.oldCoreFileName == editServerVariables.coreFileName
-                and editServerVariables.oldSelectedJavaPath
-                == editServerVariables.selectedJavaPath
-                and editServerVariables.oldMemUnit == editServerVariables.memUnit
-                and editServerVariables.oldJVMArg == editServerVariables.jvmArg
-                and editServerVariables.oldServerName == editServerVariables.serverName
-                and editServerVariables.oldConsoleOutputDeEncoding
-                == editServerVariables.consoleOutputDeEncoding
-                and editServerVariables.oldConsoleInputDeEncoding
-                == editServerVariables.consoleInputDeEncoding
-                and editServerVariables.oldIcon == editServerVariables.icon
+            editServerVariables.oldMinMem == editServerVariables.minMem
+            and editServerVariables.oldMaxMem == editServerVariables.maxMem
+            and editServerVariables.oldCoreFileName == editServerVariables.coreFileName
+            and editServerVariables.oldSelectedJavaPath
+            == editServerVariables.selectedJavaPath
+            and editServerVariables.oldMemUnit == editServerVariables.memUnit
+            and editServerVariables.oldJVMArg == editServerVariables.jvmArg
+            and editServerVariables.oldServerName == editServerVariables.serverName
+            and editServerVariables.oldConsoleOutputDeEncoding
+            == editServerVariables.consoleOutputDeEncoding
+            and editServerVariables.oldConsoleInputDeEncoding
+            == editServerVariables.consoleInputDeEncoding
+            and editServerVariables.oldIcon == editServerVariables.icon
         )
 
 
@@ -1597,12 +1667,12 @@ class DeleteServerThread(QThread):
         # 删配置
         try:
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
             ) as RglobalServerListFile:
                 globalServerList = loads(RglobalServerListFile.read())
             globalServerList["MCSLServerList"].pop(self.index)
             with open(
-                    r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
             ) as WglobalServerConfigFile:
                 WglobalServerConfigFile.write(dumps(globalServerList, indent=4))
         except Exception as e:

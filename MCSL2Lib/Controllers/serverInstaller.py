@@ -33,14 +33,13 @@ from PyQt5.QtCore import (
 )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply, QNetworkAccessManager
 
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.utils import ServerUrl, workingThreads
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 from MCSL2Lib.utils import MCSL2Logger
 
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
-settingsController = SettingsController()
 
 
 class InstallerError(Exception):
@@ -465,9 +464,7 @@ class ForgeInstaller(Installer):
 
                 # 写入单独配置
                 try:
-                    if not settingsController.fileSettings[
-                        "onlySaveGlobalServerConfig"
-                    ]:
+                    if not cfg.get(cfg.onlySaveGlobalServerConfig):
                         with open(
                             osp.join(self.cwd, "MCSL2ServerConfig.json"),
                             mode="w+",

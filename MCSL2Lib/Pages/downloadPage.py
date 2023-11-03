@@ -58,7 +58,7 @@ from MCSL2Lib.Widgets.loadingTipWidget import (
     MCSLAPILoadingErrorWidget,
     MCSLAPILoadingWidget,
 )
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
@@ -69,7 +69,6 @@ from MCSL2Lib.variables import (
     SettingsVariables,
 )
 
-settingsController = SettingsController()
 downloadVariables = DownloadVariables()
 settingsVariables = SettingsVariables()
 
@@ -496,7 +495,9 @@ class DownloadPage(QWidget):
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
 
-        self.MCSLAPIOfficialCoreScrollArea = MySmoothScrollArea(self.MCSLAPIOfficialCore)
+        self.MCSLAPIOfficialCoreScrollArea = MySmoothScrollArea(
+            self.MCSLAPIOfficialCore
+        )
         self.MCSLAPIOfficialCoreScrollArea.setWidgetResizable(True)
         self.MCSLAPIOfficialCoreScrollArea.setObjectName(
             "MCSLAPIOfficialCoreScrollArea"
@@ -544,9 +545,7 @@ class DownloadPage(QWidget):
         dsList = [self.downloadWithFastMirror, self.downloadWithMCSLAPI]
         self.downloadStackedWidget.setCurrentWidget(
             dsList[
-                settingsVariables.downloadSourceList.index(
-                    settingsController.fileSettings["downloadSource"]
-                )
+                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             ]
         )
 
@@ -635,68 +634,68 @@ class DownloadPage(QWidget):
             self.downloadStackedWidget.setCurrentWidget(
                 dsList[
                     settingsVariables.downloadSourceList.index(
-                        settingsController.fileSettings["downloadSource"]
+                        cfg.get(cfg.downloadSource)
                     )
                 ]
             )
             self.refreshDownloads()
         else:
             if not settingsVariables.downloadSourceList.index(
-                settingsController.fileSettings["downloadSource"]
+                cfg.get(cfg.downloadSource)
             ):
                 self.releaseFMMemory()
             else:
                 self.releaseMCSLAPIMemory()
 
     def releaseFMMemory(self, id=0):
-            if not id:
-                self.coreListLayout.removeItem(self.scrollAreaSpacer)
-                for i in reversed(range(self.coreListLayout.count())):
-                    try:
-                        self.coreListLayout.itemAt(i).widget().setParent(None)
-                    except AttributeError:
-                        pass
-                    try:
-                        self.coreListLayout.itemAt(i).widget().deleteLater()
-                    except AttributeError:
-                        pass
-            elif id == 1:
-                self.versionLayout.removeItem(self.scrollAreaSpacer)
-                for i in reversed(range(self.versionLayout.count())):
-                    try:
-                        self.versionLayout.itemAt(i).widget().setParent(None)
-                    except AttributeError:
-                        pass
-                    try:
-                        self.versionLayout.itemAt(i).widget().deleteLater()
-                    except AttributeError:
-                        pass
-            elif id == 2:
-                self.buildLayout.removeItem(self.scrollAreaSpacer)
-                for i in reversed(range(self.buildLayout.count())):
-                    try:
-                        self.buildLayout.itemAt(i).widget().setParent(None)
-                    except AttributeError:
-                        pass
-                    try:
-                        self.buildLayout.itemAt(i).widget().deleteLater()
-                    except AttributeError:
-                        pass
-            else:
-                pass
+        if not id:
+            self.coreListLayout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(self.coreListLayout.count())):
+                try:
+                    self.coreListLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.coreListLayout.itemAt(i).widget().deleteLater()
+                except AttributeError:
+                    pass
+        elif id == 1:
+            self.versionLayout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(self.versionLayout.count())):
+                try:
+                    self.versionLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.versionLayout.itemAt(i).widget().deleteLater()
+                except AttributeError:
+                    pass
+        elif id == 2:
+            self.buildLayout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(self.buildLayout.count())):
+                try:
+                    self.buildLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.buildLayout.itemAt(i).widget().deleteLater()
+                except AttributeError:
+                    pass
+        else:
+            pass
 
     def releaseMCSLAPIMemory(self):
-                for layout in self.MCSLAPILayoutList:
-                    layout.removeItem(self.scrollAreaSpacer)
-                    for i in reversed(range(layout.count())):
-                        try:
-                            layout.itemAt(i).widget().setParent(None)
-                        except AttributeError:
-                            pass
-                        try:
-                            layout.itemAt(i).widget().deleteLater()
-                        except AttributeError:
-                            pass
+        for layout in self.MCSLAPILayoutList:
+            layout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(layout.count())):
+                try:
+                    layout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    layout.itemAt(i).widget().deleteLater()
+                except AttributeError:
+                    pass
 
     def refreshDownloads(self):
         """刷新下载页面主逻辑"""
@@ -856,7 +855,9 @@ class DownloadPage(QWidget):
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(
-                    title=self.tr("无法下载"), content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"), parent=self
+                    title=self.tr("无法下载"),
+                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
+                    parent=self,
                 )
                 box.yesSignal.connect(box.deleteLater)
                 box.cancelButton.setParent(None)
@@ -1059,7 +1060,9 @@ class DownloadPage(QWidget):
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(
-                    title=self.tr("无法下载"), content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"), parent=self
+                    title=self.tr("无法下载"),
+                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
+                    parent=self,
                 )
                 box.yesSignal.connect(box.deleteLater)
                 box.cancelButton.setParent(None)
@@ -1118,7 +1121,7 @@ class DownloadPage(QWidget):
         ) and not osp.exists(
             osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
         ):
-            if settingsController.fileSettings["saveSameFileException"] == "ask":
+            if cfg.get(cfg.saveSameFileException) == "ask":
                 w = MessageBox(self.tr("提示"), self.tr("您要下载的文件已存在。请选择操作。"), self)
                 w.yesButton.setText(self.tr("停止下载"))
                 w.cancelButton.setText(self.tr("覆盖文件"))
@@ -1130,7 +1133,7 @@ class DownloadPage(QWidget):
                 )
                 w.exec()
             elif (
-                settingsController.fileSettings["saveSameFileException"] == "overwrite"
+                cfg.get(cfg.saveSameFileException) == "overwrite"
             ):
                 InfoBar.warning(
                     title=self.tr("警告"),
@@ -1143,7 +1146,7 @@ class DownloadPage(QWidget):
                 )
                 remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
                 self.downloadFile(fileName, fileFormat, uri, extraData)
-            elif settingsController.fileSettings["saveSameFileException"] == "stop":
+            elif cfg.get(cfg.saveSameFileException) == "stop":
                 InfoBar.warning(
                     title=self.tr("警告"),
                     content=self.tr("MCSL2/Downloads文件夹存在同名文件。\n根据设置，已停止下载。"),

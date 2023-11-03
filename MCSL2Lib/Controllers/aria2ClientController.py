@@ -27,13 +27,9 @@ from typing import Optional, Callable, Dict
 from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer, QMutex
 from aria2p import Client, API, Download
 
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.utils import workingThreads
 from MCSL2Lib.utils import MCSL2Logger
-
-
-
-settingsController = SettingsController()
 
 
 class Aria2Controller:
@@ -179,13 +175,13 @@ class Aria2Controller:
 
     @classmethod
     def download(
-            cls,
-            uri,
-            info_get: Optional[Callable[[dict], None]] = None,
-            stopped: Optional[Callable[[int], None]] = None,
-            extraData: Optional[tuple] = None,
-            watch=True,
-            interval=0.1,
+        cls,
+        uri,
+        info_get: Optional[Callable[[dict], None]] = None,
+        stopped: Optional[Callable[[int], None]] = None,
+        extraData: Optional[tuple] = None,
+        watch=True,
+        interval=0.1,
     ) -> str:
         """
         Download a file from uri
@@ -421,7 +417,7 @@ class Aria2Controller:
             # command = 'tasklist | findstr "aria2c"'
             # result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
             # if result.stdout != "":
-                # MCSL2Logger.info("已杀死aria2进程")
+            # MCSL2Logger.info("已杀死aria2进程")
             subprocess.run("taskkill /f /im aria2c.exe", text=True, shell=True)
         elif cls._osType == "macOS":
             subprocess.run("killall aria2c", text=True, shell=True)
@@ -509,13 +505,13 @@ class DownloadWatcher(QObject):
     downloadStop = pyqtSignal(list)
 
     def __init__(
-            self,
-            gid,
-            info_get: Optional[Callable[[dict], None]],
-            stopped: Optional[Callable[[list], None]],
-            interval=0.1,
-            extraData: Optional[tuple] = None,
-            parent: Optional[QObject] = None,
+        self,
+        gid,
+        info_get: Optional[Callable[[dict], None]],
+        stopped: Optional[Callable[[list], None]],
+        interval=0.1,
+        extraData: Optional[tuple] = None,
+        parent: Optional[QObject] = None,
     ) -> None:
         """
         uris: a list of download urls
@@ -592,7 +588,7 @@ class DownloadWatcher(QObject):
 
 
 def initializeAria2Configuration():
-    Aria2Thread = str(settingsController.fileSettings["aria2Thread"])
+    Aria2Thread = cfg.get(cfg.aria2Thread)
     with open(r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8") as Aria2ConfigFile:
         Aria2ConfigFile.write(
             "file-allocation=none\n"
@@ -798,6 +794,7 @@ class DL_EntryManager(QObject):
     下载记录管理器,用于管理下载记录:获取下载记录,检查记录完整性,删除不完整的记录,添加记录等
     # >>> 注意：请用DL_EntryController来调用此类中的方法!!(异步)<<<
     """
+
     onGetEntries = pyqtSignal(list)
     onReadEntries = pyqtSignal(dict)
     file = "MCSL2//Downloads//download_entries.json"
@@ -839,9 +836,7 @@ class DL_EntryManager(QObject):
         """
         向文件中添加一条记录
         """
-        json.dumps(
-                {entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True
-            )
+        json.dumps({entryName: entryData}, indent=4, ensure_ascii=False, sort_keys=True)
         MCSL2Logger.success(f"新增记录: {entryName}: {entryData}")
         self.mutex.lock()
         self.entries.update({entryName: entryData})
@@ -1008,6 +1003,7 @@ class DL_EntryController(QObject):
     2.controller.resultReady.connect(...)
     3.controller.work.emit((<method:str>,<kwargs>:dict))
     """
+
     work = pyqtSignal(object)
     resultReady = pyqtSignal(object)
 
@@ -1032,7 +1028,5 @@ def set_entries(_):
 
 
 # entries = DL_EntryManager(entries, entries_mutex).read()
-(controller := DL_EntryController()).resultReady.connect(
-    lambda d: set_entries(d)
-)
+(controller := DL_EntryController()).resultReady.connect(lambda d: set_entries(d))
 controller.work.emit(("read", {}))

@@ -30,13 +30,12 @@ from qfluentwidgets import (
     InfoBar,
     StateToolTip,
 )
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from shutil import copytree
 from MCSL2Lib.variables import MCSLv1ImportVariables
 from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 
 importVariables = MCSLv1ImportVariables()
-settingsController = SettingsController()
 
 
 class MCSLv1(QWidget):
@@ -811,7 +810,7 @@ class MCSLv1(QWidget):
 
         # 写入单独配置
         try:
-            if not settingsController.fileSettings["onlySaveGlobalServerConfig"]:
+            if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 with open(
                     f"Servers//{importVariables.serverName}//MCSL2ServerConfig.json",
                     "w+",
@@ -843,7 +842,7 @@ class MCSLv1(QWidget):
                 duration=3000,
                 parent=self,
             )
-            if settingsController.fileSettings["clearAllNewServerConfigInProgram"]:
+            if cfg.get(cfg.clearAllNewServerConfigInProgram):
                 importVariables.resetToDefault()
                 self._rollBackInitValidateArgs()
                 self._rollBackImport()

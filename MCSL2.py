@@ -17,14 +17,15 @@ import sys
 
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent, QTranslator
 from PyQt5.QtWidgets import QApplication
-from qfluentwidgets import FluentTranslator
+from qfluentwidgets import FluentTranslator, qconfig
 from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
+
 # from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.variables import GlobalMCSL2Variables
-settingsController = SettingsController()
+
 
 class MCSL2Application(QApplication):
     def __init__(self, argv):
@@ -40,7 +41,6 @@ class MCSL2Application(QApplication):
 
 
 class MCSL2Translator(QTranslator):
-
     def __init__(self, locale: QLocale = None, parent=None):
         super().__init__(parent=parent)
         self.load(locale or QLocale())
@@ -55,12 +55,14 @@ if __name__ == "__main__":
     # tracer.start()
     # 初始化
     initializeMCSL2()
+    qconfig.load(r"./MCSL2/MCSL2_Config.json", cfg)
     # 确认开发模式防止出事
-    settingsController.initialize(firstLoad=True)
-    if (settingsController.fileSettings["oldExecuteable"] == "python"
-    or settingsController.fileSettings["oldExecuteable"] == "python.exe"
-    or settingsController.fileSettings["oldExecuteable"] == "py"
-    or settingsController.fileSettings["oldExecuteable"] == "py.exe"):
+    if (
+        cfg.get(cfg.oldExecuteable) == "python"
+        or cfg.get(cfg.oldExecuteable) == "python.exe"
+        or cfg.get(cfg.oldExecuteable) == "py"
+        or cfg.get(cfg.oldExecuteable) == "py.exe"
+    ):
         GlobalMCSL2Variables.devMode = True
     else:
         GlobalMCSL2Variables.devMode = False

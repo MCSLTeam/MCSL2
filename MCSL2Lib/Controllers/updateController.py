@@ -7,10 +7,9 @@ from os import remove, name as osname, rename, execl
 from platform import architecture
 from shutil import move
 from qfluentwidgets import MessageBox, InfoBar, InfoBarPosition
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
-settingsController = SettingsController()
 
 
 class CheckUpdateThread(QThread):
@@ -38,7 +37,7 @@ class MCSL2FileUpdater(QObject):
         super().__init__(parent)
         self.updateOSPrefix = "Windows" if osname == "nt" else "Linux"
         self.updateExtSuffix = (
-            "." + settingsController.fileSettings["oldExecuteable"].split(".")[1]
+            "." + cfg.get(cfg.oldExecuteable).split(".")[1]
         )
         self.updateArchitecturePrefix: str = ""
         if "32" in architecture()[0]:
@@ -79,8 +78,8 @@ class MCSL2FileUpdater(QObject):
         """重命名，在下载后调用"""
         if not GlobalMCSL2Variables.devMode:
             rename(
-                settingsController.fileSettings["oldExecuteable"],
-                f"{settingsController.fileSettings['oldExecuteable']}.old",
+                cfg.get(cfg.oldExecuteable),
+                f"{cfg.get('oldExecuteable')}.old",
             )
             self.moveFile()
         else:
@@ -113,8 +112,8 @@ def restart():
     """重启，在移动文件后调用(此代码在开发时不起作用)"""
     if not GlobalMCSL2Variables.devMode:
         execl(
-            settingsController.fileSettings["oldExecuteable"],
-            settingsController.fileSettings["oldExecuteable"],
+            cfg.get(cfg.oldExecuteable),
+            cfg.get(cfg.oldExecuteable),
             *sys.argv,
         )
 

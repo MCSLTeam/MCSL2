@@ -62,7 +62,7 @@ from MCSL2Lib.Controllers.serverController import (
     ServerHelper,
     ServerLauncher,
 )
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consolePage import ConsolePage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
@@ -91,7 +91,6 @@ from MCSL2Lib.variables import (
 )
 
 serverVariables = ServerVariables()
-settingsController = SettingsController()
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 serverHelper = ServerHelper()
@@ -220,27 +219,6 @@ class PageLoader(QThread):
         self.loadFinished.emit(self.pageType, self.targetObj, self.flag)
 
 
-class SystemTrayIcon(QSystemTrayIcon):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.setIcon(parent.windowIcon())
-        self.setToolTip("MCServerLauncher 2")
-        self.menu = SystemTrayMenu(self)
-        self.minimizeAction = Action(text=self.tr("最小化"), triggered=self.parent().minimize)
-        self.exitAction = Action(text=self.tr("退出MCSL2"), triggered=sys.exit)
-        self.exitAction.setIcon(FIF.CLOSE)
-        self.menu.addActions([self.minimizeAction, self.exitAction])
-        self.setContextMenu(self.menu)
-        self.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
-
-    def iconActivated(self, reason):
-        if reason == QSystemTrayIcon.DoubleClick:
-            if self.parent().isMinimized():
-                self.parent().myShow()
-            else:
-                self.parent().minimize()
-
-
 @Singleton
 class Window(FluentWindow):
     """程序主窗口"""
@@ -257,7 +235,7 @@ class Window(FluentWindow):
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
 
-        # if experiment := settingsController.fileSettings.get(
+        # if experiment := cfg.get(
         #     "enableExperimentalFeatures", False
         # ):
         #     MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
@@ -304,7 +282,7 @@ class Window(FluentWindow):
             serverHelper.loadAtLaunch()
             self.initQtSlot()
             self.initPluginSystem()
-            if settingsController.fileSettings["checkUpdateOnStart"]:
+            if cfg.get(cfg.checkUpdateOnStart):
                 self.settingsInterface.checkUpdate(parent=self)
             self.consoleInterface.installEventFilter(self)
             sys.excepthook = self.catchExceptions
@@ -337,7 +315,6 @@ class Window(FluentWindow):
             )
 
     def closeEvent(self, a0) -> None:
-        settingsController._saveSettings()
         if ServerHandler().isServerRunning():
             box = MessageBox(self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
                              parent=self)
@@ -458,21 +435,19 @@ class Window(FluentWindow):
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         if (
-                settingsController.fileSettings["lastWindowSize"][0]
-                is settingsController.fileSettings["lastWindowSize"][1]
+                cfg.get(cfg.lastWindowSize)[0]
+                is cfg.get(cfg.lastWindowSize)[1]
                 is None
         ):
             self.resize(int(w // 1.5), int(h // 1.5))
         else:
             self.resize(
-                settingsController.fileSettings["lastWindowSize"][0],
-                settingsController.fileSettings["lastWindowSize"][1],
+                cfg.get(cfg.lastWindowSize)[0],
+                cfg.get(cfg.lastWindowSize)[1],
             )
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
-        self.systemTrayIcon = SystemTrayIcon(self)
-        self.systemTrayIcon.show()
 
     def mySetTheme(self):
         setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
@@ -481,7 +456,7 @@ class Window(FluentWindow):
                 self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
             else:
                 pass
-        setThemeColor(str(settingsController.fileSettings["themeColor"]))
+        setThemeColor(cfg.get(cfg.themeColor))
 
     def initSafeQuitController(self):
         # 安全退出控件
@@ -538,7 +513,7 @@ class Window(FluentWindow):
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
                 settingsVariables.downloadSourceList.index(
-                    settingsController.fileSettings["downloadSource"]
+                    cfg.get(cfg.downloadSource)
                 )
             )
         )
@@ -548,7 +523,7 @@ class Window(FluentWindow):
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
                 settingsVariables.downloadSourceList.index(
-                    settingsController.fileSettings["downloadSource"]
+                    cfg.get(cfg.downloadSource)
                 )
             )
         )
@@ -620,7 +595,7 @@ class Window(FluentWindow):
         self.serverManagerInterface.editDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
                 settingsVariables.downloadSourceList.index(
-                    settingsController.fileSettings["downloadSource"]
+                    cfg.get(cfg.downloadSource)
                 )
             )
         )
@@ -633,7 +608,7 @@ class Window(FluentWindow):
 
         # 终端
         ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
-        if settingsController.fileSettings["clearConsoleWhenStopServer"]:
+        if cfg.get(cfg.clearConsoleWhenStopServer):
             ServerHandler().serverClosed.connect(
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
@@ -641,7 +616,6 @@ class Window(FluentWindow):
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
         self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
-        self.stackedWidget.currentChanged.connect(self.settingsInterface.onPageChangedRefresh)
         # fmt: on
 
     def startServer(self):
@@ -755,7 +729,7 @@ class Window(FluentWindow):
     @pyqtSlot(bool)
     def settingsRunner_autoRunLastServer(self, startBtnStat):
         """设置：启动时自动运行上次运行的服务器"""
-        if settingsController.fileSettings["autoRunLastServer"]:
+        if cfg.get(cfg.autoRunLastServer):
             if startBtnStat:
                 InfoBar.info(
                     title=self.tr("MCSL2功能提醒"),
@@ -787,28 +761,3 @@ class Window(FluentWindow):
                     duration=3000,
                     parent=self.homeInterface,
                 )
-
-    def minimize(self):
-        self.showMinimized()
-        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
-        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
-        self.systemTrayIcon.minimizeAction = Action(text=self.tr("显示窗口"), triggered=self.myShow)
-        self.systemTrayIcon.menu.addActions(
-            [self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction]
-        )
-
-    def myShow(self):
-        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.minimizeAction)
-        self.systemTrayIcon.menu.removeAction(self.systemTrayIcon.exitAction)
-        self.systemTrayIcon.minimizeAction = Action(text=self.tr("最小化"), triggered=self.minimize)
-        self.systemTrayIcon.menu.addActions(
-            [self.systemTrayIcon.minimizeAction, self.systemTrayIcon.exitAction]
-        )
-        self.showNormal()
-        self.activateWindow()
-
-    def resizeEvent(self, e):
-        settingsController._changeSettings(
-            {"lastWindowSize": [e.size().width(), e.size().height()]}
-        )
-        return super().resizeEvent(e)

@@ -34,39 +34,9 @@ from PyQt5.QtGui import QDesktopServices
 from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.logController import _MCSL2Logger
-from MCSL2Lib.Controllers.settingsController import SettingsController
+from MCSL2Lib.Controllers.settingsController import cfg
 
 MCSL2Logger = _MCSL2Logger()
-
-settingsController = SettingsController()
-
-configTemplate = {
-    "autoRunLastServer": False,
-    "acceptAllMojangEula": False,
-    "sendStopInsteadOfKill": True,
-    "restartServerWhenCrashed": False,
-    "newServerType": "Default",
-    "onlySaveGlobalServerConfig": False,
-    "clearAllNewServerConfigInProgram": False,
-    "downloadSource": "FastMirror",
-    "alwaysAskSaveDirectory": False,
-    "aria2Thread": 8,
-    "saveSameFileException": "ask",
-    "outputDeEncoding": "ansi",
-    "inputDeEncoding": "follow",
-    "quickMenu": True,
-    "clearConsoleWhenStopServer": False,
-    "theme": "auto",
-    "themeColor": "#0078d4",
-    "alwaysRunAsAdministrator": False,
-    "startOnStartup": False,
-    "checkUpdateOnStart": False,
-    "lastServer": "",
-    "enableExperimentalFeatures": False,
-    "oldExecuteable": "",
-    "lastWindowSize": [None, None],
-}
-
 
 class ServerUrl:
     @staticmethod
@@ -100,38 +70,17 @@ def initializeMCSL2():
         if not osp.exists(folder):
             makedirs(folder, exist_ok=True)
 
-    if not osp.exists(r"./MCSL2/MCSL2_Config.json"):
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
-            config.write(dumps(configTemplate, indent=4))
-    if osp.getsize(r"./MCSL2/MCSL2_Config.json") == 0:
-        with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
-            config.write(dumps(configTemplate, indent=4))
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
             r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
-    configurationCompleter()
 
     # set global thread pool
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
     )
-
-
-def configurationCompleter():
-    with open(r"./MCSL2/MCSL2_Config.json", "r", encoding="utf-8") as config:
-        configContent = loads(config.read())
-        if set(configContent.keys()) == set(configTemplate.keys()):
-            pass
-        else:
-            missingKeys = set(configTemplate.keys()) - set(configContent.keys())
-            MCSL2Logger.warning(f"缺失配置{missingKeys}，正在使用默认配置补全。")
-            for key in missingKeys:
-                configContent[key] = configTemplate[key]
-    with open(r"./MCSL2/MCSL2_Config.json", "w+", encoding="utf-8") as config:
-        config.write(dumps(configContent, indent=4))
 
 
 # 带有text的warning装饰器
@@ -184,10 +133,10 @@ def private(func):
 
 
 def isDarkTheme():
-    if settingsController.fileSettings["theme"] == "auto":
+    if cfg.get(cfg.theme) == "auto":
         return currentTheme() == "Dark"
     else:
-        return settingsController.fileSettings["theme"] == "dark"
+        return cfg.get(cfg.theme) == "dark"
 
 
 def openWebUrl(Url):

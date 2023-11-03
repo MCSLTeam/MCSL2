@@ -20,9 +20,7 @@ from typing import Callable
 from PyQt5.QtCore import pyqtSignal, QThread
 
 from MCSL2Lib.Controllers.networkController import Session
-from MCSL2Lib.Controllers.settingsController import SettingsController
-
-settingsController = SettingsController()
+from MCSL2Lib.Controllers.settingsController import cfg
 
 
 class MCSLAPIDownloadURLParser:
