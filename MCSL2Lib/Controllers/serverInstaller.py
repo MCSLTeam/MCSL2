@@ -43,7 +43,6 @@ editServerVariables = EditServerVariables()
 settingsController = SettingsController()
 
 
-
 class InstallerError(Exception):
     pass
 
@@ -214,7 +213,7 @@ class ForgeInstaller(Installer):
             self.installPlan = ForgeInstaller.InstallPlan.PlanA
         else:
             raise InstallerError(
-                f"不支持的自动安装版本:{self._mcVersion}的forge\nMCSL2支持1.8往后的所有forge安装"
+                f"不支持的自动安装版本:{self._mcVersion}\nMCSL2仅支持Minecraft 1.8及以上版本的Forge安装"
             )
 
     def getInstallerData(self, jarFile):
@@ -287,7 +286,9 @@ class ForgeInstaller(Installer):
     def onServerDownloadProgress(self, bytesReceived, bytesTotal):
         percent = bytesReceived * 100 / bytesTotal
         MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
-        self.downloadServerProgress.emit(self.tr("(正在下载核心... ") + f"{percent:.0f}" + self.tr("% 使用BMCLAPI下载"))
+        self.downloadServerProgress.emit(
+            self.tr("(正在下载核心... ") + f"{percent:.0f}" + self.tr("%) 使用BMCLAPI下载")
+        )
 
     def onServerDownloadFinished(self):
         data = self._reply.readAll()
@@ -501,26 +502,26 @@ class ForgeInstaller(Installer):
             _profile = json.loads(fileFile.read("install_profile.json"))
         except:
             return None
-
-        if (
-            (versionInfo := _profile.get("versionInfo", {}))
-            .get("id", "")
-            .lower()
-            .startswith("forge")
-        ):
+        
+        # fmt: off
+        if (versionInfo := _profile.get("versionInfo", {})).get("id", "").lower():
             _mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            _forgeVersion = versionInfo["id"].replace((_mcVersion), "").replace("-", "")
+            _forgeVersion = versionInfo["id"].replace(str(_mcVersion), "").replace("-", "")
             return _mcVersion, _forgeVersion
+
         elif "forge" in (version := _profile.get("version", "")).lower():
             _mcVersion = McVersion(version.split("-")[0])
             _forgeVersion = version.replace(str(_mcVersion), "").replace("-", "")
             return _mcVersion, _forgeVersion
+
         elif "forge" in (version := _profile.get("id", "")).lower():
             _mcVersion = McVersion(version.split("-")[0])
             _forgeVersion = version.replace(str(_mcVersion), "").replace("-", "")
             return _mcVersion, _forgeVersion
+
         else:
             return None
+        # fmt: on
 
     def cancelInstall(self, cancelled=False):
         super().cancelInstall(cancelled)
