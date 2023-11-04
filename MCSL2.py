@@ -20,7 +20,7 @@ from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator, qconfig
 from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
 from MCSL2Lib.Controllers.settingsController import cfg
-
+import gc
 # from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
@@ -89,6 +89,7 @@ if __name__ == "__main__":
 
     w = Window()
     w.show()
+    gc.enable()
     app.exec_()
     # tracer.stop()
     # tracer.save()

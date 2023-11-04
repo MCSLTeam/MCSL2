@@ -639,13 +639,6 @@ class DownloadPage(QWidget):
                 ]
             )
             self.refreshDownloads()
-        else:
-            if not settingsVariables.downloadSourceList.index(
-                cfg.get(cfg.downloadSource)
-            ):
-                self.releaseFMMemory()
-            else:
-                self.releaseMCSLAPIMemory()
 
     def releaseFMMemory(self, id=0):
         if not id:

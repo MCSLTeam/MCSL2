@@ -19,7 +19,6 @@ from platform import version as systemVersion
 from traceback import format_exception
 from types import TracebackType
 from typing import Type
-
 from PyQt5.QtCore import (
     QEvent,
     QObject,

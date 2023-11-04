@@ -701,8 +701,6 @@ class ServerManagerPage(QWidget):
     def onPageChangedRefresh(self, currentChanged):
         if currentChanged == 2:
             self.refreshServers()
-        else:
-            self.releaseMemory()
 
     def releaseMemory(self):
         try:
