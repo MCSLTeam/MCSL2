@@ -54,6 +54,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib import MCSL2VERSION
+from MCSL2Lib.Controllers.aria2ClientController import Aria2BootThread, Aria2Controller
 from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Controllers.updateController import (
     CheckUpdateThread,
@@ -262,6 +263,7 @@ class SettingsPage(QWidget):
             parent=self.downloadSettingsGroup,
         )
         self.alwaysAskSaveDirectory.setEnabled(False)
+        self.aria2Thread.valueChanged.connect(self.restartAria2)
         self.downloadSettingsGroup.addSettingCard(self.downloadSource)
         self.downloadSettingsGroup.addSettingCard(self.alwaysAskSaveDirectory)
         self.downloadSettingsGroup.addSettingCard(self.aria2Thread)
@@ -538,6 +540,35 @@ class SettingsPage(QWidget):
             parent=self,
         )
 
+    def restartAria2(self):
+        Aria2Controller.shutDown()
+        bootThread = Aria2BootThread(self)
+        bootThread.loaded.connect(self.onAria2Loaded)
+        bootThread.finished.connect(bootThread.deleteLater)
+        bootThread.start()
+
+    @pyqtSlot(bool)
+    def onAria2Loaded(self, flag: bool):
+        if flag:
+            InfoBar.success(
+                title=self.tr("Aria2下载引擎重启成功。"),
+                content="",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+        else:
+            InfoBar.error(
+                title=self.tr("Aria2下载引擎重启失败"),
+                content=self.tr("请检查是否安装了Aria2。"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
     def checkUpdate(self, parent):
         """
         检查更新触发器\n
@@ -549,7 +580,7 @@ class SettingsPage(QWidget):
         2.新版更新链接\n
         3.新版更新介绍\n
         """
-        self.checkUpdateSetting.setEnabled(False)  # 防止爆炸
+        self.checkUpdateSetting.button.setEnabled(False)  # 防止爆炸
         if parent != self:
             title = self.tr("触发自定义设置-开始检查更新...")
         else:
@@ -581,7 +612,7 @@ class SettingsPage(QWidget):
                 duration=2500,
                 parent=self.tmpParent,
             )
-            self.checkUpdateSetting.setEnabled(True)
+            self.checkUpdateSetting.button.setEnabled(True)
             return
         if cmpVersion(latestVerInfo["latest"]):
             title = self.tr("发现新版本：") + latestVerInfo["latest"]
@@ -615,7 +646,7 @@ class SettingsPage(QWidget):
                 parent=self.tmpParent,
             )
 
-        self.checkUpdateSetting.setEnabled(True)
+        self.checkUpdateSetting.button.setEnabled(True)
 
     def generateSystemReport(self):
         """创建系统报告"""
