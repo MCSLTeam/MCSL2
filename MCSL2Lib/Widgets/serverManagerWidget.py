@@ -143,7 +143,7 @@ class singleServerManager(CardWidget):
 
         self.verticalLayout.addWidget(self.editBtn)
         self.deleteBtn = PushButton(self.btnWidget)
-        if isDarkTheme:
+        if isDarkTheme():
             self.deleteBtn.setStyleSheet(
                 "PushButton {\n"
                 "    color: black;\n"
