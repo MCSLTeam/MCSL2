@@ -29,7 +29,7 @@ from qfluentwidgets import (
     TransparentToolButton,
     FluentIcon as FIF,
 )
-from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
+from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 
 from MCSL2Lib.Widgets.selectJavaWidget import singleSelectJavaWidget
 

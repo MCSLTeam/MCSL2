@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>confirmArgumentsWidget</class>
+ <widget class="CardWidget" name="confirmArgumentsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>590</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <widget class="PixmapLabel" name="statusIcon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="HorizontalSeparator" name="Separator1">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="SubtitleLabel" name="title">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>3. 设置参数</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QWidget" name="setJavaWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>120</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>120</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_17">
+      <item row="2" column="2">
+       <widget class="PrimaryPushButton" name="downloadJavaBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>下载Java</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="SubtitleLabel" name="javaTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Java:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="PrimaryPushButton" name="selectJavaPrimaryPushBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>手动导入</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="PrimaryPushButton" name="autoDetectJavaBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>自动查找Java</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="PushButton" name="javaListBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>108</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>108</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Java列表</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" rowspan="2" colspan="2">
+       <widget class="TextEdit" name="shellArchivesValidateArgsJavaTextEdit"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="7" column="1" colspan="2">
+    <widget class="QWidget" name="setJVMArgWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>171</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>171</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_18">
+      <item row="1" column="0">
+       <widget class="PlainTextEdit" name="jvmArgPlainTextEdit">
+        <property name="placeholderText">
+         <string>可选，用一个空格分组</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="SubtitleLabel" name="jvmArgTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>JVM参数：</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="8">
+    <spacer name="Spacer1">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>625</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="QWidget" name="setMemWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>85</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>85</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_15">
+      <item row="1" column="1">
+       <widget class="LineEdit" name="minMemLineEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="SubtitleLabel" name="memTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>内存:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="LineEdit" name="maxMemLineEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="SubtitleLabel" name="ToSymbol">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>~</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <spacer name="Spacer3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="4">
+       <widget class="ComboBox" name="memUnitComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="1" colspan="2">
+    <widget class="HorizontalSeparator" name="Separator2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
+    <widget class="QWidget" name="setDeEncodingWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>122</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>122</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_16">
+      <item row="2" column="1">
+       <widget class="ComboBox" name="outputComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="ComboBox" name="inputComboBox">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="StrongBodyLabel" name="outputTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>控制台输出编码（优先级高于全局设置）</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="SubtitleLabel" name="setDeEncodingTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>编码设置：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="StrongBodyLabel" name="inputTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>指令输入编码（优先级高于全局设置）</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="2">
+    <widget class="HorizontalSeparator" name="Separator3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>PushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PixmapLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HorizontalSeparator</class>
+   <extends>QWidget</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>CardWidget</class>
+   <extends>QFrame</extends>
+   <header>qfluentwidgets</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StrongBodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SubtitleLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PlainTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

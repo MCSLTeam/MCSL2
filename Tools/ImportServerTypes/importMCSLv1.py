@@ -33,7 +33,7 @@ from qfluentwidgets import (
 from MCSL2Lib.Controllers.settingsController import cfg
 from shutil import copytree
 from MCSL2Lib.variables import MCSLv1ImportVariables
-from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
+from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 
 importVariables = MCSLv1ImportVariables()
 

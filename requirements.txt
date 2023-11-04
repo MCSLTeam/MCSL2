@@ -1,4 +1,4 @@
-# pyqt
+# interface
 # pyqt5-stubs>=5.15.6.0
 # pyqt5-tools==5.15.9.3.3
 PyQt5==5.15.10
@@ -16,3 +16,5 @@ nuitka>=1.8.4
 imageio>=2.31.5
 lib-not-dr>=0.1.7, <=0.2.0
 
+# debug
+# viztracer

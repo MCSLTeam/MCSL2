@@ -35,7 +35,7 @@ from qfluentwidgets import (
     InfoBar,
     FluentIcon as FIF
 )
-from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
+from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables

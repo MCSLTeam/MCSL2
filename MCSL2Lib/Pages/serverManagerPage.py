@@ -57,7 +57,7 @@ from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *
-from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea  # noqa: F401
+from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea  # noqa: F401
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.singleton import Singleton

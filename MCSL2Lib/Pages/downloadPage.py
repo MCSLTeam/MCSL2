@@ -53,13 +53,12 @@ from MCSL2Lib.Widgets.FastMirrorWidgets import (
 )
 from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
-from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
+from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget, MySmoothScrollArea
 from MCSL2Lib.Widgets.loadingTipWidget import (
     MCSLAPILoadingErrorWidget,
     MCSLAPILoadingWidget,
 )
 from MCSL2Lib.Controllers.settingsController import cfg
-from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
 from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.Resources.icons import *

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>importPageWidget</class>
+ <widget class="QWidget" name="importPageWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>818</width>
+    <height>499</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <widget class="TransparentToolButton" name="backToMain"/>
+   </item>
+   <item row="0" column="2">
+    <widget class="SubtitleLabel" name="importPageTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>[Import Type Title]</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <spacer name="Spacer1">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>619</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <spacer name="Spacer3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>449</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2" colspan="2">
+    <widget class="SmoothScrollArea" name="importScrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <widget class="QWidget" name="importScrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>742</width>
+        <height>452</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2"/>
+     </widget>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="2">
+    <spacer name="Spacer2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>478</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ToolButton</class>
+   <extends>QToolButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TransparentToolButton</class>
+   <extends>ToolButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SmoothScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>qfluentwidgets</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SubtitleLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

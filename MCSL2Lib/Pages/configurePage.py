@@ -66,7 +66,7 @@ from MCSL2Lib.Controllers.settingsController import cfg
 # from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.ForgeInstallProgressWidget import ForgeInstallerProgressBox
-from MCSL2Lib.Widgets.myScrollArea import MySmoothScrollArea
+from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,

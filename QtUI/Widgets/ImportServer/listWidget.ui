@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SelectFileWidget</class>
- <widget class="CardWidget" name="SelectFileWidget">
+ <class>listWidget</class>
+ <widget class="CardWidget" name="listWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,6 +32,41 @@
    <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="2">
+    <widget class="PixmapLabel" name="statusIcon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="2">
+    <widget class="BodyLabel" name="statusText">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>[状态文本]</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" rowspan="3">
     <spacer name="Spacer">
      <property name="orientation">
@@ -48,8 +83,8 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="1">
-    <widget class="SubtitleLabel" name="selectFileTitle">
+   <item row="0" column="3">
+    <widget class="SubtitleLabel" name="title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -61,25 +96,17 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="BodyLabel" name="statusText">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>[状态文本]</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="TableWidget" name="TableWidget"/>
+   <item row="2" column="2" colspan="2">
+    <widget class="ListWidget" name="mainListWidget"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PixmapLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
   <customwidget>
    <class>CardWidget</class>
    <extends>QFrame</extends>
@@ -97,8 +124,8 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
-   <class>TableWidget</class>
-   <extends>QTableWidget</extends>
+   <class>ListWidget</class>
+   <extends>QListWidget</extends>
    <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
