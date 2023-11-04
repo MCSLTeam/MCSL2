@@ -445,13 +445,13 @@ class Window(FluentWindow):
         self.show()
         QApplication.processEvents()
 
-    def mySetTheme(self, theme=cfg.theme):
+    def mySetTheme(self):
         if "windows" in system().lower():
             if int(systemVersion().split(".")[-1]) >= 22000:
                 self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
             else:
                 pass
-        setTheme(theme)
+        setTheme(cfg.theme)
         # setThemeColor(cfg.get(cfg.themeColor))
 
     def initSafeQuitController(self):
