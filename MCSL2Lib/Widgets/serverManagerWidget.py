@@ -219,7 +219,6 @@ class singleServerManager(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Icon.sizePolicy().hasHeightForWidth())
         self.Icon.setSizePolicy(sizePolicy)
-        self.Icon.setStyleSheet("")
         self.Icon.setObjectName("Icon")
 
         self.gridLayout_3.addWidget(self.Icon, 0, 0, 1, 1)

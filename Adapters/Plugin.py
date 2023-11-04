@@ -14,12 +14,13 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     FluentIcon as FIF,
+    isDarkTheme
 )
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
-from MCSL2Lib.utils import isDarkTheme, FileOpener
+from MCSL2Lib.utils import FileOpener
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 

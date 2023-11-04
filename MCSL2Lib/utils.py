@@ -35,6 +35,7 @@ from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.logController import _MCSL2Logger
 from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.singleton import Singleton
 
 MCSL2Logger = _MCSL2Logger()
 
@@ -130,13 +131,6 @@ def private(func):
 
     # 返回包装函数
     return wrapper
-
-
-def isDarkTheme():
-    if cfg.get(cfg.theme) == "auto":
-        return currentTheme() == "Dark"
-    else:
-        return cfg.get(cfg.theme) == "dark"
 
 
 def openWebUrl(Url):
@@ -261,7 +255,7 @@ class workingThreads:
     def __call__(self, *args, **kwargs):
         raise RuntimeError("This class is not allowed to be instantiated.")
 
-
+@Singleton
 class FileOpener:
     def __init__(self):
         self.isOpenedFolder: bool = False
@@ -282,4 +276,4 @@ class FileOpener:
         elif system == "Linux":
             Popen(["xdg-open", _filePath])
         else:
-            pass
+            return

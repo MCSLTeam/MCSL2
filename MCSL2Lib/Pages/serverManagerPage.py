@@ -49,6 +49,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     StateToolTip,
+    isDarkTheme
 )
 
 from MCSL2Lib.Controllers import javaDetector
@@ -62,7 +63,7 @@ from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.utils import readGlobalServerConfig, isDarkTheme
+from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 from MCSL2Lib.utils import MCSL2Logger
 

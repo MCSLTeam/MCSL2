@@ -34,21 +34,13 @@ from PyQt5.QtWidgets import (
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
-    CheckBox,
-    ComboBox,
     HyperlinkButton,
     PrimaryPushButton,
-    RadioButton,
-    Slider,
     StrongBodyLabel,
-    SwitchButton,
     TitleLabel,
-    ColorPickerButton,
-    PushButton,
     setTheme,
     CustomColorSettingCard,
     SwitchSettingCard,
-    setThemeColor,
     OptionsSettingCard,
     SettingCardGroup,
     ComboBoxSettingCard,
@@ -248,7 +240,7 @@ class SettingsPage(QWidget):
             parent=self.downloadSettingsGroup,
         )
         self.alwaysAskSaveDirectory = SwitchSettingCard(
-            icon=FIF.REMOVE_FROM,
+            icon=FIF.CHAT,
             title=self.tr("总是询问保存路径"),
             content=self.tr("不勾选则保存到MCSL2/Downloads文件夹。"),
             configItem=cfg.alwaysAskSaveDirectory,
@@ -282,7 +274,7 @@ class SettingsPage(QWidget):
         )
         self.outputDeEncoding = ComboBoxSettingCard(
             configItem=cfg.outputDeEncoding,
-            icon=FIF.COMMAND_PROMPT,
+            icon=FIF.CODE,
             title=self.tr("控制台输出编码"),
             content=self.tr("优先级低于服务器配置设置。"),
             texts=[self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")],
@@ -290,7 +282,7 @@ class SettingsPage(QWidget):
         )
         self.inputDeEncoding = ComboBoxSettingCard(
             configItem=cfg.inputDeEncoding,
-            icon=FIF.COMMAND_PROMPT,
+            icon=FIF.CODE,
             title=self.tr("指令输入编码"),
             content=self.tr("优先级低于服务器配置设置。"),
             texts=[
@@ -309,7 +301,7 @@ class SettingsPage(QWidget):
             parent=self.consoleSettingsGroup,
         )
         self.clearConsoleWhenStopServer = SwitchSettingCard(
-            icon=FIF.LAYOUT,
+            icon=FIF.REMOVE_FROM,
             title=self.tr("关闭服务器后立刻清空终端"),
             content=self.tr("强迫症患者福音啊，好好好。"),
             configItem=cfg.clearConsoleWhenStopServer,
@@ -352,8 +344,11 @@ class SettingsPage(QWidget):
             configItem=cfg.startOnStartup,
             parent=self.consoleSettingsGroup,
         )
+        self.alwaysRunAsAdministrator.setEnabled(False)
+        self.startOnStartup.setEnabled(False)
         self.themeColor.colorChanged.connect(setThemeColor)
         self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci)))
+        self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
         self.programSettingsGroup.addSettingCard(self.alwaysRunAsAdministrator)
@@ -532,6 +527,17 @@ class SettingsPage(QWidget):
         self.aboutTitle.setText(self.tr("关于"))
         self.generateSysReport.clicked.connect(self.generateSystemReport)
 
+    def showNeedRestartMsg(self):
+        InfoBar.success(
+            title=self.tr("已修改"),
+            content=self.tr("该配置将在重启MCSL2后生效"),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=3000,
+            parent=self,
+        )
+
     def checkUpdate(self, parent):
         """
         检查更新触发器\n
@@ -543,7 +549,7 @@ class SettingsPage(QWidget):
         2.新版更新链接\n
         3.新版更新介绍\n
         """
-        self.checkUpdateSetting.button.setEnabled(False)  # 防止爆炸
+        self.checkUpdateSetting.setEnabled(False)  # 防止爆炸
         if parent != self:
             title = self.tr("触发自定义设置-开始检查更新...")
         else:
@@ -575,7 +581,7 @@ class SettingsPage(QWidget):
                 duration=2500,
                 parent=self.tmpParent,
             )
-            self.checkUpdateSetting.button.setEnabled(True)
+            self.checkUpdateSetting.setEnabled(True)
             return
         if cmpVersion(latestVerInfo["latest"]):
             title = self.tr("发现新版本：") + latestVerInfo["latest"]
@@ -609,7 +615,7 @@ class SettingsPage(QWidget):
                 parent=self.tmpParent,
             )
 
-        self.checkUpdateSetting.button.setEnabled(True)
+        self.checkUpdateSetting.setEnabled(True)
 
     def generateSystemReport(self):
         """创建系统报告"""

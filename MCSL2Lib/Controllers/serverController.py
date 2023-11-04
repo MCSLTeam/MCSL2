@@ -61,7 +61,7 @@ class ServerHelper(QObject):
         self.serverName.emit(readGlobalServerConfig()[index]["name"])
         self.startBtnStat.emit(True)
         # 防止和设置页冲突导致设置无效，得这样写，立刻保存变量以及文件
-        cfg.set(cfg.lastServer, readGlobalServerConfig()[index]["name"])
+        cfg.set(cfg.lastServer, readGlobalServerConfig()[index]["name"], save=True)
         self.backToHomePage.emit(0)
 
 
@@ -202,6 +202,7 @@ class ServerHandler(QObject):
         if self.Server.serverProcess is None:
             return False
         return self.Server.serverProcess.state() == QProcess.Running
+
 
 @Singleton
 class MojangEula:

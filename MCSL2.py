@@ -56,6 +56,7 @@ if __name__ == "__main__":
     # 初始化
     initializeMCSL2()
     qconfig.load(r"./MCSL2/MCSL2_Config.json", cfg)
+    cfg.set(cfg.oldExecuteable, sys.executable.split("\\")[-1])
     # 确认开发模式防止出事
     if (
         cfg.get(cfg.oldExecuteable) == "python"

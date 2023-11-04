@@ -31,11 +31,10 @@ from PyQt5.QtCore import (
     QThread, QThreadPool,
 )
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QWidget, QSystemTrayIcon
+from PyQt5.QtWidgets import QApplication, QWidget
 from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
-    Theme,
     setTheme,
     setThemeColor,
     InfoBar,
@@ -44,10 +43,8 @@ from qfluentwidgets import (
     HyperlinkButton,
     FluentWindow,
     SplashScreen,
-    SystemTrayMenu,
-    Action,
+    isDarkTheme,
 )
-
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.aria2ClientController import (
@@ -77,7 +74,6 @@ from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.utils import (
-    isDarkTheme,
     exceptionFilter,
     ExceptionFilterMode,
     workingThreads,
@@ -449,14 +445,14 @@ class Window(FluentWindow):
         self.show()
         QApplication.processEvents()
 
-    def mySetTheme(self):
-        setTheme(Theme.DARK if isDarkTheme() else Theme.LIGHT)
+    def mySetTheme(self, theme=cfg.theme):
         if "windows" in system().lower():
             if int(systemVersion().split(".")[-1]) >= 22000:
                 self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
             else:
                 pass
-        setThemeColor(cfg.get(cfg.themeColor))
+        setTheme(theme)
+        # setThemeColor(cfg.get(cfg.themeColor))
 
     def initSafeQuitController(self):
         # 安全退出控件
@@ -761,3 +757,7 @@ class Window(FluentWindow):
                     duration=3000,
                     parent=self.homeInterface,
                 )
+    
+    def resizeEvent(self, e):
+        cfg.set(cfg.lastWindowSize, [e.size().width(), e.size().height()])
+        return super().resizeEvent(e)
