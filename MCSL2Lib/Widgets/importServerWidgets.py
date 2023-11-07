@@ -22,6 +22,7 @@ from qfluentwidgets import (
     TextEdit,
     TransparentToolButton,
     BodyLabel,
+    FluentIcon as FIF
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
@@ -44,7 +45,7 @@ class ImportPageWidget(QWidget):
         self.setObjectName("importPageWidget")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-        self.backToMain = TransparentToolButton(self)
+        self.backToMain = TransparentToolButton(FIF.PAGE_LEFT, self)
         self.backToMain.setObjectName("backToMain")
         self.gridLayout.addWidget(self.backToMain, 0, 1, 1, 1)
         self.importPageTitle = SubtitleLabel(self)
@@ -81,6 +82,12 @@ class ImportPageWidget(QWidget):
         self.gridLayout.addItem(spacerItem2, 0, 0, 2, 1)
 
         # self.importPageTitle.setText("[Import Type Title]")
+
+    def __setTypeName(self, name: str):
+        self.importPageTitle.setText(name)
+
+    def connectBackSlot(self, f):
+        self.backToMain.clicked.connect(f)
 
 
 class ConfirmArgumentsWidget(CardWidget):
@@ -548,9 +555,10 @@ class ImportSingleWidget(CardWidget):
 
 
 class ListWidget(CardWidget):
-    def __init__(self, stepCount: int, parent=None):
+    def __init__(self, stepCount: int, title: str, parent=None):
         super().__init__(parent)
         self.__setUpUI()
+        self.__initView(stepCount, title)
     
     def __setUpUI(self):
         self.setObjectName("listWidget")
@@ -597,6 +605,8 @@ class ListWidget(CardWidget):
         self.statusText.setText("[状态文本]")
         self.title.setText("2.选择核心")
 
+    def __initView(self, stepCount, title):
+        self.title.setText(f"{stepCount}. {title}")
 
 class SaveWidget(CardWidget):
     def __init__(self, stepCount: int, parent=None):
