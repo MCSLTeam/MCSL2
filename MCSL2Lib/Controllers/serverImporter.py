@@ -17,46 +17,77 @@ class ServerImporter(QObject):
         self.pageWidget = ImportPageWidget(parent)
         self.totalStep = 0
 
+    def initStep(self):
+        raise NotImplementedError
+
+    def setTypeName(self, name: str):
+        self.pageWidget.__setTypeName(name)
+
     def addThisImportType(self):
-        parent = self.parent() # type: QStackedWidget
+        parent = self.parent()  # type: QStackedWidget
         parent.addWidget(self.pageWidget)
 
     def addTypeWidget(self, w):
         self.pageWidget.typeWidgetLayout.addWidget(w)
 
-    def initImportFileFolderWidget(self, stepCount: int = 0) -> ImportFileFolderWidget:
-        return ImportFileFolderWidget(stepCount)
+    def initImportFileFolderWidget(self) -> ImportFileFolderWidget:
+        self.totalStep += 1
+        return ImportFileFolderWidget(self.totalStep)
 
     def initImportSingleWidget(
         self,
-        stepCount: int = 0,
         title: str = "",
         btnText: str = "",
     ) -> ImportSingleWidget:
-        return ImportSingleWidget(stepCount, title, btnText)
+        self.totalStep += 1
+        return ImportSingleWidget(self.totalStep, title, btnText)
 
-    def initListWidget(self, stepCount: int=0) -> ListWidget:
-        return ListWidget(stepCount)
+    def initListWidget(self, title: str = "选择") -> ListWidget:
+        self.totalStep += 1
+        return ListWidget(self.totalStep, title)
 
-    def initConfirmArgumentsWidget(
-        self,
-        stepCount: int = 0,
-        javaPath: str = "",
-        minMem=0,
-        maxMem=0,
-        outputCoding: str = "",
-        inputCoding: str = "",
-        jvmArg: List[str] = [],
-    ) -> ConfirmArgumentsWidget:
-        return ConfirmArgumentsWidget(
-            stepCount,
-            javaPath,
-            minMem,
-            maxMem,
-            outputCoding,
-            inputCoding,
-            jvmArg,
-        )
+    def initConfirmArgumentsWidget(self) -> ConfirmArgumentsWidget:
+        self.totalStep += 1
+        return ConfirmArgumentsWidget(self.totalStep)
 
-    def initSaveWidget(self, stepCount: int=0) -> SaveWidget:
-        return SaveWidget(stepCount)
+    def initSaveWidget(self) -> SaveWidget:
+        self.totalStep += 1
+        return SaveWidget(self.totalStep)
+
+
+class NoShellArchivesImporter(ServerImporter):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTypeName("导入不含开服脚本的完整服务器压缩包")
+
+    def initStep(self):
+        self.importWidget = self.initImportSingleWidget("导入服务器压缩包")
+        self.addTypeWidget(self.importWidget)
+        self.selectWidget = self.initListWidget("选择核心")
+        self.addTypeWidget(self.selectWidget)
+        self.confirmWidget = self.initConfirmArgumentsWidget()
+        self.addTypeWidget(self.confirmWidget)
+        self.saveWidget = self.initSaveWidget()
+        self.addTypeWidget(self.saveWidget)
+
+    def connectSlot(self):
+        self.pageWidget.connectBackSlot(lambda: self.parent().setCurrentIndex(0))
+
+
+class ShellArchivesImporter(ServerImporter):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTypeName("导入含开服脚本的完整服务器压缩包")
+
+    def initStep(self):
+        self.importWidget = self.initImportSingleWidget("导入服务器压缩包")
+        self.addTypeWidget(self.importWidget)
+        self.selectWidget = self.initListWidget("选择开服脚本")
+        self.addTypeWidget(self.selectWidget)
+        self.confirmWidget = self.initConfirmArgumentsWidget()
+        self.addTypeWidget(self.confirmWidget)
+        self.saveWidget = self.initSaveWidget()
+        self.addTypeWidget(self.saveWidget)
+
+    def connectSlot(self):
+        self.pageWidget.connectBackSlot(lambda: self.parent().setCurrentIndex(0))
