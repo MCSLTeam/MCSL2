@@ -49,7 +49,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     StateToolTip,
-    isDarkTheme
+    isDarkTheme,
 )
 
 from MCSL2Lib.Controllers import javaDetector
@@ -875,12 +875,12 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
         self.editOutputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(
-                globalConfig[index]["output_decoding"].lower()
+                globalConfig[index]["output_decoding"]
             )
         )
         self.editInputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(
-                globalConfig[index]["input_encoding"].lower()
+                globalConfig[index]["input_encoding"]
             )
         )
         self.editMemUnitComboBox.setCurrentIndex(
@@ -1378,14 +1378,14 @@ class ServerManagerPage(QWidget):
                     + self.tr("输出编码设置：")
                     + self.editOutputDeEncodingComboBox.itemText(
                         editServerVariables.consoleDeEncodingList.index(
-                            editServerVariables.consoleOutputDeEncoding.lower()
+                            editServerVariables.consoleOutputDeEncoding
                         )
                     )
                     + "\n"
                     + self.tr("输入编码设置：")
                     + self.editInputDeEncodingComboBox.itemText(
                         editServerVariables.consoleDeEncodingList.index(
-                            editServerVariables.consoleInputDeEncoding.lower()
+                            editServerVariables.consoleInputDeEncoding
                         )
                     )
                     + "\n"

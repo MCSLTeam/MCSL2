@@ -1929,8 +1929,8 @@ class ConfigurePage(QWidget):
                 str(configureServerVariables.maxMem) + configureServerVariables.memUnit + "\n" +
                 self.tr("服务器核心：") + configureServerVariables.corePath + "\n" +
                 self.tr("服务器核心文件名：") + configureServerVariables.coreFileName + "\n" +
-                self.tr("输出编码设置：") + self.extendedOutputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleOutputDeEncoding.lower())) + "\n" +
-                self.tr("输入编码设置：") + self.extendedInputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleInputDeEncoding.lower())) + "\n" +
+                self.tr("输出编码设置：") + self.extendedOutputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleOutputDeEncoding)) + "\n" +
+                self.tr("输入编码设置：") + self.extendedInputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleInputDeEncoding)) + "\n" +
                 self.tr("JVM参数：\n") +
                 "    " + totalJVMArg + "\n" +
                 self.tr("服务器名称：") + configureServerVariables.serverName
