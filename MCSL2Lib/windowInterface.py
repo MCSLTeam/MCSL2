@@ -27,7 +27,8 @@ from PyQt5.QtCore import (
     pyqtSlot,
     QSize,
     pyqtSignal,
-    QThread, QThreadPool,
+    QThread,
+    QThreadPool,
 )
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget
@@ -155,24 +156,24 @@ class InterfaceLoaded(QObject):
 
     def canInitNavigation(self):
         return (
-                self.homeInterfaceLoaded
-                and self.configureInterfaceLoaded
-                and self.downloadInterfaceLoaded
-                and self.consoleInterfaceLoaded
-                and self.pluginsInterfaceLoaded
-                and self.settingsInterfaceLoaded
-                and self.serverManagerInterfaceLoaded
+            self.homeInterfaceLoaded
+            and self.configureInterfaceLoaded
+            and self.downloadInterfaceLoaded
+            and self.consoleInterfaceLoaded
+            and self.pluginsInterfaceLoaded
+            and self.settingsInterfaceLoaded
+            and self.serverManagerInterfaceLoaded
         )
 
     def canInitQtSlot(self):
         return (
-                self.configureInterfaceLoaded
-                and self.selectJavaPageLoaded
-                and self.homeInterfaceLoaded
-                and self.serverManagerInterfaceLoaded
-                and self.consoleInterfaceLoaded
-                and self.selectNewJavaPageLoaded
-                and self.downloadInterfaceLoaded
+            self.configureInterfaceLoaded
+            and self.selectJavaPageLoaded
+            and self.homeInterfaceLoaded
+            and self.serverManagerInterfaceLoaded
+            and self.consoleInterfaceLoaded
+            and self.selectNewJavaPageLoaded
+            and self.downloadInterfaceLoaded
         )
 
     def canInitPluginSystem(self):
@@ -180,15 +181,15 @@ class InterfaceLoaded(QObject):
 
     def allPageLoaded(self):
         return (
-                self.homeInterfaceLoaded
-                and self.configureInterfaceLoaded
-                and self.downloadInterfaceLoaded
-                and self.consoleInterfaceLoaded
-                and self.pluginsInterfaceLoaded
-                and self.settingsInterfaceLoaded
-                and self.serverManagerInterfaceLoaded
-                and self.selectJavaPageLoaded
-                and self.selectNewJavaPageLoaded
+            self.homeInterfaceLoaded
+            and self.configureInterfaceLoaded
+            and self.downloadInterfaceLoaded
+            and self.consoleInterfaceLoaded
+            and self.pluginsInterfaceLoaded
+            and self.settingsInterfaceLoaded
+            and self.serverManagerInterfaceLoaded
+            and self.selectJavaPageLoaded
+            and self.selectNewJavaPageLoaded
         )
 
 
@@ -199,7 +200,7 @@ class PageLoader(QThread):
     loadFinished = pyqtSignal(object, str, str)
 
     def __init__(
-            self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None
+        self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None
     ):
         super().__init__()
         self.pageType = pageType
@@ -311,8 +312,9 @@ class Window(FluentWindow):
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
-            box = MessageBox(self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
-                             parent=self)
+            box = MessageBox(
+                self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"), parent=self
+            )
             box.yesButton.setText(self.tr("取消"))
             box.cancelButton.setText(self.tr("安全关闭并退出"))
             box.cancelButton.setStyleSheet(
@@ -350,7 +352,7 @@ class Window(FluentWindow):
         process.kill()
 
     def catchExceptions(
-            self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
     ):
         """
         全局捕获异常，并弹窗显示
@@ -429,17 +431,7 @@ class Window(FluentWindow):
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        if (
-                cfg.get(cfg.lastWindowSize)[0]
-                is cfg.get(cfg.lastWindowSize)[1]
-                is None
-        ):
-            self.resize(int(w // 1.5), int(h // 1.5))
-        else:
-            self.resize(
-                cfg.get(cfg.lastWindowSize)[0],
-                cfg.get(cfg.lastWindowSize)[1],
-            )
+        self.resize(int(w // 1.5), int(h // 1.5))
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
@@ -507,9 +499,7 @@ class Window(FluentWindow):
         )
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                settingsVariables.downloadSourceList.index(
-                    cfg.get(cfg.downloadSource)
-                )
+                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             )
         )
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(
@@ -517,9 +507,7 @@ class Window(FluentWindow):
         )
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                settingsVariables.downloadSourceList.index(
-                    cfg.get(cfg.downloadSource)
-                )
+                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             )
         )
         self.selectJavaPage.backBtn.clicked.connect(
@@ -589,9 +577,7 @@ class Window(FluentWindow):
         )
         self.serverManagerInterface.editDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                settingsVariables.downloadSourceList.index(
-                    cfg.get(cfg.downloadSource)
-                )
+                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             )
         )
         self.selectNewJavaPage.backBtn.clicked.connect(
@@ -620,7 +606,8 @@ class Window(FluentWindow):
             w = MessageBox(
                 title=self.tr("提示"),
                 content=self.tr(
-                    "你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。"),
+                    "你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。"
+                ),
                 parent=self,
             )
             w.yesButton.setText(self.tr("同意"))
@@ -670,18 +657,18 @@ class Window(FluentWindow):
         if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     self.consoleInterface.sendCommandButton.click()
                     return True
             elif a1.key() == Qt.Key_Up:
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if len(
-                            GlobalMCSL2Variables.userCommandHistory
+                        GlobalMCSL2Variables.userCommandHistory
                     ) and GlobalMCSL2Variables.upT > -len(
                         GlobalMCSL2Variables.userCommandHistory
                     ):
@@ -693,12 +680,12 @@ class Window(FluentWindow):
                         return True
             elif a1.key() == Qt.Key_Down:
                 if (
-                        self.stackedWidget.view.currentIndex() == 4
-                        and self.consoleInterface.commandLineEdit
+                    self.stackedWidget.view.currentIndex() == 4
+                    and self.consoleInterface.commandLineEdit
                 ):
                     if (
-                            len(GlobalMCSL2Variables.userCommandHistory)
-                            and GlobalMCSL2Variables.upT < 0
+                        len(GlobalMCSL2Variables.userCommandHistory)
+                        and GlobalMCSL2Variables.upT < 0
                     ):
                         GlobalMCSL2Variables.upT += 1
                         nextCommand = GlobalMCSL2Variables.userCommandHistory[
@@ -707,8 +694,8 @@ class Window(FluentWindow):
                         self.consoleInterface.commandLineEdit.setText(nextCommand)
                         return True
                     if (
-                            len(GlobalMCSL2Variables.userCommandHistory)
-                            and GlobalMCSL2Variables.upT == 0
+                        len(GlobalMCSL2Variables.userCommandHistory)
+                        and GlobalMCSL2Variables.upT == 0
                     ):
                         self.consoleInterface.commandLineEdit.setText("")
                         return True
@@ -749,14 +736,11 @@ class Window(FluentWindow):
                 InfoBar.info(
                     title=self.tr("功能提醒"),
                     content=self.tr(
-                        "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"),
+                        "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
                     duration=3000,
                     parent=self.homeInterface,
                 )
-    
-    def resizeEvent(self, e):
-        cfg.set(cfg.lastWindowSize, [e.size().width(), e.size().height()])
-        return super().resizeEvent(e)

@@ -875,12 +875,12 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
         self.editOutputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(
-                globalConfig[index]["output_decoding"]
+                globalConfig[index]["output_decoding"].lower()
             )
         )
         self.editInputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(
-                globalConfig[index]["input_encoding"]
+                globalConfig[index]["input_encoding"].lower()
             )
         )
         self.editMemUnitComboBox.setCurrentIndex(
@@ -1378,14 +1378,14 @@ class ServerManagerPage(QWidget):
                     + self.tr("输出编码设置：")
                     + self.editOutputDeEncodingComboBox.itemText(
                         editServerVariables.consoleDeEncodingList.index(
-                            editServerVariables.consoleOutputDeEncoding
+                            editServerVariables.consoleOutputDeEncoding.lower()
                         )
                     )
                     + "\n"
                     + self.tr("输入编码设置：")
                     + self.editInputDeEncodingComboBox.itemText(
                         editServerVariables.consoleDeEncodingList.index(
-                            editServerVariables.consoleInputDeEncoding
+                            editServerVariables.consoleInputDeEncoding.lower()
                         )
                     )
                     + "\n"

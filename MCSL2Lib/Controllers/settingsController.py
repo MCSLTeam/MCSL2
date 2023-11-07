@@ -92,13 +92,13 @@ class Config(QConfig):
         "Console",
         "outputDeEncoding",
         "ansi",
-        OptionsValidator(["utf-8", "GB18030", "ansi"]),
+        OptionsValidator(["utf-8", "gb18030", "ansi"]),
     )
     inputDeEncoding = OptionsConfigItem(
         "Console",
         "inputDeEncoding",
         "follow",
-        OptionsValidator(["follow", "utf-8", "GB18030", "ansi"]),
+        OptionsValidator(["follow", "utf-8", "gb18030", "ansi"]),
     )
     quickMenu = ConfigItem("Console", "quickMenu", True, BoolValidator())
     clearConsoleWhenStopServer = ConfigItem(
@@ -122,9 +122,9 @@ class Config(QConfig):
     )
     lastServer = ConfigItem("Other", "lastServer", "", "")
     oldExecuteable = ConfigItem("Other", "oldExecuteable", "", "")
-    lastWindowSize = ConfigItem(
-        "Other", "lastWindowSize", [None, None]
-    )
+    # lastWindowSize = ConfigItem(
+    #     "Other", "lastWindowSize", [None, None]
+    # )
 
 
 cfg = Config()

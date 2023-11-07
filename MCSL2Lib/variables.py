@@ -34,7 +34,7 @@ class ConfigureServerVariables:
         self.memUnit: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "gb18030", "ansi"]
         self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
@@ -98,7 +98,7 @@ class EditServerVariables:
         self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
 
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "gb18030", "ansi"]
         self.memUnitList = ["M", "G"]
         self.iconsFileNameList = [
             "Anvil.png",
@@ -368,8 +368,8 @@ class SettingsVariables:
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
         self.downloadSourceList = ["FastMirror", "MCSLAPI"]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
-        self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
-        self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.outputDeEncodingList = ["utf-8", "gb18030", "ansi"]
+        self.inputDeEncodingList = ["follow", "utf-8", "gb18030", "ansi"]
         self.themeList = ["auto", "dark", "light"]
 
 
@@ -393,7 +393,7 @@ class MCSLv1ImportVariables:
             "-XX:+AlwaysPreTouch",
             "-XX:+ParallelRefProcEnabled",
         ]
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.consoleDeEncodingList = ["follow", "utf-8", "gb18030", "ansi"]
         self.memUnitList = ["M", "G"]
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
