@@ -1,4 +1,5 @@
 from PyQt5.QtCore import Qt, QRect, QSize
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QSpacerItem,
     QVBoxLayout,
@@ -22,13 +23,24 @@ from qfluentwidgets import (
     TransparentToolButton,
     BodyLabel,
 )
-
+from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.variables import ImportVariables
+
+class _StatusPixmapLabel(PixmapLabel):
+    def setFinished(self):
+        self.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
+
+    def setNotFinished(self):
+        self.setPixmap(QPixmap(":/built-InIcons/not.svg"))
 
 
 class ImportPageWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.__setUpUI()
+
+    def __setUpUI(self):
         self.setObjectName("importPageWidget")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -60,9 +72,9 @@ class ImportPageWidget(QWidget):
         self.importScrollAreaWidgetContents.setObjectName(
             "importScrollAreaWidgetContents"
         )
-        self.verticalLayout_2 = QVBoxLayout(self.importScrollAreaWidgetContents)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.typeWidgetLayout = QVBoxLayout(self.importScrollAreaWidgetContents)
+        self.typeWidgetLayout.setContentsMargins(0, 0, 0, 0)
+        self.typeWidgetLayout.setObjectName("typeWidgetLayout")
         self.importScrollArea.setWidget(self.importScrollAreaWidgetContents)
         self.gridLayout.addWidget(self.importScrollArea, 1, 2, 1, 2)
         spacerItem2 = QSpacerItem(20, 478, QSizePolicy.Fixed, QSizePolicy.Minimum)
@@ -72,8 +84,24 @@ class ImportPageWidget(QWidget):
 
 
 class ConfirmArgumentsWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(
+        self,
+        stepCount,
+        javaPath,
+        minMem,
+        maxMem,
+        outputCoding,
+        inputCoding,
+        jvmArg,
+        parent=None,
+    ):
         super().__init__(parent)
+        self.__setUpUI()
+        self.__initView(
+            stepCount, javaPath, minMem, maxMem, outputCoding, inputCoding, jvmArg
+        )
+
+    def __setUpUI(self):
         self.setObjectName("confirmArgumentsWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -84,7 +112,7 @@ class ConfirmArgumentsWidget(CardWidget):
         self.setMaximumSize(QSize(16777215, 650))
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-        self.statusIcon = PixmapLabel(self)
+        self.statusIcon = _StatusPixmapLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -173,13 +201,9 @@ class ConfirmArgumentsWidget(CardWidget):
         self.javaListBtn.setMaximumSize(QSize(108, 16777215))
         self.javaListBtn.setObjectName("javaListBtn")
         self.gridLayout_17.addWidget(self.javaListBtn, 2, 3, 1, 1)
-        self.shellArchivesValidateArgsJavaTextEdit = TextEdit(self.setJavaWidget)
-        self.shellArchivesValidateArgsJavaTextEdit.setObjectName(
-            "shellArchivesValidateArgsJavaTextEdit"
-        )
-        self.gridLayout_17.addWidget(
-            self.shellArchivesValidateArgsJavaTextEdit, 1, 0, 2, 2
-        )
+        self.javaTextEdit = TextEdit(self.setJavaWidget)
+        self.javaTextEdit.setObjectName("javaTextEdit")
+        self.gridLayout_17.addWidget(self.javaTextEdit, 1, 0, 2, 2)
         self.gridLayout.addWidget(self.setJavaWidget, 1, 1, 1, 2)
         self.setJVMArgWidget = QWidget(self)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -332,7 +356,6 @@ class ConfirmArgumentsWidget(CardWidget):
         self.Separator3.setSizePolicy(sizePolicy)
         self.Separator3.setObjectName("Separator3")
         self.gridLayout.addWidget(self.Separator3, 6, 1, 1, 2)
-        self.title.setText("3. 设置参数")
         self.downloadJavaBtn.setText("下载Java")
         self.javaTitle.setText("Java:")
         self.selectJavaPrimaryPushBtn.setText("手动导入")
@@ -347,16 +370,48 @@ class ConfirmArgumentsWidget(CardWidget):
         self.inputTitle.setText("指令输入编码（优先级高于全局设置）")
         self.memUnitComboBox.addItems(["M", "G"])
         self.outputComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
         )
         self.inputComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
         )
+
+    def __initView(
+        self,
+        stepCount: int,
+        javaPath: str,
+        minMem: int,
+        maxMem: int,
+        outputCoding,
+        inputCoding,
+        jvmArg,
+    ):
+        self.title.setText(f"{stepCount}. 设置参数")
+        self.javaTextEdit.setPlainText(javaPath)
+        self.minMemLineEdit.setText(str(minMem))
+        self.maxMemLineEdit.setText(str(maxMem))
+        if outputCoding in ImportVariables.codingList:
+            self.outputComboBox.setCurrentIndex(ImportVariables.codingList.index(outputCoding))
+        else:
+            self.outputComboBox.setCurrentIndex(2)
+        if inputCoding in ImportVariables.codingList:
+            self.outputComboBox.setCurrentIndex(ImportVariables.codingList.index(inputCoding))
+        else:
+            self.inputComboBox.setCurrentIndex(2)
+        totalJVMArg = ""
+        for arg in jvmArg:
+            totalJVMArg += f"{arg} "
+        totalJVMArg.strip()
+        self.jvmArgPlainTextEdit.setPlainText(totalJVMArg)
 
 
 class ImportFileFolderWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, stepCount: int, parent=None):
         super().__init__(parent)
+        self.__setUpUI()
+        self.__initView(stepCount)
+    
+    def __setUpUI(self):
         self.setObjectName("importFileFolderWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -371,7 +426,7 @@ class ImportFileFolderWidget(CardWidget):
         self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
         spacerItem1 = QSpacerItem(265, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 2, 3, 1, 1)
-        self.statusIcon = PixmapLabel(self)
+        self.statusIcon = _StatusPixmapLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -420,15 +475,21 @@ class ImportFileFolderWidget(CardWidget):
         self.statusText.setObjectName("statusText")
         self.gridLayout.addWidget(self.statusText, 1, 1, 1, 2)
 
-        self.title.setText("1. 导入文件/文件夹")
         self.importFileBtn.setText("导入文件")
         self.ImportFolderBtn.setText("导入文件夹")
-        # self.statusText.setText("[状态文本]")
+        self.statusText.setText("[状态文本]")
+
+    def __initView(self, stepCount): 
+        self.title.setText(f"{stepCount}. 导入文件/文件夹")
 
 
 class ImportSingleWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, stepCount: int, title: str, btnText: str, parent=None):
         super().__init__(parent)
+        self.__setUpUI()
+        self.__initView(stepCount, title, btnText)
+
+    def __setUpUI(self):
         self.setObjectName("importSingleWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -439,7 +500,7 @@ class ImportSingleWidget(CardWidget):
         self.setMaximumSize(QSize(16777215, 150))
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-        self.statusIcon = PixmapLabel(self)
+        self.statusIcon = _StatusPixmapLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -479,14 +540,19 @@ class ImportSingleWidget(CardWidget):
         self.statusText.setSizePolicy(sizePolicy)
         self.statusText.setObjectName("statusText")
         self.gridLayout.addWidget(self.statusText, 1, 1, 1, 3)
-        # self.title.setText("1. 选择MCSL 1主程序")
-        # self.importBtn.setText("选择主程序")
-        # self.statusText.setText("[状态文本]")
+        self.statusText.setText("[状态文本]")
+
+    def __initView(self, stepCount, title, btnText):
+        self.title.setText(f"{stepCount}. {title}")
+        self.importBtn.setText(btnText)
 
 
 class ListWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, stepCount: int, parent=None):
         super().__init__(parent)
+        self.__setUpUI()
+    
+    def __setUpUI(self):
         self.setObjectName("listWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -497,7 +563,7 @@ class ListWidget(CardWidget):
         self.setMaximumSize(QSize(16777215, 300))
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-        self.statusIcon = PixmapLabel(self)
+        self.statusIcon = _StatusPixmapLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -528,13 +594,17 @@ class ListWidget(CardWidget):
         self.mainListWidget = ListWidget(self)
         self.mainListWidget.setObjectName("mainListWidget")
         self.gridLayout.addWidget(self.mainListWidget, 2, 2, 1, 2)
-        # self.statusText.setText("[状态文本]")
-        # self.title.setText("2.选择核心")
+        self.statusText.setText("[状态文本]")
+        self.title.setText("2.选择核心")
 
 
 class SaveWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, stepCount: int, parent=None):
         super().__init__(parent)
+        self.__setUpUI()
+        self.__initView(stepCount)
+
+    def __setUpUI(self):
         self.setObjectName("saveWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -580,10 +650,11 @@ class SaveWidget(CardWidget):
         self.gridLayout.addWidget(self.saveSaveServerBtn, 2, 1, 1, 1)
         self.saveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.saveSaveServerBtn.setText("导入！")
-        # self.title.setText("4. 完成导入")
-
         self.saveServerNameLineEdit.textChanged.connect(
             lambda: self.saveSaveServerBtn.setEnabled(
                 self.saveServerNameLineEdit.text() != ""
             )
         )
+
+    def __initView(self, stepCount):
+        self.title.setText(f"{stepCount}. 完成导入")

@@ -39,7 +39,7 @@ class ConfigureServerVariables:
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
         self.serverType = ""
-        self.extraData = {} 
+        self.extraData = {}
         """
         self.extraData maybe like this:
         
@@ -158,6 +158,7 @@ class EditServerVariables:
 
 class GlobalMCSL2Variables:
     """需要被全局使用的变量"""
+
     devMode = False
     scrollAreaViewportQss = "background-color: transparent;"
     MinecraftBuiltInCommand = [
@@ -371,6 +372,10 @@ class SettingsVariables:
         self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
         self.themeList = ["auto", "dark", "light"]
+
+
+class ImportVariables:
+    codingList = ["utf-8", "GB18030", "ansi"]
 
 
 @Singleton
