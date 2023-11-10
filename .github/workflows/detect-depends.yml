@@ -1,4 +1,4 @@
-name: Build and Release
+name: Detect Depends
 
 on: workflow_dispatch
 
