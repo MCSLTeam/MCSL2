@@ -1,7 +1,7 @@
 import typing
 
 from PyQt5.QtCore import QAbstractListModel, QModelIndex, Qt, QSize
-from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy
+from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy, QTableWidget
 from qfluentwidgets import MessageBoxBase, SubtitleLabel, TableWidget
 
 from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
@@ -46,32 +46,8 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setHorizontalHeaderLabels(
             [self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")]
         )
-
-        self.yesButton.setText(self.tr("选择"))
-        self.cancelButton.setText(self.tr("取消"))
-
-        self.yesButton.setDisabled(True)
-
-    def getSelectedEntry(self):
-        return list(map(lambda x: x.text(), self.entryView.selectedItems()))
-
-    def updateEntries(self, entries: typing.List[typing.Dict]):
-        entries.sort(key=lambda x: x.get("mc_version"), reverse=True)
-
-        self.entryView.setRowCount(len(entries))
-
-        for i, coreInfo in enumerate(entries):
-            self.entryView.setItem(i, 0, QTableWidgetItem(coreInfo.get("name")))
-            self.entryView.setItem(i, 1, QTableWidgetItem(coreInfo.get("type")))
-            self.entryView.setItem(i, 2, QTableWidgetItem(coreInfo.get("mc_version")))
-            self.entryView.setItem(
-                i, 3, QTableWidgetItem(coreInfo.get("build_version"))
-            )
         self.entryView.verticalHeader().hide()
-        self.entryView.setHorizontalHeaderLabels(
-            [self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")]
-        )
-
+        self.entryView.setWordWrap(False)
         self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.entryView.setMinimumSize(QSize(620, 300))
         self.entryView.setMaximumSize(QSize(16777215, 16777215))
@@ -84,16 +60,28 @@ class DownloadEntryBox(MessageBoxBase):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.entryView.sizePolicy().hasHeightForWidth())
         self.entryView.setSizePolicy(sizePolicy)
-        self.entryView.resizeColumnToContents(3)
-        self.entryView.horizontalHeader().setSectionResizeMode(3, QHeaderView.Fixed)
-        self.entryView.resizeColumnToContents(2)
-        self.entryView.horizontalHeader().setSectionResizeMode(2, QHeaderView.Fixed)
-        self.entryView.resizeColumnToContents(1)
-        self.entryView.horizontalHeader().setSectionResizeMode(1, QHeaderView.Fixed)
         self.entryView.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-        self.entryView.resizeRowsToContents()
-        self.entryView.setWordWrap(False)
+        self.yesButton.setText(self.tr("选择"))
+        self.cancelButton.setText(self.tr("取消"))
 
+        self.yesButton.setDisabled(True)
+
+    def getSelectedEntry(self):
+        return list(map(lambda x: x.text(), self.entryView.selectedItems()))
+
+    def updateEntries(self, entries: typing.List[typing.Dict]):
+        entries.sort(key=lambda x: x.get("mc_version"), reverse=True)
+        print(len(entries))
+        self.entryView.setRowCount(len(entries))
+        for i, coreInfo in enumerate(entries):
+            print(i, coreInfo)
+            self.entryView.setItem(i, 0, QTableWidgetItem(coreInfo.get("name")))
+            self.entryView.setItem(i, 1, QTableWidgetItem(coreInfo.get("type")))
+            self.entryView.setItem(i, 2, QTableWidgetItem(coreInfo.get("mc_version")))
+            self.entryView.setItem(
+                i, 3, QTableWidgetItem(coreInfo.get("build_version"))
+            )
+        self.entryView.resizeRowsToContents()
         self.yesButton.setDisabled(True)
         self.titleLabel.setText(self.tr("下载项(共") + str(len(entries)) + self.tr("项)"))
 
