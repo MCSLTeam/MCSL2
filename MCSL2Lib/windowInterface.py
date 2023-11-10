@@ -620,6 +620,7 @@ class Window(FluentWindow):
             w.exec()
         else:
             self.switchTo(self.consoleInterface)
+            self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
             self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
             self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
