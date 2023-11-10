@@ -154,30 +154,30 @@ class InterfaceLoaded(QObject):
 
     mainWindowInited = False
 
-    def canInitNavigation(self):
-        return (
-            self.homeInterfaceLoaded
-            and self.configureInterfaceLoaded
-            and self.downloadInterfaceLoaded
-            and self.consoleInterfaceLoaded
-            and self.pluginsInterfaceLoaded
-            and self.settingsInterfaceLoaded
-            and self.serverManagerInterfaceLoaded
-        )
+    # def canInitNavigation(self):
+    #     return (
+    #         self.homeInterfaceLoaded
+    #         and self.configureInterfaceLoaded
+    #         and self.downloadInterfaceLoaded
+    #         and self.consoleInterfaceLoaded
+    #         and self.pluginsInterfaceLoaded
+    #         and self.settingsInterfaceLoaded
+    #         and self.serverManagerInterfaceLoaded
+    #     )
 
-    def canInitQtSlot(self):
-        return (
-            self.configureInterfaceLoaded
-            and self.selectJavaPageLoaded
-            and self.homeInterfaceLoaded
-            and self.serverManagerInterfaceLoaded
-            and self.consoleInterfaceLoaded
-            and self.selectNewJavaPageLoaded
-            and self.downloadInterfaceLoaded
-        )
+    # def canInitQtSlot(self):
+    #     return (
+    #         self.configureInterfaceLoaded
+    #         and self.selectJavaPageLoaded
+    #         and self.homeInterfaceLoaded
+    #         and self.serverManagerInterfaceLoaded
+    #         and self.consoleInterfaceLoaded
+    #         and self.selectNewJavaPageLoaded
+    #         and self.downloadInterfaceLoaded
+    #     )
 
-    def canInitPluginSystem(self):
-        return self.pluginsInterfaceLoaded
+    # def canInitPluginSystem(self):
+    #     return self.pluginsInterfaceLoaded
 
     def allPageLoaded(self):
         return (
@@ -284,7 +284,6 @@ class Window(FluentWindow):
             sys.excepthook = self.catchExceptions
             self.startAria2Client()
             self.splashScreen.finish()
-            self.splashScreen.deleteLater()
             self.update()
 
     @pyqtSlot(bool)
