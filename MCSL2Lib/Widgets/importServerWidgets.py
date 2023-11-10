@@ -1,4 +1,6 @@
-from PyQt5.QtCore import Qt, QRect, QSize
+from os import getcwd
+from typing import List
+from PyQt5.QtCore import Qt, QRect, QSize, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QSpacerItem,
@@ -7,6 +9,8 @@ from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
     QHBoxLayout,
+    QFileDialog,
+    QListWidgetItem
 )
 from qfluentwidgets import (
     CardWidget,
@@ -22,26 +26,29 @@ from qfluentwidgets import (
     TextEdit,
     TransparentToolButton,
     BodyLabel,
-    FluentIcon as FIF
+    FluentIcon as FIF,
+    ListWidget,
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 from MCSL2Lib.variables import ImportVariables
 
+
 class _StatusPixmapLabel(PixmapLabel):
     def setFinished(self):
         self.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
-
+        self.setFixedSize(30, 30)
     def setNotFinished(self):
         self.setPixmap(QPixmap(":/built-InIcons/not.svg"))
+        self.setFixedSize(30, 30)
 
 
 class ImportPageWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.__setUpUI()
+        self._setUpUI()
 
-    def __setUpUI(self):
+    def _setUpUI(self):
         self.setObjectName("importPageWidget")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -83,7 +90,7 @@ class ImportPageWidget(QWidget):
 
         # self.importPageTitle.setText("[Import Type Title]")
 
-    def __setTypeName(self, name: str):
+    def _setTypeName(self, name: str):
         self.importPageTitle.setText(name)
 
     def connectBackSlot(self, f):
@@ -91,24 +98,37 @@ class ImportPageWidget(QWidget):
 
 
 class ConfirmArgumentsWidget(CardWidget):
+    
+    finishSignal = pyqtSignal(bool)
+    
     def __init__(
         self,
         stepCount,
-        javaPath,
-        minMem,
-        maxMem,
-        outputCoding,
-        inputCoding,
-        jvmArg,
+        title,
+        # javaPath,
+        # minMem,
+        # maxMem,
+        # outputCoding,
+        # inputCoding,
+        # jvmArg,
         parent=None,
     ):
         super().__init__(parent)
-        self.__setUpUI()
-        self.__initView(
-            stepCount, javaPath, minMem, maxMem, outputCoding, inputCoding, jvmArg
+        self._setUpUI()
+        self._initView(
+            stepCount, title
+            # javaPath, minMem, maxMem, outputCoding, inputCoding, jvmArg
         )
+        self.setNotFinished()
 
-    def __setUpUI(self):
+    def setFinished(self):
+        self.statusIcon.setFinished()
+        self.finishSignal.emit(True)
+
+    def setNotFinished(self):
+        self.statusIcon.setNotFinished()
+
+    def _setUpUI(self):
         self.setObjectName("confirmArgumentsWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -383,42 +403,56 @@ class ConfirmArgumentsWidget(CardWidget):
             [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
         )
 
-    def __initView(
+    def _initView(
         self,
         stepCount: int,
-        javaPath: str,
-        minMem: int,
-        maxMem: int,
-        outputCoding,
-        inputCoding,
-        jvmArg,
+        title: str,
+        # javaPath: str,
+        # minMem: int,
+        # maxMem: int,
+        # outputCoding,
+        # inputCoding,
+        # jvmArg,
     ):
-        self.title.setText(f"{stepCount}. 设置参数")
-        self.javaTextEdit.setPlainText(javaPath)
-        self.minMemLineEdit.setText(str(minMem))
-        self.maxMemLineEdit.setText(str(maxMem))
-        if outputCoding in ImportVariables.codingList:
-            self.outputComboBox.setCurrentIndex(ImportVariables.codingList.index(outputCoding))
-        else:
-            self.outputComboBox.setCurrentIndex(2)
-        if inputCoding in ImportVariables.codingList:
-            self.outputComboBox.setCurrentIndex(ImportVariables.codingList.index(inputCoding))
-        else:
-            self.inputComboBox.setCurrentIndex(2)
-        totalJVMArg = ""
-        for arg in jvmArg:
-            totalJVMArg += f"{arg} "
-        totalJVMArg.strip()
-        self.jvmArgPlainTextEdit.setPlainText(totalJVMArg)
+        self.title.setText(f"{stepCount}. {title}")
+        # self.javaTextEdit.setPlainText(javaPath)
+        # self.minMemLineEdit.setText(str(minMem))
+        # self.maxMemLineEdit.setText(str(maxMem))
+        # if outputCoding in ImportVariables.codingList:
+        #     self.outputComboBox.setCurrentIndex(ImportVariables.codingList.index(outputCoding))
+        # else:
+        #     self.outputComboBox.setCurrentIndex(2)
+        # if inputCoding in ImportVariables.codingList:
+        #     self.outputComboBox.setCurrentIndex(ImportVariables.codingList.index(inputCoding))
+        # else:
+        #     self.inputComboBox.setCurrentIndex(2)
+        # totalJVMArg = ""
+        # for arg in jvmArg:
+        #     totalJVMArg += f"{arg} "
+        # totalJVMArg.strip()
+        # self.jvmArgPlainTextEdit.setPlainText(totalJVMArg)
 
 
 class ImportFileFolderWidget(CardWidget):
+
+    finishSignal = pyqtSignal(bool)
+
     def __init__(self, stepCount: int, parent=None):
         super().__init__(parent)
-        self.__setUpUI()
-        self.__initView(stepCount)
-    
-    def __setUpUI(self):
+        self._setUpUI()
+        self._initView(stepCount)
+        self.setNotFinished()
+
+    def setFinished(self):
+        self.statusIcon.setFinished()
+        self.statusText.setText("此项已完成，请查看下一步。")
+        self.finishSignal.emit(True)
+
+    def setNotFinished(self):
+        self.statusIcon.setNotFinished()
+        self.statusText.setText("此项仍未完成。")
+
+    def _setUpUI(self):
         self.setObjectName("importFileFolderWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -486,17 +520,33 @@ class ImportFileFolderWidget(CardWidget):
         self.ImportFolderBtn.setText("导入文件夹")
         self.statusText.setText("[状态文本]")
 
-    def __initView(self, stepCount): 
+    def _initView(self, stepCount):
         self.title.setText(f"{stepCount}. 导入文件/文件夹")
 
 
 class ImportSingleWidget(CardWidget):
+
+    fileImportedSignal = pyqtSignal(str)
+    finishSignal = pyqtSignal(bool)
+
     def __init__(self, stepCount: int, title: str, btnText: str, parent=None):
         super().__init__(parent)
-        self.__setUpUI()
-        self.__initView(stepCount, title, btnText)
+        self.file: str = ""
+        self._setUpUI()
+        self._initView(stepCount, title, btnText)
+        self._connectSlots()
+        self.setNotFinished()
 
-    def __setUpUI(self):
+    def setFinished(self):
+        self.statusIcon.setFinished()
+        self.statusText.setText("此项已完成，请查看下一步。")
+        self.finishSignal.emit(True)
+
+    def setNotFinished(self):
+        self.statusIcon.setNotFinished()
+        self.statusText.setText("此项仍未完成。")
+
+    def _setUpUI(self):
         self.setObjectName("importSingleWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -549,18 +599,44 @@ class ImportSingleWidget(CardWidget):
         self.gridLayout.addWidget(self.statusText, 1, 1, 1, 3)
         self.statusText.setText("[状态文本]")
 
-    def __initView(self, stepCount, title, btnText):
+    def _initView(self, stepCount, title, btnText):
         self.title.setText(f"{stepCount}. {title}")
         self.importBtn.setText(btnText)
 
+    def _connectSlots(self):
+        self.importBtn.clicked.connect(self.selectFile)
 
-class ListWidget(CardWidget):
+    def selectFile(self):
+        self.file = str(QFileDialog.getOpenFileName(self, self.tr("选择压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)"))[
+                0
+            ]).replace("/", "\\")
+        if self.file != "":
+            self.setFinished()
+            self.fileImportedSignal.emit(self.file)
+        else:
+            pass
+        
+
+class MyListWidget(CardWidget):
+
+    finishSignal = pyqtSignal(bool)
+
     def __init__(self, stepCount: int, title: str, parent=None):
         super().__init__(parent)
-        self.__setUpUI()
-        self.__initView(stepCount, title)
-    
-    def __setUpUI(self):
+        self._setUpUI()
+        self._initView(stepCount, title)
+        self.setNotFinished()
+
+    def setFinished(self):
+        self.statusIcon.setFinished()
+        self.statusText.setText("此项已完成，请查看下一步。")
+        self.finishSignal.emit(True)
+
+    def setNotFinished(self):
+        self.statusIcon.setNotFinished()
+        self.statusText.setText("此项仍未完成。")
+
+    def _setUpUI(self):
         self.setObjectName("listWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -605,16 +681,25 @@ class ListWidget(CardWidget):
         self.statusText.setText("[状态文本]")
         self.title.setText("2.选择核心")
 
-    def __initView(self, stepCount, title):
+    def _initView(self, stepCount, title):
         self.title.setText(f"{stepCount}. {title}")
 
+    def filterList(self, fileList: List[str] = [], fileExt: str = ""):
+        filteredList = [file for file in fileList if file.endswith(fileExt)]
+        for extFile in filteredList:
+            self.mainListWidget.addItem(QListWidgetItem(extFile))
+
+
 class SaveWidget(CardWidget):
+    
+    finishSignal = pyqtSignal(bool)
+
     def __init__(self, stepCount: int, parent=None):
         super().__init__(parent)
-        self.__setUpUI()
-        self.__initView(stepCount)
+        self._setUpUI()
+        self._initView(stepCount)
 
-    def __setUpUI(self):
+    def _setUpUI(self):
         self.setObjectName("saveWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -666,5 +751,5 @@ class SaveWidget(CardWidget):
             )
         )
 
-    def __initView(self, stepCount):
+    def _initView(self, stepCount):
         self.title.setText(f"{stepCount}. 完成导入")

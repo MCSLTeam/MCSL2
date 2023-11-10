@@ -52,6 +52,7 @@ from MCSL2Lib.Controllers import javaDetector
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.Controllers.serverController import MojangEula
+# from MCSL2Lib.Controllers.serverImporter import NoShellArchivesImporter
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import cfg
 
@@ -1492,6 +1493,11 @@ class ConfigurePage(QWidget):
 
         self.settingsRunner_newServerType()
         self.importNewServerBtn.setEnabled(False)
+    #     self.enableServerImporter()
+
+    # def enableServerImporter(self):
+    #     NoShellArchivesImporter(self.importNewServerStackWidget)
+    #     self.importNewServerBtn.setEnabled(True)
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
@@ -1696,6 +1702,7 @@ class ConfigurePage(QWidget):
             )
         del self.downloadEntry
         self.downloadEntry = None
+
     def checkJavaSet(self):
         """检查Java设置"""
         if configureServerVariables.selectedJavaPath != "":
