@@ -22,7 +22,6 @@ from pathlib import Path
 from lib_not_dr.nuitka.compile import CompilerHelper
 from lib_not_dr.types.version import Version
 
-
 def get_version() -> Tuple[Version, Version]:
     # 尽量不要写死在构建脚本里
     # 用点邪门的方法
@@ -66,8 +65,8 @@ def gen_compiler() -> CompilerHelper:
         file_description="MC Server Launcher 2",
         copy_right="Copyright ©MCSL Team. All right reserved.",
         icon_path=Path("./MCSL2.ico"),
-        no_follow_import=["numpy", "scipy"],
-        follow_import=["Adapters", "loguru"],
+        no_follow_import=["numpy", "scipy", "PIL", "Pillow", "colorthief"],
+        follow_import=["Adapters", "loguru", "requests"],
         include_packages=["MCSL2Lib", 'sqlite3'],
         include_data_dir=[
             ("MCSL2/Aria2", "MCSL2/Aria2"),
