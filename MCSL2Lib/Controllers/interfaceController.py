@@ -14,7 +14,7 @@
 A stacked widget controller.
 """
 from PyQt5.QtCore import QEasingCurve
-from PyQt5.QtWidgets import QAbstractScrollArea
+from PyQt5.QtWidgets import QAbstractScrollArea, QScrollArea
 from qfluentwidgets.window.stacked_widget import StackedWidget as QFStackedWidget
 from qfluentwidgets import SmoothScrollArea, SmoothScrollDelegate
 from MCSL2Lib.variables import GlobalMCSL2Variables
@@ -39,3 +39,4 @@ class MySmoothScrollArea(SmoothScrollArea):
         super().__init__(parent)
         self.viewport().setStyleSheet(GlobalMCSL2Variables.scrollAreaViewportQss)
         self.delegate = SmoothScrollDelegate(self, True)
+        self.setFrameShape(QScrollArea.NoFrame)
