@@ -350,7 +350,7 @@ class SettingsPage(QWidget):
         self.startOnStartup.setEnabled(False)
         self.themeColor.colorChanged.connect(setThemeColor)
         self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci)))
-        self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
+        # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
         self.programSettingsGroup.addSettingCard(self.alwaysRunAsAdministrator)
