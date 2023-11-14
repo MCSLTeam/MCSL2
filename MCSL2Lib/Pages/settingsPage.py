@@ -179,10 +179,18 @@ class SettingsPage(QWidget):
             configItem=cfg.restartServerWhenCrashed,
             parent=self.serverSettingsGroup,
         )
+        self.errorHandler = SwitchSettingCard(
+            icon=FIF.SEARCH,
+            title=self.tr("服务器报错分析工具"),
+            content=self.tr("由MSL提供的解决方案。"),
+            configItem=cfg.errorHandler,
+            parent=self.serverSettingsGroup,
+        )
         self.serverSettingsGroup.addSettingCard(self.autoRunLastServer)
         self.serverSettingsGroup.addSettingCard(self.acceptAllMojangEula)
         self.serverSettingsGroup.addSettingCard(self.sendStopInsteadOfKill)
         self.serverSettingsGroup.addSettingCard(self.restartServerWhenCrashed)
+        self.serverSettingsGroup.addSettingCard(self.errorHandler)
         self.settingsLayout.addWidget(self.serverSettingsGroup)
 
         # Configure server
@@ -506,10 +514,10 @@ class SettingsPage(QWidget):
 
         self.gridLayout_5.addWidget(self.aboutTitle, 0, 2, 1, 1)
         self.settingsLayout.addWidget(self.about)
-        self.spacerItem31 = QSpacerItem(
-            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
-        )
-        self.settingsLayout.addItem(self.spacerItem31)
+        # self.spacerItem31 = QSpacerItem(
+        #     20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+        # )
+        # self.settingsLayout.addItem(self.spacerItem31)
         self.settingsWidget.setWidget(self.settingsScrollAreaWidgetContents)
         self.gridLayout_3.addWidget(self.settingsWidget, 2, 1, 1, 1)
 
@@ -543,12 +551,12 @@ class SettingsPage(QWidget):
     def restartAria2(self):
         Aria2Controller.shutDown()
         bootThread = Aria2BootThread(self)
-        bootThread.loaded.connect(self.onAria2Loaded)
+        bootThread.loaded.connect(self.onAria2Reloaded)
         bootThread.finished.connect(bootThread.deleteLater)
         bootThread.start()
 
     @pyqtSlot(bool)
-    def onAria2Loaded(self, flag: bool):
+    def onAria2Reloaded(self, flag: bool):
         if flag:
             InfoBar.success(
                 title=self.tr("Aria2下载引擎重启成功。"),
