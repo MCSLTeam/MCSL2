@@ -13,9 +13,17 @@
 """
 Home page.
 """
-
-from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal, pyqtSlot
-from PyQt5.QtWidgets import QGridLayout, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
+from PyQt5.QtGui import QCursor
+from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QThread, pyqtSignal, pyqtSlot
+from PyQt5.QtWidgets import (
+    QGridLayout,
+    QWidget,
+    QHBoxLayout,
+    QSpacerItem,
+    QSizePolicy,
+    QAction,
+    QApplication,
+)
 from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
@@ -23,11 +31,41 @@ from qfluentwidgets import (
     TitleLabel,
     IndeterminateProgressRing,
     FluentIcon as FIF,
+    InfoBar,
+    InfoBarPosition,
+    ToolTip
 )
 
-from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.verification import getAnnouncement
+
+
+class NoticeStrongBodyLabel(StrongBodyLabel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.installEventFilter(self)
+        self.tip = ToolTip("双击复制公告")
+    
+    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
+        if a1.type() == QEvent.ToolTip:
+            self.tip.move(QCursor.pos())
+            self.tip.show()
+            return True
+        if a1.type() == QEvent.Leave:
+            self.tip.hide()
+            return True
+        return super().eventFilter(a0, a1)
+
+    def mouseDoubleClickEvent(self, event):  # noqa: mouseDoubleClickEvent
+        QApplication.clipboard().setText(self.text().replace("公告: ", "")),
+        InfoBar.success(
+            "提示",
+            "已复制公告",
+            duration=1200,
+            position=InfoBarPosition.TOP,
+            parent=self.window()
+        )
+        return super().mouseDoubleClickEvent(event)
 
 
 @Singleton
@@ -67,7 +105,7 @@ class HomePage(QWidget):
         self.horizontalLayout = QHBoxLayout(self.noticeWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
 
-        self.subTitleLabel = StrongBodyLabel(self.noticeWidget)
+        self.subTitleLabel = NoticeStrongBodyLabel(self.noticeWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -170,7 +208,6 @@ class HomePage(QWidget):
         self.noticeThread.notice.connect(self.subTitleLabel.setText)
         self.noticeThread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
         self.noticeThread.start()
-
 
     @pyqtSlot(str)
     def afterSelectedServer(self, serverName):
