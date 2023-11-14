@@ -27,6 +27,7 @@ from qfluentwidgets import (
 
 from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.verification import getAnnouncement
 
 
 @Singleton
@@ -192,7 +193,7 @@ class GetNoticeThread(QThread):
 
     def run(self):
         try:
-            notice = self.tr("公告: ") + Session().get('https://api.mcsl.com.cn/getAnnouncement').text
+            notice = self.tr("公告: ") + getAnnouncement()
             self.notice.emit(notice)
         except Exception:
             self.notice.emit(self.tr("网络连接失败，无法获取公告。"))

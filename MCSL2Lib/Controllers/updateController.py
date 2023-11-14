@@ -9,6 +9,7 @@ from shutil import move
 from qfluentwidgets import MessageBox, InfoBar, InfoBarPosition
 from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.variables import GlobalMCSL2Variables
+from MCSL2Lib.verification import checkUpdate
 
 
 
@@ -26,7 +27,7 @@ class CheckUpdateThread(QThread):
 
     def run(self):
         try:
-            latestVerInfo = Session().get(f"https://api.mcsl.com.cn/checkUpdate").json()
+            latestVerInfo = checkUpdate()
             self.isUpdate.emit(latestVerInfo)
         except Exception:
             self.isUpdate.emit({"latest": "", "update-log": ""})

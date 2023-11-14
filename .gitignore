@@ -6,6 +6,7 @@ poetry.lock
 .fleet/**
 .vscode/**
 Tools/OfflineBuild/**
+Tools/verification.py
 Servers/**
 MCSL2/Downloads/**
 MCSL2/Logs/**
@@ -19,6 +20,7 @@ pdm.lock
 pdm.toml
 Icons/icons_rc.py
 __pycache__/**
+MCSL2Lib/verification.py
 MCSL2Lib/__pycache__/**
 MCSL2Lib/Controllers/__pycache__/**
 MCSL2Lib/DownloadAPIs/__pycache__/**

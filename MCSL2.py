@@ -25,6 +25,7 @@ import gc
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.variables import GlobalMCSL2Variables
+from MCSL2Lib.verification import countUserAPI
 
 
 class MCSL2Application(QApplication):
@@ -67,8 +68,8 @@ if __name__ == "__main__":
         GlobalMCSL2Variables.devMode = True
     else:
         GlobalMCSL2Variables.devMode = False
-
     deleteOldMCSL2()
+    countUserAPI()
     # 高DPI适配
     QApplication.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough
@@ -79,10 +80,10 @@ if __name__ == "__main__":
 
     # 启动
     app = MCSL2Application(sys.argv)
-    # fluentTranslator = FluentTranslator(QLocale(QLocale.English))
     # mcslTranslator = MCSL2Translator(QLocale(QLocale.English))
-    fluentTranslator = FluentTranslator(QLocale(QLocale.Chinese))
+    # fluentTranslator = FluentTranslator(QLocale(QLocale.English))
     # mcslTranslator = MCSL2Translator(QLocale(QLocale.Chinese))
+    fluentTranslator = FluentTranslator(QLocale(QLocale.Chinese))
     app.installTranslator(fluentTranslator)
     # app.installTranslator(mcslTranslator)
     from MCSL2Lib.windowInterface import Window
