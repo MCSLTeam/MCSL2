@@ -19,7 +19,6 @@ from qfluentwidgets import (
     ConfigItem,
     OptionsConfigItem,
     OptionsValidator,
-    qconfig,
     RangeConfigItem,
     RangeValidator,
     BoolValidator,
