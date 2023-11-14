@@ -1,7 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
-from MCSL2Lib.Controllers.networkController import Session
 import sys
 from os import remove, name as osname, rename, execl
 from platform import architecture
