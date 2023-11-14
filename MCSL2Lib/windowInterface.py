@@ -36,7 +36,7 @@ from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
     setTheme,
-    setThemeColor,
+    PasswordLineEdit,
     InfoBar,
     InfoBarPosition,
     MessageBox,
@@ -72,6 +72,7 @@ from MCSL2Lib.Pages.settingsPage import SettingsPage
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.verification import VerifyFluentWindowBase
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.utils import (
     exceptionFilter,
@@ -216,17 +217,17 @@ class PageLoader(QThread):
 
 
 @Singleton
-class Window(FluentWindow):
+class Window(VerifyFluentWindowBase):
     """程序主窗口"""
 
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
         super().__init__()
+        self.testMode = False
         self.mySetTheme()
         self.initWindow()
-        self.setWindowTitle(f"MCSL {MCSL2VERSION}")
-        self.titleBar.setAttribute(Qt.WA_StyledBackground)
+        self.setWindowTitle(f"MCSL {MCSL2VERSION}{' Testing Edition' if self.testMode else ''}")
 
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
@@ -285,6 +286,13 @@ class Window(FluentWindow):
             self.startAria2Client()
             self.splashScreen.finish()
             self.update()
+            if self.testMode:
+                self.testPassWordBox.show()
+                self.navigationInterface.setEnabled(False)
+                self.stackedWidget.setEnabled(False)
+            else:
+                self.testNotPassFlag = False
+                pass
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
