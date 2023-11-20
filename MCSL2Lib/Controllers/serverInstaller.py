@@ -140,7 +140,7 @@ class Installer(QObject):
                     lambda: self.cancelInstall(True)
                 )  # 设置超时时间
         else:
-            MCSL2Logger.error("关闭ForgeInstaller超时,正在强制关闭...")
+            MCSL2Logger.error(msg="关闭ForgeInstaller超时,正在强制关闭...")
             self.workingProcess.kill()
             self._cancelTimer.stop()
             self._cancelTimer.deleteLater()
