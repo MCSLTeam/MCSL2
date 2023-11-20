@@ -34,9 +34,16 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SubtitleLabel,
     MessageBox,
+    InfoBar,
+    InfoBarPosition,
+    FluentIcon as FIF,
+    CaptionLabel,
 )
 
-from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
+from MCSL2Lib.Controllers.aria2ClientController import (
+    Aria2Controller,
+    DL_EntryController,
+)
 from MCSL2Lib.utils import MCSL2Logger
 
 
@@ -240,6 +247,134 @@ class DownloadProgressWidget(QWidget):
         self.downloading = False
 
 
+class DownloadingInfoWidget(QWidget):
+    def __init__(self, fileName, parent=None):
+        super().__init__(parent)
+        self.resize(365, 100)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QSize(365, 120))
+        self.setMaximumSize(QSize(16777215, 120))
+        self.gridLayout_2 = QGridLayout(self)
+        self.stackedWidget = QStackedWidget(self)
+        self.downloadInfoPage = QWidget()
+        self.gridLayout_3 = QGridLayout(self.downloadInfoPage)
+        self.infoWidget = QWidget(self.downloadInfoPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.infoWidget.sizePolicy().hasHeightForWidth())
+        self.infoWidget.setSizePolicy(sizePolicy)
+        self.gridLayout = QGridLayout(self.infoWidget)
+        self.fileNameLabel = BodyLabel(self.infoWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.fileNameLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.fileNameLabel.setSizePolicy(sizePolicy)
+        self.gridLayout.addWidget(self.fileNameLabel, 0, 0, 1, 2)
+        self.progressNum = CaptionLabel(self.infoWidget)
+        self.gridLayout.addWidget(self.progressNum, 2, 1, 1, 1)
+        self.ProgressBar = ProgressBar(self.infoWidget)
+        self.gridLayout.addWidget(self.ProgressBar, 2, 0, 1, 1)
+        self.downloadExtraInfoLabel = BodyLabel(self.infoWidget)
+        self.gridLayout.addWidget(self.downloadExtraInfoLabel, 1, 0, 1, 2)
+        self.gridLayout_3.addWidget(self.infoWidget, 0, 0, 2, 1)
+        self.cancelBtn = PushButton(self.downloadInfoPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cancelBtn.sizePolicy().hasHeightForWidth())
+        self.cancelBtn.setSizePolicy(sizePolicy)
+        self.cancelBtn.setFixedSize(QSize(61, 32))
+        self.gridLayout_3.addWidget(self.cancelBtn, 0, 1, 1, 1)
+        self.pauseBtn = PushButton(self.downloadInfoPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pauseBtn.sizePolicy().hasHeightForWidth())
+        self.pauseBtn.setSizePolicy(sizePolicy)
+        self.pauseBtn.setFixedSize(QSize(61, 32))
+        self.gridLayout_3.addWidget(self.pauseBtn, 1, 1, 1, 1)
+        self.stackedWidget.addWidget(self.downloadInfoPage)
+        self.downloadFinishPage = QWidget()
+        self.horizontalLayout = QHBoxLayout(self.downloadFinishPage)
+        self.downloadFinishLabel = SubtitleLabel(self.downloadFinishPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.downloadFinishLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.downloadFinishLabel.setSizePolicy(sizePolicy)
+        self.horizontalLayout.addWidget(self.downloadFinishLabel)
+        spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.downloadFinishCloseBtn = PrimaryPushButton(self.downloadFinishPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.downloadFinishCloseBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.downloadFinishCloseBtn.setSizePolicy(sizePolicy)
+        self.downloadFinishCloseBtn.setFixedSize(QSize(85, 32))
+        self.horizontalLayout.addWidget(self.downloadFinishCloseBtn)
+        self.stackedWidget.addWidget(self.downloadFinishPage)
+        self.downloadFailedPage = QWidget()
+        self.gridLayout_4 = QGridLayout(self.downloadFailedPage)
+        self.downloadFailedCloseBtn = PrimaryPushButton(self.downloadFailedPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.downloadFailedCloseBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.downloadFailedCloseBtn.setSizePolicy(sizePolicy)
+        self.downloadFailedCloseBtn.setFixedSize(QSize(61, 32))
+        self.gridLayout_4.addWidget(self.downloadFailedCloseBtn, 1, 2, 1, 1)
+        self.downloadFailedRetryBtn = PushButton(self.downloadFailedPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.downloadFailedRetryBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.downloadFailedRetryBtn.setSizePolicy(sizePolicy)
+        self.downloadFailedRetryBtn.setFixedSize(QSize(61, 32))
+        self.gridLayout_4.addWidget(self.downloadFailedRetryBtn, 0, 2, 1, 1)
+        spacerItem1 = QSpacerItem(124, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem1, 0, 1, 2, 1)
+        self.downloadFailedLabel = SubtitleLabel(self.downloadFailedPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.downloadFailedLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.downloadFailedLabel.setSizePolicy(sizePolicy)
+        self.gridLayout_4.addWidget(self.downloadFailedLabel, 0, 0, 2, 1)
+        self.stackedWidget.addWidget(self.downloadFailedPage)
+        self.gridLayout_2.addWidget(self.stackedWidget, 0, 1, 1, 1)
+        self.stackedWidget.setCurrentIndex(0)
+        self.progressNum.setText("NaN%")
+        self.fileNameLabel.setText(fileName)
+        self.cancelBtn.setText("取消")
+        self.pauseBtn.setText("暂停")
+        self.downloadFinishLabel.setText("下载完毕。")
+        self.downloadFinishCloseBtn.setText("关闭( 3s )")
+        self.downloadFailedCloseBtn.setText("关闭")
+        self.downloadFailedRetryBtn.setText("重试")
+        self.downloadFailedLabel.setText("下载失败。")
+        self.downloadExtraInfoLabel.setText("[大小]  [速度]  [ETA]")
+        self.downloading = False
+
+
 class DownloadMessageBox(MessageBox):
     canceled = pyqtSignal()
     paused = pyqtSignal(bool)
@@ -338,8 +473,128 @@ class DownloadMessageBox(MessageBox):
         self.downloadProgressWidget.fileSize.setText(self.tr("[文件大小]"))
         self.downloadProgressWidget.speed.setText(self.tr("[速度]"))
         self.downloadProgressWidget.ETA.setText(self.tr("[ETA]"))
-        self.downloadProgressWidget.ProgressNum.setText(str(self.tr("NaN%")))
+        self.downloadProgressWidget.ProgressNum.setText(self.tr("NaN%"))
         self.downloadProgressWidget.ProgressBar.setValue(0)
         self.downloadProgressWidget.fileName.setText(self.tr("[文件名]"))
         self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(0)
+        self.downloadProgressWidget.downloading = False
+
+
+class DownloadInfoBar(InfoBar):
+    canceled = pyqtSignal()
+    paused = pyqtSignal(bool)
+
+    def __init__(self, fileName, url, parent=None):
+        super().__init__(
+            icon=FIF.DOWNLOAD,
+            title="",
+            content="",
+            duration=-1,
+            position=InfoBarPosition.TOP_RIGHT,
+            isClosable=False,
+            parent=parent,
+        )
+        self.pauseSwitch = False
+        self.uri = url
+        self.titleLabel.setParent(None)
+        self.iconWidget.setParent(None)
+        self.contentLabel.setParent(None)
+        self.closeButton.setParent(None)
+        self.downloadProgressWidget = DownloadingInfoWidget(fileName, self)
+        self.downloadProgressWidget.cancelBtn.clicked.connect(self.close)
+        self.downloadProgressWidget.cancelBtn.clicked.connect(self.canceled.emit)
+        self.downloadProgressWidget.pauseBtn.clicked.connect(self.onPauseBtnClicked)
+        self.downloadProgressWidget.downloadFailedCloseBtn.clicked.connect(self.close)
+        self.downloadProgressWidget.downloadFinishCloseBtn.clicked.connect(self.close)
+        self.downloadProgressWidget.downloadFailedRetryBtn.clicked.connect(
+            self.retryDownloadFile
+        )
+        self.addWidget(self.downloadProgressWidget)
+
+    def retryDownloadFile(self, extraData: tuple):
+        gid = Aria2Controller.download(
+            uri=self.uri,
+            watch=True,
+            info_get=self.onInfoGet,
+            stopped=self.onDownloadFinished,
+            interval=0.2,
+            extraData=extraData,
+        )
+        self.canceled.disconnect()
+        self.paused.disconnect()
+        self.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+        self.paused.connect(
+            lambda x: Aria2Controller.pauseDownloadTask(gid)
+            if x
+            else Aria2Controller.resumeDownloadTask(gid)
+        )
+        self.downloadProgressWidget.stackedWidget.setCurrentIndex(0)
+
+    def DownloadWidget(self):
+        return self.downloadProgressWidget
+
+    def onPauseBtnClicked(self):
+        self.pauseSwitch = not self.pauseSwitch
+        if self.pauseSwitch:
+            self.downloadProgressWidget.pauseBtn.setText(self.tr("继续"))
+        else:
+            self.downloadProgressWidget.pauseBtn.setText(self.tr("暂停"))
+        self.paused.emit(self.pauseSwitch)
+
+    @pyqtSlot(dict)
+    def onInfoGet(self, info):
+        self.downloadProgressWidget.downloadExtraInfoLabel.setText(
+            f"{info['totalLength']} | {info['speed']} | {info['eta']}"
+        )
+        self.downloadProgressWidget.progressNum.setText(info["progress"])
+        self.downloadProgressWidget.ProgressBar.setValue(info["bar"])
+        self.downloadProgressWidget.downloading = True
+
+    @pyqtSlot(list)
+    def onDownloadFinished(self, _: list):
+        [dl, extraData] = _
+        dl: Optional[Download]
+        filename = extraData[0]
+        data = {
+            "type": extraData[1],
+            "mc_version": extraData[2],
+            "build_version": extraData[3],
+        }
+
+        if dl is not None:
+            if dl.status == "complete":
+                self.downloadProgressWidget.stackedWidget.setCurrentIndex(1)
+                if path.exists(
+                    path.join("MCSL2", "Downloads", filename)
+                ):  # 防止有时候aria2抽风...
+                    DL_EntryController().work.emit(
+                        ("addCoreEntry", {"coreName": filename, "extraData": data})
+                    )
+            elif dl.status == "error":
+                self.downloadProgressWidget.stackedWidget.setCurrentIndex(2)
+                MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
+            elif dl.status == "removed":
+                try:
+                    self.close()
+                except Exception:
+                    pass
+        else:
+            self.downloadProgressWidget.stackedWidget.setCurrentIndex(2)
+        self.downloadProgressWidget.downloading = False
+        try:
+            self.parent().downloadFinishedHelper()
+        except Exception:
+            pass
+
+    def isDownloading(self):
+        return self.downloadProgressWidget.downloading
+
+    def flush(self):
+        self.downloadProgressWidget.fileNameLabel.setText(self.tr("[文件名]"))
+        self.downloadProgressWidget.downloadExtraInfoLabel.setText(
+            self.tr("[大小]  [速度]  [ETA]")
+        )
+        self.downloadProgressWidget.progressNum.setText(self.tr("NaN%"))
+        self.downloadProgressWidget.ProgressBar.setValue(0)
+        self.downloadProgressWidget.stackedWidget.setCurrentIndex(0)
         self.downloadProgressWidget.downloading = False

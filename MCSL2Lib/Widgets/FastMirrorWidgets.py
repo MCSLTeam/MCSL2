@@ -20,20 +20,20 @@ from qfluentwidgets import (
     CardWidget,
     StrongBodyLabel,
     PrimaryToolButton,
-    FluentIcon as FIF
+    FluentIcon as FIF,
+    InfoBadge,
 )
 
 
 class FastMirrorVersionListWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, version, slot, parent=None):
         super().__init__(parent)
-        # self.setObjectName("versionListWidget")
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(140, 50))
+        self.setFixedSize(QSize(150, 48))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.versionLabel = BodyLabel(self)
@@ -46,28 +46,26 @@ class FastMirrorVersionListWidget(CardWidget):
         self.versionLabel.setObjectName("versionLabel")
         self.horizontalLayout.addWidget(self.versionLabel)
         # self.versionLabel.setObjectName("versionLabel")
-        # self.versionLabel.setText("[版本]")
+        self.versionLabel.setText(version)
+        self.clicked.connect(slot)
+        self.setProperty("version", version)
 
 
 class FastMirrorCoreListWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, tag, name, slot, parent=None):
         super().__init__(parent)
         # self.setObjectName("coreListWidget")
 
-        sizePolicy = QSizePolicy(
-            QSizePolicy.Fixed, QSizePolicy.Fixed
-        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(180, 57))
+        self.setFixedSize(QSize(180, 48))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.coreTagWidget = QWidget(self)
-        sizePolicy = QSizePolicy(
-            QSizePolicy.Fixed, QSizePolicy.Fixed
-        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
@@ -76,25 +74,14 @@ class FastMirrorCoreListWidget(CardWidget):
         self.coreTagWidget.setSizePolicy(sizePolicy)
         self.coreTagWidget.setMinimumSize(QSize(0, 35))
         self.coreTagWidget.setMaximumSize(QSize(16777215, 35))
-        self.coreTagWidget.setStyleSheet(
-            "QWidget {\n"
-            "    color: white;\n"
-            "    background-color: #009faa;\n"
-            "    border-radius: 17px;\n"
-            "}"
-        )
         self.coreTagWidget.setObjectName("coreTagWidget")
         self.gridLayout = QGridLayout(self.coreTagWidget)
         self.gridLayout.setObjectName("gridLayout")
-        self.coreTag = BodyLabel(self.coreTagWidget)
-        self.coreTag.setAlignment(Qt.AlignCenter)
-        self.coreTag.setObjectName("coreTag")
+        self.coreTag = InfoBadge.attension("", self.coreTagWidget)
         self.gridLayout.addWidget(self.coreTag, 0, 0, 1, 1)
         self.horizontalLayout.addWidget(self.coreTagWidget)
         self.coreName = BodyLabel(self)
-        sizePolicy = QSizePolicy(
-            QSizePolicy.Expanding, QSizePolicy.Expanding
-        )
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.coreName.sizePolicy().hasHeightForWidth())
@@ -105,12 +92,14 @@ class FastMirrorCoreListWidget(CardWidget):
 
         self.horizontalLayout.addWidget(self.coreName)
 
-        # self.coreTag.setText("[标签]")
-        # self.coreName.setText("[名称]")
+        self.coreTag.setText(tag)
+        self.coreName.setText(name)
+        self.setProperty("name", name)
+        self.clicked.connect(slot)
 
 
 class FastMirrorBuildListWidget(CardWidget):
-    def __init__(self, parent=None):
+    def __init__(self, buildVer, syncTime, coreVersion, btnSlot, parent=None):
         super().__init__(parent)
 
         self.setObjectName("buildListWidget")
@@ -119,8 +108,8 @@ class FastMirrorBuildListWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(284, 80))
-        self.setMaximumSize(QSize(16777215, 80))
+        self.setMinimumSize(QSize(284, 68))
+        self.setMaximumSize(QSize(16777215, 68))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.TextWidget = QWidget(self)
@@ -135,10 +124,11 @@ class FastMirrorBuildListWidget(CardWidget):
         self.verticalLayout.addWidget(self.syncTimeLabel)
         self.horizontalLayout.addWidget(self.TextWidget)
         self.downloadBtn = PrimaryToolButton(FIF.DOWNLOAD, self)
-        self.downloadBtn.setMinimumSize(QSize(50, 50))
-        self.downloadBtn.setMaximumSize(QSize(50, 50))
+        self.downloadBtn.setFixedSize(QSize(40, 40))
         self.downloadBtn.setObjectName("downloadBtn")
         self.horizontalLayout.addWidget(self.downloadBtn)
 
-        # self.coreNameLabel.setText("[版本号]")
-        # self.syncTimeLabel.setText("[同步时间]")
+        self.buildVerLabel.setText(buildVer)
+        self.syncTimeLabel.setText(syncTime)
+        self.downloadBtn.clicked.connect(btnSlot)
+        self.downloadBtn.setProperty("core_version", coreVersion)

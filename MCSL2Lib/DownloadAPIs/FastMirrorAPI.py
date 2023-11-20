@@ -18,9 +18,7 @@ from json import loads
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-
-from MCSL2Lib.Controllers.networkController import Session
-
+from MCSL2Lib.Controllers.networkController import MCSLNetworkSession
 
 class FastMirrorAPIDownloadURLParser:
     """URL设定器"""
@@ -48,7 +46,7 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorJsons(downloadAPIUrl):
         data = []
         try:
-            apiData = loads(Session().get(downloadAPIUrl).text)
+            apiData = loads(MCSLNetworkSession().get(downloadAPIUrl).text)
         except Exception:
             return -2
         try:
@@ -81,7 +79,7 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorCoreVersionJsons(downloadAPIUrl):
         builds = []
         try:
-            apiData = loads(Session().get(downloadAPIUrl).text)
+            apiData = loads(MCSLNetworkSession().get(downloadAPIUrl).text)
         except Exception:
             return -2
         try:

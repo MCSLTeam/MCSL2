@@ -41,7 +41,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
-from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
+from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox, DownloadInfoBar
 from MCSL2Lib.DownloadAPIs.FastMirrorAPI import (
     FetchFastMirrorAPIThreadFactory,
     FetchFastMirrorAPICoreVersionThreadFactory,
@@ -53,7 +53,10 @@ from MCSL2Lib.Widgets.FastMirrorWidgets import (
 )
 from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
-from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget, MySmoothScrollArea
+from MCSL2Lib.Controllers.interfaceController import (
+    ChildStackedWidget,
+    MySmoothScrollArea,
+)
 from MCSL2Lib.Widgets.loadingTipWidget import (
     MCSLAPILoadingErrorWidget,
     MCSLAPILoadingWidget,
@@ -963,24 +966,20 @@ class DownloadPage(QWidget):
         self.releaseFMMemory(1)
         self.releaseFMMemory(2)
         for i in range(len(downloadVariables.FastMirrorAPIDict["name"])):
-            fastMirrorCoreListWidget = FastMirrorCoreListWidget(self)
-            fastMirrorCoreListWidget.coreTag.setText(
-                downloadVariables.FastMirrorReplaceTagDict[
-                    downloadVariables.FastMirrorAPIDict["tag"][i]
-                ]
+            self.coreListLayout.addWidget(
+                FastMirrorCoreListWidget(
+                    tag=downloadVariables.FastMirrorReplaceTagDict[
+                        downloadVariables.FastMirrorAPIDict["tag"][i]
+                    ],
+                    name=downloadVariables.FastMirrorAPIDict["name"][i],
+                    slot=self.fastMirrorCoreNameProcessor,
+                    parent=self,
+                )
             )
-            fastMirrorCoreListWidget.coreName.setText(
-                downloadVariables.FastMirrorAPIDict["name"][i]
-            )
-            fastMirrorCoreListWidget.setObjectName(
-                downloadVariables.FastMirrorAPIDict["name"][i]
-            )
-            fastMirrorCoreListWidget.clicked.connect(self.fastMirrorCoreNameProcessor)
-            self.coreListLayout.addWidget(fastMirrorCoreListWidget)
         self.coreListLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def fastMirrorCoreNameProcessor(self):
-        downloadVariables.selectedName = self.sender().objectName()
+        downloadVariables.selectedName = self.sender().property("name")
         self.initFastMirrorMCVersionsListWidget()
         try:
             self.buildLayout.removeItem(self.scrollAreaSpacer)
@@ -996,31 +995,24 @@ class DownloadPage(QWidget):
     def initFastMirrorMCVersionsListWidget(self):
         self.releaseFMMemory(1)
         self.releaseFMMemory(2)
-        for i in range(
-            len(
-                downloadVariables.FastMirrorAPIDict["mc_versions"][
-                    list(downloadVariables.FastMirrorAPIDict["name"]).index(
-                        downloadVariables.selectedName
-                    )
-                ]
+        MCVersionList = downloadVariables.FastMirrorAPIDict["mc_versions"][
+            list(downloadVariables.FastMirrorAPIDict["name"]).index(
+                downloadVariables.selectedName
             )
-        ):
-            fastMirrorMCVersionsListWidget = FastMirrorVersionListWidget(self)
-            MCVersion = downloadVariables.FastMirrorAPIDict["mc_versions"][
-                list(downloadVariables.FastMirrorAPIDict["name"]).index(
-                    downloadVariables.selectedName
+        ]
+        for i in range(len(MCVersionList)):
+            MCVersion = MCVersionList[i]
+            self.versionLayout.addWidget(
+                FastMirrorVersionListWidget(
+                    version=MCVersion,
+                    slot=self.fastMirrorMCVersionProcessor,
+                    parent=self,
                 )
-            ][i]
-            fastMirrorMCVersionsListWidget.versionLabel.setText(MCVersion)
-            fastMirrorMCVersionsListWidget.setObjectName(MCVersion)
-            fastMirrorMCVersionsListWidget.clicked.connect(
-                self.fastMirrorMCVersionProcessor
             )
-            self.versionLayout.addWidget(fastMirrorMCVersionsListWidget)
         self.versionLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def fastMirrorMCVersionProcessor(self):
-        downloadVariables.selectedMCVersion = self.sender().objectName()
+        downloadVariables.selectedMCVersion = self.sender().property("version")
         self.getFastMirrorAPICoreVersion(
             name=downloadVariables.selectedName,
             mcVersion=downloadVariables.selectedMCVersion,
@@ -1029,20 +1021,16 @@ class DownloadPage(QWidget):
     def initFastMirrorCoreVersionListWidget(self):
         self.releaseFMMemory(2)
         for i in range(len(downloadVariables.FastMirrorAPICoreVersionDict["name"])):
-            fastMirrorBuildListWidget = FastMirrorBuildListWidget(self)
-            fastMirrorBuildListWidget.buildVerLabel.setText(
-                downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i]
-            )
-            fastMirrorBuildListWidget.syncTimeLabel.setText(
-                downloadVariables.FastMirrorAPICoreVersionDict["update_time"][
+            fastMirrorBuildListWidget = FastMirrorBuildListWidget(
+                buildVer=downloadVariables.FastMirrorAPICoreVersionDict["core_version"][
                     i
-                ].replace("T", " ")
-            )
-            fastMirrorBuildListWidget.downloadBtn.setObjectName(
-                downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i]
-            )
-            fastMirrorBuildListWidget.downloadBtn.clicked.connect(
-                self.downloadFastMirrorAPIFile
+                ],
+                syncTime=downloadVariables.FastMirrorAPICoreVersionDict["update_time"][
+                    i
+                ].replace("T", " "),
+                coreVersion=downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i],
+                btnSlot=self.downloadFastMirrorAPIFile,
+                parent=self,
             )
             self.buildLayout.addWidget(fastMirrorBuildListWidget)
         self.buildLayout.addSpacerItem(self.scrollAreaSpacer)
@@ -1061,7 +1049,7 @@ class DownloadPage(QWidget):
                 box.cancelButton.deleteLater()
                 box.exec()
                 return
-        buildVer = self.sender().objectName()
+        buildVer = self.sender().property("core_version")
         fileName = f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
         fileFormat = "jar"
         uri = f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}"
@@ -1092,7 +1080,7 @@ class DownloadPage(QWidget):
         self.downloadingInfoBar.setCustomBackgroundColor("white", "#202020")
         showDownloadMsgBoxBtn = PushButton()
         showDownloadMsgBoxBtn.setText(self.tr("恢复"))
-        showDownloadMsgBoxBtn.clicked.connect(self.downloadingBox.show)
+        showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.show)
         showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.close)
         self.downloadingInfoBar.addWidget(showDownloadMsgBoxBtn)
         self.downloadingInfoBar.show()
@@ -1124,9 +1112,7 @@ class DownloadPage(QWidget):
                     lambda: self.downloadFile(fileName, fileFormat, uri, extraData)
                 )
                 w.exec()
-            elif (
-                cfg.get(cfg.saveSameFileException) == "overwrite"
-            ):
+            elif cfg.get(cfg.saveSameFileException) == "overwrite":
                 InfoBar.warning(
                     title=self.tr("警告"),
                     content=self.tr("MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。"),
@@ -1152,26 +1138,23 @@ class DownloadPage(QWidget):
             self.downloadFile(fileName, fileFormat, uri, extraData)
 
     def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
-        self.downloadingBox = DownloadMessageBox(
-            f"{fileName}.{fileFormat}", parent=self
-        )
-        self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(
-            self.hideDownloadHelper
+        downloadingInfoBar = DownloadInfoBar(
+            fileName=f"{fileName}.{fileFormat}", url=uri, parent=self
         )
         gid = Aria2Controller.download(
             uri=uri,
             watch=True,
-            info_get=self.downloadingBox.onInfoGet,
-            stopped=self.downloadingBox.onDownloadFinished,
+            info_get=downloadingInfoBar.onInfoGet,
+            stopped=downloadingInfoBar.onDownloadFinished,
             interval=0.2,
             extraData=extraData,
         )
-        self.downloadingBox.canceled.connect(
+        downloadingInfoBar.canceled.connect(
             lambda: Aria2Controller.cancelDownloadTask(gid)
         )
-        self.downloadingBox.paused.connect(
+        downloadingInfoBar.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
             if x
             else Aria2Controller.resumeDownloadTask(gid)
         )
-        self.downloadingBox.show()
+        downloadingInfoBar.show()

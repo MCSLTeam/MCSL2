@@ -7,6 +7,7 @@ poetry.lock
 .vscode/**
 Tools/OfflineBuild/**
 Tools/verification.py
+Tools/MCSL Preview Permission Manager.exe
 Servers/**
 MCSL2/Downloads/**
 MCSL2/Logs/**
