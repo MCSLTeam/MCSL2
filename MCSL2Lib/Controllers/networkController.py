@@ -17,7 +17,7 @@ to access the network normally.
 
 from requests import Session
 
-class Session(Session):
+class MCSLNetworkSession(Session):
     def __init__(self):
         super().__init__()
         #: Trust environment settings for proxy configuration, default
