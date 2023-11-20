@@ -71,7 +71,7 @@ def gen_compiler() -> CompilerHelper:
         include_data_dir=[
             ("MCSL2/Aria2", "MCSL2/Aria2"),
         ],
-        enable_plugin=["pyqt5", "multiprocessing"],
+        enable_plugin=["pyqt5"],
     )
     return compiler
 
