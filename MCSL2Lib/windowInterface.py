@@ -36,12 +36,10 @@ from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
     setTheme,
-    PasswordLineEdit,
     InfoBar,
     InfoBarPosition,
     MessageBox,
     HyperlinkButton,
-    FluentWindow,
     SplashScreen,
     isDarkTheme,
 )
@@ -227,7 +225,7 @@ class Window(VerifyFluentWindowBase):
         self.testMode = False
         self.mySetTheme()
         self.initWindow()
-        self.setWindowTitle(f"MCSL {MCSL2VERSION}{' Testing Edition' if self.testMode else ''}")
+        self.setWindowTitle(f"MCSL {MCSL2VERSION}{' Preview Mode Edition' if self.testMode else ''}")
 
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
@@ -287,7 +285,7 @@ class Window(VerifyFluentWindowBase):
             self.splashScreen.finish()
             self.update()
             if self.testMode:
-                self.testPassWordBox.show()
+                self.testVerifyBox.show()
                 self.navigationInterface.setEnabled(False)
                 self.stackedWidget.setEnabled(False)
             else:
@@ -380,6 +378,7 @@ class Window(VerifyFluentWindowBase):
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
             tracebackString = "".join(format_exception(ty, value, _traceback))
+            MCSL2Logger.error(msg=tracebackString)
             exceptionWidget = ExceptionWidget(tracebackString)
             box = MessageBox(self.tr("程序出现异常"), "", self)
             box.yesButton.setText(self.tr("确认并复制到剪切板"))
@@ -628,6 +627,7 @@ class Window(VerifyFluentWindowBase):
             w.exec()
         else:
             self.switchTo(self.consoleInterface)
+            self.consoleInterface.errMsg = ""
             self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
             self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
             self.consoleInterface.serverOutput.setPlainText("")
