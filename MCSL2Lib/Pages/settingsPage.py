@@ -14,11 +14,8 @@
 Settings page.
 """
 from datetime import datetime
-from platform import system as systemType
-from typing import Union
 
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -26,9 +23,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QFrame,
     QAbstractScrollArea,
-    QHBoxLayout,
     QVBoxLayout,
-    QSlider,
     QApplication,
 )
 from qfluentwidgets import (
@@ -64,7 +59,6 @@ from MCSL2Lib.Controllers.updateController import (
 from MCSL2Lib.Controllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
-from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 
 settingsVariables = SettingsVariables()
@@ -161,7 +155,7 @@ class SettingsPage(QWidget):
         self.acceptAllMojangEula = SwitchSettingCard(
             icon=FIF.ACCEPT,
             title=self.tr("自动同意EULA"),
-            content=self.tr("创建时自动同意服务器的Mineacrft Eula。"),
+            content=self.tr("创建时自动同意服务器的Minecraft Eula。"),
             configItem=cfg.acceptAllMojangEula,
             parent=self.serverSettingsGroup,
         )
@@ -179,18 +173,10 @@ class SettingsPage(QWidget):
             configItem=cfg.restartServerWhenCrashed,
             parent=self.serverSettingsGroup,
         )
-        self.errorHandler = SwitchSettingCard(
-            icon=FIF.SEARCH,
-            title=self.tr("服务器报错分析工具"),
-            content=self.tr("由MSL提供的解决方案。"),
-            configItem=cfg.errorHandler,
-            parent=self.serverSettingsGroup,
-        )
         self.serverSettingsGroup.addSettingCard(self.autoRunLastServer)
         self.serverSettingsGroup.addSettingCard(self.acceptAllMojangEula)
         self.serverSettingsGroup.addSettingCard(self.sendStopInsteadOfKill)
         self.serverSettingsGroup.addSettingCard(self.restartServerWhenCrashed)
-        self.serverSettingsGroup.addSettingCard(self.errorHandler)
         self.settingsLayout.addWidget(self.serverSettingsGroup)
 
         # Configure server
