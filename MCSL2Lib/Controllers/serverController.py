@@ -16,7 +16,6 @@ Communicate with Minecraft servers.
 """
 
 from datetime import datetime
-from json import dumps
 from os import path as osp
 from typing import List, Optional
 
@@ -128,8 +127,8 @@ class ServerHandler(QObject):
                 self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：服务器崩溃！"))
                 if cfg.get(cfg.restartServerWhenCrashed):
                     self.Server.serverProcess.waitForFinished()
-                    self.Server.serverProcess.start()
                     self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：正在重新启动服务器..."))
+                    self.Server.serverProcess.start()
             else:
                 self.serverLogOutput.emit(self.tr(f"[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。"))
         else:
