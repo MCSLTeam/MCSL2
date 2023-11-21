@@ -1,4 +1,3 @@
-from typing import List
 from zipfile import ZipFile
 from PyQt5.QtCore import QObject, pyqtSlot
 from MCSL2Lib.Widgets.importServerWidgets import (
@@ -13,7 +12,7 @@ from PyQt5.QtWidgets import QStackedWidget
 from qfluentwidgets import CardWidget
 
 
-class ServerImporter(QObject):
+class BaseServerImporter(QObject):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.pageWidget = ImportPageWidget(parent)
@@ -59,7 +58,7 @@ class ServerImporter(QObject):
         return SaveWidget(self.totalStep)
 
 
-class NoShellArchivesImporter(ServerImporter):
+class NoShellArchivesImporter(BaseServerImporter):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setTypeName("导入不含开服脚本的完整服务器压缩包")
@@ -78,11 +77,15 @@ class NoShellArchivesImporter(ServerImporter):
         self.addTypeWidget(self.saveWidget)
 
     def connectSlot(self):
+        # fmt: off
         self.pageWidget.connectBackSlot(lambda: self.parent().setCurrentIndex(0))
+
         self.importWidget.fileImportedSignal.connect(self.initFileListView)
+
         self.importWidget.finishSignal.connect(self.selectWidget.setEnabled)
-        self.selectWidget.clicked.connect(self.selectWidget.setFinished)
         self.selectWidget.finishSignal.connect(self.confirmWidget.setEnabled)
+        self.confirmWidget.finishSignal.connect(self.saveWidget.setEnabled)
+        # fmt: on
 
     @pyqtSlot(str)
     def initFileListView(self, file: str):

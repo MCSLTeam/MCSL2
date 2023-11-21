@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QHBoxLayout,
     QFileDialog,
-    QListWidgetItem
+    QListWidgetItem,
 )
 from qfluentwidgets import (
     CardWidget,
@@ -38,6 +38,7 @@ class _StatusPixmapLabel(PixmapLabel):
     def setFinished(self):
         self.setPixmap(QPixmap(":/built-InIcons/ok.svg"))
         self.setFixedSize(30, 30)
+
     def setNotFinished(self):
         self.setPixmap(QPixmap(":/built-InIcons/not.svg"))
         self.setFixedSize(30, 30)
@@ -98,9 +99,8 @@ class ImportPageWidget(QWidget):
 
 
 class ConfirmArgumentsWidget(CardWidget):
-    
     finishSignal = pyqtSignal(bool)
-    
+
     def __init__(
         self,
         stepCount,
@@ -116,7 +116,8 @@ class ConfirmArgumentsWidget(CardWidget):
         super().__init__(parent)
         self._setUpUI()
         self._initView(
-            stepCount, title
+            stepCount,
+            title
             # javaPath, minMem, maxMem, outputCoding, inputCoding, jvmArg
         )
         self.setNotFinished()
@@ -434,7 +435,6 @@ class ConfirmArgumentsWidget(CardWidget):
 
 
 class ImportFileFolderWidget(CardWidget):
-
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, parent=None):
@@ -525,7 +525,6 @@ class ImportFileFolderWidget(CardWidget):
 
 
 class ImportSingleWidget(CardWidget):
-
     fileImportedSignal = pyqtSignal(str)
     finishSignal = pyqtSignal(bool)
 
@@ -607,18 +606,19 @@ class ImportSingleWidget(CardWidget):
         self.importBtn.clicked.connect(self.selectFile)
 
     def selectFile(self):
-        self.file = str(QFileDialog.getOpenFileName(self, self.tr("选择压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)"))[
-                0
-            ]).replace("/", "\\")
+        self.file = str(
+            QFileDialog.getOpenFileName(
+                self, self.tr("选择压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)")
+            )[0]
+        ).replace("/", "\\")
         if self.file != "":
             self.setFinished()
             self.fileImportedSignal.emit(self.file)
         else:
             pass
-        
+
 
 class MyListWidget(CardWidget):
-
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, title: str, parent=None):
@@ -680,18 +680,20 @@ class MyListWidget(CardWidget):
         self.gridLayout.addWidget(self.mainListWidget, 2, 2, 1, 2)
         self.statusText.setText("[状态文本]")
         self.title.setText("2.选择核心")
+        self.mainListWidget.itemChanged.connect(self.setFinished)
 
     def _initView(self, stepCount, title):
         self.title.setText(f"{stepCount}. {title}")
 
     def filterList(self, fileList: List[str] = [], fileExt: str = ""):
-        filteredList = [file for file in fileList if file.endswith(fileExt)]
+        filteredList = [
+            file for file in fileList if file.endswith(fileExt) and file.count("/") == 1
+        ]
         for extFile in filteredList:
             self.mainListWidget.addItem(QListWidgetItem(extFile))
 
 
 class SaveWidget(CardWidget):
-    
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, parent=None):
