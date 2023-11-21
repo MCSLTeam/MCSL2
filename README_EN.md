@@ -71,27 +71,5 @@ And our sponsors!
 [Sponsor List](https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md)
 ___
 
-## Development document
-
-~~Actually, I don't know what to write.~~ XD  
-This project was developed based on Python 3.8.
-
-### 1. Clone this repository
-
-```bash
-git clone https://github.com/MCSLTeam/MCSL2.git
-```
-
-### 2. Install the requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-or
-
-```bash
-pip3 install -r requirements.txt
-```
-
-### ~~Give up~~ **Start programming**
+## Declaration  
+This open source project is completely free, and any resale or similar behavior will be held accountable.

@@ -71,24 +71,5 @@ ___
 [赞助者列表](https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md)
 ___
 
-## 开发文档
-
-本项目基于 Python 3.8 开发。
-
-### 1.克隆本仓库
-
-```bash
-git clone https://github.com/MCSLTeam/MCSL2.git
-```
-
-### 2.安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
-或者  
-
-```bash
-pip3 install -r requirements.txt
-```
+## 声明
+本开源项目完全免费，任何倒卖等行为必究。
