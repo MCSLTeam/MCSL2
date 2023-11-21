@@ -15,8 +15,8 @@
 Minecraft server console page.
 """
 
-from PyQt5.QtCore import QSize, Qt, pyqtSlot, pyqtSignal
-from PyQt5.QtGui import QTextCharFormat, QColor, QBrush
+from PyQt5.QtCore import QSize, Qt, pyqtSlot, pyqtSignal, QObject, QEvent
+from PyQt5.QtGui import QTextCharFormat, QColor, QBrush, QCursor
 from PyQt5.QtWidgets import (
     QSpacerItem,
     QGridLayout,
@@ -40,9 +40,12 @@ from qfluentwidgets import (
     MessageBox,
     InfoBar,
     InfoBarPosition,
+    ToggleButton,
+    ToolTip,
 )
 from re import search
 from MCSL2Lib.Controllers.serverController import ServerHandler, readServerProperties
+from MCSL2Lib.Controllers.serverErrorHandler import ServerErrorHandler
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables
@@ -50,6 +53,30 @@ from MCSL2Lib.utils import MCSL2Logger
 
 
 serverVariables = ServerVariables()
+
+
+class ErrorHandlerToggleButton(ToggleButton):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.installEventFilter(self)
+        self.tip = ToolTip("已开启")
+        self.toggled.connect(self.toggleToolTip)
+
+    def toggleToolTip(self):
+        if self.isChecked():
+            self.tip = ToolTip("已开启")
+        else:
+            self.tip = ToolTip("已关闭")
+
+    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
+        if a1.type() == QEvent.ToolTip:
+            self.tip.move(QCursor.pos())
+            self.tip.show()
+            return True
+        if a1.type() == QEvent.Leave:
+            self.tip.hide()
+            return True
+        return super().eventFilter(a0, a1)
 
 
 @Singleton
@@ -60,7 +87,7 @@ class ConsolePage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-
+        self.errMsg = ""
         self.playersList = []
         self.playersControllerBtnEnabled.emit(False)
         self.gridLayout = QGridLayout(self)
@@ -178,7 +205,6 @@ class ConsolePage(QWidget):
         self.serverOutput.setFrameShape(QFrame.NoFrame)
         self.serverOutput.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.serverOutput.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.serverOutput.setPlainText("")
         self.serverOutput.setObjectName("serverOutput")
 
         self.gridLayout_2.addWidget(self.serverOutput, 3, 0, 1, 2)
@@ -254,6 +280,11 @@ class ConsolePage(QWidget):
         self.killServer.setObjectName("killServer")
 
         self.verticalLayout.addWidget(self.killServer)
+        self.errorHandler = ErrorHandlerToggleButton(self.quickMenu)
+        self.errorHandler.setMinimumSize(QSize(0, 30))
+        self.errorHandler.setObjectName("errorHandler")
+
+        self.verticalLayout.addWidget(self.errorHandler)
         self.gridLayout.addWidget(self.quickMenu, 3, 4, 1, 1)
 
         self.setObjectName("ConsoleInterface")
@@ -263,7 +294,9 @@ class ConsolePage(QWidget):
         self.subTitleLabel.setText(self.tr("直观地观察你的服务器的输出，资源占用等。"))
         self.titleLabel.setText(self.tr("终端"))
         self.quickMenuTitleLabel.setText(self.tr("快捷菜单："))
-        self.difficulty.addItems([self.tr("和平"), self.tr("简单"), self.tr("普通"), self.tr("困难")])
+        self.difficulty.addItems(
+            [self.tr("和平"), self.tr("简单"), self.tr("普通"), self.tr("困难")]
+        )
         self.gamemode.setText(self.tr("游戏模式"))
         self.whiteList.setText(self.tr("白名单"))
         self.op.setText(self.tr("管理员"))
@@ -272,6 +305,7 @@ class ConsolePage(QWidget):
         self.saveServer.setText(self.tr("保存存档"))
         self.exitServer.setText(self.tr("关闭服务器"))
         self.killServer.setText(self.tr("强制关闭"))
+        self.errorHandler.setText(self.tr("报错分析"))
         self.commandLineEdit.setPlaceholderText(self.tr("在此输入指令，回车或点击右边按钮发送，不需要加/"))
         self.serverOutput.setPlaceholderText(self.tr("请先开启服务器！不开服务器没有日志的喂"))
         self.sendCommandButton.setEnabled(False)
@@ -301,10 +335,13 @@ class ConsolePage(QWidget):
         self.commandLineEdit.setClearButtonEnabled(True)
         self.serverMemProgressRing.setTextVisible(True)
         self.serverCPUProgressRing.setTextVisible(True)
+        self.errorHandler.setChecked(True)
 
     @pyqtSlot(float)
     def setMemView(self, mem):
-        self.serverMemLabel.setText(self.tr("内存：") + str(round(mem, 2)) + serverVariables.memUnit)
+        self.serverMemLabel.setText(
+            self.tr("内存：") + str(round(mem, 2)) + serverVariables.memUnit
+        )
         self.serverMemProgressRing.setValue(
             int(int(mem) / serverVariables.maxMem * 100)
         )
@@ -424,6 +461,8 @@ class ConsolePage(QWidget):
                 duration=2222,
                 parent=self,
             )
+        if self.errorHandler.isChecked():
+            self.errMsg += ServerErrorHandler.detect(serverOutput)
         if (
             "logged in with entity id" in serverOutput
             or " left the game" in serverOutput
@@ -440,7 +479,7 @@ class ConsolePage(QWidget):
             except Exception:
                 pass
 
-            try: 
+            try:
                 # 若不成功，尝试提取玩家名字
                 # [11:49:05] [Server thread/INFO] [minecraft/PlayerList]: Ares_Connor[/127.0.0.1:63854] logged in with entity id 229 at (7.258252218995321, 65.0, 11.09627995098097)
                 # 提取玩家名字
@@ -449,8 +488,7 @@ class ConsolePage(QWidget):
                 self.playersList.append(name)
             except Exception as e:
                 MCSL2Logger.error(
-                    f"extract player name failed",
-                    "onRecordPlayers::login {serverOutput}",
+                    msg=f"extract player name failed\nonRecordPlayers::login {serverOutput}",
                     exc=e,
                 )
 
@@ -469,8 +507,7 @@ class ConsolePage(QWidget):
                 self.playersList.pop(self.playersList.index(name))
             except Exception as e:
                 MCSL2Logger.error(
-                    f"extract player name failed",
-                    "onRecordPlayers::logout {serverOutput}",
+                    msg=f"extract player name failed\nonRecordPlayers::logout {serverOutput}",
                     exc=e,
                 )
 
@@ -552,9 +589,13 @@ class ConsolePage(QWidget):
         """快捷菜单-游戏模式"""
         if ServerHandler().isServerRunning():
             gamemodeWidget = playersController()
-            gamemodeWidget.mode.addItems([self.tr("生存"), self.tr("创造"), self.tr("冒险"), self.tr("旁观")])
+            gamemodeWidget.mode.addItems(
+                [self.tr("生存"), self.tr("创造"), self.tr("冒险"), self.tr("旁观")]
+            )
             gamemodeWidget.mode.setCurrentIndex(0)
-            gamemodeWidget.who.textChanged.connect(lambda: self.lineEditChecker(text=gamemodeWidget.who.text()))
+            gamemodeWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=gamemodeWidget.who.text())
+            )
             gamemodeWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("服务器游戏模式"), self.tr("设置服务器游戏模式"), self)
             w.yesButton.setText(self.tr("确定"))
@@ -705,7 +746,11 @@ class ConsolePage(QWidget):
     def runQuickMenu_KillServer(self):
         """快捷菜单-强制关闭服务器"""
         if ServerHandler().isServerRunning():
-            w = MessageBox(self.tr("强制关闭服务器"), self.tr("确定要强制关闭服务器吗？\n有可能导致数据丢失！\n请确保存档已经保存！"), self)
+            w = MessageBox(
+                self.tr("强制关闭服务器"),
+                self.tr("确定要强制关闭服务器吗？\n有可能导致数据丢失！\n请确保存档已经保存！"),
+                self,
+            )
             w.yesButton.setText(self.tr("算了"))
             w.cancelButton.setText(self.tr("强制关闭"))
             w.cancelSignal.connect(lambda: ServerHandler().haltServer())
