@@ -17,10 +17,9 @@ import enum
 import functools
 import hashlib
 import inspect
-
 # import sqlite3  # dont delete this
 # added in nuitka_build
-from json import loads, dumps
+from json import loads
 from os import makedirs, path as osp
 from platform import system as systemType
 from subprocess import Popen
@@ -31,13 +30,12 @@ import aria2p
 import psutil
 from PyQt5.QtCore import QUrl, QThread, QThreadPool
 from PyQt5.QtGui import QDesktopServices
-from darkdetect import theme as currentTheme
 
 from MCSL2Lib.Controllers.logController import _MCSL2Logger
-from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.singleton import Singleton
 
 MCSL2Logger = _MCSL2Logger()
+
 
 class ServerUrl:
     @staticmethod
@@ -48,7 +46,7 @@ class ServerUrl:
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
     with open(
-        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
     ) as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
     return globalServerList
@@ -73,7 +71,7 @@ def initializeMCSL2():
 
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(
-            r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
@@ -81,7 +79,7 @@ def initializeMCSL2():
     # set global thread pool
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
-    )
+    )  # IO-Bound = 2*N, CPU-Bound = N + 1
 
 
 # 带有text的warning装饰器
@@ -145,7 +143,7 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
@@ -153,7 +151,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.PASS
     if isinstance(
-        value, aria2p.ClientException
+            value, aria2p.ClientException
     ) and "Active Download not found for GID" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
@@ -169,7 +167,7 @@ def exceptionFilter(
 
 
 def checkSHA1(
-    fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
+        fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
 ) -> List[Dict]:
     """
     检查文件的SHA1值是否正确
@@ -254,6 +252,7 @@ class workingThreads:
 
     def __call__(self, *args, **kwargs):
         raise RuntimeError("This class is not allowed to be instantiated.")
+
 
 @Singleton
 class FileOpener:
