@@ -4,6 +4,9 @@
 
 <!-- AFDIAN-ACTION:START -->
 
+<a href="https://afdian.net/u/8e112f28817411eea67e5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/?imageView2/1/w/120/h/120" width="40" height="40" alt="爱发电用户_8e112" title="爱发电用户_8e112"/>
+</a>
 <a href="https://afdian.net/u/6c405d2233e911ec8bd152540025c377">
     <img src="https://pic1.afdiancdn.com/user/6c405d2233e911ec8bd152540025c377/avatar/a22733431cfea29fb1c88ba8980427e6_w960_h960_s79.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="Anshow" title="Anshow"/>
 </a>
