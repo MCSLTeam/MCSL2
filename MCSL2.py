@@ -14,18 +14,12 @@
 Main entry.
 """
 import sys
-
-from PyQt5.QtCore import Qt, QLocale, QObject, QEvent, QTranslator
+from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
-from qfluentwidgets import FluentTranslator, qconfig
-from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
 from MCSL2Lib.Controllers.settingsController import cfg
-import gc
 # from viztracer import VizTracer
 from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
-from MCSL2Lib.variables import GlobalMCSL2Variables
-from MCSL2Lib.verification import countUserAPI
 
 
 class MCSL2Application(QApplication):
@@ -41,24 +35,29 @@ class MCSL2Application(QApplication):
             return False
 
 
-class MCSL2Translator(QTranslator):
-    def __init__(self, locale: QLocale = None, parent=None):
-        super().__init__(parent=parent)
-        self.load(locale or QLocale())
+# class MCSL2Translator(QTranslator):
+#     def __init__(self, locale: QLocale = None, parent=None):
+#         super().__init__(parent=parent)
+#         self.load(locale or QLocale())
 
-    def load(self, locale: QLocale):
-        super().load(f"i18n/{locale.name()}.qm")
+#     def load(self, locale: QLocale):
+#         super().load(f"i18n/{locale.name()}.qm")
 
 
 if __name__ == "__main__":
+    # Debug
     # tracer = VizTracer()
     # tracer.enable_thread_tracing()
     # tracer.start()
-    # 初始化
+
+    # Initialize
     initializeMCSL2()
+    from qfluentwidgets import qconfig
     qconfig.load(r"./MCSL2/MCSL2_Config.json", cfg)
+
+    # Verify dev mode
     cfg.set(cfg.oldExecuteable, sys.executable.split("\\")[-1])
-    # 确认开发模式防止出事
+    from MCSL2Lib.variables import GlobalMCSL2Variables
     if (
         cfg.get(cfg.oldExecuteable) == "python"
         or cfg.get(cfg.oldExecuteable) == "python.exe"
@@ -68,30 +67,44 @@ if __name__ == "__main__":
         GlobalMCSL2Variables.devMode = True
     else:
         GlobalMCSL2Variables.devMode = False
-    deleteOldMCSL2()
+
+    # Try to delete old executable
+    from os import path as osp
+    if osp.exists(cfg.get(cfg.oldExecuteable)):
+        from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
+        deleteOldMCSL2()
+        del deleteOldMCSL2
+
+    # Analyze user
+    from MCSL2Lib.verification import countUserAPI
     countUserAPI()
-    # 高DPI适配
-    QApplication.setHighDpiScaleFactorRoundingPolicy(
+    del countUserAPI
+
+    # High DPI scaling
+    MCSL2Application.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough
     )
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-    QApplication.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
+    MCSL2Application.setAttribute(Qt.AA_EnableHighDpiScaling)
+    MCSL2Application.setAttribute(Qt.AA_UseHighDpiPixmaps)
+    MCSL2Application.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 
-    # 启动
+    # Construct QApplication
     app = MCSL2Application(sys.argv)
-    # mcslTranslator = MCSL2Translator(QLocale(QLocale.English))
-    # fluentTranslator = FluentTranslator(QLocale(QLocale.English))
-    # mcslTranslator = MCSL2Translator(QLocale(QLocale.Chinese))
+
+    # i18n
+    from qfluentwidgets import FluentTranslator
     fluentTranslator = FluentTranslator(QLocale(QLocale.Chinese))
     app.installTranslator(fluentTranslator)
-    # app.installTranslator(mcslTranslator)
-    from MCSL2Lib.windowInterface import Window
 
+    # Main Window
+    from MCSL2Lib.windowInterface import Window
     w = Window()
     w.show()
+
+    import gc
     gc.enable()
-    app.exec_()
+    
+    
     # tracer.stop()
     # tracer.save()
-    sys.exit()
+    sys.exit(app.exec_())
