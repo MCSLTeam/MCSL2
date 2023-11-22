@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>776</width>
+    <width>1053</width>
     <height>527</height>
    </rect>
   </property>
@@ -20,38 +20,73 @@
    <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <spacer name="leftSpacer">
+   <item row="0" column="2">
+    <spacer name="topSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
       <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>10</width>
-       <height>20</height>
+       <width>20</width>
+       <height>10</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="1" column="2" rowspan="2" colspan="2">
+   <item row="3" column="4">
+    <widget class="SmoothScrollArea" name="downloadingItemWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>310</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>310</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>310</width>
+        <height>407</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="downloadingItemLayout"/>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="2" rowspan="2" colspan="3">
     <widget class="QWidget" name="titleLimitWidget" native="true">
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="TitleLabel" name="titleLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>下载</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="TransparentPushButton" name="openDownloadFolderBtn">
         <property name="sizePolicy">
@@ -62,6 +97,19 @@
         </property>
         <property name="text">
          <string>打开下载文件夹</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="TitleLabel" name="titleLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>下载</string>
         </property>
        </widget>
       </item>
@@ -81,24 +129,34 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="2">
+       <widget class="TransparentPushButton" name="openDownloadEntriesBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>打开下载记录</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="TransparentTogglePushButton" name="showDownloadingItemBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>下载中列表</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
-   </item>
-   <item row="0" column="2">
-    <spacer name="topSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="3" column="2">
     <widget class="PopUpAniStackedWidget" name="downloadStackedWidget">
@@ -155,7 +213,7 @@
             <x>0</x>
             <y>0</y>
             <width>170</width>
-            <height>349</height>
+            <height>351</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -170,7 +228,7 @@
         <widget class="SmoothScrollArea" name="buildScrollArea">
          <property name="minimumSize">
           <size>
-           <width>304</width>
+           <width>20</width>
            <height>0</height>
           </size>
          </property>
@@ -191,8 +249,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>336</width>
-            <height>349</height>
+            <width>294</width>
+            <height>351</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -264,7 +322,7 @@
             <x>0</x>
             <y>0</y>
             <width>200</width>
-            <height>349</height>
+            <height>351</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -309,7 +367,7 @@
          <property name="minimumSize">
           <size>
            <width>210</width>
-           <height>45</height>
+           <height>44</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -583,6 +641,25 @@
      </widget>
     </widget>
    </item>
+   <item row="1" column="0">
+    <spacer name="leftSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="3">
+    <widget class="VerticalSeparator" name="VerticalSeparator"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -592,8 +669,23 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
+   <class>ToggleButton</class>
+   <extends>PushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
    <class>TransparentPushButton</class>
    <extends>PushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TransparentTogglePushButton</class>
+   <extends>ToggleButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>VerticalSeparator</class>
+   <extends>QWidget</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>

@@ -33,7 +33,7 @@ class FastMirrorVersionListWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(150, 48))
+        self.setFixedSize(QSize(140, 48))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.versionLabel = BodyLabel(self)

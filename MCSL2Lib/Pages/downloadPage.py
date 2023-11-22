@@ -38,10 +38,12 @@ from qfluentwidgets import (
     InfoBar,
     StateToolTip,
     TransparentPushButton,
+    TransparentTogglePushButton,
+    VerticalSeparator,
 )
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
-from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox, DownloadInfoBar
+from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox, DownloadCard
 from MCSL2Lib.DownloadAPIs.FastMirrorAPI import (
     FetchFastMirrorAPIThreadFactory,
     FetchFastMirrorAPICoreVersionThreadFactory,
@@ -129,6 +131,15 @@ class DownloadPage(QWidget):
         self.openDownloadEntriesBtn.setObjectName("openDownloadEntriesBtn")
         self.gridLayout_4.addWidget(self.openDownloadEntriesBtn, 0, 2, 1, 1)
 
+        self.showDownloadingItemBtn = TransparentTogglePushButton(self.titleLimitWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.showDownloadingItemBtn.sizePolicy().hasHeightForWidth())
+        self.showDownloadingItemBtn.setSizePolicy(sizePolicy)
+        self.showDownloadingItemBtn.setObjectName("showDownloadingItemBtn")
+        self.gridLayout_4.addWidget(self.showDownloadingItemBtn, 0, 3, 1, 1)
+
         self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -140,7 +151,7 @@ class DownloadPage(QWidget):
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
         self.gridLayout_4.addWidget(self.subTitleLabel, 1, 0, 1, 2)
-        self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
+        self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 3)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem1, 0, 2, 1, 1)
         self.downloadStackedWidget = QStackedWidget(self)
@@ -223,8 +234,8 @@ class DownloadPage(QWidget):
             self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth()
         )
         self.versionSmoothScrollArea.setSizePolicy(sizePolicy)
-        self.versionSmoothScrollArea.setMinimumSize(QSize(170, 0))
-        self.versionSmoothScrollArea.setMaximumSize(QSize(170, 16777215))
+        self.versionSmoothScrollArea.setMinimumSize(QSize(160, 0))
+        self.versionSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
         self.versionSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.versionSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.versionSmoothScrollArea.setWidgetResizable(True)
@@ -544,6 +555,37 @@ class DownloadPage(QWidget):
         self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 2, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
+        
+        self.VerticalSeparator = VerticalSeparator(self)
+        self.VerticalSeparator.setObjectName("VerticalSeparator")
+        self.gridLayout.addWidget(self.VerticalSeparator, 3, 3, 1, 1)
+
+        
+        self.downloadingItemWidget = MySmoothScrollArea(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.downloadingItemWidget.sizePolicy().hasHeightForWidth())
+        self.downloadingItemWidget.setSizePolicy(sizePolicy)
+        self.downloadingItemWidget.setMinimumSize(QSize(310, 0))
+        self.downloadingItemWidget.setMaximumSize(QSize(310, 16777215))
+        self.downloadingItemWidget.setFrameShape(QFrame.NoFrame)
+        self.downloadingItemWidget.setWidgetResizable(True)
+        self.downloadingItemWidget.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.downloadingItemWidget.setObjectName("downloadingItemWidget")
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 310, 407))
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
+        self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.downloadingItemLayout = QVBoxLayout(self.scrollAreaWidgetContents)
+        self.downloadingItemLayout.setContentsMargins(0, 0, 0, 0)
+        self.downloadingItemLayout.setObjectName("downloadingItemLayout")
+        self.downloadingItemWidget.setWidget(self.scrollAreaWidgetContents)
+        self.gridLayout.addWidget(self.downloadingItemWidget, 3, 4, 1, 1)
         dsList = [self.downloadWithFastMirror, self.downloadWithMCSLAPI]
         self.downloadStackedWidget.setCurrentWidget(
             dsList[
@@ -562,6 +604,7 @@ class DownloadPage(QWidget):
         self.refreshMCSLAPIBtn.setText(self.tr("刷新"))
         self.openDownloadFolderBtn.setText(self.tr("打开下载文件夹"))
         self.openDownloadEntriesBtn.setText(self.tr("打开下载记录"))
+        self.showDownloadingItemBtn.setText(self.tr("展开下载中列表"))
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.MCSLAPIPivot.addItem(
@@ -628,6 +671,9 @@ class DownloadPage(QWidget):
         self.openDownloadEntriesBtn.clicked.connect(
             lambda: DownloadEntryBox(self).exec()
         )
+        self.downloadingItemWidget.setFixedWidth(0)
+        self.VerticalSeparator.setVisible(False)
+        self.showDownloadingItemBtn.toggled.connect(self.switchDownloadingItemWidget)
 
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
@@ -652,6 +698,7 @@ class DownloadPage(QWidget):
                     pass
                 try:
                     self.coreListLayout.itemAt(i).widget().deleteLater()
+                    del self.coreListLayout.itemAt(i).widget
                 except AttributeError:
                     pass
         elif id == 1:
@@ -663,6 +710,7 @@ class DownloadPage(QWidget):
                     pass
                 try:
                     self.versionLayout.itemAt(i).widget().deleteLater()
+                    del self.versionLayout.itemAt(i).widget
                 except AttributeError:
                     pass
         elif id == 2:
@@ -674,6 +722,7 @@ class DownloadPage(QWidget):
                     pass
                 try:
                     self.buildLayout.itemAt(i).widget().deleteLater()
+                    del self.buildLayout.itemAt(i).widget
                 except AttributeError:
                     pass
         else:
@@ -689,6 +738,7 @@ class DownloadPage(QWidget):
                     pass
                 try:
                     layout.itemAt(i).widget().deleteLater()
+                    del layout.itemAt(i).widget
                 except AttributeError:
                     pass
 
@@ -747,6 +797,7 @@ class DownloadPage(QWidget):
                     try:
                         layout.itemAt(i).widget().setParent(None)
                         layout.itemAt(i).widget().deleteLater()
+                        del layout.itemAt(i).widget
                     except AttributeError:
                         pass
                 layout.addWidget(MCSLAPILoadingWidget())
@@ -773,6 +824,7 @@ class DownloadPage(QWidget):
         for i2 in reversed(range(layout.count())):
             layout.itemAt(i2).widget().setParent(None)
             layout.itemAt(i2).widget().deleteLater()
+            del layout.itemAt(i2).widget
         layout.addWidget(MCSLAPILoadingErrorWidget())
         self.refreshMCSLAPIBtn.setEnabled(True)
 
@@ -857,6 +909,7 @@ class DownloadPage(QWidget):
                 box.yesSignal.connect(box.deleteLater)
                 box.cancelButton.setParent(None)
                 box.cancelButton.deleteLater()
+                del box.cancelButton
                 box.exec()
                 return
         sender = self.sender()
@@ -989,6 +1042,7 @@ class DownloadPage(QWidget):
             for i in reversed(range(self.buildLayout.count())):
                 self.buildLayout.itemAt(i).widget().setParent(None)
                 self.buildLayout.itemAt(i).widget().deleteLater()
+                del self.buildLayout.itemAt(i).widget
         except AttributeError:
             pass
 
@@ -1047,6 +1101,7 @@ class DownloadPage(QWidget):
                 box.yesSignal.connect(box.deleteLater)
                 box.cancelButton.setParent(None)
                 box.cancelButton.deleteLater()
+                del box.cancelButton
                 box.exec()
                 return
         buildVer = self.sender().property("core_version")
@@ -1065,33 +1120,6 @@ class DownloadPage(QWidget):
                 buildVer,
             ),
         )
-
-    def hideDownloadHelper(self):
-        self.downloadingInfoBar = InfoBar(
-            icon=FIF.DOWNLOAD,
-            title=self.tr("已隐藏下载窗口"),
-            content=self.tr("仍在下载中，点击按钮恢复下载窗口..."),
-            orient=Qt.Horizontal,
-            isClosable=False,
-            duration=-1,
-            position=InfoBarPosition.TOP_RIGHT,
-            parent=self,
-        )
-        self.downloadingInfoBar.setCustomBackgroundColor("white", "#202020")
-        showDownloadMsgBoxBtn = PushButton()
-        showDownloadMsgBoxBtn.setText(self.tr("恢复"))
-        showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.show)
-        showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.close)
-        self.downloadingInfoBar.addWidget(showDownloadMsgBoxBtn)
-        self.downloadingInfoBar.show()
-
-    def downloadFinishedHelper(self):
-        try:
-            self.downloadingInfoBar.close()
-            self.downloadingInfoBar.deleteLater()
-            InfoBar.success(self.tr("下载完毕"))
-        except:
-            pass
 
     def checkDownloadFileExists(
         self, fileName, fileFormat, uri, extraData: tuple
@@ -1138,7 +1166,7 @@ class DownloadPage(QWidget):
             self.downloadFile(fileName, fileFormat, uri, extraData)
 
     def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
-        downloadingInfoBar = DownloadInfoBar(
+        downloadingInfoBar = DownloadCard(
             fileName=f"{fileName}.{fileFormat}", url=uri, parent=self
         )
         gid = Aria2Controller.download(
@@ -1152,9 +1180,22 @@ class DownloadPage(QWidget):
         downloadingInfoBar.canceled.connect(
             lambda: Aria2Controller.cancelDownloadTask(gid)
         )
+        downloadingInfoBar.canceled.connect(
+            lambda: Aria2Controller.cancelDownloadTask(gid)
+        )
         downloadingInfoBar.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
             if x
             else Aria2Controller.resumeDownloadTask(gid)
         )
-        downloadingInfoBar.show()
+        self.downloadingItemLayout.addWidget(downloadingInfoBar)
+
+    def switchDownloadingItemWidget(self):
+        if self.showDownloadingItemBtn.isChecked():
+            self.downloadingItemWidget.setFixedWidth(310)
+            self.VerticalSeparator.setVisible(True)
+            self.showDownloadingItemBtn.setText(self.tr("收起下载中列表"))
+        else:
+            self.downloadingItemWidget.setFixedWidth(0)
+            self.VerticalSeparator.setVisible(False)
+            self.showDownloadingItemBtn.setText(self.tr("展开下载中列表"))
