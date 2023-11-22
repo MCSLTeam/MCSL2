@@ -33,3 +33,9 @@
 </a>
 <!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
 <!-- AFDIAN-ACTION:END -->
+<br><br><br>
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo." width="100" height='100'><br>
+
+感谢 JetBrains 公司的赞助，使得本项目能够持续发展。  
+Thanks to JetBrains for their sponsorship, which makes this project continuously grow.  
+(Open Source development licenses)
