@@ -231,6 +231,7 @@ class SettingsPage(QWidget):
             texts=[
                 self.tr("FastMirror"),
                 self.tr("MCSLAPI"),
+                self.tr("极星·镜像站"),
             ],
             parent=self.downloadSettingsGroup,
         )

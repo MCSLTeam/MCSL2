@@ -502,7 +502,7 @@ class DownloadCard(SimpleCardWidget):
                     )
                 self.close()
             elif dl.status == "error":
-                errInfoBar = InfoBar.success(
+                errInfoBar = InfoBar.error(
                     title=self.tr(f"{filename} 下载失败"),
                     content="",
                     duration=-1,
@@ -515,16 +515,6 @@ class DownloadCard(SimpleCardWidget):
                 )
                 retryBtn = PushButton(self.tr("重试"))
                 retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
-                retryBtn.clicked.connect(
-                    lambda: self.parent()
-                    .parent()
-                    .parent()
-                    .parent()
-                    .downloadingItemLayout.removeWidget(errInfoBar)
-                )
-                self.parent().parent().parent().parent().downloadingItemLayout.addWidget(
-                    errInfoBar
-                )
                 self.flush()
                 MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":

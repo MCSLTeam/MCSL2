@@ -1671,6 +1671,7 @@ class ConfigurePage(QWidget):
         """显示下载条目"""
         self.downloadEntry = DownloadEntryBox(self)
         if self.downloadEntry.exec() == 1:
+            print("selected: ", self.downloadEntry.entryView.selectedItems()[0].text(), "end.")
             coreName, coreType, mcVersion, buildVersion = [
                 e.text() for e in self.downloadEntry.entryView.selectedItems()
             ]

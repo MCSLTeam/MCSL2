@@ -311,6 +311,8 @@ class DownloadVariables:
             "mod": "模组",
             "bedrock": "基岩",
         }
+        self.PolarTypeDict = {}
+        self.PolarCoreDict = {}
 
 
 @Singleton
@@ -367,7 +369,7 @@ class SettingsVariables:
 
     def __init__(self):
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
-        self.downloadSourceList = ["FastMirror", "MCSLAPI"]
+        self.downloadSourceList = ["FastMirror", "MCSLAPI", "极星·镜像站"]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
         self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
