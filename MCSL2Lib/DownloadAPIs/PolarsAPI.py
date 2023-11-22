@@ -59,7 +59,6 @@ class PolarsAPIDownloadURLParser:
         r = PolarsAPIDownloadURLParser.decodePolarsAPICoreJsons(
             f"https://mirror.polars.cc/api/query/minecraft/core/{coreType}"
         )
-        print(r)
         if type(r) == list:
             for e in r:
                 rv["name"].append(e["name"])

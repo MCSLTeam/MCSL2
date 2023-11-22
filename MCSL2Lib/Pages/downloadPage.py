@@ -1472,10 +1472,6 @@ class DownloadPage(QWidget):
             else Aria2Controller.resumeDownloadTask(gid)
         )
         self.downloadingItemLayout.addWidget(downloadingInfoWidget)
-        print(downloadingInfoWidget.parent().objectName())
-        print(downloadingInfoWidget.parent().parent().objectName())
-        print(downloadingInfoWidget.parent().parent().parent().objectName())
-        print(downloadingInfoWidget.parent().parent().parent().parent().objectName())
 
     def switchDownloadingItemWidget(self):
         if self.showDownloadingItemBtn.isChecked():

@@ -467,7 +467,6 @@ class DownloadCard(SimpleCardWidget):
 
     @pyqtSlot(list)
     def onDownloadFinished(self, _: list):
-        print("size:", self.size().height(), self.size().width())
         [dl, extraData] = _
         dl: Optional[Download]
         filename = extraData[0]
