@@ -105,9 +105,6 @@ class FetchFastMirrorAPIThread(QThread):
         if FinishSlot is not ...:
             self.fetchSignal.connect(FinishSlot)
 
-    def getURL(self):
-        return self.url
-
     def run(self):
         self.fetchSignal.emit(FastMirrorAPIDownloadURLParser.parseFastMirrorAPIUrl())
 
@@ -131,9 +128,6 @@ class FetchFastMirrorAPICoreVersionThread(QThread):
         self.mcVersion = mcVersion
         if FinishSlot is not ...:
             self.fetchSignal.connect(FinishSlot)
-
-    def getURL(self):
-        return self.url
 
     def run(self):
         self.fetchSignal.emit(

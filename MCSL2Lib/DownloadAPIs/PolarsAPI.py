@@ -20,6 +20,7 @@ from typing import Callable
 from PyQt5.QtCore import pyqtSignal, QThread
 from MCSL2Lib.Controllers.networkController import MCSLNetworkSession
 
+
 class PolarsAPIDownloadURLParser:
     """URL设定器"""
 
@@ -29,7 +30,9 @@ class PolarsAPIDownloadURLParser:
     @staticmethod
     def parsePolarsAPIUrl():
         rv = defaultdict(list)
-        r = PolarsAPIDownloadURLParser.decodePolarTypeJsons("https://mirror.polars.cc/api/query/minecraft/core")
+        r = PolarsAPIDownloadURLParser.decodePolarTypeJsons(
+            "https://mirror.polars.cc/api/query/minecraft/core"
+        )
         if type(r) == list:
             for e in r:
                 rv["id"].append(e["id"])
@@ -97,9 +100,6 @@ class FetchPolarsAPITypeThread(QThread):
         if FinishSlot is not ...:
             self.fetchSignal.connect(FinishSlot)
 
-    def getURL(self):
-        return self.url
-
     def run(self):
         self.fetchSignal.emit(PolarsAPIDownloadURLParser.parsePolarsAPIUrl())
 
@@ -125,9 +125,7 @@ class FetchPolarsAPICoreThread(QThread):
 
     def run(self):
         self.fetchSignal.emit(
-            PolarsAPIDownloadURLParser.parsePolarsAPICoreUrl(
-                coreType=self.idx
-            )
+            PolarsAPIDownloadURLParser.parsePolarsAPICoreUrl(coreType=self.idx)
         )
 
     def getData(self):
@@ -154,16 +152,12 @@ class FetchPolarsAPICoreThreadFactory:
     def __init__(self):
         self.singletonThread = None
 
-    def create(
-        self, idx, _singleton=False, finishSlot=...
-    ) -> FetchPolarsAPICoreThread:
+    def create(self, idx, _singleton=False, finishSlot=...) -> FetchPolarsAPICoreThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
             else:
-                thread = FetchPolarsAPICoreThread(
-                    idx=idx, FinishSlot=finishSlot
-                )
+                thread = FetchPolarsAPICoreThread(idx=idx, FinishSlot=finishSlot)
                 self.singletonThread = thread
                 return thread
         else:

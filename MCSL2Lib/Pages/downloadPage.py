@@ -802,78 +802,6 @@ class DownloadPage(QWidget):
             )
             self.refreshDownloads()
 
-    def releaseFMMemory(self, id=0):
-        if not id:
-            self.coreListLayout.removeItem(self.scrollAreaSpacer)
-            for i in reversed(range(self.coreListLayout.count())):
-                try:
-                    self.coreListLayout.itemAt(i).widget().setParent(None)
-                except AttributeError:
-                    pass
-                try:
-                    self.coreListLayout.itemAt(i).widget().deleteLater()
-                    del self.coreListLayout.itemAt(i).widget
-                except AttributeError:
-                    pass
-        elif id == 1:
-            self.versionLayout.removeItem(self.scrollAreaSpacer)
-            for i in reversed(range(self.versionLayout.count())):
-                try:
-                    self.versionLayout.itemAt(i).widget().setParent(None)
-                except AttributeError:
-                    pass
-                try:
-                    self.versionLayout.itemAt(i).widget().deleteLater()
-                    del self.versionLayout.itemAt(i).widget
-                except AttributeError:
-                    pass
-        elif id == 2:
-            self.buildLayout.removeItem(self.scrollAreaSpacer)
-            for i in reversed(range(self.buildLayout.count())):
-                try:
-                    self.buildLayout.itemAt(i).widget().setParent(None)
-                except AttributeError:
-                    pass
-                try:
-                    self.buildLayout.itemAt(i).widget().deleteLater()
-                    del self.buildLayout.itemAt(i).widget
-                except AttributeError:
-                    pass
-        else:
-            pass
-
-    def releaseMCSLAPIMemory(self):
-        for layout in self.MCSLAPILayoutList:
-            layout.removeItem(self.scrollAreaSpacer)
-            for i in reversed(range(layout.count())):
-                try:
-                    layout.itemAt(i).widget().setParent(None)
-                except AttributeError:
-                    pass
-                try:
-                    layout.itemAt(i).widget().deleteLater()
-                    del layout.itemAt(i).widget
-                except AttributeError:
-                    pass
-
-    def releasePolarsAPIMemory(self, id=0):
-        layout = self.polarsTypeLayout if not id else self.polarsCoreLayout
-        if layout == self.polarsCoreLayout:
-            try:
-                layout.removeItem(self.scrollAreaSpacer)
-            except AttributeError:
-                pass
-        for i in reversed(range(layout.count())):
-            try:
-                layout.itemAt(i).widget().setParent(None)
-            except AttributeError:
-                pass
-            try:
-                layout.itemAt(i).widget().deleteLater()
-                del layout.itemAt(i).widget
-            except AttributeError:
-                pass
-
     def refreshDownloads(self):
         """刷新下载页面主逻辑"""
         # FastMirror
@@ -923,6 +851,20 @@ class DownloadPage(QWidget):
     #############
     #  MCSLAPI  #
     #############
+
+    def releaseMCSLAPIMemory(self):
+        for layout in self.MCSLAPILayoutList:
+            layout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(layout.count())):
+                try:
+                    layout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    layout.itemAt(i).widget().deleteLater()
+                    del layout.itemAt(i).widget
+                except AttributeError:
+                    pass
 
     def getMCSLAPI(self):
         """请求MCSLAPI"""
@@ -1065,6 +1007,28 @@ class DownloadPage(QWidget):
             uri,
             (fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"),
         )
+
+    ##############
+    # Polars API #
+    ##############
+
+    def releasePolarsAPIMemory(self, id=0):
+        layout = self.polarsTypeLayout if not id else self.polarsCoreLayout
+        if layout == self.polarsCoreLayout:
+            try:
+                layout.removeItem(self.scrollAreaSpacer)
+            except AttributeError:
+                pass
+        for i in reversed(range(layout.count())):
+            try:
+                layout.itemAt(i).widget().setParent(None)
+            except AttributeError:
+                pass
+            try:
+                layout.itemAt(i).widget().deleteLater()
+                del layout.itemAt(i).widget
+            except AttributeError:
+                pass
 
     def getPolarsAPI(self):
         """请求Polars API"""
@@ -1211,6 +1175,46 @@ class DownloadPage(QWidget):
     ##################
     # FastMirror API #
     ##################
+
+    def releaseFMMemory(self, id=0):
+        if not id:
+            self.coreListLayout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(self.coreListLayout.count())):
+                try:
+                    self.coreListLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.coreListLayout.itemAt(i).widget().deleteLater()
+                    del self.coreListLayout.itemAt(i).widget
+                except AttributeError:
+                    pass
+        elif id == 1:
+            self.versionLayout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(self.versionLayout.count())):
+                try:
+                    self.versionLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.versionLayout.itemAt(i).widget().deleteLater()
+                    del self.versionLayout.itemAt(i).widget
+                except AttributeError:
+                    pass
+        elif id == 2:
+            self.buildLayout.removeItem(self.scrollAreaSpacer)
+            for i in reversed(range(self.buildLayout.count())):
+                try:
+                    self.buildLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.buildLayout.itemAt(i).widget().deleteLater()
+                    del self.buildLayout.itemAt(i).widget
+                except AttributeError:
+                    pass
+        else:
+            pass
 
     def getFastMirrorAPI(self):
         """请求FastMirror API"""
