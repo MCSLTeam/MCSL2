@@ -14,7 +14,6 @@
 A function for communicatng with FastMirrorAPI.
 """
 from collections import defaultdict
-from json import loads
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
@@ -46,7 +45,7 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorJsons(downloadAPIUrl):
         data = []
         try:
-            apiData = loads(MCSLNetworkSession().get(downloadAPIUrl).text)
+            apiData = MCSLNetworkSession().get(downloadAPIUrl).json()
         except Exception:
             return -2
         try:
@@ -79,7 +78,7 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorCoreVersionJsons(downloadAPIUrl):
         builds = []
         try:
-            apiData = loads(MCSLNetworkSession().get(downloadAPIUrl).text)
+            apiData = MCSLNetworkSession().get(downloadAPIUrl).json()
         except Exception:
             return -2
         try:

@@ -14,7 +14,6 @@
 A function for communicatng with MCSLAPI.
 """
 
-from json import loads
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
@@ -76,11 +75,11 @@ class MCSLAPIDownloadURLParser:
         downloadFileFormats = []
         downloadFileNames = []
         try:
-            DownloadJson = MCSLNetworkSession().get(RefreshUrl).text
+            DownloadJson = MCSLNetworkSession().get(RefreshUrl)
         except Exception as e:
             return -2, -2, -2, -2
         try:
-            PyDownloadList = loads(DownloadJson)["MCSLDownloadList"]
+            PyDownloadList = DownloadJson.json()["MCSLDownloadList"]
             for i in PyDownloadList:
                 downloadFileTitle = i["name"]
                 downloadFileTitles.insert(0, downloadFileTitle)
@@ -114,9 +113,6 @@ class FetchMCSLAPIDownloadURLThread(QThread):
         self.Data = None
         if FinishSlot is not ...:
             self.fetchSignal.connect(FinishSlot)
-
-    def getURL(self):
-        return self.url
 
     def run(self):
         self.fetchSignal.emit(MCSLAPIDownloadURLParser.parseDownloaderAPIUrl())
