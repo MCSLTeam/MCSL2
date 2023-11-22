@@ -1166,29 +1166,30 @@ class DownloadPage(QWidget):
             self.downloadFile(fileName, fileFormat, uri, extraData)
 
     def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
-        downloadingInfoBar = DownloadCard(
+        downloadingInfoWidget = DownloadCard(
             fileName=f"{fileName}.{fileFormat}", url=uri, parent=self
         )
         gid = Aria2Controller.download(
             uri=uri,
             watch=True,
-            info_get=downloadingInfoBar.onInfoGet,
-            stopped=downloadingInfoBar.onDownloadFinished,
+            info_get=downloadingInfoWidget.onInfoGet,
+            stopped=downloadingInfoWidget.onDownloadFinished,
             interval=0.2,
             extraData=extraData,
         )
-        downloadingInfoBar.canceled.connect(
+        downloadingInfoWidget.canceled.connect(
             lambda: Aria2Controller.cancelDownloadTask(gid)
         )
-        downloadingInfoBar.canceled.connect(
-            lambda: Aria2Controller.cancelDownloadTask(gid)
-        )
-        downloadingInfoBar.paused.connect(
+        downloadingInfoWidget.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
             if x
             else Aria2Controller.resumeDownloadTask(gid)
         )
-        self.downloadingItemLayout.addWidget(downloadingInfoBar)
+        self.downloadingItemLayout.addWidget(downloadingInfoWidget)
+        print(downloadingInfoWidget.parent().objectName())
+        print(downloadingInfoWidget.parent().parent().objectName())
+        print(downloadingInfoWidget.parent().parent().parent().objectName())
+        print(downloadingInfoWidget.parent().parent().parent().parent().objectName())
 
     def switchDownloadingItemWidget(self):
         if self.showDownloadingItemBtn.isChecked():

@@ -448,9 +448,6 @@ class DownloadCard(SimpleCardWidget):
             else Aria2Controller.resumeDownloadTask(gid)
         )
 
-    def DownloadWidget(self):
-        return self
-
     def onPauseBtnClicked(self):
         self.pauseSwitch = not self.pauseSwitch
         if self.pauseSwitch:
@@ -483,7 +480,7 @@ class DownloadCard(SimpleCardWidget):
         if dl is not None:
             if dl.status == "complete":
                 InfoBar.success(
-                    title=self.tr(f"{filename} 完成"),
+                    title=self.tr(f"{filename} 下载完成"),
                     content="",
                     duration=1500,
                     isClosable=True,
@@ -493,18 +490,20 @@ class DownloadCard(SimpleCardWidget):
                     .parent()
                     .parent(),
                 )
-                self.parent().parent().parent().parent().downloadingItemLayout.removeWidget(
-                    self
-                )
+                # self.parent().parent().parent().parent().downloadingItemLayout.removeWidget(
+                #     self
+                # )
+                self.hide()
                 if path.exists(
                     path.join("MCSL2", "Downloads", filename)
                 ):  # 防止有时候aria2抽风...
                     DL_EntryController().work.emit(
                         ("addCoreEntry", {"coreName": filename, "extraData": data})
                     )
+                self.close()
             elif dl.status == "error":
                 errInfoBar = InfoBar.success(
-                    title=self.tr(f"{filename} 完成"),
+                    title=self.tr(f"{filename} 下载失败"),
                     content="",
                     duration=-1,
                     isClosable=True,
