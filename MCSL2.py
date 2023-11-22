@@ -16,9 +16,7 @@ Main entry.
 import sys
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
-from MCSL2Lib.Controllers.settingsController import cfg
 # from viztracer import VizTracer
-from MCSL2Lib.utils import initializeMCSL2
 from MCSL2Lib.utils import MCSL2Logger
 
 
@@ -35,15 +33,6 @@ class MCSL2Application(QApplication):
             return False
 
 
-# class MCSL2Translator(QTranslator):
-#     def __init__(self, locale: QLocale = None, parent=None):
-#         super().__init__(parent=parent)
-#         self.load(locale or QLocale())
-
-#     def load(self, locale: QLocale):
-#         super().load(f"i18n/{locale.name()}.qm")
-
-
 if __name__ == "__main__":
     # Debug
     # tracer = VizTracer()
@@ -51,8 +40,13 @@ if __name__ == "__main__":
     # tracer.start()
 
     # Initialize
+    from MCSL2Lib.utils import initializeMCSL2
     initializeMCSL2()
+    del initializeMCSL2
+
+    # Load config
     from qfluentwidgets import qconfig
+    from MCSL2Lib.Controllers.settingsController import cfg
     qconfig.load(r"./MCSL2/MCSL2_Config.json", cfg)
 
     # Verify dev mode
@@ -103,8 +97,7 @@ if __name__ == "__main__":
 
     import gc
     gc.enable()
-    
-    
+
     # tracer.stop()
     # tracer.save()
     sys.exit(app.exec_())

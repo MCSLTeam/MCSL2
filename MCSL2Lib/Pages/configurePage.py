@@ -1923,6 +1923,7 @@ class ConfigurePage(QWidget):
             w.yesButton.setText(self.tr("好的"))
             w.cancelButton.setParent(None)
             w.cancelButton.deleteLater()
+            del w.cancelButton
             w.exec()
         else:
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)

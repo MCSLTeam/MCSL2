@@ -708,6 +708,7 @@ class ServerManagerPage(QWidget):
             for i in reversed(range(self.verticalLayout.count())):
                 self.verticalLayout.itemAt(i).widget().setParent(None)
                 self.verticalLayout.itemAt(i).widget().deleteLater()
+                del self.verticalLayout.itemAt(i).widget
         except Exception:
             pass
 
@@ -1300,6 +1301,7 @@ class ServerManagerPage(QWidget):
             w.yesButton.setText(self.tr("好好好"))
             w.cancelButton.setParent(None)
             w.cancelButton.deleteLater()
+            del w.cancelButton
             w.exec()
         else:
             # 检查
@@ -1348,6 +1350,7 @@ class ServerManagerPage(QWidget):
                 w.yesSignal.connect(w.deleteLater)
                 w.cancelButton.setParent(None)
                 w.cancelButton.deleteLater()
+                del w.cancelButton
                 w.exec()
             else:
                 totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
