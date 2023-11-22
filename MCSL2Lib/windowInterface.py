@@ -373,7 +373,7 @@ class Window(VerifyFluentWindowBase):
             return
 
         elif mode == ExceptionFilterMode.RAISE:
-            MCSL2Logger.error(f"捕捉到异常：{ty} {value} {_traceback}")
+            MCSL2Logger.error(msg=f"捕捉到异常：{ty} {value} {_traceback}")
             return self.oldHook(ty, value, _traceback)
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
@@ -385,6 +385,7 @@ class Window(VerifyFluentWindowBase):
             box.cancelButton.setText(self.tr("知道了"))
             box.contentLabel.setParent(None)
             box.contentLabel.deleteLater()
+            del box.contentLabel
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
             box.yesSignal.connect(
                 lambda: QApplication.clipboard().setText(tracebackString)
