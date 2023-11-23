@@ -787,7 +787,8 @@ class DownloadPage(QWidget):
             lambda: {
                 (box:=DownloadEntryBox(self)),
                 box.show(),
-                box.raise_()
+                box.raise_(),
+                box.asyncGetEntries()
             }
         )
         self.downloadingItemWidget.setFixedWidth(0)
