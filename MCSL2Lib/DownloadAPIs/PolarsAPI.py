@@ -14,11 +14,10 @@
 A function for communicatng with PolarsAPI.
 """
 from collections import defaultdict
-from json import loads
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-from MCSL2Lib.Controllers.networkController import MCSLNetworkSession
+from MCSL2Lib.Controllers.networkController import MCSLNetworkSession, MCSLNetworkHeaders
 
 
 class PolarsAPIDownloadURLParser:
@@ -46,7 +45,7 @@ class PolarsAPIDownloadURLParser:
     def decodePolarTypeJsons(downloadAPIUrl):
         data = []
         try:
-            apiData = MCSLNetworkSession().get(downloadAPIUrl).json()
+            apiData = MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
         except Exception:
             return -2
         try:
@@ -74,7 +73,7 @@ class PolarsAPIDownloadURLParser:
     def decodePolarsAPICoreJsons(downloadAPIUrl):
         cores = []
         try:
-            apiData = loads(MCSLNetworkSession().get(downloadAPIUrl).text)
+            apiData = MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
         except Exception:
             return -2
         try:

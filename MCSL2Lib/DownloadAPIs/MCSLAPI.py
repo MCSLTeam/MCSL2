@@ -18,7 +18,7 @@ from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 
-from MCSL2Lib.Controllers.networkController import MCSLNetworkSession
+from MCSL2Lib.Controllers.networkController import MCSLNetworkSession, MCSLNetworkHeaders
 
 
 class MCSLAPIDownloadURLParser:
@@ -75,7 +75,7 @@ class MCSLAPIDownloadURLParser:
         downloadFileFormats = []
         downloadFileNames = []
         try:
-            DownloadJson = MCSLNetworkSession().get(RefreshUrl)
+            DownloadJson = MCSLNetworkSession().get(url=RefreshUrl, headers=MCSLNetworkHeaders)
         except Exception as e:
             return -2, -2, -2, -2
         try:
