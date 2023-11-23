@@ -217,7 +217,7 @@ class PageLoader(QThread):
 @Singleton
 class Window(VerifyFluentWindowBase):
     """程序主窗口"""
-
+    startFetchingNotice = pyqtSignal()
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
@@ -273,6 +273,7 @@ class Window(VerifyFluentWindowBase):
         setattr(self, targetObj, pageType(self))
         setattr(loaded, flag, True)
         if loaded.allPageLoaded():
+            self.startFetchingNotice.connect(self.homeInterface.noticeThread.start)
             self.initNavigation()
             serverHelper.loadAtLaunch()
             self.initQtSlot()
@@ -291,6 +292,7 @@ class Window(VerifyFluentWindowBase):
             else:
                 self.testNotPassFlag = False
                 pass
+            self.startFetchingNotice.emit()
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
@@ -314,6 +316,7 @@ class Window(VerifyFluentWindowBase):
                 duration=3000,
                 parent=self,
             )
+        self.startFetchingNotice.emit()
 
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
