@@ -42,7 +42,7 @@ jobs:
           python -m pip uninstall scipy -y
 
       - name: Build on Windows
-        run: python build.py --env-gh
+        run: python mcsl2_build.py --env-gh
 
       - name: Delete Useless Files and Compress with upx
         shell: pwsh
@@ -102,7 +102,7 @@ jobs:
           sudo apt-get install -y upx-ucl
 
       - name: Build on Linux
-        run: python build.py --env-gh
+        run: python mcsl2_build.py --env-gh
 
       - name: Delete Useless Files and Compress with upx
         run: |
