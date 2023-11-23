@@ -1674,6 +1674,7 @@ class ConfigurePage(QWidget):
         self.downloadEntry.rejected.connect(self.onDownloadEntryClosed)
         self.downloadEntry.show()
         self.downloadEntry.raise_()
+        self.downloadEntry.asyncGetEntries()
 
     def onDownloadEntryClosed(self):
         entries=self.downloadEntry.lastSelection

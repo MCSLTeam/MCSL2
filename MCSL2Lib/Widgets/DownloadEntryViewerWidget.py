@@ -36,9 +36,6 @@ class DownloadEntryBox(MessageBoxBase):
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
 
-        (controller := DL_EntryController()).resultReady.connect(self.updateEntries)
-        controller.work.emit(("getEntriesList", {"check": True, "autoDelete": False}))
-
         self.entryView.itemSelectionChanged.connect(
             self.onItemSelectionChanged
         )
@@ -71,6 +68,10 @@ class DownloadEntryBox(MessageBoxBase):
 
         self.yesButton.setDisabled(True)
 
+    def asyncGetEntries(self):
+        (controller := DL_EntryController()).resultReady.connect(self.updateEntries)
+        controller.work.emit(("getEntriesList", {"check": True, "autoDelete": False}))
+
     def getSelectedEntry(self):
         return self.__lastSelection.copy()
 
@@ -84,16 +85,18 @@ class DownloadEntryBox(MessageBoxBase):
 
     def updateEntries(self, entries: typing.List[typing.Dict]):
         entries.sort(key=lambda x: x.get("mc_version"), reverse=True)
-        print(len(entries))
         self.entryView.setRowCount(len(entries))
         for i, coreInfo in enumerate(entries):
-            print(i, coreInfo)
-            self.entryView.setItem(i, 0, QTableWidgetItem(coreInfo.get("name")))
-            self.entryView.setItem(i, 1, QTableWidgetItem(coreInfo.get("type")))
-            self.entryView.setItem(i, 2, QTableWidgetItem(coreInfo.get("mc_version")))
-            self.entryView.setItem(
-                i, 3, QTableWidgetItem(coreInfo.get("build_version"))
-            )
+
+            name = QTableWidgetItem(coreInfo.get("name"))
+            type_ = QTableWidgetItem(coreInfo.get("type"))
+            mcVersion = QTableWidgetItem(coreInfo.get("mc_version"))
+            buildVersion = QTableWidgetItem(coreInfo.get("build_version"))
+
+            self.entryView.setItem(i, 0, name)
+            self.entryView.setItem(i, 1, type_)
+            self.entryView.setItem(i, 2, mcVersion)
+            self.entryView.setItem(i, 3, buildVersion)
         self.entryView.resizeRowsToContents()
         self.yesButton.setDisabled(True)
         self.titleLabel.setText(self.tr("下载项(共") + str(len(entries)) + self.tr("项)"))
