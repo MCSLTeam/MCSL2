@@ -98,6 +98,9 @@ if __name__ == "__main__":
     import gc
     gc.enable()
 
+    app.exec_()
+
     # tracer.stop()
     # tracer.save()
-    sys.exit(app.exec_())
+
+    sys.exit()
