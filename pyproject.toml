@@ -1,0 +1,25 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "MCSLTeam", email = "lxhtt@vip.qq.com"},
+]
+dependencies = [
+    "PyQt5==5.15.10",
+    "PyQt-Fluent-Widgets[full]>=1.3.8",
+    "psutil==5.9.5",
+    "loguru==0.7.2",
+    "requests==2.31.0",
+    "aria2p==0.11.3",
+    "ordered-set==4.1.0",
+    "nuitka>=1.9",
+    "imageio>=2.31.5",
+    "lib-not-dr<=0.2.0,>=0.1.7",
+    "pyqt5-qt5==5.15.2",
+    "setuptools>=69.0.2",
+]
+requires-python = ">=3.8,<3.9"
+readme = "README.md"
+license = {text = "GPL-3.0"}
+
