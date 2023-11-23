@@ -20,7 +20,7 @@ from qfluentwidgets import (
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
-from MCSL2Lib.utils import FileOpener
+from MCSL2Lib.utils import openLocalFile
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
@@ -269,7 +269,7 @@ class PluginManager(BasePluginManager):
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: FileOpener().openFileChecker(
+                lambda instance: openLocalFile(
                     f".\\Plugins\\{instance}\\"
                 )
             )

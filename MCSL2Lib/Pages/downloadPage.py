@@ -71,7 +71,7 @@ from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.Resources.icons import *
-from MCSL2Lib.utils import FileOpener  # noqa: F401
+from MCSL2Lib.utils import openLocalFile  # noqa: F401
 from MCSL2Lib.variables import (
     DownloadVariables,
     SettingsVariables,
@@ -779,7 +779,7 @@ class DownloadPage(QWidget):
         )
         self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
         self.openDownloadFolderBtn.clicked.connect(
-            lambda: FileOpener().openFileChecker(f".\\MCSL2\\Downloads\\")
+            lambda: openLocalFile(f".\\MCSL2\\Downloads\\")
         )
 
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)

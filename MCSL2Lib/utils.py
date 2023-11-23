@@ -135,6 +135,9 @@ def openWebUrl(Url):
     """打开网址"""
     QDesktopServices.openUrl(QUrl(Url))
 
+def openLocalFile(FilePath):
+    """打开本地文件(夹)"""
+    QDesktopServices.openUrl(QUrl.fromLocalFile(FilePath))
 
 class ExceptionFilterMode(enum.Enum):
     RAISE_AND_PRINT = enum.auto()  # 过滤：弹框提示，也会抛出异常
@@ -252,27 +255,3 @@ class workingThreads:
 
     def __call__(self, *args, **kwargs):
         raise RuntimeError("This class is not allowed to be instantiated.")
-
-
-@Singleton
-class FileOpener:
-    def __init__(self):
-        self.isOpenedFolder: bool = False
-
-    def openFileChecker(self, filePath):
-        if not self.isOpenedFolder:
-            self._openFileFolder(filePath)
-            self.isOpenedFolder = 1
-        else:
-            self.isOpenedFolder = 0
-
-    def _openFileFolder(self, _filePath):
-        system = systemType()
-        if system == "Windows":
-            Popen(["start", _filePath], shell=True)
-        elif system == "Darwin":
-            Popen(["open", _filePath])
-        elif system == "Linux":
-            Popen(["xdg-open", _filePath])
-        else:
-            return
