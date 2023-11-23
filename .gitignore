@@ -36,3 +36,4 @@ mcslapi.json
 /build/
 result.json
 /other/
+.pdm-python
