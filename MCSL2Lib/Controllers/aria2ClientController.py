@@ -467,7 +467,7 @@ class Aria2BootThread(QThread):
         except Exception:
             self.loaded.emit(False)
         finally:
-            MCSL2Logger.info(f"启动Aria2耗时: {time.time() - time_time}")
+            MCSL2Logger.info(f"启动Aria2耗时: {round(time.time() - time_time, 5)}秒")
 
 
 ###################
