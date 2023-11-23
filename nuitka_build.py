@@ -52,7 +52,7 @@ def gen_compiler() -> CompilerHelper:
         use_ccache=True,
         use_clang=True,
         use_msvc=True,
-        use_lto=False,
+        use_lto=True,
         standalone=True,
         enable_console=True,
         show_progress=True,
