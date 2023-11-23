@@ -86,11 +86,6 @@ class PolarsAPIDownloadURLParser:
 
 
 class FetchPolarsAPITypeThread(QThread):
-    """
-    用于获取/api/v3
-    即核心类型+游戏版本列表
-    """
-
     fetchSignal = pyqtSignal(dict)
 
     def __init__(self, FinishSlot: Callable = ...):
@@ -108,11 +103,6 @@ class FetchPolarsAPITypeThread(QThread):
 
 
 class FetchPolarsAPICoreThread(QThread):
-    """
-    用于获取/api/v3/{name}/{mc_version}
-    即服务端版本列表
-    """
-
     fetchSignal = pyqtSignal(dict)
 
     def __init__(self, idx, FinishSlot: Callable = ...):
