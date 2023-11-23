@@ -604,7 +604,8 @@ def initializeAria2Configuration():
             "rpc-listen-all=true\n"
             "event-poll=select\n"
             "rpc-listen-port=6800\n"
-            "force-save=false"
+            "force-save=false\n"
+            "check-certificate=false\n"
         )
     with open(r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8") as Aria2SessionFile:
         Aria2SessionFile.write("")
