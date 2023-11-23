@@ -1670,7 +1670,14 @@ class ConfigurePage(QWidget):
     def showDownloadEntries(self):
         """显示下载条目"""
         self.downloadEntry = DownloadEntryBox(self)
-        if self.downloadEntry.exec() == 1:
+        self.downloadEntry.accepted.connect(self.onDownloadEntryClosed)
+        self.downloadEntry.rejected.connect(self.onDownloadEntryClosed)
+        self.downloadEntry.show()
+        self.downloadEntry.raise_()
+
+    def onDownloadEntryClosed(self):
+        entries=self.downloadEntry.lastSelection
+        if entries:
             print("selected: ", self.downloadEntry.entryView.selectedItems()[0].text(), "end.")
             coreName, coreType, mcVersion, buildVersion = [
                 e.text() for e in self.downloadEntry.entryView.selectedItems()
@@ -1701,8 +1708,10 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
-        del self.downloadEntry
+        self.downloadEntry.deleteLater()
         self.downloadEntry = None
+
+
 
     def checkJavaSet(self):
         """检查Java设置"""

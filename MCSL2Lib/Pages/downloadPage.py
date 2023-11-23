@@ -612,7 +612,7 @@ class DownloadPage(QWidget):
         self.VerticalSeparator_2.setObjectName("VerticalSeparator_2")
 
         self.gridLayout_5.addWidget(self.VerticalSeparator_2, 0, 1, 4, 1)
-        self.refreshPolarsAPIBtn = PushButton(FIF.UPDATE, "刷新", self.downloadWithPolarsAPI)
+        self.refreshPolarsAPIBtn = PushButton(icon=FIF.UPDATE, text="刷新", parent=self.downloadWithPolarsAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -784,7 +784,11 @@ class DownloadPage(QWidget):
 
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)
         self.openDownloadEntriesBtn.clicked.connect(
-            lambda: DownloadEntryBox(self).exec()
+            lambda: {
+                (box:=DownloadEntryBox(self)),
+                box.show(),
+                box.raise_()
+            }
         )
         self.downloadingItemWidget.setFixedWidth(0)
         self.VerticalSeparator.setVisible(False)

@@ -1,7 +1,7 @@
 import typing
 
-from PyQt5.QtCore import QAbstractListModel, QModelIndex, Qt, QSize
-from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy, QTableWidget
+from PyQt5.QtCore import QAbstractListModel, QModelIndex, Qt, QSize, pyqtSignal
+from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy
 from qfluentwidgets import MessageBoxBase, SubtitleLabel, TableWidget
 
 from MCSL2Lib.Controllers.aria2ClientController import DL_EntryController
@@ -16,8 +16,11 @@ class DownloadEntryModel(QAbstractListModel):
 
 
 class DownloadEntryBox(MessageBoxBase):
+    onClosed = pyqtSignal(list)
+
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setModal(True)
         self.setMinimumSize(QSize(600, 0))
         self.setMaximumSize(QSize(16777215, 16777215))
         self.titleLabel = SubtitleLabel(self.tr("下载项(正在加载...)"), self)
@@ -37,9 +40,9 @@ class DownloadEntryBox(MessageBoxBase):
         controller.work.emit(("getEntriesList", {"check": True, "autoDelete": False}))
 
         self.entryView.itemSelectionChanged.connect(
-            lambda: self.yesButton.setEnabled(True)
+            self.onItemSelectionChanged
         )
-        self.entryView.doubleClicked.connect(lambda: self.accept())
+        self.entryView.doubleClicked.connect(self.yesButton.click)
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
 
@@ -64,10 +67,20 @@ class DownloadEntryBox(MessageBoxBase):
         self.yesButton.setText(self.tr("选择"))
         self.cancelButton.setText(self.tr("取消"))
 
+        self.__lastSelection = []
+
         self.yesButton.setDisabled(True)
 
     def getSelectedEntry(self):
-        return list(map(lambda x: x.text(), self.entryView.selectedItems()))
+        return self.__lastSelection.copy()
+
+    def onItemSelectionChanged(self):
+        self.yesButton.setEnabled(True)
+        self.__lastSelection = [e.text() for e in self.entryView.selectedItems()]
+
+    def closeEvent(self, e):
+        self.onClosed.emit(self.__lastSelection)
+        return super().closeEvent(e)
 
     def updateEntries(self, entries: typing.List[typing.Dict]):
         entries.sort(key=lambda x: x.get("mc_version"), reverse=True)
@@ -97,3 +110,7 @@ class DownloadEntryBox(MessageBoxBase):
             self.entryView.horizontalHeader().setSortIndicator(index, Qt.AscendingOrder)
             self.entryView.sortItems(index, Qt.AscendingOrder)
             self.columnSortOrder[index] = not self.columnSortOrder[index]
+
+    @property
+    def lastSelection(self):
+        return self.__lastSelection.copy()
