@@ -207,7 +207,6 @@ class HomePage(QWidget):
         self.noticeThread = GetNoticeThread(self)
         self.noticeThread.notice.connect(self.subTitleLabel.setText)
         self.noticeThread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
-        self.noticeThread.start()
 
     @pyqtSlot(str)
     def afterSelectedServer(self, serverName):

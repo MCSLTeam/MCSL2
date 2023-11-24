@@ -97,14 +97,14 @@ if __name__ == "__main__":
 
     if is_github:
         from pprint import pprint
-        
+
         print(compiler.as_markdown(200))
         pprint(compiler.option())
     else:
         print(compiler.as_markdown())
-        
+
         compiler.output_path = Path(f"./build/nuitka-{platform.system().lower()}")
-    
+
     print(f"```bash\n{compiler.gen_subprocess_cmd()}\n```")
 
     # 确认是否需要编译

@@ -24,24 +24,25 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
         with:
-          python-version: '3.8'
-          cache: 'pip'
+          python-version: 3.8
+          cache: true
           cache-dependency-path: |
-            requirements.txt
+            ./pdm.lock
 
-      - name: Update Pip and Install Requirements
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Update Pip and Uninstall Useless Dependencies
         shell: pwsh
         run: |
-          python -m pip install -U pip setuptools
-          python -m pip install -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
 
       - name: Build on Windows
-        run: python nuitka_build.py --github
+        run: python mcsl2_build.py --env-gh
 
       - name: Delete Useless Files and Compress with upx
         shell: pwsh
@@ -79,19 +80,19 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
         with:
-          python-version: '3.8'
-          cache: 'pip'
+          python-version: 3.8
+          cache: true
           cache-dependency-path: |
-            requirements.txt
+            ./pdm.lock
 
-      - name: Update Pip and Install Requirements
-        shell: pwsh
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Update Pip and Uninstall Useless Dependencies
         run: |
-          python -m pip install -U pip setuptools
-          python -m pip install -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
 
@@ -101,7 +102,7 @@ jobs:
           sudo apt-get install -y upx-ucl
 
       - name: Build on Linux
-        run: python nuitka_build.py --github
+        run: python mcsl2_build.py --env-gh
 
       - name: Delete Useless Files and Compress with upx
         run: |
@@ -116,7 +117,6 @@ jobs:
           sudo rm _queue.so
           upx -9 MCSL2.bin
 
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -124,53 +124,53 @@ jobs:
           path: |
             build/MCSL2.dist/**/*
 
-  Release:
-    runs-on: ubuntu-latest
+  # Release:
+  #   runs-on: ubuntu-latest
 
-    needs:
-      - Windows
-      - Linux
+  #   needs:
+  #     - Windows
+  #     - Linux
     
-    strategy:
-      matrix:
-        mcsl2version: 
-          - 2.2.2.4
+  #   strategy:
+  #     matrix:
+  #       mcsl2version: 
+  #         - 2.2.2.4
 
-    steps:
+  #   steps:
 
-      - uses: szenius/set-timezone@v1.0
-        with:
-          timezoneLinux: 'Asia/Shanghai'
+  #     - uses: szenius/set-timezone@v1.0
+  #       with:
+  #         timezoneLinux: 'Asia/Shanghai'
 
-      - name: Install Tools
-        run: sudo apt install p7zip-full -y
+  #     - name: Install Tools
+  #       run: sudo apt install p7zip-full -y
 
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
+  #     - name: Download Artifacts
+  #       uses: actions/download-artifact@v3
 
-      - name: Check-out repository
-        uses: actions/checkout@v3
-        with:
-          path: repo
+  #     - name: Check-out repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         path: repo
           
-      - name: Compress Artifacts
-        run: |
-          7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
-          7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
-          7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Windows-arm64.zip" "./MCSL2-Windows-arm64/*"
-          7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
-          7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
-          7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Linux-arm64.zip" "./MCSL2-Linux-arm64/*"
+  #     - name: Compress Artifacts
+  #       run: |
+  #         7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
+  #         7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
+  #         7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Windows-arm64.zip" "./MCSL2-Windows-arm64/*"
+  #         7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
+  #         7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
+  #         7z a -tzip "MCSL2-${{ matrix.mcsl2version }}-Linux-arm64.zip" "./MCSL2-Linux-arm64/*"
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: ./repo/ChangeLog.md
-          prerelease: false
-          draft: false
-          tag_name: v${{ matrix.mcsl2version }}
-          files: |
-            *.zip
+  #     - name: Release
+  #       uses: softprops/action-gh-release@v1
+  #       with:
+  #         body_path: ./repo/ChangeLog.md
+  #         prerelease: false
+  #         draft: false
+  #         tag_name: v${{ matrix.mcsl2version }}
+  #         files: |
+  #           *.zip
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

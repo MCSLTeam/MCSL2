@@ -15,9 +15,9 @@ dependencies = [
     "ordered-set==4.1.0",
     "nuitka>=1.9",
     "imageio>=2.31.5",
-    "lib-not-dr<=0.2.0,>=0.1.7",
     "pyqt5-qt5==5.15.2",
     "setuptools>=69.0.2",
+    "lib-not-dr>=0.1.8",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
