@@ -28,8 +28,19 @@ version = { attr = "MCSL2Lib.MCSL2VERSION" }
 
 [project.optional-dependencies]
 tomli = ["tomli>=2.0.1"]
+ruff = ["ruff>=0.1.6"]
 
 [tool.pdm.scripts]
 main = "python MCSL2.py"
 build = "python lndl_build.py -y"
 build_github = "python lndl_build.py --github"
+
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+src = [
+    "MCSL2Lib",
+    "PluginExample",
+    "Tools",
+    "Adapters",
+]
