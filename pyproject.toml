@@ -1,6 +1,6 @@
 [project]
-name = ""
-version = ""
+name = "MCSL2"
+dynamic = ["version"]
 description = ""
 authors = [
     {name = "MCSLTeam", email = "lxhtt@vip.qq.com"},
@@ -22,6 +22,12 @@ dependencies = [
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
 license = {text = "GPL-3.0"}
+
+[tool.setuptools.dynamic]
+version = { attr = "MCSL2Lib.MCSL2VERSION" }
+
+[project.optional-dependencies]
+tomli = ["tomli>=2.0.1"]
 
 [tool.pdm.scripts]
 main = "python MCSL2.py"

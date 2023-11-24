@@ -21,6 +21,7 @@ Tools/OfflineBuild/**
 Tools/verification.py
 Tools/MCSL Preview Permission Manager.exe
 Servers/**
+requirements.txt
 
 # runtime
 MCSL2/Downloads/**
