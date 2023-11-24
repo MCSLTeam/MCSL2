@@ -1,14 +1,28 @@
-VirtualEnvironment/**
-venv/**
+# envs
+VirtualEnvironment
+env
+venv
+
+# package manager
 poetry.lock
+pdm.lock
+pdm.toml
+.pdm-python
+
+# IDE
 .idea/**
 .vs/**
 .fleet/**
 .vscode/**
+
+# build
+build
 Tools/OfflineBuild/**
 Tools/verification.py
 Tools/MCSL Preview Permission Manager.exe
 Servers/**
+
+# runtime
 MCSL2/Downloads/**
 MCSL2/Logs/**
 MCSL2/MCSL2_Config.json
@@ -17,23 +31,13 @@ MCSL2/Aria2/aria2.session
 MCSL2/MCSL2_DetectedJava.json
 MCSL2/MCSL2_ServerList.json
 Plugins/**
-pdm.lock
-pdm.toml
-Icons/icons_rc.py
-__pycache__/**
-MCSL2Lib/verification.py
-MCSL2Lib/__pycache__/**
-MCSL2Lib/Controllers/__pycache__/**
-MCSL2Lib/DownloadAPIs/__pycache__/**
-MCSL2Lib/ImportServerTypes/__pycache__/**
-MCSL2Lib/Pages/__pycache__/**
-MCSL2Lib/Resources/__pycache__/**
-MCSL2Lib/Widgets/__pycache__/**
-Adapters/__pycache__/**
-tmp.py
-/PyQt-Fluent-Widgets/
 mcslapi.json
-/build/
 result.json
-/other/
-.pdm-python
+
+Icons/icons_rc.py
+
+# Just __pycache__
+*__pycache__*
+
+# tools
+/PyQt-Fluent-Widgets/
