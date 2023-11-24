@@ -23,7 +23,6 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 
-from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
 class playersController(QWidget):

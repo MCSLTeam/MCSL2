@@ -180,7 +180,7 @@ class PluginManager(BasePluginManager):
             self.pathList = next(walk(path))[1]
             if not firstLoad:
                 for i in self.pathListBackup:
-                    if not i in self.pathList:
+                    if i not in self.pathList:
                         self.allPlugins.pop(i)
                         self.pathListBackup.pop(self.pathListBackup.index(i))
                     else:

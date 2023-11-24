@@ -21,7 +21,6 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QSpacerItem,
     QSizePolicy,
-    QAction,
     QApplication,
 )
 from qfluentwidgets import (

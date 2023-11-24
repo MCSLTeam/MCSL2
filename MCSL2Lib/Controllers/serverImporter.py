@@ -8,7 +8,6 @@ from MCSL2Lib.Widgets.importServerWidgets import (
     MyListWidget,
     SaveWidget,
 )
-from PyQt5.QtWidgets import QStackedWidget
 from qfluentwidgets import CardWidget
 
 
