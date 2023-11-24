@@ -1709,9 +1709,6 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
-        self.downloadEntry.deleteLater()
-        self.downloadEntry = None
-
 
 
     def checkJavaSet(self):
