@@ -26,3 +26,4 @@ license = {text = "GPL-3.0"}
 [tool.pdm.scripts]
 main = "python MCSL2.py"
 build = "python nuitka_build.py -y"
+build_github = "python nuitka_build.py --github"
