@@ -44,3 +44,15 @@ src = [
     "Tools",
     "Adapters",
 ]
+
+[tool.lndl.nuitka]
+main = "MCSL2.py"
+output-dir = "build"
+clang = true
+msvc = true
+standalone = true
+enable-console = true
+disable-console = false
+include-data-dir = [
+    ['MCSL2/Aria2', 'MCSL2/Aria2']
+]
