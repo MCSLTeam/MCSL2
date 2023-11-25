@@ -109,7 +109,7 @@ jobs:
       - name: Build on Linux
         run: |
           python Tools/update-pyproject.py
-          python -m lndl_nuitka . -y
+          python lib_not_dr_build.py --github
 
       - name: Delete Useless Files and Compress with upx
         run: |
