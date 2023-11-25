@@ -71,7 +71,10 @@ if __name__ == "__main__":
 
     # Analyze user
     from MCSL2Lib.verification import countUserAPI
-    countUserAPI()
+    try:
+        countUserAPI()
+    except Exception:
+        pass
     del countUserAPI
 
     # High DPI scaling
