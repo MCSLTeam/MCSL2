@@ -21,24 +21,40 @@ jobs:
 
       - name: Check-out repository
         uses: actions/checkout@v3
-
-      - name: Setup PDM
-        uses: pdm-project/setup-pdm@v3
+      
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: '3.8.10' # 为了支持 win7 我还是得用 3.8
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+          # cache: 'pip'
+          # cache-dependency-path: |
+          #   **/requirement.txt
 
-      - name: Install dependencies
-        run: pdm install
+      # - name: Setup PDM
+      #   uses: pdm-project/setup-pdm@v3
+      #   with:
+      #     python-version: "3.8"
+
+      # - name: Install dependencies
+      #   run: pdm install
 
       - name: Update Pip and Uninstall Useless Dependencies
         shell: pwsh
         run: |
+          python -m pip install tomli
+          python Tools/gen-requirements.py
+          python -m pip install --upgrade pip
+          python -m pip install -U -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
           python -m pip uninstall pyqt5-stubs -y
 
       - name: Build on Windows
-        run: python mcsl2_build.py --env-gh
+        # run: python mcsl2_build.py --env-gh
+        run: |
+          python Tools/update-pyproject.py
+          python -m lndl_nuitka . -y
 
       # - name: Delete Useless Files and Compress with upx
       #   shell: pwsh

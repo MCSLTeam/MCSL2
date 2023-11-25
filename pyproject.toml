@@ -17,7 +17,7 @@ dependencies = [
     "imageio>=2.31.5",
     "pyqt5-qt5==5.15.2",
     "setuptools>=69.0.2",
-    "lib-not-dr>=0.1.8",
+    "lib-not-dr==0.2.0rc8",
     "pyqt5-stubs>=5.15.6.0",
 ]
 requires-python = ">=3.8,<3.9"
@@ -34,6 +34,7 @@ ruff = ["ruff>=0.1.6"]
 [tool.pdm.scripts]
 main = "python MCSL2.py"
 build = "python lndl_build.py -y"
+build_beta = "python -m lndl_nuitka . -y"
 build_github = "python lndl_build.py --github"
 
 [tool.ruff]
@@ -45,3 +46,37 @@ src = [
     "Tools",
     "Adapters",
 ]
+
+[tool.lndl.nuitka]
+main = "MCSL2.py"
+output-dir = "build"
+
+# 编译选项
+clang = true
+msvc = "latest"
+standalone = true
+lto = "yes"
+enable-console = true
+disable-console = false
+show-memory = false
+show-progress = false
+
+# 版本号 可通过 Tools/update-pyproject.py 更新
+product-version = "2.2.3.0"
+file-version = "0.3.0.0"
+
+# 文件信息
+product-name = "MCSL 2"
+company-name = "MCSL Team"
+file-description = "MC Server Launcher 2"
+copyright = "Copyright ©MCSL Team. All right reserved."
+
+# 依赖
+include-package = ["MCSL2Lib", "sqlite3"]
+include-data-dir = [["MCSL2/Aria2", "MCSL2/Aria2"]]
+follow-import-to = ["Adapters", "loguru", "requests"]
+nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief"]
+
+enable-plugin = ["pyqt5"]
+windows-icon-from-ico = "MCSL2.ico"
+assume-yes-for-download = true
