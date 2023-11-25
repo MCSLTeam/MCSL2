@@ -372,6 +372,12 @@ class SettingsVariables:
     def __init__(self):
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
         self.downloadSourceList = ["FastMirror", "MCSLAPI", "PolarsAPI", "AkiraCloud"]
+        self.downloadSourceTextList = [
+            "FastMirror镜像站",
+            "MCSLAPI",
+            "极星·镜像站",
+            "Akira Cloud镜像站",
+        ]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
         self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]

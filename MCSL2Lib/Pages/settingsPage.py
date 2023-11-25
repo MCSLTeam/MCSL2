@@ -229,10 +229,10 @@ class SettingsPage(QWidget):
             title=self.tr("下载源"),
             content=self.tr("随你所好。"),
             texts=[
-                self.tr("FastMirror"),
+                self.tr("FastMirror镜像站"),
                 self.tr("MCSLAPI"),
                 self.tr("极星·镜像站"),
-                self.tr("Akira Cloud"),
+                self.tr("Akira Cloud镜像站"),
             ],
             parent=self.downloadSettingsGroup,
         )

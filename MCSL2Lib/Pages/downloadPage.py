@@ -274,7 +274,9 @@ class DownloadPage(QWidget):
         self.verticalLayout_13.addLayout(self.versionLayout)
         self.versionSmoothScrollArea.setWidget(self.versionScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.versionSmoothScrollArea, 1, 1, 1, 1)
-        self.refreshFastMirrorAPIBtn = PushButton(icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithFastMirror)
+        self.refreshFastMirrorAPIBtn = PushButton(
+            icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithFastMirror
+        )
         self.refreshFastMirrorAPIBtn.setObjectName("refreshFastMirrorAPIBtn")
 
         self.gridLayout_2.addWidget(self.refreshFastMirrorAPIBtn, 0, 3, 1, 1)
@@ -564,7 +566,9 @@ class DownloadPage(QWidget):
         self.verticalLayout_7.addWidget(self.MCSLAPIOfficialCoreScrollArea)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIOfficialCore)
         self.gridLayout_3.addWidget(self.MCSLAPIStackedWidget, 1, 0, 1, 3)
-        self.refreshMCSLAPIBtn = PushButton(icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithMCSLAPI)
+        self.refreshMCSLAPIBtn = PushButton(
+            icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithMCSLAPI
+        )
         self.refreshMCSLAPIBtn.setObjectName("refreshMCSLAPIBtn")
 
         self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 2, 1, 1)
@@ -729,7 +733,9 @@ class DownloadPage(QWidget):
         self.akiraTypeLabel.setObjectName("akiraTypeLabel")
 
         self.gridLayout_10.addWidget(self.akiraTypeLabel, 0, 2, 1, 1)
-        self.refreshAkiraCloudBtn = PushButton(icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithAkiraCloud)
+        self.refreshAkiraCloudBtn = PushButton(
+            icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithAkiraCloud
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -836,7 +842,7 @@ class DownloadPage(QWidget):
             self.downloadWithFastMirror,
             self.downloadWithMCSLAPI,
             self.downloadWithPolarsAPI,
-            self.downloadWithAkiraCloud
+            self.downloadWithAkiraCloud,
         ]
         self.downloadStackedWidget.setCurrentWidget(
             self.dsList[
@@ -936,6 +942,11 @@ class DownloadPage(QWidget):
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
         if currentChanged == 3:
+            self.subTitleLabel.setText(
+                self.tr(
+                    f"Aria2引擎高速驱动！ - 当前下载源：{settingsVariables.downloadSourceTextList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]}"
+                )
+            )
             self.downloadStackedWidget.setCurrentWidget(
                 self.dsList[
                     settingsVariables.downloadSourceList.index(
@@ -1353,7 +1364,7 @@ class DownloadPage(QWidget):
             return
         else:
             self.getAkiraStateToolTip = StateToolTip(
-                self.tr("正在请求Akira Cloud"), self.tr("加载中，请稍后..."), self
+                self.tr("正在请求Akira Cloud镜像站"), self.tr("加载中，请稍后..."), self
             )
             self.getAkiraStateToolTip.move(self.getAkiraStateToolTip.getSuitablePos())
             self.getAkiraStateToolTip.show()
@@ -1364,21 +1375,21 @@ class DownloadPage(QWidget):
     def updateAkiraTypeList(self, _APIList):
         downloadVariables.AkiraTypeList = _APIList
         if len(downloadVariables.AkiraTypeList):
-            self.getAkiraStateToolTip.setContent(self.tr("请求Akira Cloud完毕！"))
+            self.getAkiraStateToolTip.setContent(self.tr("请求Akira Cloud镜像站完毕！"))
             self.getAkiraStateToolTip.setState(True)
             self.getAkiraStateToolTip = None
             self.initAkiraTypeListWidget()
         else:
-            self.getAkiraStateToolTip.setContent(self.tr("请求Akira Cloud失败！"))
+            self.getAkiraStateToolTip.setContent(self.tr("请求Akira Cloud镜像站失败！"))
             self.getAkiraStateToolTip.setState(True)
             self.getAkiraStateToolTip = None
             self.showAkiraFailedTip()
-        self.refreshPolarsAPIBtn.setEnabled(True)
+        self.refreshAkiraCloudBtn.setEnabled(True)
 
     def showAkiraFailedTip(self):
         InfoBar.error(
             title=self.tr("错误"),
-            content=self.tr("获取Akira Cloud下载信息失败！\n尝试检查网络后，请再尝试刷新。"),
+            content=self.tr("获取Akira Cloud镜像站信息失败！\n尝试检查网络后，请再尝试刷新。"),
             orient=Qt.Horizontal,
             isClosable=False,
             position=InfoBarPosition.TOP,
@@ -1412,7 +1423,7 @@ class DownloadPage(QWidget):
             return
         else:
             self.getAkiraCoreStateToolTip = StateToolTip(
-                self.tr("正在进一步请求Akira Cloud"), self.tr("加载中，请稍后..."), self
+                self.tr("正在进一步请求Akira Cloud镜像站"), self.tr("加载中，请稍后..."), self
             )
             self.getAkiraCoreStateToolTip.move(
                 self.getAkiraCoreStateToolTip.getSuitablePos()
@@ -1426,12 +1437,12 @@ class DownloadPage(QWidget):
         downloadVariables.AkiraCoreDict.clear()
         downloadVariables.AkiraCoreDict.update(_APIDict)
         if downloadVariables.AkiraCoreDict["name"] != "-1":
-            self.getAkiraCoreStateToolTip.setContent(self.tr("请求Akira Cloud完毕！"))
+            self.getAkiraCoreStateToolTip.setContent(self.tr("请求Akira Cloud镜像站完毕！"))
             self.getAkiraCoreStateToolTip.setState(True)
             self.getAkiraCoreStateToolTip = None
             self.initAkiraCoreListWidget()
         else:
-            self.getAkiraCoreStateToolTip.setContent(self.tr("请求Akira Cloud失败！"))
+            self.getAkiraCoreStateToolTip.setContent(self.tr("请求Akira Cloud镜像站失败！"))
             self.getAkiraCoreStateToolTip.setState(True)
             self.getAkiraCoreStateToolTip = None
             self.showAkiraFailedTip()
@@ -1440,19 +1451,19 @@ class DownloadPage(QWidget):
     def initAkiraCoreListWidget(self):
         self.releaseAkiraMemory(1)
         for i in range(len(downloadVariables.AkiraCoreDict["list"])):
-            self.akiraCoreLayout.addWidget(
-                FastMirrorBuildListWidget(
-                    buildVer=downloadVariables.AkiraCoreDict["list"][i],
-                    syncTime="",
-                    coreVersion=downloadVariables.AkiraCoreDict["name"],
-                    btnSlot=self.downloadAkiraFile,
-                    parent=self,
-                )
+            w = FastMirrorBuildListWidget(
+                buildVer=downloadVariables.AkiraCoreDict["list"][i],
+                syncTime="",
+                coreVersion=downloadVariables.AkiraCoreDict["name"],
+                btnSlot=self.downloadAkiraFile,
+                parent=self,
             )
+            w.syncTimeLabel.setParent(None)
+            self.akiraCoreLayout.addWidget(w)
         self.akiraCoreLayout.addItem(self.scrollAreaSpacer)
 
     def downloadAkiraFile(self):
-        """下载Akira Cloud文件"""
+        """下载Akira Cloud镜像站文件"""
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
                 box = MessageBox(
@@ -1467,8 +1478,10 @@ class DownloadPage(QWidget):
                 box.exec()
                 return
         uri = f"https://mirror.akiracloud.net/{self.sender().property('core_version')}/{self.sender().parent().buildVerLabel.text()}"
-        fileFormat = self.sender().property("core_version").split(".")[-1]
-        fileName = self.sender().property("core_version")
+        fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
+        fileName = (
+            self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
+        )
         # 判断文件是否存在
         self.checkDownloadFileExists(
             fileName,
