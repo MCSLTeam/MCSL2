@@ -27,9 +27,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirement.txt
+          # cache: 'pip'
+          # cache-dependency-path: |
+          #   requirement.txt
 
       - name: Update Pip and Uninstall Useless Dependencies
         shell: pwsh
@@ -86,9 +86,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirement.txt
+          # cache: 'pip'
+          # cache-dependency-path: |
+          #   requirement.txt
 
       - name: Update Pip and Uninstall Useless Dependencies
         shell: pwsh
