@@ -169,15 +169,15 @@ jobs:
           7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
           7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
 
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     body_path: ./repo/ChangeLog.md
-      #     prerelease: false
-      #     draft: false
-      #     tag_name: v${{ env.MCSL2_VERSION }}
-      #     files: |
-      #       *.zip
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: ./repo/ChangeLog.md
+          prerelease: false
+          draft: false
+          tag_name: v${{ env.MCSL2_VERSION }}
+          files: |
+            *.zip
 
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
