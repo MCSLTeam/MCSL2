@@ -1,3 +1,11 @@
+#
+#         From: Minecraft-Server-Launcher, by Waheal, modified by LxHTT.
+#         URL: https://github.com/Waheal/Minecraft-Server-Launcher
+#
+################################################################################
+"""
+Minecraft Forge Servers Installer.
+"""
 import re
 
 

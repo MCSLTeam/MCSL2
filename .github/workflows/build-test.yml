@@ -1,0 +1,59 @@
+name: Build Test
+
+on: workflow_dispatch
+
+permissions: write-all
+
+jobs:
+  Windows:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - windows-latest
+        architecture:
+          - x64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+      - name: Check-out repository
+        uses: actions/checkout@v3
+
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Update Pip and Uninstall Useless Dependencies
+        shell: pwsh
+        run: |
+          python -m pip uninstall numpy -y
+          python -m pip uninstall scipy -y
+          python -m pip uninstall pyqt5-stubs -y
+
+      - name: Build on Windows
+        run: python mcsl2_build.py --env-gh
+
+      # - name: Delete Useless Files and Compress with upx
+      #   shell: pwsh
+      #   run: |
+      #     Remove-Item -Force -Recurse .\build\MCSL2.dist\zstandard
+      #     Remove-Item -Force -Recurse .\build\MCSL2.dist\_asyncio.pyd
+      #     Remove-Item -Force -Recurse .\build\MCSL2.dist\pyexpat.pyd
+      #     Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qml.dll
+      #     Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qmlmodels.dll
+      #     Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5quick.dll
+      #     .\upx.exe -9 build/MCSL2.dist/_ctypes.pyd build/MCSL2.dist/_decimal.pyd build/MCSL2.dist/_elementtree.pyd build/MCSL2.dist/_lzma.pyd build/MCSL2.dist/_overlapped.pyd build/MCSL2.dist/_socket.pyd build/MCSL2.dist/_ssl.pyd build/MCSL2.dist/_win32sysloader.pyd build/MCSL2.dist/libffi-7.dll build/MCSL2.dist/libcrypto-1_1.dll build/MCSL2.dist/libssl-1_1.dll build/MCSL2.dist/MCSL2.exe build/MCSL2.dist/python38.dll build/MCSL2.dist/pythoncom38.dll build/MCSL2.dist/pywintypes38.dll build/MCSL2.dist/qt5core.dll build/MCSL2.dist/qt5dbus.dll build/MCSL2.dist/qt5gui.dll build/MCSL2.dist/qt5multimedia.dll build/MCSL2.dist/qt5network.dll build/MCSL2.dist/qt5printsupport.dll build/MCSL2.dist/qt5svg.dll build/MCSL2.dist/qt5websockets.dll build/MCSL2.dist/qt5widgets.dll build/MCSL2.dist/qt5xml.dll build/MCSL2.dist/select.pyd build/MCSL2.dist/unicodedata.pyd build/MCSL2.dist/win32api.pyd build/MCSL2.dist/win32gui.pyd build/MCSL2.dist/win32print.pyd
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: MCSL2-${{ runner.os }}-${{ matrix.architecture }}
+          path: |
+            build/MCSL2.dist/**/*

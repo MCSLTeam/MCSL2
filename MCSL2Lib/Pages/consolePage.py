@@ -335,7 +335,7 @@ class ConsolePage(QWidget):
         self.commandLineEdit.setClearButtonEnabled(True)
         self.serverMemProgressRing.setTextVisible(True)
         self.serverCPUProgressRing.setTextVisible(True)
-        self.errorHandler.setChecked(True)
+        self.errorHandler.setChecked(False)
 
     @pyqtSlot(float)
     def setMemView(self, mem):
@@ -409,7 +409,7 @@ class ConsolePage(QWidget):
             return
         if "Advanced terminal features are not available in this environment" in serverOutput:
             return
-        if "Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream"in serverOutput:
+        if "Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream" in serverOutput:
             return
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
@@ -468,6 +468,18 @@ class ConsolePage(QWidget):
             or " left the game" in serverOutput
         ):
             self.recordPlayers(serverOutput)
+
+    def showErrorHandlerReport(self):
+        if self.errorHandler.isChecked():
+            if self.errMsg!= "":
+                w = MessageBox("错误分析器日志", self.errMsg, self)
+                w.cancelButton.setParent(None)
+                w.show()
+            else:
+                w = MessageBox("错误分析器日志", "本次没有检测到任何MCSL2内置错误分析可用解决方案。", self)
+                w.cancelButton.setParent(None)
+                w.show()
+
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:

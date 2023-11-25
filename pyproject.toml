@@ -18,6 +18,7 @@ dependencies = [
     "pyqt5-qt5==5.15.2",
     "setuptools>=69.0.2",
     "lib-not-dr==0.2.0rc4",
+    "pyqt5-stubs>=5.15.6.0",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
