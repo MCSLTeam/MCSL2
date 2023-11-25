@@ -613,6 +613,7 @@ class SettingsPage(QWidget):
         if cmpVersion(latestVerInfo["latest"]):
             title = self.tr("发现新版本：") + latestVerInfo["latest"]
             w = MessageBox(title, latestVerInfo["update-log"], parent=self.tmpParent)
+            w.contentLabel.setTextFormat(Qt.MarkdownText)
             w.yesButton.setText(self.tr("更新"))
             w.cancelButton.setText(self.tr("关闭"))
             if not GlobalMCSL2Variables.devMode:
