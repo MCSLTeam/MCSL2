@@ -17,7 +17,7 @@ dependencies = [
     "imageio>=2.31.5",
     "pyqt5-qt5==5.15.2",
     "setuptools>=69.0.2",
-    "lib-not-dr==0.2.0rc8",
+    "lib-not-dr==0.2.0rc9",
     "pyqt5-stubs>=5.15.6.0",
 ]
 requires-python = ">=3.8,<3.9"
