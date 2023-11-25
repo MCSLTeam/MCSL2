@@ -217,6 +217,7 @@ class PageLoader(QThread):
 @Singleton
 class Window(VerifyFluentWindowBase):
     """程序主窗口"""
+
     startFetchingNotice = pyqtSignal()
     deleteBtnEnabled = pyqtSignal(bool)
 
@@ -225,7 +226,9 @@ class Window(VerifyFluentWindowBase):
         self.testMode = False
         self.mySetTheme()
         self.initWindow()
-        self.setWindowTitle(f"MCSL {MCSL2VERSION}{' Preview Mode Edition' if self.testMode else ''}")
+        self.setWindowTitle(
+            f"MCSL {MCSL2VERSION}{' Preview Mode Edition' if self.testMode else ''}"
+        )
 
         self.oldHook = sys.excepthook
         self.pluginManager: PluginManager = PluginManager()
@@ -603,6 +606,9 @@ class Window(VerifyFluentWindowBase):
             ServerHandler().serverClosed.connect(
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
+        ServerHandler().serverClosed.connect(
+            self.consoleInterface.showErrorHandlerReport
+        )
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
@@ -632,7 +638,9 @@ class Window(VerifyFluentWindowBase):
         else:
             self.switchTo(self.consoleInterface)
             self.consoleInterface.errMsg = ""
-            self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
+            self.consoleInterface.titleLabel.setText(
+                self.tr(f"终端：{cfg.get(cfg.lastServer)}")
+            )
             self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
             self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
