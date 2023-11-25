@@ -18,8 +18,6 @@ pdm.toml
 # build
 build
 Tools/OfflineBuild/**
-Tools/verification.py
-Tools/MCSL Preview Permission Manager.exe
 Servers/**
 requirements.txt
 
@@ -33,6 +31,8 @@ MCSL2/MCSL2_DetectedJava.json
 MCSL2/MCSL2_ServerList.json
 Plugins/**
 mcslapi.json
+
+# debug
 result.json
 
 Icons/icons_rc.py
@@ -42,3 +42,11 @@ Icons/icons_rc.py
 
 # tools
 /PyQt-Fluent-Widgets/
+
+# test
+tmp.py
+1.py
+
+# secret
+Tools/verification.py
+Tools/MCSL Preview Permission Manager.exe
