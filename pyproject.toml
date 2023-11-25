@@ -48,23 +48,34 @@ src = [
 [tool.lndl.nuitka]
 main = "MCSL2.py"
 output-dir = "build"
+
+# 编译选项
 clang = true
 msvc = true
 standalone = true
+lto = 'yes'
 enable-console = true
 disable-console = false
-include-data-dir = [['MCSL2/Aria2', 'MCSL2/Aria2']]
+show-memory = false
+show-progress = false
+
 
 # 版本号 可通过 Tools/update-pyproject.py 更新
 product-version = "2.2.3.0"
 file-version = "0.3.0.0"
 
+# 文件信息
+product-name = 'MCSL 2'
+company-name = 'MCSL Team'
+file-description = 'MC Server Launcher 2'
 copyright = 'Copyright ©MCSL Team. All right reserved.'
+
+# 依赖
+include-package = ['MCSL2Lib', 'sqlite3']
+include-data-dir = [['MCSL2/Aria2', 'MCSL2/Aria2']]
 follow-import-to = ['Adapters', 'loguru', 'requests']
 nofollow-import-to = ['numpy', 'scipy', 'PIL', 'colorthief']
+
 enable-plugin = ['pyqt5']
-include-package = ['MCSL2Lib', 'sqlite3']
-file-description = 'MC Server Launcher 2'
-lto = 'yes'
 windows-icon-from-ico = 'MCSL2/MCSL2.ico'
 assume-yes-for-download = true
