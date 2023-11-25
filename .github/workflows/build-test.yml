@@ -25,10 +25,8 @@ jobs:
       - name: Setup PDM
         uses: pdm-project/setup-pdm@v3
         with:
-          python-version: 3.8
+          python-version: "3.8"
           cache: true
-          cache-dependency-path: |
-            ./pdm.lock
 
       - name: Install dependencies
         run: pdm install
@@ -38,6 +36,7 @@ jobs:
         run: |
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
+          python -m pip uninstall pyqt5-stubs -y
 
       - name: Build on Windows
         run: python mcsl2_build.py --env-gh
