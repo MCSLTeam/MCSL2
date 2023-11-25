@@ -157,8 +157,10 @@ jobs:
 
       - name: Set Environment Variable
         run: |
+          cd repo
           mcsl2_version=$(python -c "from MCSL2Lib import MCSL2VERSION; print(MCSL2VERSION)")
           echo "MCSL2_VERSION=$mcsl2_version" >> $GITHUB_ENV
+          cd ..
       
       - name: Compress Artifacts
         run: |
