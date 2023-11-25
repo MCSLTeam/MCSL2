@@ -57,7 +57,10 @@ from MCSL2Lib.Widgets.FastMirrorWidgets import (
     FastMirrorVersionListWidget,
 )
 from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
-from MCSL2Lib.DownloadAPIs.PolarsAPI import FetchPolarsAPICoreThreadFactory, FetchPolarsAPITypeThreadFactory
+from MCSL2Lib.DownloadAPIs.PolarsAPI import (
+    FetchPolarsAPICoreThreadFactory,
+    FetchPolarsAPITypeThreadFactory,
+)
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Controllers.interfaceController import (
     ChildStackedWidget,
@@ -140,7 +143,9 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.showDownloadingItemBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.showDownloadingItemBtn.sizePolicy().hasHeightForWidth()
+        )
         self.showDownloadingItemBtn.setSizePolicy(sizePolicy)
         self.showDownloadingItemBtn.setObjectName("showDownloadingItemBtn")
         self.gridLayout_4.addWidget(self.showDownloadingItemBtn, 0, 3, 1, 1)
@@ -559,7 +564,7 @@ class DownloadPage(QWidget):
 
         self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 2, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
-        
+
         self.downloadWithPolarsAPI = QWidget()
         self.downloadWithPolarsAPI.setObjectName("downloadWithPolarsAPI")
 
@@ -571,7 +576,7 @@ class DownloadPage(QWidget):
         self.polarsCoreScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.polarsCoreScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.polarsCoreScrollArea.setWidgetResizable(True)
-        self.polarsCoreScrollArea.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.polarsCoreScrollArea.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         self.polarsCoreScrollArea.setObjectName("polarsCoreScrollArea")
 
         self.polarsCoreScrollAreaContents = QWidget()
@@ -592,48 +597,60 @@ class DownloadPage(QWidget):
         self.gridLayout_7.addLayout(self.polarsCoreLayout, 0, 0, 1, 1)
         self.polarsCoreScrollArea.setWidget(self.polarsCoreScrollAreaContents)
         self.gridLayout_5.addWidget(self.polarsCoreScrollArea, 2, 2, 2, 2)
-        self.typeLabel = SubtitleLabel(self.downloadWithPolarsAPI)
+        self.polarsTypeLabel = SubtitleLabel(self.downloadWithPolarsAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.typeLabel.sizePolicy().hasHeightForWidth())
-        self.typeLabel.setSizePolicy(sizePolicy)
-        self.typeLabel.setObjectName("typeLabel")
+        sizePolicy.setHeightForWidth(
+            self.polarsTypeLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.polarsTypeLabel.setSizePolicy(sizePolicy)
+        self.polarsTypeLabel.setObjectName("polarsTypeLabel")
 
-        self.gridLayout_5.addWidget(self.typeLabel, 0, 2, 1, 1)
+        self.gridLayout_5.addWidget(self.polarsTypeLabel, 0, 2, 1, 1)
         self.VerticalSeparator_2 = VerticalSeparator(self.downloadWithPolarsAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.VerticalSeparator_2.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.VerticalSeparator_2.sizePolicy().hasHeightForWidth()
+        )
         self.VerticalSeparator_2.setSizePolicy(sizePolicy)
         self.VerticalSeparator_2.setMinimumSize(QSize(3, 0))
         self.VerticalSeparator_2.setMaximumSize(QSize(3, 16777215))
         self.VerticalSeparator_2.setObjectName("VerticalSeparator_2")
 
         self.gridLayout_5.addWidget(self.VerticalSeparator_2, 0, 1, 4, 1)
-        self.refreshPolarsAPIBtn = PushButton(icon=FIF.UPDATE, text="刷新", parent=self.downloadWithPolarsAPI)
+        self.refreshPolarsAPIBtn = PushButton(
+            icon=FIF.UPDATE, text="刷新", parent=self.downloadWithPolarsAPI
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.refreshPolarsAPIBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.refreshPolarsAPIBtn.sizePolicy().hasHeightForWidth()
+        )
         self.refreshPolarsAPIBtn.setSizePolicy(sizePolicy)
         self.refreshPolarsAPIBtn.setObjectName("refreshPolarsAPIBtn")
         self.gridLayout_5.addWidget(self.refreshPolarsAPIBtn, 0, 3, 1, 1)
-        self.descriptionLabel = BodyLabel(self.downloadWithPolarsAPI)
+        self.polarsDescriptionLabel = BodyLabel(self.downloadWithPolarsAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.descriptionLabel.sizePolicy().hasHeightForWidth())
-        self.descriptionLabel.setSizePolicy(sizePolicy)
-        self.descriptionLabel.setObjectName("descriptionLabel")
+        sizePolicy.setHeightForWidth(
+            self.polarsDescriptionLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.polarsDescriptionLabel.setSizePolicy(sizePolicy)
+        self.polarsDescriptionLabel.setObjectName("polarsDescriptionLabel")
 
-        self.gridLayout_5.addWidget(self.descriptionLabel, 1, 2, 1, 2)
+        self.gridLayout_5.addWidget(self.polarsDescriptionLabel, 1, 2, 1, 2)
         self.polarsTypeScrollArea = MySmoothScrollArea(self.downloadWithPolarsAPI)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.polarsTypeScrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.polarsTypeScrollArea.sizePolicy().hasHeightForWidth()
+        )
         self.polarsTypeScrollArea.setSizePolicy(sizePolicy)
         self.polarsTypeScrollArea.setMinimumSize(QSize(170, 0))
         self.polarsTypeScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -661,37 +678,40 @@ class DownloadPage(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.polarsTitle.sizePolicy().hasHeightForWidth())
         self.polarsTitle.setSizePolicy(sizePolicy)
-        self.polarsTitle.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.polarsTitle.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.polarsTitle.setObjectName("polarsTitle")
 
         self.gridLayout_5.addWidget(self.polarsTitle, 0, 0, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithPolarsAPI)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
-        
+
         self.VerticalSeparator = VerticalSeparator(self)
         self.VerticalSeparator.setObjectName("VerticalSeparator")
 
         self.gridLayout.addWidget(self.VerticalSeparator, 3, 3, 1, 1)
 
-        
         self.downloadingItemWidget = MySmoothScrollArea(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadingItemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadingItemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.downloadingItemWidget.setSizePolicy(sizePolicy)
         self.downloadingItemWidget.setMinimumSize(QSize(310, 0))
         self.downloadingItemWidget.setMaximumSize(QSize(310, 16777215))
         self.downloadingItemWidget.setFrameShape(QFrame.NoFrame)
         self.downloadingItemWidget.setWidgetResizable(True)
-        self.downloadingItemWidget.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.downloadingItemWidget.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         self.downloadingItemWidget.setObjectName("downloadingItemWidget")
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 310, 407))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
+        )
         self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.downloadingItemLayout = QVBoxLayout(self.scrollAreaWidgetContents)
@@ -699,7 +719,11 @@ class DownloadPage(QWidget):
         self.downloadingItemLayout.setObjectName("downloadingItemLayout")
         self.downloadingItemWidget.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.downloadingItemWidget, 3, 4, 1, 1)
-        self.dsList = [self.downloadWithFastMirror, self.downloadWithMCSLAPI, self.downloadWithPolarsAPI]
+        self.dsList = [
+            self.downloadWithFastMirror,
+            self.downloadWithMCSLAPI,
+            self.downloadWithPolarsAPI,
+        ]
         self.downloadStackedWidget.setCurrentWidget(
             self.dsList[
                 settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
@@ -785,10 +809,10 @@ class DownloadPage(QWidget):
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)
         self.openDownloadEntriesBtn.clicked.connect(
             lambda: {
-                (box:=DownloadEntryBox(self)),
+                (box := DownloadEntryBox(self)),
                 box.show(),
                 box.raise_(),
-                box.asyncGetEntries()
+                box.asyncGetEntries(),
             }
         )
         self.downloadingItemWidget.setFixedWidth(0)
@@ -1047,9 +1071,7 @@ class DownloadPage(QWidget):
             self.getPolarsStateToolTip = StateToolTip(
                 self.tr("正在请求极星镜像API"), self.tr("加载中，请稍后..."), self
             )
-            self.getPolarsStateToolTip.move(
-                self.getPolarsStateToolTip.getSuitablePos()
-            )
+            self.getPolarsStateToolTip.move(self.getPolarsStateToolTip.getSuitablePos())
             self.getPolarsStateToolTip.show()
             workThread.start()
             self.refreshPolarsAPIBtn.setEnabled(False)
@@ -1096,8 +1118,8 @@ class DownloadPage(QWidget):
             )
 
     def polarsTypeProcessor(self):
-        self.typeLabel.setText(self.sender().property("name"))
-        self.descriptionLabel.setText(self.sender().property("description"))
+        self.polarsTypeLabel.setText(self.sender().property("name"))
+        self.polarsDescriptionLabel.setText(self.sender().property("description"))
         self.getPolarsCoreAPI(idx=self.sender().property("id"))
 
     def getPolarsCoreAPI(self, idx):
@@ -1164,18 +1186,17 @@ class DownloadPage(QWidget):
                 box.exec()
                 return
         uri = self.sender().property("core_version")
-        fileName = self.sender().parent().buildVerLabel.text()[:-4]
-        fileFormat = self.sender().parent().buildVerLabel.text().replace(fileName, "")
+        fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
+        fileName = (
+            self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
+        )
         # 判断文件是否存在
         self.checkDownloadFileExists(
             fileName,
             fileFormat,
             uri,
-            (
-                fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"
-            ),
+            (fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"),
         )
-
 
     ##################
     # FastMirror API #
@@ -1297,7 +1318,9 @@ class DownloadPage(QWidget):
     def showFastMirrorFailedTip(self):
         i = InfoBar.error(
             title=self.tr("错误"),
-            content=self.tr("获取FastMirror API失败！\n尝试检查网络后，请再尝试刷新。\n或者，点击旁边的按钮看看你是不是暂时达到请求限制了。"),
+            content=self.tr(
+                "获取FastMirror API失败！\n尝试检查网络后，请再尝试刷新。\n或者，点击旁边的按钮看看你是不是暂时达到请求限制了。"
+            ),
             orient=Qt.Horizontal,
             isClosable=False,
             position=InfoBarPosition.TOP,
@@ -1371,17 +1394,21 @@ class DownloadPage(QWidget):
     def initFastMirrorCoreVersionListWidget(self):
         self.releaseFMMemory(2)
         for i in range(len(downloadVariables.FastMirrorAPICoreVersionDict["name"])):
-            self.buildLayout.addWidget(FastMirrorBuildListWidget(
-                buildVer=downloadVariables.FastMirrorAPICoreVersionDict["core_version"][
-                    i
-                ],
-                syncTime=downloadVariables.FastMirrorAPICoreVersionDict["update_time"][
-                    i
-                ].replace("T", " "),
-                coreVersion=downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i],
-                btnSlot=self.downloadFastMirrorAPIFile,
-                parent=self,
-            ))
+            self.buildLayout.addWidget(
+                FastMirrorBuildListWidget(
+                    buildVer=downloadVariables.FastMirrorAPICoreVersionDict[
+                        "core_version"
+                    ][i],
+                    syncTime=downloadVariables.FastMirrorAPICoreVersionDict[
+                        "update_time"
+                    ][i].replace("T", " "),
+                    coreVersion=downloadVariables.FastMirrorAPICoreVersionDict[
+                        "core_version"
+                    ][i],
+                    btnSlot=self.downloadFastMirrorAPIFile,
+                    parent=self,
+                )
+            )
         self.buildLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def downloadFastMirrorAPIFile(self):
