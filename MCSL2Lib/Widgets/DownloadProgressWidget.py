@@ -488,17 +488,14 @@ class DownloadCard(SimpleCardWidget):
                     .parent()
                     .parent(),
                 )
-                # self.parent().parent().parent().parent().downloadingItemLayout.removeWidget(
-                #     self
-                # )
-                self.hide()
                 if path.exists(
                     path.join("MCSL2", "Downloads", filename)
                 ):  # 防止有时候aria2抽风...
                     DL_EntryController().work.emit(
                         ("addCoreEntry", {"coreName": filename, "extraData": data})
                     )
-                self.close()
+                self.setParent(None)
+                self.deleteLater()
             elif dl.status == "error":
                 errInfoBar = InfoBar.error(
                     title=self.tr(f"{filename} 下载失败"),
@@ -511,28 +508,35 @@ class DownloadCard(SimpleCardWidget):
                     .parent()
                     .parent(),
                 )
-                retryBtn = PushButton(self.tr("重试"))
+                retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
                 retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
+                retryBtn.clicked.connect(errInfoBar.close)
+                errInfoBar.addWidget(retryBtn)
                 self.flush()
                 MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":
                 try:
-                    self.close()
+                    self.flush()
+                    self.setParent(None)
+                    self.deleteLater()
                 except Exception:
                     pass
         else:
             errInfoBar = InfoBar.error(
-                title=self.tr(f"{filename} 下载失败"),
-                content="",
-                duration=-1,
-                isClosable=True,
-                parent=self.parent().downloadingItemWidget,
-            )
-            retryBtn = PushButton(self.tr("重试"))
+                    title=self.tr(f"{filename} 下载失败"),
+                    content="",
+                    duration=-1,
+                    isClosable=True,
+                    position=InfoBarPosition.BOTTOM_RIGHT,
+                    parent=self.parent()
+                    .parent()
+                    .parent()
+                    .parent(),
+                )
+            retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
             retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
+            retryBtn.clicked.connect(errInfoBar.close)
             errInfoBar.addWidget(retryBtn)
-            self.parent().downloadingItemLayout.addWidget(errInfoBar)
-            self.parent().downloadingItemLayout.removeWidget(self)
         self.downloading = False
         try:
             self.parent().downloadFinishedHelper()
