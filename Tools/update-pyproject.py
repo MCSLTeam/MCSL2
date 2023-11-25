@@ -28,11 +28,18 @@ if __name__ == "__main__":
     
     # 直接手动替换
     # toml paser 的格式太难看了
-    for line in lines:
+    for line_index, line in enumerate(lines):
         if line.startswith("product-version"):
-            line = f'product-version = "{get_version()[0]}"\n'
-        elif line.startswith("build-version"):
-            line = f'build-version = "{get_version()[1]}"\n'
+            
+            if line.split("=")[1].strip() != f'"{get_version()[0]}"':
+                print(f"更新版本号: {line.split('=')[1].strip()} -> {get_version()[0]}")
+            lines[line_index] = f'product-version = "{get_version()[0]}"\n'
+        elif line.startswith("file-version"):
+            
+            if line.split("=")[1].strip() != f'"{get_version()[1]}"':
+                print(f"更新构建版本号: {line.split('=')[1].strip()} -> {get_version()[1]}")
+            
+            lines[line_index] = f'file-version = "{get_version()[1]}"\n'
     
     with open("pyproject.toml", "w", encoding="utf-8") as f:
         f.writelines(lines)

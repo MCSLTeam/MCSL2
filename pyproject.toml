@@ -56,8 +56,8 @@ disable-console = false
 include-data-dir = [['MCSL2/Aria2', 'MCSL2/Aria2']]
 
 # 版本号 可通过 Tools/update-pyproject.py 更新
-product-version = '2.2.3.0'
-file-version = '0.2.0.0'
+product-version = "2.2.3.0"
+file-version = "0.3.0.0"
 
 copyright = 'Copyright ©MCSL Team. All right reserved.'
 follow-import-to = ['Adapters', 'loguru', 'requests']
