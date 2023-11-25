@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python 3.8
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8.10'
+          python-version: '3.8'
           cache: 'pip,PyQt5,psutil,requests,aria2p,ordered-set,imageio,nuitka'
 
       - name: Update Pip and Uninstall Useless Dependencies
@@ -83,7 +83,7 @@ jobs:
       - name: Setup Python 3.8
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8.10'
+          python-version: '3.8'
           cache: 'pip,PyQt5,psutil,requests,aria2p,ordered-set,imageio,nuitka'
 
       - name: Update Pip and Uninstall Useless Dependencies
