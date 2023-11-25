@@ -1,11 +1,11 @@
 ### Commit Messages Specification
-- `A | your msg` Add a new feature.
-- `F | your msg` For bug fixes.
-- `O | your msg` Made some optimizations.
-- `D | your msg` Deletion.
-- `U | your msg` Update some requirements.
-- `V | your msg` Release a version.
-- `I | your msg` I18n changes.
+- `Add | your msg` Add a new feature.
+- `Fix | your msg` For bug fixes.
+- `Optimization | your msg` Made some optimizations.
+- `Del | your msg` Deletion.
+- `Update | your msg` Update some requirements.
+- `Ver | your msg` Release a version.
+- `I18n | your msg` I18n changes.
 
 ### Pull Request Specification
 - You need to provide a detailed description of the changes.
