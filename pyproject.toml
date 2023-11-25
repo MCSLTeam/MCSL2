@@ -17,7 +17,7 @@ dependencies = [
     "imageio>=2.31.5",
     "pyqt5-qt5==5.15.2",
     "setuptools>=69.0.2",
-    "lib-not-dr==0.2.0rc2",
+    "lib-not-dr==0.2.0rc4",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
@@ -59,7 +59,6 @@ disable-console = false
 show-memory = false
 show-progress = false
 
-
 # 版本号 可通过 Tools/update-pyproject.py 更新
 product-version = "2.2.3.0"
 file-version = "0.3.0.0"
@@ -77,5 +76,5 @@ follow-import-to = ["Adapters", "loguru", "requests"]
 nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief"]
 
 enable-plugin = ["pyqt5"]
-windows-icon-from-ico = "MCSL2/MCSL2.ico"
+windows-icon-from-ico = "MCSL2.ico"
 assume-yes-for-download = true
