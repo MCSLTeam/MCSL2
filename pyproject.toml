@@ -53,6 +53,18 @@ msvc = true
 standalone = true
 enable-console = true
 disable-console = false
-include-data-dir = [
-    ['MCSL2/Aria2', 'MCSL2/Aria2']
-]
+include-data-dir = [['MCSL2/Aria2', 'MCSL2/Aria2']]
+
+# 版本号 可通过 Tools/update-pyproject.py 更新
+product-version = '2.2.3.0'
+file-version = '0.2.0.0'
+
+copyright = 'Copyright ©MCSL Team. All right reserved.'
+follow-import-to = ['Adapters', 'loguru', 'requests']
+nofollow-import-to = ['numpy', 'scipy', 'PIL', 'colorthief']
+enable-plugin = ['pyqt5']
+include-package = ['MCSL2Lib', 'sqlite3']
+file-description = 'MC Server Launcher 2'
+lto = 'yes'
+windows-icon-from-ico = 'MCSL2/MCSL2.ico'
+assume-yes-for-download = true
