@@ -779,7 +779,7 @@ class DownloadPage(QWidget):
         )
         self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
         self.openDownloadFolderBtn.clicked.connect(
-            lambda: openLocalFile(f".\\MCSL2\\Downloads\\")
+            lambda: openLocalFile(".\\MCSL2\\Downloads\\")
         )
 
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)

@@ -31,7 +31,6 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
-from MCSL2Lib.variables import ImportVariables
 
 
 class _StatusPixmapLabel(PixmapLabel):

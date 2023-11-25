@@ -16,7 +16,7 @@ Download Progress Widget.
 from os import path
 from typing import Optional
 
-from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal, Qt
+from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QGridLayout,
@@ -36,7 +36,6 @@ from qfluentwidgets import (
     MessageBox,
     SimpleCardWidget,
     InfoBarPosition,
-    FluentIcon as FIF,
     CaptionLabel,
     InfoBar,
 )

@@ -21,7 +21,7 @@ ___
 [![Version](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
 [![Issues](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
 [![Website](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.com.cn)
-[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40vip.qq.com-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)   
+[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40vip.qq.com-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)
 ___
 
 ## What can MCSL2 do?  
@@ -32,19 +32,26 @@ ___
 - **⚡ Quickly add a server**: A few options to quickly add a new server!
 - **✅ Automatic find Java**: Automatically find the vast majority of Java without manual selection.  
 - **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful.  
+
 ___
 
 ## Used open-source project
 
-`Python` 3.8.0  
+`Python` 3.8
 `Nuitka` Latest  
 `requests` Latest  
 `PyQt5` 5.15.9  
 `PyQt-Fluent-Widgets` Latest  
 `aria2p` Latest  
-`lib-not-dr` 0.1.7  
+`lib-not-dr` 0.1.x
 `loguru` 0.7.2  
 `psutil` 5.9.5  
+___
+
+## Build a packaged version from source code
+
+> Document under construction
+
 ___
 
 ## Related link
@@ -57,11 +64,11 @@ ___
 
 ## Special Thanks
 
-- 维度前端: https://www.df100.ltd
-- Z_Tsin: https://ztsin.cn/
-- FiveCDN公益加速: https://cdn.5-5.site
-- WB-Block: https://wb-block.top
-- shenjack: http://shenjack.top:81
+- 维度前端: <https://www.df100.ltd>
+- Z_Tsin: <https://ztsin.cn/>
+- FiveCDN公益加速: <https://cdn.5-5.site>
+- WB-Block: <https://wb-block.top>
+- shenjack: <http://shenjack.top:81>
 
 And all the contributors!  
 
@@ -72,4 +79,5 @@ And our sponsors!
 ___
 
 ## Declaration  
+
 This open source project is completely free, and any resale or similar behavior will be held accountable.

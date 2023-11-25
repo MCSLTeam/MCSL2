@@ -21,8 +21,6 @@ import inspect
 # added in nuitka_build
 from json import loads
 from os import makedirs, path as osp
-from platform import system as systemType
-from subprocess import Popen
 from types import TracebackType
 from typing import Type, Optional, Iterable, Callable, Dict, List
 
@@ -32,7 +30,6 @@ from PyQt5.QtCore import QUrl, QThread, QThreadPool
 from PyQt5.QtGui import QDesktopServices
 
 from MCSL2Lib.Controllers.logController import _MCSL2Logger
-from MCSL2Lib.singleton import Singleton
 
 MCSL2Logger = _MCSL2Logger()
 

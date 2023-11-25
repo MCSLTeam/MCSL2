@@ -76,7 +76,7 @@ class MCSLAPIDownloadURLParser:
         downloadFileNames = []
         try:
             DownloadJson = MCSLNetworkSession().get(url=RefreshUrl, headers=MCSLNetworkHeaders)
-        except Exception as e:
+        except Exception:
             return -2, -2, -2, -2
         try:
             PyDownloadList = DownloadJson.json()["MCSLDownloadList"]

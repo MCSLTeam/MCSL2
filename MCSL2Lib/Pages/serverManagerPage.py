@@ -1250,7 +1250,7 @@ class ServerManagerPage(QWidget):
             else:
                 isError = 0
         for eachIllegalServerCharacter in illegalServerCharacterList:
-            if not eachIllegalServerCharacter in self.editServerNameLineEdit.text():
+            if eachIllegalServerCharacter not in self.editServerNameLineEdit.text():
                 pass
             else:
                 errText += self.tr("，名称含有不合法字符")

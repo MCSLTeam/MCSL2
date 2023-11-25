@@ -159,7 +159,7 @@ if __name__ == "__main__":
 
     # 确认是否需要编译
     # 如果包含 -y 参数 则直接编译
-    if (("-y" or "-n") not in sys.argv) and (not "--env-gh" in sys.argv):
+    if (("-y" or "-n") not in sys.argv) and ("--env-gh" not in sys.argv):
         while (do_compile := input("Do you want to compile this file? (y/n) ")) not in [
             "y",
             "n",

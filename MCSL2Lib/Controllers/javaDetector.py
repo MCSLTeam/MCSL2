@@ -149,7 +149,7 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                     )
         except PermissionError:
             pass
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             pass
     return processes
 
