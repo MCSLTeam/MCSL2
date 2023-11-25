@@ -15,7 +15,6 @@ jobs:
         architecture:
           - x64
           - x86
-          - arm64
 
     runs-on: ${{ matrix.os }}
 
@@ -72,7 +71,6 @@ jobs:
         architecture:
           - x64
           - x86
-          - arm64
 
     runs-on: ${{ matrix.os }}
 
