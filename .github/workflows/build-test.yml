@@ -54,7 +54,7 @@ jobs:
         # run: python mcsl2_build.py --env-gh
         run: |
           python Tools/update-pyproject.py
-          python -m lndl_build . -y
+          python -m lndl_nuitka . -y
 
       # - name: Delete Useless Files and Compress with upx
       #   shell: pwsh
