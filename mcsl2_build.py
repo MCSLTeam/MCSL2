@@ -61,7 +61,7 @@ class MCSLCompiler:
 
         # Packages and modules
         self.NO_FOLLOW_IMPORT = Args(
-            ["numpy", "scipy", "PIL", "Pillow", "colorthief"], "--nofollow-import-to"
+            ["numpy", "scipy", "PIL", "Pillow", "colorthief", "pyqt5-stubs"], "--nofollow-import-to"
         )
         self.FOLLOW_IMPORT = Args(
             ["Adapters", "loguru", "requests"], "--follow-import-to"
@@ -77,7 +77,7 @@ class MCSLCompiler:
         self.USE_MINGW = Tag(False, "--mingw64")
         self.USE_MSVC = Arg("latest", "--msvc")
         self.USE_CLANG = Tag(True, "--clang")
-        self.LINK_TIME_OPTIMIZATION = Arg("yes", "--lto")
+        self.LINK_TIME_OPTIMIZATION = Arg("no", "--lto")
         self.DISABLE_CCACHE = Tag(False, "--disable-ccache")
 
         # Output
@@ -179,5 +179,9 @@ if __name__ == "__main__":
         subprocess.run(cmd)
         print("Compile Done!")
         print(f"===Compile Time: {(time.time_ns() - start_time) / 1000_000_000} s===")
+
+    # if "--rp" in sys.argv:
+    #     if "windows" in system().lower():
+    #         print("Publishing Release Preview...")
 
     sys.exit(0)
