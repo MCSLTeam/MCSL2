@@ -68,7 +68,7 @@ class Config(QConfig):
         "Download",
         "downloadSource",
         "FastMirror",
-        OptionsValidator(["FastMirror", "MCSLAPI", "PolarsAPI"]),
+        OptionsValidator(["FastMirror", "MCSLAPI", "PolarsAPI", "AkiraCloud"]),
     )
     alwaysAskSaveDirectory = ConfigItem(
         "Download", "alwaysAskSaveDirectory", False, BoolValidator()

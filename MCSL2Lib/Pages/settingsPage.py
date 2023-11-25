@@ -223,7 +223,7 @@ class SettingsPage(QWidget):
         self.downloadSettingsGroup = SettingCardGroup(
             self.tr("下载设置"), self.settingsWidget
         )
-        self.downloadSource = ComboBoxSettingCard(
+        self.downloadSource = OptionsSettingCard(
             configItem=cfg.downloadSource,
             icon=FIF.IOT,
             title=self.tr("下载源"),
@@ -232,6 +232,7 @@ class SettingsPage(QWidget):
                 self.tr("FastMirror"),
                 self.tr("MCSLAPI"),
                 self.tr("极星·镜像站"),
+                self.tr("Akira Cloud"),
             ],
             parent=self.downloadSettingsGroup,
         )

@@ -313,6 +313,8 @@ class DownloadVariables:
         }
         self.PolarTypeDict = {}
         self.PolarCoreDict = {}
+        self.AkiraTypeList = []
+        self.AkiraCoreDict = {}
 
 
 @Singleton
@@ -369,7 +371,7 @@ class SettingsVariables:
 
     def __init__(self):
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
-        self.downloadSourceList = ["FastMirror", "MCSLAPI", "PolarsAPI"]
+        self.downloadSourceList = ["FastMirror", "MCSLAPI", "PolarsAPI", "AkiraCloud"]
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
         self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]

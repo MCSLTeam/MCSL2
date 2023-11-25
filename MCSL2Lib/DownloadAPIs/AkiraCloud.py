@@ -1,7 +1,26 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtt@vip.qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+"""
+A function for communicatng with AkiraCloud Mirror.
+"""
+from typing import Callable
+
+from PyQt5.QtCore import pyqtSignal, QThread
 from MCSL2Lib.Controllers.networkController import (
     MCSLNetworkSession,
     MCSLNetworkHeaders,
 )
+
 import re
 from html.parser import HTMLParser
 
@@ -14,7 +33,7 @@ class AkiraHTMLParser(HTMLParser):
         self.currentData = []
         self.allList = []
 
-    def handle_starttag(self, tag):
+    def handle_starttag(self, tag, attrs):
         if tag == "table":
             self.inTable = True
         elif self.inTable and tag == "td":
@@ -45,20 +64,25 @@ class AkiraHTMLParser(HTMLParser):
 
 
 class AkiraCloudDownloadURLParser:
-
     def __init__(self) -> None:
         pass
 
     @classmethod
     def getDownloadTypeList(cls) -> list:
-        return cls._parseHTML(cls._getAPI("/"))
-    
-    @classmethod
-    def getDownloadCoreList(cls, coreType: str) -> list:
-        return cls._parseHTML(cls._getAPI(f"/{coreType}"))
+        try:
+            return cls._parseHTML(cls._getAPI("/"))
+        except Exception:
+            return []
 
     @classmethod
-    def _getAPI(APIPath: str) -> str:
+    def getDownloadCoreList(cls, coreType: str) -> list:
+        try:
+            return {"name": coreType, "list": cls._parseHTML(cls._getAPI(f"/{coreType}"))}
+        except Exception:
+            return {"name": "-1"}
+
+    @classmethod
+    def _getAPI(cls, APIPath: str) -> str:
         return (
             MCSLNetworkSession()
             .get(
@@ -69,9 +93,8 @@ class AkiraCloudDownloadURLParser:
         )
 
     @classmethod
-    def _parseHTML(htmlContent: str):
+    def _parseHTML(cls, htmlContent: str):
         parsedList = AkiraHTMLParser().feed(htmlContent)
-
         return list(
             [
                 item
@@ -81,3 +104,74 @@ class AkiraCloudDownloadURLParser:
                 )
             ]
         )
+
+
+class FetchAkiraTypeThread(QThread):
+    fetchSignal = pyqtSignal(list)
+
+    def __init__(self, FinishSlot: Callable = ...):
+        super().__init__()
+        self._id = None
+        self.Data = None
+        if FinishSlot is not ...:
+            self.fetchSignal.connect(FinishSlot)
+
+    def run(self):
+        self.fetchSignal.emit(AkiraCloudDownloadURLParser.getDownloadTypeList())
+
+    def getData(self):
+        return self.Data
+
+
+class FetchAkiraCoreThread(QThread):
+    fetchSignal = pyqtSignal(dict)
+
+    def __init__(self, coreType, FinishSlot: Callable = ...):
+        super().__init__()
+        self._id = None
+        self.Data = None
+        self.coreType = coreType
+        if FinishSlot is not ...:
+            self.fetchSignal.connect(FinishSlot)
+
+    def run(self):
+        self.fetchSignal.emit(
+            AkiraCloudDownloadURLParser.getDownloadCoreList(
+                coreType=self.coreType
+            )
+        )
+
+    def getData(self):
+        return self.Data
+
+
+class FetchAkiraTypeThreadFactory:
+    def __init__(self):
+        self.singletonThread = None
+
+    def create(self, _singleton=False, finishSlot=...) -> FetchAkiraTypeThread:
+        if _singleton:
+            if self.singletonThread is not None and self.singletonThread.isRunning():
+                return self.singletonThread
+            else:
+                thread = FetchAkiraTypeThread(finishSlot)
+                self.singletonThread = thread
+                return thread
+        else:
+            return FetchAkiraTypeThread(finishSlot)
+
+
+class FetchAkiraCoreThreadFactory:
+    def __init__(self):
+        self.singletonThread = None
+
+    def create(self, coreType, _singleton=False, finishSlot=...) -> FetchAkiraCoreThread:
+        if _singleton:
+            if self.singletonThread is not None and self.singletonThread.isRunning():
+                return self.singletonThread
+            else:
+                thread = FetchAkiraCoreThread(coreType=coreType, FinishSlot=finishSlot)
+                self.singletonThread = thread
+                return thread
+        else:
+            return FetchAkiraCoreThread(finishSlot)

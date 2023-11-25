@@ -61,6 +61,10 @@ from MCSL2Lib.DownloadAPIs.PolarsAPI import (
     FetchPolarsAPICoreThreadFactory,
     FetchPolarsAPITypeThreadFactory,
 )
+from MCSL2Lib.DownloadAPIs.AkiraCloud import (
+    FetchAkiraTypeThreadFactory,
+    FetchAkiraCoreThreadFactory,
+)
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Controllers.interfaceController import (
     ChildStackedWidget,
@@ -98,6 +102,9 @@ class DownloadPage(QWidget):
         
         self.fetchPolarsAPITypeThreadFactory = FetchPolarsAPITypeThreadFactory()
         self.fetchPolarsAPICoreThreadFactory = FetchPolarsAPICoreThreadFactory()
+        
+        self.fetchAkiraTypeThreadFactory = FetchAkiraTypeThreadFactory()
+        self.fetchAkiraCoreThreadFactory = FetchAkiraCoreThreadFactory()
         # fmt: on
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -267,8 +274,7 @@ class DownloadPage(QWidget):
         self.verticalLayout_13.addLayout(self.versionLayout)
         self.versionSmoothScrollArea.setWidget(self.versionScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.versionSmoothScrollArea, 1, 1, 1, 1)
-        self.refreshFastMirrorAPIBtn = PushButton(self.downloadWithFastMirror)
-        self.refreshFastMirrorAPIBtn.setIcon(FIF.UPDATE)
+        self.refreshFastMirrorAPIBtn = PushButton(icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithFastMirror)
         self.refreshFastMirrorAPIBtn.setObjectName("refreshFastMirrorAPIBtn")
 
         self.gridLayout_2.addWidget(self.refreshFastMirrorAPIBtn, 0, 3, 1, 1)
@@ -558,8 +564,7 @@ class DownloadPage(QWidget):
         self.verticalLayout_7.addWidget(self.MCSLAPIOfficialCoreScrollArea)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIOfficialCore)
         self.gridLayout_3.addWidget(self.MCSLAPIStackedWidget, 1, 0, 1, 3)
-        self.refreshMCSLAPIBtn = PushButton(self.downloadWithMCSLAPI)
-        self.refreshMCSLAPIBtn.setIcon(FIF.UPDATE)
+        self.refreshMCSLAPIBtn = PushButton(icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithMCSLAPI)
         self.refreshMCSLAPIBtn.setObjectName("refreshMCSLAPIBtn")
 
         self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 2, 1, 1)
@@ -683,6 +688,111 @@ class DownloadPage(QWidget):
 
         self.gridLayout_5.addWidget(self.polarsTitle, 0, 0, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithPolarsAPI)
+        self.downloadWithAkiraCloud = QWidget()
+        self.downloadWithAkiraCloud.setObjectName("downloadWithAkiraCloud")
+
+        self.gridLayout_10 = QGridLayout(self.downloadWithAkiraCloud)
+        self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+
+        self.akiraTitle = SubtitleLabel(self.downloadWithAkiraCloud)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.akiraTitle.sizePolicy().hasHeightForWidth())
+        self.akiraTitle.setSizePolicy(sizePolicy)
+        self.akiraTitle.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.akiraTitle.setObjectName("akiraTitle")
+
+        self.gridLayout_10.addWidget(self.akiraTitle, 0, 0, 1, 1)
+        self.VerticalSeparator_3 = VerticalSeparator(self.downloadWithAkiraCloud)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.VerticalSeparator_3.sizePolicy().hasHeightForWidth()
+        )
+        self.VerticalSeparator_3.setSizePolicy(sizePolicy)
+        self.VerticalSeparator_3.setMinimumSize(QSize(3, 0))
+        self.VerticalSeparator_3.setMaximumSize(QSize(3, 16777215))
+        self.VerticalSeparator_3.setObjectName("VerticalSeparator_3")
+
+        self.gridLayout_10.addWidget(self.VerticalSeparator_3, 0, 1, 3, 1)
+        self.akiraTypeLabel = SubtitleLabel(self.downloadWithAkiraCloud)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.akiraTypeLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.akiraTypeLabel.setSizePolicy(sizePolicy)
+        self.akiraTypeLabel.setObjectName("akiraTypeLabel")
+
+        self.gridLayout_10.addWidget(self.akiraTypeLabel, 0, 2, 1, 1)
+        self.refreshAkiraCloudBtn = PushButton(icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithAkiraCloud)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.refreshAkiraCloudBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.refreshAkiraCloudBtn.setSizePolicy(sizePolicy)
+        self.refreshAkiraCloudBtn.setObjectName("refreshAkiraCloudBtn")
+
+        self.gridLayout_10.addWidget(self.refreshAkiraCloudBtn, 0, 3, 1, 1)
+        self.akiraTypeScrollArea = MySmoothScrollArea(self.downloadWithAkiraCloud)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.akiraTypeScrollArea.sizePolicy().hasHeightForWidth()
+        )
+        self.akiraTypeScrollArea.setSizePolicy(sizePolicy)
+        self.akiraTypeScrollArea.setMinimumSize(QSize(170, 0))
+        self.akiraTypeScrollArea.setMaximumSize(QSize(170, 16777215))
+        self.akiraTypeScrollArea.setFrameShape(QFrame.NoFrame)
+        self.akiraTypeScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.akiraTypeScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.akiraTypeScrollArea.setWidgetResizable(True)
+        self.akiraTypeScrollArea.setObjectName("akiraTypeScrollArea")
+
+        self.akiraTypeScrollAreaContents = QWidget()
+        self.akiraTypeScrollAreaContents.setGeometry(QRect(0, 0, 170, 351))
+        self.akiraTypeScrollAreaContents.setObjectName("akiraTypeScrollAreaContents")
+
+        self.gridLayout_9 = QGridLayout(self.akiraTypeScrollAreaContents)
+        self.gridLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+
+        self.akiraTypeLayout = QVBoxLayout()
+        self.akiraTypeLayout.setObjectName("akiraTypeLayout")
+
+        self.gridLayout_9.addLayout(self.akiraTypeLayout, 0, 0, 1, 1)
+        self.akiraTypeScrollArea.setWidget(self.akiraTypeScrollAreaContents)
+        self.gridLayout_10.addWidget(self.akiraTypeScrollArea, 1, 0, 2, 1)
+        self.akiraCoreScrollArea = MySmoothScrollArea(self.downloadWithAkiraCloud)
+        self.akiraCoreScrollArea.setFrameShape(QFrame.NoFrame)
+        self.akiraCoreScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.akiraCoreScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.akiraCoreScrollArea.setWidgetResizable(True)
+        self.akiraCoreScrollArea.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        self.akiraCoreScrollArea.setObjectName("akiraCoreScrollArea")
+
+        self.akiraCoreScrollAreaContents = QWidget()
+        self.akiraCoreScrollAreaContents.setGeometry(QRect(0, 0, 491, 345))
+        self.akiraCoreScrollAreaContents.setObjectName("akiraCoreScrollAreaContents")
+
+        self.gridLayout_8 = QGridLayout(self.akiraCoreScrollAreaContents)
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+
+        self.akiraCoreLayout = QVBoxLayout()
+        self.akiraCoreLayout.setObjectName("akiraCoreLayout")
+
+        self.gridLayout_8.addLayout(self.akiraCoreLayout, 0, 0, 1, 1)
+        self.akiraCoreScrollArea.setWidget(self.akiraCoreScrollAreaContents)
+        self.gridLayout_10.addWidget(self.akiraCoreScrollArea, 2, 2, 1, 2)
+        self.downloadStackedWidget.addWidget(self.downloadWithAkiraCloud)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
 
         self.VerticalSeparator = VerticalSeparator(self)
@@ -704,6 +814,7 @@ class DownloadPage(QWidget):
         self.downloadingItemWidget.setWidgetResizable(True)
         self.downloadingItemWidget.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         self.downloadingItemWidget.setObjectName("downloadingItemWidget")
+
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 310, 407))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -714,15 +825,18 @@ class DownloadPage(QWidget):
         )
         self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+
         self.downloadingItemLayout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.downloadingItemLayout.setContentsMargins(0, 0, 0, 0)
         self.downloadingItemLayout.setObjectName("downloadingItemLayout")
+
         self.downloadingItemWidget.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.downloadingItemWidget, 3, 4, 1, 1)
         self.dsList = [
             self.downloadWithFastMirror,
             self.downloadWithMCSLAPI,
             self.downloadWithPolarsAPI,
+            self.downloadWithAkiraCloud
         ]
         self.downloadStackedWidget.setCurrentWidget(
             self.dsList[
@@ -738,11 +852,11 @@ class DownloadPage(QWidget):
         self.versionSubtitleLabel.setText(self.tr("游戏版本"))
         self.buildSubtitleLabel.setText(self.tr("构建列表"))
         self.refreshFastMirrorAPIBtn.setText(self.tr("刷新"))
-        self.refreshMCSLAPIBtn.setText(self.tr("刷新"))
         self.openDownloadFolderBtn.setText(self.tr("打开下载文件夹"))
         self.openDownloadEntriesBtn.setText(self.tr("打开下载记录"))
         self.showDownloadingItemBtn.setText(self.tr("展开下载中列表"))
         self.polarsTitle.setText("核心类型")
+        self.akiraTitle.setText("核心类型")
 
         self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.MCSLAPIPivot.addItem(
@@ -851,6 +965,15 @@ class DownloadPage(QWidget):
                     self.showPolarsAPIFailedTip()
             else:
                 self.getPolarsAPI()
+        # Akira Cloud
+        elif self.downloadStackedWidget.currentIndex() == 3:
+            if downloadVariables.AkiraTypeList:
+                if len(downloadVariables.AkiraTypeList):
+                    self.initAkiraTypeListWidget()
+                else:
+                    self.showAkiraFailedTip()
+            else:
+                self.getAkiraInfo()
         # MCSLAPI
         elif self.downloadStackedWidget.currentIndex() == 1:
             # 如果存在列表且不为空,则不再重新获取
@@ -877,9 +1000,9 @@ class DownloadPage(QWidget):
                 self.getMCSLAPI()
                 self.refreshMCSLAPIBtn.setEnabled(False)
 
-    #############
-    #  MCSLAPI  #
-    #############
+    ###########
+    # MCSLAPI #
+    ###########
 
     def releaseMCSLAPIMemory(self):
         for layout in self.MCSLAPILayoutList:
@@ -1190,6 +1313,162 @@ class DownloadPage(QWidget):
         fileName = (
             self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
         )
+        # 判断文件是否存在
+        self.checkDownloadFileExists(
+            fileName,
+            fileFormat,
+            uri,
+            (fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"),
+        )
+
+    ###############
+    # Akira Cloud #
+    ###############
+
+    def releaseAkiraMemory(self, id=0):
+        layout = self.akiraTypeLayout if not id else self.akiraCoreLayout
+        if layout == self.akiraCoreLayout:
+            try:
+                layout.removeItem(self.scrollAreaSpacer)
+            except AttributeError:
+                pass
+        for i in reversed(range(layout.count())):
+            try:
+                layout.itemAt(i).widget().setParent(None)
+            except AttributeError:
+                pass
+            try:
+                layout.itemAt(i).widget().deleteLater()
+                del layout.itemAt(i).widget
+            except AttributeError:
+                pass
+
+    def getAkiraInfo(self):
+        """请求Polars API"""
+        workThread = self.fetchAkiraTypeThreadFactory.create(
+            _singleton=True, finishSlot=self.updateAkiraTypeList
+        )
+        if workThread.isRunning():
+            self.refreshAkiraCloudBtn.setEnabled(False)
+            return
+        else:
+            self.getAkiraStateToolTip = StateToolTip(
+                self.tr("正在请求Akira Cloud"), self.tr("加载中，请稍后..."), self
+            )
+            self.getAkiraStateToolTip.move(self.getAkiraStateToolTip.getSuitablePos())
+            self.getAkiraStateToolTip.show()
+            workThread.start()
+            self.refreshAkiraCloudBtn.setEnabled(False)
+
+    @pyqtSlot(list)
+    def updateAkiraTypeList(self, _APIList):
+        downloadVariables.AkiraTypeList = _APIList
+        if len(downloadVariables.AkiraTypeList):
+            self.getAkiraStateToolTip.setContent(self.tr("请求Akira Cloud完毕！"))
+            self.getAkiraStateToolTip.setState(True)
+            self.getAkiraStateToolTip = None
+            self.initAkiraTypeListWidget()
+        else:
+            self.getAkiraStateToolTip.setContent(self.tr("请求Akira Cloud失败！"))
+            self.getAkiraStateToolTip.setState(True)
+            self.getAkiraStateToolTip = None
+            self.showAkiraFailedTip()
+        self.refreshPolarsAPIBtn.setEnabled(True)
+
+    def showAkiraFailedTip(self):
+        InfoBar.error(
+            title=self.tr("错误"),
+            content=self.tr("获取Akira Cloud下载信息失败！\n尝试检查网络后，请再尝试刷新。"),
+            orient=Qt.Horizontal,
+            isClosable=False,
+            position=InfoBarPosition.TOP,
+            duration=5000,
+            parent=self,
+        )
+
+    def initAkiraTypeListWidget(self):
+        self.releaseAkiraMemory()
+        for i in range(len(downloadVariables.AkiraTypeList)):
+            self.akiraTypeLayout.addWidget(
+                PolarsTypeWidget(
+                    name=downloadVariables.AkiraTypeList[i],
+                    idx=1,
+                    description="",
+                    slot=self.akiraTypeProcessor,
+                    parent=self,
+                )
+            )
+
+    def akiraTypeProcessor(self):
+        self.akiraTypeLabel.setText(self.sender().property("name"))
+        self.getAkiraCore(coreType=self.sender().property("name"))
+
+    def getAkiraCore(self, coreType):
+        workThread = self.fetchAkiraCoreThreadFactory.create(
+            _singleton=True, coreType=coreType, finishSlot=self.updateAkiraAPICoreDict
+        )
+        if workThread.isRunning():
+            self.refreshAkiraCloudBtn.setEnabled(False)
+            return
+        else:
+            self.getAkiraCoreStateToolTip = StateToolTip(
+                self.tr("正在进一步请求Akira Cloud"), self.tr("加载中，请稍后..."), self
+            )
+            self.getAkiraCoreStateToolTip.move(
+                self.getAkiraCoreStateToolTip.getSuitablePos()
+            )
+            self.getAkiraCoreStateToolTip.show()
+            workThread.start()
+            self.refreshAkiraCloudBtn.setEnabled(False)
+
+    @pyqtSlot(dict)
+    def updateAkiraAPICoreDict(self, _APIDict: dict):
+        downloadVariables.AkiraCoreDict.clear()
+        downloadVariables.AkiraCoreDict.update(_APIDict)
+        if downloadVariables.AkiraCoreDict["name"] != "-1":
+            self.getAkiraCoreStateToolTip.setContent(self.tr("请求Akira Cloud完毕！"))
+            self.getAkiraCoreStateToolTip.setState(True)
+            self.getAkiraCoreStateToolTip = None
+            self.initAkiraCoreListWidget()
+        else:
+            self.getAkiraCoreStateToolTip.setContent(self.tr("请求Akira Cloud失败！"))
+            self.getAkiraCoreStateToolTip.setState(True)
+            self.getAkiraCoreStateToolTip = None
+            self.showAkiraFailedTip()
+        self.refreshAkiraCloudBtn.setEnabled(True)
+
+    def initAkiraCoreListWidget(self):
+        self.releaseAkiraMemory(1)
+        for i in range(len(downloadVariables.AkiraCoreDict["list"])):
+            self.akiraCoreLayout.addWidget(
+                FastMirrorBuildListWidget(
+                    buildVer=downloadVariables.AkiraCoreDict["list"][i],
+                    syncTime="",
+                    coreVersion=downloadVariables.AkiraCoreDict["name"],
+                    btnSlot=self.downloadAkiraFile,
+                    parent=self,
+                )
+            )
+        self.akiraCoreLayout.addItem(self.scrollAreaSpacer)
+
+    def downloadAkiraFile(self):
+        """下载Akira Cloud文件"""
+        if not Aria2Controller.testAria2Service():
+            if not Aria2Controller.startAria2():
+                box = MessageBox(
+                    title=self.tr("无法下载"),
+                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
+                    parent=self,
+                )
+                box.yesSignal.connect(box.deleteLater)
+                box.cancelButton.setParent(None)
+                box.cancelButton.deleteLater()
+                del box.cancelButton
+                box.exec()
+                return
+        uri = f"https://mirror.akiracloud.net/{self.sender().property('core_version')}/{self.sender().parent().buildVerLabel.text()}"
+        fileFormat = self.sender().property("core_version").split(".")[-1]
+        fileName = self.sender().property("core_version")
         # 判断文件是否存在
         self.checkDownloadFileExists(
             fileName,

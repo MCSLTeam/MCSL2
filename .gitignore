@@ -20,6 +20,8 @@ build
 Tools/OfflineBuild/**
 Servers/**
 requirements.txt
+QtUI/*/*.py
+Icons/*.py
 
 # runtime
 MCSL2/Downloads/**
