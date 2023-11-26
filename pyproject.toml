@@ -6,19 +6,20 @@ authors = [
     {name = "MCSLTeam", email = "lxhtt@vip.qq.com"},
 ]
 dependencies = [
+    "setuptools>=69",
+    # qt
     "PyQt5==5.15.10",
     "PyQt-Fluent-Widgets[full]>=1.3.8",
+    "pyqt5-qt5==5.15.2",
+    # 系统信息
     "psutil==5.9.5",
     "loguru==0.7.2",
     "requests==2.31.0",
     "aria2p==0.11.3",
-    "ordered-set==4.1.0",
-    "nuitka>=1.9",
+    # 构建需要
+    "lib-not-dr[nuitka]>=0.2.0",
+    "nuitka>=1.9.1",
     "imageio>=2.31.5",
-    "pyqt5-qt5==5.15.2",
-    "setuptools>=69.0.2",
-    "lib-not-dr==0.2.0rc10",
-    "pyqt5-stubs>=5.15.6.0",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
@@ -28,8 +29,11 @@ license = {text = "GPL-3.0"}
 version = { attr = "MCSL2Lib.MCSL2VERSION" }
 
 [project.optional-dependencies]
-tomli = ["tomli>=2.0.1"]
-ruff = ["ruff>=0.1.6"]
+all = [
+    "tomli>=2.0.1",
+    "ruff>=0.1.6",
+    "pyqt5-stubs>=5.15.6.0"
+]
 
 [tool.pdm.scripts]
 main = "python MCSL2.py"
@@ -47,6 +51,7 @@ src = [
     "Adapters",
 ]
 
+# 请使用 lndl_nuitka . -y 编译 (-y 为自动确认)
 [tool.lndl.nuitka]
 main = "MCSL2.py"
 output-dir = "build"
@@ -56,7 +61,6 @@ clang = true
 msvc = "latest"
 standalone = true
 lto = "yes"
-enable-console = true
 disable-console = false
 show-memory = false
 show-progress = false

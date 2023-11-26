@@ -40,17 +40,26 @@ ___
 `Python` 3.8
 `Nuitka` Latest  
 `requests` Latest  
-`PyQt5` 5.15.9  
+`PyQt5` 5.15.10
 `PyQt-Fluent-Widgets` Latest  
 `aria2p` Latest  
-`lib-not-dr` 0.1.x
+`lib-not-dr` 0.2.x
 `loguru` 0.7.2  
 `psutil` 5.9.5  
 ___
 
 ## Build a packaged version from source code
 
-> Document under construction
+- git clone
+- `pip install tomli`
+- `python Tools/gen-requirements.py`
+- `python -m pip install -U -r requirements.txt`
+- `python Tools/update-pyproject.py`
+- `python -m lndl_nuitka .`
+  - or
+  - `python -m lndl_nuitka . -y`
+  - or use `-- --xxx` to add / modify parameters
+  - `python -m lndl_nuitka . -- --disable-console`
 
 ___
 
