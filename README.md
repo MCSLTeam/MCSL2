@@ -40,17 +40,26 @@ ___
 `Python` 3.8
 `Nuitka` 最新版  
 `requests` 最新版  
-`PyQt5` 5.15.9  
+`PyQt5` 5.15.10
 `PyQt-Fluent-Widgets` 最新版  
 `aria2p` 最新版  
-`lib-not-dr` 0.1.x
+`lib-not-dr` 0.2.x
 `loguru` 0.7.2  
 `psutil` 5.9.5  
 ___
 
 ## 从源码构建打包版
 
-> 文档施工中
+- git clone
+- `pip install tomli`
+- `python Tools/gen-requirements.py`
+- `python -m pip install -U -r requirements.txt`
+- `python Tools/update-pyproject.py`
+- `python -m lndl_nuitka .`
+  - 或者
+  - `python -m lndl_nuitka . -y`
+  - 又或者通过 `-- --xxx` 添加 / 修改参数
+  - `python -m lndl_nuitka . -- --disable-console`
 
 ___
 

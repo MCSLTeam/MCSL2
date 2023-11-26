@@ -27,9 +27,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-          # cache: 'pip'
-          # cache-dependency-path: |
-          #   requirement.txt
+          cache: 'pip'
+          cache-dependency-path: |
+            requirement.txt
 
       - name: Update Pip and Uninstall Useless Dependencies
         shell: pwsh
@@ -40,12 +40,12 @@ jobs:
           python -m pip install -U -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
-          python -m pip uninstall pyqt5-stubs -y
 
       - name: Build on Windows
         run: |
           python Tools/update-pyproject.py
-          python -m lndl_nuitka . -y
+          # 淦 忘记 disable-console 了
+          python -m lndl_nuitka . -y -- --disable-console --lto=no
 
       - name: Delete Useless Files and Compress with upx
         shell: pwsh
@@ -86,9 +86,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-          # cache: 'pip'
-          # cache-dependency-path: |
-          #   requirement.txt
+          cache: 'pip'
+          cache-dependency-path: |
+            requirement.txt
 
       - name: Update Pip and Uninstall Useless Dependencies
         shell: pwsh
@@ -99,7 +99,6 @@ jobs:
           python -m pip install -U -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
-          python -m pip uninstall pyqt5-stubs -y
 
       - name: Install Dependencies for Linux
         run: |
@@ -109,7 +108,8 @@ jobs:
       - name: Build on Linux
         run: |
           python Tools/update-pyproject.py
-          python -m lndl_nuitka . -y
+          # 淦 忘记 disable-console 了
+          python -m lndl_nuitka . -y -- --disable-console --lto=no
 
       - name: Delete Useless Files and Compress with upx
         run: |
@@ -169,15 +169,15 @@ jobs:
           7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
           7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: ./repo/ChangeLog.md
-          prerelease: false
-          draft: false
-          tag_name: v${{ env.MCSL2_VERSION }}
-          files: |
-            *.zip
+      # - name: Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     body_path: ./repo/ChangeLog.md
+      #     prerelease: false
+      #     draft: false
+      #     tag_name: v${{ env.MCSL2_VERSION }}
+      #     files: |
+      #       *.zip
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
