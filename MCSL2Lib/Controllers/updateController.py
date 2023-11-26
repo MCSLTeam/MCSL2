@@ -98,8 +98,10 @@ def cmpVersion(newVer: str) -> bool:
     """比较版本号"""
     currentVer = MCSL2VERSION.split(".")
     newVer = newVer.split(".")
+    print(currentVer, newVer)
     isUpdate: bool = False
-    for i in range(0, 3):
+    for i in range(4):
+        print(int(currentVer[i]), int(newVer[i]))
         if int(currentVer[i]) < int(newVer[i]):
             isUpdate = True
             break
