@@ -44,9 +44,8 @@ all = [
 
 [tool.pdm.scripts]
 main = "python MCSL2.py"
-build = "python lndl_build.py -y"
-build_beta = "python -m lndl_nuitka . -y"
-build_github = "python lndl_build.py --github"
+build = "python -m lndl_nuitka . -y"
+build_github = "python -m lndl_nuitka . -y -- --disable-console"
 
 [tool.ruff]
 target-version = "py38"
