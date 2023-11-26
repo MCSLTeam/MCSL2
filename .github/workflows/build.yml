@@ -40,12 +40,12 @@ jobs:
           python -m pip install -U -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
-          python -m pip uninstall pyqt5-stubs -y
 
       - name: Build on Windows
         run: |
           python Tools/update-pyproject.py
-          python -m lndl_nuitka . -y
+          # 淦 忘记 disable-console 了
+          python -m lndl_nuitka . -y -- --disable-console
 
       - name: Delete Useless Files and Compress with upx
         shell: pwsh
@@ -99,7 +99,6 @@ jobs:
           python -m pip install -U -r requirements.txt
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
-          python -m pip uninstall pyqt5-stubs -y
 
       - name: Install Dependencies for Linux
         run: |

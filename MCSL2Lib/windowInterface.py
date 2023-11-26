@@ -548,9 +548,6 @@ class Window(VerifyFluentWindowBase):
         self.homeInterface.selectServerBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)
         )
-        self.homeInterface.selectServerBtn.clicked.connect(
-            self.serverManagerInterface.refreshServers
-        )
         serverHelper.serverName.connect(self.homeInterface.afterSelectedServer)
         serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
         serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)

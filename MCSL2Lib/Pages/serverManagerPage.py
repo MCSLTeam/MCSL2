@@ -720,7 +720,7 @@ class ServerManagerPage(QWidget):
         if len(globalConfig):
             # 添加新的
             for i in range(len(globalConfig)):
-                self.tmpSingleServerWidget = singleServerManager()
+                self.tmpSingleServerWidget = singleServerManager(self.serversSmoothScrollArea)
                 self.tmpSingleServerWidget.mem.setText(
                     f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}"
                 )
