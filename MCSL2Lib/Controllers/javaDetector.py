@@ -209,14 +209,13 @@ def loadJavaList():
         return []
     with open("MCSL2/MCSL2_DetectedJava.json", "r", encoding="utf-8") as f:
         foundedJava = json.load(f)
-        l = [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
-        return l
+        return [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
 
 
-def saveJavaList(l: list):
+def saveJavaList(list_: list):
     with open("MCSL2/MCSL2_DetectedJava.json", "w", encoding="utf-8") as f:
         json.dump(
-            {"java": [j.json for j in l]},
+            {"java": [j.json for j in list_]},
             f,
             ensure_ascii=False,
             sort_keys=True,
@@ -224,27 +223,27 @@ def saveJavaList(l: list):
         )
 
 
-def sortJavaList(l: list, reverse=False):
+def sortJavaList(list_: list, reverse=False):
     """
     为List[Java]排序
     """
-    l.sort(key=lambda x: x.version, reverse=reverse)
+    list_.sort(key=lambda x: x.version, reverse=reverse)
 
 
-def sortedJavaList(l: list, reverse=False):
+def sortedJavaList(list_: list, reverse=False):
     """
     为List[Java]排序，并返回新列表
     """
-    return sorted(l, key=lambda x: x.version, reverse=reverse)
+    return sorted(list_, key=lambda x: x.version, reverse=reverse)
 
 
-def combineJavaList(original: list, l: list, invaild: ..., check=True):
+def combineJavaList(original: list, list_: list, invaild: ..., check=True):
     """
     合并两个List[Java]
     invaild为引用输出(list)
     """
     s1 = set(original)
-    s2 = set(l)
+    s2 = set(list_)
     s = s1.union(s2)
     if check:
         for e in s1 - s2:

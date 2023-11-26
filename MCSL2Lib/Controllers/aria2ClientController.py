@@ -1019,7 +1019,7 @@ class DL_EntryController(QObject):
 
         self.resultReady.connect(lambda _: self.worker.deleteLater())
         self.work.connect(self.worker.asyncDispatcher)
-        self.worker.onGetEntries.connect(lambda l: self.resultReady.emit(l))
+        self.worker.onGetEntries.connect(lambda entries_: self.resultReady.emit(entries_))
         self.worker.onReadEntries.connect(lambda d: self.resultReady.emit(d))
 
 
