@@ -451,8 +451,10 @@ class DownloadCard(SimpleCardWidget):
         self.pauseSwitch = not self.pauseSwitch
         if self.pauseSwitch:
             self.pauseBtn.setText(self.tr("继续"))
+            self.ProgressBar.pause()
         else:
             self.pauseBtn.setText(self.tr("暂停"))
+            self.ProgressBar.resume()
         self.paused.emit(self.pauseSwitch)
 
     @pyqtSlot(dict)
@@ -512,7 +514,8 @@ class DownloadCard(SimpleCardWidget):
                 retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
                 retryBtn.clicked.connect(errInfoBar.close)
                 errInfoBar.addWidget(retryBtn)
-                self.flush()
+                self.ProgressBar.setValue(100)
+                self.ProgressBar.error()
                 MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":
                 try:
@@ -537,6 +540,8 @@ class DownloadCard(SimpleCardWidget):
             retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
             retryBtn.clicked.connect(errInfoBar.close)
             errInfoBar.addWidget(retryBtn)
+            self.ProgressBar.setValue(100)
+            self.ProgressBar.error()
         self.downloading = False
         try:
             self.parent().downloadFinishedHelper()
