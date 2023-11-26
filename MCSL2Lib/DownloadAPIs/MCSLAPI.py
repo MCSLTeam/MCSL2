@@ -107,11 +107,11 @@ class FetchMCSLAPIDownloadURLThread(QThread):
 
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, FinishSlot: Callable = ...):
+    def __init__(self, FinishSlot: Callable = None):
         super().__init__()
         self._id = None
         self.Data = None
-        if FinishSlot is not ...:
+        if FinishSlot is not None:
             self.fetchSignal.connect(FinishSlot)
 
     def run(self):
@@ -125,7 +125,7 @@ class FetchMCSLAPIDownloadURLThreadFactory:
     def __init__(self):
         self.singletonThread = None
 
-    def create(self, _singleton=False, finishSlot=...) -> FetchMCSLAPIDownloadURLThread:
+    def create(self, _singleton=False, finishSlot=None) -> FetchMCSLAPIDownloadURLThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
