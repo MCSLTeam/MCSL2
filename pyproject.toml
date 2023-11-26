@@ -1,12 +1,15 @@
 [project]
 name = "MCSL2"
 dynamic = ["version"]
-description = ""
+description = "MC server launcher 2"
 authors = [
     {name = "MCSLTeam", email = "lxhtt@vip.qq.com"},
+    {name = "shenjackyuanjie", email = "3695888@qq.com"},
+
+    # 还是加一下吧(
 ]
 dependencies = [
-    "setuptools>=69",
+    "setuptools>=60", # 随便指定个版本就好 (
     # qt
     "PyQt5==5.15.10",
     "PyQt-Fluent-Widgets[full]>=1.3.8",
@@ -27,6 +30,10 @@ license = {text = "GPL-3.0"}
 
 [tool.setuptools.dynamic]
 version = { attr = "MCSL2Lib.MCSL2VERSION" }
+
+[tool.setuptools]
+package = []
+# 实际上并不发布包 (用于解决无法 pdm install) 
 
 [project.optional-dependencies]
 all = [
