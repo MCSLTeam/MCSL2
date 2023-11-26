@@ -35,6 +35,7 @@ Plugins/**
 mcslapi.json
 
 # debug
+.ruff_cache
 result.json
 
 Icons/icons_rc.py
