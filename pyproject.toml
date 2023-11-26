@@ -17,7 +17,7 @@ dependencies = [
     "imageio>=2.31.5",
     "pyqt5-qt5==5.15.2",
     "setuptools>=69.0.2",
-    "lib-not-dr==0.2.0rc8",
+    "lib-not-dr==0.2.0rc10",
     "pyqt5-stubs>=5.15.6.0",
 ]
 requires-python = ">=3.8,<3.9"
@@ -63,7 +63,7 @@ show-progress = false
 
 # 版本号 可通过 Tools/update-pyproject.py 更新
 product-version = "2.2.3.0"
-file-version = "0.3.0.0"
+file-version = "0.3.1.0"
 
 # 文件信息
 product-name = "MCSL 2"
