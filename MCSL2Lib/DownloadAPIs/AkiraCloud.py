@@ -99,9 +99,7 @@ class AkiraCloudDownloadURLParser:
             [
                 item
                 for item in parsedList
-                if not re.search(
-                    re.compile(r"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}|\d+\sKB"), item
-                )
+                if not re.search(re.compile(r"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}|\d+\sKB"), item)
             ]
         )
 
@@ -136,9 +134,7 @@ class FetchAkiraCoreThread(QThread):
 
     def run(self):
         self.fetchSignal.emit(
-            AkiraCloudDownloadURLParser.getDownloadCoreList(
-                coreType=self.coreType
-            )
+            AkiraCloudDownloadURLParser.getDownloadCoreList(coreType=self.coreType)
         )
 
     def getData(self):

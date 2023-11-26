@@ -91,9 +91,7 @@ class ConfigurePage(QWidget):
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.fSearch = True
         self.javaFindWorkThreadFactory.signalConnect = self.autoDetectJavaFinished
-        self.javaFindWorkThreadFactory.finishSignalConnect = (
-            self.onJavaFindWorkThreadFinished
-        )
+        self.javaFindWorkThreadFactory.finishSignalConnect = self.onJavaFindWorkThreadFinished
         self.javaFindWorkThreadFactory.create().start()
 
         self.gridLayout = QGridLayout(self)
@@ -119,9 +117,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -143,9 +139,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobNewServerWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobNewServerWidget.sizePolicy().hasHeightForWidth())
         self.noobNewServerWidget.setSizePolicy(sizePolicy)
         self.noobNewServerWidget.setMinimumSize(QSize(0, 132))
         self.noobNewServerWidget.setObjectName("noobNewServerWidget")
@@ -157,9 +151,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobNewServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobNewServerBtn.sizePolicy().hasHeightForWidth())
         self.noobNewServerBtn.setSizePolicy(sizePolicy)
         self.noobNewServerBtn.setMinimumSize(QSize(215, 33))
         self.noobNewServerBtn.setMaximumSize(QSize(215, 33))
@@ -172,9 +164,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobNewServerIntro.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobNewServerIntro.sizePolicy().hasHeightForWidth())
         self.noobNewServerIntro.setSizePolicy(sizePolicy)
         self.noobNewServerIntro.setTextFormat(Qt.MarkdownText)
         self.noobNewServerIntro.setObjectName("noobNewServerIntro")
@@ -185,25 +175,19 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedNewServerWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedNewServerWidget.sizePolicy().hasHeightForWidth())
         self.extendedNewServerWidget.setSizePolicy(sizePolicy)
         self.extendedNewServerWidget.setMinimumSize(QSize(0, 132))
         self.extendedNewServerWidget.setObjectName("extendedNewServerWidget")
 
         self.guideExtendedHorizontalLayout = QHBoxLayout(self.extendedNewServerWidget)
-        self.guideExtendedHorizontalLayout.setObjectName(
-            "guideExtendedHorizontalLayout"
-        )
+        self.guideExtendedHorizontalLayout.setObjectName("guideExtendedHorizontalLayout")
 
         self.extendedNewServerBtn = PrimaryPushButton(self.extendedNewServerWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedNewServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedNewServerBtn.sizePolicy().hasHeightForWidth())
         self.extendedNewServerBtn.setSizePolicy(sizePolicy)
         self.extendedNewServerBtn.setMinimumSize(QSize(215, 33))
         self.extendedNewServerBtn.setMaximumSize(QSize(215, 33))
@@ -216,9 +200,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedNewServerIntro.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedNewServerIntro.sizePolicy().hasHeightForWidth())
         self.extendedNewServerIntro.setSizePolicy(sizePolicy)
         self.extendedNewServerIntro.setTextFormat(Qt.MarkdownText)
         self.extendedNewServerIntro.setObjectName("extendedNewServerIntro")
@@ -229,9 +211,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importNewServerWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importNewServerWidget.sizePolicy().hasHeightForWidth())
         self.importNewServerWidget.setSizePolicy(sizePolicy)
         self.importNewServerWidget.setMinimumSize(QSize(0, 132))
         self.importNewServerWidget.setObjectName("importNewServerWidget")
@@ -243,9 +223,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importNewServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importNewServerBtn.sizePolicy().hasHeightForWidth())
         self.importNewServerBtn.setSizePolicy(sizePolicy)
         self.importNewServerBtn.setMinimumSize(QSize(215, 33))
         self.importNewServerBtn.setMaximumSize(QSize(215, 33))
@@ -258,9 +236,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importNewServerIntro.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importNewServerIntro.sizePolicy().hasHeightForWidth())
         self.importNewServerIntro.setSizePolicy(sizePolicy)
         self.importNewServerIntro.setTextFormat(Qt.MarkdownText)
         self.importNewServerIntro.setObjectName("importNewServerIntro")
@@ -283,9 +259,7 @@ class ConfigurePage(QWidget):
 
         self.noobNewServerScrollAreaContents = QWidget()
         self.noobNewServerScrollAreaContents.setGeometry(QRect(0, -100, 586, 453))
-        self.noobNewServerScrollAreaContents.setObjectName(
-            "noobNewServerScrollAreaContents"
-        )
+        self.noobNewServerScrollAreaContents.setObjectName("noobNewServerScrollAreaContents")
 
         self.noobNewServerScrollAreaVerticalLayout = QVBoxLayout(
             self.noobNewServerScrollAreaContents
@@ -299,9 +273,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobSetJavaWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobSetJavaWidget.sizePolicy().hasHeightForWidth())
         self.noobSetJavaWidget.setSizePolicy(sizePolicy)
         self.noobSetJavaWidget.setMinimumSize(QSize(0, 120))
         self.noobSetJavaWidget.setObjectName("noobSetJavaWidget")
@@ -313,9 +285,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.noobJavaSubtitleLabel.setSizePolicy(sizePolicy)
         self.noobJavaSubtitleLabel.setObjectName("noobJavaSubtitleLabel")
 
@@ -324,9 +294,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobJavaInfoLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobJavaInfoLabel.sizePolicy().hasHeightForWidth())
         self.noobJavaInfoLabel.setSizePolicy(sizePolicy)
         self.noobJavaInfoLabel.setObjectName("noobJavaInfoLabel")
 
@@ -335,18 +303,14 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobSetJavaBtnWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobSetJavaBtnWidget.sizePolicy().hasHeightForWidth())
         self.noobSetJavaBtnWidget.setSizePolicy(sizePolicy)
         self.noobSetJavaBtnWidget.setObjectName("noobSetJavaBtnWidget")
 
         self.horizontalLayout_6 = QHBoxLayout(self.noobSetJavaBtnWidget)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
 
-        self.noobDownloadJavaPrimaryPushBtn = PrimaryPushButton(
-            self.noobSetJavaBtnWidget
-        )
+        self.noobDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.noobSetJavaBtnWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -356,14 +320,10 @@ class ConfigurePage(QWidget):
         self.noobDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noobDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.noobDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noobDownloadJavaPrimaryPushBtn.setObjectName(
-            "noobDownloadJavaPrimaryPushBtn"
-        )
+        self.noobDownloadJavaPrimaryPushBtn.setObjectName("noobDownloadJavaPrimaryPushBtn")
 
         self.horizontalLayout_6.addWidget(self.noobDownloadJavaPrimaryPushBtn)
-        self.noobManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
-            self.noobSetJavaBtnWidget
-        )
+        self.noobManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.noobSetJavaBtnWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -373,14 +333,10 @@ class ConfigurePage(QWidget):
         self.noobManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noobManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.noobManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noobManuallyAddJavaPrimaryPushBtn.setObjectName(
-            "noobManuallyAddJavaPrimaryPushBtn"
-        )
+        self.noobManuallyAddJavaPrimaryPushBtn.setObjectName("noobManuallyAddJavaPrimaryPushBtn")
 
         self.horizontalLayout_6.addWidget(self.noobManuallyAddJavaPrimaryPushBtn)
-        self.noobAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
-            self.noobSetJavaBtnWidget
-        )
+        self.noobAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.noobSetJavaBtnWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -389,18 +345,14 @@ class ConfigurePage(QWidget):
         )
         self.noobAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noobAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.noobAutoDetectJavaPrimaryPushBtn.setObjectName(
-            "noobAutoDetectJavaPrimaryPushBtn"
-        )
+        self.noobAutoDetectJavaPrimaryPushBtn.setObjectName("noobAutoDetectJavaPrimaryPushBtn")
 
         self.horizontalLayout_6.addWidget(self.noobAutoDetectJavaPrimaryPushBtn)
         self.noobJavaListPushBtn = PushButton(self.noobSetJavaBtnWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobJavaListPushBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobJavaListPushBtn.sizePolicy().hasHeightForWidth())
         self.noobJavaListPushBtn.setSizePolicy(sizePolicy)
         self.noobJavaListPushBtn.setMinimumSize(QSize(90, 0))
         self.noobJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
@@ -415,9 +367,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobSetMemWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobSetMemWidget.sizePolicy().hasHeightForWidth())
         self.noobSetMemWidget.setSizePolicy(sizePolicy)
         self.noobSetMemWidget.setObjectName("noobSetMemWidget")
 
@@ -430,9 +380,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobMinMemLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobMinMemLineEdit.sizePolicy().hasHeightForWidth())
         self.noobMinMemLineEdit.setSizePolicy(sizePolicy)
         self.noobMinMemLineEdit.setMinimumSize(QSize(0, 30))
         self.noobMinMemLineEdit.setObjectName("noobMinMemLineEdit")
@@ -442,9 +390,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobMemUnitLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobMemUnitLabel.sizePolicy().hasHeightForWidth())
         self.noobMemUnitLabel.setSizePolicy(sizePolicy)
         self.noobMemUnitLabel.setObjectName("noobMemUnitLabel")
 
@@ -453,9 +399,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobMaxMemLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobMaxMemLineEdit.sizePolicy().hasHeightForWidth())
         self.noobMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.noobMaxMemLineEdit.setMinimumSize(QSize(0, 30))
         self.noobMaxMemLineEdit.setObjectName("noobMaxMemLineEdit")
@@ -474,9 +418,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobMemSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobMemSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.noobMemSubtitleLabel.setSizePolicy(sizePolicy)
         self.noobMemSubtitleLabel.setObjectName("noobMemSubtitleLabel")
 
@@ -486,9 +428,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobSetCoreWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobSetCoreWidget.sizePolicy().hasHeightForWidth())
         self.noobSetCoreWidget.setSizePolicy(sizePolicy)
         self.noobSetCoreWidget.setObjectName("noobSetCoreWidget")
 
@@ -506,14 +446,10 @@ class ConfigurePage(QWidget):
         )
         self.noobDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noobDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.noobDownloadCorePrimaryPushBtn.setObjectName(
-            "noobDownloadCorePrimaryPushBtn"
-        )
+        self.noobDownloadCorePrimaryPushBtn.setObjectName("noobDownloadCorePrimaryPushBtn")
 
         self.gridLayout_5.addWidget(self.noobDownloadCorePrimaryPushBtn, 1, 2, 1, 1)
-        self.noobManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
-            self.noobSetCoreWidget
-        )
+        self.noobManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.noobSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -522,15 +458,11 @@ class ConfigurePage(QWidget):
         )
         self.noobManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.noobManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.noobManuallyAddCorePrimaryPushBtn.setObjectName(
-            "noobManuallyAddCorePrimaryPushBtn"
-        )
+        self.noobManuallyAddCorePrimaryPushBtn.setObjectName("noobManuallyAddCorePrimaryPushBtn")
 
         self.gridLayout_5.addWidget(self.noobManuallyAddCorePrimaryPushBtn, 1, 1, 1, 1)
 
-        self.noobAddCoreFromDownloadedPrimaryPushBtn = PrimaryPushButton(
-            self.noobSetCoreWidget
-        )
+        self.noobAddCoreFromDownloadedPrimaryPushBtn = PrimaryPushButton(self.noobSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -543,17 +475,13 @@ class ConfigurePage(QWidget):
             "noobAddCoreFromDownloadedPrimaryPushBtn"
         )
 
-        self.gridLayout_5.addWidget(
-            self.noobAddCoreFromDownloadedPrimaryPushBtn, 1, 3, 1, 1
-        )
+        self.gridLayout_5.addWidget(self.noobAddCoreFromDownloadedPrimaryPushBtn, 1, 3, 1, 1)
 
         self.noobCoreSubtitleLabel = SubtitleLabel(self.noobSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.noobCoreSubtitleLabel.setSizePolicy(sizePolicy)
         self.noobCoreSubtitleLabel.setObjectName("noobCoreSubtitleLabel")
 
@@ -580,17 +508,13 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobServerNameLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobServerNameLineEdit.sizePolicy().hasHeightForWidth())
         self.noobServerNameLineEdit.setSizePolicy(sizePolicy)
         self.noobServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.noobServerNameLineEdit.setObjectName("noobServerNameLineEdit")
 
         self.verticalLayout_4.addWidget(self.noobServerNameLineEdit)
-        self.noobSaveServerPrimaryPushBtn = PrimaryPushButton(
-            self.noobSetServerNameWidget
-        )
+        self.noobSaveServerPrimaryPushBtn = PrimaryPushButton(self.noobSetServerNameWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -602,9 +526,7 @@ class ConfigurePage(QWidget):
         self.noobSaveServerPrimaryPushBtn.setObjectName("noobSaveServerPrimaryPushBtn")
 
         self.verticalLayout_4.addWidget(self.noobSaveServerPrimaryPushBtn)
-        self.noobNewServerScrollAreaVerticalLayout.addWidget(
-            self.noobSetServerNameWidget
-        )
+        self.noobNewServerScrollAreaVerticalLayout.addWidget(self.noobSetServerNameWidget)
         spacerItem7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.noobNewServerScrollAreaVerticalLayout.addItem(spacerItem7)
         self.noobNewServerScrollArea.setWidget(self.noobNewServerScrollAreaContents)
@@ -613,18 +535,14 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobTitleWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobTitleWidget.sizePolicy().hasHeightForWidth())
         self.noobTitleWidget.setSizePolicy(sizePolicy)
         self.noobTitleWidget.setObjectName("noobTitleWidget")
 
         self.horizontalLayout_4 = QHBoxLayout(self.noobTitleWidget)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
 
-        self.noobBackToGuidePushButton = TransparentToolButton(
-            FIF.PAGE_LEFT, self.noobTitleWidget
-        )
+        self.noobBackToGuidePushButton = TransparentToolButton(FIF.PAGE_LEFT, self.noobTitleWidget)
         self.noobBackToGuidePushButton.setObjectName("noobBackToGuidePushButton")
 
         self.horizontalLayout_4.addWidget(self.noobBackToGuidePushButton)
@@ -632,9 +550,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.noobSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.noobSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.noobSubtitleLabel.setSizePolicy(sizePolicy)
         self.noobSubtitleLabel.setObjectName("noobSubtitleLabel")
 
@@ -656,9 +572,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedTitleWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedTitleWidget.sizePolicy().hasHeightForWidth())
         self.extendedTitleWidget.setSizePolicy(sizePolicy)
         self.extendedTitleWidget.setObjectName("extendedTitleWidget")
 
@@ -668,18 +582,14 @@ class ConfigurePage(QWidget):
         self.extendedBackToGuidePushButton = TransparentToolButton(
             FIF.PAGE_LEFT, self.extendedTitleWidget
         )
-        self.extendedBackToGuidePushButton.setObjectName(
-            "extendedBackToGuidePushButton"
-        )
+        self.extendedBackToGuidePushButton.setObjectName("extendedBackToGuidePushButton")
 
         self.horizontalLayout_5.addWidget(self.extendedBackToGuidePushButton)
         self.extendedSubtitleLabel = SubtitleLabel(self.extendedTitleWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.extendedSubtitleLabel.setSizePolicy(sizePolicy)
         self.extendedSubtitleLabel.setObjectName("extendedSubtitleLabel")
 
@@ -687,16 +597,10 @@ class ConfigurePage(QWidget):
         spacerItem10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem10)
         self.gridLayout_2.addWidget(self.extendedTitleWidget, 0, 1, 1, 1)
-        self.extendedNewServerScrollArea = MySmoothScrollArea(
-            self.extendedNewServerPage
-        )
+        self.extendedNewServerScrollArea = MySmoothScrollArea(self.extendedNewServerPage)
         self.extendedNewServerScrollArea.setFrameShape(QFrame.NoFrame)
-        self.extendedNewServerScrollArea.setVerticalScrollBarPolicy(
-            Qt.ScrollBarAsNeeded
-        )
-        self.extendedNewServerScrollArea.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarAsNeeded
-        )
+        self.extendedNewServerScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.extendedNewServerScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.extendedNewServerScrollArea.setWidgetResizable(True)
         self.extendedNewServerScrollArea.setObjectName("extendedNewServerScrollArea")
 
@@ -718,9 +622,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedSetJavaWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedSetJavaWidget.sizePolicy().hasHeightForWidth())
         self.extendedSetJavaWidget.setSizePolicy(sizePolicy)
         self.extendedSetJavaWidget.setMinimumSize(QSize(0, 120))
         self.extendedSetJavaWidget.setObjectName("extendedSetJavaWidget")
@@ -743,9 +645,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedJavaInfoLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedJavaInfoLabel.sizePolicy().hasHeightForWidth())
         self.extendedJavaInfoLabel.setSizePolicy(sizePolicy)
         self.extendedJavaInfoLabel.setObjectName("extendedJavaInfoLabel")
 
@@ -754,18 +654,14 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedSetJavaBtnWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedSetJavaBtnWidget.sizePolicy().hasHeightForWidth())
         self.extendedSetJavaBtnWidget.setSizePolicy(sizePolicy)
         self.extendedSetJavaBtnWidget.setObjectName("extendedSetJavaBtnWidget")
 
         self.horizontalLayout_7 = QHBoxLayout(self.extendedSetJavaBtnWidget)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
 
-        self.extendedDownloadJavaPrimaryPushBtn = PrimaryPushButton(
-            self.extendedSetJavaBtnWidget
-        )
+        self.extendedDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.extendedSetJavaBtnWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -774,12 +670,8 @@ class ConfigurePage(QWidget):
         )
         self.extendedDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.extendedDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.extendedDownloadJavaPrimaryPushBtn.setCursor(
-            QCursor(Qt.PointingHandCursor)
-        )
-        self.extendedDownloadJavaPrimaryPushBtn.setObjectName(
-            "extendedDownloadJavaPrimaryPushBtn"
-        )
+        self.extendedDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.extendedDownloadJavaPrimaryPushBtn.setObjectName("extendedDownloadJavaPrimaryPushBtn")
 
         self.horizontalLayout_7.addWidget(self.extendedDownloadJavaPrimaryPushBtn)
         self.extendedManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
@@ -793,17 +685,13 @@ class ConfigurePage(QWidget):
         )
         self.extendedManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.extendedManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.extendedManuallyAddJavaPrimaryPushBtn.setCursor(
-            QCursor(Qt.PointingHandCursor)
-        )
+        self.extendedManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.extendedManuallyAddJavaPrimaryPushBtn.setObjectName(
             "extendedManuallyAddJavaPrimaryPushBtn"
         )
 
         self.horizontalLayout_7.addWidget(self.extendedManuallyAddJavaPrimaryPushBtn)
-        self.extendedAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
-            self.extendedSetJavaBtnWidget
-        )
+        self.extendedAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.extendedSetJavaBtnWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -811,9 +699,7 @@ class ConfigurePage(QWidget):
             self.extendedAutoDetectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
         )
         self.extendedAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.extendedAutoDetectJavaPrimaryPushBtn.setCursor(
-            QCursor(Qt.PointingHandCursor)
-        )
+        self.extendedAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.extendedAutoDetectJavaPrimaryPushBtn.setObjectName(
             "extendedAutoDetectJavaPrimaryPushBtn"
         )
@@ -823,9 +709,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedJavaListPushBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedJavaListPushBtn.sizePolicy().hasHeightForWidth())
         self.extendedJavaListPushBtn.setSizePolicy(sizePolicy)
         self.extendedJavaListPushBtn.setMinimumSize(QSize(90, 0))
         self.extendedJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
@@ -835,16 +719,12 @@ class ConfigurePage(QWidget):
         spacerItem11 = QSpacerItem(127, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem11)
         self.gridLayout_6.addWidget(self.extendedSetJavaBtnWidget, 1, 0, 1, 2)
-        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
-            self.extendedSetJavaWidget
-        )
+        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.extendedSetJavaWidget)
         self.extendedSetMemWidget = QWidget(self.extendedNewServerScrollAreaContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedSetMemWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedSetMemWidget.sizePolicy().hasHeightForWidth())
         self.extendedSetMemWidget.setSizePolicy(sizePolicy)
         self.extendedSetMemWidget.setObjectName("extendedSetMemWidget")
 
@@ -855,9 +735,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedMinMemLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedMinMemLineEdit.sizePolicy().hasHeightForWidth())
         self.extendedMinMemLineEdit.setSizePolicy(sizePolicy)
         self.extendedMinMemLineEdit.setMinimumSize(QSize(0, 30))
         self.extendedMinMemLineEdit.setObjectName("extendedMinMemLineEdit")
@@ -867,9 +745,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedMemSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedMemSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.extendedMemSubtitleLabel.setSizePolicy(sizePolicy)
         self.extendedMemSubtitleLabel.setObjectName("extendedMemSubtitleLabel")
 
@@ -878,9 +754,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedMaxMemLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedMaxMemLineEdit.sizePolicy().hasHeightForWidth())
         self.extendedMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.extendedMaxMemLineEdit.setMinimumSize(QSize(0, 30))
         self.extendedMaxMemLineEdit.setObjectName("extendedMaxMemLineEdit")
@@ -890,9 +764,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedToSymbol.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedToSymbol.sizePolicy().hasHeightForWidth())
         self.extendedToSymbol.setSizePolicy(sizePolicy)
         self.extendedToSymbol.setObjectName("extendedToSymbol")
 
@@ -903,16 +775,12 @@ class ConfigurePage(QWidget):
         self.extendedMemUnitComboBox.setObjectName("extendedMemUnitComboBox")
 
         self.gridLayout_7.addWidget(self.extendedMemUnitComboBox, 1, 4, 1, 1)
-        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
-            self.extendedSetMemWidget
-        )
+        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.extendedSetMemWidget)
         self.extendedSetCoreWidget = QWidget(self.extendedNewServerScrollAreaContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedSetCoreWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedSetCoreWidget.sizePolicy().hasHeightForWidth())
         self.extendedSetCoreWidget.setSizePolicy(sizePolicy)
         self.extendedSetCoreWidget.setObjectName("extendedSetCoreWidget")
 
@@ -921,9 +789,7 @@ class ConfigurePage(QWidget):
 
         spacerItem13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_8.addItem(spacerItem13, 1, 3, 1, 1)
-        self.extendedDownloadCorePrimaryPushBtn = PrimaryPushButton(
-            self.extendedSetCoreWidget
-        )
+        self.extendedDownloadCorePrimaryPushBtn = PrimaryPushButton(self.extendedSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -932,14 +798,10 @@ class ConfigurePage(QWidget):
         )
         self.extendedDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.extendedDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.extendedDownloadCorePrimaryPushBtn.setObjectName(
-            "extendedDownloadCorePrimaryPushBtn"
-        )
+        self.extendedDownloadCorePrimaryPushBtn.setObjectName("extendedDownloadCorePrimaryPushBtn")
 
         self.gridLayout_8.addWidget(self.extendedDownloadCorePrimaryPushBtn, 1, 2, 1, 1)
-        self.extendedManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
-            self.extendedSetCoreWidget
-        )
+        self.extendedManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.extendedSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -952,9 +814,7 @@ class ConfigurePage(QWidget):
             "extendedManuallyAddCorePrimaryPushBtn"
         )
 
-        self.gridLayout_8.addWidget(
-            self.extendedManuallyAddCorePrimaryPushBtn, 1, 1, 1, 1
-        )
+        self.gridLayout_8.addWidget(self.extendedManuallyAddCorePrimaryPushBtn, 1, 1, 1, 1)
         self.extendedCoreSubtitleLabel = SubtitleLabel(self.extendedSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -979,23 +839,15 @@ class ConfigurePage(QWidget):
             self.extendedAddCoreFromDownloadedPrimaryPushBtn.sizePolicy().hasHeightForWidth()
         )
         self.extendedAddCoreFromDownloadedPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.gridLayout_8.addWidget(
-            self.extendedAddCoreFromDownloadedPrimaryPushBtn, 1, 3, 1, 1
-        )
-        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
-            self.extendedSetCoreWidget
-        )
-        self.extendedSetDeEncodingWidget = QWidget(
-            self.extendedNewServerScrollAreaContents
-        )
+        self.gridLayout_8.addWidget(self.extendedAddCoreFromDownloadedPrimaryPushBtn, 1, 3, 1, 1)
+        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.extendedSetCoreWidget)
+        self.extendedSetDeEncodingWidget = QWidget(self.extendedNewServerScrollAreaContents)
         self.extendedSetDeEncodingWidget.setObjectName("extendedSetDeEncodingWidget")
 
         self.gridLayout_9 = QGridLayout(self.extendedSetDeEncodingWidget)
         self.gridLayout_9.setObjectName("gridLayout_9")
 
-        self.extendedOutputDeEncodingComboBox = ComboBox(
-            self.extendedSetDeEncodingWidget
-        )
+        self.extendedOutputDeEncodingComboBox = ComboBox(self.extendedSetDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1003,14 +855,10 @@ class ConfigurePage(QWidget):
             self.extendedOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
         )
         self.extendedOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
-        self.extendedOutputDeEncodingComboBox.setObjectName(
-            "extendedOutputDeEncodingComboBox"
-        )
+        self.extendedOutputDeEncodingComboBox.setObjectName("extendedOutputDeEncodingComboBox")
 
         self.gridLayout_9.addWidget(self.extendedOutputDeEncodingComboBox, 2, 1, 1, 1)
-        self.extendedDeEncodingSubtitleLabel = SubtitleLabel(
-            self.extendedSetDeEncodingWidget
-        )
+        self.extendedDeEncodingSubtitleLabel = SubtitleLabel(self.extendedSetDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1018,23 +866,15 @@ class ConfigurePage(QWidget):
             self.extendedDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
         )
         self.extendedDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
-        self.extendedDeEncodingSubtitleLabel.setObjectName(
-            "extendedDeEncodingSubtitleLabel"
-        )
+        self.extendedDeEncodingSubtitleLabel.setObjectName("extendedDeEncodingSubtitleLabel")
 
         self.gridLayout_9.addWidget(self.extendedDeEncodingSubtitleLabel, 0, 0, 1, 1)
-        self.extendedInputDeEncodingComboBox = ComboBox(
-            self.extendedSetDeEncodingWidget
-        )
+        self.extendedInputDeEncodingComboBox = ComboBox(self.extendedSetDeEncodingWidget)
         self.extendedInputDeEncodingComboBox.setText("")
-        self.extendedInputDeEncodingComboBox.setObjectName(
-            "extendedInputDeEncodingComboBox"
-        )
+        self.extendedInputDeEncodingComboBox.setObjectName("extendedInputDeEncodingComboBox")
 
         self.gridLayout_9.addWidget(self.extendedInputDeEncodingComboBox, 3, 1, 1, 1)
-        self.extendedOutputDeEncodingLabel = StrongBodyLabel(
-            self.extendedSetDeEncodingWidget
-        )
+        self.extendedOutputDeEncodingLabel = StrongBodyLabel(self.extendedSetDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1042,14 +882,10 @@ class ConfigurePage(QWidget):
             self.extendedOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
         )
         self.extendedOutputDeEncodingLabel.setSizePolicy(sizePolicy)
-        self.extendedOutputDeEncodingLabel.setObjectName(
-            "extendedOutputDeEncodingLabel"
-        )
+        self.extendedOutputDeEncodingLabel.setObjectName("extendedOutputDeEncodingLabel")
 
         self.gridLayout_9.addWidget(self.extendedOutputDeEncodingLabel, 2, 0, 1, 1)
-        self.extendedInputDeEncodingLabel = StrongBodyLabel(
-            self.extendedSetDeEncodingWidget
-        )
+        self.extendedInputDeEncodingLabel = StrongBodyLabel(self.extendedSetDeEncodingWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1060,9 +896,7 @@ class ConfigurePage(QWidget):
         self.extendedInputDeEncodingLabel.setObjectName("extendedInputDeEncodingLabel")
 
         self.gridLayout_9.addWidget(self.extendedInputDeEncodingLabel, 3, 0, 1, 1)
-        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
-            self.extendedSetDeEncodingWidget
-        )
+        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.extendedSetDeEncodingWidget)
         self.extendedSetJVMArgWidget = QWidget(self.extendedNewServerScrollAreaContents)
         self.extendedSetJVMArgWidget.setObjectName("extendedSetJVMArgWidget")
 
@@ -1084,20 +918,14 @@ class ConfigurePage(QWidget):
         self.JVMArgPlainTextEdit.setObjectName("JVMArgPlainTextEdit")
 
         self.gridLayout_10.addWidget(self.JVMArgPlainTextEdit, 1, 0, 1, 1)
-        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
-            self.extendedSetJVMArgWidget
-        )
-        self.extendedSetServerNameWidget = QWidget(
-            self.extendedNewServerScrollAreaContents
-        )
+        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.extendedSetJVMArgWidget)
+        self.extendedSetServerNameWidget = QWidget(self.extendedNewServerScrollAreaContents)
         self.extendedSetServerNameWidget.setObjectName("extendedSetServerNameWidget")
 
         self.verticalLayout_5 = QVBoxLayout(self.extendedSetServerNameWidget)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
 
-        self.extendedServerNameSubtitleLabel = SubtitleLabel(
-            self.extendedSetServerNameWidget
-        )
+        self.extendedServerNameSubtitleLabel = SubtitleLabel(self.extendedSetServerNameWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1105,9 +933,7 @@ class ConfigurePage(QWidget):
             self.extendedServerNameSubtitleLabel.sizePolicy().hasHeightForWidth()
         )
         self.extendedServerNameSubtitleLabel.setSizePolicy(sizePolicy)
-        self.extendedServerNameSubtitleLabel.setObjectName(
-            "extendedServerNameSubtitleLabel"
-        )
+        self.extendedServerNameSubtitleLabel.setObjectName("extendedServerNameSubtitleLabel")
 
         self.verticalLayout_5.addWidget(self.extendedServerNameSubtitleLabel)
         self.extendedServerNameLineEdit = LineEdit(self.extendedSetServerNameWidget)
@@ -1122,9 +948,7 @@ class ConfigurePage(QWidget):
         self.extendedServerNameLineEdit.setObjectName("extendedServerNameLineEdit")
 
         self.verticalLayout_5.addWidget(self.extendedServerNameLineEdit)
-        self.extendedSaveServerPrimaryPushBtn = PrimaryPushButton(
-            self.extendedSetServerNameWidget
-        )
+        self.extendedSaveServerPrimaryPushBtn = PrimaryPushButton(self.extendedSetServerNameWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1133,19 +957,13 @@ class ConfigurePage(QWidget):
         )
         self.extendedSaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.extendedSaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 0))
-        self.extendedSaveServerPrimaryPushBtn.setObjectName(
-            "extendedSaveServerPrimaryPushBtn"
-        )
+        self.extendedSaveServerPrimaryPushBtn.setObjectName("extendedSaveServerPrimaryPushBtn")
 
         self.verticalLayout_5.addWidget(self.extendedSaveServerPrimaryPushBtn)
-        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(
-            self.extendedSetServerNameWidget
-        )
+        self.noobNewServerScrollAreaVerticalLayout_2.addWidget(self.extendedSetServerNameWidget)
         spacerItem14 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.noobNewServerScrollAreaVerticalLayout_2.addItem(spacerItem14)
-        self.extendedNewServerScrollArea.setWidget(
-            self.extendedNewServerScrollAreaContents
-        )
+        self.extendedNewServerScrollArea.setWidget(self.extendedNewServerScrollAreaContents)
         self.gridLayout_2.addWidget(self.extendedNewServerScrollArea, 1, 1, 1, 1)
         spacerItem15 = QSpacerItem(20, 40, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem15, 0, 0, 2, 1)
@@ -1160,9 +978,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importTitleWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importTitleWidget.sizePolicy().hasHeightForWidth())
         self.importTitleWidget.setSizePolicy(sizePolicy)
         self.importTitleWidget.setObjectName("importTitleWidget")
 
@@ -1179,9 +995,7 @@ class ConfigurePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.importSubtitleLabel.setSizePolicy(sizePolicy)
         self.importSubtitleLabel.setObjectName("importSubtitleLabel")
         self.horizontalLayout_10.addWidget(self.importSubtitleLabel)
@@ -1231,9 +1045,7 @@ class ConfigurePage(QWidget):
         self.gridLayout_11.addItem(spacerItem21, 3, 5, 4, 1)
         spacerItem22 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.gridLayout_11.addItem(spacerItem22, 6, 3, 1, 1)
-        self.importNewServerFirstGuideTitle = SubtitleLabel(
-            self.importNewServerFirstGuide
-        )
+        self.importNewServerFirstGuideTitle = SubtitleLabel(self.importNewServerFirstGuide)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1241,9 +1053,7 @@ class ConfigurePage(QWidget):
             self.importNewServerFirstGuideTitle.sizePolicy().hasHeightForWidth()
         )
         self.importNewServerFirstGuideTitle.setSizePolicy(sizePolicy)
-        self.importNewServerFirstGuideTitle.setObjectName(
-            "importNewServerFirstGuideTitle"
-        )
+        self.importNewServerFirstGuideTitle.setObjectName("importNewServerFirstGuideTitle")
         self.gridLayout_11.addWidget(self.importNewServerFirstGuideTitle, 1, 3, 1, 1)
         self.goBtnWidget = QWidget(self.importNewServerFirstGuide)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -1436,9 +1246,7 @@ class ConfigurePage(QWidget):
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
-        self.noobAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(
-            self.showDownloadEntries
-        )
+        self.noobAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntries)
         self.noobSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # 进阶模式绑定
@@ -1448,9 +1256,7 @@ class ConfigurePage(QWidget):
         self.extendedManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.extendedAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.extendedManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
-        self.extendedAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(
-            self.showDownloadEntries
-        )
+        self.extendedAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntries)
         self.extendedSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
         # 导入法绑定
@@ -1501,9 +1307,7 @@ class ConfigurePage(QWidget):
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
-            settingsVariables.newServerTypeList.index(
-                cfg.get(cfg.newServerType)
-            )
+            settingsVariables.newServerTypeList.index(cfg.get(cfg.newServerType))
         )
 
     def newServerStackedWidgetNavigation(self):
@@ -1527,9 +1331,7 @@ class ConfigurePage(QWidget):
             selectedJavaPath = selectedJavaPath.replace("/", "\\")
             if v := javaDetector.getJavaVersion(selectedJavaPath):
                 currentJavaPaths = configureServerVariables.javaPath
-                if (
-                    java := javaDetector.Java(selectedJavaPath, v)
-                ) not in currentJavaPaths:
+                if (java := javaDetector.Java(selectedJavaPath, v)) not in currentJavaPaths:
                     currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
                     javaDetector.sortJavaList(currentJavaPaths)
                     InfoBar.success(
@@ -1548,7 +1350,9 @@ class ConfigurePage(QWidget):
                 else:
                     InfoBar.warning(
                         title=self.tr("未添加"),
-                        content=self.tr("此Java已被添加过，也有可能是自动查找Java时已经搜索到了。请检查Java列表。"),
+                        content=self.tr(
+                            "此Java已被添加过，也有可能是自动查找Java时已经搜索到了。请检查Java列表。"
+                        ),
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
@@ -1594,9 +1398,7 @@ class ConfigurePage(QWidget):
 
         savedJavaList = javaDetector.loadJavaList()
         invaildJavaList = []
-        javaList = javaDetector.combineJavaList(
-            savedJavaList, _JavaPaths, invaild=invaildJavaList
-        )
+        javaList = javaDetector.combineJavaList(savedJavaList, _JavaPaths, invaild=invaildJavaList)
         javaDetector.sortJavaList(javaList, reverse=False)
         configureServerVariables.javaPath = javaList
         javaDetector.saveJavaList(javaList)
@@ -1655,11 +1457,7 @@ class ConfigurePage(QWidget):
             InfoBar.warning(
                 title=self.tr("未添加"),
                 content=self.tr("你并没有选择服务器核心。\n当前核心:")
-                + (
-                    self.tr("未添加")
-                    if not (a := configureServerVariables.coreFileName)
-                    else a
-                ),
+                + (self.tr("未添加") if not (a := configureServerVariables.coreFileName) else a),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1677,7 +1475,7 @@ class ConfigurePage(QWidget):
         self.downloadEntry.asyncGetEntries()
 
     def onDownloadEntryClosed(self):
-        entries=self.downloadEntry.lastSelection
+        entries = self.downloadEntry.lastSelection
         if entries:
             print("selected: ", self.downloadEntry.entryView.selectedItems()[0].text(), "end.")
             coreName, coreType, mcVersion, buildVersion = [
@@ -1692,7 +1490,14 @@ class ConfigurePage(QWidget):
             }
             InfoBar.success(
                 title=self.tr("已添加"),
-                content=self.tr("核心文件名：") + str(configureServerVariables.coreFileName) + self.tr("\n类型:") + str(coreType) + self.tr("\nMC版本:") + str(mcVersion) + self.tr("\n构建版本:") + str(buildVersion),
+                content=self.tr("核心文件名：")
+                + str(configureServerVariables.coreFileName)
+                + self.tr("\n类型:")
+                + str(coreType)
+                + self.tr("\nMC版本:")
+                + str(mcVersion)
+                + self.tr("\n构建版本:")
+                + str(buildVersion),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1702,14 +1507,18 @@ class ConfigurePage(QWidget):
         else:
             InfoBar.warning(
                 title=self.tr("未添加"),
-                content=self.tr("你并没有选择服务器核心。\n当前核心:") + (self.tr("未添加") if not (a := configureServerVariables.coreFileName) else str(a)),
+                content=self.tr("你并没有选择服务器核心。\n当前核心:")
+                + (
+                    self.tr("未添加")
+                    if not (a := configureServerVariables.coreFileName)
+                    else str(a)
+                ),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
                 duration=3000,
                 parent=self,
             )
-
 
     def checkJavaSet(self):
         """检查Java设置"""
@@ -1770,10 +1579,7 @@ class ConfigurePage(QWidget):
 
     def checkCoreSet(self):
         """检查核心设置"""
-        if (
-            configureServerVariables.corePath != ""
-            and configureServerVariables.coreFileName != ""
-        ):
+        if configureServerVariables.corePath != "" and configureServerVariables.coreFileName != "":
             return self.tr("核心检查: 正常"), 0
         else:
             return self.tr("核心检查: 出错，缺失"), 1
@@ -1808,7 +1614,9 @@ class ConfigurePage(QWidget):
         ]
 
         for i in range(len(illegalServerNameList)):
-            if (illegalServerNameList[i] == self.tr(serverNameLineEditItems[currentNewServerType].text())):
+            if illegalServerNameList[i] == self.tr(
+                serverNameLineEditItems[currentNewServerType].text()
+            ):
                 errText += self.tr("，名称与操作系统冲突")
                 isError = 1
                 break
@@ -1816,7 +1624,9 @@ class ConfigurePage(QWidget):
                 isError = 0
 
         for eachIllegalServerCharacter in illegalServerCharacterList:
-            if (eachIllegalServerCharacter not in self.tr(serverNameLineEditItems[currentNewServerType].text())):
+            if eachIllegalServerCharacter not in self.tr(
+                serverNameLineEditItems[currentNewServerType].text()
+            ):
                 pass
             else:
                 errText += self.tr("，名称含有不合法字符")
@@ -1830,18 +1640,32 @@ class ConfigurePage(QWidget):
         if isError == 1:
             return errText, isError
         else:
-            configureServerVariables.serverName = self.tr(serverNameLineEditItems[currentNewServerType].text())
+            configureServerVariables.serverName = self.tr(
+                serverNameLineEditItems[currentNewServerType].text()
+            )
             return self.tr("服务器名称检查: 正常"), isError
 
     def checkDeEncodingSet(self, currentNewServerType):
         """检查编码设置"""
         if currentNewServerType == 1:
-            configureServerVariables.consoleOutputDeEncoding = configureServerVariables.consoleDeEncodingList[0]
-            configureServerVariables.consoleInputDeEncoding = configureServerVariables.consoleDeEncodingList[0]
+            configureServerVariables.consoleOutputDeEncoding = (
+                configureServerVariables.consoleDeEncodingList[0]
+            )
+            configureServerVariables.consoleInputDeEncoding = (
+                configureServerVariables.consoleDeEncodingList[0]
+            )
             return self.tr("编码检查：正常（自动处理）"), 0
         elif currentNewServerType == 2:
-            configureServerVariables.consoleOutputDeEncoding = configureServerVariables.consoleDeEncodingList[self.extendedOutputDeEncodingComboBox.currentIndex()]
-            configureServerVariables.consoleInputDeEncoding = configureServerVariables.consoleDeEncodingList[self.extendedInputDeEncodingComboBox.currentIndex()]
+            configureServerVariables.consoleOutputDeEncoding = (
+                configureServerVariables.consoleDeEncodingList[
+                    self.extendedOutputDeEncodingComboBox.currentIndex()
+                ]
+            )
+            configureServerVariables.consoleInputDeEncoding = (
+                configureServerVariables.consoleDeEncodingList[
+                    self.extendedInputDeEncodingComboBox.currentIndex()
+                ]
+            )
             return self.tr("编码检查：正常（手动设置）"), 0
 
     def checkJVMArgSet(self, currentNewServerType):
@@ -1926,7 +1750,9 @@ class ConfigurePage(QWidget):
         # 如果出错
         if errCount != 0:
             title = self.tr("创建服务器失败！有") + str(errCount) + self.tr("个问题。")
-            content = self.tr(totalResultMsg) + self.tr("\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。")
+            content = self.tr(totalResultMsg) + self.tr(
+                "\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
+            )
             w = MessageBox(title, content, self)
             w.yesButton.setText(self.tr("好的"))
             w.cancelButton.setParent(None)
@@ -1937,19 +1763,48 @@ class ConfigurePage(QWidget):
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
             title = self.tr("请再次检查你设置的参数是否有误：")
             content = (
-                totalResultMsg + "\n" +
-                "----------------------------\n" +
-                self.tr("Java：") + configureServerVariables.selectedJavaPath + "\n" +
-                self.tr("Java版本：") + configureServerVariables.selectedJavaVersion + "\n" +
-                self.tr("内存：") + str(configureServerVariables.minMem) + configureServerVariables.memUnit + "~" + 
-                str(configureServerVariables.maxMem) + configureServerVariables.memUnit + "\n" +
-                self.tr("服务器核心：") + configureServerVariables.corePath + "\n" +
-                self.tr("服务器核心文件名：") + configureServerVariables.coreFileName + "\n" +
-                self.tr("输出编码设置：") + self.extendedOutputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleOutputDeEncoding)) + "\n" +
-                self.tr("输入编码设置：") + self.extendedInputDeEncodingComboBox.itemText(configureServerVariables.consoleDeEncodingList.index(configureServerVariables.consoleInputDeEncoding)) + "\n" +
-                self.tr("JVM参数：\n") +
-                "    " + totalJVMArg + "\n" +
-                self.tr("服务器名称：") + configureServerVariables.serverName
+                totalResultMsg
+                + "\n"
+                + "----------------------------\n"
+                + self.tr("Java：")
+                + configureServerVariables.selectedJavaPath
+                + "\n"
+                + self.tr("Java版本：")
+                + configureServerVariables.selectedJavaVersion
+                + "\n"
+                + self.tr("内存：")
+                + str(configureServerVariables.minMem)
+                + configureServerVariables.memUnit
+                + "~"
+                + str(configureServerVariables.maxMem)
+                + configureServerVariables.memUnit
+                + "\n"
+                + self.tr("服务器核心：")
+                + configureServerVariables.corePath
+                + "\n"
+                + self.tr("服务器核心文件名：")
+                + configureServerVariables.coreFileName
+                + "\n"
+                + self.tr("输出编码设置：")
+                + self.extendedOutputDeEncodingComboBox.itemText(
+                    configureServerVariables.consoleDeEncodingList.index(
+                        configureServerVariables.consoleOutputDeEncoding
+                    )
+                )
+                + "\n"
+                + self.tr("输入编码设置：")
+                + self.extendedInputDeEncodingComboBox.itemText(
+                    configureServerVariables.consoleDeEncodingList.index(
+                        configureServerVariables.consoleInputDeEncoding
+                    )
+                )
+                + "\n"
+                + self.tr("JVM参数：\n")
+                + "    "
+                + totalJVMArg
+                + "\n"
+                + self.tr("服务器名称：")
+                + configureServerVariables.serverName
             )
             w = MessageBox(title, content, self)
             w.yesButton.setText(self.tr("无误，添加"))
@@ -1965,7 +1820,9 @@ class ConfigurePage(QWidget):
 
         # serverType dispatcher: 总的处理关于serverType不同而引起的新建服务器前的差异性!
         if serverType == "forge":  # case 1
-            w = MessageBox(self.tr("这是Forge安装器"), self.tr("是否需要自动安装Forge服务端？"), self)
+            w = MessageBox(
+                self.tr("这是Forge安装器"), self.tr("是否需要自动安装Forge服务端？"), self
+            )
             w.yesButton.setText(self.tr("是"))
             w.cancelButton.setText(self.tr("不需要"))
             # 如果选no
@@ -1978,14 +1835,18 @@ class ConfigurePage(QWidget):
 
         else:
             if (
-                t := ForgeInstaller.isPossibleForgeInstaller(
-                    configureServerVariables.corePath
-                )
+                t := ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)
             ) is not None:
                 mcVersion, forgeVersion = t
                 w = MessageBox(
                     self.tr("这是不是一个Forge服务器？"),
-                    self.tr("检测到可能为") + str(mcVersion) + self.tr("版本的Forge：") + forgeVersion + self.tr("\n另外,由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"),
+                    self.tr("检测到可能为")
+                    + str(mcVersion)
+                    + self.tr("版本的Forge：")
+                    + forgeVersion
+                    + self.tr(
+                        "\n另外,由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"
+                    ),
                     self,
                 )
                 w.yesButton.setText(self.tr("是"))
@@ -2005,9 +1866,7 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip = StateToolTip(
                 self.tr("安装Forge"), self.tr("请稍后，正在安装..."), self
             )
-            self.installingForgeStateToolTip.move(
-                self.installingForgeStateToolTip.getSuitablePos()
-            )
+            self.installingForgeStateToolTip.move(self.installingForgeStateToolTip.getSuitablePos())
             self.installingForgeStateToolTip.show()
             try:
                 self.forgeInstaller = ForgeInstaller(
@@ -2029,9 +1888,7 @@ class ConfigurePage(QWidget):
                 self.installerLogViewer.cancelButton.clicked.connect(
                     self.forgeInstaller.cancelInstall
                 )
-                self.installerLogViewer.yesButton.clicked.connect(
-                    self.hideForgeInstallerHelper
-                )
+                self.installerLogViewer.yesButton.clicked.connect(self.hideForgeInstallerHelper)
                 self.installerLogViewer.setModal(True)
                 self.forgeInstaller.downloadServerProgress.connect(
                     lambda text: {
@@ -2040,7 +1897,9 @@ class ConfigurePage(QWidget):
                 )
                 self.forgeInstaller.downloadServerFinished.connect(
                     lambda _: {
-                        self.installerLogViewer.titleLabel.setText(self.tr("Forge安装器(正在安装...)"))
+                        self.installerLogViewer.titleLabel.setText(
+                            self.tr("Forge安装器(正在安装...)")
+                        )
                     }
                 )
                 self.installerLogViewer.show()
@@ -2069,9 +1928,7 @@ class ConfigurePage(QWidget):
         # 检查JVM参数防止意外无法启动服务器
         for arg in configureServerVariables.jvmArg:
             if arg == "" or arg == " ":
-                configureServerVariables.jvmArg.pop(
-                    configureServerVariables.jvmArg.index(arg)
-                )
+                configureServerVariables.jvmArg.pop(configureServerVariables.jvmArg.index(arg))
 
         serverConfig = {
             "name": configureServerVariables.serverName,
@@ -2135,7 +1992,9 @@ class ConfigurePage(QWidget):
             else:
                 InfoBar.info(
                     title=self.tr("功能提醒"),
-                    content=self.tr("您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"),
+                    content=self.tr(
+                        "您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -2164,7 +2023,9 @@ class ConfigurePage(QWidget):
             MinecraftEulaInfoBar = InfoBar(
                 icon=FIF.INFO,
                 title=self.tr("功能提醒"),
-                content=self.tr("您开启了“创建时自动同意服务器的Eula”功能。\n如需要查看Minecraft Eula，请点击右边的按钮。"),
+                content=self.tr(
+                    "您开启了“创建时自动同意服务器的Eula”功能。\n如需要查看Minecraft Eula，请点击右边的按钮。"
+                ),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 duration=10000,
@@ -2206,7 +2067,9 @@ class ConfigurePage(QWidget):
                     self.JVMArgPlainTextEdit.setPlainText("")
                 InfoBar.info(
                     title=self.tr("功能提醒"),
-                    content=self.tr("“新建服务器后立刻清空相关设置项”已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。"),
+                    content=self.tr(
+                        "“新建服务器后立刻清空相关设置项”已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。"
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,

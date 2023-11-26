@@ -11,7 +11,6 @@ from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.verification import checkUpdate
 
 
-
 class CheckUpdateThread(QThread):
     """
     检查更新的网络连接线程\n
@@ -36,9 +35,7 @@ class MCSL2FileUpdater(QObject):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.updateOSPrefix = "Windows" if osname == "nt" else "Linux"
-        self.updateExtSuffix = (
-            "." + cfg.get(cfg.oldExecuteable).split(".")[1]
-        )
+        self.updateExtSuffix = "." + cfg.get(cfg.oldExecuteable).split(".")[1]
         self.updateArchitecturePrefix: str = ""
         if "32" in architecture()[0]:
             self.updateArchitecturePrefix = f"{self.updateOSPrefix}-x86"
@@ -58,7 +55,9 @@ class MCSL2FileUpdater(QObject):
                 if not Aria2Controller.startAria2():
                     box = MessageBox(
                         title=self.tr("无法更新"),
-                        content=self.tr("MCSL2的Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
+                        content=self.tr(
+                            "MCSL2的Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"
+                        ),
                         parent=self.parent(),
                     )
                     box.exec()

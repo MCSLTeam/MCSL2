@@ -32,7 +32,7 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBar,
     InfoBarPosition,
-    ToolTip
+    ToolTip,
 )
 
 from MCSL2Lib.singleton import Singleton
@@ -44,7 +44,7 @@ class NoticeStrongBodyLabel(StrongBodyLabel):
         super().__init__(parent)
         self.installEventFilter(self)
         self.tip = ToolTip("双击复制公告")
-    
+
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a1.type() == QEvent.ToolTip:
             self.tip.move(QCursor.pos())
@@ -56,13 +56,9 @@ class NoticeStrongBodyLabel(StrongBodyLabel):
         return super().eventFilter(a0, a1)
 
     def mouseDoubleClickEvent(self, event):  # noqa: mouseDoubleClickEvent
-        QApplication.clipboard().setText(self.text().replace("公告: ", "")),
+        (QApplication.clipboard().setText(self.text().replace("公告: ", "")),)
         InfoBar.success(
-            "提示",
-            "已复制公告",
-            duration=1200,
-            position=InfoBarPosition.TOP,
-            parent=self.window()
+            "提示", "已复制公告", duration=1200, position=InfoBarPosition.TOP, parent=self.window()
         )
         return super().mouseDoubleClickEvent(event)
 
@@ -108,9 +104,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setObjectName("subTitleLabel")
 
@@ -136,9 +130,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.home_btnWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.home_btnWidget.sizePolicy().hasHeightForWidth())
         self.home_btnWidget.setSizePolicy(sizePolicy)
         self.home_btnWidget.setMinimumSize(QSize(244, 140))
         self.home_btnWidget.setMaximumSize(QSize(244, 140))
@@ -163,9 +155,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.startServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.startServerBtn.sizePolicy().hasHeightForWidth())
         self.startServerBtn.setSizePolicy(sizePolicy)
         self.startServerBtn.setMinimumSize(QSize(0, 70))
         self.startServerBtn.setFocusPolicy(Qt.NoFocus)
@@ -177,9 +167,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.selectServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.selectServerBtn.sizePolicy().hasHeightForWidth())
         self.selectServerBtn.setSizePolicy(sizePolicy)
         self.selectServerBtn.setFocusPolicy(Qt.NoFocus)
         self.selectServerBtn.setObjectName("selectServerBtn")

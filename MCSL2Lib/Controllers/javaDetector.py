@@ -142,11 +142,7 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
-                    processes.extend(
-                        searchingFile(
-                            _Path, keyword, ext, fSearch, _match
-                        )
-                    )
+                    processes.extend(searchingFile(_Path, keyword, ext, fSearch, _match))
         except PermissionError:
             pass
         except FileNotFoundError:
@@ -171,13 +167,9 @@ def detectJava(fSearch=True):
         for i in range(65, 91):
             path = chr(i) + ":\\"
             if osp.exists(path):
-                javaPathList.extend(
-                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
-                )
+                javaPathList.extend(searchFile(path, "java", "exe", fSearch, javaVersionMatcher))
     else:
-        javaPathList.extend(
-            searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher)
-        )
+        javaPathList.extend(searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher))
     return javaPathList
 
 

@@ -26,14 +26,15 @@ class BaseEvent(metaclass=ABCMeta):
         self.eventType: str = None
         self.handlers: List[BaseHandler] = []
 
-    '''
+    """
             if func is not None and not callable(func):
             return
         tmpHandle
         self.handlers.append()
-    '''
+    """
+
     @abstractmethod
-    def registerHandle(self,func,priority: int):
+    def registerHandle(self, func, priority: int):
         pass
 
     @abstractmethod

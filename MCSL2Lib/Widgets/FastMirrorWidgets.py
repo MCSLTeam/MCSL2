@@ -68,9 +68,7 @@ class FastMirrorCoreListWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.coreTagWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.coreTagWidget.sizePolicy().hasHeightForWidth())
         self.coreTagWidget.setSizePolicy(sizePolicy)
         self.coreTagWidget.setMinimumSize(QSize(0, 35))
         self.coreTagWidget.setMaximumSize(QSize(16777215, 35))

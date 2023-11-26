@@ -28,6 +28,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 
+
 class NoServerWidget(QWidget):
     def __init__(self):
         super().__init__()
@@ -46,9 +47,7 @@ class NoServerWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.errPixmapWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.errPixmapWidget.sizePolicy().hasHeightForWidth())
         self.errPixmapWidget.setSizePolicy(sizePolicy)
         self.errPixmapWidget.setObjectName("errPixmapWidget")
         self.horizontalLayout_2 = QHBoxLayout(self.errPixmapWidget)
@@ -70,9 +69,7 @@ class NoServerWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.errTextWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.errTextWidget.sizePolicy().hasHeightForWidth())
         self.errTextWidget.setSizePolicy(sizePolicy)
         self.errTextWidget.setObjectName("errTextWidget")
         self.horizontalLayout = QHBoxLayout(self.errTextWidget)

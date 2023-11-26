@@ -23,7 +23,7 @@ from qfluentwidgets import (
     SwitchButton,
     TransparentToolButton,
     FluentIcon as FIF,
-    IconWidget
+    IconWidget,
 )
 from PyQt5.QtGui import QPixmap
 
@@ -88,9 +88,7 @@ class singlePluginWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pluginInfoWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.pluginInfoWidget.sizePolicy().hasHeightForWidth())
         self.pluginInfoWidget.setSizePolicy(sizePolicy)
         self.pluginInfoWidget.setMinimumSize(QSize(0, 120))
         self.pluginInfoWidget.setMaximumSize(QSize(16777215, 120))

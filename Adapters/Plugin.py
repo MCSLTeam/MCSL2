@@ -14,7 +14,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     FluentIcon as FIF,
-    isDarkTheme
+    isDarkTheme,
 )
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
@@ -65,9 +65,7 @@ class PluginLoader(BasePluginLoader):
         importedPlugin = importedPlugin.__getattribute__(pluginName)
         try:
             importedPlugin.pluginName = pluginName
-            with open(
-                f"Plugins//{pluginName}//config.json", "r", encoding="utf-8"
-            ) as f:
+            with open(f"Plugins//{pluginName}//config.json", "r", encoding="utf-8") as f:
                 importedPluginConfig: dict = loads(f.read())
             importedPlugin.version = importedPluginConfig.get("version")
             importedPlugin.description = importedPluginConfig.get("description")
@@ -127,9 +125,7 @@ class PluginManager(BasePluginManager):
         del self.loadedPlugin[pluginName]
         return True, plugin.pluginName
 
-    def decideEnableOrDisable(
-        self, pluginButton: PluginSwitchButton, switchBtnStatus: bool
-    ):
+    def decideEnableOrDisable(self, pluginButton: PluginSwitchButton, switchBtnStatus: bool):
         pluginName = pluginButton.objectName().replace("switchBtn_", "")
         if switchBtnStatus:
             try:
@@ -224,20 +220,14 @@ class PluginManager(BasePluginManager):
             # 设置图标
             if plugin.icon is None:
                 # 无图标
-                self.pluginWidget.pluginIcon.setPixmap(
-                    QPixmap(":/built-InIcons/MCSL2.png")
-                )
+                self.pluginWidget.pluginIcon.setPixmap(QPixmap(":/built-InIcons/MCSL2.png"))
             elif plugin.icon[0] == ":":
                 # 内置图标
                 self.pluginWidget.pluginIcon.setPixmap(QPixmap(plugin.icon))
-            elif plugin.icon.startswith("FIF.") or plugin.icon.startswith(
-                "FluentIcon."
-            ):
+            elif plugin.icon.startswith("FIF.") or plugin.icon.startswith("FluentIcon."):
                 # qfluentwidgets控件库图标
                 self.pluginWidget.setPluginIcon(
-                    getattr(
-                        FIF, plugin.icon.replace("FIF.", "").replace("FluentIcon.", "")
-                    )
+                    getattr(FIF, plugin.icon.replace("FIF.", "").replace("FluentIcon.", ""))
                 )
             else:
                 # 文件图标
@@ -248,9 +238,7 @@ class PluginManager(BasePluginManager):
                 )
             self.pluginWidget.pluginIcon.setFixedSize(60, 60)
             self.pluginWidget.SwitchButton.setObjectName(f"switchBtn_{pluginName}")
-            self.pluginWidget.openFolderButton.setObjectName(
-                f"openFolderBtn_{pluginName}"
-            )
+            self.pluginWidget.openFolderButton.setObjectName(f"openFolderBtn_{pluginName}")
             self.pluginWidget.deleteBtn.setObjectName(f"deleteBtn_{pluginName}")
             self.pluginWidget.setObjectName(f"pluginWidget_{pluginName}")
 
@@ -263,20 +251,14 @@ class PluginManager(BasePluginManager):
             # 设置槽函数
             self.pluginWidget.SwitchButton.selfCheckedChanged.connect(
                 lambda instance, checked: {
-                    self.decideEnableOrDisable(
-                        pluginButton=instance, switchBtnStatus=checked
-                    ),
+                    self.decideEnableOrDisable(pluginButton=instance, switchBtnStatus=checked),
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: openLocalFile(
-                    f".\\Plugins\\{instance}\\"
-                )
+                lambda instance: openLocalFile(f".\\Plugins\\{instance}\\")
             )
             self.pluginWidget.deleteBtn.selfClicked.connect(
-                lambda instance: self.deletePlugin(
-                    instance, self.pluginWidget.deleteBtn.window()
-                )
+                lambda instance: self.deletePlugin(instance, self.pluginWidget.deleteBtn.window())
             )
 
             pluginsVerticalLayout.addWidget(self.pluginWidget)

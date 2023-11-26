@@ -45,11 +45,7 @@ class InternationalizationGenerator:
             self.Widgets[i] = self.WidgetsPath + self.Widgets[i]
         # fmt: on
         self.totalFileList = sorted(
-            list(
-                set(
-                    self.Controller + self.ImportServerTypes + self.Pages + self.Widgets
-                )
-            ),
+            list(set(self.Controller + self.ImportServerTypes + self.Pages + self.Widgets)),
             key=lambda x: (x.split("/")[1][0], x.split("/")[-1][0]),
         )
         self.totalFileList.append("MCSL2Lib/windowInterface.py")

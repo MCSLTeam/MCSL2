@@ -49,13 +49,19 @@ build_github = "python -m lndl_nuitka . -y -- --disable-console"
 
 [tool.ruff]
 target-version = "py38"
-line-length = 120
+line-length = 100
 src = [
     "MCSL2Lib",
     "PluginExample",
     "Tools",
     "Adapters",
 ]
+output-format = "grouped"
+
+[tool.ruff.lint.isort]
+force-single-line = true
+force-wrap-aliases = true
+combine-as-imports = true
 
 # 请使用 lndl_nuitka . -y 编译 (-y 为自动确认)
 [tool.lndl.nuitka]

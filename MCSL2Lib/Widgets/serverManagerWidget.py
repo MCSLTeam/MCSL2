@@ -10,9 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-'''
+"""
 A single widget template for managing exist Minecraft servers.
-'''
+"""
 
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QSpacerItem, QVBoxLayout
@@ -54,9 +54,7 @@ class singleServerManager(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverInfoWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverInfoWidget.sizePolicy().hasHeightForWidth())
         self.serverInfoWidget.setSizePolicy(sizePolicy)
         self.serverInfoWidget.setMinimumSize(QSize(100, 70))
         self.serverInfoWidget.setObjectName("serverInfoWidget")
@@ -68,9 +66,7 @@ class singleServerManager(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.coreFileNameTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.coreFileNameTitle.sizePolicy().hasHeightForWidth())
         self.coreFileNameTitle.setSizePolicy(sizePolicy)
         self.coreFileNameTitle.setObjectName("coreFileNameTitle")
 
@@ -106,9 +102,7 @@ class singleServerManager(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.javaPathTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.javaPathTitle.sizePolicy().hasHeightForWidth())
         self.javaPathTitle.setSizePolicy(sizePolicy)
         self.javaPathTitle.setObjectName("javaPathTitle")
 

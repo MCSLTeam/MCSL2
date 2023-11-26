@@ -4,7 +4,6 @@ from PyQt5.QtCore import QThread
 
 
 class _PluginThread(QThread):
-
     def __init__(self):
         super().__init__()
         self.runFunc = None

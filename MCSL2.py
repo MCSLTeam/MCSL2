@@ -16,6 +16,7 @@ Main entry.
 import sys
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
+
 # from viztracer import VizTracer
 from MCSL2Lib.utils import MCSL2Logger
 
@@ -41,17 +42,20 @@ if __name__ == "__main__":
 
     # Initialize
     from MCSL2Lib.utils import initializeMCSL2
+
     initializeMCSL2()
     del initializeMCSL2
 
     # Load config
     from qfluentwidgets import qconfig
     from MCSL2Lib.Controllers.settingsController import cfg
+
     qconfig.load(r"./MCSL2/MCSL2_Config.json", cfg)
 
     # Verify dev mode
     cfg.set(cfg.oldExecuteable, sys.executable.split("\\")[-1])
     from MCSL2Lib.variables import GlobalMCSL2Variables
+
     if (
         cfg.get(cfg.oldExecuteable) == "python"
         or cfg.get(cfg.oldExecuteable) == "python.exe"
@@ -64,13 +68,16 @@ if __name__ == "__main__":
 
     # Try to delete old executable
     from os import path as osp
+
     if osp.exists(cfg.get(cfg.oldExecuteable)):
         from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
+
         deleteOldMCSL2()
         del deleteOldMCSL2
 
     # Analyze user
     from MCSL2Lib.verification import countUserAPI
+
     try:
         countUserAPI()
     except Exception:
@@ -90,15 +97,18 @@ if __name__ == "__main__":
 
     # i18n
     from qfluentwidgets import FluentTranslator
+
     fluentTranslator = FluentTranslator(QLocale(QLocale.Chinese))
     app.installTranslator(fluentTranslator)
 
     # Main Window
     from MCSL2Lib.windowInterface import Window
+
     w = Window()
     w.show()
 
     import gc
+
     gc.enable()
 
     app.exec_()

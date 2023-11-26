@@ -19,6 +19,7 @@ from typing import Callable
 from PyQt5.QtCore import pyqtSignal, QThread
 from MCSL2Lib.Controllers.networkController import MCSLNetworkSession, MCSLNetworkHeaders
 
+
 class FastMirrorAPIDownloadURLParser:
     """URL设定器"""
 
@@ -45,7 +46,9 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorJsons(downloadAPIUrl):
         data = []
         try:
-            apiData = MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+            apiData = (
+                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+            )
         except Exception:
             return -2
         try:
@@ -58,11 +61,11 @@ class FastMirrorAPIDownloadURLParser:
 
     @staticmethod
     def parseFastMirrorAPICoreVersionUrl(name, mcVersion):
-        fastMirrorAPI = f"https://download.fastmirror.net/api/v3/{name}/{mcVersion}?offset=0&limit=25"
-        rv = defaultdict(list)
-        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorCoreVersionJsons(
-            fastMirrorAPI
+        fastMirrorAPI = (
+            f"https://download.fastmirror.net/api/v3/{name}/{mcVersion}?offset=0&limit=25"
         )
+        rv = defaultdict(list)
+        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorCoreVersionJsons(fastMirrorAPI)
         if type(r) == list:
             for e in r:
                 rv["name"].append(e["name"])
@@ -78,7 +81,9 @@ class FastMirrorAPIDownloadURLParser:
     def decodeFastMirrorCoreVersionJsons(downloadAPIUrl):
         builds = []
         try:
-            apiData = MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+            apiData = (
+                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+            )
         except Exception:
             return -2
         try:

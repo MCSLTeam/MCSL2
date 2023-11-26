@@ -110,9 +110,7 @@ class ServerHandler(QObject):
         self.AServer.serverProcess.started.connect(
             lambda: self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
         )
-        self.AServer.serverProcess.readyReadStandardOutput.connect(
-            self.serverLogOutputHandler
-        )
+        self.AServer.serverProcess.readyReadStandardOutput.connect(self.serverLogOutputHandler)
         self.AServer.serverProcess.finished.connect(
             lambda: self.serverClosed.emit(self.AServer.serverProcess.exitCode())
         )
@@ -130,7 +128,9 @@ class ServerHandler(QObject):
                     self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：正在重新启动服务器..."))
                     self.Server.serverProcess.start()
             else:
-                self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。"))
+                self.serverLogOutput.emit(
+                    self.tr("[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。")
+                )
         else:
             self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器已关闭！"))
 
@@ -193,9 +193,7 @@ class ServerHandler(QObject):
         """
         用户向服务器发送命令
         """
-        self.Server.serverProcess.write(
-            f"{command}\n".encode(serverVariables.inputEncoding)
-        )
+        self.Server.serverProcess.write(f"{command}\n".encode(serverVariables.inputEncoding))
 
     def isServerRunning(self):
         if self.Server.serverProcess is None:
@@ -293,9 +291,7 @@ class ServerLauncher:
         ServerHandler().startServer(
             javaPath=self.javaPath,
             processArgs=self.jvmArg,
-            workingDirectory=str(
-                osp.realpath(f"Servers//{serverVariables.serverName}")
-            ),
+            workingDirectory=str(osp.realpath(f"Servers//{serverVariables.serverName}")),
         )
 
 
@@ -315,9 +311,7 @@ class readLastServerConfigThread(QThread):
                 serverNameList: list = []
                 for i in range(len(globalServerList)):
                     serverNameList.append(globalServerList[i]["name"])
-                ServerHelper().loadServerConfig(
-                    index=serverNameList.index(lastServerName)
-                )
+                ServerHelper().loadServerConfig(index=serverNameList.index(lastServerName))
                 ServerHelper().startBtnStat.emit(True)
                 ServerHelper().serverName.emit(lastServerName)
             except Exception:
@@ -366,9 +360,9 @@ class MinecraftServerResMonitorUtil(QObject):
     def getServerCPU(self):
         try:
             if ServerHandler().isServerRunning():
-                serverCPU = Process(
-                    ServerHandler().AServer.serverProcess.processId()
-                ).cpu_percent(interval=0.01)
+                serverCPU = Process(ServerHandler().AServer.serverProcess.processId()).cpu_percent(
+                    interval=0.01
+                )
                 self.cpuPercent.emit(float("{:.4f}".format(serverCPU / 10)))
             else:
                 self.cpuPercent.emit(0.0000)

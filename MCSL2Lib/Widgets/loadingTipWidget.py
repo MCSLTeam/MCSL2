@@ -102,9 +102,7 @@ class LoadFailedTip(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.loadFailedText.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.loadFailedText.sizePolicy().hasHeightForWidth())
         self.loadFailedText.setSizePolicy(sizePolicy)
         self.loadFailedText.setAlignment(Qt.AlignCenter)
         self.loadFailedText.setObjectName("loadFailedText")
@@ -114,7 +112,7 @@ class LoadFailedTip(QWidget):
         self.gridLayout.addItem(spacerItem1, 0, 2, 2, 1)
         self.refreshBtn = PrimaryPushButton(self)
         self.refreshBtn.setObjectName("refreshBtn")
-        
+
         self.gridLayout.addWidget(self.refreshBtn, 2, 1, 1, 1)
 
         self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
@@ -184,9 +182,7 @@ class MCSLAPILoadingErrorWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.errPixmapWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.errPixmapWidget.sizePolicy().hasHeightForWidth())
         self.errPixmapWidget.setSizePolicy(sizePolicy)
         self.errPixmapWidget.setObjectName("errPixmapWidget")
 
@@ -211,9 +207,7 @@ class MCSLAPILoadingErrorWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.errTextWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.errTextWidget.sizePolicy().hasHeightForWidth())
         self.errTextWidget.setSizePolicy(sizePolicy)
         self.errTextWidget.setObjectName("errTextWidget")
 

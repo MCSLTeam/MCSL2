@@ -22,8 +22,9 @@ class ServerErrorHandler:
                 cls.msg += "Java版本不正确，请更换Java。\n"
                 a = int(
                     errMsg[
-                        errMsg.index("(class file version ")
-                        + 20 : errMsg.index("(class file version ")
+                        errMsg.index("(class file version ") + 20 : errMsg.index(
+                            "(class file version "
+                        )
                         + 22
                     ]
                 )
@@ -53,7 +54,9 @@ class ServerErrorHandler:
 
             elif "requires running the server with" in errMsg:
                 cls.msg += "该服务器正在使用的Java与服务器不匹配。\n"
-                cls.msg += f"请使用{errMsg[errMsg.index('Java') + 4: errMsg.index('Java') + 11]}！\n"
+                cls.msg += (
+                    f"请使用{errMsg[errMsg.index('Java') + 4: errMsg.index('Java') + 11]}！\n"
+                )
 
             elif "OutOfMemoryError" in errMsg:
                 cls.msg += "服务器内存溢出。请检查服务器内存设置，不要超出可用内存，也不要太小。\n"
@@ -75,7 +78,10 @@ class ServerErrorHandler:
                 cls.msg += "JVM内存分配不足，请尝试增加系统的虚拟内存。\n"
 
             elif "进程无法访问" in errMsg:
-                if not cls.msg or "文件被占用，您的服务器可能多开，请检查任务管理器等。\n" not in cls.msg:
+                if (
+                    not cls.msg
+                    or "文件被占用，您的服务器可能多开，请检查任务管理器等。\n" not in cls.msg
+                ):
                     cls.msg += "文件被占用，您的服务器可能多开，请检查任务管理器等。\n"
 
             elif "FAILED TO BIND TO PORT" in errMsg:
@@ -94,7 +100,9 @@ class ServerErrorHandler:
                 cls.msg += "服务器发生类转换异常，请检查Java版本是否匹配。\n"
 
             elif "could not open" in errMsg and "jvm.cfg" in errMsg:
-                cls.msg += "Java环境异常，请检查Java的安装是否完整，若无法确定原因，请尝试重装Java。\n"
+                cls.msg += (
+                    "Java环境异常，请检查Java的安装是否完整，若无法确定原因，请尝试重装Java。\n"
+                )
 
             elif "Failed to download vanilla jar" in errMsg:
                 cls.msg += "服务器下载原版核心文件失败，请检查网络，必要的情况下请使用代理。\n"
@@ -114,23 +122,19 @@ class ServerErrorHandler:
             cls.msg += "{}\n".format(errMsg[startIdx:endIdx])
 
         elif "Error occurred while enabling " in errMsg:
-            cls.msg += f"在启用 {errMsg[errMsg.index('enabling ') + 9: errMsg.index(' (')]} 时发生了错误\n"
+            cls.msg += (
+                f"在启用 {errMsg[errMsg.index('enabling ') + 9: errMsg.index(' (')]} 时发生了错误\n"
+            )
 
         elif "Encountered an unexpected exception" in errMsg:
-            cls.msg += (
-                "服务器出现意外崩溃，可能是由于模组冲突，请检查您的模组列表。\n如果使用的是整合包，请使用整合包制作方提供的服务器专用包开服。\n"
-            )
+            cls.msg += "服务器出现意外崩溃，可能是由于模组冲突，请检查您的模组列表。\n如果使用的是整合包，请使用整合包制作方提供的服务器专用包开服。\n"
 
         elif "Mod" in errMsg and "requires" in errMsg:
             if "&" in errMsg:
-                errMsg = "".join(
-                    everyMsg[1:] for everyMsg in errMsg.split("&") if everyMsg
-                )
+                errMsg = "".join(everyMsg[1:] for everyMsg in errMsg.split("&") if everyMsg)
 
             elif "§" in errMsg:
-                errMsg = "".join(
-                    every_msg[1:] for every_msg in errMsg.split("§") if every_msg
-                )
+                errMsg = "".join(every_msg[1:] for every_msg in errMsg.split("§") if every_msg)
 
             elif "\x1B" in errMsg:
                 errMsg = "".join(

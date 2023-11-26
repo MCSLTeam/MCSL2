@@ -59,9 +59,7 @@ class ImportPageWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importPageTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importPageTitle.sizePolicy().hasHeightForWidth())
         self.importPageTitle.setSizePolicy(sizePolicy)
         self.importPageTitle.setObjectName("importPageTitle")
         self.gridLayout.addWidget(self.importPageTitle, 0, 2, 1, 1)
@@ -77,9 +75,7 @@ class ImportPageWidget(QWidget):
         self.importScrollArea.setObjectName("importScrollArea")
         self.importScrollAreaWidgetContents = QWidget()
         self.importScrollAreaWidgetContents.setGeometry(QRect(0, 0, 742, 452))
-        self.importScrollAreaWidgetContents.setObjectName(
-            "importScrollAreaWidgetContents"
-        )
+        self.importScrollAreaWidgetContents.setObjectName("importScrollAreaWidgetContents")
         self.typeWidgetLayout = QVBoxLayout(self.importScrollAreaWidgetContents)
         self.typeWidgetLayout.setContentsMargins(0, 0, 0, 0)
         self.typeWidgetLayout.setObjectName("typeWidgetLayout")
@@ -116,7 +112,7 @@ class ConfirmArgumentsWidget(CardWidget):
         self._setUpUI()
         self._initView(
             stepCount,
-            title
+            title,
             # javaPath, minMem, maxMem, outputCoding, inputCoding, jvmArg
         )
         self.setNotFinished()
@@ -169,9 +165,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.setJavaWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.setJavaWidget.sizePolicy().hasHeightForWidth())
         self.setJavaWidget.setSizePolicy(sizePolicy)
         self.setJavaWidget.setMinimumSize(QSize(0, 120))
         self.setJavaWidget.setMaximumSize(QSize(16777215, 120))
@@ -182,9 +176,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.downloadJavaBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.downloadJavaBtn.sizePolicy().hasHeightForWidth())
         self.downloadJavaBtn.setSizePolicy(sizePolicy)
         self.downloadJavaBtn.setMinimumSize(QSize(90, 0))
         self.downloadJavaBtn.setObjectName("downloadJavaBtn")
@@ -201,9 +193,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.selectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.selectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
         self.selectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.selectJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.selectJavaPrimaryPushBtn.setObjectName("selectJavaPrimaryPushBtn")
@@ -212,9 +202,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autoDetectJavaBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.autoDetectJavaBtn.sizePolicy().hasHeightForWidth())
         self.autoDetectJavaBtn.setSizePolicy(sizePolicy)
         self.autoDetectJavaBtn.setObjectName("autoDetectJavaBtn")
         self.gridLayout_17.addWidget(self.autoDetectJavaBtn, 1, 3, 1, 1)
@@ -236,9 +224,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.setJVMArgWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.setJVMArgWidget.sizePolicy().hasHeightForWidth())
         self.setJVMArgWidget.setSizePolicy(sizePolicy)
         self.setJVMArgWidget.setMinimumSize(QSize(0, 171))
         self.setJVMArgWidget.setMaximumSize(QSize(16777215, 171))
@@ -274,9 +260,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.minMemLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.minMemLineEdit.sizePolicy().hasHeightForWidth())
         self.minMemLineEdit.setSizePolicy(sizePolicy)
         self.minMemLineEdit.setMinimumSize(QSize(0, 30))
         self.minMemLineEdit.setObjectName("minMemLineEdit")
@@ -293,9 +277,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.maxMemLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.maxMemLineEdit.sizePolicy().hasHeightForWidth())
         self.maxMemLineEdit.setSizePolicy(sizePolicy)
         self.maxMemLineEdit.setMinimumSize(QSize(0, 30))
         self.maxMemLineEdit.setObjectName("maxMemLineEdit")
@@ -326,9 +308,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.setDeEncodingWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.setDeEncodingWidget.sizePolicy().hasHeightForWidth())
         self.setDeEncodingWidget.setSizePolicy(sizePolicy)
         self.setDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.setDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
@@ -339,9 +319,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.outputComboBox.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.outputComboBox.sizePolicy().hasHeightForWidth())
         self.outputComboBox.setSizePolicy(sizePolicy)
         self.outputComboBox.setObjectName("outputComboBox")
         self.gridLayout_16.addWidget(self.outputComboBox, 2, 1, 1, 1)
@@ -360,9 +338,7 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.setDeEncodingTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.setDeEncodingTitle.sizePolicy().hasHeightForWidth())
         self.setDeEncodingTitle.setSizePolicy(sizePolicy)
         self.setDeEncodingTitle.setObjectName("setDeEncodingTitle")
         self.gridLayout_16.addWidget(self.setDeEncodingTitle, 0, 0, 1, 1)
@@ -396,12 +372,8 @@ class ConfirmArgumentsWidget(CardWidget):
         self.setDeEncodingTitle.setText("编码设置：")
         self.inputTitle.setText("指令输入编码（优先级高于全局设置）")
         self.memUnitComboBox.addItems(["M", "G"])
-        self.outputComboBox.addItems(
-            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
-        self.inputComboBox.addItems(
-            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
+        self.outputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
+        self.inputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
 
     def _initView(
         self,
@@ -488,9 +460,7 @@ class ImportFileFolderWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importBtnWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.importBtnWidget.sizePolicy().hasHeightForWidth())
         self.importBtnWidget.setSizePolicy(sizePolicy)
         self.importBtnWidget.setObjectName("importBtnWidget")
         self.horizontalLayout_2 = QHBoxLayout(self.importBtnWidget)
@@ -715,9 +685,7 @@ class SaveWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.saveServerNameLineEdit.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.saveServerNameLineEdit.sizePolicy().hasHeightForWidth())
         self.saveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.saveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.saveServerNameLineEdit.setObjectName("saveServerNameLineEdit")
@@ -736,9 +704,7 @@ class SaveWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.saveSaveServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.saveSaveServerBtn.sizePolicy().hasHeightForWidth())
         self.saveSaveServerBtn.setSizePolicy(sizePolicy)
         self.saveSaveServerBtn.setMinimumSize(QSize(130, 30))
         self.saveSaveServerBtn.setMaximumSize(QSize(16777215, 30))
@@ -747,9 +713,7 @@ class SaveWidget(CardWidget):
         self.saveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.saveSaveServerBtn.setText("导入！")
         self.saveServerNameLineEdit.textChanged.connect(
-            lambda: self.saveSaveServerBtn.setEnabled(
-                self.saveServerNameLineEdit.text() != ""
-            )
+            lambda: self.saveSaveServerBtn.setEnabled(self.saveServerNameLineEdit.text() != "")
         )
 
     def _initView(self, stepCount):

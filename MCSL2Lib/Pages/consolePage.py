@@ -97,9 +97,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverMemCardWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverMemCardWidget.sizePolicy().hasHeightForWidth())
         self.serverMemCardWidget.setSizePolicy(sizePolicy)
         self.serverMemCardWidget.setMinimumSize(QSize(130, 120))
         self.serverMemCardWidget.setMaximumSize(QSize(130, 120))
@@ -122,9 +120,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverMemLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverMemLabel.sizePolicy().hasHeightForWidth())
         self.serverMemLabel.setSizePolicy(sizePolicy)
         self.serverMemLabel.setObjectName("serverMemLabel")
 
@@ -138,9 +134,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverCPUCardWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverCPUCardWidget.sizePolicy().hasHeightForWidth())
         self.serverCPUCardWidget.setSizePolicy(sizePolicy)
         self.serverCPUCardWidget.setMinimumSize(QSize(130, 120))
         self.serverCPUCardWidget.setMaximumSize(QSize(130, 120))
@@ -163,9 +157,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.serverCPULabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.serverCPULabel.sizePolicy().hasHeightForWidth())
         self.serverCPULabel.setSizePolicy(sizePolicy)
         self.serverCPULabel.setObjectName("serverCPULabel")
 
@@ -189,9 +181,7 @@ class ConsolePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -306,7 +296,9 @@ class ConsolePage(QWidget):
         self.exitServer.setText(self.tr("关闭服务器"))
         self.killServer.setText(self.tr("强制关闭"))
         self.errorHandler.setText(self.tr("报错分析"))
-        self.commandLineEdit.setPlaceholderText(self.tr("在此输入指令，回车或点击右边按钮发送，不需要加/"))
+        self.commandLineEdit.setPlaceholderText(
+            self.tr("在此输入指令，回车或点击右边按钮发送，不需要加/")
+        )
         self.serverOutput.setPlaceholderText(self.tr("请先开启服务器！不开服务器没有日志的喂"))
         self.sendCommandButton.setEnabled(False)
         self.commandLineEdit.textChanged.connect(
@@ -342,9 +334,7 @@ class ConsolePage(QWidget):
         self.serverMemLabel.setText(
             self.tr("内存：") + str(round(mem, 2)) + serverVariables.memUnit
         )
-        self.serverMemProgressRing.setValue(
-            int(int(mem) / serverVariables.maxMem * 100)
-        )
+        self.serverMemProgressRing.setValue(int(int(mem) / serverVariables.maxMem * 100))
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
@@ -471,22 +461,21 @@ class ConsolePage(QWidget):
 
     def showErrorHandlerReport(self):
         if self.errorHandler.isChecked():
-            if self.errMsg!= "":
+            if self.errMsg != "":
                 w = MessageBox("错误分析器日志", self.errMsg, self)
                 w.cancelButton.setParent(None)
                 w.show()
             else:
-                w = MessageBox("错误分析器日志", "本次没有检测到任何MCSL2内置错误分析可用解决方案。", self)
+                w = MessageBox(
+                    "错误分析器日志", "本次没有检测到任何MCSL2内置错误分析可用解决方案。", self
+                )
                 w.cancelButton.setParent(None)
                 w.show()
-
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
             try:
-                self.playersList.append(
-                    str(str(serverOutput).split("INFO]: ")[1].split("[/")[0])
-                )
+                self.playersList.append(str(str(serverOutput).split("INFO]: ")[1].split("[/")[0]))
                 return
             except Exception:
                 pass
@@ -575,16 +564,10 @@ class ConsolePage(QWidget):
         textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
         if ServerHandler().isServerRunning():
             try:
-                self.difficulty.setCurrentIndex(
-                    int(serverVariables.serverProperties["difficulty"])
-                )
+                self.difficulty.setCurrentIndex(int(serverVariables.serverProperties["difficulty"]))
             except ValueError:
                 self.difficulty.setCurrentIndex(
-                    int(
-                        textDiffiultyList.index(
-                            serverVariables.serverProperties["difficulty"]
-                        )
-                    )
+                    int(textDiffiultyList.index(serverVariables.serverProperties["difficulty"]))
                 )
             except Exception:
                 pass
@@ -593,9 +576,7 @@ class ConsolePage(QWidget):
 
     def runQuickMenu_Difficulty(self):
         textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
-        self.sendCommand(
-            f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}"
-        )
+        self.sendCommand(f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}")
 
     def initQuickMenu_GameMode(self):
         """快捷菜单-游戏模式"""
@@ -626,9 +607,7 @@ class ConsolePage(QWidget):
 
     def runQuickMenu_GameMode(self, gamemode: int, player: str):
         gameModeList = ["survival", "creative", "adventure", "spectator"]
-        ServerHandler().sendCommand(
-            command=f"gamemode {gameModeList[gamemode]} {player}"
-        )
+        ServerHandler().sendCommand(command=f"gamemode {gameModeList[gamemode]} {player}")
 
     def initQuickMenu_WhiteList(self):
         """快捷菜单-白名单"""
@@ -671,9 +650,7 @@ class ConsolePage(QWidget):
             opWidget = playersController()
             opWidget.mode.addItems([self.tr("添加"), self.tr("删除")])
             opWidget.mode.setCurrentIndex(0)
-            opWidget.who.textChanged.connect(
-                lambda: self.lineEditChecker(text=opWidget.who.text())
-            )
+            opWidget.who.textChanged.connect(lambda: self.lineEditChecker(text=opWidget.who.text()))
             opWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("服务器管理员"), self.tr("添加或删除管理员"), self)
             w.yesButton.setText(self.tr("确定"))
@@ -708,9 +685,7 @@ class ConsolePage(QWidget):
             w.cancelButton.setText(self.tr("取消"))
             w.textLayout.addWidget(kickWidget.playersControllerMainWidget)
             self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
-            w.yesSignal.connect(
-                lambda: self.runQuickMenu_Kick(player=kickWidget.who.text())
-            )
+            w.yesSignal.connect(lambda: self.runQuickMenu_Kick(player=kickWidget.who.text()))
             w.exec()
         else:
             self.showServerNotOpenMsg()

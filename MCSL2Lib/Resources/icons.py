@@ -18078,15 +18078,11 @@ else:
 
 
 def qInitResources():
-    qRegisterResourceData(
-        rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data
-    )
+    qRegisterResourceData(rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data)
 
 
 def qCleanupResources():
-    qUnregisterResourceData(
-        rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data
-    )
+    qUnregisterResourceData(rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data)
 
 
 qInitResources()

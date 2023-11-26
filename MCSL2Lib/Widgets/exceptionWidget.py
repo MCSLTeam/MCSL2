@@ -46,7 +46,7 @@ class ExceptionWidget(QWidget):
         self.exceptionLabel.setSizePolicy(sizePolicy)
         self.exceptionLabel.setMinimumSize(QSize(450, 200))
         self.exceptionLabel.setMaximumSize(QSize(450, 16777215))
-        self.exceptionLabel.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.exceptionLabel.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.exceptionLabel.setWordWrap(True)
         self.verticalLayout_2.addWidget(self.exceptionLabel)
         self.exceptionScrollArea.setWidget(self.exceptionScrollAreaWidgetContents)

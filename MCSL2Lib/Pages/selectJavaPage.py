@@ -90,7 +90,11 @@ class SelectJavaPage(QWidget):
         self.subTitleLabel.setObjectName("subTitleLabel")
         self.gridLayout_2.addWidget(self.subTitleLabel, 2, 1, 1, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
-        self.subTitleLabel.setText(self.tr("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。\n游戏版本1.16.5及以下的请使用Java 8\n游戏版本1.17~1.17.1的建议Java 17-18\n1.18及以上则使用Java 18-20"))
+        self.subTitleLabel.setText(
+            self.tr(
+                "以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。\n游戏版本1.16.5及以下的请使用Java 8\n游戏版本1.17~1.17.1的建议Java 17-18\n1.18及以上则使用Java 18-20"
+            )
+        )
         self.titleLabel.setText("Java")
         self.javaSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
 

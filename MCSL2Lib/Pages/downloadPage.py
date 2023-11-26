@@ -99,10 +99,10 @@ class DownloadPage(QWidget):
         self.fetchFastMirrorAPICoreVersionThreadFactory = FetchFastMirrorAPICoreVersionThreadFactory()
 
         self.fetchMCSLAPIDownloadURLThreadFactory = FetchMCSLAPIDownloadURLThreadFactory()
-        
+
         self.fetchPolarsAPITypeThreadFactory = FetchPolarsAPITypeThreadFactory()
         self.fetchPolarsAPICoreThreadFactory = FetchPolarsAPICoreThreadFactory()
-        
+
         self.fetchAkiraTypeThreadFactory = FetchAkiraTypeThreadFactory()
         self.fetchAkiraCoreThreadFactory = FetchAkiraCoreThreadFactory()
         # fmt: on
@@ -128,9 +128,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openDownloadFolderBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.openDownloadFolderBtn.sizePolicy().hasHeightForWidth())
         self.openDownloadFolderBtn.setSizePolicy(sizePolicy)
         self.openDownloadFolderBtn.setObjectName("openDownloadFolderBtn")
         self.gridLayout_4.addWidget(self.openDownloadFolderBtn, 0, 1, 1, 1)
@@ -139,9 +137,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openDownloadEntriesBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.openDownloadEntriesBtn.sizePolicy().hasHeightForWidth())
         self.openDownloadEntriesBtn.setSizePolicy(sizePolicy)
         self.openDownloadEntriesBtn.setObjectName("openDownloadEntriesBtn")
         self.gridLayout_4.addWidget(self.openDownloadEntriesBtn, 0, 2, 1, 1)
@@ -150,9 +146,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.showDownloadingItemBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.showDownloadingItemBtn.sizePolicy().hasHeightForWidth())
         self.showDownloadingItemBtn.setSizePolicy(sizePolicy)
         self.showDownloadingItemBtn.setObjectName("showDownloadingItemBtn")
         self.gridLayout_4.addWidget(self.showDownloadingItemBtn, 0, 3, 1, 1)
@@ -161,9 +155,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -185,9 +177,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.versionSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.versionSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.versionSubtitleLabel.setSizePolicy(sizePolicy)
         self.versionSubtitleLabel.setObjectName("versionSubtitleLabel")
 
@@ -196,9 +186,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth())
         self.coreListSmoothScrollArea.setSizePolicy(sizePolicy)
         self.coreListSmoothScrollArea.setMinimumSize(QSize(200, 0))
         self.coreListSmoothScrollArea.setMaximumSize(QSize(200, 16777215))
@@ -209,9 +197,7 @@ class DownloadPage(QWidget):
 
         self.coreListScrollAreaWidgetContents = QWidget()
         self.coreListScrollAreaWidgetContents.setGeometry(QRect(0, 0, 200, 349))
-        self.coreListScrollAreaWidgetContents.setObjectName(
-            "coreListScrollAreaWidgetContents"
-        )
+        self.coreListScrollAreaWidgetContents.setObjectName("coreListScrollAreaWidgetContents")
 
         self.verticalLayout_14 = QVBoxLayout(self.coreListScrollAreaWidgetContents)
         self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
@@ -227,9 +213,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.buildSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.buildSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.buildSubtitleLabel.setSizePolicy(sizePolicy)
         self.buildSubtitleLabel.setObjectName("buildSubtitleLabel")
         self.gridLayout_2.addWidget(self.buildSubtitleLabel, 0, 2, 1, 1)
@@ -237,9 +221,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.coreListSubtitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.coreListSubtitleLabel.sizePolicy().hasHeightForWidth())
         self.coreListSubtitleLabel.setSizePolicy(sizePolicy)
         self.coreListSubtitleLabel.setObjectName("coreListSubtitleLabel")
         self.gridLayout_2.addWidget(self.coreListSubtitleLabel, 0, 0, 1, 1)
@@ -247,9 +229,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.versionSmoothScrollArea.sizePolicy().hasHeightForWidth())
         self.versionSmoothScrollArea.setSizePolicy(sizePolicy)
         self.versionSmoothScrollArea.setMinimumSize(QSize(160, 0))
         self.versionSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
@@ -260,9 +240,7 @@ class DownloadPage(QWidget):
 
         self.versionScrollAreaWidgetContents = QWidget()
         self.versionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 170, 349))
-        self.versionScrollAreaWidgetContents.setObjectName(
-            "versionScrollAreaWidgetContents"
-        )
+        self.versionScrollAreaWidgetContents.setObjectName("versionScrollAreaWidgetContents")
 
         self.verticalLayout_13 = QVBoxLayout(self.versionScrollAreaWidgetContents)
         self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
@@ -290,9 +268,7 @@ class DownloadPage(QWidget):
 
         self.buildScrollAreaWidgetContents = QWidget()
         self.buildScrollAreaWidgetContents.setGeometry(QRect(0, 0, 346, 349))
-        self.buildScrollAreaWidgetContents.setObjectName(
-            "buildScrollAreaWidgetContents"
-        )
+        self.buildScrollAreaWidgetContents.setObjectName("buildScrollAreaWidgetContents")
 
         self.verticalLayout_2 = QVBoxLayout(self.buildScrollAreaWidgetContents)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -328,9 +304,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIStackedWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPIStackedWidget.sizePolicy().hasHeightForWidth())
         self.MCSLAPIStackedWidget.setSizePolicy(sizePolicy)
         self.MCSLAPIStackedWidget.setMinimumSize(QSize(676, 336))
         self.MCSLAPIStackedWidget.setMaximumSize(QSize(16777215, 16777215))
@@ -380,9 +354,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPISpigot.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPISpigot.sizePolicy().hasHeightForWidth())
         self.MCSLAPISpigot.setSizePolicy(sizePolicy)
         self.MCSLAPISpigot.setObjectName("MCSLAPISpigot")
 
@@ -412,14 +384,10 @@ class DownloadPage(QWidget):
         self.verticalLayout_9.setObjectName("verticalLayout_9")
 
         self.MCSLAPISpigotScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPISpigotScrollAreaLayout.setObjectName(
-            "MCSLAPISpigotScrollAreaLayout"
-        )
+        self.MCSLAPISpigotScrollAreaLayout.setObjectName("MCSLAPISpigotScrollAreaLayout")
 
         self.verticalLayout_9.addLayout(self.MCSLAPISpigotScrollAreaLayout)
-        self.MCSLAPISpigotScrollArea.setWidget(
-            self.MCSLAPISpigotScrollAreaWidgetContents
-        )
+        self.MCSLAPISpigotScrollArea.setWidget(self.MCSLAPISpigotScrollAreaWidgetContents)
         self.verticalLayout_4.addWidget(self.MCSLAPISpigotScrollArea)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPISpigot)
         self.MCSLAPIPaper = QWidget()
@@ -466,9 +434,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIBungeeCord.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPIBungeeCord.sizePolicy().hasHeightForWidth())
         self.MCSLAPIBungeeCord.setSizePolicy(sizePolicy)
         self.MCSLAPIBungeeCord.setObjectName("MCSLAPIBungeeCord")
 
@@ -481,9 +447,7 @@ class DownloadPage(QWidget):
         self.MCSLAPIBungeeCordScrollArea.setObjectName("MCSLAPIBungeeCordScrollArea")
 
         self.MCSLAPIBungeeCordScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIBungeeCordScrollAreaWidgetContents.setGeometry(
-            QRect(0, 0, 698, 348)
-        )
+        self.MCSLAPIBungeeCordScrollAreaWidgetContents.setGeometry(QRect(0, 0, 698, 348))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -495,30 +459,22 @@ class DownloadPage(QWidget):
             "MCSLAPIBungeeCordScrollAreaWidgetContents"
         )
 
-        self.verticalLayout_11 = QVBoxLayout(
-            self.MCSLAPIBungeeCordScrollAreaWidgetContents
-        )
+        self.verticalLayout_11 = QVBoxLayout(self.MCSLAPIBungeeCordScrollAreaWidgetContents)
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
 
         self.MCSLAPIBungeeCordScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPIBungeeCordScrollAreaLayout.setObjectName(
-            "MCSLAPIBungeeCordScrollAreaLayout"
-        )
+        self.MCSLAPIBungeeCordScrollAreaLayout.setObjectName("MCSLAPIBungeeCordScrollAreaLayout")
 
         self.verticalLayout_11.addLayout(self.MCSLAPIBungeeCordScrollAreaLayout)
-        self.MCSLAPIBungeeCordScrollArea.setWidget(
-            self.MCSLAPIBungeeCordScrollAreaWidgetContents
-        )
+        self.MCSLAPIBungeeCordScrollArea.setWidget(self.MCSLAPIBungeeCordScrollAreaWidgetContents)
         self.verticalLayout_6.addWidget(self.MCSLAPIBungeeCordScrollArea)
         self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIBungeeCord)
         self.MCSLAPIOfficialCore = QWidget()
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIOfficialCore.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPIOfficialCore.sizePolicy().hasHeightForWidth())
         self.MCSLAPIOfficialCore.setSizePolicy(sizePolicy)
         self.MCSLAPIOfficialCore.setObjectName("MCSLAPIOfficialCore")
 
@@ -526,17 +482,11 @@ class DownloadPage(QWidget):
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
 
-        self.MCSLAPIOfficialCoreScrollArea = MySmoothScrollArea(
-            self.MCSLAPIOfficialCore
-        )
+        self.MCSLAPIOfficialCoreScrollArea = MySmoothScrollArea(self.MCSLAPIOfficialCore)
         self.MCSLAPIOfficialCoreScrollArea.setWidgetResizable(True)
-        self.MCSLAPIOfficialCoreScrollArea.setObjectName(
-            "MCSLAPIOfficialCoreScrollArea"
-        )
+        self.MCSLAPIOfficialCoreScrollArea.setObjectName("MCSLAPIOfficialCoreScrollArea")
         self.MCSLAPIOfficialCoreScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIOfficialCoreScrollAreaWidgetContents.setGeometry(
-            QRect(0, 0, 98, 28)
-        )
+        self.MCSLAPIOfficialCoreScrollAreaWidgetContents.setGeometry(QRect(0, 0, 98, 28))
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -548,9 +498,7 @@ class DownloadPage(QWidget):
             "MCSLAPIOfficialCoreScrollAreaWidgetContents"
         )
 
-        self.verticalLayout_12 = QVBoxLayout(
-            self.MCSLAPIOfficialCoreScrollAreaWidgetContents
-        )
+        self.verticalLayout_12 = QVBoxLayout(self.MCSLAPIOfficialCoreScrollAreaWidgetContents)
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
 
@@ -610,9 +558,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.polarsTypeLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.polarsTypeLabel.sizePolicy().hasHeightForWidth())
         self.polarsTypeLabel.setSizePolicy(sizePolicy)
         self.polarsTypeLabel.setObjectName("polarsTypeLabel")
 
@@ -621,9 +567,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.VerticalSeparator_2.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.VerticalSeparator_2.sizePolicy().hasHeightForWidth())
         self.VerticalSeparator_2.setSizePolicy(sizePolicy)
         self.VerticalSeparator_2.setMinimumSize(QSize(3, 0))
         self.VerticalSeparator_2.setMaximumSize(QSize(3, 16777215))
@@ -636,9 +580,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.refreshPolarsAPIBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.refreshPolarsAPIBtn.sizePolicy().hasHeightForWidth())
         self.refreshPolarsAPIBtn.setSizePolicy(sizePolicy)
         self.refreshPolarsAPIBtn.setObjectName("refreshPolarsAPIBtn")
         self.gridLayout_5.addWidget(self.refreshPolarsAPIBtn, 0, 3, 1, 1)
@@ -646,9 +588,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.polarsDescriptionLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.polarsDescriptionLabel.sizePolicy().hasHeightForWidth())
         self.polarsDescriptionLabel.setSizePolicy(sizePolicy)
         self.polarsDescriptionLabel.setObjectName("polarsDescriptionLabel")
 
@@ -657,9 +597,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.polarsTypeScrollArea.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.polarsTypeScrollArea.sizePolicy().hasHeightForWidth())
         self.polarsTypeScrollArea.setSizePolicy(sizePolicy)
         self.polarsTypeScrollArea.setMinimumSize(QSize(170, 0))
         self.polarsTypeScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -713,9 +651,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.VerticalSeparator_3.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.VerticalSeparator_3.sizePolicy().hasHeightForWidth())
         self.VerticalSeparator_3.setSizePolicy(sizePolicy)
         self.VerticalSeparator_3.setMinimumSize(QSize(3, 0))
         self.VerticalSeparator_3.setMaximumSize(QSize(3, 16777215))
@@ -726,9 +662,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.akiraTypeLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.akiraTypeLabel.sizePolicy().hasHeightForWidth())
         self.akiraTypeLabel.setSizePolicy(sizePolicy)
         self.akiraTypeLabel.setObjectName("akiraTypeLabel")
 
@@ -739,9 +673,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.refreshAkiraCloudBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.refreshAkiraCloudBtn.sizePolicy().hasHeightForWidth())
         self.refreshAkiraCloudBtn.setSizePolicy(sizePolicy)
         self.refreshAkiraCloudBtn.setObjectName("refreshAkiraCloudBtn")
 
@@ -750,9 +682,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.akiraTypeScrollArea.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.akiraTypeScrollArea.sizePolicy().hasHeightForWidth())
         self.akiraTypeScrollArea.setSizePolicy(sizePolicy)
         self.akiraTypeScrollArea.setMinimumSize(QSize(170, 0))
         self.akiraTypeScrollArea.setMaximumSize(QSize(170, 16777215))
@@ -810,9 +740,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.downloadingItemWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.downloadingItemWidget.sizePolicy().hasHeightForWidth())
         self.downloadingItemWidget.setSizePolicy(sizePolicy)
         self.downloadingItemWidget.setMinimumSize(QSize(310, 0))
         self.downloadingItemWidget.setMaximumSize(QSize(310, 16777215))
@@ -826,9 +754,7 @@ class DownloadPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
         self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
 
@@ -845,9 +771,7 @@ class DownloadPage(QWidget):
             self.downloadWithAkiraCloud,
         ]
         self.downloadStackedWidget.setCurrentWidget(
-            self.dsList[
-                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
-            ]
+            self.dsList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]
         )
 
         self.setObjectName("DownloadInterface")
@@ -868,37 +792,27 @@ class DownloadPage(QWidget):
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIJava",
             text=self.tr("Java环境"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
-                self.MCSLAPIJava
-            ),
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIJava),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPISpigot",
             text=self.tr("Spigot核心"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
-                self.MCSLAPISpigot
-            ),
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPISpigot),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIPaper",
             text=self.tr("Paper核心"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
-                self.MCSLAPIPaper
-            ),
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIPaper),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIBungeeCord",
             text=self.tr("BungeeCord代理"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
-                self.MCSLAPIBungeeCord
-            ),
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIBungeeCord),
         )
         self.MCSLAPIPivot.addItem(
             routeKey="MCSLAPIOfficialCore",
             text=self.tr("Vanilla核心"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(
-                self.MCSLAPIOfficialCore
-            ),
+            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIOfficialCore),
         )
         self.MCSLAPILayoutList = [
             self.MCSLAPIJavaScrollAreaLayout,
@@ -918,13 +832,9 @@ class DownloadPage(QWidget):
         self.refreshPolarsAPIBtn.clicked.connect(self.getPolarsAPI)
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
         self.refreshMCSLAPIBtn.setEnabled(False)
-        self.scrollAreaSpacer = QSpacerItem(
-            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
-        )
+        self.scrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
-        self.openDownloadFolderBtn.clicked.connect(
-            lambda: openLocalFile(".\\MCSL2\\Downloads\\")
-        )
+        self.openDownloadFolderBtn.clicked.connect(lambda: openLocalFile(".\\MCSL2\\Downloads\\"))
 
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)
         self.openDownloadEntriesBtn.clicked.connect(
@@ -948,11 +858,7 @@ class DownloadPage(QWidget):
                 )
             )
             self.downloadStackedWidget.setCurrentWidget(
-                self.dsList[
-                    settingsVariables.downloadSourceList.index(
-                        cfg.get(cfg.downloadSource)
-                    )
-                ]
+                self.dsList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]
             )
             self.refreshDownloads()
 
@@ -991,17 +897,8 @@ class DownloadPage(QWidget):
             if downloadVariables.MCSLAPIDownloadUrlDict:
                 idx = self.MCSLAPIStackedWidget.currentIndex()
                 if (
-                    str(
-                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                            "downloadFileTitles"
-                        ]
-                    )
-                    != "-2"
-                    or str(
-                        downloadVariables.MCSLAPIDownloadUrlDict[idx][
-                            "downloadFileTitles"
-                        ]
-                    )
+                    str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"]) != "-2"
+                    or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
                     != "-1"
                 ):
                     self.initMCSLAPIDownloadWidget(n=idx)
@@ -1050,10 +947,8 @@ class DownloadPage(QWidget):
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
         idx = self.MCSLAPIStackedWidget.currentIndex()
         if (
-            str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-            != "-2"
-            or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-            != "-1"
+            str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"]) != "-2"
+            or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"]) != "-1"
         ):
             self.initMCSLAPIDownloadWidget(n=idx)
         else:
@@ -1093,16 +988,9 @@ class DownloadPage(QWidget):
         self.releaseMCSLAPIMemory()
         self.refreshMCSLAPIBtn.setEnabled(True)
         try:
-            if (
-                type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
-                == list
-            ):
+            if type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"]) == list:
                 for i in range(
-                    len(
-                        downloadVariables.MCSLAPIDownloadUrlDict[n][
-                            "downloadFileTitles"
-                        ]
-                    )
+                    len(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
                 ):
                     self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
@@ -1112,25 +1000,19 @@ class DownloadPage(QWidget):
                         QSize(60, 60)
                     )
                     self.tmpSingleMCSLAPIDownloadWidget.fileTitle.setText(
-                        downloadVariables.MCSLAPIDownloadUrlDict[n][
-                            "downloadFileTitles"
-                        ][i]
+                        downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"][i]
                     )
                     self.tmpSingleMCSLAPIDownloadWidget.fileName.setText(
                         f"{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileNames'][i]}.{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileFormats'][i]}"
                     )
-                    self.tmpSingleMCSLAPIDownloadWidget.setObjectName(
-                        f"DownloadWidget{i}..{n}"
-                    )
+                    self.tmpSingleMCSLAPIDownloadWidget.setObjectName(f"DownloadWidget{i}..{n}")
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.setObjectName(
                         f"DownloadBtn{i}..{n}"
                     )
                     self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.clicked.connect(
                         self.downloadMCSLAPIFile
                     )
-                    self.MCSLAPILayoutList[n].addWidget(
-                        self.tmpSingleMCSLAPIDownloadWidget
-                    )
+                    self.MCSLAPILayoutList[n].addWidget(self.tmpSingleMCSLAPIDownloadWidget)
                 self.MCSLAPILayoutList[n].addSpacerItem(self.scrollAreaSpacer)
             else:
                 self.showMCSLAPIFailedWidget()
@@ -1156,12 +1038,8 @@ class DownloadPage(QWidget):
         idx = int(sender.objectName().split("..")[-1])
         idx2 = int(sender.objectName().split("..")[0].split("n")[-1])
         uri = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileURLs"][idx2]
-        fileName = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][
-            idx2
-        ]
-        fileFormat = downloadVariables.MCSLAPIDownloadUrlDict[idx][
-            "downloadFileFormats"
-        ][idx2]
+        fileName = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][idx2]
+        fileFormat = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][idx2]
         # 判断文件是否存在
         # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
         self.checkDownloadFileExists(
@@ -1267,9 +1145,7 @@ class DownloadPage(QWidget):
             self.getPolarsCoreStateToolTip = StateToolTip(
                 self.tr("正在进一步请求极星镜像API"), self.tr("加载中，请稍后..."), self
             )
-            self.getPolarsCoreStateToolTip.move(
-                self.getPolarsCoreStateToolTip.getSuitablePos()
-            )
+            self.getPolarsCoreStateToolTip.move(self.getPolarsCoreStateToolTip.getSuitablePos())
             self.getPolarsCoreStateToolTip.show()
             workThread.start()
             self.refreshPolarsAPIBtn.setEnabled(False)
@@ -1321,9 +1197,7 @@ class DownloadPage(QWidget):
                 return
         uri = self.sender().property("core_version")
         fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
-        fileName = (
-            self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
-        )
+        fileName = self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
         # 判断文件是否存在
         self.checkDownloadFileExists(
             fileName,
@@ -1425,9 +1299,7 @@ class DownloadPage(QWidget):
             self.getAkiraCoreStateToolTip = StateToolTip(
                 self.tr("正在进一步请求Akira Cloud镜像站"), self.tr("加载中，请稍后..."), self
             )
-            self.getAkiraCoreStateToolTip.move(
-                self.getAkiraCoreStateToolTip.getSuitablePos()
-            )
+            self.getAkiraCoreStateToolTip.move(self.getAkiraCoreStateToolTip.getSuitablePos())
             self.getAkiraCoreStateToolTip.show()
             workThread.start()
             self.refreshAkiraCloudBtn.setEnabled(False)
@@ -1479,9 +1351,7 @@ class DownloadPage(QWidget):
                 return
         uri = f"https://mirror.akiracloud.net/{self.sender().property('core_version')}/{self.sender().parent().buildVerLabel.text()}"
         fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
-        fileName = (
-            self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
-        )
+        fileName = self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
         # 判断文件是否存在
         self.checkDownloadFileExists(
             fileName,
@@ -1548,9 +1418,7 @@ class DownloadPage(QWidget):
             self.getFastMirrorStateToolTip = StateToolTip(
                 self.tr("正在请求FastMirror API"), self.tr("加载中，请稍后..."), self
             )
-            self.getFastMirrorStateToolTip.move(
-                self.getFastMirrorStateToolTip.getSuitablePos()
-            )
+            self.getFastMirrorStateToolTip.move(self.getFastMirrorStateToolTip.getSuitablePos())
             self.getFastMirrorStateToolTip.show()
             workThread.start()
             self.refreshFastMirrorAPIBtn.setEnabled(False)
@@ -1569,9 +1437,7 @@ class DownloadPage(QWidget):
             self.getFastMirrorStateToolTip = StateToolTip(
                 self.tr("正在进一步请求FastMirror API"), self.tr("加载中，请稍后..."), self
             )
-            self.getFastMirrorStateToolTip.move(
-                self.getFastMirrorStateToolTip.getSuitablePos()
-            )
+            self.getFastMirrorStateToolTip.move(self.getFastMirrorStateToolTip.getSuitablePos())
             self.getFastMirrorStateToolTip.show()
             workThread.start()
 
@@ -1619,9 +1485,7 @@ class DownloadPage(QWidget):
             duration=5000,
             parent=self,
         )
-        errTestBtn = HyperlinkButton(
-            "https://download.fastmirror.net/api/v3", "测试", i, FIF.LINK
-        )
+        errTestBtn = HyperlinkButton("https://download.fastmirror.net/api/v3", "测试", i, FIF.LINK)
         i.addWidget(errTestBtn)
 
     def initFastMirrorCoreListWidget(self):
@@ -1661,9 +1525,7 @@ class DownloadPage(QWidget):
         self.releaseFMMemory(1)
         self.releaseFMMemory(2)
         MCVersionList = downloadVariables.FastMirrorAPIDict["mc_versions"][
-            list(downloadVariables.FastMirrorAPIDict["name"]).index(
-                downloadVariables.selectedName
-            )
+            list(downloadVariables.FastMirrorAPIDict["name"]).index(downloadVariables.selectedName)
         ]
         for i in range(len(MCVersionList)):
             MCVersion = MCVersionList[i]
@@ -1688,15 +1550,11 @@ class DownloadPage(QWidget):
         for i in range(len(downloadVariables.FastMirrorAPICoreVersionDict["name"])):
             self.buildLayout.addWidget(
                 FastMirrorBuildListWidget(
-                    buildVer=downloadVariables.FastMirrorAPICoreVersionDict[
-                        "core_version"
-                    ][i],
-                    syncTime=downloadVariables.FastMirrorAPICoreVersionDict[
-                        "update_time"
-                    ][i].replace("T", " "),
-                    coreVersion=downloadVariables.FastMirrorAPICoreVersionDict[
-                        "core_version"
-                    ][i],
+                    buildVer=downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i],
+                    syncTime=downloadVariables.FastMirrorAPICoreVersionDict["update_time"][
+                        i
+                    ].replace("T", " "),
+                    coreVersion=downloadVariables.FastMirrorAPICoreVersionDict["core_version"][i],
                     btnSlot=self.downloadFastMirrorAPIFile,
                     parent=self,
                 )
@@ -1719,7 +1577,9 @@ class DownloadPage(QWidget):
                 box.exec()
                 return
         buildVer = self.sender().property("core_version")
-        fileName = f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
+        fileName = (
+            f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
+        )
         fileFormat = "jar"
         uri = f"https://download.fastmirror.net/download/{downloadVariables.selectedName}/{downloadVariables.selectedMCVersion}/{buildVer}"
         # 判断文件是否存在
@@ -1735,21 +1595,15 @@ class DownloadPage(QWidget):
             ),
         )
 
-    def checkDownloadFileExists(
-        self, fileName, fileFormat, uri, extraData: tuple
-    ) -> bool:
+    def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
         if osp.exists(
             osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
-        ) and not osp.exists(
-            osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")
-        ):
+        ) and not osp.exists(osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")):
             if cfg.get(cfg.saveSameFileException) == "ask":
                 w = MessageBox(self.tr("提示"), self.tr("您要下载的文件已存在。请选择操作。"), self)
                 w.yesButton.setText(self.tr("停止下载"))
                 w.cancelButton.setText(self.tr("覆盖文件"))
-                w.cancelSignal.connect(
-                    lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
-                )
+                w.cancelSignal.connect(lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}"))
                 w.cancelSignal.connect(
                     lambda: self.downloadFile(fileName, fileFormat, uri, extraData)
                 )
@@ -1757,7 +1611,9 @@ class DownloadPage(QWidget):
             elif cfg.get(cfg.saveSameFileException) == "overwrite":
                 InfoBar.warning(
                     title=self.tr("警告"),
-                    content=self.tr("MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。"),
+                    content=self.tr(
+                        "MCSL2/Downloads文件夹存在同名文件。\n根据设置，已删除原文件并继续下载。"
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=False,
                     position=InfoBarPosition.TOP,
@@ -1791,9 +1647,7 @@ class DownloadPage(QWidget):
             interval=0.2,
             extraData=extraData,
         )
-        downloadingInfoWidget.canceled.connect(
-            lambda: Aria2Controller.cancelDownloadTask(gid)
-        )
+        downloadingInfoWidget.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
         downloadingInfoWidget.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
             if x

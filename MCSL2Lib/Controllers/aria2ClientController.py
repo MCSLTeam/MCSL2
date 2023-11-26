@@ -488,9 +488,7 @@ class Aria2ProcessThread(QThread):
     def run(self):
         MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
         MCSL2_Aria2Client.add_uris(self.DownloadURL)
-        process = Popen(
-            [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
-        )
+        process = Popen([self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT)
         process.wait()
 
 

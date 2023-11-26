@@ -40,9 +40,7 @@ class ServerUrl:
 
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
-    with open(
-            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-    ) as globalServerConfigFile:
+    with open(r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8") as globalServerConfigFile:
         globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
     return globalServerList
 
@@ -65,9 +63,7 @@ def initializeMCSL2():
             makedirs(folder, exist_ok=True)
 
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
-        with open(
-                r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-        ) as serverList:
+        with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as serverList:
             serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
             serverList.write(serverListTemplate)
 
@@ -88,6 +84,7 @@ def patchPageStackedWidget(enable: bool):
     if enable:
         import qfluentwidgets.window.stacked_widget as qfluent_stacked_widget
         from MCSL2Lib.Widgets.MCSL2PageStackedWidget import MCSL2PageStackedWidget
+
         qfluent_stacked_widget.PopUpAniStackedWidget = MCSL2PageStackedWidget
 
 
@@ -132,9 +129,7 @@ def private(func):
             return func(*args, **kwargs)
         else:
             # 抛出异常
-            raise PermissionError(
-                f"{func.__name__} is a private method of {class_name}"
-            )
+            raise PermissionError(f"{func.__name__} is a private method of {class_name}")
 
     # 返回包装函数
     return wrapper
@@ -157,16 +152,16 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
     """
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.PASS
-    if isinstance(
-            value, aria2p.ClientException
-    ) and "Active Download not found for GID" in str(value):
+    if isinstance(value, aria2p.ClientException) and "Active Download not found for GID" in str(
+        value
+    ):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
         return ExceptionFilterMode.PASS
@@ -180,9 +175,7 @@ def exceptionFilter(
     return ExceptionFilterMode.RAISE_AND_PRINT
 
 
-def checkSHA1(
-        fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
-) -> List[Dict]:
+def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None) -> List[Dict]:
     """
     检查文件的SHA1值是否正确
     """

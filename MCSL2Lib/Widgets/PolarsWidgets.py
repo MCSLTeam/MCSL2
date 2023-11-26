@@ -20,6 +20,7 @@ from qfluentwidgets import (
     CardWidget,
 )
 
+
 class PolarsTypeWidget(CardWidget):
     def __init__(self, name, idx, description, slot, parent=None):
         super().__init__(parent)

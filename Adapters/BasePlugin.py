@@ -3,7 +3,6 @@ from typing import List
 
 
 class BasePlugin(metaclass=ABCMeta):
-
     def __init__(self):
         self.pluginName: str = ""
         self.version: str = ""
@@ -38,7 +37,6 @@ class BasePluginLoader:
 
 
 class BasePluginManager(metaclass=ABCMeta):
-
     @abstractmethod
     def disablePlugin(self, plugin: BasePlugin):
         pass

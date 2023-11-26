@@ -36,9 +36,7 @@ class DownloadEntryBox(MessageBoxBase):
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
 
-        self.entryView.itemSelectionChanged.connect(
-            self.onItemSelectionChanged
-        )
+        self.entryView.itemSelectionChanged.connect(self.onItemSelectionChanged)
         self.entryView.doubleClicked.connect(self.yesButton.click)
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
@@ -87,7 +85,6 @@ class DownloadEntryBox(MessageBoxBase):
         entries.sort(key=lambda x: x.get("mc_version"), reverse=True)
         self.entryView.setRowCount(len(entries))
         for i, coreInfo in enumerate(entries):
-
             name = QTableWidgetItem(coreInfo.get("name"))
             type_ = QTableWidgetItem(coreInfo.get("type"))
             mcVersion = QTableWidgetItem(coreInfo.get("mc_version"))
@@ -104,9 +101,7 @@ class DownloadEntryBox(MessageBoxBase):
     def onSectionClicked(self, index: int):
         self.entryView.horizontalHeader().setSortIndicatorShown(True)
         if self.columnSortOrder[index]:
-            self.entryView.horizontalHeader().setSortIndicator(
-                index, Qt.DescendingOrder
-            )
+            self.entryView.horizontalHeader().setSortIndicator(index, Qt.DescendingOrder)
             self.entryView.sortItems(index, Qt.DescendingOrder)
             self.columnSortOrder[index] = not self.columnSortOrder[index]
         else:

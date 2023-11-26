@@ -26,7 +26,6 @@ from qfluentwidgets import (
 
 class singleMCSLAPIDownloadWidget(CardWidget):
     def __init__(self):
-
         super().__init__()
 
         # self.setObjectName("singleMCSLAPIDownloadWidget")
@@ -49,9 +48,7 @@ class singleMCSLAPIDownloadWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIPixmapLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPIPixmapLabel.sizePolicy().hasHeightForWidth())
         self.MCSLAPIPixmapLabel.setSizePolicy(sizePolicy)
         self.MCSLAPIPixmapLabel.setObjectName("MCSLAPIPixmapLabel")
 
@@ -85,9 +82,7 @@ class singleMCSLAPIDownloadWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIDownloadBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPIDownloadBtn.sizePolicy().hasHeightForWidth())
         self.MCSLAPIDownloadBtn.setSizePolicy(sizePolicy)
         self.MCSLAPIDownloadBtn.setMinimumSize(QSize(0, 50))
         self.MCSLAPIDownloadBtn.setMaximumSize(QSize(16777215, 16777215))

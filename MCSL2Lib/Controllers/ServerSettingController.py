@@ -13,10 +13,7 @@ class ServerSettingController:
             return ""
 
         file = os.path.join(
-            "MCSL2",
-            "Servers",
-            serverName,
-            cls._servers.get(serverName)["core_file_name"]
+            "MCSL2", "Servers", serverName, cls._servers.get(serverName)["core_file_name"]
         )
         try:
             with open(file, "rb") as f:
@@ -27,9 +24,7 @@ class ServerSettingController:
 
     @classmethod
     def addServerConfig(cls, serverName, serverConfig):
-        cls._servers.update({
-            serverName: serverConfig
-        })
+        cls._servers.update({serverName: serverConfig})
 
     @classmethod
     def checkServerConfig(cls, serverName):
@@ -93,9 +88,7 @@ class ServerSettingController:
             with open(p, "r") as f:
                 try:
                     cls._servers = json.load(f)["MCSLServerList"]  # 旧版兼容
-                    cls._servers = {
-                        e["name"]: e for e in cls._servers
-                    }  # 将旧版的List转为Dict
+                    cls._servers = {e["name"]: e for e in cls._servers}  # 将旧版的List转为Dict
                 except JSONDecodeError:
                     # make backup
                     f.close()
@@ -109,9 +102,7 @@ class ServerSettingController:
         for idx, e in enumerate(cls._servers.copy()):
             if not cls.checkServerConfig(e["name"]):
                 cls._servers[e["name"]] = None
-        cls._servers = {
-            k: v for k, v in cls._servers.items() if v is not None
-        }
+        cls._servers = {k: v for k, v in cls._servers.items() if v is not None}
         # end check server list
 
         # load server config from dirs : MCSL2\Servers\*
@@ -134,16 +125,11 @@ class ServerSettingController:
                     pass
                 else:
                     servers[name] = None  # 如果存在重名的服务器,则不添加
-        servers = {
-            k: v for k, v in servers.items() if v is not None
-        }
+        servers = {k: v for k, v in servers.items() if v is not None}
         # end check server config
 
         # combine server config
-        cls._servers = {
-            **cls._servers,
-            **servers
-        }
+        cls._servers = {**cls._servers, **servers}
 
     @classmethod
     def save(cls):

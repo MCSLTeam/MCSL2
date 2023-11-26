@@ -4,10 +4,10 @@
 
 import tomli
 
-with open("pyproject.toml", "r", encoding='utf-8') as f:
+with open("pyproject.toml", "r", encoding="utf-8") as f:
     pyproject = tomli.loads(f.read())
-    
-with open("requirements.txt", "w", encoding='utf-8') as f:
-    for dependency in pyproject['project']['dependencies']:
+
+with open("requirements.txt", "w", encoding="utf-8") as f:
+    for dependency in pyproject["project"]["dependencies"]:
         print(dependency)
-        f.write(dependency + '\n')
+        f.write(dependency + "\n")

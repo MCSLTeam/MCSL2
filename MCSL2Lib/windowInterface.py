@@ -198,9 +198,7 @@ loaded = InterfaceLoaded()
 class PageLoader(QThread):
     loadFinished = pyqtSignal(object, str, str)
 
-    def __init__(
-        self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None
-    ):
+    def __init__(self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None):
         super().__init__()
         self.pageType = pageType
         self.targetObj = targetObj
@@ -267,9 +265,7 @@ class Window(VerifyFluentWindowBase):
         self.initSafeQuitController()
 
         loaded.mainWindowInited = True
-        GlobalMCSL2Variables.isLoadFinished = (
-            False if not loaded.allPageLoaded() else True
-        )
+        GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
     @pyqtSlot(object, str, str)
     def onPageLoaded(self, pageType, targetObj, flag):
@@ -324,7 +320,9 @@ class Window(VerifyFluentWindowBase):
     def closeEvent(self, a0) -> None:
         if ServerHandler().isServerRunning():
             box = MessageBox(
-                self.tr("是否退出MCSL2？"), self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"), parent=self
+                self.tr("是否退出MCSL2？"),
+                self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
+                parent=self,
             )
             box.yesButton.setText(self.tr("取消"))
             box.cancelButton.setText(self.tr("安全关闭并退出"))
@@ -393,9 +391,7 @@ class Window(VerifyFluentWindowBase):
             box.contentLabel.deleteLater()
             del box.contentLabel
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
-            box.yesSignal.connect(
-                lambda: QApplication.clipboard().setText(tracebackString)
-            )
+            box.yesSignal.connect(lambda: QApplication.clipboard().setText(tracebackString))
             box.yesSignal.connect(box.deleteLater)
             box.cancelSignal.connect(box.deleteLater)
             box.yesSignal.connect(exceptionWidget.deleteLater)
@@ -406,9 +402,7 @@ class Window(VerifyFluentWindowBase):
     def initPluginSystem(self, firstLoad=True):
         """初始化插件系统"""
         self.pluginManager.readAllPlugins(firstLoad)
-        self.pluginManager.initSinglePluginsWidget(
-            self.pluginsInterface.pluginsVerticalLayout
-        )
+        self.pluginManager.initSinglePluginsWidget(self.pluginsInterface.pluginsVerticalLayout)
 
     def initNavigation(self):
         """初始化导航栏"""
@@ -461,7 +455,9 @@ class Window(VerifyFluentWindowBase):
     def initSafeQuitController(self):
         # 安全退出控件
         self.exitingMsgBox = MessageBox(
-            self.tr("正在退出MCSL2"), self.tr("安全关闭服务器中...\n\nMCSL2稍后将自行退出。"), parent=self
+            self.tr("正在退出MCSL2"),
+            self.tr("安全关闭服务器中...\n\nMCSL2稍后将自行退出。"),
+            parent=self,
         )
         self.exitingMsgBox.cancelButton.hide()
         self.exitingMsgBox.yesButton.setText(self.tr("强制结束服务器并退出"))
@@ -475,9 +471,7 @@ class Window(VerifyFluentWindowBase):
         self.exitingMsgBox.hide()
         self.quitTimer = QTimer(self)
         self.quitTimer.setInterval(3000)
-        self.quitTimer.timeout.connect(
-            lambda: self.exitingMsgBox.yesButton.setEnabled(True)
-        )
+        self.quitTimer.timeout.connect(lambda: self.exitingMsgBox.yesButton.setEnabled(True))
 
     def initQtSlot(self):
         """定义无法直接设置的Qt信号槽"""
@@ -523,9 +517,7 @@ class Window(VerifyFluentWindowBase):
                 settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             )
         )
-        self.selectJavaPage.backBtn.clicked.connect(
-            lambda: self.switchTo(self.configureInterface)
-        )
+        self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(
             lambda: self.switchTo(self.selectJavaPage)
         )
@@ -593,9 +585,7 @@ class Window(VerifyFluentWindowBase):
         self.selectNewJavaPage.backBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)
         )
-        self.selectNewJavaPage.setJavaPath.connect(
-            self.serverManagerInterface.setJavaPath
-        )
+        self.selectNewJavaPage.setJavaPath.connect(self.serverManagerInterface.setJavaPath)
 
         # 终端
         ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
@@ -603,9 +593,7 @@ class Window(VerifyFluentWindowBase):
             ServerHandler().serverClosed.connect(
                 lambda: self.consoleInterface.serverOutput.setPlainText("")
             )
-        ServerHandler().serverClosed.connect(
-            self.consoleInterface.showErrorHandlerReport
-        )
+        ServerHandler().serverClosed.connect(self.consoleInterface.showErrorHandlerReport)
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
@@ -635,9 +623,7 @@ class Window(VerifyFluentWindowBase):
         else:
             self.switchTo(self.consoleInterface)
             self.consoleInterface.errMsg = ""
-            self.consoleInterface.titleLabel.setText(
-                self.tr(f"终端：{cfg.get(cfg.lastServer)}")
-            )
+            self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
             self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
             self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
@@ -647,9 +633,7 @@ class Window(VerifyFluentWindowBase):
                 self.consoleInterface.exitServer.clicked.disconnect()
             except TypeError:
                 pass
-            ServerHandler().serverClosed.connect(
-                self.serverMemThread.onServerClosedHandler
-            )
+            ServerHandler().serverClosed.connect(self.serverMemThread.onServerClosedHandler)
             ServerHandler().serverClosed.connect(
                 self.consoleInterface.exitServer.clicked.disconnect
             )
@@ -686,9 +670,7 @@ class Window(VerifyFluentWindowBase):
                 ):
                     if len(
                         GlobalMCSL2Variables.userCommandHistory
-                    ) and GlobalMCSL2Variables.upT > -len(
-                        GlobalMCSL2Variables.userCommandHistory
-                    ):
+                    ) and GlobalMCSL2Variables.upT > -len(GlobalMCSL2Variables.userCommandHistory):
                         GlobalMCSL2Variables.upT -= 1
                         lastCommand = GlobalMCSL2Variables.userCommandHistory[
                             GlobalMCSL2Variables.upT
@@ -732,7 +714,9 @@ class Window(VerifyFluentWindowBase):
             if startBtnStat:
                 InfoBar.info(
                     title=self.tr("MCSL2功能提醒"),
-                    content=self.tr("您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."),
+                    content=self.tr(
+                        "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -742,7 +726,9 @@ class Window(VerifyFluentWindowBase):
                 self.homeInterface.startServerBtn.click()
                 InfoBar.info(
                     title=self.tr("功能提醒"),
-                    content=self.tr("您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."),
+                    content=self.tr(
+                        "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,

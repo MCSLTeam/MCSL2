@@ -1,16 +1,29 @@
 import functools
 from typing import List
 
-from PyQt5.QtCore import pyqtSignal, QPropertyAnimation, QEasingCurve, QAbstractAnimation, QPoint, \
-    QParallelAnimationGroup
+from PyQt5.QtCore import (
+    pyqtSignal,
+    QPropertyAnimation,
+    QEasingCurve,
+    QAbstractAnimation,
+    QPoint,
+    QParallelAnimationGroup,
+)
 from PyQt5.QtWidgets import QStackedWidget, QWidget, QGraphicsOpacityEffect
 
 
 class PopUpAniInfo:
-    """ Pop up ani info """
+    """Pop up ani info"""
 
-    def __init__(self, widget: QWidget, deltaX: int, deltaY, aniGroup: QParallelAnimationGroup,
-                 anis: List[QPropertyAnimation], effect: QGraphicsOpacityEffect):
+    def __init__(
+        self,
+        widget: QWidget,
+        deltaX: int,
+        deltaY,
+        aniGroup: QParallelAnimationGroup,
+        anis: List[QPropertyAnimation],
+        effect: QGraphicsOpacityEffect,
+    ):
         self.widget = widget
         self.deltaX = deltaX
         self.deltaY = deltaY
@@ -22,7 +35,8 @@ class PopUpAniInfo:
 
 
 class MCSL2PageStackedWidget(QStackedWidget):
-    """ Stacked widget with pop up animation """
+    """Stacked widget with pop up animation"""
+
     halfAniFinished = pyqtSignal()
     aniFinished = pyqtSignal()
     aniStart = pyqtSignal()
@@ -35,7 +49,7 @@ class MCSL2PageStackedWidget(QStackedWidget):
         self._ani = None
 
     def addWidget(self, widget, deltaX=0, deltaY=76):
-        """ add widget to window
+        """add widget to window
 
         Parameters
         -----------
@@ -49,28 +63,37 @@ class MCSL2PageStackedWidget(QStackedWidget):
             the y-axis offset from the beginning to the end of animation
         """
         super().addWidget(widget)
-        popAni = QPropertyAnimation(widget, b'pos', self)
+        popAni = QPropertyAnimation(widget, b"pos", self)
 
         effect = QGraphicsOpacityEffect(widget)
         widget.setGraphicsEffect(effect)
 
-        fadeAni = QPropertyAnimation(effect, b'opacity', self)
+        fadeAni = QPropertyAnimation(effect, b"opacity", self)
 
         aniGroup = QParallelAnimationGroup(widget)
         aniGroup.addAnimation(popAni)
         aniGroup.addAnimation(fadeAni)
-        self.aniInfos.append(PopUpAniInfo(
-            widget=widget,
-            deltaX=deltaX,
-            deltaY=deltaY,
-            aniGroup=aniGroup,
-            anis=[popAni, fadeAni],
-            effect=effect
-        ))
+        self.aniInfos.append(
+            PopUpAniInfo(
+                widget=widget,
+                deltaX=deltaX,
+                deltaY=deltaY,
+                aniGroup=aniGroup,
+                anis=[popAni, fadeAni],
+                effect=effect,
+            )
+        )
 
-    def setCurrentIndex(self, index: int, needPopOut: bool = False, showNextWidgetDirectly: bool = True,
-                        duration2: int = 200, easingCurve=QEasingCurve.OutExpo,duration1: int = 100):
-        """ set current window to display
+    def setCurrentIndex(
+        self,
+        index: int,
+        needPopOut: bool = False,
+        showNextWidgetDirectly: bool = True,
+        duration2: int = 200,
+        easingCurve=QEasingCurve.OutExpo,
+        duration1: int = 100,
+    ):
+        """set current window to display
 
         Parameters
         ----------
@@ -90,7 +113,7 @@ class MCSL2PageStackedWidget(QStackedWidget):
             the interpolation mode of animation
         """
         if index < 0 or index >= self.count():
-            raise Exception(f'The index `{index}` is illegal')
+            raise Exception(f"The index `{index}` is illegal")
 
         if index == self.currentIndex():
             return
@@ -125,8 +148,14 @@ class MCSL2PageStackedWidget(QStackedWidget):
             self.__setAnimation(fadeAni, 1, 0, duration2, easingCurve)
             aniGroup.finished.connect(
                 functools.partial(
-                    self.__onHalfAniFinished, needPopOut, currentAniInfo, nextAniInfo, duration1, duration2,
-                    easingCurve, index
+                    self.__onHalfAniFinished,
+                    needPopOut,
+                    currentAniInfo,
+                    nextAniInfo,
+                    duration1,
+                    duration2,
+                    easingCurve,
+                    index,
                 )
             )
             aniGroup.start()
@@ -139,13 +168,21 @@ class MCSL2PageStackedWidget(QStackedWidget):
             self.__setAnimation(preFadeAni, 1, 0, duration1, easingCurve)
             preFadeAni.finished.connect(
                 functools.partial(
-                    self.__onHalfAniFinished, needPopOut, currentAniInfo, nextAniInfo, duration1, duration2,
-                    easingCurve, index
+                    self.__onHalfAniFinished,
+                    needPopOut,
+                    currentAniInfo,
+                    nextAniInfo,
+                    duration1,
+                    duration2,
+                    easingCurve,
+                    index,
                 )
             )
             preFadeAni.start()
 
-    def __onHalfAniFinished(self, needPopOut, currentAniInfo, nextAniInfo, duration1, duration2, easingCurve, index):
+    def __onHalfAniFinished(
+        self, needPopOut, currentAniInfo, nextAniInfo, duration1, duration2, easingCurve, index
+    ):
         nextWidget = nextAniInfo.widget
         aniGroup = currentAniInfo.aniGroup if needPopOut else nextAniInfo.aniGroup
         popAni, fadeAni = currentAniInfo.anis if needPopOut else nextAniInfo.anis
@@ -182,9 +219,15 @@ class MCSL2PageStackedWidget(QStackedWidget):
             aniGroup.start()
             self.aniStart.emit()
 
-    def setCurrentWidget(self, widget, needPopOut: bool = False, showNextWidgetDirectly: bool = True,
-                         duration: int = 150, easingCurve=QEasingCurve.OutQuad):
-        """ set currect widget
+    def setCurrentWidget(
+        self,
+        widget,
+        needPopOut: bool = False,
+        showNextWidgetDirectly: bool = True,
+        duration: int = 150,
+        easingCurve=QEasingCurve.OutQuad,
+    ):
+        """set currect widget
 
         Parameters
         ----------
@@ -204,17 +247,18 @@ class MCSL2PageStackedWidget(QStackedWidget):
             the interpolation mode of animation
         """
         self.setCurrentIndex(
-            self.indexOf(widget), needPopOut, showNextWidgetDirectly, duration, easingCurve)
+            self.indexOf(widget), needPopOut, showNextWidgetDirectly, duration, easingCurve
+        )
 
     def __setAnimation(self, ani, startValue, endValue, duration, easingCurve=QEasingCurve.Linear):
-        """ set the config of animation """
+        """set the config of animation"""
         ani.setEasingCurve(easingCurve)
         ani.setStartValue(startValue)
         ani.setEndValue(endValue)
         ani.setDuration(duration)
 
     def __onAniFinished(self):
-        """ animation finished slot """
+        """animation finished slot"""
         self._ani.disconnect()
         currentIndex = self.currentIndex()
         super().setCurrentIndex(self._nextIndex)

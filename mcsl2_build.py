@@ -39,9 +39,7 @@ class MCSLCompiler:
         self.MAIN = Arg("MCSL2.py", "--main")
         self.ICON = Arg(
             "MCSL2.ico",
-            "--windows-icon-from-ico"
-            if "windows" in system().lower()
-            else "--linux-icon",
+            "--windows-icon-from-ico" if "windows" in system().lower() else "--linux-icon",
         )
         self.ENABLE_PLUGINS = Args(["pyqt5"], "--enable-plugin")
 
@@ -63,15 +61,11 @@ class MCSLCompiler:
         self.NO_FOLLOW_IMPORT = Args(
             ["numpy", "scipy", "PIL", "Pillow", "colorthief", "pyqt5-stubs"], "--nofollow-import-to"
         )
-        self.FOLLOW_IMPORT = Args(
-            ["Adapters", "loguru", "requests"], "--follow-import-to"
-        )
+        self.FOLLOW_IMPORT = Args(["Adapters", "loguru", "requests"], "--follow-import-to")
         self.INCLUDE_PACKAGES = Args(["MCSL2Lib", "sqlite3"], "--include-package")
 
         # Data files
-        self.INCLUDE_DATA_DIR = DescArg(
-            ("MCSL2/Aria2", "MCSL2/Aria2"), "--include-data-dir"
-        )
+        self.INCLUDE_DATA_DIR = DescArg(("MCSL2/Aria2", "MCSL2/Aria2"), "--include-data-dir")
 
         # Backend C Compiler
         self.USE_MINGW = Tag(False, "--mingw64")
@@ -130,18 +124,14 @@ if __name__ == "__main__":
     if "--clang" in sys.argv and "--mingw64" in sys.argv:
         raise SystemError("Can't use both --clang and --mingw64 at the same time")
 
-    compiler.USE_CLANG = (
-        Tag(True, "--clang") if "--clang" in sys.argv else Tag(False, "--clang")
-    )
-    compiler.USE_MSVC = (
-        Arg("latest", "--msvc") if "--msvc" in sys.argv else Tag(False, "--msvc")
-    )
+    compiler.USE_CLANG = Tag(True, "--clang") if "--clang" in sys.argv else Tag(False, "--clang")
+    compiler.USE_MSVC = Arg("latest", "--msvc") if "--msvc" in sys.argv else Tag(False, "--msvc")
     compiler.REMOVE_OUTPUT = (
-        Tag(True, "--remove-output")
-        if "--no-output" in sys.argv
-        else Tag(False, "--remove-output")
+        Tag(True, "--remove-output") if "--no-output" in sys.argv else Tag(False, "--remove-output")
     )
-    compiler.SHOW_PROGRESS = Tag(True, "--show-progress") if "--verbose" in sys.argv else Tag(False, "--show-progress")
+    compiler.SHOW_PROGRESS = (
+        Tag(True, "--show-progress") if "--verbose" in sys.argv else Tag(False, "--show-progress")
+    )
 
     if "--env-gh" in sys.argv:
         compiler.ENABLE_CONSOLE = Tag(False, "--enable-console")

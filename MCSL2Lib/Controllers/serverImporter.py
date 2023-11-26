@@ -88,9 +88,7 @@ class NoShellArchivesImporter(BaseServerImporter):
 
     @pyqtSlot(str)
     def initFileListView(self, file: str):
-        self.selectWidget.filterList(
-            fileList=ZipFile(file, mode="r").namelist(), fileExt=".jar"
-        )
+        self.selectWidget.filterList(fileList=ZipFile(file, mode="r").namelist(), fileExt=".jar")
 
 
 # class ShellArchivesImporter(ServerImporter):

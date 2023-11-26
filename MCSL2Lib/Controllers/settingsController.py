@@ -24,11 +24,11 @@ from qfluentwidgets import (
     BoolValidator,
 )
 
+
 class Aria2Range(RangeConfigItem):
-    
     @property
     def range(self):
-        """ get the available range of config """
+        """get the available range of config"""
         return (1, 128 if "windows" in systemType().lower() else 16)
 
 
@@ -36,15 +36,9 @@ class Config(QConfig):
     """MCSL2 Configuration"""
 
     # Server
-    autoRunLastServer = ConfigItem(
-        "Server", "autoRunLastServer", False, BoolValidator()
-    )
-    acceptAllMojangEula = ConfigItem(
-        "Server", "acceptAllMojangEula", False, BoolValidator()
-    )
-    sendStopInsteadOfKill = ConfigItem(
-        "Server", "sendStopInsteadOfKill", True, BoolValidator()
-    )
+    autoRunLastServer = ConfigItem("Server", "autoRunLastServer", False, BoolValidator())
+    acceptAllMojangEula = ConfigItem("Server", "acceptAllMojangEula", False, BoolValidator())
+    sendStopInsteadOfKill = ConfigItem("Server", "sendStopInsteadOfKill", True, BoolValidator())
     restartServerWhenCrashed = ConfigItem(
         "Server", "restartServerWhenCrashed", False, BoolValidator()
     )
@@ -112,9 +106,7 @@ class Config(QConfig):
     )
     startOnStartup = ConfigItem("Software", "startOnStartup", False, BoolValidator())
     # Update
-    checkUpdateOnStart = ConfigItem(
-        "Update", "checkUpdateOnStart", False, BoolValidator()
-    )
+    checkUpdateOnStart = ConfigItem("Update", "checkUpdateOnStart", False, BoolValidator())
     # Other
     enableExperimentalFeatures = ConfigItem(
         "Other", "enableExperimentalFeatures", False, BoolValidator()

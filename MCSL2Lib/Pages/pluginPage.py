@@ -33,7 +33,7 @@ from qfluentwidgets import (
     TitleLabel,
     InfoBarPosition,
     InfoBar,
-    FluentIcon as FIF
+    FluentIcon as FIF,
 )
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 from MCSL2Lib.utils import MCSL2Logger
@@ -59,9 +59,7 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.installPluginBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.installPluginBtn.sizePolicy().hasHeightForWidth())
         self.installPluginBtn.setSizePolicy(sizePolicy)
         self.installPluginBtn.setMinimumSize(QSize(82, 32))
         self.installPluginBtn.setMaximumSize(QSize(82, 32))
@@ -74,9 +72,7 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.refreshPluginListBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.refreshPluginListBtn.sizePolicy().hasHeightForWidth())
         self.refreshPluginListBtn.setSizePolicy(sizePolicy)
         self.refreshPluginListBtn.setMinimumSize(QSize(82, 32))
         self.refreshPluginListBtn.setMaximumSize(QSize(82, 32))
@@ -93,9 +89,7 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -118,9 +112,7 @@ class PluginPage(QWidget):
 
         self.pluginsScrollAreaWidgetContents = QWidget()
         self.pluginsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 544, 470))
-        self.pluginsScrollAreaWidgetContents.setObjectName(
-            "pluginsScrollAreaWidgetContents"
-        )
+        self.pluginsScrollAreaWidgetContents.setObjectName("pluginsScrollAreaWidgetContents")
 
         self.gridLayout_3 = QGridLayout(self.pluginsScrollAreaWidgetContents)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -164,11 +156,11 @@ class PluginPage(QWidget):
         self.installPluginBtn.clicked.connect(self.installPlugin)
 
     def installPlugin(self):
-        GlobalMCSL2Variables.installingPluginArchiveDirectory = (
-            str(QFileDialog.getOpenFileName(self, self.tr("选择插件压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)"))[
-                0
-            ]).replace("/", "\\")
-        )
+        GlobalMCSL2Variables.installingPluginArchiveDirectory = str(
+            QFileDialog.getOpenFileName(
+                self, self.tr("选择插件压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)")
+            )[0]
+        ).replace("/", "\\")
         if GlobalMCSL2Variables.installingPluginArchiveDirectory != "":
             self.installPluginThread = InstallPluginThread(self)
             self.installPluginThread.success.connect(
