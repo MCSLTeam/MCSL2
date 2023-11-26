@@ -13,6 +13,7 @@
 """
 Widget Template for Quick Menu.
 """
+
 from PyQt5.QtCore import QRect, QSize, Qt
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QVBoxLayout, QFrame
 from qfluentwidgets import (

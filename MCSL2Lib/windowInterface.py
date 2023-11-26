@@ -13,6 +13,7 @@
 """
 The main window of MCSL2.
 """
+
 import sys
 from platform import system
 from platform import version as systemVersion

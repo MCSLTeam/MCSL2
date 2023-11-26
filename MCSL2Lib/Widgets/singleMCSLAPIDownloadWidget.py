@@ -13,6 +13,7 @@
 """
 Download Item Widget for MCSLAPI.
 """
+
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QSpacerItem, QSizePolicy, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import (

@@ -13,6 +13,7 @@
 """
 Settings controller, for editing MCSL2's configurations.
 """
+
 from platform import system as systemType
 from qfluentwidgets import (
     QConfig,

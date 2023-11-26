@@ -13,6 +13,7 @@
 """
 A single widget template of plugin.
 """
+
 from PyQt5.QtCore import QSize, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QVBoxLayout, QHBoxLayout, QSpacerItem
 from qfluentwidgets import (

@@ -13,6 +13,7 @@
 """
 FastMirror Download Widgets.
 """
+
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QSizePolicy, QHBoxLayout
 from qfluentwidgets import (

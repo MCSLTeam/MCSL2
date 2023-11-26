@@ -57,6 +57,16 @@ src = [
     "Adapters",
 ]
 output-format = "grouped"
+preview = true
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle
+    "F", # pyflakes
+    "I", # isort
+    "W", # pycodestyle
+]
+ignore = ["I001"]
 
 [tool.ruff.lint.isort]
 force-single-line = true

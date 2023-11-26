@@ -6,6 +6,7 @@
 """
 Minecraft Forge Servers Installer.
 """
+
 import re
 
 

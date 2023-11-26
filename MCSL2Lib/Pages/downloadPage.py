@@ -13,6 +13,7 @@
 """
 Download page with FastMirror and MCSLAPI.
 """
+
 from os import path as osp, remove
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot

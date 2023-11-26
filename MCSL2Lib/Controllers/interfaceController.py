@@ -13,6 +13,7 @@
 """
 A stacked widget controller.
 """
+
 from PyQt5.QtCore import QEasingCurve
 from PyQt5.QtWidgets import QAbstractScrollArea, QScrollArea
 from qfluentwidgets.window.stacked_widget import StackedWidget as QFStackedWidget

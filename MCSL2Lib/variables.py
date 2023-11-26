@@ -42,7 +42,7 @@ class ConfigureServerVariables:
         self.extraData = {}
         """
         self.extraData maybe like this:
-        
+
         self.extraData = {
             'mc_version' : ...,
             'build_version' : ...,

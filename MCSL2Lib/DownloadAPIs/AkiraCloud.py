@@ -13,6 +13,7 @@
 """
 A function for communicatng with AkiraCloud Mirror.
 """
+
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread

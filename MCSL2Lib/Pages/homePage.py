@@ -13,6 +13,7 @@
 """
 Home page.
 """
+
 from PyQt5.QtGui import QCursor
 from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import (

@@ -13,6 +13,7 @@
 """
 A function for communicatng with PolarsAPI.
 """
+
 from collections import defaultdict
 from typing import Callable
 

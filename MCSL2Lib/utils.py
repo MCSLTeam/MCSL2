@@ -13,6 +13,7 @@
 """
 These are the built-in functions of MCSL2. They are just for solving the circular import.
 """
+
 import enum
 import functools
 import hashlib

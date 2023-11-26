@@ -13,6 +13,7 @@
 """
 Minecraft Forge Servers Installer.
 """
+
 import json
 import shutil
 from enum import Enum

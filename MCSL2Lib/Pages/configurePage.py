@@ -13,6 +13,7 @@
 """
 Configure new server page.
 """
+
 from json import loads, dumps
 from os import getcwd, mkdir, remove, path as osp
 from shutil import copy, rmtree

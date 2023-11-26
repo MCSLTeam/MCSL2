@@ -13,6 +13,7 @@
 """
 Download Progress Widget.
 """
+
 from os import path
 from typing import Optional
 
