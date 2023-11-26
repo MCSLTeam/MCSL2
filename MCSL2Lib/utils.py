@@ -17,8 +17,6 @@ import enum
 import functools
 import hashlib
 import inspect
-# import sqlite3  # dont delete this
-# added in nuitka_build
 from json import loads
 from os import makedirs, path as osp
 from types import TracebackType
@@ -77,6 +75,20 @@ def initializeMCSL2():
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
     )  # IO-Bound = 2*N, CPU-Bound = N + 1
+    patchPageStackedWidget(True)
+
+
+def patchPageStackedWidget(enable: bool):
+    """
+    使用美化过的PageStackedWidget
+    但是会引起:
+        QPainter::begin: A paint device can only be painted by one painter at a time.
+        QPainter::translate: Painter not active
+    """
+    if enable:
+        import qfluentwidgets.window.stacked_widget as qfluent_stacked_widget
+        from MCSL2Lib.Widgets.MCSL2PageStackedWidget import MCSL2PageStackedWidget
+        qfluent_stacked_widget.PopUpAniStackedWidget = MCSL2PageStackedWidget
 
 
 # 带有text的warning装饰器
@@ -132,9 +144,11 @@ def openWebUrl(Url):
     """打开网址"""
     QDesktopServices.openUrl(QUrl(Url))
 
+
 def openLocalFile(FilePath):
     """打开本地文件(夹)"""
     QDesktopServices.openUrl(QUrl.fromLocalFile(FilePath))
+
 
 class ExceptionFilterMode(enum.Enum):
     RAISE_AND_PRINT = enum.auto()  # 过滤：弹框提示，也会抛出异常
