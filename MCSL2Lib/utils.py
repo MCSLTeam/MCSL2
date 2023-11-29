@@ -72,7 +72,7 @@ def initializeMCSL2():
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
     )  # IO-Bound = 2*N, CPU-Bound = N + 1
-    patchPageStackedWidget(True)
+    patchPageStackedWidget(False)
 
 
 def patchPageStackedWidget(enable: bool):
@@ -182,7 +182,8 @@ def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None)
     """
     rv = []
     if _filter is None:
-        _filter = lambda a, b: True
+        def _filter(a, b):
+            return True
     for file, sha1 in fileAndSha1:
         if not osp.exists(file):
             rv.append({"file": file, "result": False})

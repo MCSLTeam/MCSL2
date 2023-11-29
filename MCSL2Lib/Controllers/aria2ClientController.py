@@ -124,7 +124,7 @@ class Aria2Controller:
             InstallHomeBrew = Popen(HomeBrewInstallCommand, stdout=PIPE, shell=True)
             output, error = InstallHomeBrew.communicate()
             if InstallHomeBrew.returncode == 0:
-                InstallAria2 = Popen("brew install aria2", stdout=PIPE, shell=True)
+                Popen("brew install aria2", stdout=PIPE, shell=True)
                 self.aria2cStatus = True
             else:
                 # CallMCSL2Dialog(

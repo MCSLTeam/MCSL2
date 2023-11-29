@@ -185,6 +185,8 @@ class PluginManager(BasePluginManager):
         except StopIteration:
             return
         for pluginName in self.pathList:
+            if pluginName.startswith("__"):
+                continue
             try:
                 self.readPlugin(pluginName)
             except Exception as e:
