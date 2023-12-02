@@ -20,7 +20,7 @@ dependencies = [
     "requests==2.31.0",
     "aria2p==0.11.3",
     # 构建需要
-    "lib-not-dr[nuitka]>=0.2.0",
+    "lib-not-dr[nuitka]>=0.2.2",
     "nuitka>=1.9.1",
     "imageio>=2.31.5",
 ]
