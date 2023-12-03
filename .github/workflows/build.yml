@@ -43,7 +43,6 @@ jobs:
 
       - name: Build on Windows
         run: |
-          python Tools/update-pyproject.py
           # 淦 忘记 disable-console 了
           python -m lndl_nuitka . -y -- --disable-console
 
@@ -107,7 +106,6 @@ jobs:
 
       - name: Build on Linux
         run: |
-          python Tools/update-pyproject.py
           # 淦 忘记 disable-console 了
           python -m lndl_nuitka . -y -- --disable-console
 
