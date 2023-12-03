@@ -8,9 +8,9 @@
 
 ___
 
-<center>
+<div style="text-align: center;">
 中文  |  <a href="https://github.com/MCSLTeam/MCSL2/blob/master/README_EN.md" target="_blank">English</a>
-</center>
+</div>
 
 ___
 [![License](https://img.shields.io/github/license/MCSLTeam/MCSL2?style=for-the-badge "License")](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
@@ -50,7 +50,7 @@ ___
 
 ## 从源码构建打包版
 
-- git clone
+- `git clone https://github.com/MCSLTeam/MCSL2.git`
 - `pip install tomli`
 - `python Tools/gen-requirements.py`
 - `python -m pip install -U -r requirements.txt`
@@ -73,11 +73,12 @@ ___
 
 ## 鸣谢
 
-- 维度前端: <https://www.df100.ltd>  
-- Z_Tsin: <https://ztsin.cn/>  
-- FiveCDN公益加速: <https://cdn.5-5.site>  
-- WB-Block: <https://wb-block.top>  
-- shenjack: <http://shenjack.top:81>
+- 维度前端: <a href="https://www.df100.ltd" target="_blank">https://www.df100.ltd</a>
+- Z_Tsin: <a href="https://github.com/Z_Tsin" target="_blank">https://github.com/Z_Tsin</a>
+- FiveCDN公益加速: <a href="https://www.5cdn.com" target="_blank">https://www.5cdn.com</a>
+- WB-Block: <a href="https://wb-block.com" target="_blank">https://wb-block.com</a>  
+- shenjack: <a href="https://github.com/shenjack" target="_blank">https://github.com/shenjack</a>
+
 
 还有所有的贡献者们！  
 
