@@ -21,27 +21,6 @@ def get_version() -> Tuple[str, str]:
         from MCSL2Lib import VERSION, BUILD_VERSION
     return (VERSION, BUILD_VERSION)
 
-
-if __name__ == "__main__":
-    with open("pyproject.toml", "r", encoding="utf-8") as f:
-        lines = f.readlines()
-
-    # 直接手动替换
-    # toml paser 的格式太难看了
-    for line_index, line in enumerate(lines):
-        if line.startswith("product-version"):
-            if line.split("=")[1].strip() != f'"{get_version()[0]}"':
-                print(f"更新版本号: {line.split('=')[1].strip()} -> {get_version()[0]}")
-            lines[line_index] = f'product-version = "{get_version()[0]}"\n'
-        elif line.startswith("file-version"):
-            if line.split("=")[1].strip() != f'"{get_version()[1]}"':
-                print(f"更新构建版本号: {line.split('=')[1].strip()} -> {get_version()[1]}")
-
-            lines[line_index] = f'file-version = "{get_version()[1]}"\n'
-
-    with open("pyproject.toml", "w", encoding="utf-8") as f:
-        f.writelines(lines)
-
 def main(raw_config: raw_config_type) -> nuitka_config_type:
     config: nuitka_config_type = raw_config['cli']  # type: ignore
 
