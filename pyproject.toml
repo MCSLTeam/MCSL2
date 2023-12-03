@@ -20,7 +20,7 @@ dependencies = [
     "requests==2.31.0",
     "aria2p==0.11.3",
     # 构建需要
-    "lib-not-dr[nuitka]>=0.2.2",
+    "lib-not-dr[nuitka]==0.3.0-rc1",
     "nuitka>=1.9.1",
     "imageio>=2.31.5",
 ]
@@ -73,8 +73,12 @@ force-single-line = true
 force-wrap-aliases = true
 combine-as-imports = true
 
-# 请使用 lndl_nuitka . -y 编译 (-y 为自动确认)
+
 [tool.lndl.nuitka]
+script = "Tools/lndl-config.py"
+
+# 请使用 lndl_nuitka . -y 编译 (-y 为自动确认)
+[tool.lndl.nuitka.cli]
 main = "MCSL2.py"
 output-dir = "build"
 
@@ -87,9 +91,9 @@ disable-console = false
 show-memory = false
 show-progress = false
 
-# 版本号 可通过 Tools/update-pyproject.py 更新
-product-version = "2.2.3.0"
-file-version = "0.3.1.0"
+# 版本号 构建时通过 Tools/lndl-config.py 自动填充
+product-version = false
+file-version = false
 
 # 文件信息
 product-name = "MCSL 2"

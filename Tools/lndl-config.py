@@ -1,7 +1,7 @@
 import traceback
 
 from typing import Tuple
-
+from lib_not_dr.nuitka import raw_config_type, nuitka_config_type
 
 def get_version() -> Tuple[str, str]:
     # 尽量不要写死在构建脚本里
@@ -41,3 +41,12 @@ if __name__ == "__main__":
 
     with open("pyproject.toml", "w", encoding="utf-8") as f:
         f.writelines(lines)
+
+def main(raw_config: raw_config_type) -> nuitka_config_type:
+    config: nuitka_config_type = raw_config['cli']  # type: ignore
+
+    versions = get_version()
+    config['product-version'] = versions[0]
+    config['file-version'] = versions[1]
+
+    return config
