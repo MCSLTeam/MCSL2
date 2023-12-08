@@ -3,10 +3,16 @@ name = "MCSL2"
 dynamic = ["version"]
 description = "MC server launcher 2"
 authors = [
-    {name = "MCSLTeam", email = "lxhtt@vip.qq.com"},
+    {name = "LxHTT", email = "lxhtt@vip.qq.com"},
     {name = "shenjackyuanjie", email = "3695888@qq.com"},
-
-    # 还是加一下吧(
+    {name = "AresConnor", email = "2837434884@qq.com"},
+    {name = "lgc2333", email = "lgc2333@126.com"},
+    {name = "wyx55520", email = "2509043002@qq.com"},
+    {name = "Yurnu", email = "1487084645@qq.com"},
+    {name = "hengshizhi", email = "3192145045@qq.com"},
+    {name = "ztsinsun", email = "horizonsun@vip.qq.com"},
+    {name = "ltzXiaoYanMo", email = "xiajiaruimail@qq.com"},
+    {name = "kitUIN", email = "kit_uin@outlook.com"},
 ]
 dependencies = [
     "setuptools>=60", # 随便指定个版本就好 (

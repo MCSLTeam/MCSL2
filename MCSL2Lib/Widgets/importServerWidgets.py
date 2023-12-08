@@ -1,5 +1,6 @@
 from os import getcwd
 from typing import List
+from zipfile import ZipFile
 from PyQt5.QtCore import Qt, QRect, QSize, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
@@ -11,6 +12,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QFileDialog,
     QListWidgetItem,
+    QTreeWidgetItem,
 )
 from qfluentwidgets import (
     CardWidget,
@@ -28,6 +30,7 @@ from qfluentwidgets import (
     BodyLabel,
     FluentIcon as FIF,
     ListWidget,
+    TreeWidget,
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
@@ -59,7 +62,9 @@ class ImportPageWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importPageTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.importPageTitle.sizePolicy().hasHeightForWidth()
+        )
         self.importPageTitle.setSizePolicy(sizePolicy)
         self.importPageTitle.setObjectName("importPageTitle")
         self.gridLayout.addWidget(self.importPageTitle, 0, 2, 1, 1)
@@ -75,7 +80,9 @@ class ImportPageWidget(QWidget):
         self.importScrollArea.setObjectName("importScrollArea")
         self.importScrollAreaWidgetContents = QWidget()
         self.importScrollAreaWidgetContents.setGeometry(QRect(0, 0, 742, 452))
-        self.importScrollAreaWidgetContents.setObjectName("importScrollAreaWidgetContents")
+        self.importScrollAreaWidgetContents.setObjectName(
+            "importScrollAreaWidgetContents"
+        )
         self.typeWidgetLayout = QVBoxLayout(self.importScrollAreaWidgetContents)
         self.typeWidgetLayout.setContentsMargins(0, 0, 0, 0)
         self.typeWidgetLayout.setObjectName("typeWidgetLayout")
@@ -165,7 +172,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.setJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.setJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.setJavaWidget.setSizePolicy(sizePolicy)
         self.setJavaWidget.setMinimumSize(QSize(0, 120))
         self.setJavaWidget.setMaximumSize(QSize(16777215, 120))
@@ -176,7 +185,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.downloadJavaBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.downloadJavaBtn.sizePolicy().hasHeightForWidth()
+        )
         self.downloadJavaBtn.setSizePolicy(sizePolicy)
         self.downloadJavaBtn.setMinimumSize(QSize(90, 0))
         self.downloadJavaBtn.setObjectName("downloadJavaBtn")
@@ -193,7 +204,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.selectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.selectJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.selectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.selectJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.selectJavaPrimaryPushBtn.setObjectName("selectJavaPrimaryPushBtn")
@@ -202,7 +215,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoDetectJavaBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.autoDetectJavaBtn.sizePolicy().hasHeightForWidth()
+        )
         self.autoDetectJavaBtn.setSizePolicy(sizePolicy)
         self.autoDetectJavaBtn.setObjectName("autoDetectJavaBtn")
         self.gridLayout_17.addWidget(self.autoDetectJavaBtn, 1, 3, 1, 1)
@@ -224,7 +239,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.setJVMArgWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.setJVMArgWidget.sizePolicy().hasHeightForWidth()
+        )
         self.setJVMArgWidget.setSizePolicy(sizePolicy)
         self.setJVMArgWidget.setMinimumSize(QSize(0, 171))
         self.setJVMArgWidget.setMaximumSize(QSize(16777215, 171))
@@ -260,7 +277,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.minMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.minMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.minMemLineEdit.setSizePolicy(sizePolicy)
         self.minMemLineEdit.setMinimumSize(QSize(0, 30))
         self.minMemLineEdit.setObjectName("minMemLineEdit")
@@ -277,7 +296,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.maxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.maxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.maxMemLineEdit.setSizePolicy(sizePolicy)
         self.maxMemLineEdit.setMinimumSize(QSize(0, 30))
         self.maxMemLineEdit.setObjectName("maxMemLineEdit")
@@ -308,7 +329,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.setDeEncodingWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.setDeEncodingWidget.sizePolicy().hasHeightForWidth()
+        )
         self.setDeEncodingWidget.setSizePolicy(sizePolicy)
         self.setDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.setDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
@@ -319,7 +342,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.outputComboBox.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.outputComboBox.sizePolicy().hasHeightForWidth()
+        )
         self.outputComboBox.setSizePolicy(sizePolicy)
         self.outputComboBox.setObjectName("outputComboBox")
         self.gridLayout_16.addWidget(self.outputComboBox, 2, 1, 1, 1)
@@ -338,7 +363,9 @@ class ConfirmArgumentsWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.setDeEncodingTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.setDeEncodingTitle.sizePolicy().hasHeightForWidth()
+        )
         self.setDeEncodingTitle.setSizePolicy(sizePolicy)
         self.setDeEncodingTitle.setObjectName("setDeEncodingTitle")
         self.gridLayout_16.addWidget(self.setDeEncodingTitle, 0, 0, 1, 1)
@@ -372,8 +399,12 @@ class ConfirmArgumentsWidget(CardWidget):
         self.setDeEncodingTitle.setText("编码设置：")
         self.inputTitle.setText("指令输入编码（优先级高于全局设置）")
         self.memUnitComboBox.addItems(["M", "G"])
-        self.outputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
-        self.inputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
+        self.outputComboBox.addItems(
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
+        )
+        self.inputComboBox.addItems(
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
+        )
 
     def _initView(
         self,
@@ -460,7 +491,9 @@ class ImportFileFolderWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importBtnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.importBtnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.importBtnWidget.setSizePolicy(sizePolicy)
         self.importBtnWidget.setObjectName("importBtnWidget")
         self.horizontalLayout_2 = QHBoxLayout(self.importBtnWidget)
@@ -654,12 +687,107 @@ class MyListWidget(CardWidget):
     def _initView(self, stepCount, title):
         self.title.setText(f"{stepCount}. {title}")
 
-    def filterList(self, fileList: List[str] = [], fileExt: str = ""):
-        filteredList = [
-            file for file in fileList if file.endswith(fileExt) and file.count("/") == 1
-        ]
-        for extFile in filteredList:
+    def filterList(self, zipList: List[str] = [], fileExt: str = ""):
+        # filteredList = [
+        #     file for file in fileList if file.endswith(fileExt) and file.count("/") == 1
+        # ]
+        # for extFile in filteredList:
+        for extFile in zipList:
             self.mainListWidget.addItem(QListWidgetItem(extFile))
+
+
+class ZipTreeModel(QTreeWidgetItem):
+    def __init__(self, name, parent=None):
+        super().__init__(parent)
+        self.setText(0, name)
+
+
+class MyTreeWidget(CardWidget):
+    finishSignal = pyqtSignal(bool)
+
+    def __init__(self, stepCount: int, title: str, parent=None):
+        super().__init__(parent)
+        self._setUpUI()
+        self._initView(stepCount, title)
+        self.setNotFinished()
+
+    def setFinished(self):
+        self.statusIcon.setFinished()
+        self.statusText.setText("此项已完成，请查看下一步。")
+        self.finishSignal.emit(True)
+
+    def setNotFinished(self):
+        self.statusIcon.setNotFinished()
+        self.statusText.setText("此项仍未完成。")
+
+    def _setUpUI(self):
+        self.setObjectName("treeWidget")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QSize(0, 300))
+        self.setMaximumSize(QSize(16777215, 300))
+        self.gridLayout = QGridLayout(self)
+        self.gridLayout.setObjectName("gridLayout")
+        self.statusIcon = _StatusPixmapLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.statusIcon.sizePolicy().hasHeightForWidth())
+        self.statusIcon.setSizePolicy(sizePolicy)
+        self.statusIcon.setMinimumSize(QSize(30, 30))
+        self.statusIcon.setMaximumSize(QSize(30, 30))
+        self.statusIcon.setObjectName("statusIcon")
+        self.gridLayout.addWidget(self.statusIcon, 0, 2, 1, 1)
+        self.statusText = BodyLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.statusText.sizePolicy().hasHeightForWidth())
+        self.statusText.setSizePolicy(sizePolicy)
+        self.statusText.setObjectName("statusText")
+        self.gridLayout.addWidget(self.statusText, 1, 2, 1, 2)
+        spacerItem = QSpacerItem(20, 229, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 0, 3, 1)
+        self.title = SubtitleLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.title.sizePolicy().hasHeightForWidth())
+        self.title.setSizePolicy(sizePolicy)
+        self.gridLayout.addWidget(self.title, 0, 3, 1, 1)
+        self.mainTreeWidget = TreeWidget(self)
+        self.gridLayout.addWidget(self.mainTreeWidget, 2, 2, 1, 2)
+        self.statusText.setText("[状态文本]")
+        self.title.setText("2.选择核心")
+        self.mainTreeWidget.clicked.connect(self.setFinished)
+
+    def _initView(self, stepCount, title):
+        self.title.setText(f"{stepCount}. {title}")
+
+    def createZipTree(self, zipFile: ZipFile):
+        item = ZipTreeModel("压缩包内目录（双击展开）")
+        self.mainTreeWidget.addTopLevelItem(item)
+        for fileInfo in zipFile.infolist():
+            fileName = fileInfo.filename
+            if "/" in fileName:
+                parts = fileName.split("/")
+                currentItem = item
+                for part in parts[:-1]:
+                    currentItem = self.findChild(currentItem, part) or ZipTreeModel(
+                        part, currentItem
+                    )
+                ZipTreeModel(parts[-1], currentItem)
+            else:
+                ZipTreeModel(fileName, item)
+
+    def findChild(self, parent, name):
+        for i in range(parent.childCount()):
+            if parent.child(i).text(0) == name:
+                return parent.child(i)
+        return None
 
 
 class SaveWidget(CardWidget):
@@ -685,7 +813,9 @@ class SaveWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.saveServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.saveServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.saveServerNameLineEdit.setSizePolicy(sizePolicy)
         self.saveServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.saveServerNameLineEdit.setObjectName("saveServerNameLineEdit")
@@ -704,7 +834,9 @@ class SaveWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.saveSaveServerBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.saveSaveServerBtn.sizePolicy().hasHeightForWidth()
+        )
         self.saveSaveServerBtn.setSizePolicy(sizePolicy)
         self.saveSaveServerBtn.setMinimumSize(QSize(130, 30))
         self.saveSaveServerBtn.setMaximumSize(QSize(16777215, 30))
@@ -713,7 +845,9 @@ class SaveWidget(CardWidget):
         self.saveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
         self.saveSaveServerBtn.setText("导入！")
         self.saveServerNameLineEdit.textChanged.connect(
-            lambda: self.saveSaveServerBtn.setEnabled(self.saveServerNameLineEdit.text() != "")
+            lambda: self.saveSaveServerBtn.setEnabled(
+                self.saveServerNameLineEdit.text() != ""
+            )
         )
 
     def _initView(self, stepCount):

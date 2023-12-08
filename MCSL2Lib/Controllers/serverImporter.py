@@ -6,9 +6,11 @@ from MCSL2Lib.Widgets.importServerWidgets import (
     ImportFileFolderWidget,
     ImportSingleWidget,
     MyListWidget,
+    MyTreeWidget,
     SaveWidget,
 )
 from qfluentwidgets import CardWidget
+from PyQt5.QtWidgets import QStackedWidget
 
 
 class BaseServerImporter(QObject):
@@ -48,6 +50,10 @@ class BaseServerImporter(QObject):
         self.totalStep += 1
         return MyListWidget(self.totalStep, title)
 
+    def initMyTreeWidget(self, title: str = "选择") -> MyTreeWidget:
+        self.totalStep += 1
+        return MyTreeWidget(self.totalStep, title)
+
     def initConfirmArgumentsWidget(self, title: str = "设置参数") -> ConfirmArgumentsWidget:
         self.totalStep += 1
         return ConfirmArgumentsWidget(self.totalStep, title)
@@ -68,7 +74,7 @@ class NoShellArchivesImporter(BaseServerImporter):
     def initStep(self):
         self.importWidget = self.initImportSingleWidget("导入服务器压缩包", "选择文件")
         self.addTypeWidget(self.importWidget)
-        self.selectWidget = self.initMyListWidget("选择核心")
+        self.selectWidget = self.initMyTreeWidget("选择核心")
         self.addTypeWidget(self.selectWidget)
         self.confirmWidget = self.initConfirmArgumentsWidget("设置更多参数")
         self.addTypeWidget(self.confirmWidget)
@@ -88,7 +94,7 @@ class NoShellArchivesImporter(BaseServerImporter):
 
     @pyqtSlot(str)
     def initFileListView(self, file: str):
-        self.selectWidget.filterList(fileList=ZipFile(file, mode="r").namelist(), fileExt=".jar")
+        self.selectWidget.createZipTree(zipFile=ZipFile(file, mode="r"))
 
 
 # class ShellArchivesImporter(ServerImporter):
