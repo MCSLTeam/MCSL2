@@ -61,6 +61,7 @@ from MCSL2Lib.Controllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.verification import generateUniqueCode
 
 settingsVariables = SettingsVariables()
 
@@ -431,7 +432,7 @@ class SettingsPage(QWidget):
         self.joinQQGroup.setObjectName("joinQQGroup")
 
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
-        self.generateSysReport = PrimaryPushButton(self.aboutContentWidget)
+        self.generateSysReport = PrimaryPushButton(icon=FIF.DICTIONARY, text="系统报告", parent=self.aboutContentWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -440,8 +441,17 @@ class SettingsPage(QWidget):
         self.generateSysReport.setObjectName("generateSysReport")
 
         self.gridLayout.addWidget(self.generateSysReport, 1, 5, 1, 1)
+        self.uniqueCodeBtn = PrimaryPushButton(icon=FIF.PASTE, text="复制识别码", parent=self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.uniqueCodeBtn.sizePolicy().hasHeightForWidth())
+        self.uniqueCodeBtn.setSizePolicy(sizePolicy)
+        self.uniqueCodeBtn.setObjectName("uniqueCodeBtn")
+
+        self.gridLayout.addWidget(self.uniqueCodeBtn, 1, 6, 1, 1)
         spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem30, 1, 5, 1, 2)
+        self.gridLayout.addItem(spacerItem30, 1, 6, 1, 2)
         self.sponsorsBtn = HyperlinkButton(
             "https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md",
             "赞助者列表",
@@ -490,8 +500,6 @@ class SettingsPage(QWidget):
 
         self.titleLabel.setText(self.tr("设置"))
         self.subTitleLabel.setText(self.tr("自定义你的MCSL2。"))
-        self.generateSysReport.setText(self.tr("系统报告"))
-        self.sponsorsBtn.setText(self.tr("赞助者名单"))
         self.aboutContent.setText(
             self.tr(
                 "MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
@@ -507,6 +515,19 @@ class SettingsPage(QWidget):
         )
         self.aboutTitle.setText(self.tr("关于"))
         self.generateSysReport.clicked.connect(self.generateSystemReport)
+        self.uniqueCodeBtn.clicked.connect(self.copyUniqueCode)
+
+    def copyUniqueCode(self):
+        QApplication.clipboard().setText(generateUniqueCode())
+        InfoBar.success(
+            title=self.tr("已复制"),
+            content=self.tr("妥善保存，请勿泄露。"),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=3000,
+            parent=self,
+        )
 
     def showNeedRestartMsg(self):
         InfoBar.success(
