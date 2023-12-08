@@ -32,7 +32,7 @@ license = {text = "GPL-3.0"}
 version = { attr = "MCSL2Lib.MCSL2VERSION" }
 
 [tool.setuptools]
-package = []
+packages = []
 # 实际上并不发布包 (用于解决无法 pdm install) 
 
 [project.optional-dependencies]
