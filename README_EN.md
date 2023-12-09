@@ -73,11 +73,7 @@ ___
 
 ## Special Thanks
 
-- 维度前端: <https://www.df100.ltd>
-- Z_Tsin: <https://ztsin.cn/>
-- FiveCDN公益加速: <https://cdn.5-5.site>
-- WB-Block: <https://wb-block.top>
-- shenjack: <http://shenjack.top:81>
+Please view <https://mcsl.com.cn/links/> for the links.
 
 And all the contributors!  
 
