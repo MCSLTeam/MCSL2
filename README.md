@@ -74,7 +74,7 @@ ___
 ## 鸣谢
 
 - 维度前端: <a href="https://www.df100.ltd" target="_blank">https://www.df100.ltd</a>
-- Z_Tsin: <a href="https://github.com/Z_Tsin" target="_blank">https://github.com/Z_Tsin</a>
+- Z_Tsin: <a href="https://github.com/Z_Tsin" target="_blank">https://github.com/ztsinsun</a>
 - FiveCDN公益加速: <a href="https://www.5cdn.com" target="_blank">https://www.5cdn.com</a>
 - WB-Block: <a href="https://wb-block.com" target="_blank">https://wb-block.com</a>  
 - shenjack: <a href="https://github.com/shenjack" target="_blank">https://github.com/shenjack</a>
