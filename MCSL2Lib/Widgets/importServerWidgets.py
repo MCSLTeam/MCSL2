@@ -697,9 +697,10 @@ class MyListWidget(CardWidget):
 
 
 class ZipTreeModel(QTreeWidgetItem):
-    def __init__(self, name, parent=None):
+    def __init__(self, name, filePath, parent=None):
         super().__init__(parent)
         self.setText(0, name)
+        self.file = filePath
 
 
 class MyTreeWidget(CardWidget):
@@ -715,6 +716,7 @@ class MyTreeWidget(CardWidget):
         self.statusIcon.setFinished()
         self.statusText.setText("此项已完成，请查看下一步。")
         self.finishSignal.emit(True)
+        print(self.mainTreeWidget.selectedItems()[0].file)
 
     def setNotFinished(self):
         self.statusIcon.setNotFinished()
@@ -727,8 +729,8 @@ class MyTreeWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(0, 300))
-        self.setMaximumSize(QSize(16777215, 300))
+        self.setMinimumSize(QSize(0, 340))
+        self.setMaximumSize(QSize(16777215, 340))
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
         self.statusIcon = _StatusPixmapLabel(self)
@@ -762,26 +764,28 @@ class MyTreeWidget(CardWidget):
         self.gridLayout.addWidget(self.mainTreeWidget, 2, 2, 1, 2)
         self.statusText.setText("[状态文本]")
         self.title.setText("2.选择核心")
+        self.mainTreeWidget.header().hide()
         self.mainTreeWidget.clicked.connect(self.setFinished)
 
     def _initView(self, stepCount, title):
         self.title.setText(f"{stepCount}. {title}")
 
-    def createZipTree(self, zipFile: ZipFile):
-        item = ZipTreeModel("压缩包内目录（双击展开）")
+    def createZipTree(self, zipFile: ZipFile, supportExt: str = ""):
+        item = ZipTreeModel("压缩包内目录（双击展开）", None)
         self.mainTreeWidget.addTopLevelItem(item)
         for fileInfo in zipFile.infolist():
             fileName = fileInfo.filename
             if "/" in fileName:
-                parts = fileName.split("/")
-                currentItem = item
-                for part in parts[:-1]:
-                    currentItem = self.findChild(currentItem, part) or ZipTreeModel(
-                        part, currentItem
-                    )
-                ZipTreeModel(parts[-1], currentItem)
+                if fileName.endswith(supportExt):
+                    parts = fileName.split("/")
+                    currentItem = item
+                    for part in parts[:-1]:
+                        currentItem = self.findChild(currentItem, part) or ZipTreeModel(
+                            part, None, currentItem
+                        )
+                    ZipTreeModel(parts[-1], fileName, currentItem)
             else:
-                ZipTreeModel(fileName, item)
+                ZipTreeModel(fileName, fileName, item)
 
     def findChild(self, parent, name):
         for i in range(parent.childCount()):
