@@ -1180,10 +1180,6 @@ class ServerManagerPage(QWidget):
         """检查JVM内存堆单位设置"""
         return self.tr("JVM内存堆单位检查：正常"), 0
 
-    def checkIconSet(self):
-        """检查图标设置"""
-        return self.tr("图标检查：正常"), 0
-
     def setJavaPath(self, selectedJavaPath):
         """选择Java后处理Java路径"""
         editServerVariables.selectedJavaPath = selectedJavaPath
@@ -1213,7 +1209,6 @@ class ServerManagerPage(QWidget):
             serverNameResult = self.checkServerNameSet()
             jvmArgResult = self.checkJVMArgSet()
             memUnitResult = self.checkMemUnitSet()
-            iconResult = self.checkIconSet()
             totalResultMsg = (
                 f"{javaResult[0]}\n"
                 f"{memResult[0]}\n"
@@ -1221,7 +1216,6 @@ class ServerManagerPage(QWidget):
                 f"{coreResult[0]}\n"
                 f"{serverNameResult[0]}\n"
                 f"{jvmArgResult[0]}\n"
-                f"{iconResult[0]}"
             )
             totalResultIndicator = [
                 javaResult[1],
@@ -1230,7 +1224,6 @@ class ServerManagerPage(QWidget):
                 coreResult[1],
                 serverNameResult[1],
                 jvmArgResult[1],
-                iconResult[1],
             ]
             # 错了多少
             errCount = 0
