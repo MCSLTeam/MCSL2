@@ -1144,8 +1144,6 @@ class ServerManagerPage(QWidget):
             "com8",
             "com9",
         ]
-
-        # 实际上Windows系统中文件名限制还包括com0以及com3-9, 因此此类别并不完全符合
         for i in range(len(illegalServerNameList)):
             if illegalServerNameList[i] == self.editServerNameLineEdit.text():
                 errText += self.tr("，名称与操作系统冲突")

@@ -1332,7 +1332,7 @@ class ConfigurePage(QWidget):
             selectedJavaPath = selectedJavaPath.replace("/", "\\")
             if v := javaDetector.getJavaVersion(selectedJavaPath):
                 currentJavaPaths = configureServerVariables.javaPath
-                if (java := javaDetector.Java(selectedJavaPath, v)) not in currentJavaPaths:
+                if javaDetector.Java(selectedJavaPath, v) not in currentJavaPaths:
                     currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
                     javaDetector.sortJavaList(currentJavaPaths)
                     InfoBar.success(
@@ -1613,7 +1613,6 @@ class ConfigurePage(QWidget):
             "com8",
             "com9",
         ]
-
         for i in range(len(illegalServerNameList)):
             if illegalServerNameList[i] == self.tr(
                 serverNameLineEditItems[currentNewServerType].text()

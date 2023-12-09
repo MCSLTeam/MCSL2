@@ -18,20 +18,18 @@ from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.utils import readGlobalServerConfig, warning
 from MCSL2Lib.singleton import Singleton
 
-
-@Singleton
-class ConfigureServerVariables:
-    """新建服务器所需变量"""
+class BaseServerVariables:
+    """服务器变量基类"""
 
     def __init__(self):
         self.javaPath: list = []
         self.minMem: int
         self.maxMem: int
+        self.memUnit: str = ""
         self.corePath: str = ""
         self.coreFileName: str = ""
         self.selectedJavaPath: str = ""
         self.selectedJavaVersion: str = ""
-        self.memUnit: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
         self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
@@ -66,16 +64,18 @@ class ConfigureServerVariables:
         self.serverType = ""
         self.extraData = {}
 
+@Singleton
+class ConfigureServerVariables(BaseServerVariables):
+    """新建服务器所需变量"""
+    pass
+
 
 @Singleton
-class EditServerVariables:
+class EditServerVariables(BaseServerVariables):
     """修改服务器所需变量"""
 
     def __init__(self):
-        self.javaPath: list = []
-        self.corePath: str = ""
-        self.selectedJavaVersion: str = ""
-
+        super().__init__()
         self.oldMinMem: int
         self.oldMaxMem: int
         self.oldCoreFileName: str = ""
@@ -85,21 +85,12 @@ class EditServerVariables:
         self.oldServerName: str = ""
         self.oldConsoleOutputDeEncoding: str = "follow"
         self.oldConsoleInputDeEncoding: str = "follow"
+        self.oldServerType = ""
+        self.oldExtraData = {}
         self.oldIcon: str = "Grass.png"
 
-        self.minMem: int
-        self.maxMem: int
-        self.coreFileName: str = ""
-        self.selectedJavaPath: str = ""
-        self.memUnit: str = ""
-        self.jvmArg: list[str] = [""]
-        self.serverName: str = ""
-        self.consoleOutputDeEncoding: str = "follow"
-        self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
 
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
-        self.memUnitList = ["M", "G"]
         self.iconsFileNameList = [
             "Anvil.png",
             "Cloth.png",
@@ -120,11 +111,6 @@ class EditServerVariables:
             "Spigot.svg",
         ]
 
-        self.oldServerType = ""
-        self.serverType = ""
-        self.oldExtraData = {}
-        self.extraData = {}
-
     def resetToDefault(self):
         self.oldMinMem: int
         self.oldMaxMem: int
@@ -138,22 +124,8 @@ class EditServerVariables:
         self.oldConsoleOutputDeEncoding: str = "follow"
         self.oldConsoleInputDeEncoding: str = "follow"
         self.oldIcon: str = "Grass.png"
-
-        self.minMem: int
-        self.maxMem: int
-        self.corePath: str = ""
-        self.coreFileName: str = ""
-        self.selectedJavaPath: str = ""
-        self.selectedJavaVersion: str = ""
-        self.memUnit: str = ""
-        self.jvmArg: list[str] = [""]
-        self.serverName: str = ""
-        self.consoleOutputDeEncoding: str = "follow"
-        self.consoleInputDeEncoding: str = "follow"
         self.icon: str = "Grass.png"
-
-        self.serverType = ""
-        self.extraData.clear()
+        super().resetToDefault()
 
 
 class GlobalMCSL2Variables:
