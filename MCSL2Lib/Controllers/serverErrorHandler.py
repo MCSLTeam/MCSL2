@@ -139,7 +139,7 @@ class ServerErrorHandler:
 
             elif "\x1B" in errMsg:
                 errMsg = "".join(
-                    every_msg[every_msg.index("m") + 1:]
+                    every_msg[every_msg.index("m") + 1 :]
                     for every_msg in errMsg.split("\x1B")
                     if every_msg
                 )

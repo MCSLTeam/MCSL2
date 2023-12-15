@@ -18,6 +18,7 @@ from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.utils import readGlobalServerConfig, warning
 from MCSL2Lib.singleton import Singleton
 
+
 class BaseServerVariables:
     """服务器变量基类"""
 
@@ -64,9 +65,11 @@ class BaseServerVariables:
         self.serverType = ""
         self.extraData = {}
 
+
 @Singleton
 class ConfigureServerVariables(BaseServerVariables):
     """新建服务器所需变量"""
+
     pass
 
 

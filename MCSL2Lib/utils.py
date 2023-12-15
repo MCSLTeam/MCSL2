@@ -182,8 +182,10 @@ def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None)
     """
     rv = []
     if _filter is None:
+
         def _filter(a, b):
             return True
+
     for file, sha1 in fileAndSha1:
         if not osp.exists(file):
             rv.append({"file": file, "result": False})

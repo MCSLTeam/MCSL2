@@ -10,7 +10,6 @@ from MCSL2Lib.Widgets.importServerWidgets import (
     SaveWidget,
 )
 from qfluentwidgets import CardWidget
-from PyQt5.QtWidgets import QStackedWidget
 
 
 class BaseServerImporter(QObject):
