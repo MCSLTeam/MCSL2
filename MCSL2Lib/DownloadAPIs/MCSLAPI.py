@@ -18,7 +18,10 @@ from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 
-from MCSL2Lib.Controllers.networkController import MCSLNetworkSession, MCSLNetworkHeaders
+from MCSL2Lib.Controllers.networkController import (
+    MCSLNetworkSession,
+    MCSLNetworkHeaders,
+)
 
 
 class MCSLAPIDownloadURLParser:
@@ -28,75 +31,44 @@ class MCSLAPIDownloadURLParser:
         pass
 
     @staticmethod
-    def parseDownloaderAPIUrl():
-        UrlArg = "https://api.mcsl.com.cn/DownloadAPI"
-        TypeArg = [
-            "/JavaDownloadInfo.json",
-            "/SpigotDownloadInfo.json",
-            "/PaperDownloadInfo.json",
-            "/BungeeCordDownloadInfo.json",
-            "/OfficialCoreDownloadInfo.json",
-        ]
+    def parseDownloaderAPIUrl(path):
         rv = {}
-        for i in range(len(TypeArg)):
-            DownloadAPIUrl = UrlArg + TypeArg[i]
-            (
-                downloadFileTitles,
-                downloadFileURLs,
-                downloadFileNames,
-                downloadFileFormats,
-            ) = MCSLAPIDownloadURLParser.decodeDownloadJsons(DownloadAPIUrl)
-            rv.update(
-                {
-                    i: dict(
-                        zip(
-                            (
-                                "downloadFileTitles",
-                                "downloadFileURLs",
-                                "downloadFileNames",
-                                "downloadFileFormats",
-                            ),
-                            (
-                                downloadFileTitles,
-                                downloadFileURLs,
-                                downloadFileNames,
-                                downloadFileFormats,
-                            ),
-                        )
-                    )
-                }
-            )
+        r = MCSLAPIDownloadURLParser.decodeDownloadJsons(
+            "https://file.mcsl.com.cn/api/fs/list", path
+        )
+        rv["name"] = r[0]
+        rv["size"] = r[1]
+        rv["is_dir"] = r[2]
+        rv["total"] = r[3]
         return rv
 
     @staticmethod
-    def decodeDownloadJsons(RefreshUrl):
-        downloadFileTitles = []
-        downloadFileURLs = []
-        downloadFileFormats = []
-        downloadFileNames = []
+    def decodeDownloadJsons(APIUrl, path: str):
+        name = []
+        size = []
+        isDir = []
         try:
-            DownloadJson = MCSLNetworkSession().get(url=RefreshUrl, headers=MCSLNetworkHeaders)
-        except Exception:
-            return -2, -2, -2, -2
-        try:
-            PyDownloadList = DownloadJson.json()["MCSLDownloadList"]
-            for i in PyDownloadList:
-                downloadFileTitle = i["name"]
-                downloadFileTitles.insert(0, downloadFileTitle)
-                downloadFileURL = i["url"]
-                downloadFileURLs.insert(0, downloadFileURL)
-                downloadFileFormat = i["format"]
-                downloadFileFormats.insert(0, downloadFileFormat)
-                downloadFileName = i["filename"]
-                downloadFileNames.insert(0, downloadFileName)
-            return (
-                downloadFileTitles,
-                downloadFileURLs,
-                downloadFileNames,
-                downloadFileFormats,
+            DownloadJson = MCSLNetworkSession().post(
+                url=APIUrl,
+                json={
+                    "path": f"/MCSLAPI{path}",
+                    "password": "",
+                    "page": 1,
+                    "per_page": 0,
+                    "refresh": False,
+                },
+                headers=MCSLNetworkHeaders,
             )
-        except:
-            return -1, -1, -1, -1
+        except Exception:
+            return -2, -2, -2
+        try:
+            for i in range(DownloadJson.json()["data"]["total"]):
+                name.append(DownloadJson.json()["data"]["content"][i]["name"])
+                size.append(DownloadJson.json()["data"]["content"][i]["size"])
+                isDir.append(DownloadJson.json()["data"]["content"][i]["is_dir"])
+            return name, size, isDir, DownloadJson.json()["data"]["total"]
+        except Exception:
+            return -1, -1, -1
 
 
 class FetchMCSLAPIDownloadURLThread(QThread):
@@ -107,31 +79,34 @@ class FetchMCSLAPIDownloadURLThread(QThread):
 
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, FinishSlot: Callable = None):
+    def __init__(self, finishSlot: Callable = None, path: str = ""):
         super().__init__()
         self._id = None
-        self.Data = None
-        if FinishSlot is not None:
-            self.fetchSignal.connect(FinishSlot)
+        self.data = None
+        self.path = path
+        if finishSlot is not None:
+            self.fetchSignal.connect(finishSlot)
 
     def run(self):
-        self.fetchSignal.emit(MCSLAPIDownloadURLParser.parseDownloaderAPIUrl())
+        self.fetchSignal.emit(MCSLAPIDownloadURLParser.parseDownloaderAPIUrl(self.path))
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchMCSLAPIDownloadURLThreadFactory:
     def __init__(self):
         self.singletonThread = None
 
-    def create(self, _singleton=False, finishSlot=None) -> FetchMCSLAPIDownloadURLThread:
+    def create(
+        self, _singleton=False, finishSlot=None, path: str = ""
+    ) -> FetchMCSLAPIDownloadURLThread:
         if _singleton:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
             else:
-                thread = FetchMCSLAPIDownloadURLThread(finishSlot)
+                thread = FetchMCSLAPIDownloadURLThread(finishSlot, path)
                 self.singletonThread = thread
                 return thread
         else:
-            return FetchMCSLAPIDownloadURLThread(finishSlot)
+            return FetchMCSLAPIDownloadURLThread(finishSlot, path)

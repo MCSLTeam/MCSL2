@@ -18,7 +18,10 @@ from collections import defaultdict
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-from MCSL2Lib.Controllers.networkController import MCSLNetworkSession, MCSLNetworkHeaders
+from MCSL2Lib.Controllers.networkController import (
+    MCSLNetworkSession,
+    MCSLNetworkHeaders,
+)
 
 
 class PolarsAPIDownloadURLParser:
@@ -33,7 +36,7 @@ class PolarsAPIDownloadURLParser:
         r = PolarsAPIDownloadURLParser.decodePolarTypeJsons(
             "https://mirror.polars.cc/api/query/minecraft/core"
         )
-        if type(r) == list:
+        if type(r) is list:
             for e in r:
                 rv["id"].append(e["id"])
                 rv["name"].append(e["name"])
@@ -47,7 +50,9 @@ class PolarsAPIDownloadURLParser:
         data = []
         try:
             apiData = (
-                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+                MCSLNetworkSession()
+                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
+                .json()
             )
         except Exception:
             return -2
@@ -55,7 +60,7 @@ class PolarsAPIDownloadURLParser:
             for i in apiData:
                 data.insert(0, i)
             return data
-        except:
+        except Exception:
             return -1
 
     @staticmethod
@@ -64,7 +69,7 @@ class PolarsAPIDownloadURLParser:
         r = PolarsAPIDownloadURLParser.decodePolarsAPICoreJsons(
             f"https://mirror.polars.cc/api/query/minecraft/core/{coreType}"
         )
-        if type(r) == list:
+        if type(r) is list:
             for e in r:
                 rv["name"].append(e["name"])
                 rv["downloadUrl"].append(e["downloadUrl"])
@@ -77,7 +82,9 @@ class PolarsAPIDownloadURLParser:
         cores = []
         try:
             apiData = (
-                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+                MCSLNetworkSession()
+                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
+                .json()
             )
         except Exception:
             return -2
@@ -85,25 +92,25 @@ class PolarsAPIDownloadURLParser:
             for i in apiData:
                 cores.insert(0, i)
             return cores
-        except:
+        except Exception:
             return -1
 
 
 class FetchPolarsAPITypeThread(QThread):
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, FinishSlot: Callable = ...):
+    def __init__(self, finishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.Data = None
-        if FinishSlot is not ...:
-            self.fetchSignal.connect(FinishSlot)
+        self.data = None
+        if finishSlot is not ...:
+            self.fetchSignal.connect(finishSlot)
 
     def run(self):
         self.fetchSignal.emit(PolarsAPIDownloadURLParser.parsePolarsAPIUrl())
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchPolarsAPICoreThread(QThread):
@@ -112,16 +119,18 @@ class FetchPolarsAPICoreThread(QThread):
     def __init__(self, idx, FinishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.Data = None
+        self.data = None
         self.idx = idx
         if FinishSlot is not ...:
             self.fetchSignal.connect(FinishSlot)
 
     def run(self):
-        self.fetchSignal.emit(PolarsAPIDownloadURLParser.parsePolarsAPICoreUrl(coreType=self.idx))
+        self.fetchSignal.emit(
+            PolarsAPIDownloadURLParser.parsePolarsAPICoreUrl(coreType=self.idx)
+        )
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchPolarsAPITypeThreadFactory:

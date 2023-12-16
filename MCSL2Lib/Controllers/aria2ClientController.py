@@ -122,7 +122,7 @@ class Aria2Controller:
         try:
             HomeBrewInstallCommand = '/bin/bash -c "$(curl -fsSL https://mecdn.mcserverx.com/gh/LxHTT/MCSLDownloaderAPI/master/MCSL2NecessaryTools/Install_Homebrew.sh)"'
             InstallHomeBrew = Popen(HomeBrewInstallCommand, stdout=PIPE, shell=True)
-            output, error = InstallHomeBrew.communicate()
+            InstallHomeBrew.communicate()
             if InstallHomeBrew.returncode == 0:
                 Popen("brew install aria2", stdout=PIPE, shell=True)
                 self.aria2cStatus = True
@@ -166,7 +166,9 @@ class Aria2Controller:
             Aria2Program = "aria2c"
         else:
             Aria2Program = "aria2c"
-        ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf --input-file=/MCSL2/Aria2/aria2.session --save-session=/MCSL2/Aria2/aria2.session"
+        ConfigCommand = "--conf-path=/MCSL2/Aria2/aria2.conf \
+            --input-file=/MCSL2/Aria2/aria2.session \
+            --save-session=/MCSL2/Aria2/aria2.session"
         Aria2Thread = Aria2ProcessThread(
             Aria2Program=Aria2Program,
             ConfigCommand=ConfigCommand,
@@ -276,7 +278,7 @@ class Aria2Controller:
         """
         try:
             download = cls._aria2.get_download(gid)
-        except:
+        except Exception:
             cls.killWatcher(gid)
             return {
                 "connections": 0,
@@ -314,7 +316,7 @@ class Aria2Controller:
         try:
             MCSL2Logger.info(f"Aria2下载已暂停: {cls._aria2.client.pause(gid)}")
             cls._downloadTasks.pop(gid)
-        except:
+        except Exception:
             pass
 
     @classmethod
@@ -354,7 +356,7 @@ class Aria2Controller:
         """
         try:
             cls._aria2.client.get_version()
-        except:
+        except Exception:
             return False
         return True
 
@@ -397,13 +399,13 @@ class Aria2Controller:
         cls._aria2: API
         try:
             download = cls._aria2.get_download(gid)
-        except:
+        except Exception:
             cls.killWatcher(gid)
             return None
         if stopFlag:
             try:
                 cls._aria2.client.remove(gid)  # 删除下载任务
-            except:
+            except Exception:
                 pass
         if download.status == "complete" and gid in cls._downloadTasks.keys():
             cls._downloadTasks.pop(gid)
@@ -640,7 +642,7 @@ entries_mutex = QMutex()
 #         with open(DL_EntryManager.file) as f:
 #             rv = json.load(f)
 #         for coreName, coreData in rv.copy().items():
-#             if check and not DL_EntryManager.checkCoreEntry(coreName, coreData["md5"], autoDelete):
+#             if check and not DL_EntryManager.checkCoreEntry(coreName, coreData["md5"], autoDelete):  # noqa: E501
 #                 print("删除不完整的核心文件记录:", coreName)
 #                 rv.pop(coreName)
 #         return rv
@@ -866,7 +868,7 @@ class DL_EntryManager(QObject):
             if autoDelete:
                 try:
                     remove(osp.join(self.path, coreName))
-                except:
+                except Exception:
                     pass
             self.flush()
             return {coreName: rv}
@@ -903,7 +905,7 @@ class DL_EntryManager(QObject):
                     self.mutex.lock()
                     self.entries.pop(coreName)
                     self.mutex.unlock()
-                except:
+                except Exception:
                     pass
         else:
             if autoDelete:
@@ -957,7 +959,7 @@ class DL_EntryManager(QObject):
         # with open(self.file, "r") as f:
         #     fileRecordedEntries = json.load(f)
         #
-        # if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成
+        # if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成  # noqa: E501
         #     print("记录不一致,重新计算各条目完整性,并更新本地记录")
         #     for entryName in entries_snapshot.keys():
         #         if self.tryGetEntry(entryName, check, autoDelete) is None:

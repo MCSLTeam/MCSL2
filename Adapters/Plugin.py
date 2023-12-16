@@ -18,7 +18,7 @@ from qfluentwidgets import (
 )
 
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
-from MCSL2Lib.Resources.icons import *  # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
 from MCSL2Lib.utils import openLocalFile
 from MCSL2Lib.variables import GlobalMCSL2Variables
@@ -74,7 +74,7 @@ class PluginLoader(BasePluginLoader):
             if "icon" in importedPluginConfig:
                 importedPlugin.icon = importedPluginConfig.get("icon")
 
-        except:
+        except Exception:
             raise Warning("读取配置错误", pluginName)
         if importedPlugin.__class__.__name__ == Plugin.__name__:
             return importedPlugin
@@ -119,7 +119,7 @@ class PluginManager(BasePluginManager):
         if plugin.DISABLE is not None:
             try:
                 plugin.DISABLE()
-            except:
+            except Exception:
                 del self.loadedPlugin[pluginName]
                 return False, plugin.pluginName
         del self.loadedPlugin[pluginName]
@@ -146,7 +146,7 @@ class PluginManager(BasePluginManager):
             try:
                 plugin.isEnabled = True
                 plugin.ENABLE()
-            except:
+            except Exception:
                 raise Warning("未完全卸载", plugin.pluginName)
 
     def loadPlugin(self, pluginName: str) -> Plugin | None:
@@ -199,7 +199,7 @@ class PluginManager(BasePluginManager):
             if plugin.ENABLE is not None:
                 try:
                     self.enablePlugin(pluginName)
-                except:
+                except Exception:
                     continue
 
     def disableAllPlugins(self):
@@ -285,7 +285,7 @@ class PluginManager(BasePluginManager):
     def deletePluginConfirm(self, pluginName, parent):
         self.isDelMsgShowed = 0
         title = f'你真的要删除插件"{pluginName}"?'
-        content = f'此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"{pluginName}"，然后点击“删除”按钮：'
+        content = f'此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"{pluginName}"，然后点击“删除”按钮：'  # noqa: E501
         w2 = MessageBox(title, content, parent)
         w2.yesButton.setText("取消")
         w2.cancelButton.setText("删除")

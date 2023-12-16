@@ -18,7 +18,10 @@ from collections import defaultdict
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-from MCSL2Lib.Controllers.networkController import MCSLNetworkSession, MCSLNetworkHeaders
+from MCSL2Lib.Controllers.networkController import (
+    MCSLNetworkSession,
+    MCSLNetworkHeaders,
+)
 
 
 class FastMirrorAPIDownloadURLParser:
@@ -29,10 +32,11 @@ class FastMirrorAPIDownloadURLParser:
 
     @staticmethod
     def parseFastMirrorAPIUrl():
-        fastMirrorAPI = "https://download.fastmirror.net/api/v3"
         rv = defaultdict(list)
-        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorJsons(fastMirrorAPI)
-        if type(r) == list:
+        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorJsons(
+            "https://download.fastmirror.net/api/v3"
+        )
+        if type(r) is list:
             for e in r:
                 rv["name"].append(e["name"])
                 rv["mc_versions"].append(e["mc_versions"])
@@ -48,26 +52,27 @@ class FastMirrorAPIDownloadURLParser:
         data = []
         try:
             apiData = (
-                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+                MCSLNetworkSession()
+                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
+                .json()
             )
         except Exception:
             return -2
         try:
             if apiData["success"]:
                 for i in apiData["data"]:
-                    data.insert(0, i)
+                    data.append(i)
                 return data
-        except:
+        except Exception:
             return -1
 
     @staticmethod
     def parseFastMirrorAPICoreVersionUrl(name, mcVersion):
-        fastMirrorAPI = (
+        rv = defaultdict(list)
+        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorCoreVersionJsons(
             f"https://download.fastmirror.net/api/v3/{name}/{mcVersion}?offset=0&limit=25"
         )
-        rv = defaultdict(list)
-        r = FastMirrorAPIDownloadURLParser.decodeFastMirrorCoreVersionJsons(fastMirrorAPI)
-        if type(r) == list:
+        if type(r) is list:
             for e in r:
                 rv["name"].append(e["name"])
                 rv["mc_version"].append(e["mc_version"])
@@ -83,16 +88,18 @@ class FastMirrorAPIDownloadURLParser:
         builds = []
         try:
             apiData = (
-                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+                MCSLNetworkSession()
+                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
+                .json()
             )
         except Exception:
             return -2
         try:
             if apiData["success"]:
                 for i in apiData["data"]["builds"]:
-                    builds.insert(0, i)
+                    builds.append(i)
                 return builds
-        except:
+        except Exception:
             return -1
 
 
@@ -104,18 +111,18 @@ class FetchFastMirrorAPIThread(QThread):
 
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, FinishSlot: Callable = ...):
+    def __init__(self, finishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.Data = None
-        if FinishSlot is not ...:
-            self.fetchSignal.connect(FinishSlot)
+        self.data = None
+        if finishSlot is not ...:
+            self.fetchSignal.connect(finishSlot)
 
     def run(self):
         self.fetchSignal.emit(FastMirrorAPIDownloadURLParser.parseFastMirrorAPIUrl())
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchFastMirrorAPICoreVersionThread(QThread):
@@ -126,14 +133,14 @@ class FetchFastMirrorAPICoreVersionThread(QThread):
 
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, name, mcVersion, FinishSlot: Callable = ...):
+    def __init__(self, name, mcVersion, finishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.Data = None
+        self.data = None
         self.name = name
         self.mcVersion = mcVersion
-        if FinishSlot is not ...:
-            self.fetchSignal.connect(FinishSlot)
+        if finishSlot is not ...:
+            self.fetchSignal.connect(finishSlot)
 
     def run(self):
         self.fetchSignal.emit(
@@ -143,7 +150,7 @@ class FetchFastMirrorAPICoreVersionThread(QThread):
         )
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchFastMirrorAPIThreadFactory:
@@ -174,7 +181,7 @@ class FetchFastMirrorAPICoreVersionThreadFactory:
                 return self.singletonThread
             else:
                 thread = FetchFastMirrorAPICoreVersionThread(
-                    name=name, mcVersion=mcVersion, FinishSlot=finishSlot
+                    name=name, mcVersion=mcVersion, finishSlot=finishSlot
                 )
                 self.singletonThread = thread
                 return thread

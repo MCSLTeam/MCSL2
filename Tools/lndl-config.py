@@ -16,7 +16,7 @@ def get_version() -> Tuple[str, str]:
                     VERSION = line.strip('BUILD_VERSION = "')[:-2]
                 if line.startswith("BUILD_VERSION"):
                     BUILD_VERSION = line.strip('BUILD_VERSION = "')[:-2]
-    except:
+    except Exception:
         # 尽量不导入
         traceback.print_exc()
         from MCSL2Lib import VERSION, BUILD_VERSION

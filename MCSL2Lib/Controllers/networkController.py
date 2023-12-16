@@ -33,5 +33,5 @@ class MCSLNetworkSession(Session):
 
 
 MCSLNetworkHeaders = {
-    "User-Agent": f"MCServerLauncher2/{MCSL2VERSION} ({systemType()} {systemVersion()} {systemArchitecture()})"
+    "User-Agent": f"MCServerLauncher2/{MCSL2VERSION} ({systemType()} {systemVersion()} {systemArchitecture()})"  # noqa: E501
 }

@@ -31,5 +31,5 @@ class Event(BaseEvent):
         for handler in self.handlers:
             try:
                 await handler.handle_func()
-            except:
+            except Exception:
                 raise Exception("事件处理错误")

@@ -29,9 +29,9 @@ fSearch = True
 # fmt: off
 matchKeywords = {
     '1.', 'bin', 'cache', 'client', 'corretto', 'craft', 'data', 'download', 'eclipse',
-    'env', 'ext', 'file', 'forge', 'fabric', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell',
-    'jvm', 'launch', 'mc', 'microsoft', 'mod', 'mojang', 'net', 'netease', 'optifine',
-    'oracle', 'path', 'program', 'roaming', 'run', 'runtime', 'server', 'software',
+    'env', 'ext', 'file', 'forge', 'fabric', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre',
+    'zulu', 'dragonwell', 'jvm', 'launch', 'mc', 'microsoft', 'mod', 'mojang', 'net', 'netease',
+    'optifine', 'oracle', 'path', 'program', 'roaming', 'run', 'runtime', 'server', 'software',
     'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr',
     '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
     '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清'

@@ -31,7 +31,6 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SubtitleLabel,
     TitleLabel,
-    Pivot,
     PushButton,
     FluentIcon as FIF,
     MessageBox,
@@ -42,6 +41,7 @@ from qfluentwidgets import (
     TransparentTogglePushButton,
     VerticalSeparator,
     BodyLabel,
+    BreadcrumbBar,
     HyperlinkButton,
 )
 
@@ -68,7 +68,6 @@ from MCSL2Lib.DownloadAPIs.AkiraCloud import (
 )
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Controllers.interfaceController import (
-    ChildStackedWidget,
     MySmoothScrollArea,
 )
 from MCSL2Lib.Widgets.loadingTipWidget import (
@@ -76,10 +75,10 @@ from MCSL2Lib.Widgets.loadingTipWidget import (
     MCSLAPILoadingWidget,
 )
 from MCSL2Lib.Controllers.settingsController import cfg
-from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import singleMCSLAPIDownloadWidget
+from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import MCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.Resources.icons import *
-from MCSL2Lib.utils import openLocalFile  # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
+from MCSL2Lib.utils import openLocalFile
 from MCSL2Lib.variables import (
     DownloadVariables,
     SettingsVariables,
@@ -96,8 +95,8 @@ class DownloadPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         # fmt: off
-        self.fetchFastMirrorAPIThreadFactory = FetchFastMirrorAPIThreadFactory()
-        self.fetchFastMirrorAPICoreVersionThreadFactory = FetchFastMirrorAPICoreVersionThreadFactory()
+        self.fetchFMAPIThreadFactory = FetchFastMirrorAPIThreadFactory()
+        self.fetchFMAPICoreVersionThreadFactory = FetchFastMirrorAPICoreVersionThreadFactory()
 
         self.fetchMCSLAPIDownloadURLThreadFactory = FetchMCSLAPIDownloadURLThreadFactory()
 
@@ -282,245 +281,46 @@ class DownloadPage(QWidget):
         self.buildScrollArea.setWidget(self.buildScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.buildScrollArea, 1, 2, 1, 2)
         self.downloadStackedWidget.addWidget(self.downloadWithFastMirror)
+
         self.downloadWithMCSLAPI = QWidget()
         self.downloadWithMCSLAPI.setObjectName("downloadWithMCSLAPI")
-
         self.gridLayout_3 = QGridLayout(self.downloadWithMCSLAPI)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
-
-        self.MCSLAPIPivot = Pivot(self.downloadWithMCSLAPI)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIPivot.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIPivot.setSizePolicy(sizePolicy)
-        self.MCSLAPIPivot.setFixedSize(QSize(210, 45))
-        self.MCSLAPIPivot.setObjectName("MCSLAPIPivot")
-
-        self.gridLayout_3.addWidget(self.MCSLAPIPivot, 0, 0, 1, 1)
-        spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_3.addItem(spacerItem2, 0, 1, 1, 1)
-        self.MCSLAPIStackedWidget = ChildStackedWidget(self.downloadWithMCSLAPI)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIStackedWidget.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIStackedWidget.setSizePolicy(sizePolicy)
-        self.MCSLAPIStackedWidget.setMinimumSize(QSize(676, 336))
-        self.MCSLAPIStackedWidget.setMaximumSize(QSize(16777215, 16777215))
-        self.MCSLAPIStackedWidget.setObjectName("MCSLAPIStackedWidget")
-
-        self.MCSLAPIJava = QWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIJava.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIJava.setSizePolicy(sizePolicy)
-        self.MCSLAPIJava.setObjectName("MCSLAPIJava")
-
-        self.verticalLayout_3 = QVBoxLayout(self.MCSLAPIJava)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-
-        self.MCSLAPIJavaScrollArea = MySmoothScrollArea(self.MCSLAPIJava)
-        self.MCSLAPIJavaScrollArea.setWidgetResizable(True)
-        self.MCSLAPIJavaScrollArea.setObjectName("MCSLAPIJavaScrollArea")
-
-        self.MCSLAPIJavaScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIJavaScrollAreaWidgetContents.setGeometry(QRect(0, 0, 698, 348))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIJavaScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
-        self.MCSLAPIJavaScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.MCSLAPIJavaScrollAreaWidgetContents.setObjectName(
-            "MCSLAPIJavaScrollAreaWidgetContents"
-        )
-
-        self.verticalLayout_8 = QVBoxLayout(self.MCSLAPIJavaScrollAreaWidgetContents)
-        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_8.setObjectName("verticalLayout_8")
-
-        self.MCSLAPIJavaScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPIJavaScrollAreaLayout.setObjectName("MCSLAPIJavaScrollAreaLayout")
-
-        self.verticalLayout_8.addLayout(self.MCSLAPIJavaScrollAreaLayout)
-        self.MCSLAPIJavaScrollArea.setWidget(self.MCSLAPIJavaScrollAreaWidgetContents)
-        self.verticalLayout_3.addWidget(self.MCSLAPIJavaScrollArea)
-        self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIJava)
-        self.MCSLAPISpigot = QWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPISpigot.sizePolicy().hasHeightForWidth())
-        self.MCSLAPISpigot.setSizePolicy(sizePolicy)
-        self.MCSLAPISpigot.setObjectName("MCSLAPISpigot")
-
-        self.verticalLayout_4 = QVBoxLayout(self.MCSLAPISpigot)
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-
-        self.MCSLAPISpigotScrollArea = MySmoothScrollArea(self.MCSLAPISpigot)
-        self.MCSLAPISpigotScrollArea.setWidgetResizable(True)
-        self.MCSLAPISpigotScrollArea.setObjectName("MCSLAPISpigotScrollArea")
-
-        self.MCSLAPISpigotScrollAreaWidgetContents = QWidget()
-        self.MCSLAPISpigotScrollAreaWidgetContents.setGeometry(QRect(0, 0, 698, 348))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPISpigotScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
-        self.MCSLAPISpigotScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.MCSLAPISpigotScrollAreaWidgetContents.setObjectName(
-            "MCSLAPISpigotScrollAreaWidgetContents"
-        )
-
-        self.verticalLayout_9 = QVBoxLayout(self.MCSLAPISpigotScrollAreaWidgetContents)
-        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_9.setObjectName("verticalLayout_9")
-
-        self.MCSLAPISpigotScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPISpigotScrollAreaLayout.setObjectName("MCSLAPISpigotScrollAreaLayout")
-
-        self.verticalLayout_9.addLayout(self.MCSLAPISpigotScrollAreaLayout)
-        self.MCSLAPISpigotScrollArea.setWidget(self.MCSLAPISpigotScrollAreaWidgetContents)
-        self.verticalLayout_4.addWidget(self.MCSLAPISpigotScrollArea)
-        self.MCSLAPIStackedWidget.addWidget(self.MCSLAPISpigot)
-        self.MCSLAPIPaper = QWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIPaper.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIPaper.setSizePolicy(sizePolicy)
-        self.MCSLAPIPaper.setObjectName("MCSLAPIPaper")
-
-        self.verticalLayout_5 = QVBoxLayout(self.MCSLAPIPaper)
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_5.setObjectName("verticalLayout_5")
-
-        self.MCSLAPIPaperScrollArea = MySmoothScrollArea(self.MCSLAPIPaper)
-        self.MCSLAPIPaperScrollArea.setWidgetResizable(True)
-        self.MCSLAPIPaperScrollArea.setObjectName("MCSLAPIPaperScrollArea")
-
-        self.MCSLAPIPaperScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIPaperScrollAreaWidgetContents.setGeometry(QRect(0, 0, 698, 348))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIPaperScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
-        self.MCSLAPIPaperScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.MCSLAPIPaperScrollAreaWidgetContents.setObjectName(
-            "MCSLAPIPaperScrollAreaWidgetContents"
-        )
-
-        self.verticalLayout_10 = QVBoxLayout(self.MCSLAPIPaperScrollAreaWidgetContents)
-        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_10.setObjectName("verticalLayout_10")
-
-        self.MCSLAPIPaperScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPIPaperScrollAreaLayout.setObjectName("MCSLAPIPaperScrollAreaLayout")
-
-        self.verticalLayout_10.addLayout(self.MCSLAPIPaperScrollAreaLayout)
-        self.MCSLAPIPaperScrollArea.setWidget(self.MCSLAPIPaperScrollAreaWidgetContents)
-        self.verticalLayout_5.addWidget(self.MCSLAPIPaperScrollArea)
-        self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIPaper)
-        self.MCSLAPIBungeeCord = QWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIBungeeCord.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIBungeeCord.setSizePolicy(sizePolicy)
-        self.MCSLAPIBungeeCord.setObjectName("MCSLAPIBungeeCord")
-
-        self.verticalLayout_6 = QVBoxLayout(self.MCSLAPIBungeeCord)
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
-
-        self.MCSLAPIBungeeCordScrollArea = MySmoothScrollArea(self.MCSLAPIBungeeCord)
-        self.MCSLAPIBungeeCordScrollArea.setWidgetResizable(True)
-        self.MCSLAPIBungeeCordScrollArea.setObjectName("MCSLAPIBungeeCordScrollArea")
-
-        self.MCSLAPIBungeeCordScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIBungeeCordScrollAreaWidgetContents.setGeometry(QRect(0, 0, 698, 348))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIBungeeCordScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
-        self.MCSLAPIBungeeCordScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.MCSLAPIBungeeCordScrollAreaWidgetContents.setObjectName(
-            "MCSLAPIBungeeCordScrollAreaWidgetContents"
-        )
-
-        self.verticalLayout_11 = QVBoxLayout(self.MCSLAPIBungeeCordScrollAreaWidgetContents)
-        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_11.setObjectName("verticalLayout_11")
-
-        self.MCSLAPIBungeeCordScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPIBungeeCordScrollAreaLayout.setObjectName("MCSLAPIBungeeCordScrollAreaLayout")
-
-        self.verticalLayout_11.addLayout(self.MCSLAPIBungeeCordScrollAreaLayout)
-        self.MCSLAPIBungeeCordScrollArea.setWidget(self.MCSLAPIBungeeCordScrollAreaWidgetContents)
-        self.verticalLayout_6.addWidget(self.MCSLAPIBungeeCordScrollArea)
-        self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIBungeeCord)
-        self.MCSLAPIOfficialCore = QWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIOfficialCore.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIOfficialCore.setSizePolicy(sizePolicy)
-        self.MCSLAPIOfficialCore.setObjectName("MCSLAPIOfficialCore")
-
-        self.verticalLayout_7 = QVBoxLayout(self.MCSLAPIOfficialCore)
-        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
-
-        self.MCSLAPIOfficialCoreScrollArea = MySmoothScrollArea(self.MCSLAPIOfficialCore)
-        self.MCSLAPIOfficialCoreScrollArea.setWidgetResizable(True)
-        self.MCSLAPIOfficialCoreScrollArea.setObjectName("MCSLAPIOfficialCoreScrollArea")
-        self.MCSLAPIOfficialCoreScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIOfficialCoreScrollAreaWidgetContents.setGeometry(QRect(0, 0, 98, 28))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIOfficialCoreScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
-        )
-        self.MCSLAPIOfficialCoreScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.MCSLAPIOfficialCoreScrollAreaWidgetContents.setObjectName(
-            "MCSLAPIOfficialCoreScrollAreaWidgetContents"
-        )
-
-        self.verticalLayout_12 = QVBoxLayout(self.MCSLAPIOfficialCoreScrollAreaWidgetContents)
-        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_12.setObjectName("verticalLayout_12")
-
-        self.MCSLAPIOfficialCoreScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPIOfficialCoreScrollAreaLayout.setObjectName(
-            "MCSLAPIOfficialCoreScrollAreaLayout"
-        )
-
-        self.verticalLayout_12.addLayout(self.MCSLAPIOfficialCoreScrollAreaLayout)
-        self.MCSLAPIOfficialCoreScrollArea.setWidget(
-            self.MCSLAPIOfficialCoreScrollAreaWidgetContents
-        )
-        self.verticalLayout_7.addWidget(self.MCSLAPIOfficialCoreScrollArea)
-        self.MCSLAPIStackedWidget.addWidget(self.MCSLAPIOfficialCore)
-        self.gridLayout_3.addWidget(self.MCSLAPIStackedWidget, 1, 0, 1, 3)
         self.refreshMCSLAPIBtn = PushButton(
             icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithMCSLAPI
         )
-        self.refreshMCSLAPIBtn.setObjectName("refreshMCSLAPIBtn")
-
-        self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 1, 1, 1)
+        self.MCSLAPIScrollArea = MySmoothScrollArea(self.downloadWithMCSLAPI)
+        self.MCSLAPIScrollArea.setFrameShape(QFrame.NoFrame)
+        self.MCSLAPIScrollArea.setWidgetResizable(True)
+        self.MCSLAPIScrollArea.setObjectName("MCSLAPIScrollArea")
+        self.MCSLAPIScrollAreaWidgetContents = QWidget()
+        self.MCSLAPIScrollAreaWidgetContents.setGeometry(QRect(0, 0, 676, 351))
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.MCSLAPIScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
+        )
+        self.MCSLAPIScrollAreaWidgetContents.setSizePolicy(sizePolicy)
+        self.MCSLAPIScrollAreaWidgetContents.setObjectName("MCSLAPIScrollAreaWidgetContents")
+        self.verticalLayout_9 = QVBoxLayout(self.MCSLAPIScrollAreaWidgetContents)
+        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.MCSLAPIScrollAreaLayout = QVBoxLayout()
+        self.MCSLAPIScrollAreaLayout.setObjectName("MCSLAPIScrollAreaLayout")
+        self.verticalLayout_9.addLayout(self.MCSLAPIScrollAreaLayout)
+        self.MCSLAPIScrollArea.setWidget(self.MCSLAPIScrollAreaWidgetContents)
+        self.gridLayout_3.addWidget(self.MCSLAPIScrollArea, 1, 0, 1, 2)
+        self.MCSLAPIBreadcrumbBar = BreadcrumbBar(self.downloadWithMCSLAPI)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.MCSLAPIBreadcrumbBar.sizePolicy().hasHeightForWidth())
+        self.MCSLAPIBreadcrumbBar.setSizePolicy(sizePolicy)
+        self.MCSLAPIBreadcrumbBar.setObjectName("MCSLAPIBreadcrumbBar")
+        self.gridLayout_3.addWidget(self.MCSLAPIBreadcrumbBar, 0, 0, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
 
         self.downloadWithPolarsAPI = QWidget()
@@ -789,46 +589,7 @@ class DownloadPage(QWidget):
         self.polarsTitle.setText("核心类型")
         self.akiraTitle.setText("核心类型")
 
-        self.coreListSmoothScrollArea.setAttribute(Qt.WA_StyledBackground)
-        self.MCSLAPIPivot.addItem(
-            routeKey="MCSLAPIJava",
-            text=self.tr("Java环境"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIJava),
-        )
-        self.MCSLAPIPivot.addItem(
-            routeKey="MCSLAPISpigot",
-            text=self.tr("Spigot核心"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPISpigot),
-        )
-        self.MCSLAPIPivot.addItem(
-            routeKey="MCSLAPIPaper",
-            text=self.tr("Paper核心"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIPaper),
-        )
-        self.MCSLAPIPivot.addItem(
-            routeKey="MCSLAPIBungeeCord",
-            text=self.tr("BungeeCord代理"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIBungeeCord),
-        )
-        self.MCSLAPIPivot.addItem(
-            routeKey="MCSLAPIOfficialCore",
-            text=self.tr("Vanilla核心"),
-            onClick=lambda: self.MCSLAPIStackedWidget.setCurrentWidget(self.MCSLAPIOfficialCore),
-        )
-        self.MCSLAPILayoutList = [
-            self.MCSLAPIJavaScrollAreaLayout,
-            self.MCSLAPISpigotScrollAreaLayout,
-            self.MCSLAPIPaperScrollAreaLayout,
-            self.MCSLAPIBungeeCordScrollAreaLayout,
-            self.MCSLAPIOfficialCoreScrollAreaLayout,
-        ]
-        self.MCSLAPIJavaScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLAPISpigotScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLAPIPaperScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLAPIBungeeCordScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLAPIOfficialCoreScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLAPIPivot.setCurrentItem("MCSLAPIJava")
-        self.MCSLAPIStackedWidget.currentChanged.connect(self.refreshDownloads)
+        self.MCSLAPIBreadcrumbBar.addItem("MCSLAPI", "MCSLAPI")
         self.refreshMCSLAPIBtn.clicked.connect(self.getMCSLAPI)
         self.refreshPolarsAPIBtn.clicked.connect(self.getPolarsAPI)
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
@@ -855,7 +616,11 @@ class DownloadPage(QWidget):
         if currentChanged == 3:
             self.subTitleLabel.setText(
                 self.tr(
-                    f"Aria2引擎高速驱动！ - 当前下载源：{settingsVariables.downloadSourceTextList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]}"
+                    f"Aria2引擎高速驱动！ - 当前下载源：{
+                        settingsVariables.downloadSourceTextList[
+                            settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
+                        ]
+                    }"
                 )
             )
             self.downloadStackedWidget.setCurrentWidget(
@@ -902,7 +667,7 @@ class DownloadPage(QWidget):
                     or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
                     != "-1"
                 ):
-                    self.initMCSLAPIDownloadWidget(n=idx)
+                    self.initMCSLAPIDownloadWidget()
                 else:
                     self.showMCSLAPIFailedWidget()
             else:
@@ -914,20 +679,19 @@ class DownloadPage(QWidget):
     ###########
 
     def releaseMCSLAPIMemory(self):
-        for layout in self.MCSLAPILayoutList:
-            layout.removeItem(self.scrollAreaSpacer)
-            for i in reversed(range(layout.count())):
-                try:
-                    layout.itemAt(i).widget().setParent(None)
-                except AttributeError:
-                    pass
-                try:
-                    layout.itemAt(i).widget().deleteLater()
-                    del layout.itemAt(i).widget
-                except AttributeError:
-                    pass
+        self.MCSLAPIScrollAreaLayout.removeItem(self.scrollAreaSpacer)
+        for i in reversed(range(self.MCSLAPIScrollAreaLayout.count())):
+            try:
+                self.MCSLAPIScrollAreaLayout.itemAt(i).widget().setParent(None)
+            except AttributeError:
+                pass
+            try:
+                self.MCSLAPIScrollAreaLayout.itemAt(i).widget().deleteLater()
+                del self.MCSLAPIScrollAreaLayout.itemAt(i).widget
+            except AttributeError:
+                pass
 
-    def getMCSLAPI(self):
+    def getMCSLAPI(self, path: str = ""):
         """请求MCSLAPI"""
         workThread = self.fetchMCSLAPIDownloadURLThreadFactory.create(
             _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict
@@ -937,8 +701,7 @@ class DownloadPage(QWidget):
             return
         else:
             self.releaseMCSLAPIMemory()
-            for layout in self.MCSLAPILayoutList:
-                layout.addWidget(MCSLAPILoadingWidget())
+            self.MCSLAPIScrollAreaLayout.addWidget(MCSLAPILoadingWidget())
             workThread.start()
             self.refreshMCSLAPIBtn.setEnabled(False)
 
@@ -946,79 +709,52 @@ class DownloadPage(QWidget):
     def updateMCSLAPIDownloadUrlDict(self, _downloadUrlDict: dict):
         """更新获取MCSLAPI结果"""
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
-        idx = self.MCSLAPIStackedWidget.currentIndex()
+        print(downloadVariables.MCSLAPIDownloadUrlDict)
         if (
-            str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"]) != "-2"
-            or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"]) != "-1"
+            str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-2"
+            or str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-1"
         ):
-            self.initMCSLAPIDownloadWidget(n=idx)
+            self.initMCSLAPIDownloadWidget()
         else:
             self.showMCSLAPIFailedWidget()
 
     def showMCSLAPIFailedWidget(self):
-        layout = self.MCSLAPILayoutList[self.MCSLAPIStackedWidget.currentIndex()]
-        for i2 in reversed(range(layout.count())):
-            layout.itemAt(i2).widget().setParent(None)
-            layout.itemAt(i2).widget().deleteLater()
-            del layout.itemAt(i2).widget
-        layout.addWidget(MCSLAPILoadingErrorWidget())
+        self.releaseMCSLAPIMemory()
+        self.MCSLAPIScrollAreaLayout.addWidget(MCSLAPILoadingErrorWidget())
         self.refreshMCSLAPIBtn.setEnabled(True)
 
     @staticmethod
-    def getMCSLAPIDownloadIcon(downloadType):
+    def getMCSLAPIDownloadIcon(isDir):
         """设置MCSLAPI源图标"""
-        if downloadType == 0:
-            return QPixmap(":/built-InIcons/Java.svg")
-        elif downloadType == 1:
-            return QPixmap(":/built-InIcons/Spigot.svg")
-        elif downloadType == 2:
-            return QPixmap(":/built-InIcons/Paper.png")
-        elif downloadType == 3:
-            return QPixmap(":/built-InIcons/Spigot.svg")
-        elif downloadType == 4:
-            return QPixmap(":/built-InIcons/Grass.png")
-        else:
-            return QPixmap(":/built-InIcons/MCSL2.png")
+        return (
+            QPixmap(":/built-InIcons/file.svg")
+            if not isDir
+            else QPixmap(":/built-InIcons/folder.svg")
+        )
 
-    def initMCSLAPIDownloadWidget(self, n: int):
-        """
-        初始化MCSLAPI模式下的UI\n
-        n 代表第几种类型\n
-        下方循环的 i 代表次数
-        """
+    def initMCSLAPIDownloadWidget(self):
+        """初始化MCSLAPI模式下的UI"""
         self.releaseMCSLAPIMemory()
         self.refreshMCSLAPIBtn.setEnabled(True)
-        try:
-            if type(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"]) == list:
-                for i in range(
-                    len(downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"])
-                ):
-                    self.tmpSingleMCSLAPIDownloadWidget = singleMCSLAPIDownloadWidget()
-                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setPixmap(
-                        self.getMCSLAPIDownloadIcon(downloadType=n)
-                    )
-                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIPixmapLabel.setFixedSize(
-                        QSize(60, 60)
-                    )
-                    self.tmpSingleMCSLAPIDownloadWidget.fileTitle.setText(
-                        downloadVariables.MCSLAPIDownloadUrlDict[n]["downloadFileTitles"][i]
-                    )
-                    self.tmpSingleMCSLAPIDownloadWidget.fileName.setText(
-                        f"{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileNames'][i]}.{downloadVariables.MCSLAPIDownloadUrlDict[n]['downloadFileFormats'][i]}"
-                    )
-                    self.tmpSingleMCSLAPIDownloadWidget.setObjectName(f"DownloadWidget{i}..{n}")
-                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.setObjectName(
-                        f"DownloadBtn{i}..{n}"
-                    )
-                    self.tmpSingleMCSLAPIDownloadWidget.MCSLAPIDownloadBtn.clicked.connect(
-                        self.downloadMCSLAPIFile
-                    )
-                    self.MCSLAPILayoutList[n].addWidget(self.tmpSingleMCSLAPIDownloadWidget)
-                self.MCSLAPILayoutList[n].addSpacerItem(self.scrollAreaSpacer)
-            else:
-                self.showMCSLAPIFailedWidget()
-        except TypeError:
-            self.showMCSLAPIFailedWidget()
+        downloadDict = downloadVariables.MCSLAPIDownloadUrlDict
+        # try:
+        for i in range(downloadDict["total"]):
+            self.MCSLAPIScrollAreaLayout.addWidget(
+                MCSLAPIDownloadWidget(
+                    link=f"/{downloadDict['name'][i]}"
+                    if downloadDict["is_dir"][i]
+                    else f"/{self.MCSLAPIBreadcrumbBar.currentItem().routeKey}",
+                    name=f"/{downloadDict['name'][i]}" if not downloadDict["is_dir"][i] else "",
+                    size=downloadDict["size"][i] if not downloadDict["is_dir"][i] else "-",
+                    pixmap=self.getMCSLAPIDownloadIcon(downloadDict["is_dir"][i]),
+                    downloadSlot=self.downloadMCSLAPIFile
+                    if not downloadDict["is_dir"][i]
+                    else lambda: self.getMCSLAPI(downloadDict["name"][i]),
+                )
+            )
+        self.MCSLAPIScrollAreaLayout.addSpacerItem(self.scrollAreaSpacer)
+        # except TypeError:
+        #     self.showMCSLAPIFailedWidget()
 
     def downloadMCSLAPIFile(self):
         """下载MCSLAPI文件"""
@@ -1036,11 +772,9 @@ class DownloadPage(QWidget):
                 box.exec()
                 return
         sender = self.sender()
-        idx = int(sender.objectName().split("..")[-1])
-        idx2 = int(sender.objectName().split("..")[0].split("n")[-1])
-        uri = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileURLs"][idx2]
-        fileName = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileNames"][idx2]
-        fileFormat = downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileFormats"][idx2]
+        uri = sender.property("link")
+        fileName = sender.property("name").split(".")[0]
+        fileFormat = sender.property("name").split(".")[1]
         # 判断文件是否存在
         # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
         self.checkDownloadFileExists(
@@ -1409,7 +1143,7 @@ class DownloadPage(QWidget):
         """请求FastMirror API"""
         self.releasePolarsAPIMemory()
         self.releasePolarsAPIMemory(1)
-        workThread = self.fetchFastMirrorAPIThreadFactory.create(
+        workThread = self.fetchFMAPIThreadFactory.create(
             _singleton=True, finishSlot=self.updateFastMirrorAPIDict
         )
         if workThread.isRunning():
@@ -1426,7 +1160,7 @@ class DownloadPage(QWidget):
 
     def getFastMirrorAPICoreVersion(self, name, mcVersion):
         """请求FastMirror API 核心的版本"""
-        workThread = self.fetchFastMirrorAPICoreVersionThreadFactory.create(
+        workThread = self.fetchFMAPICoreVersionThreadFactory.create(
             name=name,
             mcVersion=mcVersion,
             _singleton=True,
@@ -1478,7 +1212,9 @@ class DownloadPage(QWidget):
         i = InfoBar.error(
             title=self.tr("错误"),
             content=self.tr(
-                "获取FastMirror API失败！\n尝试检查网络后，请再尝试刷新。\n或者，点击旁边的按钮看看你是不是暂时达到请求限制了。"
+                "获取FastMirror API失败！\n \
+                    尝试检查网络后，请再尝试刷新。\n \
+                        或者，点击旁边的按钮看看你是不是暂时达到请求限制了。"
             ),
             orient=Qt.Horizontal,
             isClosable=False,

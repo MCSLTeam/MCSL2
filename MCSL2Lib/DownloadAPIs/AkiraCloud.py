@@ -108,30 +108,30 @@ class AkiraCloudDownloadURLParser:
 class FetchAkiraTypeThread(QThread):
     fetchSignal = pyqtSignal(list)
 
-    def __init__(self, FinishSlot: Callable = ...):
+    def __init__(self, finishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.Data = None
-        if FinishSlot is not ...:
-            self.fetchSignal.connect(FinishSlot)
+        self.data = None
+        if finishSlot is not ...:
+            self.fetchSignal.connect(finishSlot)
 
     def run(self):
         self.fetchSignal.emit(AkiraCloudDownloadURLParser.getDownloadTypeList())
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchAkiraCoreThread(QThread):
     fetchSignal = pyqtSignal(dict)
 
-    def __init__(self, coreType, FinishSlot: Callable = ...):
+    def __init__(self, coreType, finishSlot: Callable = ...):
         super().__init__()
         self._id = None
-        self.Data = None
+        self.data = None
         self.coreType = coreType
-        if FinishSlot is not ...:
-            self.fetchSignal.connect(FinishSlot)
+        if finishSlot is not ...:
+            self.fetchSignal.connect(finishSlot)
 
     def run(self):
         self.fetchSignal.emit(
@@ -139,7 +139,7 @@ class FetchAkiraCoreThread(QThread):
         )
 
     def getData(self):
-        return self.Data
+        return self.data
 
 
 class FetchAkiraTypeThreadFactory:
@@ -167,7 +167,7 @@ class FetchAkiraCoreThreadFactory:
             if self.singletonThread is not None and self.singletonThread.isRunning():
                 return self.singletonThread
             else:
-                thread = FetchAkiraCoreThread(coreType=coreType, FinishSlot=finishSlot)
+                thread = FetchAkiraCoreThread(coreType=coreType, finishSlot=finishSlot)
                 self.singletonThread = thread
                 return thread
         else:

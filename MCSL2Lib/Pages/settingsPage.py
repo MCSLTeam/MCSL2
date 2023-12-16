@@ -504,7 +504,7 @@ class SettingsPage(QWidget):
         self.subTitleLabel.setText(self.tr("自定义你的MCSL2。"))
         self.aboutContent.setText(
             self.tr(
-                "MCSL2是一个开源非营利性项目，遵循GNU General Public License Version 3.0开源协议。\n"
+                "MCSL2是一个开源非营利性项目，遵循GNU General Public License 3.0开源协议。\n"
             )
             + self.tr("任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n")
             + self.tr(

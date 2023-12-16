@@ -56,7 +56,7 @@ from MCSL2Lib.Controllers import javaDetector
 from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Controllers.settingsController import cfg
-from MCSL2Lib.Resources.icons import *
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea  # noqa: F401
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
@@ -1516,7 +1516,7 @@ class ServerManagerPage(QWidget):
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(
             self, "forgeInstaller"
-        ):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
+        ):  # 有可能创建forgeInstaller就抛出了异常(如invalid forge installer等),故需要判断是否初始化
             del self.forgeInstaller
         editServerVariables.resetToDefault()  # 重置
 

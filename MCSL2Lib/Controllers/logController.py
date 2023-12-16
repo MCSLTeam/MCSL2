@@ -4,7 +4,7 @@ from loguru import logger as loguru_logger
 from os import path as osp, getpid
 from typing import Optional
 from traceback import format_exception
-from datetime import datetime
+from datetime import datetime  # noqa: F811
 from qfluentwidgets import __version__ as pfwVer
 from psutil import Process
 from platform import (
@@ -34,14 +34,14 @@ class _MCSL2Logger:
             format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
         )
         self.info(
-            f"\nMCSL2 - 日志\n本次启动时刻：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n{genSysReport()}"
+            f"\nMCSL2 - 日志\n本次启动时刻：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n{genSysReport()}"  # noqa: E501
         )
 
     def _getLogFile(self) -> str:
         return osp.join("MCSL2/Logs", f"MCSL2_{self.time}.log")
 
     def _template(self, caller_info, msg) -> str:
-        return f"{caller_info['module']}.{caller_info['function']}, at line {caller_info['line']} | {msg}"
+        return f"{caller_info['module']}.{caller_info['function']}, at line {caller_info['line']} | {msg}"  # noqa: E501
 
     def info(self, msg: str):
         frame = getframeinfo(currentframe().f_back)
@@ -131,7 +131,7 @@ class _MCSL2Logger:
 
 def genSysReport() -> str:
     sysInfo = (
-        f"{systemType()} {'11' if int(systemVersion().split('.')[-1]) >= 22000 else '10'} {systemVersion()}"
+        f"{systemType()} {'11' if int(systemVersion().split('.')[-1]) >= 22000 else '10'} {systemVersion()}"  # noqa: E501
         if systemType() == "Windows" and systemRelease() == "10"
         else f"{systemType()} {systemRelease()}"
     )

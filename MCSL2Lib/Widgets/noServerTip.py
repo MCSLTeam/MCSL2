@@ -27,7 +27,7 @@ from qfluentwidgets import (
     SubtitleLabel,
     PixmapLabel,
 )
-from MCSL2Lib.Resources.icons import *  # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 
 
 class NoServerWidget(QWidget):

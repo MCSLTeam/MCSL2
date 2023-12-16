@@ -29,7 +29,6 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QFrame,
     QFileDialog,
-    QStackedWidget,
 )
 from qfluentwidgets import (
     ComboBox,
@@ -51,7 +50,7 @@ from qfluentwidgets import (
 
 from MCSL2Lib.Controllers import javaDetector
 
-# from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
+from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget as QStackedWidget
 from MCSL2Lib.Controllers.serverController import MojangEula
 from MCSL2Lib.Controllers.serverImporter import NoShellArchivesImporter
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
@@ -1186,33 +1185,37 @@ class ConfigurePage(QWidget):
         self.extendedMinMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.extendedMaxMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.extendedServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
-        self.extendedOutputDeEncodingComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
+        self.extendedOutputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI(推荐)"),
+        ])
         self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
-        self.extendedInputDeEncodingComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
+        self.extendedInputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI(推荐)"),
+        ])
         self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
         self.extendedMemUnitComboBox.addItems(["M", "G"])
         self.extendedMemUnitComboBox.setCurrentIndex(0)
         # 导入
         self.importSubtitleLabel.setText(self.tr("导入"))
         self.importNewServerFirstGuideTitle.setText(self.tr("  请选择导入服务器的方式："))
-        self.importNewServerTypeComboBox.addItems(
-            [
-                self.tr("选择一项"),
-                self.tr("导入 不含开服脚本的 完整的 服务器"),
-                self.tr("导入 含开服脚本的 完整的 服务器"),
-                self.tr("导入 服务器 存档(没有开服脚本、没有服务器核心)"),
-                self.tr("导入 MCSL 1 的服务器"),
-                self.tr("导入 MCSL 2 的服务器"),
-                self.tr("导入 MSL 的服务器"),
-                self.tr("导入 灵工艺我的世界「轻」开服器 的服务器"),
-                self.tr("导入 MCSManager 8 的服务器"),
-                self.tr("导入 MCSManager 9 的服务器"),
-            ]
-        )
+        self.importNewServerTypeComboBox.addItems([
+            self.tr("选择一项"),
+            self.tr("导入 不含开服脚本的 完整的 服务器"),
+            self.tr("导入 含开服脚本的 完整的 服务器"),
+            self.tr("导入 服务器 存档(没有开服脚本、没有服务器核心)"),
+            self.tr("导入 MCSL 1 的服务器"),
+            self.tr("导入 MCSL 2 的服务器"),
+            self.tr("导入 MSL 的服务器"),
+            self.tr("导入 灵工艺我的世界「轻」开服器 的服务器"),
+            self.tr("导入 MCSManager 8 的服务器"),
+            self.tr("导入 MCSManager 9 的服务器"),
+        ])
         # 引导页绑定
         self.noobNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
         self.extendedNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
@@ -1876,9 +1879,9 @@ class ConfigurePage(QWidget):
                     logDecode=cfg.get(cfg.outputDeEncoding),
                 )
 
-                configureServerVariables.extraData[
-                    "forge_version"
-                ] = self.forgeInstaller.forgeVersion
+                configureServerVariables.extraData["forge_version"] = (
+                    self.forgeInstaller.forgeVersion
+                )
                 self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
 
                 # init installerLogViewer
@@ -2024,7 +2027,8 @@ class ConfigurePage(QWidget):
                 icon=FIF.INFO,
                 title=self.tr("功能提醒"),
                 content=self.tr(
-                    "您开启了“创建时自动同意服务器的Eula”功能。\n如需要查看Minecraft Eula，请点击右边的按钮。"
+                    "您开启了“创建时自动同意服务器的Eula”功能。\n \
+                        如需要查看Minecraft Eula，请点击右边的按钮。"
                 ),
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -2048,7 +2052,7 @@ class ConfigurePage(QWidget):
         if exitCode == 0:
             self.postNewServerDispatcher(
                 exit0Msg=exit0Msg
-            )  # 后处理各种应serverType不同而引起的差异性，例如serverType==forge时，需要执行自动安装等等...
+            )  # 后处理各种应serverType不同而引起的差异性，如serverType==forge时，需要执行自动安装等
 
             if cfg.get(cfg.clearAllNewServerConfigInProgram):
                 configureServerVariables.resetToDefault()
@@ -2129,7 +2133,7 @@ class ConfigurePage(QWidget):
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(
             self, "forgeInstaller"
-        ):  # 有可能在创建forgeInstaller那边就抛出了异常(例如invalid forge installer 等等),故 需要判断是否已经初始化
+        ):  # 有可能创建forgeInstaller就抛出了异常(如invalid forge installer等),故需要判断是否初始化
             del self.forgeInstaller
         configureServerVariables.resetToDefault()  # 重置
 

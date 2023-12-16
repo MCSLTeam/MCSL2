@@ -33,7 +33,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <spacer name="horizontalSpacer">
+    <spacer name="leftSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -58,30 +58,68 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>45</width>
-       <height>45</height>
+       <width>40</width>
+       <height>40</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>45</width>
-       <height>45</height>
+       <width>40</width>
+       <height>40</height>
       </size>
      </property>
     </widget>
    </item>
    <item>
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="BodyLabel" name="fileName">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="sizeHint" stdset="0">
+     <property name="text">
+      <string>[file name]</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="StrongBodyLabel" name="fileSizeTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>大小：</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="BodyLabel" name="fileSize">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
       <size>
-       <width>40</width>
-       <height>20</height>
+       <width>70</width>
+       <height>0</height>
       </size>
      </property>
-    </spacer>
+     <property name="maximumSize">
+      <size>
+       <width>70</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>[size]</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -102,6 +140,16 @@
    <extends>CardWidget</extends>
    <header>qfluentwidgets</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>StrongBodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

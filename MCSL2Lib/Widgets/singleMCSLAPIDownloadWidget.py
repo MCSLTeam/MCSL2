@@ -15,34 +15,27 @@ Download Item Widget for MCSLAPI.
 """
 
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QWidget, QSpacerItem, QSizePolicy, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QSpacerItem, QSizePolicy, QHBoxLayout
 from qfluentwidgets import (
     BodyLabel,
-    SimpleCardWidget,
+    CardWidget,
     PixmapLabel,
-    PrimaryPushButton,
-    SubtitleLabel,
+    StrongBodyLabel,
 )
 
 
-class singleMCSLAPIDownloadWidget(SimpleCardWidget):
-    def __init__(self):
+class MCSLAPIDownloadWidget(CardWidget):
+    def __init__(self, link, name, size, pixmap, downloadSlot):
         super().__init__()
-
-        # self.setObjectName("singleMCSLAPIDownloadWidget")
-
-        self.resize(656, 120)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QSize(656, 120))
-        self.setMaximumSize(QSize(16777215, 120))
-        self.setWindowTitle("")
+        self.setMinimumSize(QSize(656, 50))
+        self.setMaximumSize(QSize(16777215, 88))
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
-
         spacerItem = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.MCSLAPIPixmapLabel = PixmapLabel(self)
@@ -51,45 +44,39 @@ class singleMCSLAPIDownloadWidget(SimpleCardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.MCSLAPIPixmapLabel.sizePolicy().hasHeightForWidth())
         self.MCSLAPIPixmapLabel.setSizePolicy(sizePolicy)
+        self.MCSLAPIPixmapLabel.setFixedSize(QSize(40, 40))
         self.MCSLAPIPixmapLabel.setObjectName("MCSLAPIPixmapLabel")
-
         self.horizontalLayout.addWidget(self.MCSLAPIPixmapLabel)
-        self.MCSLAPIDownloadInfoWidget = QWidget(self)
-        self.MCSLAPIDownloadInfoWidget.setObjectName("MCSLAPIDownloadInfoWidget")
-
-        self.verticalLayout = QVBoxLayout(self.MCSLAPIDownloadInfoWidget)
-        self.verticalLayout.setObjectName("verticalLayout")
-
-        self.fileTitle = SubtitleLabel(self.MCSLAPIDownloadInfoWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fileTitle.sizePolicy().hasHeightForWidth())
-        self.fileTitle.setSizePolicy(sizePolicy)
-        self.fileTitle.setObjectName("fileTitle")
-
-        self.verticalLayout.addWidget(self.fileTitle)
-        self.fileName = BodyLabel(self.MCSLAPIDownloadInfoWidget)
+        self.fileName = BodyLabel(self)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.fileName.sizePolicy().hasHeightForWidth())
         self.fileName.setSizePolicy(sizePolicy)
         self.fileName.setObjectName("fileName")
-
-        self.verticalLayout.addWidget(self.fileName)
-        self.horizontalLayout.addWidget(self.MCSLAPIDownloadInfoWidget)
-        self.MCSLAPIDownloadBtn = PrimaryPushButton(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        self.horizontalLayout.addWidget(self.fileName)
+        self.fileSizeTitle = StrongBodyLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIDownloadBtn.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIDownloadBtn.setSizePolicy(sizePolicy)
-        self.MCSLAPIDownloadBtn.setMinimumSize(QSize(0, 50))
-        self.MCSLAPIDownloadBtn.setMaximumSize(QSize(16777215, 16777215))
-        # self.MCSLAPIDownloadBtn.setObjectName("MCSLAPIDownloadBtn")
-
-        self.horizontalLayout.addWidget(self.MCSLAPIDownloadBtn)
-        # self.fileTitle.setText("[文件标题]")
-        # self.fileName.setText("[文件名]")
-        self.MCSLAPIDownloadBtn.setText(self.tr("下载"))
+        sizePolicy.setHeightForWidth(self.fileSizeTitle.sizePolicy().hasHeightForWidth())
+        self.fileSizeTitle.setSizePolicy(sizePolicy)
+        self.fileSizeTitle.setObjectName("fileSizeTitle")
+        self.horizontalLayout.addWidget(self.fileSizeTitle)
+        self.fileSize = BodyLabel(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.fileSize.sizePolicy().hasHeightForWidth())
+        self.fileSize.setSizePolicy(sizePolicy)
+        self.fileSize.setMinimumSize(QSize(70, 0))
+        self.fileSize.setMaximumSize(QSize(70, 16777215))
+        self.fileSize.setObjectName("fileSize")
+        self.horizontalLayout.addWidget(self.fileSize)
+        self.fileSize.setText(size)
+        self.fileName.setText(name)
+        self.setProperty("link", f"https://file.mcsl.com.cn/d/alistfile/MCSLAPI{link}{name}")
+        self.setProperty("name", name)
+        self.MCSLAPIPixmapLabel.setPixmap(pixmap)
+        self.MCSLAPIPixmapLabel.setFixedSize(QSize(40, 40))
+        self.clicked.connect(downloadSlot)

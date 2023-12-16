@@ -149,7 +149,7 @@ class singlePluginWidget(CardWidget):
         self.horizontalLayout.addWidget(self.deleteBtn)
 
     def setPluginIcon(self, icon):
-        if type(self.pluginIcon) == PixmapLabel:
+        if type(self.pluginIcon) is PixmapLabel:
             self.pluginIcon.setPixmap(QPixmap(icon))
         else:
             self.pluginIcon.setIcon(icon)

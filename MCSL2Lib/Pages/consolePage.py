@@ -284,9 +284,12 @@ class ConsolePage(QWidget):
         self.subTitleLabel.setText(self.tr("直观地观察你的服务器的输出，资源占用等。"))
         self.titleLabel.setText(self.tr("终端"))
         self.quickMenuTitleLabel.setText(self.tr("快捷菜单："))
-        self.difficulty.addItems(
-            [self.tr("和平"), self.tr("简单"), self.tr("普通"), self.tr("困难")]
-        )
+        self.difficulty.addItems([
+            self.tr("和平"),
+            self.tr("简单"),
+            self.tr("普通"),
+            self.tr("困难"),
+        ])
         self.gamemode.setText(self.tr("游戏模式"))
         self.whiteList.setText(self.tr("白名单"))
         self.op.setText(self.tr("管理员"))
@@ -346,10 +349,10 @@ class ConsolePage(QWidget):
         fmt = QTextCharFormat()
         # fmt: off
         greenText = ["INFO", "Info", "info", "tip", "tips", "hint", "HINT", "提示"]
-        orangeText = ["WARN", "Warning", "warn", "alert", "ALERT", "Alert", "CAUTION", "Caution", "警告"]
-        redText = ["ERR", "Err", "Fatal", "FATAL", "Critical", "Danger", "DANGER", "错", "at java", "at net", "at oolloo", "Caused by", "at sun"]
+        orangeText = ["WARN", "Warning", "warn", "alert", "ALERT", "Alert", "CAUTION", "Caution", "警告"]  # noqa: E501
+        redText = ["ERR", "Err", "Fatal", "FATAL", "Critical", "Danger", "DANGER", "错", "at java", "at net", "at oolloo", "Caused by", "at sun"]  # noqa: E501
         blueText = ["DEBUG", "Debug", "debug", "调试", "TEST", "Test", "Unknown command", "MCSL2"]
-        color = [QColor(52, 185, 96), QColor(196, 139, 33), QColor(214, 39, 21), QColor(22, 122, 232)]
+        color = [QColor(52, 185, 96), QColor(196, 139, 33), QColor(214, 39, 21), QColor(22, 122, 232)]  # noqa: E501
         for keyword in greenText:
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[0]))
@@ -392,7 +395,7 @@ class ConsolePage(QWidget):
             .replace("Forge Version Check", self.tr("Forge版本检查"))
             .replace("ModLauncher running: args", self.tr("ModLauncher运行中: 参数"))
             .replace("All chunks are saved", self.tr("所有区块已保存"))
-            .replace("Saving the game (this may take a moment!)", self.tr("保存游戏存档中（可能需要一些时间）"))
+            .replace("Saving the game (this may take a moment!)", self.tr("保存游戏存档中（可能需要一些时间）"))  # noqa: E501
             .replace("Saved the game", self.tr("已保存游戏存档"))
         )
         if "Disabling terminal, you're running in an unsupported environment." in serverOutput:
@@ -424,11 +427,11 @@ class ConsolePage(QWidget):
                 ip = "127.0.0.1"
             port = serverVariables.serverProperties.get("server-port", 25565)
             self.serverOutput.appendPlainText(
-                self.tr("[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。")
+                self.tr("[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。")  # noqa: E501
             )
             InfoBar.success(
                 title=self.tr("提示"),
-                content=self.tr("服务器启动完毕！\n如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),
+                content=self.tr("服务器启动完毕！\n如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),  # noqa: E501
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
@@ -440,7 +443,7 @@ class ConsolePage(QWidget):
             fmt.setForeground(QBrush(color[1]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
             self.serverOutput.appendPlainText(
-                self.tr("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")
+                self.tr("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")  # noqa: E501
             )
             InfoBar.warning(
                 title=self.tr("警告"),
@@ -482,7 +485,7 @@ class ConsolePage(QWidget):
 
             try:
                 # 若不成功，尝试提取玩家名字
-                # [11:49:05] [Server thread/INFO] [minecraft/PlayerList]: Ares_Connor[/127.0.0.1:63854] logged in with entity id 229 at (7.258252218995321, 65.0, 11.09627995098097)
+                # [11:49:05] [Server thread/INFO] [minecraft/PlayerList]: Ares_Connor[/127.0.0.1:63854] logged in with entity id 229 at (7.258252218995321, 65.0, 11.09627995098097)  # noqa: E501
                 # 提取玩家名字
                 name = serverOutput
                 name = name.split("]: ")[1].split("[/")[0]
@@ -496,13 +499,13 @@ class ConsolePage(QWidget):
         elif " left the game" in serverOutput:
             try:
                 # fmt: off
-                self.playersList.pop(self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0])))
+                self.playersList.pop(self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0])))  # noqa: E501
                 return
             except Exception:
                 pass
 
             try:  # 若不成功，尝试提取玩家名字
-                # [11:53:52] [Server thread/INFO] [minecraft/DedicatedServer]: Ares_Connor left the game
+                # [11:53:52] [Server thread/INFO] [minecraft/DedicatedServer]: Ares_Connor left the game  # noqa: E501
                 name = serverOutput
                 name = name.split("]: ")[1].split(" left the game")[0].strip()
                 self.playersList.pop(self.playersList.index(name))
@@ -582,9 +585,12 @@ class ConsolePage(QWidget):
         """快捷菜单-游戏模式"""
         if ServerHandler().isServerRunning():
             gamemodeWidget = playersController()
-            gamemodeWidget.mode.addItems(
-                [self.tr("生存"), self.tr("创造"), self.tr("冒险"), self.tr("旁观")]
-            )
+            gamemodeWidget.mode.addItems([
+                self.tr("生存"),
+                self.tr("创造"),
+                self.tr("冒险"),
+                self.tr("旁观"),
+            ])
             gamemodeWidget.mode.setCurrentIndex(0)
             gamemodeWidget.who.textChanged.connect(
                 lambda: self.lineEditChecker(text=gamemodeWidget.who.text())

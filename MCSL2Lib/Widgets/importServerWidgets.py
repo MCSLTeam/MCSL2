@@ -32,7 +32,7 @@ from qfluentwidgets import (
     ListWidget,
     TreeWidget,
 )
-from MCSL2Lib.Resources.icons import *  # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 
 

@@ -51,7 +51,7 @@ class ServerErrorHandler:
 
             elif "Unsupported Java detected" in errMsg:
                 cls.msg += "该服务器正在使用的Java与服务器不兼容。\n"
-                cls.msg += f"请使用{errMsg[errMsg.index('Only up to ') + 11: errMsg.index('Only up to ') + 18]}\n"
+                cls.msg += f"请使用{errMsg[errMsg.index('Only up to ') + 11: errMsg.index('Only up to ') + 18]}\n"  # noqa: E501
 
             elif "requires running the server with" in errMsg:
                 cls.msg += "该服务器正在使用的Java与服务器不匹配。\n"
@@ -109,7 +109,7 @@ class ServerErrorHandler:
                 cls.msg += "服务器下载原版核心文件失败，请检查网络，必要的情况下请使用代理。\n"
 
             elif 'Exception in thread "main"' in errMsg:
-                cls.msg += '服务端给出了如下报错：\nException in thread "main"\n请尝试更换Java版本或服务端。'
+                cls.msg += '服务端给出了如下报错：\nException in thread "main"\n请尝试更换Java版本或服务端。'  # noqa: E501
 
         if "Could not load" in errMsg and "plugin" in errMsg:
             cls.msg += "无法加载下列插件：\n"
@@ -128,7 +128,7 @@ class ServerErrorHandler:
             )
 
         elif "Encountered an unexpected exception" in errMsg:
-            cls.msg += "服务器出现意外崩溃，可能是由于模组冲突，请检查您的模组列表。\n如果使用的是整合包，请使用整合包制作方提供的服务器专用包开服。\n"
+            cls.msg += "服务器出现意外崩溃，可能是由于模组冲突，请检查您的模组列表。\n如果使用的是整合包，请使用整合包制作方提供的服务器专用包开服。\n"  # noqa: E501
 
         elif "Mod" in errMsg and "requires" in errMsg:
             if "&" in errMsg:

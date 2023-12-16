@@ -161,7 +161,7 @@
    <item row="3" column="2">
     <widget class="PopUpAniStackedWidget" name="downloadStackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="downloadWithFastMirror">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -373,14 +373,14 @@
         </widget>
        </item>
        <item row="1" column="0" colspan="2">
-        <widget class="SmoothScrollArea" name="MCSLAPISpigotScrollArea">
+        <widget class="SmoothScrollArea" name="MCSLAPIScrollArea">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="MCSLAPISpigotScrollAreaWidgetContents">
+         <widget class="QWidget" name="MCSLAPIScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -397,7 +397,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
-            <layout class="QVBoxLayout" name="MCSLAPISpigotScrollAreaLayout"/>
+            <layout class="QVBoxLayout" name="MCSLAPIScrollAreaLayout"/>
            </item>
           </layout>
          </widget>
@@ -471,7 +471,7 @@
             <x>0</x>
             <y>0</y>
             <width>170</width>
-            <height>20</height>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_6">
@@ -571,8 +571,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>47</width>
-            <height>20</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
@@ -695,7 +695,7 @@
             <x>0</x>
             <y>0</y>
             <width>170</width>
-            <height>20</height>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
@@ -728,8 +728,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>47</width>
-            <height>20</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_8">

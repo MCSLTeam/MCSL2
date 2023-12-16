@@ -189,7 +189,7 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",  # noqa: E501
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
@@ -257,7 +257,7 @@ class ForgeInstaller(Installer):
             self.installPlan = ForgeInstaller.InstallPlan.PlanA
         else:
             raise InstallerError(
-                f"不支持的自动安装版本:{self._mcVersion}\nMCSL2仅支持Minecraft 1.8及以上版本的Forge安装"
+                f"不支持的自动安装版本:{self._mcVersion}\nMCSL2仅支持Minecraft 1.8及以上版本的Forge自动安装"  # noqa: E501
             )
 
     def getInstallerData(self, jarFile):
@@ -515,7 +515,7 @@ class ForgeInstaller(Installer):
             return None
         try:
             _profile = json.loads(fileFile.read("install_profile.json"))
-        except:
+        except Exception:
             return None
 
         # fmt: off

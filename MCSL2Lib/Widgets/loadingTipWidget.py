@@ -30,7 +30,7 @@ from qfluentwidgets import (
     PixmapLabel,
     PrimaryPushButton,
 )
-from MCSL2Lib.Resources.icons import *  # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 
 
 class LoadingTip(QWidget):

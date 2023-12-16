@@ -68,7 +68,7 @@ from MCSL2Lib.Pages.selectJavaPage import SelectJavaPage
 from MCSL2Lib.Pages.selectNewJavaPage import SelectNewJavaPage
 from MCSL2Lib.Pages.serverManagerPage import ServerManagerPage
 from MCSL2Lib.Pages.settingsPage import SettingsPage
-from MCSL2Lib.Resources.icons import *  # noqa: F401
+from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.verification import VerifyFluentWindowBase
