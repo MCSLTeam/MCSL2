@@ -51,6 +51,9 @@ Icons/icons_rc.py
 tmp.py
 1.py
 
+# useless egg info
+*.egg-info
+
 # secret
 Tools/verification.py
 Tools/MCSL Preview Permission Manager.exe

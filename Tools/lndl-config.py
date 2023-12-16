@@ -3,6 +3,7 @@ import traceback
 from typing import Tuple
 from lib_not_dr.nuitka import raw_config_type, nuitka_config_type
 
+
 def get_version() -> Tuple[str, str]:
     # 尽量不要写死在构建脚本里
     # 用点邪门的方法
@@ -21,11 +22,12 @@ def get_version() -> Tuple[str, str]:
         from MCSL2Lib import VERSION, BUILD_VERSION
     return (VERSION, BUILD_VERSION)
 
+
 def main(raw_config: raw_config_type) -> nuitka_config_type:
-    config: nuitka_config_type = raw_config['cli']  # type: ignore
+    config: nuitka_config_type = raw_config["cli"]  # type: ignore
 
     versions = get_version()
-    config['product-version'] = versions[0]
-    config['file-version'] = versions[1]
+    config["product-version"] = versions[0]
+    config["file-version"] = versions[1]
 
     return config

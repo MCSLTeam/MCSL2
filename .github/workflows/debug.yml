@@ -1,25 +1,18 @@
-name: Build and Release
+name: 手动 debug build
 
 on: workflow_dispatch
-
-permissions: write-all
 
 jobs:
   Windows:
     strategy:
       fail-fast: false
 
-      matrix:
-        architecture:
-          - x64
-          - x86
-
     runs-on: windows-latest
 
     steps:
 
       - name: Check-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python 3.8
         uses: actions/setup-python@v4
@@ -58,7 +51,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: MCSL2-windows-${{ matrix.architecture }}
+          name: MCSL2-windows
           path: |
             build/MCSL2.dist/**/*
 
@@ -66,16 +59,11 @@ jobs:
     strategy:
       fail-fast: false
 
-      matrix:
-        architecture:
-          - x64
-          - x86
-
     runs-on: ubuntu-latest
 
     steps:
       - name: Check-out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Python 3.8
         uses: actions/setup-python@v4
@@ -120,57 +108,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: MCSL2-ubuntu-${{ matrix.architecture }}
+          name: MCSL2-ubuntu
           path: |
             build/MCSL2.dist/**/*
-
-  Release:
-    runs-on: ubuntu-latest
-
-    needs:
-      - Windows
-      - Linux
-
-    steps:
-
-      - uses: szenius/set-timezone@v1.0
-        with:
-          timezoneLinux: 'Asia/Shanghai'
-
-      - name: Install Tools
-        run: sudo apt install p7zip-full -y
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-
-      - name: Check-out repository
-        uses: actions/checkout@v4
-        with:
-          path: repo
-
-      - name: Set Environment Variable
-        run: |
-          cd repo
-          mcsl2_version=$(python -c "from MCSL2Lib import MCSL2VERSION; print(MCSL2VERSION)")
-          echo "MCSL2_VERSION=$mcsl2_version" >> $GITHUB_ENV
-          cd ..
-      
-      - name: Compress Artifacts
-        run: |
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: ./repo/ChangeLog.md
-          prerelease: false
-          draft: false
-          tag_name: v${{ env.MCSL2_VERSION }}
-          files: |
-            *.zip
-
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

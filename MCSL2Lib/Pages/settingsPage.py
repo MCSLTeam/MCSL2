@@ -432,7 +432,9 @@ class SettingsPage(QWidget):
         self.joinQQGroup.setObjectName("joinQQGroup")
 
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
-        self.generateSysReport = PrimaryPushButton(icon=FIF.DICTIONARY, text="系统报告", parent=self.aboutContentWidget)
+        self.generateSysReport = PrimaryPushButton(
+            icon=FIF.DICTIONARY, text="系统报告", parent=self.aboutContentWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
