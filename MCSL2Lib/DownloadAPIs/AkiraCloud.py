@@ -96,13 +96,11 @@ class AkiraCloudDownloadURLParser:
     @classmethod
     def _parseHTML(cls, htmlContent: str):
         parsedList = AkiraHTMLParser().feed(htmlContent)
-        return list(
-            [
-                item
-                for item in parsedList
-                if not re.search(re.compile(r"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}|\d+\sKB"), item)
-            ]
-        )
+        return list([
+            item
+            for item in parsedList
+            if not re.search(re.compile(r"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}|\d+\sKB"), item)
+        ])
 
 
 class FetchAkiraTypeThread(QThread):

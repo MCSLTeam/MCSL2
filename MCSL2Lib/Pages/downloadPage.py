@@ -590,14 +590,16 @@ class DownloadPage(QWidget):
         self.akiraTitle.setText("核心类型")
 
         self.MCSLAPIBreadcrumbBar.addItem("MCSLAPI", "MCSLAPI")
-        self.refreshMCSLAPIBtn.clicked.connect(self.getMCSLAPI)
+        self.refreshMCSLAPIBtn.clicked.connect(
+            lambda: self.getMCSLAPI(f"/{self.MCSLAPIBreadcrumbBar.currentItem().routeKey}")
+        )
         self.refreshPolarsAPIBtn.clicked.connect(self.getPolarsAPI)
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
         self.refreshMCSLAPIBtn.setEnabled(False)
         self.scrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
         self.openDownloadFolderBtn.clicked.connect(lambda: openLocalFile(".\\MCSL2\\Downloads\\"))
-
+        self.MCSLAPIBreadcrumbBar.currentIndexChanged.connect(self.getMCSLAPI)
         self.openDownloadEntriesBtn.setIcon(FIF.MENU)
         self.openDownloadEntriesBtn.clicked.connect(
             lambda: {
@@ -616,11 +618,7 @@ class DownloadPage(QWidget):
         if currentChanged == 3:
             self.subTitleLabel.setText(
                 self.tr(
-                    f"Aria2引擎高速驱动！ - 当前下载源：{
-                        settingsVariables.downloadSourceTextList[
-                            settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
-                        ]
-                    }"
+                    f"Aria2引擎高速驱动！ - 当前下载源：{settingsVariables.downloadSourceTextList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]}"  # noqa: E501
                 )
             )
             self.downloadStackedWidget.setCurrentWidget(
@@ -661,11 +659,9 @@ class DownloadPage(QWidget):
         elif self.downloadStackedWidget.currentIndex() == 1:
             # 如果存在列表且不为空,则不再重新获取
             if downloadVariables.MCSLAPIDownloadUrlDict:
-                idx = self.MCSLAPIStackedWidget.currentIndex()
                 if (
-                    str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"]) != "-2"
-                    or str(downloadVariables.MCSLAPIDownloadUrlDict[idx]["downloadFileTitles"])
-                    != "-1"
+                    str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-2"
+                    or str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-1"
                 ):
                     self.initMCSLAPIDownloadWidget()
                 else:
@@ -693,9 +689,18 @@ class DownloadPage(QWidget):
 
     def getMCSLAPI(self, path: str = ""):
         """请求MCSLAPI"""
+        if type(path) is int:
+            if path == 0:
+                self.refreshMCSLAPIBtn.click()
+            return
+        if path == "MCSLAPI" or path == "/MCSLAPI":
+            path = ""
         workThread = self.fetchMCSLAPIDownloadURLThreadFactory.create(
-            _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict
+            _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict, path=path
         )
+        if path != "":
+            path = path.replace("/", "")
+            self.MCSLAPIBreadcrumbBar.addItem(path, path)
         if workThread.isRunning():
             self.refreshMCSLAPIBtn.setEnabled(False)
             return
@@ -709,7 +714,6 @@ class DownloadPage(QWidget):
     def updateMCSLAPIDownloadUrlDict(self, _downloadUrlDict: dict):
         """更新获取MCSLAPI结果"""
         downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
-        print(downloadVariables.MCSLAPIDownloadUrlDict)
         if (
             str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-2"
             or str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-1"
@@ -744,12 +748,14 @@ class DownloadPage(QWidget):
                     link=f"/{downloadDict['name'][i]}"
                     if downloadDict["is_dir"][i]
                     else f"/{self.MCSLAPIBreadcrumbBar.currentItem().routeKey}",
-                    name=f"/{downloadDict['name'][i]}" if not downloadDict["is_dir"][i] else "",
+                    name=f"/{downloadDict['name'][i]}"
+                    if not downloadDict["is_dir"][i]
+                    else downloadDict["name"][i],
                     size=downloadDict["size"][i] if not downloadDict["is_dir"][i] else "-",
                     pixmap=self.getMCSLAPIDownloadIcon(downloadDict["is_dir"][i]),
                     downloadSlot=self.downloadMCSLAPIFile
                     if not downloadDict["is_dir"][i]
-                    else lambda: self.getMCSLAPI(downloadDict["name"][i]),
+                    else self.getMCSLAPI,
                 )
             )
         self.MCSLAPIScrollAreaLayout.addSpacerItem(self.scrollAreaSpacer)
@@ -773,7 +779,7 @@ class DownloadPage(QWidget):
                 return
         sender = self.sender()
         uri = sender.property("link")
-        fileName = sender.property("name").split(".")[0]
+        fileName = sender.property("name").split(".")[0].replace("/", "")
         fileFormat = sender.property("name").split(".")[1]
         # 判断文件是否存在
         # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"

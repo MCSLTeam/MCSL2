@@ -575,12 +575,18 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.editServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
         self.JVMArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
-        self.editOutputDeEncodingComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
-        self.editInputDeEncodingComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
+        self.editOutputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI(推荐)"),
+        ])
+        self.editInputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI(推荐)"),
+        ])
         self.editMemUnitComboBox.addItems([self.tr("M"), self.tr("G")])
 
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
@@ -1460,9 +1466,9 @@ class ServerManagerPage(QWidget):
                         logDecode=cfg.get(cfg.outputDeEncoding),
                         isEditing=self.serverIndex,
                     )
-                    editServerVariables.extraData[
-                        "forge_version"
-                    ] = self.forgeInstaller.forgeVersion
+                    editServerVariables.extraData["forge_version"] = (
+                        self.forgeInstaller.forgeVersion
+                    )
                     self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
                     self.forgeInstaller.asyncInstall()
                 except Exception as e:

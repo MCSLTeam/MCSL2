@@ -383,15 +383,13 @@ class ForgeInstaller(Installer):
             process = QProcess()
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
-            process.setArguments(
-                [
-                    "-jar",
-                    self.file + ".tmp",
-                    "--mirror",
-                    "https://bmclapi2.bangbang93.com/maven/",
-                    "--installServer",
-                ]
-            )
+            process.setArguments([
+                "-jar",
+                self.file + ".tmp",
+                "--mirror",
+                "https://bmclapi2.bangbang93.com/maven/",
+                "--installServer",
+            ])
             process.readyReadStandardOutput.connect(
                 lambda: self._installerLogHandler(
                     "ForgeInstaller::PlanB"
@@ -462,11 +460,9 @@ class ForgeInstaller(Installer):
                         else self.isEditing
                     ]
                     d["jvm_arg"].extend(forgeArgs)
-                    d.update(
-                        {
-                            "server_type": "forge",
-                        }
-                    )
+                    d.update({
+                        "server_type": "forge",
+                    })
                     globalServerList["MCSLServerList"].pop(
                         -1 if self.isEditing is None else self.isEditing
                     )

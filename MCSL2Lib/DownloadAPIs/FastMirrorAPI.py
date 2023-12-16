@@ -52,9 +52,7 @@ class FastMirrorAPIDownloadURLParser:
         data = []
         try:
             apiData = (
-                MCSLNetworkSession()
-                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
-                .json()
+                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
             )
         except Exception:
             return -2
@@ -88,9 +86,7 @@ class FastMirrorAPIDownloadURLParser:
         builds = []
         try:
             apiData = (
-                MCSLNetworkSession()
-                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
-                .json()
+                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
             )
         except Exception:
             return -2

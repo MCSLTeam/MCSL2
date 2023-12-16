@@ -302,9 +302,10 @@ class DownloadMessageBox(MessageBox):
             if dl.status == "complete":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
                 if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
-                    DL_EntryController().work.emit(
-                        ("addCoreEntry", {"coreName": filename, "extraData": data})
-                    )
+                    DL_EntryController().work.emit((
+                        "addCoreEntry",
+                        {"coreName": filename, "extraData": data},
+                    ))
             elif dl.status == "error":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
                 MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
@@ -467,9 +468,10 @@ class DownloadCard(SimpleCardWidget):
                     parent=self.parent().parent().parent().parent(),
                 )
                 if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
-                    DL_EntryController().work.emit(
-                        ("addCoreEntry", {"coreName": filename, "extraData": data})
-                    )
+                    DL_EntryController().work.emit((
+                        "addCoreEntry",
+                        {"coreName": filename, "extraData": data},
+                    ))
                 self.setParent(None)
                 self.deleteLater()
             elif dl.status == "error":

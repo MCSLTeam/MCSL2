@@ -567,12 +567,18 @@ class MCSLv1(QWidget):
         self.MCSLv1Save.setEnabled(False)
         self.MCSLv1ImportStatusText.setText(self.tr("未选择"))
         self.MCSLv1ValidateArgsMemUnitComboBox.addItems(["M", "G"])
-        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
-        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems(
-            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")]
-        )
+        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI(推荐)"),
+        ])
+        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI(推荐)"),
+        ])
         self.MCSLv1SaveServerNameLineEdit.textChanged.connect(
             lambda: self.MCSLv1SaveServerPrimaryPushBtn.setEnabled(
                 self.MCSLv1SaveServerNameLineEdit.text() != ""

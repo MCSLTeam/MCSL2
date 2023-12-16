@@ -50,9 +50,7 @@ class PolarsAPIDownloadURLParser:
         data = []
         try:
             apiData = (
-                MCSLNetworkSession()
-                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
-                .json()
+                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
             )
         except Exception:
             return -2
@@ -82,9 +80,7 @@ class PolarsAPIDownloadURLParser:
         cores = []
         try:
             apiData = (
-                MCSLNetworkSession()
-                .get(url=downloadAPIUrl, headers=MCSLNetworkHeaders)
-                .json()
+                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
             )
         except Exception:
             return -2
@@ -125,9 +121,7 @@ class FetchPolarsAPICoreThread(QThread):
             self.fetchSignal.connect(FinishSlot)
 
     def run(self):
-        self.fetchSignal.emit(
-            PolarsAPIDownloadURLParser.parsePolarsAPICoreUrl(coreType=self.idx)
-        )
+        self.fetchSignal.emit(PolarsAPIDownloadURLParser.parsePolarsAPICoreUrl(coreType=self.idx))
 
     def getData(self):
         return self.data

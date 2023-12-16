@@ -41,9 +41,12 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
 
-        self.entryView.setHorizontalHeaderLabels(
-            [self.tr("名称"), self.tr("类型"), self.tr("MC版本"), self.tr("构建版本")]
-        )
+        self.entryView.setHorizontalHeaderLabels([
+            self.tr("名称"),
+            self.tr("类型"),
+            self.tr("MC版本"),
+            self.tr("构建版本"),
+        ])
         self.entryView.verticalHeader().hide()
         self.entryView.setWordWrap(False)
         self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
