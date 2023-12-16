@@ -16,6 +16,7 @@ pdm.toml
 .vscode/**
 
 # build
+MCSL2.egg-info/**
 build
 Tools/OfflineBuild/**
 Servers/**

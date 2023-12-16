@@ -18,14 +18,14 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QSpacerItem, QSizePolicy, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import (
     BodyLabel,
-    CardWidget,
+    SimpleCardWidget,
     PixmapLabel,
     PrimaryPushButton,
     SubtitleLabel,
 )
 
 
-class singleMCSLAPIDownloadWidget(CardWidget):
+class singleMCSLAPIDownloadWidget(SimpleCardWidget):
     def __init__(self):
         super().__init__()
 

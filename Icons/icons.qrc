@@ -20,5 +20,7 @@
     <file>Error.svg</file>
     <file>not.svg</file>
     <file>ok.svg</file>
+    <file>file.svg</file>
+    <file>folder.svg</file>
   </qresource>
 </RCC>

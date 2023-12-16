@@ -72,21 +72,6 @@ def initializeMCSL2():
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
     )  # IO-Bound = 2*N, CPU-Bound = N + 1
-    patchPageStackedWidget(False)
-
-
-def patchPageStackedWidget(enable: bool):
-    """
-    使用美化过的PageStackedWidget
-    但是会引起:
-        QPainter::begin: A paint device can only be painted by one painter at a time.
-        QPainter::translate: Painter not active
-    """
-    if enable:
-        import qfluentwidgets.window.stacked_widget as qfluent_stacked_widget
-        from MCSL2Lib.Widgets.MCSL2PageStackedWidget import MCSL2PageStackedWidget
-
-        qfluent_stacked_widget.PopUpAniStackedWidget = MCSL2PageStackedWidget
 
 
 # 带有text的warning装饰器
