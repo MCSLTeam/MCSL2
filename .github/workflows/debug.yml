@@ -3,57 +3,56 @@ name: 手动 debug build
 on: workflow_dispatch
 
 jobs:
-  Windows:
-    strategy:
-      fail-fast: false
+  # Windows:
+  #   strategy:
+  #     fail-fast: false
 
-    runs-on: windows-latest
+  #   runs-on: windows-latest
 
-    steps:
+  #   steps:
 
-      - name: Check-out repository
-        uses: actions/checkout@v4
+  #     - name: Check-out repository
+  #       uses: actions/checkout@v4
 
-      - name: Setup Python 3.8
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirement.txt
+  #     - name: Setup Python 3.8
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.8'
+  #         cache: 'pip'
+  #         cache-dependency-path: |
+  #           requirement.txt
 
-      - name: Update Pip and Uninstall Useless Dependencies
-        shell: pwsh
-        run: |
-          python -m pip install tomli
-          python Tools/gen-requirements.py
-          python -m pip install --upgrade pip
-          python -m pip install -U -r requirements.txt
-          python -m pip uninstall numpy -y
-          python -m pip uninstall scipy -y
+  #     - name: Update Pip and Uninstall Useless Dependencies
+  #       shell: pwsh
+  #       run: |
+  #         python -m pip install tomli
+  #         python Tools/gen-requirements.py
+  #         python -m pip install --upgrade pip
+  #         python -m pip install -U -r requirements.txt
+  #         python -m pip uninstall numpy -y
+  #         python -m pip uninstall scipy -y
 
-      - name: Build on Windows
-        run: |
-          # 淦 忘记 disable-console 了
-          python -m lndl_nuitka . -y -- --disable-console
+  #     - name: Build on Windows
+  #       run: |
+  #         python -m lndl_nuitka . -y -- --disable-console
 
-      - name: Delete Useless Files and Compress with upx
-        shell: pwsh
-        run: |
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\zstandard
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\_asyncio.pyd
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\pyexpat.pyd
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qml.dll
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qmlmodels.dll
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5quick.dll
-          .\upx.exe -9 build/MCSL2.dist/_ctypes.pyd build/MCSL2.dist/_decimal.pyd build/MCSL2.dist/_elementtree.pyd build/MCSL2.dist/_lzma.pyd build/MCSL2.dist/_overlapped.pyd build/MCSL2.dist/_socket.pyd build/MCSL2.dist/_ssl.pyd build/MCSL2.dist/_win32sysloader.pyd build/MCSL2.dist/libffi-7.dll build/MCSL2.dist/libcrypto-1_1.dll build/MCSL2.dist/libssl-1_1.dll build/MCSL2.dist/MCSL2.exe build/MCSL2.dist/python38.dll build/MCSL2.dist/pythoncom38.dll build/MCSL2.dist/pywintypes38.dll build/MCSL2.dist/qt5core.dll build/MCSL2.dist/qt5dbus.dll build/MCSL2.dist/qt5gui.dll build/MCSL2.dist/qt5multimedia.dll build/MCSL2.dist/qt5network.dll build/MCSL2.dist/qt5printsupport.dll build/MCSL2.dist/qt5svg.dll build/MCSL2.dist/qt5websockets.dll build/MCSL2.dist/qt5widgets.dll build/MCSL2.dist/qt5xml.dll build/MCSL2.dist/select.pyd build/MCSL2.dist/unicodedata.pyd build/MCSL2.dist/win32api.pyd build/MCSL2.dist/win32gui.pyd build/MCSL2.dist/win32print.pyd
+  #     - name: Delete Useless Files and Compress with upx
+  #       shell: pwsh
+  #       run: |
+  #         Remove-Item -Force -Recurse .\build\MCSL2.dist\zstandard
+  #         Remove-Item -Force -Recurse .\build\MCSL2.dist\_asyncio.pyd
+  #         Remove-Item -Force -Recurse .\build\MCSL2.dist\pyexpat.pyd
+  #         Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qml.dll
+  #         Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qmlmodels.dll
+  #         Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5quick.dll
+  #         .\upx.exe -9 build/MCSL2.dist/_ctypes.pyd build/MCSL2.dist/_decimal.pyd build/MCSL2.dist/_elementtree.pyd build/MCSL2.dist/_lzma.pyd build/MCSL2.dist/_overlapped.pyd build/MCSL2.dist/_socket.pyd build/MCSL2.dist/_ssl.pyd build/MCSL2.dist/_win32sysloader.pyd build/MCSL2.dist/libffi-7.dll build/MCSL2.dist/libcrypto-1_1.dll build/MCSL2.dist/libssl-1_1.dll build/MCSL2.dist/MCSL2.exe build/MCSL2.dist/python38.dll build/MCSL2.dist/pythoncom38.dll build/MCSL2.dist/pywintypes38.dll build/MCSL2.dist/qt5core.dll build/MCSL2.dist/qt5dbus.dll build/MCSL2.dist/qt5gui.dll build/MCSL2.dist/qt5multimedia.dll build/MCSL2.dist/qt5network.dll build/MCSL2.dist/qt5printsupport.dll build/MCSL2.dist/qt5svg.dll build/MCSL2.dist/qt5websockets.dll build/MCSL2.dist/qt5widgets.dll build/MCSL2.dist/qt5xml.dll build/MCSL2.dist/select.pyd build/MCSL2.dist/unicodedata.pyd build/MCSL2.dist/win32api.pyd build/MCSL2.dist/win32gui.pyd build/MCSL2.dist/win32print.pyd
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: MCSL2-windows
-          path: |
-            build/MCSL2.dist/**/*
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: MCSL2-windows
+  #         path: |
+  #           build/MCSL2.dist/**/*
 
   Linux:
     strategy:
@@ -90,8 +89,7 @@ jobs:
 
       - name: Build on Linux
         run: |
-          # 淦 忘记 disable-console 了
-          python -m lndl_nuitka . -y -- --disable-console
+          python -m lndl_nuitka . -y
 
       - name: Delete Useless Files and Compress with upx
         run: |
@@ -110,4 +108,4 @@ jobs:
         with:
           name: MCSL2-ubuntu
           path: |
-            build/MCSL2.dist/**/*
+            build/**/*

@@ -103,9 +103,9 @@ file-version = false
 
 # 文件信息
 product-name = "MCSL 2"
-company-name = "MCSL Team"
-file-description = "MC Server Launcher 2"
-copyright = "Copyright ©MCSL Team. All right reserved."
+company-name = "MCSLTeam"
+file-description = "MCServerLauncher 2"
+copyright = "Copyright ©MCSLTeam. All rights reserved."
 
 # 依赖
 include-package = ["MCSL2Lib", "sqlite3"]
