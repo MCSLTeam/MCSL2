@@ -18,7 +18,7 @@ from PyQt5.QtCore import QSize, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QVBoxLayout, QHBoxLayout, QSpacerItem
 from qfluentwidgets import (
     BodyLabel,
-    CardWidget,
+    SimpleCardWidget,
     PixmapLabel,
     StrongBodyLabel,
     SwitchButton,
@@ -51,7 +51,7 @@ class PluginOperationButton(TransparentToolButton):
         self.selfClicked.emit(self.objectName().split("Btn_")[1])
 
 
-class singlePluginWidget(CardWidget):
+class singlePluginWidget(SimpleCardWidget):
     """单独的插件Widget模板"""
 
     def __init__(self, icon: str = None):

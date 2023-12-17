@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
 )
 from qfluentwidgets import (
-    CardWidget,
+    SimpleCardWidget,
     LineEdit,
     PixmapLabel,
     PrimaryPushButton,
@@ -36,7 +36,7 @@ from qfluentwidgets import (
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 
 
-class singleSelectJavaWidget(CardWidget):
+class SingleSelectJavaWidget(SimpleCardWidget):
     """单独的选择Java的Widget模板"""
 
     def __init__(self):

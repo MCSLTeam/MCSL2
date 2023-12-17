@@ -1,3 +1,19 @@
+#     Copyright 2023, MCSL Team, mailto:lxhtt@vip.qq.com
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+"""
+Import Server Widgets
+"""
+
 from os import getcwd
 from typing import List
 from zipfile import ZipFile
@@ -15,7 +31,7 @@ from PyQt5.QtWidgets import (
     QTreeWidgetItem,
 )
 from qfluentwidgets import (
-    CardWidget,
+    SimpleCardWidget,
     ComboBox,
     HorizontalSeparator,
     LineEdit,
@@ -96,7 +112,7 @@ class ImportPageWidget(QWidget):
         self.backToMain.clicked.connect(f)
 
 
-class ConfirmArgumentsWidget(CardWidget):
+class ConfirmArgumentsWidget(SimpleCardWidget):
     finishSignal = pyqtSignal(bool)
 
     def __init__(
@@ -408,7 +424,7 @@ class ConfirmArgumentsWidget(CardWidget):
         # self.jvmArgPlainTextEdit.setPlainText(totalJVMArg)
 
 
-class ImportFileFolderWidget(CardWidget):
+class ImportFileFolderWidget(SimpleCardWidget):
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, parent=None):
@@ -496,7 +512,7 @@ class ImportFileFolderWidget(CardWidget):
         self.title.setText(f"{stepCount}. 导入文件/文件夹")
 
 
-class ImportSingleWidget(CardWidget):
+class ImportSingleWidget(SimpleCardWidget):
     fileImportedSignal = pyqtSignal(str)
     finishSignal = pyqtSignal(bool)
 
@@ -590,7 +606,7 @@ class ImportSingleWidget(CardWidget):
             pass
 
 
-class MyListWidget(CardWidget):
+class MyListWidget(SimpleCardWidget):
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, title: str, parent=None):
@@ -673,7 +689,7 @@ class ZipTreeModel(QTreeWidgetItem):
         self.file = filePath
 
 
-class MyTreeWidget(CardWidget):
+class MyTreeWidget(SimpleCardWidget):
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, title: str, parent=None):
@@ -764,7 +780,7 @@ class MyTreeWidget(CardWidget):
         return None
 
 
-class SaveWidget(CardWidget):
+class SaveWidget(SimpleCardWidget):
     finishSignal = pyqtSignal(bool)
 
     def __init__(self, stepCount: int, parent=None):

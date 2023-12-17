@@ -18,7 +18,7 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QSpacerItem, QVBoxLayout
 from qfluentwidgets import (
     BodyLabel,
-    CardWidget,
+    SimpleCardWidget,
     PixmapLabel,
     PrimaryPushButton,
     PushButton,
@@ -28,7 +28,7 @@ from qfluentwidgets import (
 )
 
 
-class singleServerManager(CardWidget):
+class SingleServerManager(SimpleCardWidget):
     """单独的服务器管理Widget模板"""
 
     def __init__(self, parent=None):

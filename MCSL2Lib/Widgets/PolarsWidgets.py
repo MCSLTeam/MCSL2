@@ -11,7 +11,7 @@
 #
 ################################################################################
 """
-FastMirror Download Widgets.
+Polars Download Widgets.
 """
 
 from PyQt5.QtCore import QSize, Qt

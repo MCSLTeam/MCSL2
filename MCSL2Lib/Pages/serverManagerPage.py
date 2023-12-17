@@ -59,7 +59,7 @@ from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea  # noqa: F401
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
-from MCSL2Lib.Widgets.serverManagerWidget import singleServerManager
+from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
@@ -85,6 +85,7 @@ class ServerManagerPage(QWidget):
         self.javaFindWorkThreadFactory.signalConnect = self.autoDetectJavaFinished
         self.javaFindWorkThreadFactory.finishSignalConnect = self.onJavaFindWorkThreadFinished
 
+        self.serverList = []
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -660,13 +661,16 @@ class ServerManagerPage(QWidget):
 
     def refreshServers(self):
         """刷新服务器列表主逻辑"""
-        self.releaseMemory()
         # 读取全局设置
         globalConfig = readGlobalServerConfig()
+        serverList = [config["name"] for config in globalConfig if "name" in config]
+        if serverList == self.serverList:
+            return
         if len(globalConfig):
+            self.releaseMemory()
             # 添加新的
             for i in range(len(globalConfig)):
-                self.tmpSingleServerWidget = singleServerManager(self.serversSmoothScrollArea)
+                self.tmpSingleServerWidget = SingleServerManager(self.serversSmoothScrollArea)
                 self.tmpSingleServerWidget.mem.setText(
                     f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}"
                 )
@@ -693,6 +697,8 @@ class ServerManagerPage(QWidget):
 
             # 重新设置布局
             self.verticalLayout.addItem(self.serversScrollAreaSpacer)
+
+            self.serverList = serverList
         else:
             noServerWidget = NoServerWidget()
             self.verticalLayout.addWidget(noServerWidget)

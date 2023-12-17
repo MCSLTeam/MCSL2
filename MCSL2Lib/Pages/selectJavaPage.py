@@ -31,7 +31,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
 
-from MCSL2Lib.Widgets.selectJavaWidget import singleSelectJavaWidget
+from MCSL2Lib.Widgets.selectJavaWidget import SingleSelectJavaWidget
 
 
 class SelectJavaPage(QWidget):
@@ -109,7 +109,7 @@ class SelectJavaPage(QWidget):
             self.javaItemVerticalLayout.itemAt(i).widget().deleteLater()
         # 添加新的
         for i in range(len(JavaPath)):
-            self.tmpSingleJavaWidget = singleSelectJavaWidget()
+            self.tmpSingleJavaWidget = SingleSelectJavaWidget()
             self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(
                 f"finishSelectJavaBtn{str(i)}"
             )
