@@ -779,8 +779,9 @@ class DownloadPage(QWidget):
                 return
         sender = self.sender()
         uri = sender.property("link")
-        fileName = sender.property("name").split(".")[0].replace("/", "")
-        fileFormat = sender.property("name").split(".")[1]
+        print(uri)
+        fileFormat = sender.property("name").split(".")[-1]
+        fileName = sender.property("name").replace(f".{fileFormat}", "").replace("/", "")
         # 判断文件是否存在
         # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
         self.checkDownloadFileExists(

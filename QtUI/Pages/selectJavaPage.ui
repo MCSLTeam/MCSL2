@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>710</width>
+    <width>818</width>
     <height>592</height>
    </rect>
   </property>
@@ -49,8 +49,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>670</width>
-        <height>410</height>
+        <width>778</width>
+        <height>472</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -80,6 +80,25 @@
    <item row="1" column="2" rowspan="2" colspan="2">
     <widget class="QWidget" name="titleLimitWidget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="TransparentToolButton" name="backBtn"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="StrongBodyLabel" name="subTitleLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <widget class="TitleLabel" name="titleLabel">
         <property name="sizePolicy">
@@ -93,27 +112,30 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="TransparentToolButton" name="backBtn"/>
-      </item>
-      <item row="2" column="1">
-       <widget class="StrongBodyLabel" name="subTitleLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+      <item row="0" column="3" rowspan="3">
+       <widget class="BodyLabel" name="BodyLabel">
         <property name="text">
-         <string>以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。
-游戏版本1.16.5及以下的请使用Java 8
+         <string>游戏版本1.16.5及以下的请使用Java 8
 游戏版本1.17~1.17.1的建议Java 17-18
 1.18及以上则使用Java 18-20</string>
         </property>
-        <property name="textFormat">
-         <enum>Qt::PlainText</enum>
-        </property>
        </widget>
+      </item>
+      <item row="0" column="2" rowspan="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>5</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -136,6 +158,11 @@
    <extends>QScrollArea</extends>
    <header>qfluentwidgets</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
    <class>StrongBodyLabel</class>

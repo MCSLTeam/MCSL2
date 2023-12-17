@@ -11,7 +11,7 @@ jobs:
 
       matrix:
         os:
-          - windows-latest
+          - windows-2019
         architecture:
           - x64
 
