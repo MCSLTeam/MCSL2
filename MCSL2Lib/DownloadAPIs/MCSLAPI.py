@@ -51,7 +51,7 @@ class MCSLAPIDownloadURLParser:
             DownloadJson = MCSLNetworkSession().post(
                 url=APIUrl,
                 json={
-                    "path": f"/MCSLAPI{path}",
+                    "path": f"/MCSL2/MCSLAPI{path}",
                     "password": "",
                     "page": 1,
                     "per_page": 0,
