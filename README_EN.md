@@ -1,88 +1,84 @@
-[![MCSL 2 Title Image](https://s3.bmp.ovh/imgs/2023/03/21/5afb21934bd980ab.png)](https://mcsl.com.cn)
+<p align="left">
+  <img align="left" height="200" src="https://img.fastmirror.net/s/2023/10/29/653deb00353b8.png" alt="MCSL2" style="float: left; border-radius: 10px;"/>
+</p>
 
-# MCSL2 | A simple and multifunctional Minecraft server launcher
+# MCServerLauncher 2  
 
-<right>
-——Made by MCSL Team
-</right>
+A sleek and versatile Minecraft server launcher
+
+<div>
+    <a href="https://github.com/MCSLTeam/MCSL2/stargazers">
+        <img src="https://img.shields.io/github/stars/MCSLTeam/MCSL2?style=for-the-badge" alt="Star">
+    </a>
+    <a href="https://github.com/MCSLTeam/MCSL2/forks">
+        <img src="https://img.shields.io/github/forks/MCSLTeam/MCSL2?style=for-the-badge" alt="Fork">
+    </a>
+    <a href="https://github.com/MCSLTeam/MCSL2/issues">
+        <img src="https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge" alt="Issues">
+    </a>
+    <br>
+    <a href="https://github.com/MCSLTeam/MCSL2/releases">
+        <img src="https://img.shields.io/github/downloads/MCSLTeam/MCSL2/total?style=for-the-badge" alt="Downloads">
+    </a>
+    <a href="https://github.com/MCSLTeam/MCSL2/releases/latest">
+        <img src="https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge" alt="Version">
+    </a>
+    <a href="mailto:services@mcsl.com.cn">
+        <img src="https://img.shields.io/badge/%20CONTACT-services%40mcsl.com.cn-%2357728B?style=for-the-badge" alt="Email">
+    </a>
+</div>
+
+<div style="text-align: right;">
+    English  |  <a href="https://github.com/MCSLTeam/MCSL2" target="_blank">中文</a>
+</div>
 
 ___
 
-<center>
-<a href="https://github.com/MCSLTeam/MCSL2" target="_blank">中文</a>  |  English
-</center>
+## What can it do?
 
-___
-[![License](https://img.shields.io/github/license/MCSLTeam/MCSL2?style=for-the-badge "License")](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
-[![Star](https://img.shields.io/github/stars/MCSLTeam/MCSL2?style=for-the-badge "Star")](https://github.com/MCSLTeam/MCSL2/stargazers)
-[![Fork](https://img.shields.io/github/forks/MCSLTeam/MCSL2?style=for-the-badge "Fork")](https://github.com/MCSLTeam/MCSL2/forks)
-[![Actions](https://img.shields.io/github/actions/workflow/status/MCSLTeam/MCSL2/build.yml?label=Build&style=for-the-badge "Actions")](https://github.com/MCSLTeam/MCSL2/actions)  
-[![Downloads](https://img.shields.io/github/downloads/MCSLTeam/MCSL2/total?style=for-the-badge "Downloads")](https://github.com/MCSLTeam/MCSL2/releases)
-[![Version](https://img.shields.io/github/v/tag/MCSLTeam/MCSL2?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/MCSL2/releases/latest)
-[![Issues](https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge "Issues")](https://github.com/MCSLTeam/MCSL2/issues)  
-[![Website](https://img.shields.io/badge/offical-website-gray.svg?style=for-the-badge "Website")](https://mcsl.com.cn)
-[![LxHTT's Email](https://img.shields.io/badge/%20EMAIL-lxhtt%40vip.qq.com-%2357728B?style=for-the-badge)](mailto:lxhtt@vip.qq.com)
-___
+- **👨🏻‍💻For Users of All Levels**: Provides simple mode, advanced mode, import mode to meet the needs of users at different levels.
+- **💻Sleek and Beautiful Interface**: Based on Fluent Design language, offering a clean and attractive interface.
+- **⏬One-Click Resource Download**: Integrated with FastMirror, MCSLAPI, Polestar Mirror, Akira Mirror, for swift resource downloads.
+- **✅Automatic Java Detection**: Pioneering Java detection algorithm in the server opening interface, completing the search in 1-2 seconds.
+- **🎞️Multi-Server Management**: All-in-one server management for efficient operation.
+- **🔧Self-Developed Plugin System**: Implemented using Python features, providing limitless possibilities.
 
-## What can MCSL2 do?  
+## Open Source Projects Used
 
-- **💻 Simple and beautiful interface**: Written with PyQt5, and a fluent design widgets library[PyQt-Fluent-Widgets](https://www.github.com/zhiyiYo/PyQt-Fluent-Widgets)  
-- **🎞️ Multiple servers can be managed**: Multi-server centralized management, more efficient operation and maintenance  
-- **⏬ All-in-One download service**: Download a variety of resources from FastMirror and MCSLAPI with Aria2.  
-- **⚡ Quickly add a server**: A few options to quickly add a new server!
-- **✅ Automatic find Java**: Automatically find the vast majority of Java without manual selection.  
-- **🔧 Extended tool system**: Use various kinds of extension to make your MCSL2 more powerful.  
+Please check [here](https://github.com/MCSLTeam/MCSL2/blob/master/pyproject.toml) for details.
 
-___
+## Building MCSL2 from Source Code
 
-## Used open-source project
-
-`Python` 3.8
-`Nuitka` Latest  
-`requests` Latest  
-`PyQt5` 5.15.10
-`PyQt-Fluent-Widgets` Latest  
-`aria2p` Latest  
-`lib-not-dr` 0.2.x
-`loguru` 0.7.2  
-`psutil` 5.9.5  
-___
-
-## Build a packaged version from source code
-
-- git clone
+- `git clone https://github.com/MCSLTeam/MCSL2.git`
 - `pip install tomli`
 - `python Tools/gen-requirements.py`
 - `python -m pip install -U -r requirements.txt`
 - `python Tools/update-pyproject.py`
 - `python -m lndl_nuitka .`
-  - or
+  - Or
   - `python -m lndl_nuitka . -y`
-  - or use `-- --xxx` to add / modify parameters
+  - Alternatively, add/modify parameters with `-- --xxx`
   - `python -m lndl_nuitka . -- --disable-console`
 
-___
+## Relevant Links
 
-## Related link
+MCSL 2 Official Website：<https://mcsl.com.cn>  
+GitHub Issues：<https://github.com/MCSLTeam/MCSL2/issues>  
+Official QQ Group：<https://mcsl.com.cn/links/mcsl2-qq-group.html>  
+GPLv3 Open Source License：<https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE>  
+QFluentWidgets：<https://qfluentwidgets.com>
 
-MCSL 2 Official Website:[https://mcsl.com.cn](https://mcsl.com.cn)  
-GitHub Issue:[https://github.com/MCSLTeam/MCSL2/issues](https://github.com/MCSLTeam/MCSL2/issues)  
-QQ Group:[https://jq.qq.com/?k=b6NlRcJn](https://jq.qq.com/?k=b6NlRcJn)  
-GNU General Public License v3.0:[https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE](https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE)
-___
+## Acknowledgments
 
-## Special Thanks
+Please visit <https://mcsl.com.cn/links/> for relevant links.
 
-Please view <https://mcsl.com.cn/links/> for the links.
-
-And all the contributors!  
+Also, a big thank you to all contributors!
 
 <a href="https://github.com/MCSLTeam/MCSL2/graphs/contributors"><img src="https://contrib.rocks/image?repo=MCSLTeam/MCSL2&anon=1&max=100000000"></a>
 
-And our sponsors!  
-[Sponsor List](https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md)
-___
+And to the sponsors too!  
+[Sponsors List](https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md)
 
-## Declaration  
+## Disclaimer
 
-This open source project is completely free, and any resale or similar behavior will be held accountable.
+This open-source project is completely free, and any resale activities will be prosecuted.
