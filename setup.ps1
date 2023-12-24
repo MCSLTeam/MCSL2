@@ -59,7 +59,7 @@ if ($pdmInstall -eq "n") {
 # Venv
 ###################################
 $useVenv = Read-Host -Prompt "Do you want a virtual environment? (y/n)"
-if ($pdmInstall -eq "n") {
+if ($useVenv -eq "n") {
     & pdm use $selectedPython
 } else {
     & pdm venv create $selectedPython
@@ -69,6 +69,11 @@ if ($pdmInstall -eq "n") {
 # Install dependencies
 ###################################
 Write-Host "Installing dependencies..."
-& pdm install
-Write-Host "Success. Start developing MCServerLauncher 2 now!"
+$isDev = Read-Host -Prompt "Do you want to install dev dependencies? (y/n)"
+if ($isDev -eq "n") {
+    & pdm install --no-self --fail-fast
+} else {
+    & pdm install --no-self --fail-fast --dev
+}
+Write-Host "Success. Start your MCServerLauncher 2 now!"
 exit
