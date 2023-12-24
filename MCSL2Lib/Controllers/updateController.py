@@ -119,7 +119,7 @@ def cmpVersion(newVer: str) -> bool:
     print(currentVer, newVer)
     isUpdate: bool = False
     for i in range(4):
-        print(int(currentVer[i]), int(newVer[i]))
+        # print(int(currentVer[i]), "<" if int(currentVer[i]) < int(newVer[i]) else ">", int(newVer[i]))
         if int(currentVer[i]) < int(newVer[i]):
             isUpdate = True
             break
