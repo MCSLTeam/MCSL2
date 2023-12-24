@@ -1,18 +1,18 @@
 [project]
 name = "MCSL2"
 dynamic = ["version"]
-description = "MC server launcher 2"
+description = "MCServerLauncher 2"
 authors = [
-    {name = "LxHTT", email = "lxhtt@vip.qq.com"},
-    {name = "shenjackyuanjie", email = "3695888@qq.com"},
-    {name = "AresConnor", email = "2837434884@qq.com"},
-    {name = "lgc2333", email = "lgc2333@126.com"},
-    {name = "wyx55520", email = "2509043002@qq.com"},
-    {name = "Yurnu", email = "1487084645@qq.com"},
-    {name = "hengshizhi", email = "3192145045@qq.com"},
-    {name = "ztsinsun", email = "horizonsun@vip.qq.com"},
-    {name = "ltzXiaoYanMo", email = "xiajiaruimail@qq.com"},
-    {name = "kitUIN", email = "kit_uin@outlook.com"},
+    { name = "LxHTT", email = "lxhtt@mcsl.com.cn" },
+    { name = "shenjackyuanjie", email = "3695888@qq.com" },
+    { name = "AresConnor", email = "2837434884@qq.com" },
+    { name = "lgc2333", email = "lgc2333@126.com" },
+    { name = "wyx55520", email = "2509043002@qq.com" },
+    { name = "Yurnu", email = "1487084645@qq.com" },
+    { name = "hengshizhi", email = "3192145045@qq.com" },
+    { name = "ztsinsun", email = "horizonsun@vip.qq.com" },
+    { name = "ltzXiaoYanMo", email = "xiajiaruimail@qq.com" },
+    { name = "kitUIN", email = "kit_uin@outlook.com" },
 ]
 dependencies = [
     "setuptools>=60", # 随便指定个版本就好 (
@@ -32,7 +32,7 @@ dependencies = [
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
-license = {text = "GPL-3.0"}
+license = { text = "GPL-3.0" }
 
 [tool.setuptools.dynamic]
 version = { attr = "MCSL2Lib.MCSL2VERSION" }
@@ -42,11 +42,7 @@ packages = []
 # 实际上并不发布包 (用于解决无法 pdm install) 
 
 [project.optional-dependencies]
-all = [
-    "tomli>=2.0.1",
-    "ruff>=0.1.6",
-    "pyqt5-stubs>=5.15.6.0"
-]
+all = ["tomli>=2.0.1", "ruff>=0.1.6", "pyqt5-stubs>=5.15.6.0"]
 
 [tool.pdm.scripts]
 main = "python MCSL2.py"
@@ -56,12 +52,7 @@ build_github = "python -m lndl_nuitka . -y -- --disable-console"
 [tool.ruff]
 target-version = "py38"
 line-length = 100
-src = [
-    "MCSL2Lib",
-    "PluginExample",
-    "Tools",
-    "Adapters",
-]
+src = ["MCSL2Lib", "PluginExample", "Tools", "Adapters"]
 output-format = "grouped"
 preview = true
 
@@ -111,13 +102,7 @@ copyright = "Copyright ©MCSLTeam. All rights reserved."
 include-package = ["MCSL2Lib", "sqlite3"]
 include-data-dir = [["MCSL2/Aria2", "MCSL2/Aria2"]]
 follow-import-to = ["Adapters", "loguru", "requests"]
-nofollow-import-to = [
-    "numpy", 
-    "scipy", 
-    "PIL", 
-    "colorthief", 
-    "sqlite3.test"
-]
+nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief", "sqlite3.test"]
 
 enable-plugin = ["pyqt5"]
 windows-icon-from-ico = "MCSL2.ico"
