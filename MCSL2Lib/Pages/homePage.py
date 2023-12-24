@@ -37,7 +37,10 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.verification import getAnnouncement
+try:
+    from MCSL2Lib.verification import getAnnouncement
+except Exception:
+    from MCSL2Lib.noVerification import getAnnouncement
 
 
 class NoticeStrongBodyLabel(StrongBodyLabel):

@@ -71,7 +71,6 @@ from MCSL2Lib.Pages.settingsPage import SettingsPage
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.verification import VerifyFluentWindowBase
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.utils import (
     exceptionFilter,
@@ -85,6 +84,11 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+try:
+    from MCSL2Lib.verification import VerifyFluentWindowBase
+except Exception:
+    from qfluentwidgets import FluentWindow as VerifyFluentWindowBase
+
 
 serverVariables = ServerVariables()
 configureServerVariables = ConfigureServerVariables()
@@ -226,7 +230,7 @@ class Window(VerifyFluentWindowBase):
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCSL {MCSL2VERSION}{' Preview Mode Edition' if self.testMode else ''}"
+            f"MCSL {MCSL2VERSION}{' 测试版' if self.testMode else ''}"
         )
 
         self.oldHook = sys.excepthook

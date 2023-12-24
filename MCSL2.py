@@ -77,7 +77,10 @@ if __name__ == "__main__":
         del deleteOldMCSL2
 
     # Analyze user
-    from MCSL2Lib.verification import countUserAPI
+    try:
+        from MCSL2Lib.verification import countUserAPI
+    except Exception:
+        from MCSL2Lib.noVerification import countUserAPI
 
     try:
         countUserAPI()

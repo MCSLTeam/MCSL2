@@ -61,7 +61,10 @@ from MCSL2Lib.Controllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
-from MCSL2Lib.verification import generateUniqueCode
+try:
+    from MCSL2Lib.verification import generateUniqueCode
+except Exception:
+    from MCSL2Lib.noVerification import generateUniqueCode
 
 settingsVariables = SettingsVariables()
 

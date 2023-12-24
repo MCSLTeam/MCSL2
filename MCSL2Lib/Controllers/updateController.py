@@ -24,7 +24,10 @@ from shutil import move
 from qfluentwidgets import MessageBox, InfoBar, InfoBarPosition
 from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from MCSL2Lib.verification import checkUpdate
+try:
+    from MCSL2Lib.verification import checkUpdate
+except Exception:
+    from MCSL2Lib.noVerification import checkUpdate
 
 
 class CheckUpdateThread(QThread):
