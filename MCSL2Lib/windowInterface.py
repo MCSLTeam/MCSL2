@@ -230,7 +230,7 @@ class Window(VerifyFluentWindowBase):
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCSL {MCSL2VERSION}{' 测试版' if self.testMode else ''}"
+            f"MCServerLauncher {MCSL2VERSION}{' 测试版' if self.testMode else ''}"
         )
 
         self.oldHook = sys.excepthook

@@ -513,7 +513,7 @@ class SettingsPage(QWidget):
             )
             + self.tr("明显辨识度。\n")
             + self.tr("\n")
-            + self.tr("Copyright ©MCSL Team. All right reserved.\n")
+            + self.tr("Copyright © MCSLTeam. All right reserved.\n")
             + self.tr("")
         )
         self.aboutTitle.setText(self.tr("关于"))
