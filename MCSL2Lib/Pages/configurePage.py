@@ -1543,7 +1543,13 @@ class ConfigurePage(QWidget):
     def finishNewServer(self):
         """完成新建服务器的检查触发器"""
         # 定义
-        currentNewServerType = self.newServerStackedWidget.currentIndex()  # 检查
+        currentNewServerType = self.newServerStackedWidget.currentIndex()
+        configureServerVariables.memUnit = (
+            configureServerVariables.memUnitList[0]
+            if currentNewServerType == 1
+            else configureServerVariables.memUnitList[self.extendedMemUnitComboBox.currentIndex()]
+        )
+        # 检查
         check = ServerValidator().check(
             v=configureServerVariables,
             minMem=self.noobMinMemLineEdit.text()

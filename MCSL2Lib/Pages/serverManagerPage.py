@@ -804,7 +804,6 @@ class ServerManagerPage(QWidget):
         """初始化编辑服务器界面"""
         globalConfig: list = readGlobalServerConfig()
         self.stackedWidget.setCurrentIndex(1)
-        self.javaFindWorkThreadFactory.create().start()
         self.serverIndex = index
         # 自动填充旧配置。在下方初始化变量之前不应调用任何的editServerVariables的属性
         self.editServerSubtitleLabel.setText(
@@ -854,7 +853,7 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldMemUnit = editServerVariables.memUnit = globalConfig[index][
             "memory_unit"
         ]
-        editServerVariables.oldJVMArg = editServerVariables.oldJVMArg = globalConfig[index][
+        editServerVariables.oldJVMArg = editServerVariables.jvmArg = globalConfig[index][
             "jvm_arg"
         ]
         editServerVariables.oldServerName = editServerVariables.serverName = globalConfig[index][
@@ -1110,6 +1109,9 @@ class ServerManagerPage(QWidget):
             del w.cancelButton
             w.exec()
         else:
+            editServerVariables.memUnit = editServerVariables.memUnitList[
+                self.editMemUnitComboBox.currentIndex()
+            ]
             # 检查
             check = ServerValidator().check(
                 v=editServerVariables,
