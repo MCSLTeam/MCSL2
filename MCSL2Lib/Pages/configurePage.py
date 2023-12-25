@@ -252,8 +252,8 @@ class ConfigurePage(QWidget):
         self.noobNewServerGridLayout.setObjectName("noobNewServerGridLayout")
 
         self.noobNewServerScrollArea = MySmoothScrollArea(self.noobNewServerPage)
-        self.noobNewServerScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.noobNewServerScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.noobNewServerScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.noobNewServerScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.noobNewServerScrollArea.setWidgetResizable(True)
         self.noobNewServerScrollArea.setObjectName("noobNewServerScrollArea")
         self.noobNewServerScrollArea.setFrameShape(QFrame.NoFrame)

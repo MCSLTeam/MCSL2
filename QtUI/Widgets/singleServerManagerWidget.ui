@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>477</width>
     <height>200</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>640</width>
+    <width>200</width>
     <height>200</height>
    </size>
   </property>
@@ -32,160 +32,35 @@
    <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="11" rowspan="5">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="0" rowspan="4">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="8">
-    <widget class="QWidget" name="serverInfoWidget" native="true">
+   <item row="0" column="1">
+    <widget class="SubtitleLabel" name="serverName">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>70</height>
-      </size>
+     <property name="text">
+      <string>[服务器名称]</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="StrongBodyLabel" name="coreFileNameTitle">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>核心：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="StrongBodyLabel" name="memTitle">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>内存设置：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="BodyLabel" name="mem">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>[内存]</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="BodyLabel" name="coreFileName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>[核心文件名]</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="StrongBodyLabel" name="javaPathTitle">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Java：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="BodyLabel" name="javaPath">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>[Java路径]</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
-   <item row="0" column="4" colspan="9">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="12" rowspan="6">
+   <item row="2" column="1" colspan="2">
     <widget class="QWidget" name="btnWidget" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="PrimaryPushButton" name="selectBtn">
         <property name="text">
-         <string>选择</string>
+         <string>启动</string>
         </property>
        </widget>
       </item>
@@ -193,6 +68,20 @@
        <widget class="PushButton" name="editBtn">
         <property name="text">
          <string>编辑</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="PushButton" name="backupBtn">
+        <property name="text">
+         <string>备份</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="PushButton" name="openDataFolderBtn">
+        <property name="text">
+         <string>打开文件夹</string>
         </property>
        </widget>
       </item>
@@ -501,70 +390,106 @@ QPushButton:hover {
      </layout>
     </widget>
    </item>
-   <item row="1" column="7" rowspan="6">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>5</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="7" column="4" colspan="9">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="8">
-    <widget class="SubtitleLabel" name="serverName">
+   <item row="1" column="1">
+    <widget class="QWidget" name="serverInfoWidget" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>[服务器名称]</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" rowspan="2">
-    <widget class="QWidget" name="widget" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>120</width>
-       <height>120</height>
+       <width>100</width>
+       <height>70</height>
       </size>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3">
+     <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
+       <widget class="StrongBodyLabel" name="coreFileNameTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>核心：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="StrongBodyLabel" name="memTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>内存设置：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="BodyLabel" name="mem">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>[内存]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="BodyLabel" name="coreFileName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>[核心文件名]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="StrongBodyLabel" name="javaPathTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Java：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="BodyLabel" name="javaPath">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>[Java路径]</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="3">
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
        <widget class="PixmapLabel" name="Icon">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -588,6 +513,19 @@ QPushButton:hover {
          <string notr="true"/>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>

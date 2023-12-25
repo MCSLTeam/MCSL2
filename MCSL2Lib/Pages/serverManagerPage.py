@@ -49,6 +49,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     StateToolTip,
     isDarkTheme,
+    FlowLayout,
 )
 
 from MCSL2Lib.Controllers import javaDetector
@@ -64,7 +65,7 @@ from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.utils import readGlobalServerConfig
+from MCSL2Lib.utils import openLocalFile, readGlobalServerConfig
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 from MCSL2Lib.utils import MCSL2Logger
 
@@ -136,7 +137,7 @@ class ServerManagerPage(QWidget):
         self.serversSmoothScrollArea = MySmoothScrollArea(self.serversPage)
         self.serversSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.serversSmoothScrollArea.setFrameShadow(QFrame.Plain)
-        self.serversSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.serversSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.serversSmoothScrollArea.setWidgetResizable(True)
         self.serversSmoothScrollArea.setObjectName("serversSmoothScrollArea")
 
@@ -144,9 +145,9 @@ class ServerManagerPage(QWidget):
         self.serversScrollAreaWidgetContents.setGeometry(QRect(0, 0, 640, 452))
         self.serversScrollAreaWidgetContents.setObjectName("serversScrollAreaWidgetContents")
 
-        self.verticalLayout = QVBoxLayout(self.serversScrollAreaWidgetContents)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.flowLayout = FlowLayout(self.serversScrollAreaWidgetContents)
+        self.flowLayout.setContentsMargins(0, 0, 0, 0)
+        self.flowLayout.setObjectName("verticalLayout")
 
         self.serversSmoothScrollArea.setWidget(self.serversScrollAreaWidgetContents)
         self.verticalLayout_2.addWidget(self.serversSmoothScrollArea)
@@ -615,11 +616,7 @@ class ServerManagerPage(QWidget):
             self.tr("Spigot核心"),
         ]
         self.editServerIcon.addItems(self.iconsList)
-        self.editServerIcon.setMaxVisibleItems(5)
-        self.serversScrollAreaSpacer = QSpacerItem(
-            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
-        )
-        self.verticalLayout.addItem(self.serversScrollAreaSpacer)
+        self.editServerIcon.setMaxVisibleItems(8)
 
     def goBack(self):
         # 没改就直接退出
@@ -651,14 +648,7 @@ class ServerManagerPage(QWidget):
             self.refreshServers()
 
     def releaseMemory(self):
-        try:
-            self.verticalLayout.removeItem(self.serversScrollAreaSpacer)
-            for i in reversed(range(self.verticalLayout.count())):
-                self.verticalLayout.itemAt(i).widget().setParent(None)
-                self.verticalLayout.itemAt(i).widget().deleteLater()
-                del self.verticalLayout.itemAt(i).widget
-        except Exception:
-            pass
+        self.flowLayout.takeAllWidgets()
 
     def refreshServers(self):
         """刷新服务器列表主逻辑"""
@@ -671,38 +661,22 @@ class ServerManagerPage(QWidget):
             self.releaseMemory()
             # 添加新的
             for i in range(len(globalConfig)):
-                self.tmpSingleServerWidget = SingleServerManager(self.serversSmoothScrollArea)
-                self.tmpSingleServerWidget.mem.setText(
-                    f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}"
+                self.flowLayout.addWidget(
+                    SingleServerManager(
+                        mem=f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}",
+                        coreFileName=f"{globalConfig[i]['core_file_name']}",
+                        javaPath=f"{globalConfig[i]['java_path']}",
+                        serverName=f"{globalConfig[i]['name']}",
+                        icon=QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}"),
+                        btnSlot=self.scrollAreaProcessor,
+                        i=i,
+                        parent=self.serversSmoothScrollArea,
+                    )
                 )
-                self.tmpSingleServerWidget.coreFileName.setText(
-                    f"{globalConfig[i]['core_file_name']}"
-                )
-                self.tmpSingleServerWidget.javaPath.setText(f"{globalConfig[i]['java_path']}")
-                self.tmpSingleServerWidget.serverName.setText(f"{globalConfig[i]['name']}")
-                self.tmpSingleServerWidget.Icon.setPixmap(
-                    QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}")
-                )
-                self.tmpSingleServerWidget.Icon.setFixedSize(QSize(60, 60))
-
-                self.tmpSingleServerWidget.selectBtn.clicked.connect(self.scrollAreaProcessor)
-
-                self.tmpSingleServerWidget.editBtn.clicked.connect(self.scrollAreaProcessor)
-
-                self.tmpSingleServerWidget.deleteBtn.clicked.connect(self.scrollAreaProcessor)
-
-                self.tmpSingleServerWidget.selectBtn.setObjectName(f"selectBtn{str(i)}")
-                self.tmpSingleServerWidget.editBtn.setObjectName(f"editBtn{str(i)}")
-                self.tmpSingleServerWidget.deleteBtn.setObjectName(f"deleteBtn{str(i)}")
-                self.verticalLayout.addWidget(self.tmpSingleServerWidget)
-
-            # 重新设置布局
-            self.verticalLayout.addItem(self.serversScrollAreaSpacer)
-
             self.serverList = serverList
         else:
             noServerWidget = NoServerWidget()
-            self.verticalLayout.addWidget(noServerWidget)
+            self.flowLayout.addWidget(noServerWidget)
 
     # 判断第几个
     def scrollAreaProcessor(self):
@@ -714,6 +688,12 @@ class ServerManagerPage(QWidget):
             self.initEditServerInterface(index=index)
         elif type == "delete":
             self.deleteServer_Step1(index=index)
+        elif type == "openDataFolder":
+            self.openDataFolder(index=index)
+
+    def openDataFolder(self, index):
+        globalConfig: list = readGlobalServerConfig()
+        openLocalFile(f"./Servers/{globalConfig[index]['name']}")
 
     ##################
     #    删除服务器    #
@@ -838,45 +818,38 @@ class ServerManagerPage(QWidget):
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
         """初始化变量"""
-        editServerVariables.oldMinMem = editServerVariables.minMem = globalConfig[index][
-            "min_memory"
-        ]
-        editServerVariables.oldMaxMem = editServerVariables.maxMem = globalConfig[index][
-            "max_memory"
-        ]
-        editServerVariables.oldCoreFileName = editServerVariables.coreFileName = globalConfig[
-            index
-        ]["core_file_name"]
-        editServerVariables.oldSelectedJavaPath = (
-            editServerVariables.selectedJavaPath
-        ) = globalConfig[index]["java_path"]
-        editServerVariables.oldMemUnit = editServerVariables.memUnit = globalConfig[index][
-            "memory_unit"
-        ]
-        editServerVariables.oldJVMArg = editServerVariables.jvmArg = globalConfig[index][
-            "jvm_arg"
-        ]
-        editServerVariables.oldServerName = editServerVariables.serverName = globalConfig[index][
-            "name"
-        ]
-        editServerVariables.oldConsoleOutputDeEncoding = (
-            editServerVariables.consoleOutputDeEncoding
-        ) = globalConfig[index]["output_decoding"]
-        editServerVariables.oldConsoleInputDeEncoding = (
-            editServerVariables.consoleInputDeEncoding
-        ) = globalConfig[index]["input_encoding"]
-        editServerVariables.oldIcon = editServerVariables.icon = globalConfig[index]["icon"]
+        editServerVariables.minMem = globalConfig[index]["min_memory"]
+        editServerVariables.maxMem = globalConfig[index]["max_memory"]
+        editServerVariables.coreFileName = globalConfig[index]["core_file_name"]
+        (editServerVariables.selectedJavaPath) = globalConfig[index]["java_path"]
+        editServerVariables.memUnit = globalConfig[index]["memory_unit"]
+        editServerVariables.jvmArg = globalConfig[index]["jvm_arg"]
+        editServerVariables.serverName = globalConfig[index]["name"]
+        (editServerVariables.consoleOutputDeEncoding) = globalConfig[index]["output_decoding"]
+        (editServerVariables.consoleInputDeEncoding) = globalConfig[index]["input_encoding"]
+        editServerVariables.icon = globalConfig[index]["icon"]
         try:
-            editServerVariables.oldServerType = editServerVariables.serverType = globalConfig[
-                index
-            ]["server_type"]
-            editServerVariables.oldExtraData = editServerVariables.extraData = globalConfig[index][
-                "extra_data"
-            ]
+            editServerVariables.serverType = globalConfig[index]["server_type"]
+            editServerVariables.extraData = globalConfig[index]["extra_data"]
         except Exception:
             pass
+        self.syncVariables()
         # 初始化QtSlot
         self.connectEditServerSlot()
+
+    def syncVariables(self):
+        editServerVariables.oldMinMem = editServerVariables.minMem
+        editServerVariables.oldMaxMem = editServerVariables.maxMem
+        editServerVariables.oldCoreFileName = editServerVariables.coreFileName
+        editServerVariables.oldSelectedJavaPath = editServerVariables.selectedJavaPath
+        editServerVariables.oldMemUnit = editServerVariables.memUnit
+        editServerVariables.oldJVMArg = editServerVariables.jvmArg
+        editServerVariables.oldServerName = editServerVariables.serverName
+        editServerVariables.oldConsoleOutputDeEncoding = editServerVariables.consoleOutputDeEncoding
+        editServerVariables.oldConsoleInputDeEncoding = editServerVariables.consoleInputDeEncoding
+        editServerVariables.oldIcon = editServerVariables.icon
+        editServerVariables.oldServerType = editServerVariables.serverType
+        editServerVariables.oldExtraData = editServerVariables.extraData
 
     def connectEditServerSlot(self):
         self.editJavaTextEdit.textChanged.connect(self.changeJavaPath)
@@ -1325,6 +1298,8 @@ class ServerManagerPage(QWidget):
             exitCode = 1
             exit1Msg += f"\n{e}"
 
+        self.syncVariables()
+
         if exitCode == 0:
             if (
                 editServerVariables.serverType == "forge"
@@ -1374,17 +1349,6 @@ class ServerManagerPage(QWidget):
                 parent=self,
             )
         self.refreshServers()
-        """更新变量"""
-        editServerVariables.oldMinMem = editServerVariables.minMem
-        editServerVariables.oldMaxMem = editServerVariables.maxMem
-        editServerVariables.oldCoreFileName = editServerVariables.coreFileName
-        editServerVariables.oldSelectedJavaPath = editServerVariables.selectedJavaPath
-        editServerVariables.oldMemUnit = editServerVariables.memUnit
-        editServerVariables.oldJVMArg = editServerVariables.oldJVMArg
-        editServerVariables.oldServerName = editServerVariables.serverName
-        editServerVariables.oldConsoleOutputDeEncoding = editServerVariables.consoleOutputDeEncoding
-        editServerVariables.oldConsoleInputDeEncoding = editServerVariables.consoleInputDeEncoding
-        editServerVariables.oldIcon = editServerVariables.icon
 
     @pyqtSlot(bool)
     def afterInstallingForge(self, installFinished, args=...):
