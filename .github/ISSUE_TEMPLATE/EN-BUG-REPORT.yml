@@ -21,6 +21,7 @@ body:
       - "MCSL2: Home Page"
       - "MCSL2: Start a Minecraft Server"
       - "MCSL2: Build a new Minecraft Server"
+      - "MCSL2: Edit/Delete a Minecraft Server"
       - "MCSL2: Download"
       - "MCSL2: Console Page"
       - "MCSL2: Plugins"

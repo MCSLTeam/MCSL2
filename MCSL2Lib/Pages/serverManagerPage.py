@@ -29,7 +29,6 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QHBoxLayout,
     QFileDialog,
-    QStackedWidget,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -53,8 +52,10 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.Controllers import javaDetector
+from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.Controllers.serverController import ServerHelper
 from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
+from MCSL2Lib.Controllers.serverValidator import ServerValidator
 from MCSL2Lib.Controllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea  # noqa: F401
@@ -123,7 +124,7 @@ class ServerManagerPage(QWidget):
         self.subTitleLabel.setObjectName("subTitleLabel")
 
         self.gridLayout_2.addWidget(self.subTitleLabel, 1, 0, 1, 1)
-        self.stackedWidget = QStackedWidget(self.titleLimitWidget)
+        self.stackedWidget = ChildStackedWidget(self.titleLimitWidget)
         self.stackedWidget.setObjectName("stackedWidget")
 
         self.serversPage = QWidget()
@@ -1088,110 +1089,6 @@ class ServerManagerPage(QWidget):
 
         self.editAutoDetectJavaPrimaryPushBtn.setEnabled(True)
 
-    def checkJavaSet(self):
-        """检查Java设置"""
-        if editServerVariables.selectedJavaPath != "":
-            return self.tr("Java检查: 正常"), 0
-        else:
-            return self.tr("Java检查: 出错，缺失"), 1
-
-    def checkMemSet(self):
-        """检查内存设置"""
-
-        # 是否为空
-        if self.editMinMemLineEdit.text() != "" and self.editMaxMemLineEdit.text() != "":
-            # 是否是数字
-            if (
-                self.editMinMemLineEdit.text().isdigit()
-                and self.editMaxMemLineEdit.text().isdigit()
-            ):
-                # 是否为整数
-                if (
-                    int(self.editMinMemLineEdit.text()) % 1 == 0
-                    and int(self.editMaxMemLineEdit.text()) % 1 == 0
-                ):
-                    # 是否为整数
-                    if int(self.editMinMemLineEdit.text()) <= int(self.editMaxMemLineEdit.text()):
-                        # 设!
-                        editServerVariables.minMem = int(self.editMinMemLineEdit.text())
-                        editServerVariables.maxMem = int(self.editMaxMemLineEdit.text())
-                        return self.tr("内存检查: 正常"), 0
-
-                    else:
-                        return self.tr("内存检查: 出错, 最小内存必须小于等于最大内存"), 1
-                else:
-                    return self.tr("内存检查: 出错, 不为整数"), 1
-            else:
-                return self.tr("内存检查: 出错, 不为数字"), 1
-        else:
-            return self.tr("内存检查: 出错, 内容为空"), 1
-
-    def checkCoreSet(self):
-        """检查核心设置"""
-        if editServerVariables.coreFileName != "":
-            return self.tr("核心检查: 正常"), 0
-        else:
-            return self.tr("核心检查: 出错，缺失"), 1
-
-    def checkServerNameSet(self):
-        """检查服务器名称设置"""
-        errText = self.tr("服务器名称检查: 出错")
-        isError: int
-        illegalServerCharacterList = ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]
-        illegalServerNameList = [
-            "aux",
-            "prn",
-            "con",
-            "lpt1",
-            "lpt2",
-            "nul",
-            "com0",
-            "com1",
-            "com2",
-            "com3",
-            "com4",
-            "com5",
-            "com6",
-            "com7",
-            "com8",
-            "com9",
-        ]
-        for i in range(len(illegalServerNameList)):
-            if illegalServerNameList[i] == self.editServerNameLineEdit.text():
-                errText += self.tr("，名称与操作系统冲突")
-                isError = 1
-                break
-            else:
-                isError = 0
-        for eachIllegalServerCharacter in illegalServerCharacterList:
-            if eachIllegalServerCharacter not in self.editServerNameLineEdit.text():
-                pass
-            else:
-                errText += self.tr("，名称含有不合法字符")
-                isError = 1
-                break
-        if self.editServerNameLineEdit.text() == "":
-            errText += self.tr("，未填写")
-            isError = 1
-        if isError == 1:
-            return errText, isError
-        else:
-            editServerVariables.serverName = self.editServerNameLineEdit.text()
-            return self.tr("服务器名称检查: 正常"), isError
-
-    def checkJVMArgSet(self):
-        """检查JVM参数设置，同时设置"""
-        if self.JVMArgPlainTextEdit.toPlainText() != "":
-            editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
-            return self.tr("JVM参数检查：正常"), 0
-        else:
-            editServerVariables.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
-            return self.tr("JVM参数检查：正常（无手动参数，自动启用log4j2防护）"), 0
-
-    def checkMemUnitSet(self):
-        """检查JVM内存堆单位设置"""
-        return self.tr("JVM内存堆单位检查：正常"), 0
-
     def setJavaPath(self, selectedJavaPath):
         """选择Java后处理Java路径"""
         editServerVariables.selectedJavaPath = selectedJavaPath
@@ -1199,7 +1096,6 @@ class ServerManagerPage(QWidget):
 
     def finishEditServer(self):
         """完成修改服务器的检查触发器"""
-        jvmArgResult = self.checkJVMArgSet()
         dupCode = self.checkDuplicateConfig()
         # 重复不保存
         if dupCode:
@@ -1208,47 +1104,25 @@ class ServerManagerPage(QWidget):
                 content=self.tr("都没改就不需要保存了，退出即可"),
                 parent=self,
             )
-            w.yesButton.setText(self.tr("好好好"))
+            w.yesButton.setText(self.tr("好"))
             w.cancelButton.setParent(None)
             w.cancelButton.deleteLater()
             del w.cancelButton
             w.exec()
         else:
             # 检查
-            javaResult = self.checkJavaSet()
-            memResult = self.checkMemSet()
-            coreResult = self.checkCoreSet()
-            serverNameResult = self.checkServerNameSet()
-            jvmArgResult = self.checkJVMArgSet()
-            memUnitResult = self.checkMemUnitSet()
-            totalResultMsg = (
-                f"{javaResult[0]}\n"
-                f"{memResult[0]}\n"
-                f"{memUnitResult[0]}\n"
-                f"{coreResult[0]}\n"
-                f"{serverNameResult[0]}\n"
-                f"{jvmArgResult[0]}\n"
+            check = ServerValidator().check(
+                v=editServerVariables,
+                minMem=self.editMinMemLineEdit.text(),
+                maxMem=self.editMaxMemLineEdit.text(),
+                name=self.editServerNameLineEdit.text(),
+                jvmArg=self.JVMArgPlainTextEdit.toPlainText(),
             )
-            totalResultIndicator = [
-                javaResult[1],
-                memResult[1],
-                memUnitResult[1],
-                coreResult[1],
-                serverNameResult[1],
-                jvmArgResult[1],
-            ]
-            # 错了多少
-            errCount = 0
-            for indicator in totalResultIndicator:
-                if indicator == 1:
-                    errCount += 1
-                else:
-                    pass
             # 如果出错
-            if errCount != 0:
-                title = self.tr("创建服务器失败！有") + str(errCount) + self.tr("个问题。")
+            if check[1] != 0:
+                title = self.tr("编辑服务器失败！存在") + str(check[1]) + self.tr("个问题。")
                 content = (
-                    totalResultMsg
+                    check[0]
                     + "\n----------------------------\n"
                     + self.tr(
                         "请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
@@ -1265,10 +1139,7 @@ class ServerManagerPage(QWidget):
                 totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
                 title = self.tr("请再次检查你设置的参数是否有误：")
                 content = (
-                    totalResultMsg
-                    + "\n"
-                    + "----------------------------\n"
-                    + self.tr("Java：")
+                    self.tr("Java：")
                     + editServerVariables.selectedJavaPath
                     + "\n"
                     + self.tr("Java版本：")

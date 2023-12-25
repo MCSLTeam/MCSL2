@@ -24,11 +24,14 @@ def checkUpdate():
 def countUserAPI():
     pass
 
+
 # fmt: off
 def generateUniqueCode():
     return "-".join([md5(f"{getlogin() if osname == 'nt' else getenv('USER')}{processor()}{sysType()}".encode()).hexdigest()[i:i+4].upper() for i in range(0, 16, 4)])
 # fmt: on
 
 __AuthorizationHeaders = {
-    "x-mcsl2-client-private-header": next((arg.split("=")[1] for arg in sys.argv[1:] if arg.startswith("--verified-header")), None)
+    "x-mcsl2-client-private-header": next(
+        (arg.split("=")[1] for arg in sys.argv[1:] if arg.startswith("--verified-header")), None
+    )
 }

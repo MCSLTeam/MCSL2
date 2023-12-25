@@ -21,6 +21,7 @@ body:
       - "MCSL2主页"
       - "MCSL2启动服务器"
       - "MCSL2新建服务器"
+      - "MCSL2更改/删除服务器"
       - "MCSL2下载"
       - "MCSL2终端"
       - "MCSL2插件"

@@ -95,10 +95,12 @@ if __name__ == "__main__":
     MCSL2Application.setAttribute(Qt.AA_EnableHighDpiScaling)
     MCSL2Application.setAttribute(Qt.AA_UseHighDpiPixmaps)
     MCSL2Application.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
+    MCSL2Application.setAttribute(Qt.AA_UseDesktopOpenGL)
+    MCSL2Application.setAttribute(Qt.AA_SynthesizeTouchForUnhandledMouseEvents)
+    MCSL2Application.setAttribute(Qt.AA_SynthesizeMouseForUnhandledTouchEvents)
 
     # Construct QApplication
     app = MCSL2Application(sys.argv)
-
     # i18n
     from qfluentwidgets import FluentTranslator
 
