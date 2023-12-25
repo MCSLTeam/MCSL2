@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSpacerItem,
     QStackedWidget,
+    QButtonGroup,
 )
 from qfluentwidgets import (
     StrongBodyLabel,
@@ -54,8 +55,8 @@ from MCSL2Lib.DownloadAPIs.FastMirrorAPI import (
 from MCSL2Lib.Widgets.PolarsWidgets import PolarsTypeWidget
 from MCSL2Lib.Widgets.FastMirrorWidgets import (
     FastMirrorBuildListWidget,
-    FastMirrorCoreListWidget,
-    FastMirrorVersionListWidget,
+    FastMirrorCorePushButton,
+    FastMirrorVersionButton,
 )
 from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
 from MCSL2Lib.DownloadAPIs.PolarsAPI import (
@@ -106,6 +107,12 @@ class DownloadPage(QWidget):
         self.fetchAkiraTypeThreadFactory = FetchAkiraTypeThreadFactory()
         self.fetchAkiraCoreThreadFactory = FetchAkiraCoreThreadFactory()
         # fmt: on
+
+        self.fmBtnGroup = QButtonGroup(self)
+        self.fmVersionBtnGroup = QButtonGroup(self)
+        self.polarsBtnGroup = QButtonGroup(self)
+        self.akiraBtnGroup = QButtonGroup(self)
+
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
@@ -188,8 +195,8 @@ class DownloadPage(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.coreListSmoothScrollArea.sizePolicy().hasHeightForWidth())
         self.coreListSmoothScrollArea.setSizePolicy(sizePolicy)
-        self.coreListSmoothScrollArea.setMinimumSize(QSize(200, 0))
-        self.coreListSmoothScrollArea.setMaximumSize(QSize(200, 16777215))
+        self.coreListSmoothScrollArea.setMinimumSize(QSize(160, 0))
+        self.coreListSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
         self.coreListSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.coreListSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.coreListSmoothScrollArea.setWidgetResizable(True)
@@ -860,16 +867,18 @@ class DownloadPage(QWidget):
 
     def initPolarsTypeListWidget(self):
         self.releasePolarsAPIMemory()
+        self.polarsBtnGroup.deleteLater()
+        self.polarsBtnGroup = QButtonGroup(self)
         for i in range(len(downloadVariables.PolarTypeDict["name"])):
-            self.polarsTypeLayout.addWidget(
-                PolarsTypeWidget(
-                    name=downloadVariables.PolarTypeDict["name"][i],
-                    idx=downloadVariables.PolarTypeDict["id"][i],
-                    description=downloadVariables.PolarTypeDict["description"][i],
-                    slot=self.polarsTypeProcessor,
-                    parent=self,
-                )
+            k = PolarsTypeWidget(
+                name=downloadVariables.PolarTypeDict["name"][i],
+                idx=downloadVariables.PolarTypeDict["id"][i],
+                description=downloadVariables.PolarTypeDict["description"][i],
+                slot=self.polarsTypeProcessor,
+                parent=self,
             )
+            self.polarsTypeLayout.addWidget(k)
+            self.polarsBtnGroup.addButton(k)
 
     def polarsTypeProcessor(self):
         self.polarsTypeLabel.setText(self.sender().property("name"))
@@ -1015,16 +1024,18 @@ class DownloadPage(QWidget):
 
     def initAkiraTypeListWidget(self):
         self.releaseAkiraMemory()
+        self.akiraBtnGroup.deleteLater()
+        self.akiraBtnGroup = QButtonGroup(self)
         for i in range(len(downloadVariables.AkiraTypeList)):
-            self.akiraTypeLayout.addWidget(
-                PolarsTypeWidget(
-                    name=downloadVariables.AkiraTypeList[i],
-                    idx=1,
-                    description="",
-                    slot=self.akiraTypeProcessor,
-                    parent=self,
-                )
+            k = PolarsTypeWidget(
+                name=downloadVariables.AkiraTypeList[i],
+                idx=1,
+                description="",
+                slot=self.akiraTypeProcessor,
+                parent=self,
             )
+            self.akiraTypeLayout.addWidget(k)
+            self.akiraBtnGroup.addButton(k)
 
     def akiraTypeProcessor(self):
         self.akiraTypeLabel.setText(self.sender().property("name"))
@@ -1237,17 +1248,19 @@ class DownloadPage(QWidget):
         self.releaseFMMemory()
         self.releaseFMMemory(1)
         self.releaseFMMemory(2)
+        self.fmBtnGroup.deleteLater()
+        self.fmBtnGroup = QButtonGroup(self)
         for i in range(len(downloadVariables.FastMirrorAPIDict["name"])):
-            self.coreListLayout.addWidget(
-                FastMirrorCoreListWidget(
-                    tag=downloadVariables.FastMirrorReplaceTagDict[
-                        downloadVariables.FastMirrorAPIDict["tag"][i]
-                    ],
-                    name=downloadVariables.FastMirrorAPIDict["name"][i],
-                    slot=self.fastMirrorCoreNameProcessor,
-                    parent=self,
-                )
+            k = FastMirrorCorePushButton(
+                tag=downloadVariables.FastMirrorReplaceTagDict[
+                    downloadVariables.FastMirrorAPIDict["tag"][i]
+                ],
+                name=downloadVariables.FastMirrorAPIDict["name"][i],
+                slot=self.fastMirrorCoreNameProcessor,
+                parent=self,
             )
+            self.coreListLayout.addWidget(k)
+            self.fmBtnGroup.addButton(k)
         self.coreListLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def fastMirrorCoreNameProcessor(self):
@@ -1271,15 +1284,17 @@ class DownloadPage(QWidget):
         MCVersionList = downloadVariables.FastMirrorAPIDict["mc_versions"][
             list(downloadVariables.FastMirrorAPIDict["name"]).index(downloadVariables.selectedName)
         ]
+        self.fmVersionBtnGroup.deleteLater()
+        self.fmVersionBtnGroup = QButtonGroup(self)
         for i in range(len(MCVersionList)):
             MCVersion = MCVersionList[i]
-            self.versionLayout.addWidget(
-                FastMirrorVersionListWidget(
-                    version=MCVersion,
-                    slot=self.fastMirrorMCVersionProcessor,
-                    parent=self,
-                )
+            k = FastMirrorVersionButton(
+                version=MCVersion,
+                slot=self.fastMirrorMCVersionProcessor,
+                parent=self,
             )
+            self.versionLayout.addWidget(k)
+            self.fmVersionBtnGroup.addButton(k)
         self.versionLayout.addSpacerItem(self.scrollAreaSpacer)
 
     def fastMirrorMCVersionProcessor(self):

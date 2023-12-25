@@ -15,84 +15,43 @@ FastMirror Download Widgets.
 """
 
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QSizePolicy, QGridLayout, QHBoxLayout, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QSizePolicy, QHBoxLayout, QWidget, QVBoxLayout
 from qfluentwidgets import (
     BodyLabel,
     CardWidget,
     StrongBodyLabel,
     PrimaryToolButton,
     FluentIcon as FIF,
-    InfoBadge,
+    ToggleButton,
 )
 
 
-class FastMirrorVersionListWidget(CardWidget):
+class FastMirrorVersionButton(ToggleButton):
     def __init__(self, version, slot, parent=None):
         super().__init__(parent)
+
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(140, 48))
-        self.horizontalLayout = QHBoxLayout(self)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.versionLabel = BodyLabel(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.versionLabel.sizePolicy().hasHeightForWidth())
-        self.versionLabel.setSizePolicy(sizePolicy)
-        self.versionLabel.setAlignment(Qt.AlignCenter)
-        self.versionLabel.setObjectName("versionLabel")
-        self.horizontalLayout.addWidget(self.versionLabel)
-        # self.versionLabel.setObjectName("versionLabel")
-        self.versionLabel.setText(version)
+        self.setFixedSize(QSize(140, 45))
+        self.setText(version)
         self.clicked.connect(slot)
         self.setProperty("version", version)
 
 
-class FastMirrorCoreListWidget(CardWidget):
+class FastMirrorCorePushButton(ToggleButton):
     def __init__(self, tag, name, slot, parent=None):
         super().__init__(parent)
-        # self.setObjectName("coreListWidget")
 
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(180, 48))
-        self.horizontalLayout = QHBoxLayout(self)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.coreTagWidget = QWidget(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreTagWidget.sizePolicy().hasHeightForWidth())
-        self.coreTagWidget.setSizePolicy(sizePolicy)
-        self.coreTagWidget.setMinimumSize(QSize(0, 35))
-        self.coreTagWidget.setMaximumSize(QSize(16777215, 35))
-        self.coreTagWidget.setObjectName("coreTagWidget")
-        self.gridLayout = QGridLayout(self.coreTagWidget)
-        self.gridLayout.setObjectName("gridLayout")
-        self.coreTag = InfoBadge.attension("", self.coreTagWidget)
-        self.gridLayout.addWidget(self.coreTag, 0, 0, 1, 1)
-        self.horizontalLayout.addWidget(self.coreTagWidget)
-        self.coreName = BodyLabel(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreName.sizePolicy().hasHeightForWidth())
-        self.coreName.setSizePolicy(sizePolicy)
-        self.coreName.setAlignment(Qt.AlignCenter)
-        self.coreName.setObjectName("coreName")
-        self.horizontalLayout.addWidget(self.coreName)
-
-        self.horizontalLayout.addWidget(self.coreName)
-
-        self.coreTag.setText(tag)
-        self.coreName.setText(name)
+        self.setFixedSize(QSize(150, 45))
+        self.setText(f"{tag} | {name}")
         self.setProperty("name", name)
         self.clicked.connect(slot)
 

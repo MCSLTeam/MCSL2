@@ -14,15 +14,12 @@
 Polars Download Widgets.
 """
 
-from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QSizePolicy, QHBoxLayout
-from qfluentwidgets import (
-    BodyLabel,
-    CardWidget,
-)
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QSizePolicy
+from qfluentwidgets import ToggleButton
 
 
-class PolarsTypeWidget(CardWidget):
+class PolarsTypeWidget(ToggleButton):
     def __init__(self, name, idx, description, slot, parent=None):
         super().__init__(parent)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -31,19 +28,7 @@ class PolarsTypeWidget(CardWidget):
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
         self.setFixedSize(QSize(140, 48))
-        self.horizontalLayout = QHBoxLayout(self)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.nameLabel = BodyLabel(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.nameLabel.sizePolicy().hasHeightForWidth())
-        self.nameLabel.setSizePolicy(sizePolicy)
-        self.nameLabel.setAlignment(Qt.AlignCenter)
-        self.nameLabel.setObjectName("versionLabel")
-        self.horizontalLayout.addWidget(self.nameLabel)
-        # self.versionLabel.setObjectName("versionLabel")
-        self.nameLabel.setText(name)
+        self.setText(name)
         self.clicked.connect(slot)
         self.setProperty("name", name)
         self.setProperty("id", idx)
