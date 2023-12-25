@@ -29,7 +29,7 @@ from PyQt5.QtWidgets import (
 )
 from qfluentwidgets import (
     BodyLabel,
-    CardWidget,
+    SimpleCardWidget,
     HyperlinkButton,
     PrimaryPushButton,
     StrongBodyLabel,
@@ -366,7 +366,7 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.updateSettingsGroup)
 
         # Other
-        self.about = CardWidget(self.settingsScrollAreaWidgetContents)
+        self.about = SimpleCardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -655,27 +655,17 @@ class SettingsPage(QWidget):
 
     def generateSystemReport(self):
         """创建系统报告"""
-        InfoBar.info(
-            title=self.tr("开始生成系统报告..."),
-            content="",
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP_RIGHT,
-            duration=1500,
-            parent=self,
-        )
         report = (
-            self.tr("MCSL2系统报告：\n")
-            + self.tr("生成时间：")
+            self.tr("生成时间：")
             + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             + "\n"
             + genSysReport()
         )
 
-        title = self.tr("MC Server Launcher 2系统报告")
+        title = self.tr("MCServerLauncher 2系统报告")
         w = MessageBox(
             title,
-            report + self.tr("\n----------------------------\n点击复制按钮以复制到剪贴板。"),
+            report + self.tr("\n\n点击复制按钮以复制到剪贴板。"),
             self,
         )
         w.yesButton.setText(self.tr("复制"))

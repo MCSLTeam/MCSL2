@@ -29,7 +29,9 @@ from platform import (
     version as systemVersion,
     release as systemRelease,
     python_version as pythonVersion,
+    processor as systemProcessor,
 )
+from .. import MCSL2VERSION
 
 
 class _MCSL2Logger:
@@ -152,9 +154,11 @@ def genSysReport() -> str:
         else f"{systemType()} {systemRelease()}"
     )
     return (
+        f"MCSL2版本：{MCSL2VERSION}\n"
         f"Python版本：{pythonVersion()}\n"
         f"控件库版本：{pfwVer}\n"
         f"操作系统：{sysInfo}\n"
+        f"CPU：{systemProcessor()}\n"
         f"架构：{systemArchitecture()[0]}\n"
         f"内存占用：{str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))}MB"
     )
