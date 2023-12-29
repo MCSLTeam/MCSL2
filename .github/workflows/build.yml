@@ -6,45 +6,28 @@ permissions: write-all
 
 jobs:
   Windows:
-    strategy:
-      fail-fast: false
-
-      matrix:
-        architecture:
-          - x64
-          - x86
-
     runs-on: windows-2019
-
     steps:
 
-      - name: Check-out repository
-        uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
-      - name: Setup Python 3.8
-        uses: actions/setup-python@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
         with:
-          python-version: '3.8'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirement.txt
+          python-version: 3.8
+          architecture: x64
+          cache: true
 
-      - name: Update Pip and Uninstall Useless Dependencies
-        shell: pwsh
+      - name: Dependencies
         run: |
-          python -m pip install tomli
-          python Tools/gen-requirements.py
-          python -m pip install --upgrade pip
-          python -m pip install -U -r requirements.txt
-          python -m pip uninstall numpy -y
-          python -m pip uninstall scipy -y
+          pdm install --no-self
 
-      - name: Build on Windows
+      - name: Build
         run: |
-          # 淦 忘记 disable-console 了
-          python -m lndl_nuitka . -y -- --disable-console
+          pdm run build_github
 
-      - name: Delete Useless Files and Compress with upx
+      - name: Optimize
         shell: pwsh
         run: |
           Remove-Item -Force -Recurse .\build\MCSL2.dist\zstandard
@@ -58,54 +41,39 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: MCSL2-windows-${{ matrix.architecture }}
+          name: MCSL2-Windows-x64
           path: |
             build/MCSL2.dist/**/*
 
   Linux:
-    strategy:
-      fail-fast: false
-
-      matrix:
-        architecture:
-          - x64
-          - x86
 
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Check-out repository
+      - name: Install Tools
+        run: |
+          sudo apt-get install libfuse2
+          sudo apt-get install upx-ucl
+ 
+      - name: Checkout Repo
         uses: actions/checkout@v4
-
-      - name: Setup Python 3.8
-        uses: actions/setup-python@v4
+  
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
         with:
-          python-version: '3.8'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirement.txt
+          python-version: 3.8
+          architecture: x64
+          cache: true
 
-      - name: Update Pip and Uninstall Useless Dependencies
-        shell: pwsh
+      - name: Install Dependencies
         run: |
-          python -m pip install tomli
-          python Tools/gen-requirements.py
-          python -m pip install --upgrade pip
-          python -m pip install -U -r requirements.txt
-          python -m pip uninstall numpy -y
-          python -m pip uninstall scipy -y
+          pdm install --no-self
 
-      - name: Install Dependencies for Linux
+      - name: Build
         run: |
-          sudo apt-get install -y libfuse2
-          sudo apt-get install -y upx-ucl
+          pdm run build_github
 
-      - name: Build on Linux
-        run: |
-          # 淦 忘记 disable-console 了
-          python -m lndl_nuitka . -y -- --disable-console
-
-      - name: Delete Useless Files and Compress with upx
+      - name: Optimize
         run: |
           cd build
           cd MCSL2.dist
@@ -120,7 +88,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: MCSL2-ubuntu-${{ matrix.architecture }}
+          name: MCSL2-Linux-x64
           path: |
             build/MCSL2.dist/**/*
 
@@ -138,12 +106,12 @@ jobs:
           timezoneLinux: 'Asia/Shanghai'
 
       - name: Install Tools
-        run: sudo apt install p7zip-full -y
+        run: sudo apt install p7zip-full
 
       - name: Download Artifacts
         uses: actions/download-artifact@v3
 
-      - name: Check-out repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           path: repo
@@ -155,19 +123,15 @@ jobs:
           echo "MCSL2_VERSION=$mcsl2_version" >> $GITHUB_ENV
           cd ..
       
-      - name: Compress Artifacts
+      - name: Compress
         run: |
           7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Windows-x86.zip" "./MCSL2-Windows-x86/*"
           7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x86.zip" "./MCSL2-Linux-x86/*"
           mkdir Update
           cd Update
-          mkdir Linux-x64 Linux-x86 Windows-x64 Windows-x86
+          mkdir Linux-x64 Windows-x64
           cp -r ../MCSL2-Linux-x64/MCSL2.bin Linux-x64/
-          cp -r ../MCSL2-Linux-x86/MCSL2.bin Linux-x86/
           cp -r ../MCSL2-Windows-x64/MCSL2.exe Windows-x64/
-          cp -r ../MCSL2-Windows-x86/MCSL2.exe Windows-x86/
           cd ..
           7z a -tzip "Update-${{ env.MCSL2_VERSION }}.zip" "./Update/*"
 

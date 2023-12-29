@@ -22,7 +22,8 @@ while ($selectedPython -eq $null) {
     $choice = Read-Host -Prompt "Enter the number of the desired Python version"
     if ($choice -ge 1 -and $choice -le $existPythonList.Count) {
         $selectedPython = $existPythonList[$choice - 1]
-    } else {
+    }
+    else {
         Write-Host "Invalid selection. Please enter a valid number."
     }
 }
@@ -46,11 +47,13 @@ if ($pdmInstall -eq "n") {
             & $selectedPython -m pipx ensurepath
             Write-Host "pipx has been installed. You need to re-open this terminal and re-run this script to continue."
             exit
-        } else {
+        }
+        else {
             & $selectedPython -m pipx install pdm
             Write-Host "pdm has been installed successfully with pipx."
         }
-    } else {
+    }
+    else {
         & $selectedPython -m pip install --user pdm
         Write-Host "pdm has been installed successfully with pip."
     }
@@ -59,9 +62,10 @@ if ($pdmInstall -eq "n") {
 # Venv
 ###################################
 $useVenv = Read-Host -Prompt "Do you want a virtual environment? (y/n)"
-if ($pdmInstall -eq "n") {
+if ($useVenv -eq "n") {
     & pdm use $selectedPython
-} else {
+}
+else {
     & pdm venv create $selectedPython
     & pdm use --venv in-project
 }
@@ -69,6 +73,12 @@ if ($pdmInstall -eq "n") {
 # Install dependencies
 ###################################
 Write-Host "Installing dependencies..."
-& pdm install
-Write-Host "Success. Start developing MCServerLauncher 2 now!"
+$isDev = Read-Host -Prompt "Do you want to install dev dependencies? (y/n)"
+if ($isDev -eq "y") {
+    & pdm install --no-self --dev
+}
+else {
+    & pdm install --no-self
+}
+Write-Host "Success."
 exit
