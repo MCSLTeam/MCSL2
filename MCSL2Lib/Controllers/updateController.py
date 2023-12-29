@@ -114,18 +114,7 @@ class MCSL2FileUpdater(QObject):
 
 def cmpVersion(newVer: str) -> bool:
     """比较版本号"""
-    currentVer = MCSL2VERSION.split(".")
-    newVer = newVer.split(".")
-    print(currentVer, newVer)
-    isUpdate: bool = False
-    for i in range(4):
-        # print(int(currentVer[i]), "<" if int(currentVer[i]) < int(newVer[i]) else ">", int(newVer[i]))
-        if int(currentVer[i]) < int(newVer[i]):
-            isUpdate = True
-            break
-        else:
-            continue
-    return isUpdate
+    return bool(int("".join(MCSL2VERSION.split("."))) < int("".join(newVer.split("."))))
 
 
 def restart():
