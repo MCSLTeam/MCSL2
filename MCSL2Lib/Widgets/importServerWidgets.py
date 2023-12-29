@@ -699,10 +699,12 @@ class MyTreeWidget(SimpleCardWidget):
         self.setNotFinished()
 
     def setFinished(self):
+        if not self.mainTreeWidget.selectedItems()[0].file.endswith(".jar"):
+            self.setNotFinished()
+            return
         self.statusIcon.setFinished()
         self.statusText.setText("此项已完成，请查看下一步。")
         self.finishSignal.emit(True)
-        print(self.mainTreeWidget.selectedItems()[0].file)
 
     def setNotFinished(self):
         self.statusIcon.setNotFinished()
@@ -751,7 +753,7 @@ class MyTreeWidget(SimpleCardWidget):
         self.statusText.setText("[状态文本]")
         self.title.setText("2.选择核心")
         self.mainTreeWidget.header().hide()
-        self.mainTreeWidget.clicked.connect(self.setFinished)
+        self.mainTreeWidget.itemClicked.connect(self.setFinished)
 
     def _initView(self, stepCount, title):
         self.title.setText(f"{stepCount}. {title}")
