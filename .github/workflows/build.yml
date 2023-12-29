@@ -12,6 +12,11 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
       - name: Setup PDM
         uses: pdm-project/setup-pdm@v3
         with:
