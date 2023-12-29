@@ -29,12 +29,12 @@ class ServerValidator(QObject):
         d = self.checkServerNameSet(name, v)
         e = self.checkJVMArgSet(jvmArg, v)
         return "\n".join([
-            a[0] if a[1] else "",
-            b[0] if b[1] else "",
-            c[0] if c[1] else "",
-            d[0] if d[1] else "",
-            e[0] if e[1] else "",
-        ]).replace("\n\n", "\n").replace("\n\n", "\n"), int(a[1] + b[1] + c[1] + d[1] + e[1])
+            a[0] if a[1] else "1",
+            b[0] if b[1] else "1",
+            c[0] if c[1] else "1",
+            d[0] if d[1] else "1",
+            e[0] if e[1] else "1",
+        ]).replace("1\n", "").replace("1", ""), int(a[1] + b[1] + c[1] + d[1] + e[1])
 
     def checkJavaSet(self, v: BaseServerVariables):
         """检查Java设置"""
