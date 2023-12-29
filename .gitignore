@@ -7,6 +7,7 @@ venv
 poetry.lock
 pdm.lock
 pdm.toml
+.pdm.toml
 .pdm-python
 
 # IDE

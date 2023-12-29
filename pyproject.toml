@@ -104,6 +104,6 @@ include-data-dir = [["MCSL2/Aria2", "MCSL2/Aria2"]]
 follow-import-to = ["Adapters", "loguru", "requests"]
 nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief", "sqlite3.test"]
 
-enable-plugin = ["pyqt5"]
+enable-plugin = ["pyqt5", "multiprocessing"]
 windows-icon-from-ico = "MCSL2.ico"
 assume-yes-for-download = true
