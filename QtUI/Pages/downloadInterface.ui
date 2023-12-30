@@ -87,7 +87,20 @@
    <item row="1" column="2" rowspan="2" colspan="3">
     <widget class="QWidget" name="titleLimitWidget" native="true">
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="1">
+      <item row="0" column="4">
+       <widget class="TransparentTogglePushButton" name="showDownloadingItemBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>下载中列表</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
        <widget class="TransparentPushButton" name="openDownloadFolderBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -97,6 +110,22 @@
         </property>
         <property name="text">
          <string>打开下载文件夹</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="StrongBodyLabel" name="subTitleLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Aria2引擎高速驱动！</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::MarkdownText</enum>
         </property>
        </widget>
       </item>
@@ -113,23 +142,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="StrongBodyLabel" name="subTitleLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Aria2引擎高速驱动！</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::MarkdownText</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
+      <item row="0" column="3">
        <widget class="TransparentPushButton" name="openDownloadEntriesBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -142,8 +155,8 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="TransparentTogglePushButton" name="showDownloadingItemBtn">
+      <item row="0" column="1">
+       <widget class="TransparentPushButton" name="createCustomDownloadBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -151,7 +164,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>下载中列表</string>
+         <string>自定义下载</string>
         </property>
        </widget>
       </item>
@@ -385,8 +398,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>676</width>
-            <height>351</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <property name="sizePolicy">

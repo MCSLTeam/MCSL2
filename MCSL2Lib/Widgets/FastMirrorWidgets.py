@@ -81,7 +81,7 @@ class FastMirrorBuildListWidget(CardWidget):
         self.syncTimeLabel.setObjectName("syncTimeLabel")
         self.verticalLayout.addWidget(self.syncTimeLabel)
         self.horizontalLayout.addWidget(self.TextWidget)
-        self.downloadBtn = PrimaryToolButton(FIF.DOWNLOAD, self)
+        self.downloadBtn = PrimaryToolButton(FIF.CLOUD_DOWNLOAD, self)
         self.downloadBtn.setFixedSize(QSize(45, 45))
         self.downloadBtn.setObjectName("downloadBtn")
         self.horizontalLayout.addWidget(self.downloadBtn)

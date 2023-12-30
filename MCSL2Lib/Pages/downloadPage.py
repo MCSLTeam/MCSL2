@@ -44,6 +44,8 @@ from qfluentwidgets import (
     BodyLabel,
     BreadcrumbBar,
     HyperlinkButton,
+    LineEdit,
+    PrimaryPushButton,
 )
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
@@ -131,32 +133,49 @@ class DownloadPage(QWidget):
         self.titleLabel.setObjectName("titleLabel")
         self.gridLayout_4.addWidget(self.titleLabel, 0, 0, 1, 1)
 
-        self.openDownloadFolderBtn = TransparentPushButton(self.titleLimitWidget)
+        self.createCustomDownloadBtn = TransparentPushButton(
+            text=self.tr("自定义下载"), parent=self.titleLimitWidget, icon=FIF.ADD_TO
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.createCustomDownloadBtn.sizePolicy().hasHeightForWidth())
+        self.createCustomDownloadBtn.setSizePolicy(sizePolicy)
+        self.createCustomDownloadBtn.setObjectName("createCustomDownloadBtn")
+        self.gridLayout_4.addWidget(self.createCustomDownloadBtn, 0, 1, 1, 1)
+
+        self.openDownloadFolderBtn = TransparentPushButton(
+            text=self.tr("打开下载文件夹"), parent=self.titleLimitWidget, icon=FIF.FOLDER
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.openDownloadFolderBtn.sizePolicy().hasHeightForWidth())
         self.openDownloadFolderBtn.setSizePolicy(sizePolicy)
         self.openDownloadFolderBtn.setObjectName("openDownloadFolderBtn")
-        self.gridLayout_4.addWidget(self.openDownloadFolderBtn, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.openDownloadFolderBtn, 0, 2, 1, 1)
 
-        self.openDownloadEntriesBtn = TransparentPushButton(self.titleLimitWidget)
+        self.openDownloadEntriesBtn = TransparentPushButton(
+            text=self.tr("打开下载记录"), parent=self.titleLimitWidget, icon=FIF.MENU
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.openDownloadEntriesBtn.sizePolicy().hasHeightForWidth())
         self.openDownloadEntriesBtn.setSizePolicy(sizePolicy)
         self.openDownloadEntriesBtn.setObjectName("openDownloadEntriesBtn")
-        self.gridLayout_4.addWidget(self.openDownloadEntriesBtn, 0, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.openDownloadEntriesBtn, 0, 3, 1, 1)
 
-        self.showDownloadingItemBtn = TransparentTogglePushButton(self.titleLimitWidget)
+        self.showDownloadingItemBtn = TransparentTogglePushButton(
+            text=self.tr("展开下载中列表"), parent=self.titleLimitWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.showDownloadingItemBtn.sizePolicy().hasHeightForWidth())
         self.showDownloadingItemBtn.setSizePolicy(sizePolicy)
         self.showDownloadingItemBtn.setObjectName("showDownloadingItemBtn")
-        self.gridLayout_4.addWidget(self.showDownloadingItemBtn, 0, 3, 1, 1)
+        self.gridLayout_4.addWidget(self.showDownloadingItemBtn, 0, 4, 1, 1)
 
         self.subTitleLabel = StrongBodyLabel(self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -590,9 +609,6 @@ class DownloadPage(QWidget):
         self.versionSubtitleLabel.setText(self.tr("游戏版本"))
         self.buildSubtitleLabel.setText(self.tr("构建列表"))
         self.refreshFastMirrorAPIBtn.setText(self.tr("刷新"))
-        self.openDownloadFolderBtn.setText(self.tr("打开下载文件夹"))
-        self.openDownloadEntriesBtn.setText(self.tr("打开下载记录"))
-        self.showDownloadingItemBtn.setText(self.tr("展开下载中列表"))
         self.polarsTitle.setText("核心类型")
         self.akiraTitle.setText("核心类型")
 
@@ -604,10 +620,9 @@ class DownloadPage(QWidget):
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
         self.refreshMCSLAPIBtn.setEnabled(False)
         self.scrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.openDownloadFolderBtn.setIcon(FIF.FOLDER)
+        self.createCustomDownloadBtn.clicked.connect(self.downloadCustomURLFile)
         self.openDownloadFolderBtn.clicked.connect(lambda: openLocalFile(".\\MCSL2\\Downloads\\"))
         self.MCSLAPIBreadcrumbBar.currentIndexChanged.connect(self.getMCSLAPI)
-        self.openDownloadEntriesBtn.setIcon(FIF.MENU)
         self.openDownloadEntriesBtn.clicked.connect(
             lambda: {
                 (box := DownloadEntryBox(self)),
@@ -705,7 +720,7 @@ class DownloadPage(QWidget):
         workThread = self.fetchMCSLAPIDownloadURLThreadFactory.create(
             _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict, path=path
         )
-        if path != "":
+        if path != "" and type(self.sender()) is not PrimaryPushButton:
             path = path.replace("/", "")
             self.MCSLAPIBreadcrumbBar.addItem(path, path)
         if workThread.isRunning():
@@ -771,19 +786,8 @@ class DownloadPage(QWidget):
 
     def downloadMCSLAPIFile(self):
         """下载MCSLAPI文件"""
-        if not Aria2Controller.testAria2Service():
-            if not Aria2Controller.startAria2():
-                box = MessageBox(
-                    title=self.tr("无法下载"),
-                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
-                    parent=self,
-                )
-                box.yesSignal.connect(box.deleteLater)
-                box.cancelButton.setParent(None)
-                box.cancelButton.deleteLater()
-                del box.cancelButton
-                box.exec()
-                return
+        if not self.checkAria2Service():
+            return
         sender = self.sender()
         uri = sender.property("link")
         print(uri)
@@ -933,19 +937,8 @@ class DownloadPage(QWidget):
 
     def downloadPolarsAPIFile(self):
         """下载极星镜像API文件"""
-        if not Aria2Controller.testAria2Service():
-            if not Aria2Controller.startAria2():
-                box = MessageBox(
-                    title=self.tr("无法下载"),
-                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
-                    parent=self,
-                )
-                box.yesSignal.connect(box.deleteLater)
-                box.cancelButton.setParent(None)
-                box.cancelButton.deleteLater()
-                del box.cancelButton
-                box.exec()
-                return
+        if not self.checkAria2Service():
+            return
         uri = self.sender().property("core_version")
         fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
         fileName = self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
@@ -1089,19 +1082,8 @@ class DownloadPage(QWidget):
 
     def downloadAkiraFile(self):
         """下载Akira Cloud镜像站文件"""
-        if not Aria2Controller.testAria2Service():
-            if not Aria2Controller.startAria2():
-                box = MessageBox(
-                    title=self.tr("无法下载"),
-                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
-                    parent=self,
-                )
-                box.yesSignal.connect(box.deleteLater)
-                box.cancelButton.setParent(None)
-                box.cancelButton.deleteLater()
-                del box.cancelButton
-                box.exec()
-                return
+        if not self.checkAria2Service():
+            return
         uri = f"https://mirror.akiracloud.net/{self.sender().property('core_version')}/{self.sender().parent().buildVerLabel.text()}"
         fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
         fileName = self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
@@ -1322,19 +1304,8 @@ class DownloadPage(QWidget):
 
     def downloadFastMirrorAPIFile(self):
         """下载FastMirror API文件"""
-        if not Aria2Controller.testAria2Service():
-            if not Aria2Controller.startAria2():
-                box = MessageBox(
-                    title=self.tr("无法下载"),
-                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
-                    parent=self,
-                )
-                box.yesSignal.connect(box.deleteLater)
-                box.cancelButton.setParent(None)
-                box.cancelButton.deleteLater()
-                del box.cancelButton
-                box.exec()
-                return
+        if not self.checkAria2Service():
+            return
         buildVer = self.sender().property("core_version")
         fileName = (
             f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
@@ -1353,6 +1324,51 @@ class DownloadPage(QWidget):
                 buildVer,
             ),
         )
+
+    def downloadCustomURLFile(self):
+        if not self.checkAria2Service():
+            return
+        urlLineEdit = LineEdit()
+        urlLineEdit.setPlaceholderText(self.tr("URL"))
+        w = MessageBox(
+            "创建下载任务",
+            "使用MCSL2自带的高速Aria2下载引擎下载文件。\n请注意，部分网站可能会禁止(403)，无法正常下载。",
+            self,
+        )
+        w.textLayout.addWidget(urlLineEdit)
+        w.yesButton.setText(self.tr("下载"))
+        w.yesSignal.connect(
+            lambda: self.checkDownloadFileExists(
+                fileName := urlLineEdit.text().replace("\\", "/").split("/")[-1].split(".")[0],
+                fileFormat := urlLineEdit.text()
+                .replace("\\", "/")
+                .split("/")[-1]
+                .replace(fileName, "")
+                .replace(".", ""),
+                urlLineEdit.text(),
+                (fileName + "." + fileFormat, "custom", "custom", "custom"),
+            )
+        )
+        w.show()
+
+    def checkAria2Service(self):
+        if not Aria2Controller.testAria2Service():
+            if not Aria2Controller.startAria2():
+                box = MessageBox(
+                    title=self.tr("无法下载"),
+                    content=self.tr("Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"),
+                    parent=self,
+                )
+                box.yesSignal.connect(box.deleteLater)
+                box.cancelButton.setParent(None)
+                box.cancelButton.deleteLater()
+                del box.cancelButton
+                box.exec()
+                return False
+            else:
+                return True
+        else:
+            return True
 
     def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
         if osp.exists(

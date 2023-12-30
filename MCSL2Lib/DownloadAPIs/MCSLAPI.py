@@ -60,7 +60,7 @@ class MCSLAPIDownloadURLParser:
                 headers=MCSLNetworkHeaders,
             )
         except Exception:
-            return -2, -2, -2
+            return -2, -2, -2, -2
         try:
             for i in range(DownloadJson.json()["data"]["total"]):
                 name.append(DownloadJson.json()["data"]["content"][i]["name"])
@@ -68,7 +68,7 @@ class MCSLAPIDownloadURLParser:
                 isDir.append(DownloadJson.json()["data"]["content"][i]["is_dir"])
             return name, size, isDir, DownloadJson.json()["data"]["total"]
         except Exception:
-            return -1, -1, -1
+            return -1, -1, -1, -1
 
 
 class FetchMCSLAPIDownloadURLThread(QThread):

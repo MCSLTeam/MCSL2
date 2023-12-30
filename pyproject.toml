@@ -17,8 +17,8 @@ authors = [
 dependencies = [
     "setuptools>=60", # 随便指定个版本就好 (
     # qt
-    "PyQt5==5.15.10",
-    "PyQt-Fluent-Widgets[full]>=1.3.8",
+    "PyQt5",
+    "PyQt-Fluent-Widgets[full]",
     "pyqt5-qt5==5.15.2",
     # 系统信息
     "psutil==5.9.5",
