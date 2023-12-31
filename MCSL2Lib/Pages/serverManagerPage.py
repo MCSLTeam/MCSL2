@@ -60,7 +60,8 @@ from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
-from MCSL2Lib.ServerController.windowCreator import ServerWindow  # noqa: F401
+from MCSL2Lib.ServerController.windowCreator import ServerWindow
+from MCSL2Lib.ServerController.processCreator import ServerLauncher
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
 from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWidget
@@ -1393,7 +1394,7 @@ class ServerManagerPage(QWidget):
 
     def startServer(self, index):
         v = ServerConfigConstructor.loadServerConfig(index=index)
-        (w := ServerWindow(v)).show()
+        (w := ServerWindow(v, ServerLauncher(v)).show()
         w.startServer()
         self.runningServerCardGenerated.emit(
             lambda: RunningServerHeaderCardWidget(serverName=v.serverName, serverConsole=w)
