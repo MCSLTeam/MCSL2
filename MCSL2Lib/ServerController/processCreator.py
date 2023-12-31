@@ -35,10 +35,7 @@ class _Server:
         self.lastOutputSize = 0
 
 
-@Singleton
-class ServerConfigConstructor(QObject):
-    def __init__(self):
-        super().__init__()
+class ServerConfigConstructor:
 
     @classmethod
     def loadServerConfig(cls, index) -> ServerVariables:
