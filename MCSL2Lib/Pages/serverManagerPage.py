@@ -54,14 +54,16 @@ from qfluentwidgets import (
 
 from MCSL2Lib.ProgramControllers import javaDetector
 from MCSL2Lib.ProgramControllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.ProgramControllers.serverController import ServerHelper
-from MCSL2Lib.ProgramControllers.serverInstaller import ForgeInstaller
+from MCSL2Lib.ServerController.processCreator import ServerConfigConstructor
+from MCSL2Lib.ServerController.serverInstaller import ForgeInstaller
 from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
-from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea  # noqa: F401
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ServerController.windowCreator import ServerWindow  # noqa: F401
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
+from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWidget
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
@@ -78,6 +80,7 @@ class ServerManagerPage(QWidget):
     """服务器管理页"""
 
     deleteBtnEnabled = pyqtSignal(bool)
+    runningServerCardGenerated = pyqtSignal(RunningServerHeaderCardWidget)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -683,7 +686,7 @@ class ServerManagerPage(QWidget):
         type = str(self.sender().objectName()).split("Btn")[0]
         index = int(str(self.sender().objectName()).split("Btn")[1])
         if type == "select":
-            ServerHelper().selectedServer(index=index)
+            self.startServer(index=index)
         elif type == "edit":
             self.initEditServerInterface(index=index)
         elif type == "delete":
@@ -1386,6 +1389,14 @@ class ServerManagerPage(QWidget):
             and editServerVariables.oldConsoleInputDeEncoding
             == editServerVariables.consoleInputDeEncoding
             and editServerVariables.oldIcon == editServerVariables.icon
+        )
+
+    def startServer(self, index):
+        v = ServerConfigConstructor.loadServerConfig(index=index)
+        (w := ServerWindow(v)).show()
+        w.startServer()
+        self.runningServerCardGenerated.emit(
+            lambda: RunningServerHeaderCardWidget(serverName=v.serverName, serverConsole=w)
         )
 
 

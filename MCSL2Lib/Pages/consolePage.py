@@ -44,8 +44,8 @@ from qfluentwidgets import (
     ToolTip,
 )
 from re import search
-from MCSL2Lib.ProgramControllers.serverController import ServerHandler, readServerProperties
-from MCSL2Lib.ProgramControllers.serverErrorHandler import ServerErrorHandler
+from MCSL2Lib.ServerController.serverUtils import ServerHandler, readServerProperties
+from MCSL2Lib.ServerController.serverErrorHandler import ServerErrorHandler
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import ServerVariables, GlobalMCSL2Variables

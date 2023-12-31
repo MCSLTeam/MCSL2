@@ -59,7 +59,7 @@
      </property>
      <widget class="QWidget" name="overviewPage">
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="1" rowspan="7">
+       <item row="0" column="1" rowspan="8">
         <widget class="VerticalSeparator" name="overviewSeparator">
          <property name="minimumSize">
           <size>
@@ -76,7 +76,7 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="PushButton" name="backupServer">
+        <widget class="PushButton" name="backupServerBtn">
          <property name="minimumSize">
           <size>
            <width>160</width>
@@ -91,6 +91,25 @@
          </property>
          <property name="text">
           <string>备份服务器</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="PushButton" name="backupSavesBtn">
+         <property name="minimumSize">
+          <size>
+           <width>160</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>160</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>备份存档</string>
          </property>
         </widget>
        </item>
@@ -113,26 +132,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="PushButton" name="backupSaves">
-         <property name="minimumSize">
-          <size>
-           <width>160</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>160</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>备份存档</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" rowspan="7">
+       <item row="0" column="0" rowspan="8">
         <widget class="SmoothScrollArea" name="overviewScrollArea">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -317,6 +317,20 @@
          </widget>
         </widget>
        </item>
+       <item row="4" column="2">
+        <widget class="PrimaryPushButton" name="toggleServerBtn">
+         <property name="text">
+          <string>启动服务器</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="PushButton" name="genRunScriptBtn">
+         <property name="text">
+          <string>生成启动脚本</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="commandPage">
@@ -499,7 +513,7 @@
            </widget>
           </item>
           <item>
-           <widget class="ToggleButton" name="ToggleButton">
+           <widget class="ToggleButton" name="errorHandler">
             <property name="text">
              <string>报错分析</string>
             </property>
@@ -557,8 +571,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>668</width>
-            <height>537</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
          </widget>

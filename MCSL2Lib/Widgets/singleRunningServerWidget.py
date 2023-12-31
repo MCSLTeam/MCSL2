@@ -1,10 +1,10 @@
-from qframelesswindow import FramelessWindow
+from MCSL2Lib.ServerController.windowCreator import ServerWindow
 from qfluentwidgets import HeaderCardWidget, CommandBar, Action, FluentIcon as FIF
 from PyQt5.QtCore import QSize, Qt
 
 
 class RunningServerHeaderCardWidget(HeaderCardWidget):
-    def __init__(self, serverName: str, serverConsole: FramelessWindow, parent=None):
+    def __init__(self, serverName: str, serverConsole: ServerWindow, parent=None):
         super().__init__(parent)
         self.setTitle(serverName)
         self.headerView.setFixedHeight(44)

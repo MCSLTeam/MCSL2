@@ -21,18 +21,15 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 from PyQt5.QtCore import (
-    QEvent,
-    QObject,
     Qt,
     QTimer,
     pyqtSlot,
     QSize,
     pyqtSignal,
-    QThread,
     QThreadPool,
 )
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
@@ -40,7 +37,6 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     MessageBox,
-    HyperlinkButton,
     SplashScreen,
     isDarkTheme,
 )
@@ -50,13 +46,6 @@ from MCSL2Lib.ProgramControllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
     Aria2BootThread,
-)
-from MCSL2Lib.ProgramControllers.serverController import (
-    MinecraftServerResMonitorUtil,
-    MojangEula,
-    ServerHandler,
-    ServerHelper,
-    ServerLauncher,
 )
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Pages.configurePage import ConfigurePage
@@ -84,6 +73,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
+
 try:
     from MCSL2Lib.verification import VerifyFluentWindowBase
 except Exception:
@@ -93,128 +83,127 @@ except Exception:
 serverVariables = ServerVariables()
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
-serverHelper = ServerHelper()
 settingsVariables = SettingsVariables()
 
-pageLoadConfig = [
-    {"type": HomePage, "targetObj": "homeInterface", "flag": "homeInterfaceLoaded"},
-    {
-        "type": ConsoleCenterPage,
-        "targetObj": "consoleInterface",
-        "flag": "consoleInterfaceLoaded",
-    },
-    {
-        "type": PluginPage,
-        "targetObj": "pluginsInterface",
-        "flag": "pluginsInterfaceLoaded",
-    },
-    {
-        "type": SettingsPage,
-        "targetObj": "settingsInterface",
-        "flag": "settingsInterfaceLoaded",
-    },
-    {
-        "type": ServerManagerPage,
-        "targetObj": "serverManagerInterface",
-        "flag": "serverManagerInterfaceLoaded",
-    },
-    {
-        "type": SelectNewJavaPage,
-        "targetObj": "selectNewJavaPage",
-        "flag": "selectNewJavaPageLoaded",
-    },
-    {
-        "type": SelectJavaPage,
-        "targetObj": "selectJavaPage",
-        "flag": "selectJavaPageLoaded",
-    },
-    {
-        "type": DownloadPage,
-        "targetObj": "downloadInterface",
-        "flag": "downloadInterfaceLoaded",
-    },
-    {
-        "type": ConfigurePage,
-        "targetObj": "configureInterface",
-        "flag": "configureInterfaceLoaded",
-    },
-]
+# pageLoadConfig = [
+#     {"type": HomePage, "targetObj": "homeInterface", "flag": "homeInterfaceLoaded"},
+#     {
+#         "type": ConsoleCenterPage,
+#         "targetObj": "consoleInterface",
+#         "flag": "consoleInterfaceLoaded",
+#     },
+#     {
+#         "type": PluginPage,
+#         "targetObj": "pluginsInterface",
+#         "flag": "pluginsInterfaceLoaded",
+#     },
+#     {
+#         "type": SettingsPage,
+#         "targetObj": "settingsInterface",
+#         "flag": "settingsInterfaceLoaded",
+#     },
+#     {
+#         "type": ServerManagerPage,
+#         "targetObj": "serverManagerInterface",
+#         "flag": "serverManagerInterfaceLoaded",
+#     },
+#     {
+#         "type": SelectNewJavaPage,
+#         "targetObj": "selectNewJavaPage",
+#         "flag": "selectNewJavaPageLoaded",
+#     },
+#     {
+#         "type": SelectJavaPage,
+#         "targetObj": "selectJavaPage",
+#         "flag": "selectJavaPageLoaded",
+#     },
+#     {
+#         "type": DownloadPage,
+#         "targetObj": "downloadInterface",
+#         "flag": "downloadInterfaceLoaded",
+#     },
+#     {
+#         "type": ConfigurePage,
+#         "targetObj": "configureInterface",
+#         "flag": "configureInterfaceLoaded",
+#     },
+# ]
 
 
-class InterfaceLoaded(QObject):
-    homeInterfaceLoaded = False
-    configureInterfaceLoaded = False
-    downloadInterfaceLoaded = False
-    consoleInterfaceLoaded = False
-    pluginsInterfaceLoaded = False
-    settingsInterfaceLoaded = False
-    serverManagerInterfaceLoaded = False
-    selectJavaPageLoaded = False
-    selectNewJavaPageLoaded = False
+# class InterfaceLoaded(QObject):
+#     homeInterfaceLoaded = False
+#     configureInterfaceLoaded = False
+#     downloadInterfaceLoaded = False
+#     consoleInterfaceLoaded = False
+#     pluginsInterfaceLoaded = False
+#     settingsInterfaceLoaded = False
+#     serverManagerInterfaceLoaded = False
+#     selectJavaPageLoaded = False
+#     selectNewJavaPageLoaded = False
 
-    initNavigationFinished = False
-    initQtSlotFinished = False
-    initPluginSystemFinished = False
+#     initNavigationFinished = False
+#     initQtSlotFinished = False
+#     initPluginSystemFinished = False
 
-    mainWindowInited = False
+#     mainWindowInited = False
 
-    # def canInitNavigation(self):
-    #     return (
-    #         self.homeInterfaceLoaded
-    #         and self.configureInterfaceLoaded
-    #         and self.downloadInterfaceLoaded
-    #         and self.consoleInterfaceLoaded
-    #         and self.pluginsInterfaceLoaded
-    #         and self.settingsInterfaceLoaded
-    #         and self.serverManagerInterfaceLoaded
-    #     )
+#     # def canInitNavigation(self):
+#     #     return (
+#     #         self.homeInterfaceLoaded
+#     #         and self.configureInterfaceLoaded
+#     #         and self.downloadInterfaceLoaded
+#     #         and self.consoleInterfaceLoaded
+#     #         and self.pluginsInterfaceLoaded
+#     #         and self.settingsInterfaceLoaded
+#     #         and self.serverManagerInterfaceLoaded
+#     #     )
 
-    # def canInitQtSlot(self):
-    #     return (
-    #         self.configureInterfaceLoaded
-    #         and self.selectJavaPageLoaded
-    #         and self.homeInterfaceLoaded
-    #         and self.serverManagerInterfaceLoaded
-    #         and self.consoleInterfaceLoaded
-    #         and self.selectNewJavaPageLoaded
-    #         and self.downloadInterfaceLoaded
-    #     )
+#     # def canInitQtSlot(self):
+#     #     return (
+#     #         self.configureInterfaceLoaded
+#     #         and self.selectJavaPageLoaded
+#     #         and self.homeInterfaceLoaded
+#     #         and self.serverManagerInterfaceLoaded
+#     #         and self.consoleInterfaceLoaded
+#     #         and self.selectNewJavaPageLoaded
+#     #         and self.downloadInterfaceLoaded
+#     #     )
 
-    # def canInitPluginSystem(self):
-    #     return self.pluginsInterfaceLoaded
+#     # def canInitPluginSystem(self):
+#     #     return self.pluginsInterfaceLoaded
 
-    def allPageLoaded(self):
-        return (
-            self.homeInterfaceLoaded
-            and self.configureInterfaceLoaded
-            and self.downloadInterfaceLoaded
-            and self.consoleInterfaceLoaded
-            and self.pluginsInterfaceLoaded
-            and self.settingsInterfaceLoaded
-            and self.serverManagerInterfaceLoaded
-            and self.selectJavaPageLoaded
-            and self.selectNewJavaPageLoaded
-        )
-
-
-loaded = InterfaceLoaded()
+#     def allPageLoaded(self):
+#         return (
+#             self.homeInterfaceLoaded
+#             and self.configureInterfaceLoaded
+#             and self.downloadInterfaceLoaded
+#             and self.consoleInterfaceLoaded
+#             and self.pluginsInterfaceLoaded
+#             and self.settingsInterfaceLoaded
+#             and self.serverManagerInterfaceLoaded
+#             and self.selectJavaPageLoaded
+#             and self.selectNewJavaPageLoaded
+#         )
 
 
-class PageLoader(QThread):
-    loadFinished = pyqtSignal(object, str, str)
+# loaded = InterfaceLoaded()
 
-    def __init__(self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None):
-        super().__init__()
-        self.pageType = pageType
-        self.targetObj = targetObj
-        self.flag = flag
-        self.page = None
-        self.loadFinished.connect(callback)
 
-    def run(self) -> None:
-        # 强行切换上下文,留给UI线程进行刷新
-        self.yieldCurrentThread()
-        self.loadFinished.emit(self.pageType, self.targetObj, self.flag)
+# class PageLoader(QThread):
+#     loadFinished = pyqtSignal(object, str, str)
+
+#     def __init__(self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None):
+#         super().__init__()
+#         self.pageType = pageType
+#         self.targetObj = targetObj
+#         self.flag = flag
+#         self.page = None
+#         self.loadFinished.connect(callback)
+
+#     def run(self) -> None:
+#         # 强行切换上下文,留给UI线程进行刷新
+#         self.yieldCurrentThread()
+#         self.loadFinished.emit(self.pageType, self.targetObj, self.flag)
 
 
 @Singleton
@@ -229,11 +218,10 @@ class Window(VerifyFluentWindowBase):
         self.testMode = False
         self.mySetTheme()
         self.initWindow()
-        self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{' 测试版' if self.testMode else ''}"
-        )
+        self.setWindowTitle(f"MCServerLauncher {MCSL2VERSION}{' 测试版' if self.testMode else ''}")
 
         self.oldHook = sys.excepthook
+        sys.excepthook = self.catchExceptions
         self.pluginManager: PluginManager = PluginManager()
 
         # if experiment := cfg.get(
@@ -241,62 +229,64 @@ class Window(VerifyFluentWindowBase):
         # ):
         #     MCSL2Logger.warning(f"实验性功能已设置为{experiment}")
 
-        self.homeInterface = None  # type: HomePage
-        self.configureInterface = None  # type: ConfigurePage
-        self.downloadInterface = None  # type: DownloadPage
-        self.consoleInterface = None  # type: ConsoleCenterPage
-        self.pluginsInterface = None  # type: PluginPage
-        self.settingsInterface = None  # type: SettingsPage
-        self.serverManagerInterface = None  # type: ServerManagerPage
-        self.selectJavaPage = None  # type: SelectJavaPage
-        self.selectNewJavaPage = None  # type: SelectNewJavaPage
+        # self.homeInterface = None  # type: HomePage
+        # self.configureInterface = None  # type: ConfigurePage
+        # self.downloadInterface = None  # type: DownloadPage
+        # self.consoleInterface = None  # type: ConsoleCenterPage
+        # self.pluginsInterface = None  # type: PluginPage
+        # self.settingsInterface = None  # type: SettingsPage
+        # self.serverManagerInterface = None  # type: ServerManagerPage
+        # self.selectJavaPage = None  # type: SelectJavaPage
+        # self.selectNewJavaPage = None  # type: SelectNewJavaPage
+        self.homeInterface = HomePage(self)
+        self.configureInterface = ConfigurePage(self)
+        self.downloadInterface = DownloadPage(self)
+        self.consoleInterface = ConsoleCenterPage(self)
+        self.pluginsInterface = PluginPage(self)
+        self.settingsInterface = SettingsPage(self)
+        self.serverManagerInterface = ServerManagerPage(self)
+        self.selectJavaPage = SelectJavaPage(self)
+        self.selectNewJavaPage = SelectNewJavaPage(self)
 
-        # 页面加载器
-        loaders = []
-        for config in pageLoadConfig:
-            loader = PageLoader(
-                config["type"],
-                config["targetObj"],
-                config["flag"],
-                self.onPageLoaded,
-            )
-            loaders.append(loader)
+        # # 页面加载器
+        # loaders = []
+        # for config in pageLoadConfig:
+        #     loader = PageLoader(
+        #         config["type"],
+        #         config["targetObj"],
+        #         config["flag"],
+        #         self.onPageLoaded,
+        #     )
+        #     loaders.append(loader)
 
-        for loader in loaders:
-            loader.start()
+        # for loader in loaders:
+        #     loader.start()
 
         initializeAria2Configuration()
 
         self.initSafeQuitController()
 
-        loaded.mainWindowInited = True
-        GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
+        # loaded.mainWindowInited = True
+        # GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
-    @pyqtSlot(object, str, str)
-    def onPageLoaded(self, pageType, targetObj, flag):
-        setattr(self, targetObj, pageType(self))
-        setattr(loaded, flag, True)
-        if loaded.allPageLoaded():
-            self.startFetchingNotice.connect(self.homeInterface.noticeThread.start)
-            self.initNavigation()
-            serverHelper.loadAtLaunch()
-            self.initQtSlot()
-            self.initPluginSystem()
-            if cfg.get(cfg.checkUpdateOnStart):
-                self.settingsInterface.checkUpdate(parent=self)
-            self.consoleInterface.installEventFilter(self)  # TODO: rep
-            sys.excepthook = self.catchExceptions
-            self.startAria2Client()
-            self.splashScreen.finish()
-            self.update()
-            if self.testMode:
-                self.testVerifyBox.show()
-                self.navigationInterface.setEnabled(False)
-                self.stackedWidget.setEnabled(False)
-            else:
-                self.testNotPassFlag = False
-                pass
-            self.startFetchingNotice.emit()
+        self.startFetchingNotice.connect(self.homeInterface.noticeThread.start)
+        self.initNavigation()
+        self.initQtSlot()
+        self.initPluginSystem()
+        if cfg.get(cfg.checkUpdateOnStart):
+            self.settingsInterface.checkUpdate(parent=self)
+        self.consoleInterface.installEventFilter(self)
+        self.startAria2Client()
+        self.splashScreen.finish()
+        self.update()
+        if self.testMode:
+            self.testVerifyBox.show()
+            self.navigationInterface.setEnabled(False)
+            self.stackedWidget.setEnabled(False)
+        else:
+            self.testNotPassFlag = False
+            pass
+        self.startFetchingNotice.emit()
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
@@ -545,13 +535,7 @@ class Window(VerifyFluentWindowBase):
         self.homeInterface.selectServerBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)
         )
-        serverHelper.serverName.connect(self.homeInterface.afterSelectedServer)
-        serverHelper.backToHomePage.connect(lambda: self.switchTo(self.homeInterface))
-        serverHelper.startBtnStat.connect(self.homeInterface.startServerBtn.setEnabled)
-        self.homeInterface.startServerBtn.clicked.connect(self.startServer)
 
-        # 设置器
-        serverHelper.startBtnStat.connect(self.settingsRunner_autoRunLastServer)
         # 管理服务器
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
@@ -592,118 +576,11 @@ class Window(VerifyFluentWindowBase):
         )
         self.selectNewJavaPage.setJavaPath.connect(self.serverManagerInterface.setJavaPath)
 
-        # 终端
-        # ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
-        # if cfg.get(cfg.clearConsoleWhenStopServer):
-        #     ServerHandler().serverClosed.connect(
-        #         lambda: self.consoleInterface.serverOutput.setPlainText("")
-        #     )
-        # ServerHandler().serverClosed.connect(self.consoleInterface.showErrorHandlerReport)
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
         self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
         # fmt: on
-
-    def startServer(self):
-        """启动服务器总函数，直接放这里得了"""
-        firstTry = ServerLauncher().startServer()
-        if not firstTry:
-            w = MessageBox(
-                title=self.tr("提示"),
-                content=self.tr(
-                    "你并未同意Minecraft的最终用户许可协议。\n未同意，服务器将无法启动。\n可点击下方的按钮查看Eula。\n同意Eula后，服务器将会启动。"
-                ),
-                parent=self,
-            )
-            w.yesButton.setText(self.tr("同意"))
-            w.yesSignal.connect(MojangEula().acceptEula)
-            w.yesSignal.connect(self.startServer)
-            w.cancelButton.setText(self.tr("拒绝"))
-            eulaBtn = HyperlinkButton(
-                url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK
-            )
-            w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
-            w.exec()
-        else:
-            # self.switchTo(self.consoleInterface)
-            # self.consoleInterface.errMsg = ""
-            # self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
-            # self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
-            # self.consoleInterface.serverOutput.setPlainText("")
-            self.serverMemThread = MinecraftServerResMonitorUtil(self)
-            self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
-            self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)
-            try:
-                self.consoleInterface.exitServer.clicked.disconnect()
-            except TypeError:
-                pass
-            ServerHandler().serverClosed.connect(self.serverMemThread.onServerClosedHandler)
-            ServerHandler().serverClosed.connect(
-                self.consoleInterface.exitServer.clicked.disconnect
-            )
-            ServerHandler().serverClosed.connect(
-                lambda: self.consoleInterface.exitServer.clicked.connect(
-                    self.homeInterface.startServerBtn.click
-                )
-            )
-            ServerHandler().serverClosed.connect(
-                lambda: self.consoleInterface.exitServer.setText(self.tr("开启服务器"))
-            )
-            self.consoleInterface.exitServer.clicked.connect(
-                self.consoleInterface.runQuickMenu_StopServer
-            )
-            self.consoleInterface.exitServer.setText(self.tr("关闭服务器"))
-            GlobalMCSL2Variables.isLoadFinished = True
-
-    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-        if not GlobalMCSL2Variables.isLoadFinished:
-            return super().eventFilter(a0, a1)
-
-        if a0 == self.consoleInterface and a1.type() == QEvent.KeyPress:
-            if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
-                if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
-                ):
-                    self.consoleInterface.sendCommandButton.click()
-                    return True
-            elif a1.key() == Qt.Key_Up:
-                if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
-                ):
-                    if len(
-                        GlobalMCSL2Variables.userCommandHistory
-                    ) and GlobalMCSL2Variables.upT > -len(GlobalMCSL2Variables.userCommandHistory):
-                        GlobalMCSL2Variables.upT -= 1
-                        lastCommand = GlobalMCSL2Variables.userCommandHistory[
-                            GlobalMCSL2Variables.upT
-                        ]
-                        self.consoleInterface.commandLineEdit.setText(lastCommand)
-                        return True
-            elif a1.key() == Qt.Key_Down:
-                if (
-                    self.stackedWidget.view.currentIndex() == 4
-                    and self.consoleInterface.commandLineEdit
-                ):
-                    if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT < 0
-                    ):
-                        GlobalMCSL2Variables.upT += 1
-                        nextCommand = GlobalMCSL2Variables.userCommandHistory[
-                            GlobalMCSL2Variables.upT
-                        ]
-                        self.consoleInterface.commandLineEdit.setText(nextCommand)
-                        return True
-                    if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT == 0
-                    ):
-                        self.consoleInterface.commandLineEdit.setText("")
-                        return True
-        return super().eventFilter(a0, a1)
 
     def startAria2Client(self):
         bootThread = Aria2BootThread(self)
@@ -712,43 +589,43 @@ class Window(VerifyFluentWindowBase):
         bootThread.finished.connect(self.splashScreen.finish)
         bootThread.start()
 
-    @pyqtSlot(bool)
-    def settingsRunner_autoRunLastServer(self, startBtnStat):
-        """设置：启动时自动运行上次运行的服务器"""
-        if cfg.get(cfg.autoRunLastServer):
-            if startBtnStat:
-                InfoBar.info(
-                    title=self.tr("MCSL2功能提醒"),
-                    content=self.tr(
-                        "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
-                    ),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self.homeInterface,
-                )
-                self.homeInterface.startServerBtn.click()
-                InfoBar.info(
-                    title=self.tr("功能提醒"),
-                    content=self.tr(
-                        "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
-                    ),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self.consoleInterface,
-                )
-            else:
-                InfoBar.info(
-                    title=self.tr("功能提醒"),
-                    content=self.tr(
-                        "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"
-                    ),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self.homeInterface,
-                )
+    # @pyqtSlot(bool)
+    # def settingsRunner_autoRunLastServer(self, startBtnStat):
+    #     """设置：启动时自动运行上次运行的服务器"""
+    #     if cfg.get(cfg.autoRunLastServer):
+    #         if startBtnStat:
+    #             InfoBar.info(
+    #                 title=self.tr("MCSL2功能提醒"),
+    #                 content=self.tr(
+    #                     "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
+    #                 ),
+    #                 orient=Qt.Horizontal,
+    #                 isClosable=True,
+    #                 position=InfoBarPosition.TOP,
+    #                 duration=3000,
+    #                 parent=self.homeInterface,
+    #             )
+    #             self.homeInterface.startServerBtn.click()
+    #             InfoBar.info(
+    #                 title=self.tr("功能提醒"),
+    #                 content=self.tr(
+    #                     "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
+    #                 ),
+    #                 orient=Qt.Horizontal,
+    #                 isClosable=True,
+    #                 position=InfoBarPosition.TOP,
+    #                 duration=3000,
+    #                 parent=self.consoleInterface,
+    #             )
+    #         else:
+    #             InfoBar.info(
+    #                 title=self.tr("功能提醒"),
+    #                 content=self.tr(
+    #                     "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"
+    #                 ),
+    #                 orient=Qt.Horizontal,
+    #                 isClosable=True,
+    #                 position=InfoBarPosition.TOP,
+    #                 duration=3000,
+    #                 parent=self.homeInterface,
+    #             )

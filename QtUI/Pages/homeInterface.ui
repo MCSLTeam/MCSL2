@@ -106,18 +106,18 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>244</width>
-       <height>140</height>
+       <width>200</width>
+       <height>135</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>244</width>
-       <height>140</height>
+       <width>200</width>
+       <height>135</height>
       </size>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="2">
+      <item row="1" column="0">
        <widget class="PushButton" name="newServerBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -133,41 +133,44 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="PrimaryPushButton" name="startServerBtn">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>2</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>70</height>
-         </size>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="text">
-         <string>启动服务器：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="PushButton" name="selectServerBtn">
+      <item row="1" column="1">
+       <widget class="PushButton" name="downloadButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="text">
+         <string>下载</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="PrimaryPushButton" name="selectServerBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>180</width>
+          <height>65</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>180</width>
+          <height>65</height>
+         </size>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
-         <string>选择</string>
+         <string>选择服务器</string>
         </property>
        </widget>
       </item>

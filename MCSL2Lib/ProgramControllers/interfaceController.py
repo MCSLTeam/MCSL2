@@ -57,7 +57,7 @@ class EraseStackedWidget(QStackedWidget):
         self._nextIndex = None
         self._ani = None
 
-    def addWidget(self, widget, deltaX=76, deltaY=0):
+    def addWidget(self, widget, deltaX=180, deltaY=0):
         """add widget to window
 
         Parameters
@@ -87,7 +87,7 @@ class EraseStackedWidget(QStackedWidget):
         index: int,
         needPopOut: bool = False,
         showNextWidgetDirectly: bool = True,
-        duration: int = 250,
+        duration: int = 220,
         easingCurve=QEasingCurve.BezierSpline,
     ):
         """set current window to display
@@ -152,7 +152,7 @@ class EraseStackedWidget(QStackedWidget):
         widget,
         needPopOut: bool = False,
         showNextWidgetDirectly: bool = True,
-        duration: int = 250,
+        duration: int = 220,
         easingCurve=QEasingCurve.BezierSpline,
     ):
         """set currect widget
@@ -182,7 +182,7 @@ class EraseStackedWidget(QStackedWidget):
             easingCurve,
         )
 
-    def __setAnimation(self, ani, startValue, endValue, duration, easingCurve=QEasingCurve.Linear):
+    def __setAnimation(self, ani, startValue, endValue, duration, easingCurve=QEasingCurve.BezierSpline):
         """set the config of animation"""
         ani.setEasingCurve(easingCurve)
         ani.setStartValue(startValue)
@@ -224,9 +224,9 @@ class ChildStackedWidget(QFrame):
             widget.verticalScrollBar().setValue(0)
 
         if not popOut:
-            self.view.setCurrentWidget(widget, duration=300)
+            self.view.setCurrentWidget(widget, duration=220)
         else:
-            self.view.setCurrentWidget(widget, False, True, 200, QEasingCurve.BezierSpline)
+            self.view.setCurrentWidget(widget, False, True, 220, QEasingCurve.BezierSpline)
 
     def setCurrentIndex(self, index, popOut=False):
         self.setCurrentWidget(self.view.widget(index), popOut)

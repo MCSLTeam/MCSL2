@@ -15,7 +15,7 @@ These are the built-in variables of MCSL2.
 """
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.utils import readGlobalServerConfig, warning
+from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
 
 
@@ -265,7 +265,6 @@ class GlobalMCSL2Variables:
         "    background-color: transparent\n"
         "}"
     )
-    isLoadFinished: bool = False
     installingPluginArchiveDirectory: str = ""
 
 
@@ -292,7 +291,6 @@ class DownloadVariables:
         self.AkiraCoreDict = {}
 
 
-@Singleton
 class ServerVariables:
     """需要开启的服务器的变量"""
 
@@ -310,8 +308,7 @@ class ServerVariables:
         self.serverType: str = ""
         self.extraData = {}
 
-    @warning("要为所有ServerVariables添加serverType和extraData属性")
-    def initialize(self, index: int):
+    def initialize(self, index: int) -> "ServerVariables":
         self.serverConfig: dict = readGlobalServerConfig()[index]
         self.serverName = self.serverConfig["name"]
         self.coreFileName = self.serverConfig["core_file_name"]
@@ -330,6 +327,7 @@ class ServerVariables:
             self.serverType = ""
             self.extraData = {}
             pass
+        return self
 
     def translateCoding(self):
         if self.outputDecoding == "follow":
