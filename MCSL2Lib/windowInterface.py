@@ -313,31 +313,31 @@ class Window(VerifyFluentWindowBase):
         self.startFetchingNotice.emit()
 
     def closeEvent(self, a0) -> None:
-        if ServerHandler().isServerRunning():
-            box = MessageBox(
-                self.tr("是否退出MCSL2？"),
-                self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
-                parent=self,
-            )
-            box.yesButton.setText(self.tr("取消"))
-            box.cancelButton.setText(self.tr("安全关闭并退出"))
-            box.cancelButton.setStyleSheet(
-                GlobalMCSL2Variables.darkWarnBtnStyleSheet
-                if isDarkTheme()
-                else GlobalMCSL2Variables.lightWarnBtnStyleSheet
-            )
-            if box.exec() == 1:
-                a0.ignore()
-                return
+        # if ServerHandler().isServerRunning():
+        #     box = MessageBox(
+        #         self.tr("是否退出MCSL2？"),
+        #         self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
+        #         parent=self,
+        #     )
+        #     box.yesButton.setText(self.tr("取消"))
+        #     box.cancelButton.setText(self.tr("安全关闭并退出"))
+        #     box.cancelButton.setStyleSheet(
+        #         GlobalMCSL2Variables.darkWarnBtnStyleSheet
+        #         if isDarkTheme()
+        #         else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        #     )
+        #     if box.exec() == 1:
+        #         a0.ignore()
+        #         return
 
-            process = ServerHandler().Server.serverProcess
-            process.finished.connect(self.close)
-            process.write(b"stop\n")
-            self.exitingMsgBox.show()
-            self.quitTimer.start()
+        #     process = ServerHandler().Server.serverProcess
+        #     process.finished.connect(self.close)
+        #     process.write(b"stop\n")
+            # self.exitingMsgBox.show()
+            # self.quitTimer.start()
 
-            a0.ignore()
-            return
+            # a0.ignore()
+            # return
 
         # close thread pool
         QThreadPool.globalInstance().clear()
