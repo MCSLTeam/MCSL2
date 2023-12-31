@@ -18,7 +18,7 @@ import hashlib
 import json
 import subprocess
 import time
-from os import getcwd, mkdir, remove
+from os import mkdir, remove
 from os import path as osp
 from platform import system
 from shutil import which
@@ -28,7 +28,8 @@ from typing import Optional, Callable, Dict
 from PyQt5.QtCore import QThread, pyqtSignal, QObject, QProcess, QTimer, QMutex
 from aria2p import Client, API, Download
 
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 from MCSL2Lib.utils import workingThreads
 from MCSL2Lib.utils import MCSL2Logger
 
@@ -374,12 +375,8 @@ class Aria2Controller:
                 Aria2Program = "aria2c"
             else:
                 Aria2Program = "aria2c"
-            path = osp.join(getcwd(), "MCSL2", "Downloads")
             ConfigCommand = [
                 "--conf-path=MCSL2/Aria2/aria2.conf",
-                "--input-file=MCSL2/Aria2/aria2.session",
-                "--save-session=MCSL2/Aria2/aria2.session",
-                f"--dir={path}",
             ]
             cls.aria2Process = QProcess()
             cls.aria2Process.startDetached(Aria2Program, ConfigCommand)
@@ -588,18 +585,20 @@ class DownloadWatcher(QObject):
         return self._files
 
 
-def initializeAria2Configuration():
-    Aria2Thread = cfg.get(cfg.aria2Thread)
+def initializeAria2Configuration(running: bool = False):
     with open(r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8") as Aria2ConfigFile:
         Aria2ConfigFile.write(
             "file-allocation=none\n"
             "continue=true\n"
+            "always-resume=false\n"
+            "no-file-allocation-limit=10M\n"
             "max-concurrent-downloads=5\n"
+            "remote-time=true\n"
             "min-split-size=5M\n"
-            "split=64\n"
+            f"split={cfg.get(cfg.aria2Thread)}\n"
             "disable-ipv6=false\n"
             "enable-http-pipelining=false\n"
-            f"max-connection-per-server={Aria2Thread}\n"
+            "max-connection-per-server=16\n"
             "enable-rpc=true\n"
             "rpc-allow-origin-all=true\n"
             "rpc-listen-all=true\n"
@@ -607,9 +606,19 @@ def initializeAria2Configuration():
             "rpc-listen-port=6800\n"
             "force-save=false\n"
             "check-certificate=false\n"
+            "dir=MCSL2/Downloads\n"
+            "input-file=MCSL2/Aria2/aria2.session\n"
+            "save-session=MCSL2/Aria2/aria2.session\n"
+            "max-overall-download-limit=0\n"
+            "max-download-limit=0\n"
+            "http-accept-gzip=true\n"
+            "async-dns-server=119.29.29.29,223.5.5.5\n"
+            "console-log-level=error\n"
+            f"user-agent={MCSLNetworkSession.MCSLNetworkHeaders['User-Agent']}"
         )
-    with open(r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8") as Aria2SessionFile:
-        Aria2SessionFile.write("")
+    if not running:
+        with open(r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8") as Aria2SessionFile:
+            Aria2SessionFile.write("")
 
 
 entries = {}

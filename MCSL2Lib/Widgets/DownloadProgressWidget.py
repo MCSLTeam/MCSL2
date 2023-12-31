@@ -41,7 +41,7 @@ from qfluentwidgets import (
     InfoBar,
 )
 
-from MCSL2Lib.Controllers.aria2ClientController import (
+from MCSL2Lib.ProgramControllers.aria2ClientController import (
     Aria2Controller,
     DL_EntryController,
 )

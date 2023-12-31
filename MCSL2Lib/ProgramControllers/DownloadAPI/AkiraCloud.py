@@ -17,10 +17,7 @@ A function for communicatng with AkiraCloud Mirror.
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-from MCSL2Lib.Controllers.networkController import (
-    MCSLNetworkSession,
-    MCSLNetworkHeaders,
-)
+from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 
 import re
 from html.parser import HTMLParser
@@ -84,14 +81,12 @@ class AkiraCloudDownloadURLParser:
 
     @classmethod
     def _getAPI(cls, APIPath: str) -> str:
-        return (
-            MCSLNetworkSession()
-            .get(
+        k = (s := MCSLNetworkSession()).get(
                 url=f"https://mirror.akiracloud.net{APIPath}",
-                headers=MCSLNetworkHeaders,
-            )
-            .text
-        )
+                headers=s.MCSLNetworkHeaders,
+            ).text
+        del s
+        return k
 
     @classmethod
     def _parseHTML(cls, htmlContent: str):

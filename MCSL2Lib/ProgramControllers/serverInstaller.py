@@ -32,7 +32,7 @@ from PyQt5.QtCore import (
 )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.utils import ServerUrl
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables

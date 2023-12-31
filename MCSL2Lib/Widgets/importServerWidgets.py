@@ -49,7 +49,7 @@ from qfluentwidgets import (
     TreeWidget,
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
-from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 
 
 class _StatusPixmapLabel(PixmapLabel):

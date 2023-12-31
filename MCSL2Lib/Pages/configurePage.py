@@ -48,14 +48,14 @@ from qfluentwidgets import (
     StateToolTip,
 )
 
-from MCSL2Lib.Controllers import javaDetector
+from MCSL2Lib.ProgramControllers import javaDetector
 
-from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.Controllers.serverController import MojangEula
-from MCSL2Lib.Controllers.serverImporter import NoShellArchivesImporter
-from MCSL2Lib.Controllers.serverInstaller import ForgeInstaller
-from MCSL2Lib.Controllers.serverValidator import ServerValidator
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.interfaceController import ChildStackedWidget
+from MCSL2Lib.ProgramControllers.serverController import MojangEula
+from MCSL2Lib.ProgramControllers.serverImporter import NoShellArchivesImporter
+from MCSL2Lib.ProgramControllers.serverInstaller import ForgeInstaller
+from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
+from MCSL2Lib.ProgramControllers.settingsController import cfg
 
 # from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
 # from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
@@ -68,7 +68,7 @@ from MCSL2Lib.Controllers.settingsController import cfg
 # from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.ForgeInstallProgressWidget import ForgeInstallerProgressBox
-from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import (
     ConfigureServerVariables,

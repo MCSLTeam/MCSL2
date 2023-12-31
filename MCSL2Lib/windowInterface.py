@@ -46,21 +46,21 @@ from qfluentwidgets import (
 )
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.Controllers.aria2ClientController import (
+from MCSL2Lib.ProgramControllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
     Aria2BootThread,
 )
-from MCSL2Lib.Controllers.serverController import (
+from MCSL2Lib.ProgramControllers.serverController import (
     MinecraftServerResMonitorUtil,
     MojangEula,
     ServerHandler,
     ServerHelper,
     ServerLauncher,
 )
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Pages.configurePage import ConfigurePage
-from MCSL2Lib.Pages.consolePage import ConsolePage
+from MCSL2Lib.Pages.consoleCenterPage import ConsoleCenterPage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
 from MCSL2Lib.Pages.homePage import HomePage
 from MCSL2Lib.Pages.pluginPage import PluginPage
@@ -99,7 +99,7 @@ settingsVariables = SettingsVariables()
 pageLoadConfig = [
     {"type": HomePage, "targetObj": "homeInterface", "flag": "homeInterfaceLoaded"},
     {
-        "type": ConsolePage,
+        "type": ConsoleCenterPage,
         "targetObj": "consoleInterface",
         "flag": "consoleInterfaceLoaded",
     },
@@ -244,7 +244,7 @@ class Window(VerifyFluentWindowBase):
         self.homeInterface = None  # type: HomePage
         self.configureInterface = None  # type: ConfigurePage
         self.downloadInterface = None  # type: DownloadPage
-        self.consoleInterface = None  # type: ConsolePage
+        self.consoleInterface = None  # type: ConsoleCenterPage
         self.pluginsInterface = None  # type: PluginPage
         self.settingsInterface = None  # type: SettingsPage
         self.serverManagerInterface = None  # type: ServerManagerPage
@@ -284,7 +284,7 @@ class Window(VerifyFluentWindowBase):
             self.initPluginSystem()
             if cfg.get(cfg.checkUpdateOnStart):
                 self.settingsInterface.checkUpdate(parent=self)
-            self.consoleInterface.installEventFilter(self)
+            self.consoleInterface.installEventFilter(self)  # TODO: rep
             sys.excepthook = self.catchExceptions
             self.startAria2Client()
             self.splashScreen.finish()
@@ -415,7 +415,7 @@ class Window(VerifyFluentWindowBase):
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, self.tr("新建"))
         self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, self.tr("管理"))
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, self.tr("下载"))
-        self.addSubInterface(self.consoleInterface, FIF.COMMAND_PROMPT, self.tr("终端"))
+        self.addSubInterface(self.consoleInterface, FIF.ROBOT, self.tr("监控"))
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, self.tr("插件"))
         self.navigationInterface.addSeparator()
         self.navigationInterface.setExpandWidth(200)
@@ -593,12 +593,12 @@ class Window(VerifyFluentWindowBase):
         self.selectNewJavaPage.setJavaPath.connect(self.serverManagerInterface.setJavaPath)
 
         # 终端
-        ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
-        if cfg.get(cfg.clearConsoleWhenStopServer):
-            ServerHandler().serverClosed.connect(
-                lambda: self.consoleInterface.serverOutput.setPlainText("")
-            )
-        ServerHandler().serverClosed.connect(self.consoleInterface.showErrorHandlerReport)
+        # ServerHandler().serverLogOutput.connect(self.consoleInterface.colorConsoleText)
+        # if cfg.get(cfg.clearConsoleWhenStopServer):
+        #     ServerHandler().serverClosed.connect(
+        #         lambda: self.consoleInterface.serverOutput.setPlainText("")
+        #     )
+        # ServerHandler().serverClosed.connect(self.consoleInterface.showErrorHandlerReport)
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
@@ -626,11 +626,11 @@ class Window(VerifyFluentWindowBase):
             w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
             w.exec()
         else:
-            self.switchTo(self.consoleInterface)
-            self.consoleInterface.errMsg = ""
-            self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
-            self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
-            self.consoleInterface.serverOutput.setPlainText("")
+            # self.switchTo(self.consoleInterface)
+            # self.consoleInterface.errMsg = ""
+            # self.consoleInterface.titleLabel.setText(self.tr(f"终端：{cfg.get(cfg.lastServer)}"))
+            # self.navigationInterface.setCurrentItem(self.consoleInterface.objectName())
+            # self.consoleInterface.serverOutput.setPlainText("")
             self.serverMemThread = MinecraftServerResMonitorUtil(self)
             self.serverMemThread.memPercent.connect(self.consoleInterface.setMemView)
             self.serverMemThread.cpuPercent.connect(self.consoleInterface.setCPUView)

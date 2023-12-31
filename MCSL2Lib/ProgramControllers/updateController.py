@@ -16,13 +16,13 @@ Update Controller
 
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
+from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2Controller
 import sys
 from os import remove, name as osname, rename, execl
 from platform import architecture
 from shutil import move
 from qfluentwidgets import MessageBox, InfoBar, InfoBarPosition
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.variables import GlobalMCSL2Variables
 try:
     from MCSL2Lib.verification import checkUpdate

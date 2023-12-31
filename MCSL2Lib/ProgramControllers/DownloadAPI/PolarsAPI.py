@@ -18,9 +18,8 @@ from collections import defaultdict
 from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
-from MCSL2Lib.Controllers.networkController import (
+from MCSL2Lib.ProgramControllers.networkController import (
     MCSLNetworkSession,
-    MCSLNetworkHeaders,
 )
 
 
@@ -50,8 +49,11 @@ class PolarsAPIDownloadURLParser:
         data = []
         try:
             apiData = (
-                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+                (s := MCSLNetworkSession())
+                .get(url=downloadAPIUrl, headers=s.MCSLNetworkHeaders)
+                .json()
             )
+            del s
         except Exception:
             return -2
         try:
@@ -80,8 +82,11 @@ class PolarsAPIDownloadURLParser:
         cores = []
         try:
             apiData = (
-                MCSLNetworkSession().get(url=downloadAPIUrl, headers=MCSLNetworkHeaders).json()
+                (s := MCSLNetworkSession())
+                .get(url=downloadAPIUrl, headers=s.MCSLNetworkHeaders)
+                .json()
             )
+            del s
         except Exception:
             return -2
         try:

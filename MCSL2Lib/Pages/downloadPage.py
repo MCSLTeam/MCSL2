@@ -50,7 +50,7 @@ from qfluentwidgets import (
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadCard
-from MCSL2Lib.DownloadAPIs.FastMirrorAPI import (
+from MCSL2Lib.ProgramControllers.DownloadAPI.FastMirrorAPI import (
     FetchFastMirrorAPIThreadFactory,
     FetchFastMirrorAPICoreVersionThreadFactory,
 )
@@ -60,24 +60,24 @@ from MCSL2Lib.Widgets.FastMirrorWidgets import (
     FastMirrorCorePushButton,
     FastMirrorVersionButton,
 )
-from MCSL2Lib.DownloadAPIs.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
-from MCSL2Lib.DownloadAPIs.PolarsAPI import (
+from MCSL2Lib.ProgramControllers.DownloadAPI.MCSLAPI import FetchMCSLAPIDownloadURLThreadFactory
+from MCSL2Lib.ProgramControllers.DownloadAPI.PolarsAPI import (
     FetchPolarsAPICoreThreadFactory,
     FetchPolarsAPITypeThreadFactory,
 )
-from MCSL2Lib.DownloadAPIs.AkiraCloud import (
+from MCSL2Lib.ProgramControllers.DownloadAPI.AkiraCloud import (
     FetchAkiraTypeThreadFactory,
     FetchAkiraCoreThreadFactory,
 )
-from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
-from MCSL2Lib.Controllers.interfaceController import (
+from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2Controller
+from MCSL2Lib.ProgramControllers.interfaceController import (
     MySmoothScrollArea,
 )
 from MCSL2Lib.Widgets.loadingTipWidget import (
     MCSLAPILoadingErrorWidget,
     MCSLAPILoadingWidget,
 )
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import MCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403

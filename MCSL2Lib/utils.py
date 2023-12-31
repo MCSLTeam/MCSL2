@@ -28,7 +28,7 @@ import psutil
 from PyQt5.QtCore import QUrl, QThread, QThreadPool
 from PyQt5.QtGui import QDesktopServices
 
-from MCSL2Lib.Controllers.logController import _MCSL2Logger
+from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
 MCSL2Logger = _MCSL2Logger()
 

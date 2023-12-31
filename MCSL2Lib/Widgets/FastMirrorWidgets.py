@@ -14,10 +14,9 @@
 FastMirror Download Widgets.
 """
 
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QSizePolicy, QHBoxLayout, QWidget, QVBoxLayout
 from qfluentwidgets import (
-    BodyLabel,
     CardWidget,
     StrongBodyLabel,
     PrimaryToolButton,

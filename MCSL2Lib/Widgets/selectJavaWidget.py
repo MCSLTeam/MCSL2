@@ -20,7 +20,6 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QWidget,
     QGridLayout,
-    QFrame,
     QLayout,
     QHBoxLayout,
     QSpacerItem,

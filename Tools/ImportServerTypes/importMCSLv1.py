@@ -30,10 +30,10 @@ from qfluentwidgets import (
     InfoBar,
     StateToolTip,
 )
-from MCSL2Lib.Controllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.settingsController import cfg
 from shutil import copytree
 from MCSL2Lib.variables import MCSLv1ImportVariables
-from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 
 importVariables = MCSLv1ImportVariables()
 

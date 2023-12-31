@@ -50,17 +50,17 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.Controllers.aria2ClientController import Aria2BootThread, Aria2Controller
-from MCSL2Lib.Controllers.settingsController import cfg
-from MCSL2Lib.Controllers.updateController import (
+from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2BootThread, Aria2Controller
+from MCSL2Lib.ProgramControllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.updateController import (
     CheckUpdateThread,
     MCSL2FileUpdater,
     cmpVersion,
 )
-from MCSL2Lib.Controllers.logController import genSysReport
+from MCSL2Lib.ProgramControllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
-from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 try:
     from MCSL2Lib.verification import generateUniqueCode
 except Exception:

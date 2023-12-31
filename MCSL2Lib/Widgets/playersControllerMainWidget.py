@@ -22,7 +22,7 @@ from qfluentwidgets import (
     LineEdit,
     StrongBodyLabel,
 )
-from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 
 
 class playersController(QWidget):

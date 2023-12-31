@@ -17,7 +17,7 @@ Exception Widget.
 from PyQt5.QtCore import QRect, Qt, QSize
 from PyQt5.QtWidgets import QSizePolicy, QVBoxLayout, QWidget, QFrame
 from qfluentwidgets import BodyLabel
-from MCSL2Lib.Controllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 
 
 class ExceptionWidget(QWidget):

@@ -18,10 +18,7 @@ from typing import Callable
 
 from PyQt5.QtCore import pyqtSignal, QThread
 
-from MCSL2Lib.Controllers.networkController import (
-    MCSLNetworkSession,
-    MCSLNetworkHeaders,
-)
+from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 
 
 class MCSLAPIDownloadURLParser:
@@ -48,7 +45,7 @@ class MCSLAPIDownloadURLParser:
         size = []
         isDir = []
         try:
-            DownloadJson = MCSLNetworkSession().post(
+            downloadJson = (s := MCSLNetworkSession()).post(
                 url=APIUrl,
                 json={
                     "path": f"/MCSL2/MCSLAPI{path}",
@@ -57,16 +54,17 @@ class MCSLAPIDownloadURLParser:
                     "per_page": 0,
                     "refresh": False,
                 },
-                headers=MCSLNetworkHeaders,
+                headers=s.MCSLNetworkHeaders,
             )
+            del s
         except Exception:
             return -2, -2, -2, -2
         try:
-            for i in range(DownloadJson.json()["data"]["total"]):
-                name.append(DownloadJson.json()["data"]["content"][i]["name"])
-                size.append(DownloadJson.json()["data"]["content"][i]["size"])
-                isDir.append(DownloadJson.json()["data"]["content"][i]["is_dir"])
-            return name, size, isDir, DownloadJson.json()["data"]["total"]
+            for i in range(downloadJson.json()["data"]["total"]):
+                name.append(downloadJson.json()["data"]["content"][i]["name"])
+                size.append(downloadJson.json()["data"]["content"][i]["size"])
+                isDir.append(downloadJson.json()["data"]["content"][i]["is_dir"])
+            return name, size, isDir, downloadJson.json()["data"]["total"]
         except Exception:
             return -1, -1, -1, -1
 

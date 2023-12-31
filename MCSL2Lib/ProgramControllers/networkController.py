@@ -25,13 +25,13 @@ from platform import (
 
 
 class MCSLNetworkSession(Session):
+
+    MCSLNetworkHeaders = {
+        "User-Agent": f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.47 MCServerLauncher2/{MCSL2VERSION} ({systemType()} {systemVersion()}; {systemArchitecture()[0]})"  # noqa: E501
+    }
+
     def __init__(self):
         super().__init__()
         #: Trust environment settings for proxy configuration, default
         #: authentication and similar.
         self.trust_env = False
-
-
-MCSLNetworkHeaders = {
-    "User-Agent": f"MCServerLauncher2/{MCSL2VERSION} ({systemType()} {systemVersion()} {systemArchitecture()})"  # noqa: E501
-}

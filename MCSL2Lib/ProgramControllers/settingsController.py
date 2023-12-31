@@ -14,7 +14,6 @@
 Settings controller, for editing MCSL2's configurations.
 """
 
-from platform import system as systemType
 from qfluentwidgets import (
     QConfig,
     ConfigItem,
@@ -30,7 +29,7 @@ class Aria2Range(RangeConfigItem):
     @property
     def range(self):
         """get the available range of config"""
-        return (1, 128 if "windows" in systemType().lower() else 16)
+        return (1, 128)
 
 
 class Config(QConfig):
@@ -72,7 +71,7 @@ class Config(QConfig):
         "Download",
         "aria2Thread",
         8,
-        validator=RangeValidator(min=1, max=128 if "windows" in systemType().lower() else 16),
+        validator=RangeValidator(min=1, max=128),
     )
     saveSameFileException = OptionsConfigItem(
         "Download",

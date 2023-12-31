@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     # Load config
     from qfluentwidgets import qconfig
-    from MCSL2Lib.Controllers.settingsController import cfg
+    from MCSL2Lib.ProgramControllers.settingsController import cfg
 
     qconfig.load(r"./MCSL2/MCSL2_Config.json", cfg)
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     from os import path as osp
 
     if osp.exists(cfg.get(cfg.oldExecuteable)):
-        from MCSL2Lib.Controllers.updateController import deleteOldMCSL2
+        from MCSL2Lib.ProgramControllers.updateController import deleteOldMCSL2
 
         deleteOldMCSL2()
         del deleteOldMCSL2
