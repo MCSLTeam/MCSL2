@@ -1,0 +1,58 @@
+name: Linux Debug Build
+
+on: workflow_dispatch
+
+jobs:
+  Linux:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Install Tools
+        run: |
+          sudo apt-get install libfuse2
+          sudo apt-get install upx-ucl
+ 
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+  
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirement.txt
+
+      - name: Dependencies
+        shell: pwsh
+        run: |
+          python -m pip install tomli
+          python Tools/gen-requirements.py
+          python -m pip install --upgrade pip
+          python -m pip install -U -r requirements.txt
+          python -m pip uninstall numpy -y
+          python -m pip uninstall scipy -y
+
+      - name: Build on Linux
+        run: |
+          python -m lndl_nuitka . -y -- --disable-console
+
+      - name: Optimize
+        run: |
+          cd build
+          cd MCSL2.dist
+          rm -r zstandard
+          sudo rm libQt5Quick.so.5
+          sudo rm libQt5Qml.so.5
+          sudo rm libQt5QmlModels.so.5
+          sudo rm _asyncio.so
+          sudo rm _queue.so
+          upx -9 MCSL2.bin
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: MCSL2-Linux-x64
+          path: |
+            build/MCSL2.dist/**/*

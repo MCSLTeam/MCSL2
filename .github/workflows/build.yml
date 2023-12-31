@@ -26,7 +26,8 @@ jobs:
 
       - name: Dependencies
         run: |
-          pdm install --no-self
+          pdm install --no-self -dev
+          pdm add tomli
 
       - name: Build
         run: |
@@ -51,10 +52,9 @@ jobs:
             build/MCSL2.dist/**/*
 
   Linux:
-
     runs-on: ubuntu-20.04
-
     steps:
+
       - name: Install Tools
         run: |
           sudo apt-get install libfuse2
@@ -63,20 +63,27 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
   
-      - name: Setup PDM
-        uses: pdm-project/setup-pdm@v3
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8
-          architecture: x64
-          cache: true
+          python-version: '3.8'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirement.txt
 
-      - name: Install Dependencies
+      - name: Dependencies
+        shell: pwsh
         run: |
-          pdm install --no-self
+          python -m pip install tomli
+          python Tools/gen-requirements.py
+          python -m pip install --upgrade pip
+          python -m pip install -U -r requirements.txt
+          python -m pip uninstall numpy -y
+          python -m pip uninstall scipy -y
 
-      - name: Build
+      - name: Build on Linux
         run: |
-          pdm run build_github
+          python -m lndl_nuitka . -y -- --disable-console
 
       - name: Optimize
         run: |
