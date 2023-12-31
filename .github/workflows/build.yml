@@ -30,7 +30,7 @@ jobs:
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
 
-      - name: Build on Linux
+      - name: Build
         run: |
           python -m lndl_nuitka . -y -- --disable-console
 
@@ -82,7 +82,7 @@ jobs:
           python -m pip uninstall numpy -y
           python -m pip uninstall scipy -y
 
-      - name: Build on Linux
+      - name: Build
         run: |
           python -m lndl_nuitka . -y -- --disable-console
 
