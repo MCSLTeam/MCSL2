@@ -535,6 +535,9 @@ class Window(VerifyFluentWindowBase):
         self.homeInterface.selectServerBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)
         )
+        self.homeInterface.downloadBtn.clicked.connect(
+            lambda: self.switchTo(self.downloadInterface)
+        )
 
         # 管理服务器
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
