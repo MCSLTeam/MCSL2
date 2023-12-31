@@ -16,22 +16,23 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-
-      - name: Setup PDM
-        uses: pdm-project/setup-pdm@v3
-        with:
-          python-version: 3.8
-          architecture: x64
-          cache: true
+          cache: 'pip'
+          cache-dependency-path: |
+            requirement.txt
 
       - name: Dependencies
+        shell: pwsh
         run: |
-          pdm install --no-self -dev
-          pdm add tomli
+          python -m pip install tomli
+          python Tools/gen-requirements.py
+          python -m pip install --upgrade pip
+          python -m pip install -U -r requirements.txt
+          python -m pip uninstall numpy -y
+          python -m pip uninstall scipy -y
 
-      - name: Build
+      - name: Build on Linux
         run: |
-          pdm run build_github
+          python -m lndl_nuitka . -y -- --disable-console
 
       - name: Optimize
         shell: pwsh
