@@ -303,6 +303,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
 
             textEdit = PlainTextEdit(parent=w)
+            textEdit.setReadOnly(True)
             textEdit.setPlainText(script)
             textEdit.setFixedSize(QSize(400, 200))
 
