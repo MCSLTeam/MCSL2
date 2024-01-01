@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
     QLabel,
     QCompleter,
     QApplication,
+    QFileDialog,
 )
 from qfluentwidgets import (
     HyperlinkButton,
@@ -250,6 +251,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 return
 
             self.serverBridge.serverProcess.process.finished.connect(self.close)
+            self.serverBridge.serverProcess.process.finished.connect(
+                lambda: self.manageBtn.setEnabled(True)
+            )
+            self.serverBridge.serverProcess.process.finished.connect(
+                lambda: self.manageBtn.setText("启动")
+            )
             self.serverBridge.serverProcess.process.write(b"stop\n")
             self.exitingMsgBox.show()
             self.quitTimer.start()
@@ -257,8 +264,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 self.monitorWidget.setParent(None)
             except Exception:
                 pass
-            self.manageBtn.setEnabled(True)
-            self.manageBtn.setText("启动")
 
             a0.ignore()
             return
@@ -271,6 +276,50 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.manageBtn.setText("启动")
 
         super().closeEvent(a0)
+
+    def genRunScript(self, save=False):
+        script = self.serverConfig.javaPath + " " + " ".join(self.serverLauncher.jvmArg)
+        if save:
+            return script
+        else:
+            (w := MessageBox("生成启动脚本", "", parent=self)).contentLabel.setParent(None)
+            w.yesButton.setText("保存")
+            w.yesSignal.connect(self.saveRunScript)
+            (copyWidget := QWidget()).setLayout((cmdLayout := QHBoxLayout()))
+
+            copyBtn = PushButton(icon=FIF.COPY, text="复制", parent=w)
+            copyBtn.setFixedHeight(200)
+            copyBtn.clicked.connect(lambda: QApplication.clipboard().setText(script))
+            copyBtn.clicked.connect(
+                InfoBar.success(
+                    "已复制",
+                    "",
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.TOP,
+                    duration=1500,
+                    parent=self,
+                )
+            )
+
+            textEdit = PlainTextEdit(parent=w)
+            textEdit.setPlainText(script)
+            textEdit.setFixedSize(QSize(400, 200))
+
+            cmdLayout.addWidget(textEdit, 0, Qt.AlignRight)
+            cmdLayout.addWidget(copyBtn, 1, Qt.AlignRight)
+            w.textLayout.addWidget(copyWidget)
+            w.show()
+
+    def saveRunScript(self):
+        print(
+            QFileDialog.getSaveFileName(
+                self,
+                f"MCSL2服务器 - {self.serverConfig.serverName} 保存启动脚本",
+                f"Run {self.serverConfig.serverName}.bat",
+                "Batch(*.bat)|Shell(*.sh)",
+            )[0]
+        )
 
     def initSafelyQuitController(self):
         # 安全退出控件
@@ -628,6 +677,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.openServerFolder.clicked.connect(
             lambda: openLocalFile(f"Servers/{self.serverConfig.serverName}")
         )
+        self.genRunScriptBtn.clicked.connect(self.genRunScript)
 
     def initNavigation(self):
         self.serverSegmentedWidget.addItem(

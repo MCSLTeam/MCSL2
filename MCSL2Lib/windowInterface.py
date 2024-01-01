@@ -312,7 +312,7 @@ class Window(VerifyFluentWindowBase):
         if self.consoleCenterInterface.isAnyServerRunning():
             box = MessageBox(
                 self.tr("现在你无法退出MCSL2"),
-                self.tr("仍有服务器正在运行。\n\n请在退出前关闭所有服务器。"),
+                self.tr("仍有服务器正在运行。\n请在退出前关闭所有服务器。"),
                 parent=self,
             )
             box.yesButton.setText(self.tr("了解"))
