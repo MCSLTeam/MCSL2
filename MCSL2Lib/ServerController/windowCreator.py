@@ -54,8 +54,9 @@ from MCSL2Lib.ServerController.serverUtils import (
 import sys
 from re import search
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
-from MCSL2Lib.utils import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger, openLocalFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
+
 
 class ErrorHandlerToggleButton(ToggleButton):
     def __init__(self, parent=None):
@@ -198,7 +199,9 @@ class ServerWindowTitleBar(TitleBar):
 class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     playersControllerBtnEnabled = pyqtSignal(bool)
 
-    def __init__(self, config: ServerVariables, launcher: ServerLauncher):
+    def __init__(
+        self, config: ServerVariables, launcher: ServerLauncher, manageBtn: PrimaryPushButton
+    ):
         self._isMicaEnabled = False
         super().__init__()
         self.errMsg = ""
@@ -208,6 +211,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.serverLauncher = launcher
         self.serverBridge = None
         self.monitorWidget = None
+        self.manageBtn = manageBtn
+        self.manageBtn.setEnabled(False)
+        self.manageBtn.setText("已开启")
         self.initWindow()
         self.setupInterface()
         self.setupOverviewPage()
@@ -247,14 +253,22 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.serverBridge.serverProcess.process.write(b"stop\n")
             self.exitingMsgBox.show()
             self.quitTimer.start()
-            self.monitorWidget.setParent(None)
-            self.monitorWidget.deleteLater()
+            try:
+                self.monitorWidget.setParent(None)
+            except Exception:
+                pass
+            self.manageBtn.setEnabled(True)
+            self.manageBtn.setText("启动")
 
             a0.ignore()
             return
         else:
-            self.monitorWidget.setParent(None)
-            self.monitorWidget.deleteLater()
+            try:
+                self.monitorWidget.setParent(None)
+            except Exception:
+                pass
+            self.manageBtn.setEnabled(True)
+            self.manageBtn.setText("启动")
 
         super().closeEvent(a0)
 
@@ -611,6 +625,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.commandLineEdit.returnPressed.connect(
             lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
+        self.openServerFolder.clicked.connect(
+            lambda: openLocalFile(f"Servers/{self.serverConfig.serverName}")
+        )
 
     def initNavigation(self):
         self.serverSegmentedWidget.addItem(
@@ -753,6 +770,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.unRegisterResMonitor()
             self.unRegisterCommandOutput()
             self.unRegisterStartServerComponents()
+            self.toggleServerBtn.setEnabled(True)
+            self.exitServer.setEnabled(True)
 
     def registerStartServerComponents(self):
         self.toggleServerBtn.setText(self.tr("关闭服务器"))
@@ -792,10 +811,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.serverMemThread = MinecraftServerResMonitorUtil(bridge=self.serverBridge, parent=self)
         self.serverMemThread.memPercent.connect(self.setMemView)
         self.serverMemThread.cpuPercent.connect(self.setCPUView)
-        self.serverBridge.serverClosed.connect(self.serverMemThread.onServerClosedHandler)
         self.serverBridge.serverClosed.connect(self.unRegisterResMonitor)
 
     def unRegisterResMonitor(self):
+        self.serverMemThread.onServerClosedHandler()
         self.serverMemThread.memPercent.disconnect(self.setMemView)
         self.serverMemThread.cpuPercent.disconnect(self.setCPUView)
         self.serverMemThread.deleteLater()
@@ -1242,6 +1261,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def runQuickMenu_StopServer(self):
         if self.getRunningStatus():
+            self.toggleServerBtn.setEnabled(False)
+            self.exitServer.setEnabled(False)
             box = MessageBox(self.tr("正常关闭服务器"), self.tr("你确定要关闭服务器吗？"), self)
             box.yesSignal.connect(self.stopServer)
             box.exec_()
@@ -1271,5 +1292,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 )
             )
             w.exec_()
+            self.unRegisterResMonitor()
+            self.unRegisterCommandOutput()
+            self.unRegisterStartServerComponents()
         else:
             self.showServerNotOpenMsg()

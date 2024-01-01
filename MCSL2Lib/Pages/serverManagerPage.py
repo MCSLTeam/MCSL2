@@ -1394,7 +1394,7 @@ class ServerManagerPage(QWidget):
 
     def startServer(self, index):
         v = ServerConfigConstructor.loadServerConfig(index=index)
-        (w := ServerWindow(v, ServerLauncher(v))).show()
+        (w := ServerWindow(v, ServerLauncher(v), manageBtn=self.sender())).show()
         w.monitorWidget = RunningServerHeaderCardWidget(
             serverName=v.serverName, serverConsole=w
         ).itSelf

@@ -76,7 +76,7 @@ class MinecraftServerResMonitorUtil(QObject):
             pass
 
     @pyqtSlot(int)
-    def onServerClosedHandler(self, _):
+    def onServerClosedHandler(self):
         self.cpuPercent.emit(0.0)
         self.memPercent.emit(0.0)
         self.timer.stop()
