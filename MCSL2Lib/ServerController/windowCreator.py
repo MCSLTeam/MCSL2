@@ -291,7 +291,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             copyBtn.setFixedHeight(200)
             copyBtn.clicked.connect(lambda: QApplication.clipboard().setText(script))
             copyBtn.clicked.connect(
-                InfoBar.success(
+                lambda: InfoBar.success(
                     "已复制",
                     "",
                     orient=Qt.Horizontal,
@@ -324,7 +324,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def initSafelyQuitController(self):
         # 安全退出控件
         self.exitingMsgBox = MessageBox(
-            self.tr("安全关闭服务器中..."),
+            self.tr(f"安全关闭服务器“{self.serverConfig.serverName}”中..."),
             "稍安勿躁。如果长时间没有反应，请尝试强制关闭服务器。",
             parent=self,
         )
