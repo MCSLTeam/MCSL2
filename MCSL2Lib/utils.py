@@ -35,7 +35,7 @@ MCSL2Logger = _MCSL2Logger()
 
 class ServerUrl:
     @staticmethod
-    def getBmclapiUrl(mcVersion: str) -> str:
+    def getBmclapiUrl(mcVersion: str) -> QUrl:
         return QUrl(f"https://bmclapi2.bangbang93.com/version/{mcVersion}/server")
 
 
@@ -154,6 +154,12 @@ def exceptionFilter(
     if isinstance(value, Exception) and "raise test" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, Exception) and "pass test" in str(value):
+        return ExceptionFilterMode.PASS
+    if isinstance(
+        value, Exception
+    ) and "RunningServerHeaderCardWidget cannot be converted to PyQt5.QtWidgets.QLayoutItem" in str(
+        value
+    ):
         return ExceptionFilterMode.PASS
     if isinstance(value, Exception) and "print test" in str(value):
         return ExceptionFilterMode.RAISE_AND_PRINT

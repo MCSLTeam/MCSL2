@@ -151,7 +151,7 @@ class ServerManagerPage(QWidget):
 
         self.flowLayout = FlowLayout(self.serversScrollAreaWidgetContents)
         self.flowLayout.setContentsMargins(0, 0, 0, 0)
-        self.flowLayout.setObjectName("verticalLayout")
+        self.flowLayout.setObjectName("flowLayout")
 
         self.serversSmoothScrollArea.setWidget(self.serversScrollAreaWidgetContents)
         self.verticalLayout_2.addWidget(self.serversSmoothScrollArea)
@@ -1394,11 +1394,11 @@ class ServerManagerPage(QWidget):
 
     def startServer(self, index):
         v = ServerConfigConstructor.loadServerConfig(index=index)
-        (w := ServerWindow(v, ServerLauncher(v)).show()
-        w.startServer()
-        self.runningServerCardGenerated.emit(
-            lambda: RunningServerHeaderCardWidget(serverName=v.serverName, serverConsole=w)
-        )
+        (w := ServerWindow(v, ServerLauncher(v))).show()
+        w.monitorWidget = RunningServerHeaderCardWidget(
+            serverName=v.serverName, serverConsole=w
+        ).itSelf
+        self.runningServerCardGenerated.emit(w.monitorWidget)
 
 
 class DeleteServerThread(QThread):

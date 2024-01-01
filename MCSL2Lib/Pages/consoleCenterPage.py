@@ -1,9 +1,10 @@
-from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtCore import QRect, Qt, pyqtSlot
 from PyQt5.QtWidgets import QGridLayout, QSizePolicy, QWidget, QSpacerItem, QFrame
 
-from qfluentwidgets import StrongBodyLabel, TitleLabel
+from qfluentwidgets import StrongBodyLabel, TitleLabel, FlowLayout
 
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
+from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWidget
 
 
 class ConsoleCenterPage(QWidget):
@@ -48,3 +49,13 @@ class ConsoleCenterPage(QWidget):
         self.runningServersScrollAreaWidgetContents.setGeometry(QRect(0, 0, 670, 512))
         self.runningServersScrollArea.setWidget(self.runningServersScrollAreaWidgetContents)
         self.gridLayout.addWidget(self.runningServersScrollArea, 3, 2, 1, 1)
+        self.flowLayout = FlowLayout(self.runningServersScrollAreaWidgetContents)
+        self.flowLayout.setContentsMargins(0, 0, 0, 0)
+
+    @pyqtSlot(RunningServerHeaderCardWidget)
+    def addRunningCard(self, card: RunningServerHeaderCardWidget):
+        card.setParent(self.runningServersScrollAreaWidgetContents)
+        self.flowLayout.addWidget(card)
+
+    def isAnyServerRunning(self) -> bool:
+        return bool(self.flowLayout.count() > 0)

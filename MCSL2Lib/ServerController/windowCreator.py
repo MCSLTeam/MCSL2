@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt, QSize, QRect, QEvent, QObject, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import Qt, QSize, QRect, QEvent, QObject, pyqtSignal, pyqtSlot, QTimer
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QGridLayout,
@@ -53,9 +53,9 @@ from MCSL2Lib.ServerController.serverUtils import (
 )
 import sys
 from re import search
+from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
-
 
 class ErrorHandlerToggleButton(ToggleButton):
     def __init__(self, parent=None):
@@ -206,7 +206,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.playersControllerBtnEnabled.emit(False)
         self.serverConfig = config
         self.serverLauncher = launcher
-        self.serverProcessHandler = None
+        self.serverBridge = None
+        self.monitorWidget = None
         self.initWindow()
         self.setupInterface()
         self.setupOverviewPage()
@@ -220,7 +221,63 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.setObjectName("serverWindow")
         cfg.themeChangedFinished.connect(self._onThemeChangedFinished)
         self.setMicaEffectEnabled(True)
-        self.installEventFilter(self)
+        self.initSlots()
+        self.startServer()
+        self.initSafelyQuitController()
+
+    def closeEvent(self, a0) -> None:
+        if self.serverBridge.isServerRunning():
+            box = MessageBox(
+                self.tr("是否关闭此窗口？"),
+                self.tr("服务器正在运行，请在退出前先关闭服务器。"),
+                parent=self,
+            )
+            box.yesButton.setText(self.tr("取消"))
+            box.cancelButton.setText(self.tr("关闭并退出"))
+            box.cancelButton.setStyleSheet(
+                GlobalMCSL2Variables.darkWarnBtnStyleSheet
+                if isDarkTheme()
+                else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+            )
+            if box.exec() == 1:
+                a0.ignore()
+                return
+
+            self.serverBridge.serverProcess.process.finished.connect(self.close)
+            self.serverBridge.serverProcess.process.write(b"stop\n")
+            self.exitingMsgBox.show()
+            self.quitTimer.start()
+            self.monitorWidget.setParent(None)
+            self.monitorWidget.deleteLater()
+
+            a0.ignore()
+            return
+        else:
+            self.monitorWidget.setParent(None)
+            self.monitorWidget.deleteLater()
+
+        super().closeEvent(a0)
+
+    def initSafelyQuitController(self):
+        # 安全退出控件
+        self.exitingMsgBox = MessageBox(
+            self.tr("安全关闭服务器中..."),
+            "稍安勿躁。如果长时间没有反应，请尝试强制关闭服务器。",
+            parent=self,
+        )
+        self.exitingMsgBox.cancelButton.hide()
+        self.exitingMsgBox.yesButton.setText(self.tr("强制结束服务器"))
+        self.exitingMsgBox.yesButton.setStyleSheet(
+            GlobalMCSL2Variables.darkWarnBtnStyleSheet
+            if isDarkTheme()
+            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
+        )
+        self.exitingMsgBox.yesButton.clicked.connect(self.serverBridge.serverProcess.process.kill)
+        self.exitingMsgBox.yesButton.setEnabled(False)
+        self.exitingMsgBox.hide()
+        self.quitTimer = QTimer(self)
+        self.quitTimer.setInterval(3000)
+        self.quitTimer.timeout.connect(lambda: self.exitingMsgBox.yesButton.setEnabled(True))
 
     def setupInterface(self):
         self.gridLayout = QGridLayout(self)
@@ -260,11 +317,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.backupSavesBtn.setFixedSize(QSize(160, 32))
         self.overviewPageLayout.addWidget(self.backupSavesBtn, 1, 2, 1, 1)
         self.overviewScrollArea = MySmoothScrollArea(self.overviewPage)
-        self.overviewScrollArea.setFrameShape(QFrame.NoFrame)
-        self.overviewScrollArea.setFrameShadow(QFrame.Plain)
         self.overviewScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.overviewScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.overviewScrollArea.setWidgetResizable(True)
         self.overviewScrollArea.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.overviewScrollArea.setMinimumWidth(320)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 491, 575))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents)
@@ -282,8 +339,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.serverResMonitorWidget.sizePolicy().hasHeightForWidth())
         self.serverResMonitorWidget.setSizePolicy(sizePolicy)
-        self.serverResMonitorWidget.setMinimumSize(QSize(0, 165))
-        self.serverResMonitorWidget.setMaximumSize(QSize(16777215, 165))
+        self.serverResMonitorWidget.setFixedHeight(165)
         self.horizontalLayout = QHBoxLayout(self.serverResMonitorWidget)
         self.serverRAMMonitorWidget = QWidget(self.serverResMonitorWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -293,11 +349,21 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.serverRAMMonitorWidget.setSizePolicy(sizePolicy)
         self.serverRAMMonitorLayout = QGridLayout(self.serverRAMMonitorWidget)
         self.serverRAMMonitorLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.serverRAMMonitorTitle = StrongBodyLabel(self.serverRAMMonitorWidget)
-        self.serverRAMMonitorLayout.addWidget(self.serverRAMMonitorTitle, 0, 0, 1, 1)
+        spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.serverRAMMonitorLayout.addItem(spacerItem1, 1, 0, 1, 1)
         self.serverRAMMonitorRing = ProgressRing(self.serverRAMMonitorWidget)
         self.serverRAMMonitorRing.setTextVisible(True)
-        self.serverRAMMonitorLayout.addWidget(self.serverRAMMonitorRing, 1, 0, 1, 1)
+        self.serverRAMMonitorLayout.addWidget(self.serverRAMMonitorRing, 1, 1, 1, 1)
+        spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.serverRAMMonitorLayout.addItem(spacerItem2, 1, 2, 1, 1)
+        self.serverRAMMonitorTitle = StrongBodyLabel(self.serverRAMMonitorWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.serverRAMMonitorTitle.sizePolicy().hasHeightForWidth())
+        self.serverRAMMonitorTitle.setSizePolicy(sizePolicy)
+        self.serverRAMMonitorTitle.setAlignment(Qt.AlignCenter)
+        self.serverRAMMonitorLayout.addWidget(self.serverRAMMonitorTitle, 0, 0, 1, 3)
         self.horizontalLayout.addWidget(self.serverRAMMonitorWidget)
         self.resSeparator = VerticalSeparator(self.serverResMonitorWidget)
         self.horizontalLayout.addWidget(self.resSeparator)
@@ -307,17 +373,22 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.serverCPUMonitorWidget.sizePolicy().hasHeightForWidth())
         self.serverCPUMonitorWidget.setSizePolicy(sizePolicy)
-        self.serverCPUMonitorLayout = QGridLayout(self.serverCPUMonitorWidget)
+        self.gridLayout_4 = QGridLayout(self.serverCPUMonitorWidget)
+        spacerItem3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem3, 1, 2, 1, 1)
+        self.serverCPUMonitorRing = ProgressRing(self.serverCPUMonitorWidget)
+        self.serverCPUMonitorRing.setTextVisible(False)
+        self.gridLayout_4.addWidget(self.serverCPUMonitorRing, 1, 1, 1, 1)
+        spacerItem4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem4, 1, 0, 1, 1)
         self.serverCPUMonitorTitle = StrongBodyLabel(self.serverCPUMonitorWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.serverCPUMonitorTitle.sizePolicy().hasHeightForWidth())
         self.serverCPUMonitorTitle.setSizePolicy(sizePolicy)
-        self.serverCPUMonitorLayout.addWidget(self.serverCPUMonitorTitle, 0, 0, 1, 1)
-        self.serverCPUMonitorRing = ProgressRing(self.serverCPUMonitorWidget)
-        self.serverCPUMonitorRing.setTextVisible(False)
-        self.serverCPUMonitorLayout.addWidget(self.serverCPUMonitorRing, 1, 0, 1, 1)
+        self.serverCPUMonitorTitle.setAlignment(Qt.AlignCenter)
+        self.gridLayout_4.addWidget(self.serverCPUMonitorTitle, 0, 0, 1, 3)
         self.horizontalLayout.addWidget(self.serverCPUMonitorWidget)
         self.verticalLayout_3.addWidget(self.serverResMonitorWidget)
         self.existPlayersTitle = SubtitleLabel(self.scrollAreaWidgetContents)
@@ -479,6 +550,17 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         spacerItem2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.commandPageLayout.addItem(spacerItem2, 1, 5, 5, 1)
 
+        self.gamemode.clicked.connect(self.initQuickMenu_GameMode)
+        self.difficulty.currentIndexChanged.connect(self.runQuickMenu_Difficulty)
+        self.whiteList.clicked.connect(self.initQuickMenu_WhiteList)
+        self.op.clicked.connect(self.initQuickMenu_Operator)
+        self.kickPlayers.clicked.connect(self.initQuickMenu_Kick)
+        self.banPlayers.clicked.connect(self.initQuickMenu_BanOrPardon)
+        self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
+        self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
+        self.killServer.clicked.connect(self.runQuickMenu_KillServer)
+        self.errorHandler.setChecked(False)
+
     def initTexts(self):
         self.difficulty.addItems([
             self.tr("和平"),
@@ -518,8 +600,16 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.switchAnalyzeProviderBtn.setOffText("当前：使用本地模块分析")
         self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送，不需要加/")
         self.serverOutput.setPlaceholderText(self.tr("请先开启服务器！不开服务器没有日志！"))
+
+    def initSlots(self):
         self.commandLineEdit.textChanged.connect(
             lambda: self.sendCommandButton.setEnabled(self.commandLineEdit.text() != "")
+        )
+        self.sendCommandButton.clicked.connect(
+            lambda: self.sendCommand(command=self.commandLineEdit.text())
+        )
+        self.commandLineEdit.returnPressed.connect(
+            lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
 
     def initNavigation(self):
@@ -559,7 +649,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         """初始化窗口"""
 
         self.setTitleBar(ServerWindowTitleBar(self))
-        self.setWindowTitle("MCSL2服务器 - ")
+        self.setWindowTitle(f"MCSL2服务器 - {self.serverConfig.serverName}")
 
         self.setWindowIcon(QIcon(":/built-InIcons/MCSL2.png"))
         desktop = QApplication.desktop().availableGeometry()
@@ -603,6 +693,14 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def isMicaEffectEnabled(self):
         return self._isMicaEnabled
 
+    def getRunningStatus(self):
+        if self.serverBridge is None:
+            return False
+        elif not self.serverBridge.isServerRunning():
+            return False
+        else:
+            return True
+
     def setupCommandCompleter(self):
         intellisense = QCompleter(
             GlobalMCSL2Variables.MinecraftBuiltInCommand, self.commandLineEdit
@@ -624,15 +722,18 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         w.cancelButton.setText(self.tr("拒绝"))
         eulaBtn = HyperlinkButton(url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK)
         w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
-        w.show()
+        w.exec_()
 
     def startServer(self):
-        if self.serverProcessHandler is not None:
-            if not self.serverProcessHandler.isServerRunning():
-                t = self.serverProcessHandler.startServer()
+        if self.serverBridge is not None:
+            if not self.serverBridge.isServerRunning():
+                t = self.serverBridge.startServer()
                 if isinstance(t, _MinecraftEULA):
                     self._showNoAcceptEULAMsg(t)
                 else:
+                    self.registerResMonitor()
+                    self.registerCommandOutput()
+                    self.registerStartServerComponents()
                     return
             else:
                 return
@@ -641,31 +742,75 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             if isinstance(t, _MinecraftEULA):
                 self._showNoAcceptEULAMsg(t)
             else:
-                self.serverProcessHandler = t
+                self.serverBridge = t
+                self.registerResMonitor()
+                self.registerCommandOutput()
+                self.registerStartServerComponents()
+
+    def stopServer(self):
+        if self.serverBridge is not None:
+            self.serverBridge.stopServer()
+            self.unRegisterResMonitor()
+            self.unRegisterCommandOutput()
+            self.unRegisterStartServerComponents()
+
+    def registerStartServerComponents(self):
+        self.toggleServerBtn.setText(self.tr("关闭服务器"))
+        self.exitServer.setText(self.tr("关闭服务器"))
+        try:
+            self.toggleServerBtn.clicked.disconnect()
+        except Exception:
+            pass
+        try:
+            self.exitServer.clicked.disconnect()
+        except Exception:
+            pass
+        self.toggleServerBtn.clicked.connect(self.runQuickMenu_StopServer)
+        self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
+
+    def unRegisterStartServerComponents(self):
+        self.toggleServerBtn.setText(self.tr("开启服务器"))
+        self.exitServer.setText(self.tr("开启服务器"))
+        try:
+            self.toggleServerBtn.clicked.disconnect()
+        except Exception:
+            pass
+        try:
+            self.exitServer.clicked.disconnect()
+        except Exception:
+            pass
+        self.toggleServerBtn.clicked.connect(self.startServer)
+        self.exitServer.clicked.connect(self.startServer)
+
+    def registerCommandOutput(self):
+        self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
+
+    def unRegisterCommandOutput(self):
+        self.serverBridge.serverLogOutput.disconnect(self.colorConsoleText)
 
     def registerResMonitor(self):
-        self.serverMemThread = MinecraftServerResMonitorUtil(self)
+        self.serverMemThread = MinecraftServerResMonitorUtil(bridge=self.serverBridge, parent=self)
         self.serverMemThread.memPercent.connect(self.setMemView)
         self.serverMemThread.cpuPercent.connect(self.setCPUView)
-
-        self.serverProcessHandler.serverClosed.connect(self.unRegisterResMonitor)
+        self.serverBridge.serverClosed.connect(self.serverMemThread.onServerClosedHandler)
+        self.serverBridge.serverClosed.connect(self.unRegisterResMonitor)
 
     def unRegisterResMonitor(self):
         self.serverMemThread.memPercent.disconnect(self.setMemView)
         self.serverMemThread.cpuPercent.disconnect(self.setCPUView)
-        self.serverMemThread.onServerClosedHandler()
         self.serverMemThread.deleteLater()
-        del self.serverMemThread
 
     @pyqtSlot(float)
     def setMemView(self, mem):
+        translatedMEM = mem / (1024 if self.serverConfig.memUnit == "G" else 1)
         self.serverRAMMonitorTitle.setText(
-            f"RAM：{str(round(mem, 2))}{self.serverConfig.memUnit}/{self.serverConfig.maxMem}{self.serverConfig.memUnit}"  # noqa: E501
+            f"RAM：{str(round(translatedMEM, 2))}{self.serverConfig.memUnit}/{self.serverConfig.maxMem}{self.serverConfig.memUnit}"  # noqa: E501
         )
-        self.serverRAMMonitorRing.setValue(int(int(mem) / self.serverConfig.maxMem * 100))
+        self.serverRAMMonitorRing.setValue(int(int(translatedMEM) / self.serverConfig.maxMem * 100))
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
+        self.serverCPUMonitorTitle.setText(f"CPU：{cpuPercent}%")
         self.serverCPUMonitorRing.setValue(int(cpuPercent))
 
     @pyqtSlot(str)
@@ -752,11 +897,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 ip = "127.0.0.1"
             port = self.serverConfig.serverProperties.get("server-port", 25565)
             self.serverOutput.appendPlainText(
-                self.tr("[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。")  # noqa: E501
+                self.tr(f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：如果本机开服，IP 地址为{ip}，端口为{port}。\n[MCSL2 | 提示]：如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。")  # noqa: E501
             )
             InfoBar.success(
                 title=self.tr("提示"),
-                content=self.tr("服务器启动完毕！\n如果本机开服，IP 地址为") + ip + self.tr("，端口为") + port + self.tr("。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),  # noqa: E501
+                content=self.tr(f"服务器启动完毕！\n如果本机开服，IP 地址为{ip}，端口为{port}。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),  # noqa: E501
                 orient=Qt.Horizontal,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
@@ -792,13 +937,13 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             if self.errMsg != "":
                 w = MessageBox("错误分析器日志", self.errMsg, self)
                 w.cancelButton.setParent(None)
-                w.show()
+                w.exec_()
             else:
                 w = MessageBox(
                     "错误分析器日志", "本次没有检测到任何MCSL2内置错误分析可用解决方案。", self
                 )
                 w.cancelButton.setParent(None)
-                w.show()
+                w.exec_()
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
@@ -840,39 +985,291 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                     exc=e,
                 )
 
-    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-        if a0 == self.commandPage and a1.type() == QEvent.KeyPress:
-            if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
-                if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
-                    self.sendCommandButton.click()
-                    return True
-            elif a1.key() == Qt.Key_Up:
-                if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
-                    if len(
-                        GlobalMCSL2Variables.userCommandHistory
-                    ) and GlobalMCSL2Variables.upT > -len(GlobalMCSL2Variables.userCommandHistory):
-                        GlobalMCSL2Variables.upT -= 1
-                        lastCommand = GlobalMCSL2Variables.userCommandHistory[
-                            GlobalMCSL2Variables.upT
-                        ]
-                        self.commandLineEdit.setText(lastCommand)
-                        return True
-            elif a1.key() == Qt.Key_Down:
-                if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
-                    if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT < 0
-                    ):
-                        GlobalMCSL2Variables.upT += 1
-                        nextCommand = GlobalMCSL2Variables.userCommandHistory[
-                            GlobalMCSL2Variables.upT
-                        ]
-                        self.commandLineEdit.setText(nextCommand)
-                        return True
-                    if (
-                        len(GlobalMCSL2Variables.userCommandHistory)
-                        and GlobalMCSL2Variables.upT == 0
-                    ):
-                        self.commandLineEdit.setText("")
-                        return True
-        return super().eventFilter(a0, a1)
+    # def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
+    #     if a0 == self.commandPage and a1.type() == QEvent.KeyPress:
+    #         if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
+    #             if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
+    #                 self.sendCommandButton.click()
+    #                 return True
+    #         elif a1.key() == Qt.Key_Up:
+    #             if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
+    #                 if len(
+    #                     GlobalMCSL2Variables.userCommandHistory
+    #                 ) and GlobalMCSL2Variables.upT > -len(GlobalMCSL2Variables.userCommandHistory):
+    #                     GlobalMCSL2Variables.upT -= 1
+    #                     lastCommand = GlobalMCSL2Variables.userCommandHistory[
+    #                         GlobalMCSL2Variables.upT
+    #                     ]
+    #                     self.commandLineEdit.setText(lastCommand)
+    #                     return True
+    #         elif a1.key() == Qt.Key_Down:
+    #             if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
+    #                 if (
+    #                     len(GlobalMCSL2Variables.userCommandHistory)
+    #                     and GlobalMCSL2Variables.upT < 0
+    #                 ):
+    #                     GlobalMCSL2Variables.upT += 1
+    #                     nextCommand = GlobalMCSL2Variables.userCommandHistory[
+    #                         GlobalMCSL2Variables.upT
+    #                     ]
+    #                     self.commandLineEdit.setText(nextCommand)
+    #                     return True
+    #                 if (
+    #                     len(GlobalMCSL2Variables.userCommandHistory)
+    #                     and GlobalMCSL2Variables.upT == 0
+    #                 ):
+    #                     self.commandLineEdit.setText("")
+    #                     return True
+    #     return super().eventFilter(a0, a1)
+
+    def showServerNotOpenMsg(self):
+        """弹出服务器未开启提示"""
+        w = MessageBox(
+            title=self.tr("失败"),
+            content=self.tr("服务器并未开启，请先开启服务器。"),
+            parent=self,
+        )
+        w.yesButton.setText(self.tr("好"))
+        w.cancelButton.setParent(None)
+        w.cancelButton.deleteLater()
+        w.exec_()
+
+    def sendCommand(self, command):
+        if self.getRunningStatus():
+            if command != "":
+                self.serverBridge.sendCommand(command=command)
+                self.commandLineEdit.clear()
+                GlobalMCSL2Variables.userCommandHistory.append(command)
+                GlobalMCSL2Variables.upT = 0
+            else:
+                pass
+        else:
+            self.showServerNotOpenMsg()
+
+    def lineEditChecker(self, text):
+        if text != "":
+            self.playersControllerBtnEnabled.emit(True)
+        else:
+            self.playersControllerBtnEnabled.emit(False)
+
+    def getKnownServerPlayers(self) -> str:
+        players = self.tr("无玩家加入")
+        if len(self.playersList):
+            players = ""
+            for player in self.playersList:
+                players += f"{player}\n"
+        else:
+            pass
+        return players
+
+    def initQuickMenu_Difficulty(self):
+        """快捷菜单-服务器游戏难度"""
+        textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
+        if self.getRunningStatus():
+            try:
+                self.difficulty.setCurrentIndex(
+                    int(self.serverConfig.serverProperties["difficulty"])
+                )
+            except ValueError:
+                self.difficulty.setCurrentIndex(
+                    int(textDiffiultyList.index(self.serverConfig.serverProperties["difficulty"]))
+                )
+            except Exception:
+                pass
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_Difficulty(self):
+        textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
+        self.sendCommand(f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}")
+
+    def initQuickMenu_GameMode(self):
+        """快捷菜单-游戏模式"""
+        if self.getRunningStatus():
+            gamemodeWidget = playersController()
+            gamemodeWidget.mode.addItems([
+                self.tr("生存"),
+                self.tr("创造"),
+                self.tr("冒险"),
+                self.tr("旁观"),
+            ])
+            gamemodeWidget.mode.setCurrentIndex(0)
+            gamemodeWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=gamemodeWidget.who.text())
+            )
+            gamemodeWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox(self.tr("服务器游戏模式"), self.tr("设置服务器游戏模式"), self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
+            w.textLayout.addWidget(gamemodeWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_GameMode(
+                    gamemode=gamemodeWidget.mode.currentIndex(),
+                    player=gamemodeWidget.who.text(),
+                )
+            )
+            w.exec_()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_GameMode(self, gamemode: int, player: str):
+        gameModeList = ["survival", "creative", "adventure", "spectator"]
+        if self.getRunningStatus():
+            self.serverBridge.sendCommand(command=f"gamemode {gameModeList[gamemode]} {player}")
+        else:
+            self.showServerNotOpenMsg()
+            # TODO: rollback
+
+    def initQuickMenu_WhiteList(self):
+        """快捷菜单-白名单"""
+        if self.getRunningStatus():
+            whiteListWidget = playersController()
+            whiteListWidget.mode.addItems([self.tr("添加(add)"), self.tr("删除(remove)")])
+            whiteListWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=whiteListWidget.who.text())
+            )
+            whiteListWidget.playersTip.setText(self.getKnownServerPlayers())
+            content = (
+                self.tr("请确保服务器的白名单功能处于启用状态。\n")
+                + self.tr("启用：/whitelist on\n")
+                + self.tr("关闭：/whitelist off\n")
+                + self.tr("列出当前白名单：/whitelist list\n")
+                + self.tr("重新加载白名单：/whitelist reload")
+            )
+            w = MessageBox(self.tr("白名单"), content, self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
+            w.textLayout.addWidget(whiteListWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_WhiteList(
+                    mode=whiteListWidget.mode.currentIndex(),
+                    player=whiteListWidget.who.text(),
+                )
+            )
+            w.exec_()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_WhiteList(self, mode: int, player: str):
+        whiteListMode = ["add", "remove"]
+        if self.getRunningStatus():
+            self.serverBridge.sendCommand(command=f"whitelist {whiteListMode[mode]} {player}")
+        else:
+            self.showServerNotOpenMsg()
+
+    def initQuickMenu_Operator(self):
+        """快捷菜单-服务器管理员"""
+        if self.getRunningStatus():
+            opWidget = playersController()
+            opWidget.mode.addItems([self.tr("添加"), self.tr("删除")])
+            opWidget.mode.setCurrentIndex(0)
+            opWidget.who.textChanged.connect(lambda: self.lineEditChecker(text=opWidget.who.text()))
+            opWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox(self.tr("服务器管理员"), self.tr("添加或删除管理员"), self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
+            w.textLayout.addWidget(opWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_Operator(
+                    mode=opWidget.mode.currentIndex(), player=opWidget.who.text()
+                )
+            )
+            w.exec_()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_Operator(self, mode: int, player: str):
+        commandPrefixList = ["op", "deop"]
+        if self.getRunningStatus():
+            self.serverBridge.sendCommand(command=f"{commandPrefixList[mode]} {player}")
+        else:
+            self.showServerNotOpenMsg()
+
+    def initQuickMenu_Kick(self):
+        """快捷菜单-踢人"""
+        if self.getRunningStatus():
+            kickWidget = playersController()
+            kickWidget.mode.setParent(None)
+            kickWidget.mode.deleteLater()
+            kickWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=kickWidget.who.text())
+            )
+            kickWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox(self.tr("踢出玩家"), self.tr("踢出服务器中的玩家"), self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
+            w.textLayout.addWidget(kickWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(lambda: self.runQuickMenu_Kick(player=kickWidget.who.text()))
+            w.exec_()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_Kick(self, player: str):
+        self.serverBridge.sendCommand(command=f"kick {player}")
+
+    def initQuickMenu_BanOrPardon(self):
+        """快捷菜单-封禁或解禁玩家"""
+        if self.getRunningStatus():
+            banOrPardonWidget = playersController()
+            banOrPardonWidget.mode.addItems([self.tr("封禁"), self.tr("解禁")])
+            banOrPardonWidget.mode.setCurrentIndex(0)
+            banOrPardonWidget.who.textChanged.connect(
+                lambda: self.lineEditChecker(text=banOrPardonWidget.who.text())
+            )
+            banOrPardonWidget.playersTip.setText(self.getKnownServerPlayers())
+            w = MessageBox(self.tr("封禁或解禁玩家"), "ban/pardon", self)
+            w.yesButton.setText(self.tr("确定"))
+            w.cancelButton.setText(self.tr("取消"))
+            w.textLayout.addWidget(banOrPardonWidget.playersControllerMainWidget)
+            self.playersControllerBtnEnabled.connect(w.yesButton.setEnabled)
+            w.yesSignal.connect(
+                lambda: self.runQuickMenu_BanOrPardon(
+                    mode=banOrPardonWidget.mode.currentIndex(),
+                    player=banOrPardonWidget.who.text(),
+                )
+            )
+            w.exec_()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_BanOrPardon(self, mode: int, player: str):
+        commandPrefixList = ["ban", "pardon"]
+        self.serverBridge.sendCommand(command=f"{commandPrefixList[mode]} {player}")
+
+    def runQuickMenu_StopServer(self):
+        if self.getRunningStatus():
+            box = MessageBox(self.tr("正常关闭服务器"), self.tr("你确定要关闭服务器吗？"), self)
+            box.yesSignal.connect(self.stopServer)
+            box.exec_()
+        else:
+            self.showServerNotOpenMsg()
+
+    def runQuickMenu_KillServer(self):
+        """快捷菜单-强制关闭服务器"""
+        if self.getRunningStatus():
+            w = MessageBox(
+                self.tr("强制关闭服务器"),
+                self.tr("确定要强制关闭服务器吗？\n有可能导致数据丢失！\n请确保存档已经保存！"),
+                self,
+            )
+            w.yesButton.setText(self.tr("算了"))
+            w.cancelButton.setText(self.tr("强制关闭"))
+            w.cancelSignal.connect(lambda: self.serverBridge.haltServer())
+            w.cancelSignal.connect(
+                lambda: InfoBar.warning(
+                    title=self.tr("警告"),
+                    content=self.tr("正在结束服务器..."),
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.TOP,
+                    duration=800,
+                    parent=self,
+                )
+            )
+            w.exec_()
+        else:
+            self.showServerNotOpenMsg()

@@ -17,7 +17,7 @@ Communicate with Minecraft servers.
 
 from PyQt5.QtCore import QObject, pyqtSignal, QTimer, pyqtSlot
 from psutil import NoSuchProcess, Process, AccessDenied
-from MCSL2Lib.ServerController.processCreator import _ServerProcessHandler
+from MCSL2Lib.ServerController.processCreator import _ServerProcessBridge
 from MCSL2Lib.variables import ServerVariables
 
 serverVariables = ServerVariables()
@@ -31,9 +31,9 @@ class MinecraftServerResMonitorUtil(QObject):
     memPercent = pyqtSignal(float)
     cpuPercent = pyqtSignal(float)
 
-    def __init__(self, handler: _ServerProcessHandler, parent=None):
+    def __init__(self, bridge: _ServerProcessBridge, parent=None):
         super().__init__(parent)
-        self.handler = handler
+        self.bridge = bridge
         self.setObjectName("MinecraftServerResMonitorThread")
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.getServerMem)
@@ -44,9 +44,9 @@ class MinecraftServerResMonitorUtil(QObject):
     def getServerMem(self):
         divisionNum = self.divisionNumList[serverVariables.memUnit]
         try:
-            if self.handler.isServerRunning():
+            if self.bridge.isServerRunning():
                 serverMem = (
-                    Process(self.handler.handledServer.process.processId()).memory_full_info().uss
+                    Process(self.bridge.handledServer.process.processId()).memory_full_info().uss
                     / divisionNum
                 )
                 self.memPercent.emit(float("{:.4f}".format(serverMem)))
@@ -61,9 +61,9 @@ class MinecraftServerResMonitorUtil(QObject):
 
     def getServerCPU(self):
         try:
-            if self.handler.isServerRunning():
+            if self.bridge.isServerRunning():
                 serverCPU = Process(
-                    self.handler.handledServer.process.processId().processId()
+                    self.bridge.handledServer.process.processId()
                 ).cpu_percent(interval=0.01)
                 self.cpuPercent.emit(float("{:.4f}".format(serverCPU / 10)))
             else:

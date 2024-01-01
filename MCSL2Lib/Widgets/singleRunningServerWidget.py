@@ -15,6 +15,10 @@ class RunningServerHeaderCardWidget(HeaderCardWidget):
 
         self.viewLayout.addWidget(_RunningServerCommandBar(self))
 
+    @property
+    def itSelf(self):
+        return self
+
 
 class _RunningServerCommandBar(CommandBar):
     def __init__(self, parent=None):
@@ -28,6 +32,8 @@ class _RunningServerCommandBar(CommandBar):
         return super().parent()
 
     def completeActions(self):
-        # self.openPrompt.triggered.connect(self.parent().console.show)
-        # self.closeServer.triggered.connect(self.parent().console.close)
+        self.openPrompt.triggered.connect(self.parent().console.show)
+        self.closeServer.triggered.connect(self.parent().console.show)
+        self.closeServer.triggered.connect(self.parent().console.activateWindow)
+        self.closeServer.triggered.connect(self.parent().console.runQuickMenu_StopServer)
         self.addActions([self.openPrompt, self.closeServer])

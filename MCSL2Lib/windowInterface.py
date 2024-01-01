@@ -22,7 +22,6 @@ from types import TracebackType
 from typing import Type
 from PyQt5.QtCore import (
     Qt,
-    QTimer,
     pyqtSlot,
     QSize,
     pyqtSignal,
@@ -69,7 +68,6 @@ from MCSL2Lib.utils import (
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
     EditServerVariables,
-    GlobalMCSL2Variables,
     ServerVariables,
     SettingsVariables,
 )
@@ -241,7 +239,7 @@ class Window(VerifyFluentWindowBase):
         self.homeInterface = HomePage(self)
         self.configureInterface = ConfigurePage(self)
         self.downloadInterface = DownloadPage(self)
-        self.consoleInterface = ConsoleCenterPage(self)
+        self.consoleCenterInterface = ConsoleCenterPage(self)
         self.pluginsInterface = PluginPage(self)
         self.settingsInterface = SettingsPage(self)
         self.serverManagerInterface = ServerManagerPage(self)
@@ -264,7 +262,6 @@ class Window(VerifyFluentWindowBase):
 
         initializeAria2Configuration()
 
-        self.initSafeQuitController()
 
         # loaded.mainWindowInited = True
         # GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
@@ -275,7 +272,6 @@ class Window(VerifyFluentWindowBase):
         self.initPluginSystem()
         if cfg.get(cfg.checkUpdateOnStart):
             self.settingsInterface.checkUpdate(parent=self)
-        self.consoleInterface.installEventFilter(self)
         self.startAria2Client()
         self.splashScreen.finish()
         self.update()
@@ -313,31 +309,18 @@ class Window(VerifyFluentWindowBase):
         self.startFetchingNotice.emit()
 
     def closeEvent(self, a0) -> None:
-        # if ServerHandler().isServerRunning():
-        #     box = MessageBox(
-        #         self.tr("是否退出MCSL2？"),
-        #         self.tr("服务器正在运行。\n\n请在退出前先关闭服务器。"),
-        #         parent=self,
-        #     )
-        #     box.yesButton.setText(self.tr("取消"))
-        #     box.cancelButton.setText(self.tr("安全关闭并退出"))
-        #     box.cancelButton.setStyleSheet(
-        #         GlobalMCSL2Variables.darkWarnBtnStyleSheet
-        #         if isDarkTheme()
-        #         else GlobalMCSL2Variables.lightWarnBtnStyleSheet
-        #     )
-        #     if box.exec() == 1:
-        #         a0.ignore()
-        #         return
-
-        #     process = ServerHandler().Server.serverProcess
-        #     process.finished.connect(self.close)
-        #     process.write(b"stop\n")
-            # self.exitingMsgBox.show()
-            # self.quitTimer.start()
-
-            # a0.ignore()
-            # return
+        if self.consoleCenterInterface.isAnyServerRunning():
+            box = MessageBox(
+                self.tr("现在你无法退出MCSL2"),
+                self.tr("仍有服务器正在运行。\n\n请在退出前关闭所有服务器。"),
+                parent=self,
+            )
+            box.yesButton.setText(self.tr("了解"))
+            box.cancelButton.setParent(None)
+            box.cancelButton.deleteLater()
+            box.exec_()
+            a0.ignore()
+            return
 
         # close thread pool
         QThreadPool.globalInstance().clear()
@@ -351,9 +334,7 @@ class Window(VerifyFluentWindowBase):
         finally:
             super().closeEvent(a0)
 
-    def onForceExit(self):
-        process = ServerHandler().Server.serverProcess
-        process.kill()
+
 
     def catchExceptions(
         self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
@@ -405,7 +386,7 @@ class Window(VerifyFluentWindowBase):
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, self.tr("新建"))
         self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, self.tr("管理"))
         self.addSubInterface(self.downloadInterface, FIF.DOWNLOAD, self.tr("下载"))
-        self.addSubInterface(self.consoleInterface, FIF.ROBOT, self.tr("监控"))
+        self.addSubInterface(self.consoleCenterInterface, FIF.ROBOT, self.tr("监控"))
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, self.tr("插件"))
         self.navigationInterface.addSeparator()
         self.navigationInterface.setExpandWidth(200)
@@ -446,27 +427,6 @@ class Window(VerifyFluentWindowBase):
                 pass
         setTheme(cfg.theme)
         # setThemeColor(cfg.get(cfg.themeColor))
-
-    def initSafeQuitController(self):
-        # 安全退出控件
-        self.exitingMsgBox = MessageBox(
-            self.tr("正在退出MCSL2"),
-            self.tr("安全关闭服务器中...\n\nMCSL2稍后将自行退出。"),
-            parent=self,
-        )
-        self.exitingMsgBox.cancelButton.hide()
-        self.exitingMsgBox.yesButton.setText(self.tr("强制结束服务器并退出"))
-        self.exitingMsgBox.yesButton.setStyleSheet(
-            GlobalMCSL2Variables.darkWarnBtnStyleSheet
-            if isDarkTheme()
-            else GlobalMCSL2Variables.lightWarnBtnStyleSheet
-        )
-        self.exitingMsgBox.yesButton.clicked.connect(self.onForceExit)
-        self.exitingMsgBox.yesButton.setEnabled(False)
-        self.exitingMsgBox.hide()
-        self.quitTimer = QTimer(self)
-        self.quitTimer.setInterval(3000)
-        self.quitTimer.timeout.connect(lambda: self.exitingMsgBox.yesButton.setEnabled(True))
 
     def initQtSlot(self):
         """定义无法直接设置的Qt信号槽"""
@@ -584,6 +544,8 @@ class Window(VerifyFluentWindowBase):
         self.stackedWidget.currentChanged.connect(self.serverManagerInterface.onPageChangedRefresh)
         self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
         # fmt: on
+
+        self.serverManagerInterface.runningServerCardGenerated.connect(self.consoleCenterInterface.addRunningCard)
 
     def startAria2Client(self):
         bootThread = Aria2BootThread(self)
