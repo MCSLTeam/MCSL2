@@ -1041,6 +1041,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 name = serverOutput
                 name = name.split("]: ")[1].split("[/")[0]
                 self.playersList.append(name)
+                self.existPlayersListWidget.clear()
+                self.existPlayersListWidget.addItems(self.playersList)
             except Exception as e:
                 MCSL2Logger.error(
                     msg=f"extract player name failed\nonRecordPlayers::login {serverOutput}",
@@ -1060,6 +1062,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 name = serverOutput
                 name = name.split("]: ")[1].split(" left the game")[0].strip()
                 self.playersList.pop(self.playersList.index(name))
+                self.existPlayersListWidget.clear()
+                self.existPlayersListWidget.addItems(self.playersList)
             except Exception as e:
                 MCSL2Logger.error(
                     msg=f"extract player name failed\nonRecordPlayers::logout {serverOutput}",
