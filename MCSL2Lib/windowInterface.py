@@ -92,10 +92,12 @@ class Window(VerifyFluentWindowBase):
 
     def __init__(self):
         super().__init__()
-        self.previewFlag = False
+        self.previewFlag = True
         self.mySetTheme()
         self.initWindow()
-        self.setWindowTitle(f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24.1.2' if self.previewFlag else ''}")
+        self.setWindowTitle(
+            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24.1.2' if self.previewFlag else ''}"
+        )
 
         self.oldHook = sys.excepthook
         sys.excepthook = self.catchExceptions
@@ -225,8 +227,6 @@ class Window(VerifyFluentWindowBase):
                 super().closeEvent(a0)
         finally:
             super().closeEvent(a0)
-
-
 
     def catchExceptions(
         self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
@@ -437,7 +437,9 @@ class Window(VerifyFluentWindowBase):
         self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
         # fmt: on
 
-        self.serverManagerInterface.runningServerCardGenerated.connect(self.consoleCenterInterface.addRunningCard)
+        self.serverManagerInterface.runningServerCardGenerated.connect(
+            self.consoleCenterInterface.addRunningCard
+        )
 
     def startAria2Client(self):
         bootThread = Aria2BootThread(self)
