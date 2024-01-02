@@ -33,7 +33,7 @@ from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 MCSL2Logger = _MCSL2Logger()
 
 
-class ServerUrl:
+class ServicesUrl:
     @staticmethod
     def getBmclapiUrl(mcVersion: str) -> QUrl:
         return QUrl(f"https://bmclapi2.bangbang93.com/version/{mcVersion}/server")

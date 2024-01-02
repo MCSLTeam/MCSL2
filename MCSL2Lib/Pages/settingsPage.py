@@ -146,8 +146,8 @@ class SettingsPage(QWidget):
         self.serverSettingsGroup = SettingCardGroup(self.tr("服务器设置"), self.settingsWidget)
         self.autoRunLastServer = SwitchSettingCard(
             icon=FIF.ROBOT,
-            title=self.tr("自动开服"),
-            content=self.tr("启动MCSL2时自动运行上次运行的服务器。"),
+            title=self.tr("自动启动MCSL2时自动运行上次运行的服务器"),
+            content=self.tr("此项由于大量资源占用已被暂时禁用。"),
             configItem=cfg.autoRunLastServer,
             parent=self.serverSettingsGroup,
         )
@@ -160,8 +160,8 @@ class SettingsPage(QWidget):
         )
         self.sendStopInsteadOfKill = SwitchSettingCard(
             icon=FIF.VPN,
-            title=self.tr("安全关闭服务器"),
-            content=self.tr('向服务器发送"stop"以安全地关闭服务器。'),
+            title=self.tr("总是向服务器发送“stop”以安全地关闭服务器"),
+            content=self.tr('此项因为安全性已被永久禁止更改。'),
             configItem=cfg.sendStopInsteadOfKill,
             parent=self.serverSettingsGroup,
         )
@@ -172,6 +172,8 @@ class SettingsPage(QWidget):
             configItem=cfg.restartServerWhenCrashed,
             parent=self.serverSettingsGroup,
         )
+        self.autoRunLastServer.setEnabled(False)
+        self.sendStopInsteadOfKill.setEnabled(False)
         self.serverSettingsGroup.addSettingCard(self.autoRunLastServer)
         self.serverSettingsGroup.addSettingCard(self.acceptAllMojangEula)
         self.serverSettingsGroup.addSettingCard(self.sendStopInsteadOfKill)

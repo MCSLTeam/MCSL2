@@ -62,6 +62,7 @@ from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 from MCSL2Lib.ServerController.windowCreator import ServerWindow
 from MCSL2Lib.ServerController.processCreator import ServerLauncher
+from MCSL2Lib.ServerController.serverUtils import backupServer, backupSaves
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
 from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWidget
@@ -686,14 +687,16 @@ class ServerManagerPage(QWidget):
     def scrollAreaProcessor(self):
         type = str(self.sender().objectName()).split("Btn")[0]
         index = int(str(self.sender().objectName()).split("Btn")[1])
-        if type == "select":
+        if type == "run":
             self.startServer(index=index)
         elif type == "edit":
             self.initEditServerInterface(index=index)
-        elif type == "delete":
-            self.deleteServer_Step1(index=index)
+        elif type == "backup":
+            self.backup(index=index)
         elif type == "openDataFolder":
             self.openDataFolder(index=index)
+        elif type == "delete":
+            self.deleteServer_Step1(index=index)
 
     def openDataFolder(self, index):
         globalConfig: list = readGlobalServerConfig()
@@ -1394,11 +1397,32 @@ class ServerManagerPage(QWidget):
 
     def startServer(self, index):
         v = ServerConfigConstructor.loadServerConfig(index=index)
-        (w := ServerWindow(v, ServerLauncher(v), manageBtn=self.sender())).show()
+        (
+            w := ServerWindow(
+                v,
+                ServerLauncher(v),
+                manageBtn=self.sender(),
+                manageBackupBtn=self.sender().parent().parent().backupBtn,
+            )
+        ).show()
         w.monitorWidget = RunningServerHeaderCardWidget(
             serverName=v.serverName, serverConsole=w
         ).itSelf
         self.runningServerCardGenerated.emit(w.monitorWidget)
+
+    def backup(self, index):
+        w = MessageBox("备份服务器", "请选择：", self)
+        w.yesButton.setText("服务器")
+        w.cancelButton.setText("仅存档")
+        w.yesSignal.connect(
+            lambda: backupServer(
+                ServerConfigConstructor.loadServerConfig(index=index).serverName, parent=self
+            )
+        )
+        w.cancelSignal.connect(
+            lambda: backupSaves(ServerConfigConstructor.loadServerConfig(index=index), parent=self)
+        )
+        w.exec_()
 
 
 class DeleteServerThread(QThread):

@@ -33,6 +33,7 @@ class _RunningServerCommandBar(CommandBar):
 
     def completeActions(self):
         self.openPrompt.triggered.connect(self.parent().console.show)
+        self.openPrompt.triggered.connect(self.parent().console.activateWindow)
         self.closeServer.triggered.connect(self.parent().console.show)
         self.closeServer.triggered.connect(self.parent().console.activateWindow)
         self.closeServer.triggered.connect(self.parent().console.runQuickMenu_StopServer)
