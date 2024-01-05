@@ -18,7 +18,7 @@ Communicate with Minecraft servers.
 from PyQt5.QtCore import QObject, pyqtSignal, QTimer, pyqtSlot, Qt
 from PyQt5.QtWidgets import QFileDialog
 from psutil import NoSuchProcess, Process, AccessDenied
-from MCSL2Lib.ServerController.processCreator import _ServerProcessBridge
+from MCSL2Lib.ServerControllers.processCreator import _ServerProcessBridge
 from MCSL2Lib.variables import ServerVariables
 from os import path as osp, mkdir
 from qfluentwidgets import InfoBar, InfoBarPosition

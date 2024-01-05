@@ -1,4 +1,4 @@
-from MCSL2Lib.ServerController.windowCreator import ServerWindow
+from MCSL2Lib.ServerControllers.windowCreator import ServerWindow
 from qfluentwidgets import HeaderCardWidget, CommandBar, Action, FluentIcon as FIF
 from PyQt5.QtCore import QSize, Qt
 

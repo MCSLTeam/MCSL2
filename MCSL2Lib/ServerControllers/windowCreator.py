@@ -1,4 +1,3 @@
-
 from PyQt5.QtCore import Qt, QSize, QRect, QEvent, QObject, pyqtSignal, pyqtSlot, QTimer
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -47,9 +46,9 @@ from qframelesswindow import TitleBar
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.ServerController.processCreator import _MinecraftEULA, ServerLauncher
-from MCSL2Lib.ServerController.serverErrorHandler import ServerErrorHandler
-from MCSL2Lib.ServerController.serverUtils import (
+from MCSL2Lib.ServerControllers.processCreator import _MinecraftEULA, ServerLauncher
+from MCSL2Lib.ServerControllers.serverErrorHandler import ServerErrorHandler
+from MCSL2Lib.ServerControllers.serverUtils import (
     MinecraftServerResMonitorUtil,
     readServerProperties,
     backupServer,
@@ -205,7 +204,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     playersControllerBtnEnabled = pyqtSignal(bool)
 
     def __init__(
-        self, config: ServerVariables, launcher: ServerLauncher, manageBtn: PrimaryPushButton, manageBackupBtn: PushButton
+        self,
+        config: ServerVariables,
+        launcher: ServerLauncher,
+        manageBtn: PrimaryPushButton,
+        manageBackupBtn: PushButton,
     ):
         self._isMicaEnabled = False
         super().__init__()
@@ -279,7 +282,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         super().closeEvent(a0)
 
     def genRunScript(self, save=False):
-        script = f"cd \"{osp.abspath('Servers' + self.serverConfig.serverName)}\"\n" + self.serverConfig.javaPath + " " + " ".join(self.serverLauncher.jvmArg)
+        script = (
+            f"cd \"{osp.abspath('Servers' + self.serverConfig.serverName)}\"\n"
+            + self.serverConfig.javaPath
+            + " "
+            + " ".join(self.serverLauncher.jvmArg)
+        )
         if save:
             return script
         else:
@@ -322,7 +330,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 "Batch(*.bat);;Shell(*.sh)",
             )[0],
             mode="w+",
-            encoding="utf-8") as script:
+            encoding="utf-8",
+        ) as script:
             script.write(self.genRunScript(save=True))
 
     def initSafelyQuitController(self):
@@ -682,8 +691,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             lambda: openLocalFile(f"Servers/{self.serverConfig.serverName}")
         )
         self.genRunScriptBtn.clicked.connect(self.genRunScript)
-        self.backupServerBtn.clicked.connect(lambda: backupServer(serverName=self.serverConfig.serverName, parent=self))
-        self.backupSavesBtn.clicked.connect(lambda: backupSaves(serverConfig=self.serverConfig, parent=self))
+        self.backupServerBtn.clicked.connect(
+            lambda: backupServer(serverName=self.serverConfig.serverName, parent=self)
+        )
+        self.backupSavesBtn.clicked.connect(
+            lambda: backupSaves(serverConfig=self.serverConfig, parent=self)
+        )
 
     def initNavigation(self):
         self.serverSegmentedWidget.addItem(
@@ -807,7 +820,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                     self.registerResMonitor()
                     self.registerCommandOutput()
                     self.registerStartServerComponents()
-                    self.serverBridge.serverProcess.process.finished.connect(self.unRegisterCommandOutput)
+                    self.serverBridge.serverProcess.process.finished.connect(
+                        self.unRegisterCommandOutput
+                    )
                     return
             else:
                 return
@@ -837,11 +852,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.setText(self.tr("关闭服务器"))
         try:
             self.toggleServerBtn.clicked.disconnect()
-        except Exception:
+        except AttributeError or TypeError:
             pass
         try:
             self.exitServer.clicked.disconnect()
-        except Exception:
+        except AttributeError or TypeError:
             pass
         self.toggleServerBtn.clicked.connect(self.runQuickMenu_StopServer)
         self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
@@ -854,11 +869,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.setText(self.tr("开启服务器"))
         try:
             self.toggleServerBtn.clicked.disconnect()
-        except Exception:
+        except AttributeError or TypeError:
             pass
         try:
             self.exitServer.clicked.disconnect()
-        except Exception:
+        except AttributeError or TypeError:
             pass
         self.toggleServerBtn.clicked.connect(self.startServer)
         self.exitServer.clicked.connect(self.startServer)
@@ -870,18 +885,29 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
 
     def unRegisterCommandOutput(self):
-        self.serverBridge.serverLogOutput.disconnect(self.colorConsoleText)
+        try:
+            self.serverBridge.serverLogOutput.disconnect(self.colorConsoleText)
+        except AttributeError or TypeError:
+            pass
 
     def registerResMonitor(self):
-        self.serverMemThread = MinecraftServerResMonitorUtil(serverConfig=self.serverConfig, bridge=self.serverBridge, parent=self)
+        self.serverMemThread = MinecraftServerResMonitorUtil(
+            serverConfig=self.serverConfig, bridge=self.serverBridge, parent=self
+        )
         self.serverMemThread.memPercent.connect(self.setMemView)
         self.serverMemThread.cpuPercent.connect(self.setCPUView)
         self.serverBridge.serverClosed.connect(self.unRegisterResMonitor)
 
     def unRegisterResMonitor(self):
         self.serverMemThread.onServerClosedHandler()
-        self.serverMemThread.memPercent.disconnect(self.setMemView)
-        self.serverMemThread.cpuPercent.disconnect(self.setCPUView)
+        try:
+            self.serverMemThread.memPercent.disconnect(self.setMemView)
+        except AttributeError or TypeError:
+            pass
+        try:
+            self.serverMemThread.cpuPercent.disconnect(self.setCPUView)
+        except AttributeError or TypeError:
+            pass
         self.serverMemThread.deleteLater()
 
     @pyqtSlot(float)

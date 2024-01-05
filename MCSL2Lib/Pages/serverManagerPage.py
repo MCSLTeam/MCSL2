@@ -54,15 +54,15 @@ from qfluentwidgets import (
 
 from MCSL2Lib.ProgramControllers import javaDetector
 from MCSL2Lib.ProgramControllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.ServerController.processCreator import ServerConfigConstructor
-from MCSL2Lib.ServerController.serverInstaller import ForgeInstaller
+from MCSL2Lib.ServerControllers.processCreator import ServerConfigConstructor
+from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
-from MCSL2Lib.ServerController.windowCreator import ServerWindow
-from MCSL2Lib.ServerController.processCreator import ServerLauncher
-from MCSL2Lib.ServerController.serverUtils import backupServer, backupSaves
+from MCSL2Lib.ServerControllers.windowCreator import ServerWindow
+from MCSL2Lib.ServerControllers.processCreator import ServerLauncher
+from MCSL2Lib.ServerControllers.serverUtils import backupServer, backupSaves
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
 from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWidget
