@@ -51,9 +51,9 @@ from qfluentwidgets import (
 from MCSL2Lib.ProgramControllers import javaDetector
 
 from MCSL2Lib.ProgramControllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.ServerController.processCreator import _MinecraftEULA
+from MCSL2Lib.ServerControllers.processCreator import _MinecraftEULA
 from MCSL2Lib.ProgramControllers.serverImporter import NoShellArchivesImporter
-from MCSL2Lib.ServerController.serverInstaller import ForgeInstaller
+from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 

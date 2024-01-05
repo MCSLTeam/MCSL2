@@ -19,7 +19,7 @@ dependencies = [
     # qt
     "PyQt5",
     "PyQt-Fluent-Widgets[full]",
-    "pyqt5-qt5==5.15.2",
+    "pyqt5-qt5",
     # 系统信息
     "psutil==5.9.5",
     "loguru==0.7.2",
@@ -28,8 +28,6 @@ dependencies = [
     # 构建需要
     "lib-not-dr[nuitka]>=0.3",
     "nuitka>=1.9.5",
-    "imageio>=2.31.5",
-    "pyqt5-stubs>=5.15.6.0",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
@@ -40,7 +38,7 @@ version = { attr = "MCSL2Lib.MCSL2VERSION" }
 
 [tool.setuptools]
 packages = []
-# 实际上并不发布包 (用于解决无法 pdm install) 
+# 实际上并不发布包 (用于解决无法 pdm install)
 
 [project.optional-dependencies]
 all = ["tomli>=2.0.1", "ruff>=0.1.6", "pyqt5-stubs>=5.15.6.0"]
