@@ -79,8 +79,7 @@ if __name__ == "__main__":
     # Analyze user
     try:
         from MCSL2Lib.verification import countUserAPI
-    except ImportError as err:
-        print(err)
+    except ImportError:
         from MCSL2Lib.noVerification import countUserAPI
 
     try:
