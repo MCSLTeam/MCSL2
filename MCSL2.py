@@ -79,13 +79,13 @@ if __name__ == "__main__":
     # Analyze user
     try:
         from MCSL2Lib.verification import countUserAPI
-    except Exception:
+    except ImportError:
         from MCSL2Lib.noVerification import countUserAPI
 
     try:
         countUserAPI()
-    except Exception:
-        pass
+    except Exception as err:
+        print(err)
     del countUserAPI
 
     # High DPI scaling
