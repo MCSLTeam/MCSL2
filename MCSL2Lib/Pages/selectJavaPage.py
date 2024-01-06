@@ -29,6 +29,7 @@ from qfluentwidgets import (
     TitleLabel,
     TransparentToolButton,
     FluentIcon as FIF,
+    FlowLayout,
 )
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 
@@ -59,9 +60,9 @@ class SelectJavaPage(QWidget):
         self.verticalLayout = QVBoxLayout(self.javaScrollAreaWidgetContents)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.javaItemVerticalLayout = QVBoxLayout()
+        self.javaItemFlowLayout = FlowLayout()
 
-        self.verticalLayout.addLayout(self.javaItemVerticalLayout)
+        self.verticalLayout.addLayout(self.javaItemFlowLayout)
         self.javaSmoothScrollArea.setWidget(self.javaScrollAreaWidgetContents)
         self.gridLayout.addWidget(self.javaSmoothScrollArea, 3, 2, 1, 1)
         spacerItem1 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -93,8 +94,8 @@ class SelectJavaPage(QWidget):
         self.selectJavaTip = BodyLabel(self.titleLimitWidget)
 
         self.gridLayout_2.addWidget(self.selectJavaTip, 0, 3, 3, 1)
-        spacerItem2 = QSpacerItem(5, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem2, 0, 2, 3, 1)
+        titleLimitLayout = QSpacerItem(5, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(titleLimitLayout, 0, 2, 3, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         self.subTitleLabel.setText(
             self.tr("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。\n")
@@ -109,23 +110,17 @@ class SelectJavaPage(QWidget):
 
     def refreshPage(self, JavaPath):
         """刷新Java列表"""
-
-        # 删除旧的
-        for i in reversed(range(self.javaItemVerticalLayout.count())):
-            self.javaItemVerticalLayout.itemAt(i).widget().deleteLater()
-        # 添加新的
+        self.javaItemFlowLayout.takeAllWidgets()
         for i in range(len(JavaPath)):
-            self.tmpSingleJavaWidget = SingleSelectJavaWidget()
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.setObjectName(
-                f"finishSelectJavaBtn{str(i)}"
+            self.javaItemFlowLayout.addWidget(
+                SingleSelectJavaWidget(
+                    btnName=f"finishSelectJavaBtn{str(i)}",
+                    selectBtnSlot=lambda: self.scrollAreaProcessor(JavaPath),
+                    backBtnSlot=lambda: self.backBtn.click,
+                    path=JavaPath[i].path,
+                    ver=JavaPath[i].version,
+                )
             )
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(
-                lambda: self.scrollAreaProcessor(JavaPath)
-            )
-            self.tmpSingleJavaWidget.finishSelectJavaBtn.clicked.connect(self.backBtn.click)
-            self.tmpSingleJavaWidget.javaPath.setText(str(JavaPath[i].path))
-            self.tmpSingleJavaWidget.javaVer.setText(str(JavaPath[i].version))
-            self.javaItemVerticalLayout.addWidget(self.tmpSingleJavaWidget)
 
     def scrollAreaProcessor(self, JavaPath):
         """判断索引"""

@@ -789,6 +789,7 @@ class ServerManagerPage(QWidget):
     ##################
     def initEditServerInterface(self, index):
         """初始化编辑服务器界面"""
+        self.autoDetectJava()
         globalConfig: list = readGlobalServerConfig()
         self.stackedWidget.setCurrentIndex(1)
         self.serverIndex = index

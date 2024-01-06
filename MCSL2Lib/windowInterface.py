@@ -92,7 +92,7 @@ class Window(VerifyFluentWindowBase):
 
     def __init__(self):
         super().__init__()
-        self.previewFlag = True
+        self.previewFlag = False
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
