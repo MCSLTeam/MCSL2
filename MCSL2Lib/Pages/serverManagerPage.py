@@ -871,6 +871,7 @@ class ServerManagerPage(QWidget):
             lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
         )
         self.editServerNameLineEdit.textChanged.connect(self.changeServerName)
+        self.JVMArgPlainTextEdit.textChanged.connect(self.changeJVMArg)
 
     def disconnectEditServerSlot(self):
         self.editJavaTextEdit.textChanged.disconnect()
@@ -882,6 +883,7 @@ class ServerManagerPage(QWidget):
         self.editInputDeEncodingComboBox.currentIndexChanged.disconnect()
         self.editServerIcon.currentIndexChanged.disconnect()
         self.editServerNameLineEdit.textChanged.disconnect()
+        self.JVMArgPlainTextEdit.textChanged.disconnect()
 
     def changeIcon(self, iconIndex):
         """改图标用"""
@@ -946,6 +948,9 @@ class ServerManagerPage(QWidget):
 
     def changeServerName(self):
         editServerVariables.serverName = self.editServerNameLineEdit.text()
+
+    def changeJVMArg(self):
+        editServerVariables.jvmArg = self.JVMArgPlainTextEdit.toPlainText().split(" ")
 
     def replaceJavaManually(self):
         """手动导入Java"""
@@ -1412,7 +1417,7 @@ class ServerManagerPage(QWidget):
         self.runningServerCardGenerated.emit(w.monitorWidget)
 
     def backup(self, index):
-        w = MessageBox("备份服务器", "请选择：", self)
+        w = MessageBox("备份服务器", "请选择你需要备份的文件：", self)
         w.yesButton.setText("服务器")
         w.cancelButton.setText("仅存档")
         w.yesSignal.connect(
