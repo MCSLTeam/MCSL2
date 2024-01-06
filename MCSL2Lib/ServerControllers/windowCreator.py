@@ -41,7 +41,7 @@ from qfluentwidgets import (
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
-from PyQt5.QtGui import QIcon, QCursor, QColor, QPainter, QTextCharFormat, QColor, QBrush, QCursor
+from PyQt5.QtGui import QIcon, QCursor, QColor, QPainter, QTextCharFormat, QBrush, QTextCursor
 from qframelesswindow import TitleBar
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
@@ -852,11 +852,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.setText(self.tr("关闭服务器"))
         try:
             self.toggleServerBtn.clicked.disconnect()
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
         try:
             self.exitServer.clicked.disconnect()
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
         self.toggleServerBtn.clicked.connect(self.runQuickMenu_StopServer)
         self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
@@ -869,11 +869,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.setText(self.tr("开启服务器"))
         try:
             self.toggleServerBtn.clicked.disconnect()
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
         try:
             self.exitServer.clicked.disconnect()
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
         self.toggleServerBtn.clicked.connect(self.startServer)
         self.exitServer.clicked.connect(self.startServer)
@@ -887,7 +887,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def unRegisterCommandOutput(self):
         try:
             self.serverBridge.serverLogOutput.disconnect(self.colorConsoleText)
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
 
     def registerResMonitor(self):
@@ -902,11 +902,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.serverMemThread.onServerClosedHandler()
         try:
             self.serverMemThread.memPercent.disconnect(self.setMemView)
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
         try:
             self.serverMemThread.cpuPercent.disconnect(self.setCPUView)
-        except AttributeError or TypeError:
+        except (AttributeError, TypeError):
             pass
         self.serverMemThread.deleteLater()
 
@@ -943,6 +943,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         for keyword in blueText:
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[3]))
+        self.serverOutput.moveCursor(QTextCursor.End)
         self.serverOutput.mergeCurrentCharFormat(fmt)
         serverOutput = (
             serverOutput.replace("[38;2;170;170;170m", "")
