@@ -84,8 +84,8 @@ if __name__ == "__main__":
 
     try:
         countUserAPI()
-    except Exception as err:
-        print(err)
+    except Exception:
+        pass
     del countUserAPI
 
     # High DPI scaling

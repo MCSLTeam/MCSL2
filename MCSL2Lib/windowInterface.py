@@ -281,7 +281,7 @@ class Window(VerifyFluentWindowBase):
         self.addSubInterface(self.consoleCenterInterface, FIF.ROBOT, self.tr("监控"))
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, self.tr("插件"))
         self.navigationInterface.addSeparator()
-        self.navigationInterface.setExpandWidth(200)
+        self.navigationInterface.setExpandWidth(170)
         self.addSubInterface(
             self.settingsInterface,
             FIF.SETTING,
