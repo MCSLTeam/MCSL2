@@ -119,3 +119,8 @@ class Config(QConfig):
 
 
 cfg = Config()
+
+if cfg.get(cfg.autoRunLastServer):
+    cfg.set(cfg.autoRunLastServer, False)
+if cfg.get(cfg.sendStopInsteadOfKill):
+    cfg.set(cfg.sendStopInsteadOfKill, True)

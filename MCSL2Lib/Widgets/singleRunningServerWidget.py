@@ -1,4 +1,4 @@
-from MCSL2Lib.ServerController.windowCreator import ServerWindow
+from MCSL2Lib.ServerControllers.windowCreator import ServerWindow
 from qfluentwidgets import HeaderCardWidget, CommandBar, Action, FluentIcon as FIF
 from PyQt5.QtCore import QSize, Qt
 
@@ -33,6 +33,7 @@ class _RunningServerCommandBar(CommandBar):
 
     def completeActions(self):
         self.openPrompt.triggered.connect(self.parent().console.show)
+        self.openPrompt.triggered.connect(self.parent().console.activateWindow)
         self.closeServer.triggered.connect(self.parent().console.show)
         self.closeServer.triggered.connect(self.parent().console.activateWindow)
         self.closeServer.triggered.connect(self.parent().console.runQuickMenu_StopServer)

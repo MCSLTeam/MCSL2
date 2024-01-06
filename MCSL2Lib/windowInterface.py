@@ -83,140 +83,21 @@ configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
 settingsVariables = SettingsVariables()
 
-# pageLoadConfig = [
-#     {"type": HomePage, "targetObj": "homeInterface", "flag": "homeInterfaceLoaded"},
-#     {
-#         "type": ConsoleCenterPage,
-#         "targetObj": "consoleInterface",
-#         "flag": "consoleInterfaceLoaded",
-#     },
-#     {
-#         "type": PluginPage,
-#         "targetObj": "pluginsInterface",
-#         "flag": "pluginsInterfaceLoaded",
-#     },
-#     {
-#         "type": SettingsPage,
-#         "targetObj": "settingsInterface",
-#         "flag": "settingsInterfaceLoaded",
-#     },
-#     {
-#         "type": ServerManagerPage,
-#         "targetObj": "serverManagerInterface",
-#         "flag": "serverManagerInterfaceLoaded",
-#     },
-#     {
-#         "type": SelectNewJavaPage,
-#         "targetObj": "selectNewJavaPage",
-#         "flag": "selectNewJavaPageLoaded",
-#     },
-#     {
-#         "type": SelectJavaPage,
-#         "targetObj": "selectJavaPage",
-#         "flag": "selectJavaPageLoaded",
-#     },
-#     {
-#         "type": DownloadPage,
-#         "targetObj": "downloadInterface",
-#         "flag": "downloadInterfaceLoaded",
-#     },
-#     {
-#         "type": ConfigurePage,
-#         "targetObj": "configureInterface",
-#         "flag": "configureInterfaceLoaded",
-#     },
-# ]
-
-
-# class InterfaceLoaded(QObject):
-#     homeInterfaceLoaded = False
-#     configureInterfaceLoaded = False
-#     downloadInterfaceLoaded = False
-#     consoleInterfaceLoaded = False
-#     pluginsInterfaceLoaded = False
-#     settingsInterfaceLoaded = False
-#     serverManagerInterfaceLoaded = False
-#     selectJavaPageLoaded = False
-#     selectNewJavaPageLoaded = False
-
-#     initNavigationFinished = False
-#     initQtSlotFinished = False
-#     initPluginSystemFinished = False
-
-#     mainWindowInited = False
-
-#     # def canInitNavigation(self):
-#     #     return (
-#     #         self.homeInterfaceLoaded
-#     #         and self.configureInterfaceLoaded
-#     #         and self.downloadInterfaceLoaded
-#     #         and self.consoleInterfaceLoaded
-#     #         and self.pluginsInterfaceLoaded
-#     #         and self.settingsInterfaceLoaded
-#     #         and self.serverManagerInterfaceLoaded
-#     #     )
-
-#     # def canInitQtSlot(self):
-#     #     return (
-#     #         self.configureInterfaceLoaded
-#     #         and self.selectJavaPageLoaded
-#     #         and self.homeInterfaceLoaded
-#     #         and self.serverManagerInterfaceLoaded
-#     #         and self.consoleInterfaceLoaded
-#     #         and self.selectNewJavaPageLoaded
-#     #         and self.downloadInterfaceLoaded
-#     #     )
-
-#     # def canInitPluginSystem(self):
-#     #     return self.pluginsInterfaceLoaded
-
-#     def allPageLoaded(self):
-#         return (
-#             self.homeInterfaceLoaded
-#             and self.configureInterfaceLoaded
-#             and self.downloadInterfaceLoaded
-#             and self.consoleInterfaceLoaded
-#             and self.pluginsInterfaceLoaded
-#             and self.settingsInterfaceLoaded
-#             and self.serverManagerInterfaceLoaded
-#             and self.selectJavaPageLoaded
-#             and self.selectNewJavaPageLoaded
-#         )
-
-
-# loaded = InterfaceLoaded()
-
-
-# class PageLoader(QThread):
-#     loadFinished = pyqtSignal(object, str, str)
-
-#     def __init__(self, pageType: Type[QWidget], targetObj: str, flag: str, callback=None):
-#         super().__init__()
-#         self.pageType = pageType
-#         self.targetObj = targetObj
-#         self.flag = flag
-#         self.page = None
-#         self.loadFinished.connect(callback)
-
-#     def run(self) -> None:
-#         # 强行切换上下文,留给UI线程进行刷新
-#         self.yieldCurrentThread()
-#         self.loadFinished.emit(self.pageType, self.targetObj, self.flag)
-
 
 @Singleton
 class Window(VerifyFluentWindowBase):
     """程序主窗口"""
 
-    startFetchingNotice = pyqtSignal()
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
         super().__init__()
-        self.testMode = False
+        self.previewFlag = True
         self.mySetTheme()
         self.initWindow()
-        self.setWindowTitle(f"MCServerLauncher {MCSL2VERSION}{' 测试版' if self.testMode else ''}")
+        self.setWindowTitle(
+            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24.1.2' if self.previewFlag else ''}"
+        )
 
         self.oldHook = sys.excepthook
         sys.excepthook = self.catchExceptions
@@ -259,14 +140,11 @@ class Window(VerifyFluentWindowBase):
 
         # for loader in loaders:
         #     loader.start()
-
+        self.homeInterface.noticeThread.start()
         initializeAria2Configuration()
-
-
         # loaded.mainWindowInited = True
         # GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
-        self.startFetchingNotice.connect(self.homeInterface.noticeThread.start)
         self.initNavigation()
         self.initQtSlot()
         self.initPluginSystem()
@@ -275,14 +153,31 @@ class Window(VerifyFluentWindowBase):
         self.startAria2Client()
         self.splashScreen.finish()
         self.update()
-        if self.testMode:
+        if self.previewFlag:
+            self.passSignal.connect(lambda: self.homeInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.configureInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.downloadInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.consoleCenterInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.pluginsInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.settingsInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.serverManagerInterface.setEnabled(True))
+            self.passSignal.connect(lambda: self.selectJavaPage.setEnabled(True))
+            self.passSignal.connect(lambda: self.selectNewJavaPage.setEnabled(True))
             self.testVerifyBox.show()
             self.navigationInterface.setEnabled(False)
             self.stackedWidget.setEnabled(False)
+            self.homeInterface.setEnabled(False)
+            self.configureInterface.setEnabled(False)
+            self.downloadInterface.setEnabled(False)
+            self.consoleCenterInterface.setEnabled(False)
+            self.pluginsInterface.setEnabled(False)
+            self.settingsInterface.setEnabled(False)
+            self.serverManagerInterface.setEnabled(False)
+            self.selectJavaPage.setEnabled(False)
+            self.selectNewJavaPage.setEnabled(False)
         else:
             self.testNotPassFlag = False
             pass
-        self.startFetchingNotice.emit()
 
     @pyqtSlot(bool)
     def onAria2Loaded(self, flag: bool):
@@ -306,7 +201,6 @@ class Window(VerifyFluentWindowBase):
                 duration=3000,
                 parent=self,
             )
-        self.startFetchingNotice.emit()
 
     def closeEvent(self, a0) -> None:
         if self.consoleCenterInterface.isAnyServerRunning():
@@ -333,8 +227,6 @@ class Window(VerifyFluentWindowBase):
                 super().closeEvent(a0)
         finally:
             super().closeEvent(a0)
-
-
 
     def catchExceptions(
         self, ty: Type[BaseException], value: BaseException, _traceback: TracebackType
@@ -545,7 +437,9 @@ class Window(VerifyFluentWindowBase):
         self.stackedWidget.currentChanged.connect(self.downloadInterface.onPageChangedRefresh)
         # fmt: on
 
-        self.serverManagerInterface.runningServerCardGenerated.connect(self.consoleCenterInterface.addRunningCard)
+        self.serverManagerInterface.runningServerCardGenerated.connect(
+            self.consoleCenterInterface.addRunningCard
+        )
 
     def startAria2Client(self):
         bootThread = Aria2BootThread(self)

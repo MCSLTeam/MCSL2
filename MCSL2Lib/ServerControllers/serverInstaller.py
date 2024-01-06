@@ -34,7 +34,7 @@ from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.utils import MCSL2Logger
-from MCSL2Lib.utils import ServerUrl
+from MCSL2Lib.utils import ServicesUrl
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -179,7 +179,7 @@ class BMCLAPIDownloader(QObject):
         self._fileName = None
 
     def download(self, mcVersion, targetPath, fileName):
-        self._url = ServerUrl.getBmclapiUrl(str(mcVersion))
+        self._url = ServicesUrl.getBmclapiUrl(str(mcVersion))
         self._targetPath = targetPath
         self._fileName = fileName
         self._download()

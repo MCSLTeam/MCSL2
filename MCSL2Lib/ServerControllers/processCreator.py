@@ -130,11 +130,7 @@ class _ServerProcessBridge(QObject):
         停止服务器
         """
         if self.isServerRunning():
-            if cfg.get(cfg.sendStopInsteadOfKill):
-                self.serverProcess.process.write(b"stop\n")
-                # self.Server.serverProcess.waitForFinished()
-            else:
-                self.haltServer()
+            self.serverProcess.process.write(b"stop\n")
 
     def restartServer(self):
         """

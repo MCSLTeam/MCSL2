@@ -159,7 +159,7 @@ class PluginPage(QWidget):
     def installPlugin(self):
         GlobalMCSL2Variables.installingPluginArchiveDirectory = str(
             QFileDialog.getOpenFileName(
-                self, self.tr("选择插件压缩包"), getcwd(), self.tr("Zip压缩包(*.zip)")
+                self, self.tr("选择插件压缩包"), getcwd(), "Zip压缩包(*.zip)"
             )[0]
         ).replace("/", "\\")
         if GlobalMCSL2Variables.installingPluginArchiveDirectory != "":
