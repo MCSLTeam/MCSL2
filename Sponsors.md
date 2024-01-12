@@ -4,6 +4,12 @@
 
 <!-- AFDIAN-ACTION:START -->
 
+<a href="https://afdian.net/u/08143f36270e11eca31452540025c377">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/?imageView2/1/w/120/h/120" width="40" height="40" alt="爱发电用户_08143" title="爱发电用户_08143"/>
+</a>
+<a href="https://afdian.net/u/db59897ea6d611ee970152540025c377">
+    <img src="https://pic1.afdiancdn.com/user/db59897ea6d611ee970152540025c377/avatar/92f85930e75f9a5414edac0ddd107aa4_w258_h503_s50.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="小扒蔡" title="小扒蔡"/>
+</a>
 <a href="https://afdian.net/u/8e112f28817411eea67e5254001e7c00">
     <img src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/?imageView2/1/w/120/h/120" width="40" height="40" alt="爱发电用户_8e112" title="爱发电用户_8e112"/>
 </a>
