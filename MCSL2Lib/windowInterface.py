@@ -92,11 +92,11 @@ class Window(VerifyFluentWindowBase):
 
     def __init__(self):
         super().__init__()
-        self.previewFlag = False
+        self.previewFlag = True
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24.1.2' if self.previewFlag else ''}"
+            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24112' if self.previewFlag else ''}"
         )
 
         self.oldHook = sys.excepthook
