@@ -41,7 +41,7 @@ from qfluentwidgets import (
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
-from PyQt5.QtGui import QIcon, QCursor, QColor, QPainter, QTextCharFormat, QBrush, QTextCursor
+from PyQt5.QtGui import QIcon, QCursor, QColor, QPainter, QTextCharFormat, QBrush
 from qframelesswindow import TitleBar
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
@@ -943,7 +943,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         for keyword in blueText:
             if keyword in serverOutput:
                 fmt.setForeground(QBrush(color[3]))
-        self.serverOutput.moveCursor(QTextCursor.End)
         self.serverOutput.mergeCurrentCharFormat(fmt)
         serverOutput = (
             serverOutput.replace("[38;2;170;170;170m", "")
@@ -976,6 +975,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             .replace("All chunks are saved", self.tr("所有区块已保存"))
             .replace("Saving the game (this may take a moment!)", self.tr("保存游戏存档中（可能需要一些时间）"))  # noqa: E501
             .replace("Saved the game", self.tr("已保存游戏存档"))
+            .replace("[33m[", "[")
+            .replace("[", "[")
         )
         if "Disabling terminal, you're running in an unsupported environment." in serverOutput:
             return
