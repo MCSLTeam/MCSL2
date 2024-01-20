@@ -111,7 +111,7 @@ class EditServerVariables(BaseServerVariables):
             "RedstoneBlock.png",
             "RedstoneLampOff.png",
             "RedstoneLampOn.png",
-            "Spigot.svg",
+            "Spigot.png",
         ]
 
     def resetToDefault(self):

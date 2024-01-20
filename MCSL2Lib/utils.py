@@ -18,7 +18,7 @@ import enum
 import functools
 import hashlib
 import inspect
-from json import loads
+from json import dumps, loads
 from os import makedirs, path as osp
 from types import TracebackType
 from typing import Type, Optional, Iterable, Callable, Dict, List
@@ -62,6 +62,7 @@ def initializeMCSL2():
     for folder in folders:
         if not osp.exists(folder):
             makedirs(folder, exist_ok=True)
+    del folders
 
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
         with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as serverList:
@@ -72,6 +73,34 @@ def initializeMCSL2():
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
     )  # IO-Bound = 2*N, CPU-Bound = N + 1
+
+    # fix changed icon
+    with open(r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8") as globalServerListFile:
+        globalServerList = loads(globalServerListFile.read())
+    k = 0
+    updateSpigotIconList = [
+        singleConfig["icon"] for singleConfig in globalServerList["MCSLServerList"]
+    ]
+    for icon in updateSpigotIconList:
+        if icon == "Spigot.svg":
+            tmpConfig = globalServerList["MCSLServerList"][updateSpigotIconList.index(icon)]
+            globalServerList["MCSLServerList"].pop(updateSpigotIconList.index(icon))
+            tmpConfig["icon"] = "Spigot.png"
+            globalServerList["MCSLServerList"].append(tmpConfig)
+            MCSL2Logger.warning(
+                "检测到过时配置文件，已自动更新： {"
+                + f"\"name\": \"{tmpConfig['name']}\", \"icon\": \"{tmpConfig['icon']}\""
+                + "}"
+            )
+            k += 1
+        else:
+            continue
+    if k >= 1:
+        with open(
+            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+        ) as newGlobalServerListFile:
+            newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+    del tmpConfig, globalServerList, updateSpigotIconList, k, newGlobalServerListFile
 
 
 # 带有text的warning装饰器
