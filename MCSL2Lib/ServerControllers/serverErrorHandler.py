@@ -4,7 +4,7 @@
 #
 ################################################################################
 """
-Minecraft Forge Servers Installer.
+Minecraft Error Handler.
 """
 
 import re

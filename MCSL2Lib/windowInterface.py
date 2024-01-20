@@ -96,7 +96,7 @@ class Window(VerifyFluentWindowBase):
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24.1.2' if self.previewFlag else ''}"
+            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24112' if self.previewFlag else ''}"
         )
 
         self.oldHook = sys.excepthook
@@ -274,6 +274,7 @@ class Window(VerifyFluentWindowBase):
 
     def initNavigation(self):
         """初始化导航栏"""
+        self.navigationInterface.setExpandWidth(170)
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr("主页"))
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, self.tr("新建"))
         self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, self.tr("管理"))
@@ -281,7 +282,6 @@ class Window(VerifyFluentWindowBase):
         self.addSubInterface(self.consoleCenterInterface, FIF.ROBOT, self.tr("监控"))
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, self.tr("插件"))
         self.navigationInterface.addSeparator()
-        self.navigationInterface.setExpandWidth(200)
         self.addSubInterface(
             self.settingsInterface,
             FIF.SETTING,
@@ -447,44 +447,3 @@ class Window(VerifyFluentWindowBase):
         bootThread.finished.connect(bootThread.deleteLater)
         bootThread.finished.connect(self.splashScreen.finish)
         bootThread.start()
-
-    # @pyqtSlot(bool)
-    # def settingsRunner_autoRunLastServer(self, startBtnStat):
-    #     """设置：启动时自动运行上次运行的服务器"""
-    #     if cfg.get(cfg.autoRunLastServer):
-    #         if startBtnStat:
-    #             InfoBar.info(
-    #                 title=self.tr("MCSL2功能提醒"),
-    #                 content=self.tr(
-    #                     "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
-    #                 ),
-    #                 orient=Qt.Horizontal,
-    #                 isClosable=True,
-    #                 position=InfoBarPosition.TOP,
-    #                 duration=3000,
-    #                 parent=self.homeInterface,
-    #             )
-    #             self.homeInterface.startServerBtn.click()
-    #             InfoBar.info(
-    #                 title=self.tr("功能提醒"),
-    #                 content=self.tr(
-    #                     "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
-    #                 ),
-    #                 orient=Qt.Horizontal,
-    #                 isClosable=True,
-    #                 position=InfoBarPosition.TOP,
-    #                 duration=3000,
-    #                 parent=self.consoleInterface,
-    #             )
-    #         else:
-    #             InfoBar.info(
-    #                 title=self.tr("功能提醒"),
-    #                 content=self.tr(
-    #                     "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"
-    #                 ),
-    #                 orient=Qt.Horizontal,
-    #                 isClosable=True,
-    #                 position=InfoBarPosition.TOP,
-    #                 duration=3000,
-    #                 parent=self.homeInterface,
-    #             )

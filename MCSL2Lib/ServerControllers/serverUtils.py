@@ -15,7 +15,7 @@
 Communicate with Minecraft servers.
 """
 
-from PyQt5.QtCore import QObject, pyqtSignal, QTimer, pyqtSlot, Qt
+from PyQt5.QtCore import QObject, pyqtSignal, QTimer, pyqtSlot, Qt, QThread
 from PyQt5.QtWidgets import QFileDialog
 from psutil import NoSuchProcess, Process, AccessDenied
 from MCSL2Lib.ServerControllers.processCreator import _ServerProcessBridge
@@ -89,7 +89,7 @@ def readServerProperties(serverConfig: ServerVariables):
     serverConfig.serverProperties.clear()
     try:
         with open(
-            f"./Servers/{serverConfig.serverName}/server.properties", "r"
+            f"./Servers/{serverConfig.serverName}/server.properties", "r", encoding="utf-8"
         ) as serverPropertiesFile:
             lines = serverPropertiesFile.readlines()
             for line in lines:
@@ -99,6 +99,28 @@ def readServerProperties(serverConfig: ServerVariables):
                     serverConfig.serverProperties[key.strip()] = value.strip()
     except FileNotFoundError:
         serverConfig.serverProperties.update({"msg": "File not found"})
+
+
+class MakeArchiveThread(QThread):
+    successSignal = pyqtSignal()
+    errorSignal = pyqtSignal()
+
+    def __init__(self, a, b, c, parent=None):
+        super().__init__(parent)
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def run(self):
+        try:
+            make_archive(
+                self.a,
+                self.b,
+                self.c,
+            )
+            self.successSignal.emit()
+        except Exception:
+            self.errorSignal.emit()
 
 
 def backupServer(serverName: str, parent):
@@ -111,20 +133,21 @@ def backupServer(serverName: str, parent):
         )[0]
         if s == "":
             return
-        make_archive(
-            (s).replace(".zip", ""),
-            "zip",
-            osp.abspath(f"Servers/{serverName}"),
+        tmpArchiveThread = MakeArchiveThread(
+            (s).replace(".zip", ""), "zip", osp.abspath(f"Servers/{serverName}"), parent
         )
-        InfoBar.success(
-            title="备份完毕",
-            content=f"已保存至{s}",
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP,
-            duration=1500,
-            parent=parent,
+        tmpArchiveThread.successSignal.connect(
+            lambda: InfoBar.success(
+                title="备份完毕",
+                content=f"已保存至{s}",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=1500,
+                parent=parent,
+            )
         )
+        tmpArchiveThread.start()
     except Exception:
         InfoBar.success(
             title="备份失败",
@@ -142,17 +165,18 @@ def backupSaves(serverConfig: ServerVariables, parent):
         readServerProperties(serverConfig)
         levelName = serverConfig.serverProperties.get("level-name")
         levelNameList = [levelName, f"{levelName}_nether", f"{levelName}_the_end"]
-        for dir in levelNameList:
-            if not osp.exists(f"Servers/{serverConfig.serverName}/{dir}/"):
-                levelNameList.remove(dir)
         if osp.exists(f"MCSL2/BackupTemp_{serverConfig.serverName}/"):
             rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
         mkdir(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
         for dir in levelNameList:
-            copytree(
-                osp.abspath(f"Servers/{serverConfig.serverName}/{dir}/"),
-                osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
-            )
+            try:
+                copytree(
+                    osp.abspath(f"Servers/{serverConfig.serverName}/{dir}/"),
+                    osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
+                )
+            except FileNotFoundError:
+                levelNameList.remove(dir)
+                continue
         s = QFileDialog.getSaveFileName(
             parent,
             f"MCSL2 - 备份服务器“{serverConfig.serverName}”的存档",
@@ -161,21 +185,34 @@ def backupSaves(serverConfig: ServerVariables, parent):
         )[0]
         if s == "":
             return
-        make_archive(
+        existsDir = "\n".join(levelNameList)
+        tmpArchiveThread = MakeArchiveThread(
             s.replace(".zip", ""),
             "zip",
             osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"),
+            parent,
         )
-        InfoBar.success(
-            title="备份完毕",
-            content=f"已保存至{s}",
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP,
-            duration=1500,
-            parent=parent,
+        tmpArchiveThread.successSignal.connect(
+            lambda: InfoBar.success(
+                title="备份完毕",
+                content=f"已保存至{s}。\n备份了以下文件夹：\n{existsDir}",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=1500,
+                parent=parent,
+            )
         )
-        rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
-    except Exception:
-        rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}\\"))
-        raise Exception
+        tmpArchiveThread.successSignal.connect(
+            lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
+        )
+        tmpArchiveThread.errorSignal.connect(
+            lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
+        )
+        tmpArchiveThread.start()
+    except Exception as e:
+        try:
+            rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}\\"))
+        except Exception:
+            pass
+        raise e

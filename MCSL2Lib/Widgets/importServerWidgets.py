@@ -752,7 +752,7 @@ class MyTreeWidget(SimpleCardWidget):
         self.gridLayout.addWidget(self.mainTreeWidget, 2, 2, 1, 2)
         self.statusText.setText("[状态文本]")
         self.title.setText("2.选择核心")
-        self.mainTreeWidget.header().hide()
+        self.mainTreeWidget.setHeaderHidden(False)
         self.mainTreeWidget.itemClicked.connect(self.setFinished)
 
     def _initView(self, stepCount, title):

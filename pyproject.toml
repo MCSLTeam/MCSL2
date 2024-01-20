@@ -19,7 +19,7 @@ dependencies = [
     # qt
     "PyQt5",
     "PyQt-Fluent-Widgets[full]",
-    "pyqt5-qt5",
+    "pyqt5-qt5==5.15.2",
     # 系统信息
     "psutil==5.9.5",
     "loguru==0.7.2",
@@ -28,6 +28,7 @@ dependencies = [
     # 构建需要
     "lib-not-dr[nuitka]>=0.3",
     "nuitka>=1.9.5",
+    "QScintilla>=2.14.1",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"

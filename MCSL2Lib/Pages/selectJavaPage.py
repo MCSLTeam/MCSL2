@@ -116,7 +116,7 @@ class SelectJavaPage(QWidget):
                 SingleSelectJavaWidget(
                     btnName=f"finishSelectJavaBtn{str(i)}",
                     selectBtnSlot=lambda: self.scrollAreaProcessor(JavaPath),
-                    backBtnSlot=lambda: self.backBtn.click,
+                    backBtnSlot=self.backBtn.click,
                     path=JavaPath[i].path,
                     ver=JavaPath[i].version,
                 )

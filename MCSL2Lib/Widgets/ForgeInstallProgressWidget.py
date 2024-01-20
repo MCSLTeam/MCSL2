@@ -13,7 +13,8 @@
 """
 Forge Install Progress Widget
 """
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
+from PyQt5.QtGui import QTextCursor
 from qfluentwidgets import MessageBoxBase, SubtitleLabel, PlainTextEdit
 
 
@@ -24,8 +25,9 @@ class ForgeInstallerProgressBox(MessageBoxBase):
         self.forgeLogViewer = PlainTextEdit(self)
         self.forgeLogViewer.setMaximumBlockCount(1000)
         self.textSignal = textSignal
-        self.textSignal.connect(self.forgeLogViewer.appendPlainText)
+        self.textSignal.connect(self.updateLogs)
         self.forgeLogViewer.setReadOnly(True)
+        self.forgeLogViewer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.forgeLogViewer)
@@ -39,5 +41,10 @@ class ForgeInstallerProgressBox(MessageBoxBase):
         self.yesButton.clicked.connect(self.hide)
         # self.yesButton.setDisabled(True)
 
+    @pyqtSlot(str)
+    def updateLogs(self, log):
+        self.forgeLogViewer.moveCursor(QTextCursor.End)
+        self.forgeLogViewer.appendPlainText(log)
+
     def __del__(self):
-        self.textSignal.disconnect(self.forgeLogViewer.appendPlainText)
+        self.textSignal.disconnect(self.updateLogs)

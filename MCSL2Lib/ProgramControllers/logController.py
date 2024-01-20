@@ -31,6 +31,7 @@ from platform import (
     python_version as pythonVersion,
     processor as systemProcessor,
 )
+from PyQt5.QtCore import qVersion
 from .. import MCSL2VERSION
 
 
@@ -156,7 +157,8 @@ def genSysReport() -> str:
     return (
         f"MCSL2版本：{MCSL2VERSION}\n"
         f"Python版本：{pythonVersion()}\n"
-        f"控件库版本：{pfwVer}\n"
+        f"Qt版本：{qVersion()}\n"
+        f"QFluentWidgets版本：{pfwVer}\n"
         f"操作系统：{sysInfo}\n"
         f"CPU：{systemProcessor()}\n"
         f"架构：{systemArchitecture()[0]}\n"
