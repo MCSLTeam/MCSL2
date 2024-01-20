@@ -89,7 +89,7 @@ def readServerProperties(serverConfig: ServerVariables):
     serverConfig.serverProperties.clear()
     try:
         with open(
-            f"./Servers/{serverConfig.serverName}/server.properties", "r"
+            f"./Servers/{serverConfig.serverName}/server.properties", "r", encoding="utf-8"
         ) as serverPropertiesFile:
             lines = serverPropertiesFile.readlines()
             for line in lines:
