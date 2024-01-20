@@ -882,6 +882,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.manageBackupBtn.setEnabled(True)
 
     def registerCommandOutput(self):
+        try:
+            self.serverBridge.serverLogOutput.disconnect(self.colorConsoleText)
+        except (AttributeError, TypeError):
+            pass
         self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
 
     def unRegisterCommandOutput(self):
