@@ -92,7 +92,7 @@ class Window(VerifyFluentWindowBase):
 
     def __init__(self):
         super().__init__()
-        self.previewFlag = True
+        self.previewFlag = False
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
@@ -447,44 +447,3 @@ class Window(VerifyFluentWindowBase):
         bootThread.finished.connect(bootThread.deleteLater)
         bootThread.finished.connect(self.splashScreen.finish)
         bootThread.start()
-
-    # @pyqtSlot(bool)
-    # def settingsRunner_autoRunLastServer(self, startBtnStat):
-    #     """设置：启动时自动运行上次运行的服务器"""
-    #     if cfg.get(cfg.autoRunLastServer):
-    #         if startBtnStat:
-    #             InfoBar.info(
-    #                 title=self.tr("MCSL2功能提醒"),
-    #                 content=self.tr(
-    #                     "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
-    #                 ),
-    #                 orient=Qt.Horizontal,
-    #                 isClosable=True,
-    #                 position=InfoBarPosition.TOP,
-    #                 duration=3000,
-    #                 parent=self.homeInterface,
-    #             )
-    #             self.homeInterface.startServerBtn.click()
-    #             InfoBar.info(
-    #                 title=self.tr("功能提醒"),
-    #                 content=self.tr(
-    #                     "您开启了“启动时自动运行上次运行的服务器”功能。\n正在启动上次运行的服务器..."
-    #                 ),
-    #                 orient=Qt.Horizontal,
-    #                 isClosable=True,
-    #                 position=InfoBarPosition.TOP,
-    #                 duration=3000,
-    #                 parent=self.consoleInterface,
-    #             )
-    #         else:
-    #             InfoBar.info(
-    #                 title=self.tr("功能提醒"),
-    #                 content=self.tr(
-    #                     "虽然您开启了“启动时自动运行上次运行的服务器”功能，\n但由于上次开启记录不存在，或上次开启的服务器已被删除，\n无法启动服务器。\n您仍然可以手动开启服务器。"
-    #                 ),
-    #                 orient=Qt.Horizontal,
-    #                 isClosable=True,
-    #                 position=InfoBarPosition.TOP,
-    #                 duration=3000,
-    #                 parent=self.homeInterface,
-    #             )
