@@ -274,6 +274,7 @@ class Window(VerifyFluentWindowBase):
 
     def initNavigation(self):
         """初始化导航栏"""
+        self.navigationInterface.setExpandWidth(170)
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr("主页"))
         self.addSubInterface(self.configureInterface, FIF.ADD_TO, self.tr("新建"))
         self.addSubInterface(self.serverManagerInterface, FIF.LIBRARY, self.tr("管理"))
@@ -281,7 +282,6 @@ class Window(VerifyFluentWindowBase):
         self.addSubInterface(self.consoleCenterInterface, FIF.ROBOT, self.tr("监控"))
         self.addSubInterface(self.pluginsInterface, FIF.APPLICATION, self.tr("插件"))
         self.navigationInterface.addSeparator()
-        self.navigationInterface.setExpandWidth(170)
         self.addSubInterface(
             self.settingsInterface,
             FIF.SETTING,

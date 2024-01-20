@@ -55,7 +55,7 @@
    <item row="2" column="1" rowspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="overviewPage">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -608,12 +608,44 @@
       </layout>
      </widget>
      <widget class="QWidget" name="configEditorPage">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="Pivot" name="configEditorPivot"/>
-       </item>
-       <item>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="1" column="1">
         <widget class="QStackedWidget" name="configEditorStackedWidget"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="TabBar" name="configEditorTabBar">
+         <property name="movable">
+          <bool>true</bool>
+         </property>
+         <property name="scrollable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="2">
+        <widget class="TreeView" name="configEditorFileTreeView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -641,8 +673,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>65</width>
+            <height>16</height>
            </rect>
           </property>
          </widget>
@@ -832,6 +864,12 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>SingleDirectionScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>qfluentwidgets</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>StrongBodyLabel</class>
    <extends>QLabel</extends>
    <header>qfluentwidgets</header>
@@ -849,6 +887,11 @@
   <customwidget>
    <class>SegmentedWidget</class>
    <extends>Pivot</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TabBar</class>
+   <extends>SingleDirectionScrollArea</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
@@ -874,6 +917,11 @@
   <customwidget>
    <class>ListWidget</class>
    <extends>QListWidget</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TreeView</class>
+   <extends>QTreeView</extends>
    <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>

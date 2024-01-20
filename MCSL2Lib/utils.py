@@ -100,7 +100,6 @@ def initializeMCSL2():
             r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as newGlobalServerListFile:
             newGlobalServerListFile.write(dumps(globalServerList, indent=4))
-    del tmpConfig, globalServerList, updateSpigotIconList, k, newGlobalServerListFile
 
 
 # 带有text的warning装饰器

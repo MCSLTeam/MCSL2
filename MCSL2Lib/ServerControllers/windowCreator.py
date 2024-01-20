@@ -1,4 +1,14 @@
-from PyQt5.QtCore import Qt, QSize, QRect, QEvent, QObject, pyqtSignal, pyqtSlot, QTimer
+from PyQt5.QtCore import (
+    Qt,
+    QSize,
+    QRect,
+    QEvent,
+    QObject,
+    pyqtSignal,
+    pyqtSlot,
+    QTimer,
+    QModelIndex,
+)
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QGridLayout,
@@ -12,6 +22,7 @@ from PyQt5.QtWidgets import (
     QCompleter,
     QApplication,
     QFileDialog,
+    QFileSystemModel,
 )
 from qfluentwidgets import (
     HyperlinkButton,
@@ -19,7 +30,8 @@ from qfluentwidgets import (
     ComboBox,
     LineEdit,
     ListWidget,
-    Pivot,
+    TreeView,
+    TabBar,
     PlainTextEdit,
     PrimaryPushButton,
     PrimaryToolButton,
@@ -516,11 +528,67 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def setupEditorPage(self):
         self.configEditorPage = QWidget()
         self.configEditorPage.setObjectName("configEditorPage")
-        self.configEditorPageLayout = QVBoxLayout(self.configEditorPage)
-        self.configEditorPivot = Pivot(self.configEditorPage)
-        self.configEditorPageLayout.addWidget(self.configEditorPivot)
+        self.configEditorPageLayout = QGridLayout(self.configEditorPage)
+        self.configEditorPageLayout.setObjectName("gridLayout_7")
         self.configEditorStackedWidget = EraseStackedWidget(self.configEditorPage)
-        self.configEditorPageLayout.addWidget(self.configEditorStackedWidget)
+        self.configEditorStackedWidget.setObjectName("configEditorStackedWidget")
+        self.configEditorPageLayout.addWidget(self.configEditorStackedWidget, 1, 1, 1, 1)
+        self.configEditorTabBar = TabBar(self.configEditorPage)
+        self.configEditorTabBar.setMovable(False)
+        self.configEditorTabBar.setAddButtonVisible(False)
+        self.configEditorTabBar.setScrollable(False)
+        self.configEditorTabBar.setObjectName("configEditorTabBar")
+        self.configEditorPageLayout.addWidget(self.configEditorTabBar, 0, 1, 1, 1)
+        self.configEditorFileTreeView = TreeView(self.configEditorPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.configEditorFileTreeView.sizePolicy().hasHeightForWidth())
+        self.configEditorFileTreeView.setSizePolicy(sizePolicy)
+        self.configEditorFileTreeView.setMinimumSize(QSize(200, 0))
+        self.configEditorFileTreeView.setFrameShape(QFrame.NoFrame)
+        self.configEditorFileTreeView.setFrameShadow(QFrame.Plain)
+        self.configEditorFileTreeView.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.configEditorFileTreeView.setObjectName("configEditorFileTreeView")
+        self.configFileTreeModel = QFileSystemModel()
+        self.configFileTreeModel.setRootPath("")
+        self.configFileTreeModel.setNameFilters([
+            "*.yml",
+            "*.json",
+            "*.conf",
+            "*.ini",
+            "*.properties",
+            "*.xml",
+            "*.yaml",
+            "*.tmlp",
+            "*.toml",
+            "*.txt",
+            "*.log",
+            "*.sh",
+            "*.bat",
+            "*.cmd",
+            "*.ps1",
+            "*.psm1",
+            "*.psd1",
+            "*.ps1xml",
+            "*.dsc",
+            "*.dscx",
+            "*.dscx12",
+            "*.*.ps1xml",
+        ])
+        self.configFileTreeModel.setNameFilterDisables(False)
+        self.configEditorFileTreeView.setModel(self.configFileTreeModel)
+        self.configEditorFileTreeView.setRootIndex(
+            self.configFileTreeModel.index(osp.abspath(f"Servers/{self.serverConfig.serverName}"))
+        )
+        self.configEditorFileTreeView.setHeaderHidden(True)
+        self.configEditorFileTreeView.setColumnHidden(1, True)
+        self.configEditorFileTreeView.setColumnHidden(2, True)
+        self.configEditorFileTreeView.setColumnHidden(3, True)
+        self.configEditorFileTreeView.selectionModel().selectionChanged.connect(
+            self.createConfigEditor
+        )
+        self.configEditorPageLayout.addWidget(self.configEditorFileTreeView, 0, 0, 2, 1)
         self.stackedWidget.addWidget(self.configEditorPage)
 
     def setupScheduleTasksPage(self):
@@ -737,7 +805,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.setTitleBar(ServerWindowTitleBar(self))
         self.setWindowTitle(f"MCSL2服务器 - {self.serverConfig.serverName}")
 
-        self.setWindowIcon(QIcon(":/built-InIcons/MCSL2.png"))
+        self.setWindowIcon(QIcon(f":/built-InIcons/{self.serverConfig.serverIconName}"))
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         self.resize(int(w // 1.5), int(h // 1.5))
@@ -996,7 +1064,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 content=self.tr("服务器正在启动，请稍后..."),
                 orient=Qt.Horizontal,
                 isClosable=False,
-                position=InfoBarPosition.TOP,
+                position=InfoBarPosition.BOTTOM,
                 duration=2222,
                 parent=self,
             )
@@ -1018,7 +1086,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 content=self.tr(f"服务器启动完毕！\n如果本机开服，IP 地址为{ip}，端口为{port}。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),  # noqa: E501
                 orient=Qt.Horizontal,
                 isClosable=False,
-                position=InfoBarPosition.TOP,
+                position=InfoBarPosition.BOTTOM,
                 duration=5000,
                 parent=self,
             )
@@ -1404,3 +1472,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.unRegisterStartServerComponents()
         else:
             self.showServerNotOpenMsg()
+
+    def createConfigEditor(self, selected, deselected):
+        self.sender().model().filePath(selected.indexes()[0])
