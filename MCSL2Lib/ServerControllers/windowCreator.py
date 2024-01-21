@@ -1158,6 +1158,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             try:
                 # fmt: off
                 self.playersList.pop(self.playersList.index(str(str(serverOutput).split("INFO]: ")[1].split(" left the game")[0])))  # noqa: E501
+                self.existPlayersListWidget.clear()
+                self.existPlayersListWidget.addItems(self.playersList)
                 return
             except Exception:
                 pass
