@@ -189,6 +189,8 @@ def exceptionFilter(
         value
     ):
         return ExceptionFilterMode.PASS
+    if isinstance(value, Exception) and "sipBadCatcherResult" in str(value):
+        return ExceptionFilterMode.PASS
     if isinstance(value, Exception) and "print test" in str(value):
         return ExceptionFilterMode.RAISE_AND_PRINT
 
