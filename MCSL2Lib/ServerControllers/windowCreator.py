@@ -7,7 +7,6 @@ from PyQt5.QtCore import (
     pyqtSignal,
     pyqtSlot,
     QTimer,
-    QModelIndex,
 )
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -50,6 +49,7 @@ from qfluentwidgets import (
     isDarkTheme,
     InfoBarPosition,
     InfoBar,
+    TabCloseButtonDisplayMode,
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
@@ -69,6 +69,7 @@ from MCSL2Lib.ServerControllers.serverUtils import (
 from os import path as osp
 import sys
 from re import search
+from typing import Dict
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger, openLocalFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
@@ -225,6 +226,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self._isMicaEnabled = False
         super().__init__()
         self.errMsg = ""
+        self.configEditorContainerDict: Dict[QWidget] = {}
+        self.configEditorDict: Dict[PlainTextEdit] = {}
         self.playersList = []
         self.playersControllerBtnEnabled.emit(False)
         self.serverConfig = config
@@ -534,9 +537,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.configEditorStackedWidget.setObjectName("configEditorStackedWidget")
         self.configEditorPageLayout.addWidget(self.configEditorStackedWidget, 1, 1, 1, 1)
         self.configEditorTabBar = TabBar(self.configEditorPage)
-        self.configEditorTabBar.setMovable(False)
         self.configEditorTabBar.setAddButtonVisible(False)
+        self.configEditorTabBar.setMovable(False)
         self.configEditorTabBar.setScrollable(False)
+        self.configEditorTabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.ON_HOVER)
         self.configEditorTabBar.setObjectName("configEditorTabBar")
         self.configEditorPageLayout.addWidget(self.configEditorTabBar, 0, 1, 1, 1)
         self.configEditorFileTreeView = TreeView(self.configEditorPage)
@@ -588,6 +592,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.configEditorFileTreeView.selectionModel().selectionChanged.connect(
             self.createConfigEditor
         )
+        self.configEditorTabBar.tabCloseRequested.connect(self.removeConfigEditor)
         self.configEditorPageLayout.addWidget(self.configEditorFileTreeView, 0, 0, 2, 1)
         self.stackedWidget.addWidget(self.configEditorPage)
 
@@ -1474,4 +1479,78 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.showServerNotOpenMsg()
 
     def createConfigEditor(self, selected, deselected):
-        self.sender().model().filePath(selected.indexes()[0])
+        print(self.configEditorDict)
+        filePath = self.sender().model().filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
+        if osp.isdir(filePath):
+            print(1)
+            return
+        if filePath in self.configEditorTabBar.itemMap:
+            self.configEditorTabBar.setCurrentTab(filePath)
+            print(2)
+            return
+        else:
+            print(3)
+            try:
+                with open(filePath, "r", encoding="utf-8") as f:
+                    text = f.read()
+            except Exception as e:
+                InfoBar.info(
+                    title="抱歉",
+                    content=f"MCSL2无法打开此文件，原因：\n{e.with_traceback()}",
+                    orient=Qt.Horizontal,
+                    parent=self,
+                    duration=1500,
+                    isClosable=False,
+                    position=InfoBarPosition.TOP,
+                )
+                return
+
+            fileName = osp.basename(filePath)
+            container = QWidget()
+            containerLayout = QGridLayout(container)
+            containerLayout.addWidget((p := PlainTextEdit(container)), 0, 0)
+            p.setPlainText(text)
+            self.configEditorStackedWidget.addWidget(container)
+            self.configEditorTabBar.addTab(
+                routeKey=filePath,
+                text=fileName,
+                icon=FIF.LABEL,
+                onClick=lambda: self.configEditorStackedWidget.setCurrentWidget(container),
+            )
+            self.configEditorTabBar.setCurrentTab(filePath)
+            self.configEditorStackedWidget.setCurrentWidget(container)
+            self.configEditorContainerDict.update({filePath: container})
+            self.configEditorDict.update({filePath: p})
+
+    @pyqtSlot(int)
+    def removeConfigEditor(self, i):
+        with open(self.configEditorTabBar.items[i]._routeKey, "r", encoding="utf-8") as f:
+            tmpText = f.read()
+        if (
+            newText := self.configEditorDict[
+                self.configEditorTabBar.items[i]._routeKey
+            ].toPlainText()
+        ) != tmpText:
+            with open(self.configEditorTabBar.items[i]._routeKey, "w+", encoding="utf-8") as nf:
+                nf.write(newText)
+
+            InfoBar.info(
+                title="提示",
+                content=f"已自动保存{self.configEditorTabBar.items[i]._routeKey}",
+                orient=Qt.Horizontal,
+                parent=self,
+                duration=1500,
+                isClosable=False,
+                position=InfoBarPosition.TOP,
+            )
+
+        self.configEditorStackedWidget.removeWidget(
+            self.configEditorContainerDict[self.configEditorTabBar.items[i]._routeKey]
+        )
+        self.configEditorContainerDict[self.configEditorTabBar.items[i]._routeKey].deleteLater()
+
+        self.configEditorDict.pop(self.configEditorTabBar.items[i]._routeKey)
+
+        self.configEditorContainerDict.pop(self.configEditorTabBar.items[i]._routeKey)
+
+        self.configEditorTabBar.removeTab(i)
