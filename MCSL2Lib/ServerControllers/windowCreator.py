@@ -539,7 +539,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.configEditorTabBar = TabBar(self.configEditorPage)
         self.configEditorTabBar.setAddButtonVisible(False)
         self.configEditorTabBar.setMovable(False)
-        self.configEditorTabBar.setScrollable(False)
+        self.configEditorTabBar.setScrollable(True)
         self.configEditorTabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.ON_HOVER)
         self.configEditorTabBar.setObjectName("configEditorTabBar")
         self.configEditorPageLayout.addWidget(self.configEditorTabBar, 0, 1, 1, 1)
@@ -1479,17 +1479,13 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.showServerNotOpenMsg()
 
     def createConfigEditor(self, selected, deselected):
-        print(self.configEditorDict)
         filePath = self.sender().model().filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
         if osp.isdir(filePath):
-            print(1)
             return
         if filePath in self.configEditorTabBar.itemMap:
             self.configEditorTabBar.setCurrentTab(filePath)
-            print(2)
             return
         else:
-            print(3)
             try:
                 with open(filePath, "r", encoding="utf-8") as f:
                     text = f.read()
