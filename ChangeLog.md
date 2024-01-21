@@ -4,27 +4,20 @@
 
 ### 新功能  
 
-- 多服务器同时开启  
-- 备份服务器功能  
-- 备份服务器存档功能  
-- 生成启动脚本功能  
-- MCSLAPI下载多样化  
-- 下载页面选中项高亮  
-- 整合终端页面->服务器窗口  
-- 新增监控页面  
-- 新版服务器管理列表  
+- 统一配置文件编辑器
 
 ### 修复  
 
-- Linux版无法启动问题  
+- sipBadCatcherResult  
+- `server.properties`文件的读取问题  
+- 终端复读问题
 
 ### 优化  
 
-- 大幅性能优化  
+- Spigot服务器图标  
 - 系统报告功能  
-- 下载进度条  
 
-___
+<!-- ___
 
 ### 其他下载地址（官方分流）
 
@@ -34,4 +27,4 @@ ___
 
 [蓝奏云3（密码MCSL）](https://lxht.lanzoug.com/b01edy9tg)
 
-[蓝奏云4（密码MCSL）](https://lxht.lanzoub.com/b01edy9tg)
+[蓝奏云4（密码MCSL）](https://lxht.lanzoub.com/b01edy9tg) -->
