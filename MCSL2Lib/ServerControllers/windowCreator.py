@@ -134,6 +134,10 @@ class ServerWindowTitleBar(TitleBar):
         self.vBoxLayout.addLayout(self.buttonLayout)
         self.vBoxLayout.addStretch(1)
         self.hBoxLayout.addLayout(self.vBoxLayout, 0)
+        self.setQss()
+
+    def setQss(self):
+        print("setting")
         if isDarkTheme():
             self.setStyleSheet(
                 """
@@ -808,6 +812,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         """初始化窗口"""
 
         self.setTitleBar(ServerWindowTitleBar(self))
+        cfg.themeChanged.connect(self.titleBar.setQss)
         self.setWindowTitle(f"MCSL2服务器 - {self.serverConfig.serverName}")
 
         self.setWindowIcon(QIcon(f":/built-InIcons/{self.serverConfig.serverIconName}"))
