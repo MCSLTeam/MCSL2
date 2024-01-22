@@ -890,12 +890,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 if isinstance(t, _MinecraftEULA):
                     self._showNoAcceptEULAMsg(t)
                 else:
+                    self.registerServerExitStatusHandler()
                     self.registerResMonitor()
                     self.registerCommandOutput()
                     self.registerStartServerComponents()
-                    self.serverBridge.serverProcess.process.finished.connect(
-                        self.unRegisterCommandOutput
-                    )
                     return
             else:
                 return
@@ -905,6 +903,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 self._showNoAcceptEULAMsg(t)
             else:
                 self.serverBridge = t
+                self.registerServerExitStatusHandler()
                 self.registerResMonitor()
                 self.registerCommandOutput()
                 self.registerStartServerComponents()
@@ -915,10 +914,37 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.killServer.setEnabled(True)
             self.toggleServerBtn.setEnabled(True)
             self.exitServer.setEnabled(True)
-            self.unRegisterResMonitor()
             self.unRegisterStartServerComponents()
             if self.errorHandler.isChecked() and not forceNoErrorHandler:
                 self.showErrorHandlerReport()
+
+    def haltServer(self, forceNoErrorHandler=True):
+        if self.serverBridge is not None:
+            InfoBar.warning(
+                title=self.tr("警告"),
+                content=self.tr("正在强制关闭服务器..."),
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.TOP,
+                duration=800,
+                parent=self,
+            )
+            self.serverBridge.haltServer()
+            self.killServer.setEnabled(True)
+            self.toggleServerBtn.setEnabled(True)
+            self.exitServer.setEnabled(True)
+            self.unRegisterStartServerComponents()
+            if self.errorHandler.isChecked() and not forceNoErrorHandler:
+                self.showErrorHandlerReport()
+
+    def registerServerExitStatusHandler(self):
+        self.serverBridge.serverClosed.connect(self.serverExitStatusHandler)
+
+    def unRegisterServerExitStatusHandler(self):
+        try:
+            self.serverBridge.serverClosed.disconnect(self.serverExitStatusHandler)
+        except (AttributeError, TypeError):
+            pass
 
     def registerStartServerComponents(self):
         self.toggleServerBtn.setText(self.tr("关闭服务器"))
@@ -936,6 +962,15 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.backupSavesBtn.setEnabled(False)
         self.backupServerBtn.setEnabled(False)
         self.manageBackupBtn.setEnabled(False)
+        InfoBar.info(
+            title=self.tr("提示"),
+            content=self.tr("服务器正在启动，请稍后..."),
+            orient=Qt.Horizontal,
+            isClosable=False,
+            position=InfoBarPosition.BOTTOM_RIGHT,
+            duration=2222,
+            parent=self,
+        )
 
     def unRegisterStartServerComponents(self):
         self.toggleServerBtn.setText(self.tr("开启服务器"))
@@ -960,10 +995,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         except (AttributeError, TypeError):
             pass
         self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
+        self.colorConsoleText("[MCSL2 | 提示]：服务器正在启动，请稍后...")
 
     def unRegisterCommandOutput(self):
         try:
-            self.serverBridge.serverLogOutput.disconnect(self.colorConsoleText)
+            self.serverBridge.serverLogOutput.disconnect()
         except (AttributeError, TypeError):
             pass
 
@@ -973,7 +1009,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         )
         self.serverMemThread.memPercent.connect(self.setMemView)
         self.serverMemThread.cpuPercent.connect(self.setCPUView)
-        self.serverBridge.serverClosed.connect(self.unRegisterResMonitor)
 
     def unRegisterResMonitor(self):
         self.serverMemThread.onServerClosedHandler()
@@ -986,6 +1021,23 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         except (AttributeError, TypeError):
             pass
         self.serverMemThread.deleteLater()
+
+    @pyqtSlot(int)
+    def serverExitStatusHandler(self, exitCode):
+        if exitCode:
+            if exitCode != 62097:
+                self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器崩溃！"))
+                if cfg.get(cfg.restartServerWhenCrashed):
+                    self.colorConsoleText(self.tr("[MCSL2 | 提示]：正在重新启动服务器..."))
+                    self.startServer()
+            else:
+                self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器可能被强制结束进程。"))
+        else:
+            self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器已关闭！"))
+
+        self.unRegisterServerExitStatusHandler()
+        self.unRegisterResMonitor()
+        self.unRegisterCommandOutput()
 
     @pyqtSlot(float)
     def setMemView(self, mem):
@@ -1063,16 +1115,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             return
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
-            serverOutput = self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后...\n") + serverOutput
-            InfoBar.info(
-                title=self.tr("提示"),
-                content=self.tr("服务器正在启动，请稍后..."),
-                orient=Qt.Horizontal,
-                isClosable=False,
-                position=InfoBarPosition.BOTTOM,
-                duration=2222,
-                parent=self,
-            )
         self.serverOutput.appendPlainText(serverOutput)
         if search(r"(?=.*Done)(?=.*!)", serverOutput):
             fmt.setForeground(QBrush(color[3]))
@@ -1088,10 +1130,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
             InfoBar.success(
                 title=self.tr("提示"),
-                content=self.tr(f"服务器启动完毕！\n如果本机开服，IP 地址为{ip}，端口为{port}。\n如果外网开服,或使用了内网穿透等服务，连接地址为你的相关服务地址。"),  # noqa: E501
+                content=self.tr(f"服务器启动完毕，详情请到快捷终端查看。"),  # noqa: E501
                 orient=Qt.Horizontal,
                 isClosable=False,
-                position=InfoBarPosition.BOTTOM,
+                position=InfoBarPosition.BOTTOM_RIGHT,
                 duration=5000,
                 parent=self,
             )
@@ -1457,24 +1499,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
             w.yesButton.setText(self.tr("算了"))
             w.cancelButton.setText(self.tr("强制关闭"))
-            w.cancelSignal.connect(self.serverBridge.haltServer)
-            w.cancelSignal.connect(lambda: self.killServer.setEnabled(True))
-            w.cancelSignal.connect(lambda: self.toggleServerBtn.setEnabled(True))
-            w.cancelSignal.connect(lambda: self.exitServer.setEnabled(True))
-            w.cancelSignal.connect(
-                lambda: InfoBar.warning(
-                    title=self.tr("警告"),
-                    content=self.tr("正在结束服务器..."),
-                    orient=Qt.Horizontal,
-                    isClosable=False,
-                    position=InfoBarPosition.TOP,
-                    duration=800,
-                    parent=self,
-                )
-            )
+            w.cancelSignal.connect(self.haltServer)
             w.exec_()
-            self.unRegisterResMonitor()
-            self.unRegisterStartServerComponents()
         else:
             self.showServerNotOpenMsg()
 

@@ -75,32 +75,14 @@ class _ServerProcessBridge(QObject):
         self.handledServer.process.setProgram(self.javaPath)
         self.handledServer.process.setArguments(self.processArgs)
         self.handledServer.process.setWorkingDirectory(self.workingDirectory)
-        self.handledServer.process.started.connect(
-            lambda: self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
-        )
         self.handledServer.process.readyReadStandardOutput.connect(self.serverLogOutputHandler)
         self.handledServer.process.finished.connect(
             lambda: self.serverClosed.emit(self.handledServer.process.exitCode())
         )
-        self.handledServer.process.finished.connect(
-            lambda: self.serverCrashed(self.handledServer.process.exitCode())
-        )
+        # self.handledServer.process.finished.connect(
+        #     lambda: self.serverCrashed(self.handledServer.process.exitCode())
+        # )
         return self.handledServer
-
-    def serverCrashed(self, exitCode):
-        if exitCode:
-            if exitCode != 62097:
-                self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器崩溃！"))
-                if cfg.get(cfg.restartServerWhenCrashed):
-                    self.serverProcess.process.waitForFinished()
-                    self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：正在重新启动服务器..."))
-                    self.serverProcess.process.start()
-            else:
-                self.serverLogOutput.emit(
-                    self.tr("[MCSL2 | 提示]：服务器崩溃，但可能是被强制结束进程。")
-                )
-        else:
-            self.serverLogOutput.emit(self.tr("[MCSL2 | 提示]：服务器已关闭！"))
 
     def serverLogOutputHandler(self):
         """
