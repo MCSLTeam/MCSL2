@@ -32,7 +32,7 @@ from platform import (
     processor as systemProcessor,
 )
 from PyQt5.QtCore import qVersion
-from .. import MCSL2VERSION
+from .. import DEV_VERSION, MCSL2VERSION
 
 
 class _MCSL2Logger:
@@ -155,7 +155,7 @@ def genSysReport() -> str:
         else f"{systemType()} {systemRelease()}"
     )
     return (
-        f"MCSL2版本：{MCSL2VERSION}\n"
+        f"MCSL2版本：{MCSL2VERSION} {DEV_VERSION}\n"
         f"Python版本：{pythonVersion()}\n"
         f"Qt版本：{qVersion()}\n"
         f"QFluentWidgets版本：{pfwVer}\n"
