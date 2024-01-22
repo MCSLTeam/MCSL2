@@ -137,7 +137,6 @@ class ServerWindowTitleBar(TitleBar):
         self.setQss()
 
     def setQss(self):
-        print("setting")
         if isDarkTheme():
             self.setStyleSheet(
                 """
