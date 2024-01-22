@@ -40,7 +40,7 @@ from qfluentwidgets import (
     isDarkTheme,
 )
 from Adapters.Plugin import PluginManager
-from MCSL2Lib import MCSL2VERSION
+from MCSL2Lib import DEV_VERSION, MCSL2VERSION
 from MCSL2Lib.ProgramControllers.aria2ClientController import (
     Aria2Controller,
     initializeAria2Configuration,
@@ -96,7 +96,7 @@ class Window(VerifyFluentWindowBase):
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{' 测试版 dev 24112' if self.previewFlag else ''}"
+            f"MCServerLauncher {MCSL2VERSION}{' 测试版 ' if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''}"  # noqa: E501
         )
 
         self.oldHook = sys.excepthook
