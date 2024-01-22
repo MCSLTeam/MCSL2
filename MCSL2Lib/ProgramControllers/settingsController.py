@@ -29,7 +29,7 @@ class Aria2Range(RangeConfigItem):
     @property
     def range(self):
         """get the available range of config"""
-        return (1, 128)
+        return [1, 128]
 
 
 class Config(QConfig):
