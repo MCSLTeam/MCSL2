@@ -32,7 +32,7 @@ body:
     required: true
 
 - type: textarea
-  id: description
+  id: issue_description
   attributes:
     label: "说明"
     description: "说明你的问题、麻烦、建议等。"
@@ -40,7 +40,7 @@ body:
     required: true
 
 - type: textarea
-  id: description
+  id: reproduction_steps
   attributes:
     label: "如何复现这个bug？"
     placeholder: "你可以使用文字回答，或者使用图片/视频回答。"
@@ -48,7 +48,7 @@ body:
     required: true
 
 - type: textarea
-  id: "attachment"
+  id: attachment_description
   attributes:
     label: "附件(可选)"
     placeholder: "先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。"
