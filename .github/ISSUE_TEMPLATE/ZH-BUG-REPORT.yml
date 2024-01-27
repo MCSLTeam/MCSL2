@@ -40,6 +40,14 @@ body:
     required: true
 
 - type: textarea
+  id: description
+  attributes:
+    label: "如何复现这个bug？"
+    placeholder: "你可以使用文字回答，或者使用图片/视频回答。"
+  validations:
+    required: true
+
+- type: textarea
   id: "attachment"
   attributes:
     label: "附件(可选)"

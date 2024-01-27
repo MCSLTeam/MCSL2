@@ -40,6 +40,14 @@ body:
     required: true
 
 - type: textarea
+  id: description
+  attributes:
+    label: "How to reproduce this bug?"
+    placeholder: "You can answer using text, or using picture/video."
+  validations:
+    required: true
+
+- type: textarea
   id: "attachment"
   attributes:
     label: "Attachment(Optional)"
