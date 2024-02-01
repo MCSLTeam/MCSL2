@@ -1,7 +1,7 @@
 name: "BUG Report"
 description: "Bug Report Template for English users"
 title: "BUG | (NAME THIS ISSUE HERE)"
-labels: ["Program Bug"]
+labels: [· 程序Bug]
 body:
 
 - type: textarea
