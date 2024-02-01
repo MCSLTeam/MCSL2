@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#     Copyright 2023, MCSL Team, mailto:lxhtt@vip.qq.com
+#     Copyright 2024, MCSL Team, mailto:lxhtt@vip.qq.com
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
