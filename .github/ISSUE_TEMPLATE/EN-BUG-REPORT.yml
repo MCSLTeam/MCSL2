@@ -1,7 +1,7 @@
 name: "BUG Report"
 description: "Bug Report Template for English users"
 title: "BUG | (NAME THIS ISSUE HERE)"
-labels: [· 程序Bug]
+labels: ["Program Bug"]
 body:
 
 - type: textarea
@@ -32,7 +32,7 @@ body:
     required: true
 
 - type: textarea
-  id: description
+  id: issue_description
   attributes:
     label: "Description"
     description: "Explain your problem, trouble, suggestion, etc."
@@ -40,16 +40,24 @@ body:
     required: true
 
 - type: textarea
-  id: "attachment"
+  id: reproduction_steps
+  attributes:
+    label: "How to reproduce this bug?"
+    placeholder: "You can answer using text, or using picture/video."
+  validations:
+    required: true
+
+- type: textarea
+  id: attachment_info
   attributes:
     label: "Attachment(Optional)"
     placeholder: "Click on the textarea first, and then drag and drop the file directly into the textarea to upload."
 
 - type: checkboxes
-  id: check
+  id: check_duplicates
   attributes:
     label: "Verify"
-    description: "Please read [Issues](https://github.com/MCSLTeam/MCSL2/issues) to see if there is the issue of duplicate items with you."
+    description: "Please read [Issues](https://github.com/MCSLTeam/MCSL2/issues) to see if there is already an issue with the same problem as yours."
     options:
-      - label: "I make sure my issue is not the same as someone else's"
+      - label: "I confirm that my issue does not duplicate another user's issue"
         required: true

@@ -329,6 +329,7 @@ class ForgeInstaller(Installer):
         self.__asyncInstallRoutine()
 
     def __asyncInstallRoutine(self):
+
         if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
             makedirs(
                 name=(
@@ -349,7 +350,12 @@ class ForgeInstaller(Installer):
             self._bmclapiDownloader = BMCLAPIDownloader()
             self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
             self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
-            self._bmclapiDownloader.download(self._mcVersion, cwd, f"server-{self._mcVersion}.jar")
+
+            if self._mcVersion >= McVersion("1.20"):
+                self._bmclapiDownloader.download(self._mcVersion, cwd, f"server-{self._mcVersion}-bundled.jar")
+            else:
+                self._bmclapiDownloader.download(self._mcVersion, cwd, f"server-{self._mcVersion}.jar")
+                
         elif self.installPlan == ForgeInstaller.InstallPlan.PlanA:
             # 预下载核心并安装...
             self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
