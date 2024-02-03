@@ -1,4 +1,4 @@
-#     Copyright 2024, MCSL Team, mailto:lxhtt@vip.qq.com
+#     Copyright 2024, MCSL Team, mailto:services@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -12,7 +12,7 @@
 ################################################################################
 
 """
-MCSL2运行支持库
+MCSL2 Program Library
 """
 
 VERSION = "2.2.3.6"
