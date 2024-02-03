@@ -317,8 +317,8 @@ class Window(VerifyFluentWindowBase):
                 self.windowEffect.setMicaEffect(self.winId(), isDarkMode=isDarkTheme())
             else:
                 pass
-        setTheme(cfg.theme)
-        # setThemeColor(cfg.get(cfg.themeColor))
+        setTheme(cfg.theme, lazy=True)
+        # setThemeColor(cfg.get(cfg.themeColor), lazy=True)
 
     def initQtSlot(self):
         """定义无法直接设置的Qt信号槽"""
