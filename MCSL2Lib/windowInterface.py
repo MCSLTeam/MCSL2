@@ -36,6 +36,7 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     MessageBox,
+    Dialog,
     SplashScreen,
     isDarkTheme,
 )
@@ -252,11 +253,15 @@ class Window(VerifyFluentWindowBase):
             tracebackString = "".join(format_exception(ty, value, _traceback))
             MCSL2Logger.error(msg=tracebackString)
             exceptionWidget = ExceptionWidget(tracebackString)
-            box = MessageBox(self.tr("程序出现异常"), "", self)
+            box = Dialog(
+                self.tr("MCSL2 发生未经处理的异常"),
+                content=self.tr("如果有能力可自行解决，无法解决请积极反馈！"),
+                parent=None,
+            )
+            box.titleBar.show()
+            box.setTitleBarVisible(False)
             box.yesButton.setText(self.tr("确认并复制到剪切板"))
             box.cancelButton.setText(self.tr("知道了"))
-            box.contentLabel.setParent(None)
-            box.contentLabel.deleteLater()
             del box.contentLabel
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
             box.yesSignal.connect(lambda: QApplication.clipboard().setText(tracebackString))
