@@ -27,7 +27,7 @@ dependencies = [
     "aria2p==0.11.3",
     # 构建需要
     "lib-not-dr[nuitka]>=0.3",
-    "nuitka>=1.9.5",
+    "nuitka==1.9.7",
     "QScintilla>=2.14.1",
 ]
 requires-python = ">=3.8,<3.9"
