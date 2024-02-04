@@ -715,7 +715,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.commandPageLayout.addItem(spacerItem2, 1, 5, 5, 1)
 
         self.gamemode.clicked.connect(self.initQuickMenu_GameMode)
-        self.difficulty.currentIndexChanged.connect(self.runQuickMenu_Difficulty)
         self.whiteList.clicked.connect(self.initQuickMenu_WhiteList)
         self.op.clicked.connect(self.initQuickMenu_Operator)
         self.kickPlayers.clicked.connect(self.initQuickMenu_Kick)
@@ -1274,6 +1273,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
+        print(self.sender().objectName())
         w = MessageBox(
             title=self.tr("失败"),
             content=self.tr("服务器并未开启，请先开启服务器。"),
@@ -1326,6 +1326,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 )
             except Exception:
                 pass
+            self.difficulty.currentIndexChanged.connect(self.runQuickMenu_Difficulty)
         else:
             self.showServerNotOpenMsg()
 
