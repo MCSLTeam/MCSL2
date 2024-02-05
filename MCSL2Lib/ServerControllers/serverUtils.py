@@ -167,6 +167,14 @@ def backupSaves(serverConfig: ServerVariables, parent):
         levelNameList = [levelName, f"{levelName}_nether", f"{levelName}_the_end"]
         if osp.exists(f"MCSL2/BackupTemp_{serverConfig.serverName}/"):
             rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
+        s = QFileDialog.getSaveFileName(
+            parent,
+            f"MCSL2 - 备份服务器“{serverConfig.serverName}”的存档",
+            f"{serverConfig.serverName}_{levelName}_backup.zip",
+            "Zip压缩包(*.zip)",
+        )[0]
+        if s == "":
+            return
         mkdir(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
         for dir in levelNameList:
             try:
@@ -177,14 +185,6 @@ def backupSaves(serverConfig: ServerVariables, parent):
             except FileNotFoundError:
                 levelNameList.remove(dir)
                 continue
-        s = QFileDialog.getSaveFileName(
-            parent,
-            f"MCSL2 - 备份服务器“{serverConfig.serverName}”的存档",
-            f"{serverConfig.serverName}_{levelName}_backup.zip",
-            "Zip压缩包(*.zip)",
-        )[0]
-        if s == "":
-            return
         existsDir = "\n".join(levelNameList)
         tmpArchiveThread = MakeArchiveThread(
             s.replace(".zip", ""),
