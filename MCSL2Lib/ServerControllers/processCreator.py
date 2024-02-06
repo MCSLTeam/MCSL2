@@ -20,8 +20,6 @@ from os import path as osp
 from typing import Optional
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
-
-from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.variables import ServerVariables
 from MCSL2Lib.utils import MCSL2Logger
 

@@ -182,7 +182,9 @@ class EraseStackedWidget(QStackedWidget):
             easingCurve,
         )
 
-    def __setAnimation(self, ani, startValue, endValue, duration, easingCurve=QEasingCurve.BezierSpline):
+    def __setAnimation(
+        self, ani, startValue, endValue, duration, easingCurve=QEasingCurve.BezierSpline
+    ):
         """set the config of animation"""
         ani.setEasingCurve(easingCurve)
         ani.setStartValue(startValue)

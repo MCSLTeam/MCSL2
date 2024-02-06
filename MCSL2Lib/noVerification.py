@@ -37,10 +37,14 @@ def countUserAPI():
     pass
 
 
-# fmt: off
 def generateUniqueCode():
-    return "-".join([md5(f"{getlogin() if osname == 'nt' else getenv('USER')}{processor()}{sysType()}".encode()).hexdigest()[i:i + 4].upper() for i in range(0, 16, 4)])
-# fmt: on
+    return "-".join([
+        md5(f"{getlogin() if osname == 'nt' else getenv('USER')}{processor()}{sysType()}".encode())
+        .hexdigest()[i : i + 4]
+        .upper()
+        for i in range(0, 16, 4)
+    ])
+
 
 __AuthorizationHeaders = {
     "x-mcsl2-client-private-header": next(
