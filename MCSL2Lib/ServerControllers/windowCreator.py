@@ -1077,11 +1077,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def serverExitStatusHandler(self, exitCode):
         self.unRegisterServerExitStatusHandler()
         self.unRegisterResMonitor()
+        self.unRegisterStartServerComponents()
         if exitCode:
             if exitCode != 62097:
                 self.colorConsoleText(
                     self.tr(
-                        "[MCSL2 | 提示]：服务器崩溃，进程退出码为 {exitCode}！".format(
+                        "[MCSL2 | 提示]：服务器崩溃，进程退出码为 {exitCode} ！".format(
                             exitCode=exitCode
                         )
                     )
@@ -1627,8 +1628,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         if self.errTextEdit.toPlainText() == "":
             return
         if not self.switchAnalyzeProviderBtn.isChecked():
+            localHandleResult = ServerErrorHandler.detect(self.errTextEdit.toPlainText())
             self.resultTextEdit.setPlainText(
-                ServerErrorHandler.detect(self.errTextEdit.toPlainText())
+                localHandleResult if localHandleResult else "未检测到本地分析模块可用解决方案。"
             )
         else:
             self.resultTextEdit.setPlainText(
