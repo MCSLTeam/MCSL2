@@ -86,7 +86,7 @@ class ServerErrorHandler:
                     cls.msg += "文件被占用，您的服务器可能多开，请检查任务管理器等。\n"
 
             elif "FAILED TO BIND TO PORT" in errMsg:
-                cls.msg += "端口被占用，您的服务器可能多开，请检查任务管理器等。\n"
+                cls.msg += "此服务器使用的端口已被占用，请使用第三方分析软件查找占用进程并解决。\n"
 
             elif "Unable to access jarfile" in errMsg:
                 cls.msg += "无法访问Jar可执行文件，请检查文件是否存在，或更换服务器核心或名称。\n"
