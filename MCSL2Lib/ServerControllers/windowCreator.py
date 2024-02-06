@@ -110,8 +110,8 @@ class ErrorHandlerToggleButton(ToggleButton):
             return True
         return super().eventFilter(a0, a1)
 
-class CommandLineEdit(LineEdit):
 
+class CommandLineEdit(LineEdit):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.upT = 0
@@ -121,9 +121,7 @@ class CommandLineEdit(LineEdit):
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a1.type() == QEvent.KeyPress:
             if a1.key() == Qt.Key_Up:
-                if len(self.userCommandHistory) and self.upT > -len(
-                    self.userCommandHistory
-                ):
+                if len(self.userCommandHistory) and self.upT > -len(self.userCommandHistory):
                     self.upT -= 1
                     lastCommand = self.userCommandHistory[self.upT]
                     self.setText(lastCommand)
@@ -804,9 +802,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.sendCommandButton.clicked.connect(
             lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
-        self.commandLineEdit.returnPressed.connect(
-            self.commandLineEditTypeChecker
-        )
+        self.commandLineEdit.returnPressed.connect(self.commandLineEditTypeChecker)
         self.openServerFolder.clicked.connect(
             lambda: openLocalFile(f"Servers/{self.serverConfig.serverName}")
         )
@@ -817,6 +813,13 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.backupSavesBtn.clicked.connect(
             lambda: backupSaves(serverConfig=self.serverConfig, parent=self)
         )
+        self.copyResultBtn.clicked.connect(
+            lambda: QApplication.clipboard().setText(self.resultTextEdit.toPlainText())
+        )
+        self.errTextEdit.textChanged.connect(
+            lambda: self.startAnalyze.setEnabled(self.errTextEdit.toPlainText().strip() != "")
+        )
+        self.startAnalyze.clicked.connect(self.manualAnalyzeError)
 
     def initNavigation(self):
         self.serverSegmentedWidget.addItem(
@@ -1287,8 +1290,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                     exc=e,
                 )
 
-
-
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
         print(self.sender().objectName())
@@ -1440,7 +1441,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             opWidget = playersController()
             opWidget.mode.addItems([self.tr("添加"), self.tr("删除")])
             opWidget.mode.setCurrentIndex(0)
-            opWidget.who.textChanged.connect(lambda: self.playersControllerLineEditTypeChecker(text=opWidget.who.text()))
+            opWidget.who.textChanged.connect(
+                lambda: self.playersControllerLineEditTypeChecker(text=opWidget.who.text())
+            )
             opWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("服务器管理员"), self.tr("添加或删除管理员"), self)
             w.yesButton.setText(self.tr("确定"))
@@ -1619,3 +1622,15 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.configEditorContainerDict.pop(self.configEditorTabBar.items[i]._routeKey)
 
         self.configEditorTabBar.removeTab(i)
+
+    def manualAnalyzeError(self):
+        if self.errTextEdit.toPlainText() == "":
+            return
+        if not self.switchAnalyzeProviderBtn.isChecked():
+            self.resultTextEdit.setPlainText(
+                ServerErrorHandler.detect(self.errTextEdit.toPlainText())
+            )
+        else:
+            self.resultTextEdit.setPlainText(
+                "我们仍在积极与CrashMC对接，目前方案不可用，请使用本地分析。"
+            )

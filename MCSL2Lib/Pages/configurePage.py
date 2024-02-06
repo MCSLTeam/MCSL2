@@ -1139,7 +1139,8 @@ class ConfigurePage(QWidget):
             + self.tr(" - JVM参数")
         )
         self.importNewServerBtn.setText(self.tr("导入"))
-        self.importNewServerIntro.setText(self.tr("暂未完成。"))
+        self.importNewServerBtn.setEnabled(False)
+        self.importNewServerIntro.setText(self.tr("很抱歉，由于思路及精力有限，我们无法马上完成此部分。\n此部分将在全部完成后开放。"))
 
         # 简易模式
         self.noobJavaSubtitleLabel.setText(self.tr("Java:"))

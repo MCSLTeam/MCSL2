@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2024, MCSL Team, mailto:services@mcsl.com.cn
-
-     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
-
-     Licensed under the GNU General Public License, Version 3.0, with our
-     additional agreements. (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE -->
-
-
 <ui version="4.0">
  <class>ServerWindow</class>
  <widget class="QFrame" name="ServerWindow">
@@ -67,7 +55,7 @@
    <item row="2" column="1" rowspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="overviewPage">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -685,8 +673,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>65</width>
-            <height>16</height>
+            <width>668</width>
+            <height>537</height>
            </rect>
           </property>
          </widget>
