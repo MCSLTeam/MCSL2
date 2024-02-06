@@ -110,6 +110,35 @@ class ErrorHandlerToggleButton(ToggleButton):
             return True
         return super().eventFilter(a0, a1)
 
+class CommandLineEdit(LineEdit):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.upT = 0
+        self.userCommandHistory = []
+        self.installEventFilter(self)
+
+    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
+        if a1.type() == QEvent.KeyPress:
+            if a1.key() == Qt.Key_Up:
+                if len(self.userCommandHistory) and self.upT > -len(
+                    self.userCommandHistory
+                ):
+                    self.upT -= 1
+                    lastCommand = self.userCommandHistory[self.upT]
+                    self.setText(lastCommand)
+                    return True
+            elif a1.key() == Qt.Key_Down:
+                if len(self.userCommandHistory) and self.upT < 0:
+                    self.upT += 1
+                    nextCommand = self.userCommandHistory[self.upT]
+                    self.setText(nextCommand)
+                    return True
+                if len(self.userCommandHistory) and self.upT == 0:
+                    self.setText("")
+                return True
+        return super().eventFilter(a0, a1)
+
 
 class ServerWindowTitleBar(TitleBar):
     def __init__(self, parent):
@@ -241,6 +270,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self._isMicaEnabled = False
         super().__init__()
         self.errMsg = ""
+        self.userCommandHistory = []
+        self.upT = 0
         self.configEditorContainerDict: Dict[QWidget] = {}
         self.configEditorDict: Dict[PlainTextEdit] = {}
         self.playersList = []
@@ -526,12 +557,14 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.commandPage = QWidget()
         self.commandPage.setObjectName("commandPage")
         self.commandPageLayout = QGridLayout(self.commandPage)
-        self.commandLineEdit = LineEdit(self.commandPage)
+        self.commandLineEdit = CommandLineEdit(self.commandPage)
         self.commandLineEdit.setClearButtonEnabled(True)
+        self.commandLineEdit.setFocus()
         self.commandPageLayout.addWidget(self.commandLineEdit, 5, 0, 1, 4)
         self.sendCommandButton = PrimaryToolButton(FIF.SEND_FILL, self.commandPage)
         self.sendCommandButton.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.sendCommandButton.setEnabled(False)
+        self.sendCommandButton.setFocusPolicy(Qt.NoFocus)
         self.commandPageLayout.addWidget(self.sendCommandButton, 5, 4, 1, 1)
         self.serverOutput = PlainTextEdit(self.commandPage)
         self.serverOutput.setFrameShape(QFrame.NoFrame)
@@ -772,7 +805,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             lambda: self.sendCommand(command=self.commandLineEdit.text())
         )
         self.commandLineEdit.returnPressed.connect(
-            lambda: self.sendCommand(command=self.commandLineEdit.text())
+            self.commandLineEditTypeChecker
         )
         self.openServerFolder.clicked.connect(
             lambda: openLocalFile(f"Servers/{self.serverConfig.serverName}")
@@ -1039,20 +1072,29 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     @pyqtSlot(int)
     def serverExitStatusHandler(self, exitCode):
-        if exitCode:
-            if exitCode != 62097:
-                self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器崩溃！"))
-                if cfg.get(cfg.restartServerWhenCrashed):
-                    self.colorConsoleText(self.tr("[MCSL2 | 提示]：正在重新启动服务器..."))
-                    self.startServer()
-            else:
-                self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器可能被强制结束进程。"))
-        else:
-            self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器已关闭！"))
-
         self.unRegisterServerExitStatusHandler()
         self.unRegisterResMonitor()
-        self.unRegisterCommandOutput()
+        if exitCode:
+            if exitCode != 62097:
+                self.colorConsoleText(
+                    self.tr(
+                        "[MCSL2 | 提示]：服务器崩溃，进程退出码为 {exitCode}！".format(
+                            exitCode=exitCode
+                        )
+                    )
+                )
+                if cfg.get(cfg.restartServerWhenCrashed):
+                    self.colorConsoleText(self.tr("[MCSL2 | 提示]：正在重新启动服务器..."))
+                    self.unRegisterCommandOutput()
+                    self.startServer()
+                else:
+                    self.unRegisterCommandOutput()
+            else:
+                self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器被强制结束进程。"))
+                self.unRegisterCommandOutput()
+        else:
+            self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器已关闭！"))
+            self.unRegisterCommandOutput()
 
     @pyqtSlot(float)
     def setMemView(self, mem):
@@ -1140,18 +1182,27 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             except KeyError:
                 ip = "127.0.0.1"
             port = self.serverConfig.serverProperties.get("server-port", 25565)
-            self.serverOutput.appendPlainText(
-                self.tr(f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
+            self.colorConsoleText(
+                self.tr(f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
             )
-            InfoBar.success(
-                title=self.tr("提示"),
-                content=self.tr(f"服务器启动完毕，详情请到快捷终端查看。"),  # noqa: E501
-                orient=Qt.Horizontal,
-                isClosable=False,
-                position=InfoBarPosition.BOTTOM_RIGHT,
-                duration=5000,
-                parent=self,
-            )
+            if port == "25565":
+                self.colorConsoleText(
+                    self.tr("[MCSL2 | 警告]：检测到您的服务器端口为25565，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
+                )
+            else:
+                pass
+            if self.stackedWidget.currentWidget() != self.commandPage:
+                InfoBar.success(
+                    title=self.tr("提示"),
+                    content=self.tr("服务器启动完毕，详情请到快捷终端查看。"),  # noqa: E501
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.BOTTOM_RIGHT,
+                    duration=5000,
+                    parent=self,
+                )
+            else:
+                pass
             self.initQuickMenu_Difficulty()
         if "�" in serverOutput:
             fmt.setForeground(QBrush(color[1]))
@@ -1168,6 +1219,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 duration=2222,
                 parent=self,
             )
+        else:
+            pass
         if self.errorHandler.isChecked():
             self.errMsg += ServerErrorHandler.detect(serverOutput)
         if (
@@ -1234,42 +1287,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                     exc=e,
                 )
 
-    # def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-    #     if a0 == self.commandPage and a1.type() == QEvent.KeyPress:
-    #         if a1.key() == Qt.Key_Return or a1.key() == Qt.Key_Enter:
-    #             if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
-    #                 self.sendCommandButton.click()
-    #                 return True
-    #         elif a1.key() == Qt.Key_Up:
-    #             if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
-    #                 if len(
-    #                     GlobalMCSL2Variables.userCommandHistory
-    #                 ) and GlobalMCSL2Variables.upT > -len(GlobalMCSL2Variables.userCommandHistory):
-    #                     GlobalMCSL2Variables.upT -= 1
-    #                     lastCommand = GlobalMCSL2Variables.userCommandHistory[
-    #                         GlobalMCSL2Variables.upT
-    #                     ]
-    #                     self.commandLineEdit.setText(lastCommand)
-    #                     return True
-    #         elif a1.key() == Qt.Key_Down:
-    #             if self.stackedWidget.currentIndex() == 1 and self.commandLineEdit:
-    #                 if (
-    #                     len(GlobalMCSL2Variables.userCommandHistory)
-    #                     and GlobalMCSL2Variables.upT < 0
-    #                 ):
-    #                     GlobalMCSL2Variables.upT += 1
-    #                     nextCommand = GlobalMCSL2Variables.userCommandHistory[
-    #                         GlobalMCSL2Variables.upT
-    #                     ]
-    #                     self.commandLineEdit.setText(nextCommand)
-    #                     return True
-    #                 if (
-    #                     len(GlobalMCSL2Variables.userCommandHistory)
-    #                     and GlobalMCSL2Variables.upT == 0
-    #                 ):
-    #                     self.commandLineEdit.setText("")
-    #                     return True
-    #     return super().eventFilter(a0, a1)
+
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
@@ -1289,14 +1307,20 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             if command != "":
                 self.serverBridge.sendCommand(command=command)
                 self.commandLineEdit.clear()
-                GlobalMCSL2Variables.userCommandHistory.append(command)
-                GlobalMCSL2Variables.upT = 0
+                self.commandLineEdit.userCommandHistory.append(command)
+                self.commandLineEdit.upT = 0
             else:
                 pass
         else:
             self.showServerNotOpenMsg()
 
-    def lineEditChecker(self, text):
+    def commandLineEditTypeChecker(self):
+        if self.commandLineEdit._completerMenu.isVisible():
+            return
+        else:
+            self.sendCommand(command=self.commandLineEdit.text())
+
+    def playersControllerLineEditTypeChecker(self, text):
         if text != "":
             self.playersControllerBtnEnabled.emit(True)
         else:
@@ -1346,7 +1370,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             ])
             gamemodeWidget.mode.setCurrentIndex(0)
             gamemodeWidget.who.textChanged.connect(
-                lambda: self.lineEditChecker(text=gamemodeWidget.who.text())
+                lambda: self.playersControllerLineEditTypeChecker(text=gamemodeWidget.who.text())
             )
             gamemodeWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("服务器游戏模式"), self.tr("设置服务器游戏模式"), self)
@@ -1378,7 +1402,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             whiteListWidget = playersController()
             whiteListWidget.mode.addItems([self.tr("添加(add)"), self.tr("删除(remove)")])
             whiteListWidget.who.textChanged.connect(
-                lambda: self.lineEditChecker(text=whiteListWidget.who.text())
+                lambda: self.playersControllerLineEditTypeChecker(text=whiteListWidget.who.text())
             )
             whiteListWidget.playersTip.setText(self.getKnownServerPlayers())
             content = (
@@ -1416,7 +1440,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             opWidget = playersController()
             opWidget.mode.addItems([self.tr("添加"), self.tr("删除")])
             opWidget.mode.setCurrentIndex(0)
-            opWidget.who.textChanged.connect(lambda: self.lineEditChecker(text=opWidget.who.text()))
+            opWidget.who.textChanged.connect(lambda: self.playersControllerLineEditTypeChecker(text=opWidget.who.text()))
             opWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("服务器管理员"), self.tr("添加或删除管理员"), self)
             w.yesButton.setText(self.tr("确定"))
@@ -1446,7 +1470,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             kickWidget.mode.setParent(None)
             kickWidget.mode.deleteLater()
             kickWidget.who.textChanged.connect(
-                lambda: self.lineEditChecker(text=kickWidget.who.text())
+                lambda: self.playersControllerLineEditTypeChecker(text=kickWidget.who.text())
             )
             kickWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("踢出玩家"), self.tr("踢出服务器中的玩家"), self)
@@ -1469,7 +1493,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             banOrPardonWidget.mode.addItems([self.tr("封禁"), self.tr("解禁")])
             banOrPardonWidget.mode.setCurrentIndex(0)
             banOrPardonWidget.who.textChanged.connect(
-                lambda: self.lineEditChecker(text=banOrPardonWidget.who.text())
+                lambda: self.playersControllerLineEditTypeChecker(text=banOrPardonWidget.who.text())
             )
             banOrPardonWidget.playersTip.setText(self.getKnownServerPlayers())
             w = MessageBox(self.tr("封禁或解禁玩家"), "ban/pardon", self)
