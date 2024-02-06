@@ -155,8 +155,16 @@ jobs:
           mkdir Update
           cd Update
           mkdir Linux-x64 Windows-x64
+          cd Linux-x64
+          mkdir MCSL2Lib
+          cd ..
+          cd Windows-x64
+          mkdir MCSL2Lib
+          cd ..
           cp -r ../MCSL2-Linux-x64/MCSL2.bin Linux-x64/
           cp -r ../MCSL2-Windows-x64/MCSL2.exe Windows-x64/
+          cp -r ../MCSL2-Linux-x64/MCSL2Lib/verification.so Linux-x64/
+          cp -r ../MCSL2-Windows-x64/MCSL2Lib/verification.pyd Windows-x64/
           cd ..
           7z a -tzip "Update-${{ env.MCSL2_VERSION }}.zip" "./Update/*"
 
