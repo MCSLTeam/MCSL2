@@ -1,32 +1,35 @@
-> [!IMPORTANT]  
+<!-- > [!IMPORTANT]  
 > 这是一个测试版，仅可在[QQ群 · MCSL2·官方交流群](https://mcsl.com.cn/links/mcsl2-qq-group.html)中下载，并且需要申请内测权限。  
-> 您可前往[该页面](https://mcsl.com.cn/join-preview.html)申请内测权限。  
+> 您可前往[该页面](https://mcsl.com.cn/join-preview.html)申请内测权限。   -->
 
-### 新功能
+### 新功能  
 
-- 终端命令行历史记录（上下键）
+> 多服务器同时开启  
+> 统一配置文件编辑器  
+> 备份服务器数据功能  
+> 备份服务器存档功能  
+> 生成启动脚本功能  
+> MCSLAPI下载多样化  
+> 下载页面选中项高亮  
+> 整合终端页面为服务器窗口  
+> 新增监控页面  
+> 新版服务器管理列表  
 
-### 修复
+### 修复  
 
-- 服务器意外停止时控件不响应的问题
-- 备份存档时意外创建文件的问题
-- 开服意外弹窗的问题
-- 终端补全选中时意外发送指令的问题
+> Linux版无法启动问题  
+> `server.properties` 文件的读取问题  
+> 在线玩家列表问题
 
-### 优化
+### 优化  
 
-- 切换主题时的响应速度
-- 防止报错窗口崩坏MCSL2
-- 本地错误分析模块
+> 大幅性能优化  
+> 下载进度条  
+> Spigot服务器图标  
+> MCSL系统报告功能  
 
-<!-- ___
+___
 
-### 其他下载地址（官方分流）
+### 其他下载地址
 
-[蓝奏云1（密码MCSL）](https://lxht.lanzoum.com/b01edy9tg)
-
-[蓝奏云2（密码MCSL）](https://lxht.lanzoux.com/b01edy9tg)
-
-[蓝奏云3（密码MCSL）](https://lxht.lanzoug.com/b01edy9tg)
-
-[蓝奏云4（密码MCSL）](https://lxht.lanzoub.com/b01edy9tg) -->
+<https://mcsl.com.cn/download.html>
