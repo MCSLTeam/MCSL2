@@ -381,17 +381,28 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             w.show()
 
     def saveRunScript(self):
-        with open(
-            file=QFileDialog.getSaveFileName(
-                self,
-                f"MCSL2服务器 - {self.serverConfig.serverName} 保存启动脚本",
-                f"Run {self.serverConfig.serverName}.bat",
-                "Batch(*.bat);;Shell(*.sh)",
-            )[0],
-            mode="w+",
-            encoding="utf-8",
-        ) as script:
-            script.write(self.genRunScript(save=True))
+        try:
+            with open(
+                file=QFileDialog.getSaveFileName(
+                    self,
+                    f"MCSL2服务器 - {self.serverConfig.serverName} 保存启动脚本",
+                    f"Run {self.serverConfig.serverName}.bat",
+                    "Batch(*.bat);;Shell(*.sh)",
+                )[0],
+                mode="w+",
+                encoding="utf-8",
+            ) as script:
+                script.write(self.genRunScript(save=True))
+        except FileNotFoundError:
+            InfoBar.warning(
+                "提示",
+                "已取消保存启动脚本",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=1500,
+                parent=self,
+            )
 
     def initSafelyQuitController(self):
         # 安全退出控件
@@ -853,6 +864,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             icon=FIF.SEARCH_MIRROR,
         )
         self.serverSegmentedWidget.setCurrentItem("overviewPage")
+        self.serverSegmentedWidget.items["scheduleTasksPage"].setEnabled(False)
 
     def initWindow(self):
         """初始化窗口"""

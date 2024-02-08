@@ -241,6 +241,9 @@ class Window(VerifyFluentWindowBase):
         # 过滤部分异常
         mode = exceptionFilter(ty, value, _traceback)
 
+        if mode == ExceptionFilterMode.SILENT:
+            return
+
         if mode == ExceptionFilterMode.PASS:
             MCSL2Logger.info(f"忽略了异常：{ty} {value} {_traceback}")
             return

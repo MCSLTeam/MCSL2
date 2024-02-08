@@ -322,6 +322,7 @@ class ServerVariables:
         self.inputEncoding = serverConfig["input_encoding"]
         self.serverIconName = serverConfig["icon"]
         self.translateCoding()
+        print(self.inputEncoding, self.outputDecoding)
         try:
             self.serverType = serverConfig["server_type"]
             self.extraData = serverConfig["extra_data"]
