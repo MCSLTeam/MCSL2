@@ -55,7 +55,7 @@ from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.updateController import (
     CheckUpdateThread,
     MCSL2FileUpdater,
-    cmpVersion,
+    compareVersion,
 )
 from MCSL2Lib.ProgramControllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
@@ -620,7 +620,7 @@ class SettingsPage(QWidget):
             )
             self.checkUpdateSetting.button.setEnabled(True)
             return
-        if cmpVersion(latestVerInfo["latest"]):
+        if compareVersion(latestVerInfo["latest"]):
             title = self.tr("发现新版本：") + latestVerInfo["latest"]
             w = MessageBox(title, latestVerInfo["update-log"], parent=self.tmpParent)
             w.contentLabel.setTextFormat(Qt.MarkdownText)
@@ -633,7 +633,7 @@ class SettingsPage(QWidget):
                 w.yesSignal.connect(
                     lambda: InfoBar.error(
                         title=self.tr("不行"),
-                        content=self.tr("开发过程中更新会把你Python删掉的"),
+                        content=self.tr("开发模式下更新会把Python删掉的"),
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP_RIGHT,
