@@ -1448,11 +1448,11 @@ class ConfigurePage(QWidget):
             QFileDialog.getOpenFileName(
                 self, self.tr("选择*.jar文件"), getcwd(), self.tr("Java可执行文件(*.jar)")
             )[0]
-        ).replace("/", "\\")
+        )
 
         if tmpCorePath != "":
             configureServerVariables.corePath = tmpCorePath
-            configureServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
+            configureServerVariables.coreFileName = tmpCorePath.split("/")[-1]
             InfoBar.success(
                 title=self.tr("已添加"),
                 content=self.tr("核心文件名：") + configureServerVariables.coreFileName,
