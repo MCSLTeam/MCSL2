@@ -283,6 +283,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.manageBtn.setText("已开启")
         self.manageBackupBtn = manageBackupBtn
         self.manageBackupBtn.setEnabled(False)
+        self.isServerLoaded = False
         self.initWindow()
         self.setupInterface()
         self.setupOverviewPage()
@@ -981,6 +982,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.toggleServerBtn.setEnabled(True)
             self.exitServer.setEnabled(True)
             self.unRegisterStartServerComponents()
+            self.isServerLoaded = False
             if self.errorHandler.isChecked() and not forceNoErrorHandler:
                 self.showErrorHandlerReport()
 
@@ -1000,6 +1002,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.toggleServerBtn.setEnabled(True)
             self.exitServer.setEnabled(True)
             self.unRegisterStartServerComponents()
+            self.isServerLoaded = False
             if self.errorHandler.isChecked() and not forceNoErrorHandler:
                 self.showErrorHandlerReport()
 
@@ -1192,37 +1195,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         if "Loading libraries, please wait..." in serverOutput:
             self.playersList.clear()
         self.serverOutput.appendPlainText(serverOutput)
-        if search(r"(?=.*Done)(?=.*!)", serverOutput):
-            fmt.setForeground(QBrush(color[3]))
-            self.serverOutput.mergeCurrentCharFormat(fmt)
-            try:
-                ip = self.serverConfig.serverProperties["server-ip"]
-                ip = "127.0.0.1" if ip == "" else ip
-            except KeyError:
-                ip = "127.0.0.1"
-            port = self.serverConfig.serverProperties.get("server-port", 25565)
-            self.colorConsoleText(
-                self.tr(f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
-            )
-            if port == "25565":
-                self.colorConsoleText(
-                    self.tr("[MCSL2 | 警告]：检测到您的服务器端口为25565，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
-                )
-            else:
-                pass
-            if self.stackedWidget.currentWidget() != self.commandPage:
-                InfoBar.success(
-                    title=self.tr("提示"),
-                    content=self.tr("服务器启动完毕，详情请到快捷终端查看。"),  # noqa: E501
-                    orient=Qt.Horizontal,
-                    isClosable=False,
-                    position=InfoBarPosition.BOTTOM_RIGHT,
-                    duration=5000,
-                    parent=self,
-                )
-            else:
-                pass
-            self.initQuickMenu_Difficulty()
         if "�" in serverOutput:
             fmt.setForeground(QBrush(color[1]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
@@ -1247,6 +1219,40 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             or " left the game" in serverOutput
         ):
             self.recordPlayers(serverOutput)
+        if search(r"(?=.*Done)(?=.*!)", serverOutput):
+            if self.isServerLoaded:
+                return
+            fmt.setForeground(QBrush(color[3]))
+            self.serverOutput.mergeCurrentCharFormat(fmt)
+            try:
+                ip = self.serverConfig.serverProperties["server-ip"]
+                ip = "127.0.0.1" if ip == "" else ip
+            except KeyError:
+                ip = "127.0.0.1"
+            port = self.serverConfig.serverProperties.get("server-port", 25565)
+            self.colorConsoleText(
+                self.tr(f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
+            )
+            self.isServerLoaded = True
+            if port == "25565":
+                self.colorConsoleText(
+                    self.tr("[MCSL2 | 警告]：检测到您的服务器端口为25565，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
+                )
+            else:
+                pass
+            if self.stackedWidget.currentWidget() != self.commandPage:
+                InfoBar.success(
+                    title=self.tr("提示"),
+                    content=self.tr("服务器启动完毕，详情请到快捷终端查看。"),  # noqa: E501
+                    orient=Qt.Horizontal,
+                    isClosable=False,
+                    position=InfoBarPosition.BOTTOM_RIGHT,
+                    duration=5000,
+                    parent=self,
+                )
+            else:
+                pass
+            self.initQuickMenu_Difficulty()
 
     def showErrorHandlerReport(self):
         if self.errMsg != "":
