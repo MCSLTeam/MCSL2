@@ -660,8 +660,6 @@ class ServerManagerPage(QWidget):
         # 读取全局设置
         globalConfig = readGlobalServerConfig()
         serverList = [config["name"] for config in globalConfig if "name" in config]
-        if serverList == self.serverList:
-            return
         if len(globalConfig):
             self.releaseMemory()
             # 添加新的
@@ -680,6 +678,7 @@ class ServerManagerPage(QWidget):
                 )
             self.serverList = serverList
         else:
+            self.releaseMemory()
             noServerWidget = NoServerWidget()
             self.flowLayout.addWidget(noServerWidget)
 
