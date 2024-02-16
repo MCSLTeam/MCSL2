@@ -339,6 +339,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.manageBtn.setText("启动")
 
         super().closeEvent(a0)
+        del self.serverConfig
+        del self.serverLauncher
+        del self
 
     def genRunScript(self, save=False):
         script = (
