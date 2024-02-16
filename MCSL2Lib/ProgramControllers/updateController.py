@@ -94,9 +94,9 @@ class MCSL2FileUpdater(QObject):
                     return
                 if showInfoBar:
                     InfoBar.info(
-                        title=self.tr("更新中"),
+                        title=self.tr("正在下载更新"),
                         content=self.tr("MCSL2稍后将自动重启"),
-                        position=InfoBarPosition.TOP_RIGHT,
+                        position=InfoBarPosition.BOTTOM_RIGHT,
                         duration=-1,
                         parent=self.parent().window(),
                     )
@@ -126,7 +126,7 @@ class MCSL2FileUpdater(QObject):
         if not GlobalMCSL2Variables.devMode:
             rename(
                 cfg.get(cfg.oldExecuteable),
-                f"{cfg.get('oldExecuteable')}.old",
+                f"{cfg.get(cfg.oldExecuteable)}.old",
             )
             rename(
                 f"MCSL2Lib/{self.updateVerificationFileName}",
