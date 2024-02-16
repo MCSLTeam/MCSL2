@@ -1337,7 +1337,6 @@ class ConfigurePage(QWidget):
             )[0]
         )
         if selectedJavaPath != "":
-            selectedJavaPath = selectedJavaPath.replace("/", "\\")
             if v := javaDetector.getJavaVersion(selectedJavaPath):
                 currentJavaPaths = configureServerVariables.javaPath
                 if javaDetector.Java(selectedJavaPath, v) not in currentJavaPaths:

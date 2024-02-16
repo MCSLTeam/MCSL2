@@ -910,7 +910,7 @@ class ServerManagerPage(QWidget):
             QFileDialog.getOpenFileName(
                 self, self.tr("选择*.jar文件"), getcwd(), self.tr("Java可执行文件(*.jar)")
             )[0]
-        ).replace("/", "\\")
+        )
         if tmpCorePath != "":
             editServerVariables.corePath = tmpCorePath
             editServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
@@ -959,7 +959,6 @@ class ServerManagerPage(QWidget):
             )[0]
         )
         if tmpJavaPath != "":
-            tmpJavaPath = tmpJavaPath.replace("/", "\\")
             if v := javaDetector.getJavaVersion(tmpJavaPath):
                 tmpNewJavaPath = editServerVariables.javaPath.copy()
                 if javaDetector.Java(tmpJavaPath, v) not in tmpNewJavaPath:
