@@ -11,7 +11,7 @@
 #
 ################################################################################
 """
-Download page with FastMirror and MCSLAPI.
+Download page with FastMirror, MCSLAPI, PolarsAPI and AkiraCloud.
 """
 
 from os import path as osp, remove
@@ -790,7 +790,6 @@ class DownloadPage(QWidget):
             return
         sender = self.sender()
         uri = sender.property("link")
-        print(uri)
         fileFormat = sender.property("name").split(".")[-1]
         fileName = sender.property("name").replace(f".{fileFormat}", "").replace("/", "")
         # 判断文件是否存在

@@ -76,7 +76,7 @@ class MCSLAPIDownloadWidget(CardWidget):
         self.fileSizeTitle.setText("大小:")
         self.fileSize.setText(size if type(size) is str else str(f"{size / 1024 / 1024:.2f}MB"))
         self.fileName.setText(name.replace("/", ""))
-        self.setProperty("link", f"https://file.mcsl.com.cn/d/alistfile/MCSL2/MCSLAPI{link}{name}")
+        self.setProperty("link", f"https://jn.sv.ztsin.cn:5244/d/alistfile/MCSL2/MCSLAPI{link}{name}")
         self.setProperty("name", name)
         self.MCSLAPIPixmapLabel.setPixmap(pixmap)
         self.MCSLAPIPixmapLabel.setFixedSize(QSize(40, 40))
