@@ -1,16 +1,13 @@
 @{
     var viewModel = (Afdian.Action.ViewModels.AfdianViewModel)@Model;
-    // 排除自己
-    viewModel.Sponsor.data.list = viewModel.Sponsor.data.list.ToList();
-    // 只要 当前仓库 对应的计划
-    viewModel.Order.data.list = viewModel.Order.data.list.ToList();
+    viewModel.Sponsor.data.list = viewModel.Sponsor.data.list;
+    viewModel.Order.data.list = viewModel.Order.data.list;
 }
 
 @for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
 {
-    @{ 
-        var sponsorItem  = viewModel.Sponsor.data.list[i];
-     }
+    var sponsorItem  = viewModel.Sponsor.data.list[i];
+
 
 <a href="https://afdian.net/u/@sponsorItem.user.user_id">
     <img src="@sponsorItem.user.avatar?imageView2/1/w/120/h/120" width="40" height="40" alt="@sponsorItem.user.name" title="@sponsorItem.user.name"/>
@@ -19,27 +16,25 @@
 
 @for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
 {
-    @{ 
-        var sponsorItem  = viewModel.Sponsor.data.list[i];
-        double totalMoney = 0;
-        int orderNum = 0;
-        string remarks = "";
+    var sponsorItem  = viewModel.Sponsor.data.list[i];
+    double totalMoney = 0;
+    int orderNum = 0;
+    string remarks = "";
 
-        for (int j = 0; j < viewModel.Order.data.list.Count(); j++)
-        {
-            var orderItem  = viewModel.Order.data.list[j];
-            if (orderItem.user_id == sponsorItem.user.user_id) {
-                totalMoney += Convert.ToDouble(orderItem.total_amount);
-                orderNum++;
-                if (!string.IsNullOrEmpty(orderItem.remark)) {
-                    remarks = orderItem.remark;
-                }
+    for (int j = 0; j < viewModel.Order.data.list.Count(); j++)
+    {
+        var orderItem  = viewModel.Order.data.list[j];
+        if (orderItem.user_id == sponsorItem.user.user_id) {
+            totalMoney += Convert.ToDouble(orderItem.total_amount);
+            orderNum++;
+            if (!string.IsNullOrEmpty(orderItem.remark)) {
+                remarks = orderItem.remark;
             }
         }
-        if (remarks.Length > 10) {
-            remarks = remarks.Substring(0, 10) + "...";
-        }
-     }
+    }
+    if (remarks.Length > 10) {
+        remarks = remarks.Substring(0, 10) + "...";
+    }
 
 <a href="https://afdian.net/u/@sponsorItem.user.user_id">
 @sponsorItem.user.name
