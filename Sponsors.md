@@ -1,4 +1,6 @@
-﻿## 赞助者
+﻿# 赞助者列表
+___
+## 爱发电赞助者
 
 感谢这些来自爱发电的赞助者：
 
@@ -37,11 +39,13 @@
 <a href="https://afdian.net/u/a5d575eabc3f11eaa5a452540025c377">
     <img src="https://pic1.afdiancdn.com/user/a5d575eabc3f11eaa5a452540025c377/avatar/66592060ae8b0db60c36922d6ca8f515_w639_h640_s133.jpg?imageView2/1/w/120/h/120" width="40" height="40" alt="Washtile645" title="Washtile645"/>
 </a>
-<!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
 <!-- AFDIAN-ACTION:END -->
-<br><br><br>
-<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo." width="100" height='100'><br>
 
-感谢 JetBrains 公司的赞助，使得本项目能够持续发展。  
-Thanks to JetBrains for their sponsorship, which makes this project continuously grow.  
-(Open Source development licenses)
+## 其他赞助者
+
+| 赞助者 | 赞助内容 | 赞助时间 | 赞助备注 |
+|:-----:|:-------:|:-------:|:------:|
+| 岸边 | 支付宝 15.00元 | 2024-02-19 | 无 |
+| JetBrains | Open Source License x3 | 2023年11月22日 | 无 |
+| 玖壹云网络 | 主站及API的CDN服务 | 2023年8月17日~现在 | 无 |
+| 千丝 | 支付宝 10.00元 | 已无从考证 | 无 |
