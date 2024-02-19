@@ -8,12 +8,14 @@
 {
     var sponsorItem  = viewModel.Sponsor.data.list[i];
     double totalMoney = 0;
+    int orderNum = 0;
 
     for (int j = 0; j < viewModel.Order.data.list.Count(); j++)
     {
         var orderItem  = viewModel.Order.data.list[j];
         if (orderItem.user_id == sponsorItem.user.user_id) {
             totalMoney += Convert.ToDouble(orderItem.total_amount);
+            orderNum++;
         }
     }
 
