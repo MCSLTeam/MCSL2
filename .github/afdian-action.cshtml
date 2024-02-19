@@ -1,8 +1,26 @@
+@{
+    var viewModel = (Afdian.Action.ViewModels.AfdianViewModel)@Model;
+    // 排除自己
+    viewModel.Sponsor.data.list = viewModel.Sponsor.data.list.ToList();
+    // 只要 当前仓库 对应的计划
+    viewModel.Order.data.list = viewModel.Order.data.list.ToList();
+}
+
 @for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
 {
     @{ 
         var sponsorItem  = viewModel.Sponsor.data.list[i];
-        // 计算此赞助者总共赞助金额
+     }
+
+<a href="https://afdian.net/u/@sponsorItem.user.user_id">
+    <img src="@sponsorItem.user.avatar?imageView2/1/w/120/h/120" width="40" height="40" alt="@sponsorItem.user.name" title="@sponsorItem.user.name"/>
+</a>
+}
+
+@for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
+{
+    @{ 
+        var sponsorItem  = viewModel.Sponsor.data.list[i];
         double totalMoney = 0;
         int orderNum = 0;
         string remarks = "";
@@ -14,7 +32,6 @@
                 totalMoney += Convert.ToDouble(orderItem.total_amount);
                 orderNum++;
                 if (!string.IsNullOrEmpty(orderItem.remark)) {
-                    // 只要最新留言
                     remarks = orderItem.remark;
                 }
             }
@@ -29,4 +46,3 @@
 </a>
 <span>( @orderNum 次赞助, 共 ￥@totalMoney ) 留言: @remarks</span><br>
 }
-<!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
