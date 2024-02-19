@@ -1,3 +1,5 @@
+@using System
+
 @{
     var viewModel = (Afdian.Action.ViewModels.AfdianViewModel)@Model;
     viewModel.Sponsor.data.list = viewModel.Sponsor.data.list;
@@ -20,5 +22,5 @@
 <a href="https://afdian.net/u/@sponsorItem.user.user_id">
 @sponsorItem.user.name
 </a>
-<span>（ 共赞助 @totalMoney 元 ）</span><br>
+<span>（ @orderNum 次赞助, 共 @totalMoney 元）</span><br>
 }
