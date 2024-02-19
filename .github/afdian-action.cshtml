@@ -7,19 +7,8 @@
 @for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
 {
     var sponsorItem  = viewModel.Sponsor.data.list[i];
-
-
-<a href="https://afdian.net/u/@sponsorItem.user.user_id">
-    <img src="@sponsorItem.user.avatar?imageView2/1/w/120/h/120" width="40" height="40" alt="@sponsorItem.user.name" title="@sponsorItem.user.name"/>
-</a>
-}
-
-@for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
-{
-    var sponsorItem  = viewModel.Sponsor.data.list[i];
     double totalMoney = 0;
     int orderNum = 0;
-    string remarks = "";
 
     for (int j = 0; j < viewModel.Order.data.list.Count(); j++)
     {
@@ -27,17 +16,11 @@
         if (orderItem.user_id == sponsorItem.user.user_id) {
             totalMoney += Convert.ToDouble(orderItem.total_amount);
             orderNum++;
-            if (!string.IsNullOrEmpty(orderItem.remark)) {
-                remarks = orderItem.remark;
-            }
         }
-    }
-    if (remarks.Length > 10) {
-        remarks = remarks.Substring(0, 10) + "...";
     }
 
 <a href="https://afdian.net/u/@sponsorItem.user.user_id">
 @sponsorItem.user.name
 </a>
-<span>( @orderNum 次赞助, 共 ￥@totalMoney ) 留言: @remarks</span><br>
+<span>( @orderNum 次赞助, 共 ￥@totalMoney )</span><br>
 }
