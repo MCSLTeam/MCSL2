@@ -31,7 +31,7 @@ class MCSLAPIDownloadURLParser:
     def parseDownloaderAPIUrl(path):
         rv = {}
         r = MCSLAPIDownloadURLParser.decodeDownloadJsons(
-            "https://file.mcsl.com.cn/api/fs/list", path
+            "https://jn.sv.ztsin.cn:5244/api/fs/list", path
         )
         rv["name"] = r[0]
         rv["size"] = r[1]
