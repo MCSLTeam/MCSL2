@@ -1235,9 +1235,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                     f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
             )
             self.isServerLoaded = True
-            if port == "25565" or port == "19132":
+            if port == "25565":
                 self.colorConsoleText(
-                    self.tr(f"[MCSL2 | 警告]：检测到您的服务器端口为{port}，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
+                    self.tr("[MCSL2 | 警告]：检测到您的服务器端口为25565，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
                 )
             else:
                 pass
