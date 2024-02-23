@@ -21,6 +21,7 @@ from psutil import NoSuchProcess, Process, AccessDenied
 from MCSL2Lib.ServerControllers.processCreator import _ServerProcessBridge
 from MCSL2Lib.variables import ServerVariables
 from os import path as osp, mkdir
+from os.path import isdir, exists
 from qfluentwidgets import InfoBar, InfoBarPosition
 from shutil import make_archive, copytree, rmtree
 
@@ -160,11 +161,16 @@ def backupServer(serverName: str, parent):
         )
 
 
+def isBedrockServer(serverName):
+    directoryPath = f'./Servers/{serverName}/resource_packs'
+    return exists(directoryPath) and isdir(directoryPath)
+
+
 def backupSaves(serverConfig: ServerVariables, parent):
     try:
         readServerProperties(serverConfig)
         levelName = serverConfig.serverProperties.get("level-name")
-        levelNameList = [levelName, f"{levelName}_nether", f"{levelName}_the_end"]
+        levelNameList = [f"worlds/{levelName}", "worlds/nether", "worlds/end"] if isBedrockServer(serverConfig.serverName) else [levelName, f"{levelName}_nether", f"{levelName}_the_end"]  # noqa: E501
         if osp.exists(f"MCSL2/BackupTemp_{serverConfig.serverName}/"):
             rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
         s = QFileDialog.getSaveFileName(
