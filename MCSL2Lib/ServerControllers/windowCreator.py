@@ -270,8 +270,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.errMsg = ""
         self.userCommandHistory = []
         self.upT = 0
-        self.configEditorContainerDict: Dict[QWidget] = {}
-        self.configEditorDict: Dict[PlainTextEdit] = {}
+        self.configEditorContainerDict: Dict[str, QWidget] = {}
+        self.configEditorDict: Dict[str, PlainTextEdit] = {}
         self.playersList = []
         self.playersControllerBtnEnabled.emit(False)
         self.serverConfig = config
@@ -1611,24 +1611,23 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
             self.configEditorTabBar.setCurrentTab(filePath)
             self.configEditorStackedWidget.setCurrentWidget(container)
-            self.configEditorContainerDict.update({filePath: container})
-            self.configEditorDict.update({filePath: p})
+            self.configEditorContainerDict[filePath] = container
+            self.configEditorDict[filePath] = p
 
     @pyqtSlot(int)
     def removeConfigEditor(self, i):
-        with open(self.configEditorTabBar.items[i]._routeKey, "r", encoding="utf-8") as f:
+        routeKey = self.configEditorTabBar.items[i].routeKey()  # type: str
+        with open(routeKey, "r", encoding="utf-8") as f:
             tmpText = f.read()
         if (
-            newText := self.configEditorDict[
-                self.configEditorTabBar.items[i]._routeKey
-            ].toPlainText()
+            newText := self.configEditorDict[routeKey].toPlainText()
         ) != tmpText:
-            with open(self.configEditorTabBar.items[i]._routeKey, "w+", encoding="utf-8") as nf:
+            with open(routeKey, "w+", encoding="utf-8") as nf:
                 nf.write(newText)
 
             InfoBar.info(
                 title="提示",
-                content=f"已自动保存{self.configEditorTabBar.items[i]._routeKey}",
+                content=f"已自动保存{routeKey}",
                 orient=Qt.Horizontal,
                 parent=self,
                 duration=1500,
@@ -1637,13 +1636,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
 
         self.configEditorStackedWidget.removeWidget(
-            self.configEditorContainerDict[self.configEditorTabBar.items[i]._routeKey]
+            self.configEditorContainerDict[routeKey]
         )
-        self.configEditorContainerDict[self.configEditorTabBar.items[i]._routeKey].deleteLater()
 
-        self.configEditorDict.pop(self.configEditorTabBar.items[i]._routeKey)
+        self.configEditorDict.pop(routeKey)
 
-        self.configEditorContainerDict.pop(self.configEditorTabBar.items[i]._routeKey)
+        self.configEditorContainerDict.pop(routeKey)
 
         self.configEditorTabBar.removeTab(i)
 
