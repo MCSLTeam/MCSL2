@@ -166,56 +166,82 @@ def isBedrockServer(serverName):
     return exists(directoryPath) and isdir(directoryPath)
 
 
+def isBungeeCordServer(serverName):
+    filePath = f'./Servers/{serverName}/locations.yml'
+    return exists(filePath)
+
+
+def generateLevelNameList(serverName, levelName):
+    if isBedrockServer(serverName):
+        return [f"worlds/{levelName}", "worlds/nether", "worlds/end"]
+    elif isBungeeCordServer(serverName):
+        return
+    else:
+        return [levelName, f"{levelName}_nether", f"{levelName}_the_end"]
+
+
 def backupSaves(serverConfig: ServerVariables, parent):
     try:
         readServerProperties(serverConfig)
         levelName = serverConfig.serverProperties.get("level-name")
-        levelNameList = [f"worlds/{levelName}", "worlds/nether", "worlds/end"] if isBedrockServer(serverConfig.serverName) else [levelName, f"{levelName}_nether", f"{levelName}_the_end"]  # noqa: E501
-        if osp.exists(f"MCSL2/BackupTemp_{serverConfig.serverName}/"):
-            rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
-        s = QFileDialog.getSaveFileName(
-            parent,
-            f"MCSL2 - 备份服务器“{serverConfig.serverName}”的存档",
-            f"{serverConfig.serverName}_{levelName}_backup.zip",
-            "Zip压缩包(*.zip)",
-        )[0]
-        if s == "":
-            return
-        mkdir(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
-        for dir in levelNameList:
-            try:
-                copytree(
-                    osp.abspath(f"Servers/{serverConfig.serverName}/{dir}/"),
-                    osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
+        serverName = serverConfig.serverName
+        levelNameList = generateLevelNameList(serverName, levelName)
+        if levelNameList is not None:
+            if osp.exists(f"MCSL2/BackupTemp_{serverConfig.serverName}/"):
+                rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
+            s = QFileDialog.getSaveFileName(
+                parent,
+                f"MCSL2 - 备份服务器“{serverConfig.serverName}”的存档",
+                f"{serverConfig.serverName}_{levelName}_backup.zip",
+                "Zip压缩包(*.zip)",
+            )[0]
+            if s == "":
+                return
+            mkdir(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
+            for dir in levelNameList:
+                try:
+                    copytree(
+                        osp.abspath(f"Servers/{serverConfig.serverName}/{dir}/"),
+                        osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
+                    )
+                except FileNotFoundError:
+                    levelNameList.remove(dir)
+                    continue
+            existsDir = "\n".join(levelNameList)
+            tmpArchiveThread = MakeArchiveThread(
+                s.replace(".zip", ""),
+                "zip",
+                osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"),
+                parent,
+            )
+            tmpArchiveThread.successSignal.connect(
+                lambda: InfoBar.success(
+                    title="备份完毕",
+                    content=f"已保存至{s}。\n备份了以下文件夹：\n{existsDir}",
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=1500,
+                    parent=parent,
                 )
-            except FileNotFoundError:
-                levelNameList.remove(dir)
-                continue
-        existsDir = "\n".join(levelNameList)
-        tmpArchiveThread = MakeArchiveThread(
-            s.replace(".zip", ""),
-            "zip",
-            osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"),
-            parent,
-        )
-        tmpArchiveThread.successSignal.connect(
-            lambda: InfoBar.success(
-                title="备份完毕",
-                content=f"已保存至{s}。\n备份了以下文件夹：\n{existsDir}",
+            )
+            tmpArchiveThread.successSignal.connect(
+                lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
+            )
+            tmpArchiveThread.errorSignal.connect(
+                lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
+            )
+            tmpArchiveThread.start()
+        else:
+            InfoBar.warning(
+                title="保存失败",
+                content=f"代理服务端没有存档,无法保存",
                 orient=Qt.Horizontal,
                 isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=1500,
+                position=InfoBarPosition.BOTTOM_LEFT,
+                duration=3000,
                 parent=parent,
             )
-        )
-        tmpArchiveThread.successSignal.connect(
-            lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
-        )
-        tmpArchiveThread.errorSignal.connect(
-            lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
-        )
-        tmpArchiveThread.start()
     except Exception as e:
         try:
             rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}\\"))
