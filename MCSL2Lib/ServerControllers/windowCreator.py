@@ -1579,7 +1579,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         if osp.isdir(filePath):
             return
         if filePath in self.configEditorTabBar.itemMap:
-            self.configEditorTabBar.setCurrentTab(filePath)
+            self.configEditorTabBar.tab(filePath).pressed.emit()
             return
         else:
             try:
