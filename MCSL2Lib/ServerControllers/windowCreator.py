@@ -1219,19 +1219,20 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             or " left the game" in serverOutput
         ):
             self.recordPlayers(serverOutput)
-        if search(r"(?=.*Done)(?=.*!)", serverOutput):
+        if search(r'(?=.*Done)(?=.*!)', serverOutput) or search(r'(?=.*"help")', serverOutput):
             if self.isServerLoaded:
                 return
             fmt.setForeground(QBrush(color[3]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
             try:
                 ip = self.serverConfig.serverProperties["server-ip"]
-                ip = "127.0.0.1" if ip == "" else ip
+                ip = "127.0.0.1" if ip == "" or ip == "0.0.0.0" else ip
             except KeyError:
                 ip = "127.0.0.1"
             port = self.serverConfig.serverProperties.get("server-port", 25565)
             self.colorConsoleText(
-                self.tr(f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
+                self.tr(
+                    f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
             )
             self.isServerLoaded = True
             if port == "25565":
@@ -1338,7 +1339,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.showServerNotOpenMsg()
 
     def commandLineEditTypeChecker(self):
-        if self.commandLineEdit._completerMenu.isVisible():
+        if isinstance(self.commandLineEdit._completerMenu,
+                      type(None)) or self.commandLineEdit._completerMenu.isVisible():
             return
         else:
             self.sendCommand(command=self.commandLineEdit.text())
