@@ -81,7 +81,7 @@ from MCSL2Lib.ServerControllers.serverUtils import (
 from os import path as osp
 import sys
 from re import search
-from typing import Dict
+from typing import Dict, Tuple
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger, openLocalFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
@@ -603,6 +603,17 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.configEditorTabBar.setScrollable(True)
         self.configEditorTabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.ON_HOVER)
         self.configEditorTabBar.setObjectName("configEditorTabBar")
+        self.configEditorTabBar.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        def hScrollBarRangeChanged(range: Tuple[int, int]):
+            scrollBar = self.configEditorTabBar.hScrollBar
+            tab = self.configEditorTabBar.currentTab()
+            if tab.pos().x() + tab.width() / 2 - scrollBar.value() > self.configEditorTabBar.width():
+                scrollBar.scrollTo(scrollBar.maximum(), useAni=False)
+
+        self.configEditorTabBar.hScrollBar.rangeChanged.connect(
+            hScrollBarRangeChanged
+        )
         self.configEditorPageLayout.addWidget(self.configEditorTabBar, 0, 1, 1, 1)
         self.configEditorFileTreeView = TreeView(self.configEditorPage)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -1580,8 +1591,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             return
         if filePath in self.configEditorTabBar.itemMap:
             tab = self.configEditorTabBar.tab(filePath)
-            self.configEditorTabBar.hScrollBar.scrollTo(tab.pos().x(), useAni = False);
             tab.pressed.emit()
+            self.configEditorTabBar.hScrollBar.scrollTo(tab.pos().x(), useAni=False)  # 自动滚动到选择的标签页
             return
         else:
             try:
