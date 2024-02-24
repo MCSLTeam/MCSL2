@@ -67,6 +67,7 @@ from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from PyQt5.QtGui import QIcon, QCursor, QColor, QPainter, QTextCharFormat, QBrush
 from qframelesswindow import TitleBar
+from MCSL2Lib.Pages.configEditorPage import ConfigEditorPage
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.ProgramControllers.settingsController import cfg
@@ -81,7 +82,6 @@ from MCSL2Lib.ServerControllers.serverUtils import (
 from os import path as osp
 import sys
 from re import search
-from typing import Dict
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger, openLocalFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
@@ -257,6 +257,7 @@ class ServerWindowTitleBar(TitleBar):
 
 class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     playersControllerBtnEnabled = pyqtSignal(bool)
+    configEditorPage: ConfigEditorPage
 
     def __init__(
         self,
@@ -270,8 +271,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.errMsg = ""
         self.userCommandHistory = []
         self.upT = 0
-        self.configEditorContainerDict: Dict[str, QWidget] = {}
-        self.configEditorDict: Dict[str, PlainTextEdit] = {}
         self.playersList = []
         self.playersControllerBtnEnabled.emit(False)
         self.serverConfig = config
@@ -590,73 +589,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.stackedWidget.addWidget(self.commandPage)
 
     def setupEditorPage(self):
-        self.configEditorPage = QWidget()
-        self.configEditorPage.setObjectName("configEditorPage")
-        self.configEditorPageLayout = QGridLayout(self.configEditorPage)
-        self.configEditorPageLayout.setObjectName("gridLayout_7")
-        self.configEditorStackedWidget = EraseStackedWidget(self.configEditorPage)
-        self.configEditorStackedWidget.setObjectName("configEditorStackedWidget")
-        self.configEditorPageLayout.addWidget(self.configEditorStackedWidget, 1, 1, 1, 1)
-        self.configEditorTabBar = TabBar(self.configEditorPage)
-        self.configEditorTabBar.setAddButtonVisible(False)
-        self.configEditorTabBar.setMovable(False)
-        self.configEditorTabBar.setScrollable(True)
-        self.configEditorTabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.ON_HOVER)
-        self.configEditorTabBar.setObjectName("configEditorTabBar")
-        self.configEditorPageLayout.addWidget(self.configEditorTabBar, 0, 1, 1, 1)
-        self.configEditorFileTreeView = TreeView(self.configEditorPage)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.configEditorFileTreeView.sizePolicy().hasHeightForWidth())
-        self.configEditorFileTreeView.setSizePolicy(sizePolicy)
-        self.configEditorFileTreeView.setMinimumSize(QSize(200, 0))
-        self.configEditorFileTreeView.setFrameShape(QFrame.NoFrame)
-        self.configEditorFileTreeView.setFrameShadow(QFrame.Plain)
-        self.configEditorFileTreeView.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.configEditorFileTreeView.setObjectName("configEditorFileTreeView")
-        self.configFileTreeModel = QFileSystemModel()
-        self.configFileTreeModel.setRootPath("")
-        self.configFileTreeModel.setNameFilters([
-            "*.yml",
-            "*.json",
-            "*.conf",
-            "*.ini",
-            "*.properties",
-            "*.xml",
-            "*.yaml",
-            "*.tmlp",
-            "*.toml",
-            "*.txt",
-            "*.log",
-            "*.sh",
-            "*.bat",
-            "*.cmd",
-            "*.ps1",
-            "*.psm1",
-            "*.psd1",
-            "*.ps1xml",
-            "*.dsc",
-            "*.dscx",
-            "*.dscx12",
-            "*.*.ps1xml",
-        ])
-        self.configFileTreeModel.setNameFilterDisables(False)
-        self.configEditorFileTreeView.setModel(self.configFileTreeModel)
-        self.configEditorFileTreeView.setRootIndex(
-            self.configFileTreeModel.index(osp.abspath(f"Servers/{self.serverConfig.serverName}"))
-        )
-        self.configEditorFileTreeView.setHeaderHidden(True)
-        self.configEditorFileTreeView.setColumnHidden(1, True)
-        self.configEditorFileTreeView.setColumnHidden(2, True)
-        self.configEditorFileTreeView.setColumnHidden(3, True)
-        self.configEditorFileTreeView.selectionModel().selectionChanged.connect(
-            self.createConfigEditor
-        )
-        self.configEditorTabBar.tabCloseRequested.connect(self.removeConfigEditor)
-        self.configEditorPageLayout.addWidget(self.configEditorFileTreeView, 0, 0, 2, 1)
+        self.configEditorPage = ConfigEditorPage(self.serverConfig)
         self.stackedWidget.addWidget(self.configEditorPage)
-
     def setupScheduleTasksPage(self):
         self.scheduleTasksPage = QWidget()
         self.scheduleTasksPage.setObjectName("scheduleTasksPage")
@@ -1574,76 +1508,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         else:
             self.showServerNotOpenMsg()
 
-    def createConfigEditor(self, selected, deselected):
-        filePath = self.sender().model().filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
-        if osp.isdir(filePath):
-            return
-        if filePath in self.configEditorTabBar.itemMap:
-            self.configEditorTabBar.tab(filePath).pressed.emit()
-            return
-        else:
-            try:
-                with open(filePath, "r", encoding="utf-8") as f:
-                    text = f.read()
-            except Exception as e:
-                InfoBar.info(
-                    title="抱歉",
-                    content=f"MCSL2无法打开此文件，原因：\n{e.with_traceback()}",
-                    orient=Qt.Horizontal,
-                    parent=self,
-                    duration=1500,
-                    isClosable=False,
-                    position=InfoBarPosition.TOP,
-                )
-                return
-
-            fileName = osp.basename(filePath)
-            container = QWidget()
-            containerLayout = QGridLayout(container)
-            containerLayout.addWidget((p := PlainTextEdit(container)), 0, 0)
-            p.setPlainText(text)
-            self.configEditorStackedWidget.addWidget(container)
-            self.configEditorTabBar.addTab(
-                routeKey=filePath,
-                text=fileName,
-                icon=FIF.LABEL,
-                onClick=lambda: self.configEditorStackedWidget.setCurrentWidget(container),
-            )
-            self.configEditorTabBar.setCurrentTab(filePath)
-            self.configEditorStackedWidget.setCurrentWidget(container)
-            self.configEditorContainerDict[filePath] = container
-            self.configEditorDict[filePath] = p
-
-    @pyqtSlot(int)
-    def removeConfigEditor(self, i):
-        routeKey = self.configEditorTabBar.items[i].routeKey()  # type: str
-        with open(routeKey, "r", encoding="utf-8") as f:
-            tmpText = f.read()
-        if (
-            newText := self.configEditorDict[routeKey].toPlainText()
-        ) != tmpText:
-            with open(routeKey, "w+", encoding="utf-8") as nf:
-                nf.write(newText)
-
-            InfoBar.info(
-                title="提示",
-                content=f"已自动保存{routeKey}",
-                orient=Qt.Horizontal,
-                parent=self,
-                duration=1500,
-                isClosable=False,
-                position=InfoBarPosition.TOP,
-            )
-
-        self.configEditorStackedWidget.removeWidget(
-            self.configEditorContainerDict[routeKey]
-        )
-
-        self.configEditorDict.pop(routeKey)
-
-        self.configEditorContainerDict.pop(routeKey)
-
-        self.configEditorTabBar.removeTab(i)
 
     def manualAnalyzeError(self):
         if self.errTextEdit.toPlainText() == "":
