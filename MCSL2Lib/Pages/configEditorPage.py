@@ -131,7 +131,7 @@ class ConfigEditorPage(QWidget):
         self.tabBar.tabCloseRequested.connect(self.removeConfigEditor)
         self.tabBar.currentChanged.connect(self.configTabSelectChanged)
         self.autoSaveTimer.setSingleShot(False)
-        self.autoSaveTimer.timeout.connect(lambda: self.saveConfig(self.tabBar.currentTab().routeKey()))
+        self.autoSaveTimer.timeout.connect(self.autoSaveConfig)
 
         self.__initLayout()
 
@@ -157,7 +157,8 @@ class ConfigEditorPage(QWidget):
     def createConfigEditor(self, selected, deselected):
         if not selected.indexes():
             return
-        filePath = self.treeView.selectionModel().model().filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
+        filePath = self.treeView.selectionModel().model().filePath(selected.indexes()[0]).replace("\\",
+                                                                                                  "/")  # type: str
         self.treeView.selectionModel().clearSelection()
         if osp.isdir(filePath):
             return
@@ -187,7 +188,7 @@ class ConfigEditorPage(QWidget):
             containerLayout = QGridLayout(container)
             containerLayout.addWidget((p := CtrlSPlainTextEdit(container)), 0, 0)
             p.setPlainText(text)
-            p.ctrlSPressed.connect(lambda: self.saveConfig(self.tabBar.currentTab().routeKey()))
+            p.ctrlSPressed.connect(self.autoSaveConfig)
             self.stackedWidget.addWidget(container)
             self.tabBar.addTab(
                 routeKey=filePath,
@@ -200,7 +201,6 @@ class ConfigEditorPage(QWidget):
             self.containerDict[filePath] = container
             self.editorDict[filePath] = p
             self.tabBar.currentChanged.emit(self.tabBar.currentIndex())  # 新建标签页不触发currentChanged,这里手动触发
-
 
     def saveConfig(self, filePath: str):
         with open(filePath, "r", encoding="utf-8") as f:
@@ -219,6 +219,10 @@ class ConfigEditorPage(QWidget):
             )
         # else:
         #     MCSL2Logger.debug(f"{filePath}未修改,无需保存")
+
+    def autoSaveConfig(self):
+        if tab := self.tabBar.currentTab():
+            self.saveConfig(tab.routeKey())
 
     @pyqtSlot(int)
     def removeConfigEditor(self, i: int):
