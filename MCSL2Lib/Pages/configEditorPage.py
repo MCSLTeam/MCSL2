@@ -16,8 +16,8 @@ Config Editor Widget
 from os import path as osp
 from typing import Tuple, Dict, Optional
 
-from PyQt5.QtCore import Qt, QSize, pyqtSlot, QTimer
-from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, QFrame, QFileSystemModel
+from PyQt5.QtCore import Qt, QSize, pyqtSlot, QTimer, pyqtSignal
+from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, QFrame, QFileSystemModel, QApplication
 from qfluentwidgets import (
     TreeView,
     TabBar,
@@ -34,6 +34,20 @@ from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.variables import ServerVariables
 
 
+class CtrlSPlainTextEdit(PlainTextEdit):
+    ctrlSPressed = pyqtSignal()
+
+    def __init__(self, parent: Optional[QWidget] = None):
+        super().__init__(parent=parent)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_S:
+            if QApplication.keyboardModifiers() == Qt.ControlModifier:
+                self.ctrlSPressed.emit()
+                return
+        super().keyPressEvent(event)
+
+
 class ConfigEditorPage(QWidget):
     """
     `编辑配置文件` 页面
@@ -44,7 +58,7 @@ class ConfigEditorPage(QWidget):
         self.serverConfig = serverConfig
         self.containerDict: Dict[str, QWidget] = dict()
         """标签页中的编辑控件存储器"""
-        self.editorDict: Dict[str, PlainTextEdit] = dict()
+        self.editorDict: Dict[str, CtrlSPlainTextEdit] = dict()
         """标签页中的编辑框存储器"""
         self.layout = QGridLayout(self)
         self.stackedWidget = EraseStackedWidget(self)
@@ -141,7 +155,10 @@ class ConfigEditorPage(QWidget):
             scrollBar.scrollTo(scrollBar.maximum(), useAni=False)
 
     def createConfigEditor(self, selected, deselected):
-        filePath = self.treeModel.filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
+        if not selected.indexes():
+            return
+        filePath = self.treeView.selectionModel().model().filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
+        self.treeView.selectionModel().clearSelection()
         if osp.isdir(filePath):
             return
         if filePath in self.tabBar.itemMap:  # Select Existing Tab
@@ -168,8 +185,9 @@ class ConfigEditorPage(QWidget):
             fileName = osp.basename(filePath)
             container = QWidget()
             containerLayout = QGridLayout(container)
-            containerLayout.addWidget((p := PlainTextEdit(container)), 0, 0)
+            containerLayout.addWidget((p := CtrlSPlainTextEdit(container)), 0, 0)
             p.setPlainText(text)
+            p.ctrlSPressed.connect(lambda: self.saveConfig(self.tabBar.currentTab().routeKey()))
             self.stackedWidget.addWidget(container)
             self.tabBar.addTab(
                 routeKey=filePath,
@@ -182,6 +200,7 @@ class ConfigEditorPage(QWidget):
             self.containerDict[filePath] = container
             self.editorDict[filePath] = p
             self.tabBar.currentChanged.emit(self.tabBar.currentIndex())  # 新建标签页不触发currentChanged,这里手动触发
+
 
     def saveConfig(self, filePath: str):
         with open(filePath, "r", encoding="utf-8") as f:
