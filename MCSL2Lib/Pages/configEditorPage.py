@@ -217,8 +217,8 @@ class ConfigEditorPage(QWidget):
                 isClosable=False,
                 position=InfoBarPosition.TOP,
             )
-        else:
-            MCSL2Logger.debug(f"{filePath}未修改,无需保存")
+        # else:
+        #     MCSL2Logger.debug(f"{filePath}未修改,无需保存")
 
     @pyqtSlot(int)
     def removeConfigEditor(self, i: int):
