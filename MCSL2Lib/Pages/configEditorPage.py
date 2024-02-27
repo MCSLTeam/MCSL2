@@ -16,8 +16,8 @@ Config Editor Widget
 from os import path as osp
 from typing import Tuple, Dict, Optional
 
-from PyQt5.QtCore import Qt, QSize, pyqtSlot
-from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, QFrame, QFileSystemModel
+from PyQt5.QtCore import Qt, QSize, pyqtSlot, QTimer, pyqtSignal
+from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, QFrame, QFileSystemModel, QApplication
 from qfluentwidgets import (
     TreeView,
     TabBar,
@@ -29,25 +29,49 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget
+from MCSL2Lib.utils import MCSL2Logger
 
 from MCSL2Lib.variables import ServerVariables
 
 
+class CtrlSPlainTextEdit(PlainTextEdit):
+    ctrlSPressed = pyqtSignal()
+
+    def __init__(self, parent: Optional[QWidget] = None):
+        super().__init__(parent=parent)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_S:
+            if QApplication.keyboardModifiers() == Qt.ControlModifier:
+                self.ctrlSPressed.emit()
+                return
+        super().keyPressEvent(event)
+
+
 class ConfigEditorPage(QWidget):
     """
-    Config Editor Page
+    `编辑配置文件` 页面
     """
 
     def __init__(self, serverConfig: ServerVariables, parent: Optional[QWidget] = None):
         super().__init__(parent=parent)
         self.serverConfig = serverConfig
         self.containerDict: Dict[str, QWidget] = dict()
-        self.editorDict: Dict[str, PlainTextEdit] = dict()
+        """标签页中的编辑控件存储器"""
+        self.editorDict: Dict[str, CtrlSPlainTextEdit] = dict()
+        """标签页中的编辑框存储器"""
         self.layout = QGridLayout(self)
         self.stackedWidget = EraseStackedWidget(self)
         self.tabBar = TabBar(self)
+        """标签页"""
         self.treeView = TreeView(self)
+        """文件树"""
         self.treeModel = QFileSystemModel()
+        """文件树Model"""
+        self.autoSaveTimer = QTimer(self)
+        """自动保存计时器"""
+        self.autoSaveInterval = 60
+        """自动保存间隔时间,单位:秒"""
 
         self.__initWidget()
 
@@ -105,6 +129,9 @@ class ConfigEditorPage(QWidget):
         self.treeView.setColumnHidden(3, True)
         self.treeView.selectionModel().selectionChanged.connect(self.createConfigEditor)
         self.tabBar.tabCloseRequested.connect(self.removeConfigEditor)
+        self.tabBar.currentChanged.connect(self.configTabSelectChanged)
+        self.autoSaveTimer.setSingleShot(False)
+        self.autoSaveTimer.timeout.connect(self.autoSaveConfig)
 
         self.__initLayout()
 
@@ -112,6 +139,10 @@ class ConfigEditorPage(QWidget):
         self.layout.addWidget(self.stackedWidget, 1, 1, 1, 1)
         self.layout.addWidget(self.tabBar, 0, 1, 1, 1)
         self.layout.addWidget(self.treeView, 0, 0, 2, 1)
+
+    @pyqtSlot(int)
+    def configTabSelectChanged(self, index: int):
+        self.reloadTimer()
 
     @pyqtSlot(tuple)
     def hScrollBarRangeChanged(self, range: Tuple[int, int]):
@@ -124,7 +155,11 @@ class ConfigEditorPage(QWidget):
             scrollBar.scrollTo(scrollBar.maximum(), useAni=False)
 
     def createConfigEditor(self, selected, deselected):
-        filePath = self.treeModel.filePath(selected.indexes()[0]).replace("\\", "/")  # type: str
+        if not selected.indexes():
+            return
+        filePath = self.treeView.selectionModel().model().filePath(selected.indexes()[0]).replace("\\",
+                                                                                                  "/")  # type: str
+        self.treeView.selectionModel().clearSelection()
         if osp.isdir(filePath):
             return
         if filePath in self.tabBar.itemMap:  # Select Existing Tab
@@ -151,8 +186,9 @@ class ConfigEditorPage(QWidget):
             fileName = osp.basename(filePath)
             container = QWidget()
             containerLayout = QGridLayout(container)
-            containerLayout.addWidget((p := PlainTextEdit(container)), 0, 0)
+            containerLayout.addWidget((p := CtrlSPlainTextEdit(container)), 0, 0)
             p.setPlainText(text)
+            p.ctrlSPressed.connect(self.autoSaveConfig)
             self.stackedWidget.addWidget(container)
             self.tabBar.addTab(
                 routeKey=filePath,
@@ -164,27 +200,40 @@ class ConfigEditorPage(QWidget):
             self.stackedWidget.setCurrentWidget(container)
             self.containerDict[filePath] = container
             self.editorDict[filePath] = p
+            self.tabBar.currentChanged.emit(self.tabBar.currentIndex())  # 新建标签页不触发currentChanged,这里手动触发
 
-    @pyqtSlot(int)
-    def removeConfigEditor(self, i: int):
-        routeKey = self.tabBar.items[i].routeKey()  # type: str
-        with open(routeKey, "r", encoding="utf-8") as f:
+    def saveConfig(self, filePath: str):
+        with open(filePath, "r", encoding="utf-8") as f:
             tmpText = f.read()
-        if (newText := self.editorDict[routeKey].toPlainText()) != tmpText:
-            with open(routeKey, "w+", encoding="utf-8") as nf:
+        if (newText := self.editorDict[filePath].toPlainText()) != tmpText:
+            with open(filePath, "w+", encoding="utf-8") as nf:
                 nf.write(newText)
-
             InfoBar.info(
                 title="提示",
-                content=f"已自动保存{routeKey}",
+                content=f"已自动保存{filePath}",
                 orient=Qt.Horizontal,
                 parent=self,
                 duration=1500,
                 isClosable=False,
                 position=InfoBarPosition.TOP,
             )
+        # else:
+        #     MCSL2Logger.debug(f"{filePath}未修改,无需保存")
+
+    def autoSaveConfig(self):
+        if tab := self.tabBar.currentTab():
+            self.saveConfig(tab.routeKey())
+
+    @pyqtSlot(int)
+    def removeConfigEditor(self, i: int):
+        routeKey = self.tabBar.items[i].routeKey()  # type: str
+        self.saveConfig(routeKey)
 
         self.stackedWidget.removeWidget(self.containerDict[routeKey])
         self.editorDict.pop(routeKey)
         self.containerDict.pop(routeKey)
         self.tabBar.removeTab(i)
+
+    def reloadTimer(self):
+        self.autoSaveTimer.stop()
+        self.autoSaveTimer.start(self.autoSaveInterval * 1000)
