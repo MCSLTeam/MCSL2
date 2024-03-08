@@ -25,7 +25,7 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBarPosition,
     InfoBar,
-    TabCloseButtonDisplayMode,
+    TabCloseButtonDisplayMode, TabItem,
 )
 
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget
@@ -46,6 +46,16 @@ class CtrlSPlainTextEdit(PlainTextEdit):
                 self.ctrlSPressed.emit()
                 return
         super().keyPressEvent(event)
+
+
+def addFileChange(tab: TabItem):
+    if tab.text()[-1:] != "*":
+        tab.setText(tab.text() + "*")
+
+
+def clearFileChange(tab: TabItem):
+    if tab.text()[-1:] == "*":
+        tab.setText(tab.text()[:-1])
 
 
 class ConfigEditorPage(QWidget):
@@ -188,21 +198,22 @@ class ConfigEditorPage(QWidget):
             containerLayout = QGridLayout(container)
             containerLayout.addWidget((p := CtrlSPlainTextEdit(container)), 0, 0)
             p.setPlainText(text)
-            p.ctrlSPressed.connect(self.autoSaveConfig)
+            p.ctrlSPressed.connect(lambda: self.autoSaveConfig(False))
             self.stackedWidget.addWidget(container)
-            self.tabBar.addTab(
+            tab = self.tabBar.addTab(
                 routeKey=filePath,
                 text=fileName,
                 icon=FIF.LABEL,
                 onClick=lambda: self.stackedWidget.setCurrentWidget(container),
             )
+            p.textChanged.connect(lambda: addFileChange(tab))
             self.tabBar.setCurrentTab(filePath)
             self.stackedWidget.setCurrentWidget(container)
             self.containerDict[filePath] = container
             self.editorDict[filePath] = p
             self.tabBar.currentChanged.emit(self.tabBar.currentIndex())  # 新建标签页不触发currentChanged,这里手动触发
 
-    def saveConfig(self, filePath: str):
+    def saveConfig(self, filePath: str, auto: bool = True):
         with open(filePath, "r", encoding="utf-8") as f:
             tmpText = f.read()
         if (newText := self.editorDict[filePath].toPlainText()) != tmpText:
@@ -210,7 +221,7 @@ class ConfigEditorPage(QWidget):
                 nf.write(newText)
             InfoBar.info(
                 title="提示",
-                content=f"已自动保存{filePath}",
+                content=f"已{'自动' if auto else ''}保存{filePath}",
                 orient=Qt.Horizontal,
                 parent=self,
                 duration=1500,
@@ -220,9 +231,10 @@ class ConfigEditorPage(QWidget):
         # else:
         #     MCSL2Logger.debug(f"{filePath}未修改,无需保存")
 
-    def autoSaveConfig(self):
+    def autoSaveConfig(self, auto: bool = True):
         if tab := self.tabBar.currentTab():
-            self.saveConfig(tab.routeKey())
+            self.saveConfig(tab.routeKey(), auto)
+            clearFileChange(tab)
 
     @pyqtSlot(int)
     def removeConfigEditor(self, i: int):
