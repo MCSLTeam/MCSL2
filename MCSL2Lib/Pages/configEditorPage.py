@@ -221,7 +221,7 @@ class ConfigEditorPage(QWidget):
                 nf.write(newText)
             InfoBar.info(
                 title="提示",
-                content=f"已{'自动' if auto else ''}保存{filePath}",
+                content=f"已{'自动' if auto else ''}保存{osp.basename(filePath)}",
                 orient=Qt.Horizontal,
                 parent=self,
                 duration=1500,
