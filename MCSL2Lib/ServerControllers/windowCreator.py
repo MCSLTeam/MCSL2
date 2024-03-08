@@ -1502,6 +1502,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 self,
             )
             w.yesButton.setText(self.tr("算了"))
+            w.yesButton.clicked.connect(lambda: {
+                self.killServer.setEnabled(True),
+                self.toggleServerBtn.setEnabled(True),
+                self.exitServer.setEnabled(True)
+            })
             w.cancelButton.setText(self.tr("强制关闭"))
             w.cancelSignal.connect(self.haltServer)
             w.exec_()
