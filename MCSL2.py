@@ -84,8 +84,8 @@ if __name__ == "__main__":
 
     try:
         countUserAPI()
-    except Exception:
-        pass
+    except Exception as err:
+        MCSL2Logger.critical(err)
     del countUserAPI
 
     # High DPI scaling
