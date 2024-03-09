@@ -21,7 +21,7 @@ from platform import system
 from re import search
 
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
-from MCSL2Lib.utils import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
 
 foundJava = []
@@ -199,20 +199,20 @@ def loadJavaList():
 
     if not osp.exists("MCSL2/MCSL2_DetectedJava.json"):
         return []
-    with open("MCSL2/MCSL2_DetectedJava.json", "r", encoding="utf-8") as f:
-        foundedJava = json.load(f)
-        return [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
+    foundedJava = json.loads(readFile("MCSL2/MCSL2_DetectedJava.json"))
+    return [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
 
 
 def saveJavaList(list_: list):
-    with open("MCSL2/MCSL2_DetectedJava.json", "w", encoding="utf-8") as f:
-        json.dump(
+    writeFile(
+        "MCSL2/MCSL2_DetectedJava.json",
+        json.dumps(
             {"java": [j.json for j in list_]},
-            f,
             ensure_ascii=False,
             sort_keys=True,
             indent=4,
-        )
+        ),
+    )
 
 
 def sortJavaList(list_: list, reverse=False):

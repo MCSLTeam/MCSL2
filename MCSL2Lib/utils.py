@@ -25,7 +25,7 @@ from typing import Type, Optional, Iterable, Callable, Dict, List
 
 import aria2p
 import psutil
-from PyQt5.QtCore import QUrl, QThread, QThreadPool
+from PyQt5.QtCore import QUrl, QThread, QThreadPool, QFile
 from PyQt5.QtGui import QDesktopServices
 
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
@@ -42,9 +42,7 @@ class ServicesUrl:
 
 def readGlobalServerConfig() -> list:
     """读取全局服务器配置, 返回的是一个list"""
-    with open(r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8") as globalServerConfigFile:
-        globalServerList = loads(globalServerConfigFile.read())["MCSLServerList"]
-    return globalServerList
+    return loads(readFile(r"MCSL2/MCSL2_ServerList.json"))["MCSLServerList"]
 
 
 def initializeMCSL2():
@@ -66,9 +64,7 @@ def initializeMCSL2():
     del folders
 
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
-        with open(r"./MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8") as serverList:
-            serverListTemplate = '{\n  "MCSLServerList": [\n\n  ]\n}'
-            serverList.write(serverListTemplate)
+        writeFile(r"./MCSL2/MCSL2_ServerList.json", '{\n  "MCSLServerList": [\n\n  ]\n}')
 
     # set global thread pool
     QThreadPool.globalInstance().setMaxThreadCount(
@@ -76,8 +72,7 @@ def initializeMCSL2():
     )  # IO-Bound = 2*N, CPU-Bound = N + 1
 
     # fix changed icon
-    with open(r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8") as globalServerListFile:
-        globalServerList = loads(globalServerListFile.read())
+    globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
     k = 0
     updateSpigotIconList = [
         singleConfig["icon"] for singleConfig in globalServerList["MCSLServerList"]
@@ -97,10 +92,7 @@ def initializeMCSL2():
         else:
             continue
     if k >= 1:
-        with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-        ) as newGlobalServerListFile:
-            newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+        writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
 
 
 # 带有text的warning装饰器
@@ -159,6 +151,34 @@ def openLocalFile(FilePath):
     """打开本地文件(夹)"""
     QDesktopServices.openUrl(QUrl.fromLocalFile(FilePath))
 
+def readFile(file: str):
+    f = QFile(file)
+    f.open(QFile.ReadOnly)
+    content = str(f.readAll(), encoding="utf-8")
+    f.close()
+    return content
+
+
+def writeFile(file: str, content: str):
+    f = QFile(file)
+    f.open(QFile.WriteOnly)
+    f.write(content.encode("utf-8"))
+    f.close()
+
+
+def readBytesFile(file: str):
+    f = QFile(file)
+    f.open(QFile.ReadOnly)
+    content = f.readAll()
+    f.close()
+    return content
+
+
+def writeBytesFile(file: str, content: bytes):
+    f = QFile(file)
+    f.open(QFile.WriteOnly)
+    f.write(content)
+    f.close()
 
 class ExceptionFilterMode(enum.Enum):
     RAISE_AND_PRINT = enum.auto()  # 过滤：弹框提示，也会抛出异常
@@ -214,8 +234,7 @@ def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None)
             continue
         if _filter(file, sha1):
             # check sha1
-            with open(file, "rb") as f:
-                fileSha1 = hashlib.sha1(f.read()).hexdigest()
+            fileSha1 = hashlib.sha1(readBytesFile(file)).hexdigest()
             rv.append({"file": file, "result": fileSha1 == sha1})
         else:
             rv.append({"file": file, "result": True})

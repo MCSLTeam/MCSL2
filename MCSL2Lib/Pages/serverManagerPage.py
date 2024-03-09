@@ -69,9 +69,8 @@ from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWi
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.utils import openLocalFile, readGlobalServerConfig
+from MCSL2Lib.utils import openLocalFile, readGlobalServerConfig, MCSL2Logger, readFile, writeFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
-from MCSL2Lib.utils import MCSL2Logger
 
 
 editServerVariables = EditServerVariables()
@@ -1265,19 +1264,10 @@ class ServerManagerPage(QWidget):
 
         # 写入全局配置
         try:
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-            ) as globalServerListFile:
-                # old
-                globalServerList = loads(globalServerListFile.read())
-
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-            ) as newGlobalServerListFile:
-                # 添加新的
-                globalServerList["MCSLServerList"].pop(self.serverIndex)
-                globalServerList["MCSLServerList"].insert(0, serverConfig)
-                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+            globalServerList = readFile(r"MCSL2/MCSL2_ServerList.json")
+            globalServerList["MCSLServerList"].pop(self.serverIndex)
+            globalServerList["MCSLServerList"].insert(0, serverConfig)
+            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
             exitCode = 0
         except Exception as e:
             exitCode = 1
@@ -1286,12 +1276,10 @@ class ServerManagerPage(QWidget):
         # 写入单独配置
         try:
             if not cfg.get(cfg.onlySaveGlobalServerConfig):
-                with open(
+                writeFile(
                     f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
-                    "w+",
-                    encoding="utf-8",
-                ) as serverListFile:
-                    serverListFile.write(dumps(serverConfig, indent=4))
+                    dumps(serverConfig, indent=4),
+                )
             else:
                 InfoBar.info(
                     title=self.tr("功能提醒"),
@@ -1448,15 +1436,9 @@ class DeleteServerThread(QThread):
         exit1Msg = ""
         # 删配置
         try:
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-            ) as RglobalServerListFile:
-                globalServerList = loads(RglobalServerListFile.read())
+            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
             globalServerList["MCSLServerList"].pop(self.index)
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-            ) as WglobalServerConfigFile:
-                WglobalServerConfigFile.write(dumps(globalServerList, indent=4))
+            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
         except Exception as e:
             self.exitCode.emit(1)
             exit1Msg += f"\n{e}"

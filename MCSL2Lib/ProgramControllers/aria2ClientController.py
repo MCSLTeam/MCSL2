@@ -30,8 +30,7 @@ from aria2p import Client, API, Download
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
-from MCSL2Lib.utils import workingThreads
-from MCSL2Lib.utils import MCSL2Logger
+from MCSL2Lib.utils import readFile, workingThreads, MCSL2Logger, writeFile, readBytesFile
 
 
 class Aria2Controller:
@@ -586,39 +585,38 @@ class DownloadWatcher(QObject):
 
 
 def initializeAria2Configuration(running: bool = False):
-    with open(r"MCSL2/Aria2/aria2.conf", "w+", encoding="utf-8") as Aria2ConfigFile:
-        Aria2ConfigFile.write(
-            "file-allocation=none\n"
-            "continue=true\n"
-            "always-resume=false\n"
-            "no-file-allocation-limit=10M\n"
-            "max-concurrent-downloads=5\n"
-            "remote-time=true\n"
-            "min-split-size=5M\n"
-            f"split={cfg.get(cfg.aria2Thread)}\n"
-            "disable-ipv6=false\n"
-            "enable-http-pipelining=false\n"
-            "max-connection-per-server=16\n"
-            "enable-rpc=true\n"
-            "rpc-allow-origin-all=true\n"
-            "rpc-listen-all=true\n"
-            "event-poll=select\n"
-            "rpc-listen-port=6800\n"
-            "force-save=false\n"
-            "check-certificate=false\n"
-            "dir=MCSL2/Downloads\n"
-            "input-file=MCSL2/Aria2/aria2.session\n"
-            "save-session=MCSL2/Aria2/aria2.session\n"
-            "max-overall-download-limit=0\n"
-            "max-download-limit=0\n"
-            "http-accept-gzip=true\n"
-            "async-dns-server=119.29.29.29,223.5.5.5\n"
-            "console-log-level=error\n"
-            f"user-agent={MCSLNetworkSession.MCSLNetworkHeaders['User-Agent']}"
-        )
+    writeFile(
+        r"MCSL2/Aria2/aria2.conf",
+        "file-allocation=none\n"
+        "continue=true\n"
+        "always-resume=false\n"
+        "no-file-allocation-limit=10M\n"
+        "max-concurrent-downloads=5\n"
+        "remote-time=true\n"
+        "min-split-size=5M\n"
+        f"split={cfg.get(cfg.aria2Thread)}\n"
+        "disable-ipv6=false\n"
+        "enable-http-pipelining=false\n"
+        "max-connection-per-server=16\n"
+        "enable-rpc=true\n"
+        "rpc-allow-origin-all=true\n"
+        "rpc-listen-all=true\n"
+        "event-poll=select\n"
+        "rpc-listen-port=6800\n"
+        "force-save=false\n"
+        "check-certificate=false\n"
+        "dir=MCSL2/Downloads\n"
+        "input-file=MCSL2/Aria2/aria2.session\n"
+        "save-session=MCSL2/Aria2/aria2.session\n"
+        "max-overall-download-limit=0\n"
+        "max-download-limit=0\n"
+        "http-accept-gzip=true\n"
+        "async-dns-server=119.29.29.29,223.5.5.5\n"
+        "console-log-level=error\n"
+        f"user-agent={MCSLNetworkSession.MCSLNetworkHeaders['User-Agent']}",
+    )
     if not running:
-        with open(r"MCSL2/Aria2/aria2.session", "w+", encoding="utf-8") as Aria2SessionFile:
-            Aria2SessionFile.write("")
+        writeFile("MCSL2/Aria2/aria2.session", "")
 
 
 entries = {}
@@ -824,13 +822,11 @@ class DL_EntryManager(QObject):
             mkdir(osp.join("MCSL2", "Downloads"))
         if not osp.exists(DL_EntryManager.file):
             MCSL2Logger.info(f"创建下载记录文件: {DL_EntryManager.file}")
-            with open(DL_EntryManager.file, "w", encoding="utf-8") as f:
-                f.write("{}")
+            writeFile(DL_EntryManager.file, "{}")
 
     def read(self, check=True, autoDelete=True):
         self.fileExisted()
-        with open(DL_EntryManager.file, "r") as f:
-            self.entries = json.load(f)
+        self.entries = json.loads(readFile(DL_EntryManager.file))
         for coreName, coreData in self.entries.copy().items():
             if check and not self.checkCoreEntry(coreName, coreData["md5"], autoDelete):
                 MCSL2Logger.info(f"删除不完整的核心文件记录: {coreName}")
@@ -861,8 +857,7 @@ class DL_EntryManager(QObject):
         """
         coreFileName = osp.join(self.path, coreName)
         # 计算md5
-        with open(coreFileName, "rb") as f:
-            md5 = hashlib.md5(f.read()).hexdigest()
+        md5 = hashlib.md5(readBytesFile(coreFileName)).hexdigest()
         extraData.update({"md5": md5})
         self.addEntry(coreName, extraData)
 
@@ -890,8 +885,7 @@ class DL_EntryManager(QObject):
         """
         self.fileExisted()
         self.mutex.lock()
-        with open(self.file, "w", encoding="utf-8") as f:
-            json.dump(self.entries, f, indent=4, ensure_ascii=False, sort_keys=True)
+        writeFile(self.file, json.dumps(self.entries, indent=4, ensure_ascii=False, sort_keys=True))
         self.mutex.unlock()
 
     def checkCoreEntry(self, coreName: str, originMd5: str, autoDelete=False):
@@ -904,8 +898,7 @@ class DL_EntryManager(QObject):
         coreFileName = osp.join(self.path, coreName)
         if osp.exists(coreFileName):
             # 计算md5
-            with open(coreFileName, "rb") as f:
-                fileMd5 = hashlib.md5(f.read()).hexdigest()
+            fileMd5 = hashlib.md5(readBytesFile(coreFileName)).hexdigest()
             if fileMd5 == originMd5:
                 return True
             if autoDelete:
@@ -965,8 +958,8 @@ class DL_EntryManager(QObject):
         rv = entries_snapshot.copy()
 
         # # 检查记录一致性
-        # with open(self.file, "r") as f:
-        #     fileRecordedEntries = json.load(f)
+        # f = readFile(self.file)
+        # fileRecordedEntries = json.load(f)
         #
         # if fileRecordedEntries != entries_snapshot:  # 如果数据不一致则重新读取,并更新记录.用于加速结果的生成  # noqa: E501
         #     print("记录不一致,重新计算各条目完整性,并更新本地记录")

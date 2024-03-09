@@ -79,7 +79,7 @@ from os import path as osp
 import sys
 from re import search
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
-from MCSL2Lib.utils import MCSL2Logger, openLocalFile
+from MCSL2Lib.utils import MCSL2Logger, openLocalFile, writeFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
 
 
@@ -381,17 +381,15 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def saveRunScript(self):
         try:
-            with open(
-                file=QFileDialog.getSaveFileName(
+            writeFile(
+                QFileDialog.getSaveFileName(
                     self,
                     f"MCSL2服务器 - {self.serverConfig.serverName} 保存启动脚本",
                     f"Run {self.serverConfig.serverName}.bat",
                     "Batch(*.bat);;Shell(*.sh)",
                 )[0],
-                mode="w+",
-                encoding="utf-8",
-            ) as script:
-                script.write(self.genRunScript(save=True))
+                self.genRunScript(save=True),
+            )
         except FileNotFoundError:
             InfoBar.warning(
                 "提示",
@@ -587,6 +585,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def setupEditorPage(self):
         self.configEditorPage = ConfigEditorPage(self.serverConfig)
         self.stackedWidget.addWidget(self.configEditorPage)
+
     def setupScheduleTasksPage(self):
         self.scheduleTasksPage = QWidget()
         self.scheduleTasksPage.setObjectName("scheduleTasksPage")
@@ -1269,8 +1268,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.showServerNotOpenMsg()
 
     def commandLineEditTypeChecker(self):
-        if isinstance(self.commandLineEdit._completerMenu,
-                      type(None)) or self.commandLineEdit._completerMenu.isVisible():
+        if (
+            isinstance(self.commandLineEdit._completerMenu, type(None))
+            or self.commandLineEdit._completerMenu.isVisible()
+        ):
             return
         else:
             self.sendCommand(command=self.commandLineEdit.text())
@@ -1498,17 +1499,18 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 self,
             )
             w.yesButton.setText(self.tr("算了"))
-            w.yesButton.clicked.connect(lambda: {
-                self.killServer.setEnabled(True),
-                self.toggleServerBtn.setEnabled(True),
-                self.exitServer.setEnabled(True)
-            })
+            w.yesButton.clicked.connect(
+                lambda: {
+                    self.killServer.setEnabled(True),
+                    self.toggleServerBtn.setEnabled(True),
+                    self.exitServer.setEnabled(True),
+                }
+            )
             w.cancelButton.setText(self.tr("强制关闭"))
             w.cancelSignal.connect(self.haltServer)
             w.exec_()
         else:
             self.showServerNotOpenMsg()
-
 
     def manualAnalyzeError(self):
         if self.errTextEdit.toPlainText() == "":

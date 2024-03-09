@@ -38,7 +38,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget
-
+from MCSL2Lib.utils import readFile, writeFile
 from MCSL2Lib.variables import ServerVariables
 
 
@@ -193,8 +193,7 @@ class ConfigEditorPage(QWidget):
             return
         else:  # Add New Tab
             try:
-                with open(filePath, "r", encoding="utf-8") as f:
-                    text = f.read()
+                text = readFile(filePath)
             except Exception as e:
                 InfoBar.info(
                     title="抱歉",
@@ -230,11 +229,9 @@ class ConfigEditorPage(QWidget):
             )  # 新建标签页不触发currentChanged,这里手动触发
 
     def saveConfig(self, filePath: str, auto: bool = True):
-        with open(filePath, "r", encoding="utf-8") as f:
-            tmpText = f.read()
+        tmpText = readFile(filePath)
         if (newText := self.editorDict[filePath].toPlainText()) != tmpText:
-            with open(filePath, "w+", encoding="utf-8") as nf:
-                nf.write(newText)
+            writeFile(filePath, newText)
             InfoBar.info(
                 title="提示",
                 content=f"已{'自动' if auto else ''}保存 {osp.basename(filePath)}",

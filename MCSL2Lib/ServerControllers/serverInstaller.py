@@ -35,8 +35,7 @@ from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 from python_hosts.hosts import Hosts, HostsEntry
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.utils import MCSL2Logger, AUTHOR_SERVERS
-from MCSL2Lib.utils import ServicesUrl
+from MCSL2Lib.utils import MCSL2Logger, AUTHOR_SERVERS, ServicesUrl, readFile, writeFile
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -486,11 +485,7 @@ class ForgeInstaller(Installer):
                         editServerVariables.jvmArg.extend(forgeArgs)
                 # 写入全局配置
                 try:
-                    with open(
-                        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-                    ) as globalServerListFile:
-                        # old
-                        globalServerList = loads(globalServerListFile.read())
+                    globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
                     d = globalServerList["MCSLServerList"][
                         len(globalServerList["MCSLServerList"]) - 1
                         if self.isEditing is None
@@ -505,22 +500,14 @@ class ForgeInstaller(Installer):
                         -1 if self.isEditing is None else self.isEditing
                     )
                     globalServerList["MCSLServerList"].append(d)
-                    with open(
-                        r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-                    ) as newGlobalServerListFile:
-                        newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+                    writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
                 except Exception as e:
                     raise e
 
                 # 写入单独配置
                 try:
                     if not cfg.get(cfg.onlySaveGlobalServerConfig):
-                        with open(
-                            osp.join(self.cwd, "MCSL2ServerConfig.json"),
-                            mode="w+",
-                            encoding="utf-8",
-                        ) as f:
-                            f.write(dumps(d, indent=4))
+                        writeFile(osp.join(self.cwd, "MCSL2ServerConfig.json"), dumps(d, indent=4))
                 except Exception as e:
                     raise e
 

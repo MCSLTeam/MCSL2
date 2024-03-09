@@ -32,7 +32,7 @@ from qfluentwidgets import (
 from Adapters.BasePlugin import BasePlugin, BasePluginLoader, BasePluginManager
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.Widgets.pluginWidget import singlePluginWidget, PluginSwitchButton
-from MCSL2Lib.utils import openLocalFile
+from MCSL2Lib.utils import openLocalFile, readFile
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
 
@@ -77,8 +77,7 @@ class PluginLoader(BasePluginLoader):
         importedPlugin = importedPlugin.__getattribute__(pluginName)
         try:
             importedPlugin.pluginName = pluginName
-            with open(f"Plugins//{pluginName}//config.json", "r", encoding="utf-8") as f:
-                importedPluginConfig: dict = loads(f.read())
+            importedPluginConfig: dict = loads(readFile(f"Plugins//{pluginName}//config.json"))
             importedPlugin.version = importedPluginConfig.get("version")
             importedPlugin.description = importedPluginConfig.get("description")
             importedPlugin.author = importedPluginConfig.get("author")
@@ -97,8 +96,7 @@ class PluginLoader(BasePluginLoader):
     def getInfo(cls, pluginName: str) -> PluginType:
         pluginType = PluginType()
         pluginType.pluginName = pluginName
-        with open(f"Plugins//{pluginName}//config.json", "r", encoding="utf-8") as f:
-            importedPluginConfig: dict = loads(f.read())
+        importedPluginConfig: dict = loads(readFile(f"Plugins//{pluginName}//config.json"))
         pluginType.version = importedPluginConfig.get("version")
         pluginType.description = importedPluginConfig.get("description")
         pluginType.author = importedPluginConfig.get("author")

@@ -75,7 +75,7 @@ from MCSL2Lib.variables import (
     ServerVariables,
     SettingsVariables,
 )
-from MCSL2Lib.utils import MCSL2Logger
+from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
@@ -1778,19 +1778,9 @@ class ConfigurePage(QWidget):
 
         # 写入全局配置
         try:
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-            ) as globalServerListFile:
-                # old
-                globalServerList = loads(globalServerListFile.read())
-                globalServerListFile.close()
-
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-            ) as newGlobalServerListFile:
-                # 添加新的
-                globalServerList["MCSLServerList"].append(serverConfig)
-                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+            globalServerList["MCSLServerList"].append(serverConfig)
+            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
             exitCode = 0
         except Exception as e:
             exitCode = 1
@@ -1799,12 +1789,10 @@ class ConfigurePage(QWidget):
         # 写入单独配置
         try:
             if not cfg.get(cfg.onlySaveGlobalServerConfig):
-                with open(
+                writeFile(
                     f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
-                    "w+",
-                    encoding="utf-8",
-                ) as serverListFile:
-                    serverListFile.write(dumps(serverConfig, indent=4))
+                    dumps(serverConfig, indent=4),
+                )
             else:
                 InfoBar.info(
                     title=self.tr("功能提醒"),
@@ -1913,19 +1901,9 @@ class ConfigurePage(QWidget):
             # 删除文件夹
             rmtree(serverDir)
             # 删除全局配置
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
-            ) as globalServerListFile:
-                # old
-                globalServerList = loads(globalServerListFile.read())
-                globalServerListFile.close()
-
-            with open(
-                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
-            ) as newGlobalServerListFile:
-                # 删除新的
-                globalServerList["MCSLServerList"].pop()
-                newGlobalServerListFile.write(dumps(globalServerList, indent=4))
+            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+            globalServerList["MCSLServerList"].pop()
+            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
 
     @pyqtSlot(bool)
     def afterInstallingForge(self, installFinished, args=...):
