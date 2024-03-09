@@ -31,6 +31,7 @@ from PyQt5.QtGui import QDesktopServices
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
 MCSL2Logger = _MCSL2Logger()
+AUTHOR_SERVERS = ['18.65.216.60']
 
 
 class ServicesUrl:
@@ -97,7 +98,7 @@ def initializeMCSL2():
             continue
     if k >= 1:
         with open(
-            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
         ) as newGlobalServerListFile:
             newGlobalServerListFile.write(dumps(globalServerList, indent=4))
 
@@ -167,7 +168,7 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
@@ -175,7 +176,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.SILENT
     if isinstance(value, aria2p.ClientException) and "Active Download not found for GID" in str(
-        value
+            value
     ):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
@@ -187,7 +188,7 @@ def exceptionFilter(
     if isinstance(value, Exception) and "print test" in str(value):
         return ExceptionFilterMode.RAISE_AND_PRINT
     if isinstance(
-        value, Exception
+            value, Exception
     ) and "RunningServerHeaderCardWidget cannot be converted to PyQt5.QtWidgets.QLayoutItem" in str(
         value
     ):
@@ -204,7 +205,6 @@ def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None)
     """
     rv = []
     if _filter is None:
-
         def _filter(a, b):
             return True
 
