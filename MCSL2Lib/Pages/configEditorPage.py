@@ -13,11 +13,19 @@
 """
 Config Editor Widget
 """
+
 from os import path as osp
 from typing import Tuple, Dict, Optional
 
 from PyQt5.QtCore import Qt, QSize, pyqtSlot, QTimer, pyqtSignal
-from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, QFrame, QFileSystemModel, QApplication
+from PyQt5.QtWidgets import (
+    QWidget,
+    QGridLayout,
+    QSizePolicy,
+    QFrame,
+    QFileSystemModel,
+    QApplication,
+)
 from qfluentwidgets import (
     TreeView,
     TabBar,
@@ -25,11 +33,11 @@ from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBarPosition,
     InfoBar,
-    TabCloseButtonDisplayMode, TabItem,
+    TabCloseButtonDisplayMode,
+    TabItem,
 )
 
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget
-from MCSL2Lib.utils import MCSL2Logger
 
 from MCSL2Lib.variables import ServerVariables
 
@@ -167,15 +175,21 @@ class ConfigEditorPage(QWidget):
     def createConfigEditor(self, selected, deselected):
         if not selected.indexes():
             return
-        filePath = self.treeView.selectionModel().model().filePath(selected.indexes()[0]).replace("\\",
-                                                                                                  "/")  # type: str
+        filePath = (
+            self.treeView.selectionModel()
+            .model()
+            .filePath(selected.indexes()[0])
+            .replace("\\", "/")
+        )  # type: str
         self.treeView.selectionModel().clearSelection()
         if osp.isdir(filePath):
             return
         if filePath in self.tabBar.itemMap:  # Select Existing Tab
             tab = self.tabBar.tab(filePath)
             tab.pressed.emit()  # Select Tab
-            self.tabBar.hScrollBar.scrollTo(tab.pos().x(), useAni=False)  # Auto Scroll To The Select Tab
+            self.tabBar.hScrollBar.scrollTo(
+                tab.pos().x(), useAni=False
+            )  # Auto Scroll To The Select Tab
             return
         else:  # Add New Tab
             try:
@@ -211,7 +225,9 @@ class ConfigEditorPage(QWidget):
             self.stackedWidget.setCurrentWidget(container)
             self.containerDict[filePath] = container
             self.editorDict[filePath] = p
-            self.tabBar.currentChanged.emit(self.tabBar.currentIndex())  # 新建标签页不触发currentChanged,这里手动触发
+            self.tabBar.currentChanged.emit(
+                self.tabBar.currentIndex()
+            )  # 新建标签页不触发currentChanged,这里手动触发
 
     def saveConfig(self, filePath: str, auto: bool = True):
         with open(filePath, "r", encoding="utf-8") as f:

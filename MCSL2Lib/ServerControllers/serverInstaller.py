@@ -191,8 +191,7 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
-            # noqa: E501
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",  # noqa: E501
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
@@ -233,13 +232,13 @@ class ForgeInstaller(Installer):
         PlanB = 1
 
     def __init__(
-            self,
-            serverPath,
-            file,
-            isEditing: Optional[str] = "",
-            java=None,
-            installerPath=None,
-            logDecode="utf-8",
+        self,
+        serverPath,
+        file,
+        isEditing: Optional[str] = "",
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -263,7 +262,7 @@ class ForgeInstaller(Installer):
             self.installPlan = ForgeInstaller.InstallPlan.PlanA
         else:
             raise InstallerError(
-                f"不支持的自动安装版本:{self._mcVersion}\nMCSL2仅支持Minecraft 1.8及以上版本的Forge自动安装"
+                f"不支持的自动安装版本:{self._mcVersion}\nMCSL2的Forge自动安装仅支持Minecraft 1.8+"
                 # noqa: E501
             )
 
@@ -272,8 +271,8 @@ class ForgeInstaller(Installer):
         # 读取version.json
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -285,10 +284,10 @@ class ForgeInstaller(Installer):
 
     def checkInstaller(self) -> bool:
         if (
-                (versionInfo := self._profile.get("versionInfo", {}))
-                        .get("id", "")
-                        .lower()
-                        .startswith("forge")
+            (versionInfo := self._profile.get("versionInfo", {}))
+            .get("id", "")
+            .lower()
+            .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
@@ -339,15 +338,17 @@ class ForgeInstaller(Installer):
         hosts = Hosts()
         if not hosts.find_all_matching(name="authserver.mojang.com"):
             self._needHost = True
-            hosts.add(entries=[
-                HostsEntry(
-                    entry_type='ipv4',
-                    address=ipv4,
-                    names=['authserver.mojang.com'],
-                    comment=self.HOST_ENTRY_TAG
-                )
-                for ipv4 in AUTHOR_SERVERS
-            ])
+            hosts.add(
+                entries=[
+                    HostsEntry(
+                        entry_type="ipv4",
+                        address=ipv4,
+                        names=["authserver.mojang.com"],
+                        comment=self.HOST_ENTRY_TAG,
+                    )
+                    for ipv4 in AUTHOR_SERVERS
+                ]
+            )
             hosts.write()
 
             if "Windows" in platform.platform():
@@ -486,7 +487,7 @@ class ForgeInstaller(Installer):
                 # 写入全局配置
                 try:
                     with open(
-                            r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
+                        r"MCSL2/MCSL2_ServerList.json", "r", encoding="utf-8"
                     ) as globalServerListFile:
                         # old
                         globalServerList = loads(globalServerListFile.read())
@@ -505,7 +506,7 @@ class ForgeInstaller(Installer):
                     )
                     globalServerList["MCSLServerList"].append(d)
                     with open(
-                            r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
+                        r"MCSL2/MCSL2_ServerList.json", "w+", encoding="utf-8"
                     ) as newGlobalServerListFile:
                         newGlobalServerListFile.write(dumps(globalServerList, indent=4))
                 except Exception as e:
@@ -515,9 +516,9 @@ class ForgeInstaller(Installer):
                 try:
                     if not cfg.get(cfg.onlySaveGlobalServerConfig):
                         with open(
-                                osp.join(self.cwd, "MCSL2ServerConfig.json"),
-                                mode="w+",
-                                encoding="utf-8",
+                            osp.join(self.cwd, "MCSL2ServerConfig.json"),
+                            mode="w+",
+                            encoding="utf-8",
                         ) as f:
                             f.write(dumps(d, indent=4))
                 except Exception as e:
@@ -527,7 +528,7 @@ class ForgeInstaller(Installer):
             else:
                 self.installFinished.emit(False)
                 if (
-                        self.workingProcess.exitCode() != 0 and self.workingProcess.exitCode() != 62097
+                    self.workingProcess.exitCode() != 0 and self.workingProcess.exitCode() != 62097
                 ):  # 62097是用户取消安装的错误码
                     raise InstallerError(
                         f"Forge installer exited with code {self.workingProcess.exitCode()}"
@@ -603,12 +604,12 @@ class FabricInstaller(Installer):
         PlanB = 1
 
     def __init__(
-            self,
-            serverPath,
-            file,
-            java=None,
-            installerPath=None,
-            logDecode="utf-8",
+        self,
+        serverPath,
+        file,
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -629,8 +630,8 @@ class FabricInstaller(Installer):
         # 打开Installer压缩包
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 props = str(zipfile.read("install.properties")).split("\n")

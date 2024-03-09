@@ -235,7 +235,7 @@ def backupSaves(serverConfig: ServerVariables, parent):
         else:
             InfoBar.warning(
                 title="保存失败",
-                content=f"代理服务端没有存档,无法保存",
+                content="代理服务端没有存档,无法保存",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_LEFT,

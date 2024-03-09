@@ -33,7 +33,6 @@ from PyQt5.QtWidgets import (
     QCompleter,
     QApplication,
     QFileDialog,
-    QFileSystemModel,
 )
 from qfluentwidgets import (
     HyperlinkButton,
@@ -41,8 +40,6 @@ from qfluentwidgets import (
     ComboBox,
     LineEdit,
     ListWidget,
-    TreeView,
-    TabBar,
     PlainTextEdit,
     PrimaryPushButton,
     PrimaryToolButton,
@@ -61,7 +58,6 @@ from qfluentwidgets import (
     isDarkTheme,
     InfoBarPosition,
     InfoBar,
-    TabCloseButtonDisplayMode,
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
