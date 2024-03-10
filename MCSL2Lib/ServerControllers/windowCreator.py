@@ -82,6 +82,11 @@ from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger, openLocalFile, writeFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
 
+def add_quotes(string):
+    if string.startswith('"') and string.endswith('"'):
+        return string  # 字符串已经有最外层的双引号
+    else:
+        return '"' + string + '"'  # 在字符串前后添加双引号
 
 class ErrorHandlerToggleButton(ToggleButton):
     def __init__(self, parent=None):
@@ -342,7 +347,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def genRunScript(self, save=False):
         script = (
             f"cd \"{osp.abspath('Servers' + self.serverConfig.serverName)}\"\n"
-            + self.serverConfig.javaPath
+            + add_quotes(self.serverConfig.javaPath)
             + " "
             + " ".join(self.serverLauncher.jvmArg)
         )
