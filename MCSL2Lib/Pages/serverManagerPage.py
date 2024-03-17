@@ -912,7 +912,7 @@ class ServerManagerPage(QWidget):
         )
         if tmpCorePath != "":
             editServerVariables.corePath = tmpCorePath
-            editServerVariables.coreFileName = tmpCorePath.split("\\")[-1]
+            editServerVariables.coreFileName = tmpCorePath.split("/")[-1]
             InfoBar.success(
                 title=self.tr("已修改，但未保存"),
                 content=self.tr("核心文件名：") + editServerVariables.coreFileName,
