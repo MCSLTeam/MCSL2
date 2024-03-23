@@ -31,7 +31,7 @@ from PyQt5.QtGui import QDesktopServices
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
 MCSL2Logger = _MCSL2Logger()
-AUTHOR_SERVERS = ['18.65.216.60']
+AUTHOR_SERVERS = ["18.65.216.60"]
 
 
 class ServicesUrl:
@@ -151,6 +151,7 @@ def openLocalFile(FilePath):
     """打开本地文件(夹)"""
     QDesktopServices.openUrl(QUrl.fromLocalFile(FilePath))
 
+
 def readFile(file: str):
     f = QFile(file)
     f.open(QFile.ReadOnly)
@@ -180,6 +181,7 @@ def writeBytesFile(file: str, content: bytes):
     f.write(content)
     f.close()
 
+
 class ExceptionFilterMode(enum.Enum):
     RAISE_AND_PRINT = enum.auto()  # 过滤：弹框提示，也会抛出异常
     RAISE = enum.auto()  # 过滤：不弹框提示，但是会抛出异常
@@ -188,7 +190,7 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
@@ -196,7 +198,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.SILENT
     if isinstance(value, aria2p.ClientException) and "Active Download not found for GID" in str(
-            value
+        value
     ):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
@@ -208,7 +210,7 @@ def exceptionFilter(
     if isinstance(value, Exception) and "print test" in str(value):
         return ExceptionFilterMode.RAISE_AND_PRINT
     if isinstance(
-            value, Exception
+        value, Exception
     ) and "RunningServerHeaderCardWidget cannot be converted to PyQt5.QtWidgets.QLayoutItem" in str(
         value
     ):
@@ -225,6 +227,7 @@ def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None)
     """
     rv = []
     if _filter is None:
+
         def _filter(a, b):
             return True
 

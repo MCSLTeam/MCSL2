@@ -28,7 +28,7 @@ class ConsoleCenterPage(QWidget):
         self.titleLimitWidget = QWidget(self)
         self.titleLayout = QGridLayout(self.titleLimitWidget)
         self.subTitleLabel = StrongBodyLabel(
-            text="查看所有正在运行中的服务器。", parent=self.titleLimitWidget
+            text=self.tr("查看所有正在运行中的服务器。"), parent=self.titleLimitWidget
         )
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -37,7 +37,7 @@ class ConsoleCenterPage(QWidget):
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.titleLayout.addWidget(self.subTitleLabel, 1, 0, 1, 1)
-        self.titleLabel = TitleLabel(text="监控", parent=self.titleLimitWidget)
+        self.titleLabel = TitleLabel(text=self.tr("监控"), parent=self.titleLimitWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

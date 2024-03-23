@@ -261,8 +261,9 @@ class ForgeInstaller(Installer):
             self.installPlan = ForgeInstaller.InstallPlan.PlanA
         else:
             raise InstallerError(
-                f"不支持的自动安装版本:{self._mcVersion}\nMCSL2的Forge自动安装仅支持Minecraft 1.8+"
-                # noqa: E501
+                self.tr(
+                    "不支持的自动安装版本:{mcVersion}\nMCSL2的Forge自动安装仅支持Minecraft 1.8+"
+                ).format(mcVersion=self._mcVersion)  # noqa: E501
             )
 
     def getInstallerData(self, jarFile):
@@ -309,7 +310,7 @@ class ForgeInstaller(Installer):
             percent = 0
         MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
         self.downloadServerProgress.emit(
-            self.tr("(正在下载核心... ") + f"{percent:.0f}" + self.tr("%) 使用BMCLAPI下载")
+            self.tr("(正在下载核心... {:.0f}%) 使用BMCLAPI下载").format(percent)
         )
 
     def onServerDownloadFinished(self, success: bool):
@@ -645,7 +646,7 @@ class FabricInstaller(Installer):
         percent = bytesReceived * 100 / bytesTotal
         MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
         self.downloadServerProgress.emit(
-            self.tr("(正在下载核心... ") + f"{percent:.0f}" + self.tr("%) 使用BMCLAPI下载")
+            self.tr("(正在下载核心... {:.0f}%) 使用BMCLAPI下载").format(percent)
         )
 
     def onServerDownloadFinished(self, success: bool):

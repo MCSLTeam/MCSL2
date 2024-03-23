@@ -639,8 +639,10 @@ class DownloadPage(QWidget):
     def onPageChangedRefresh(self, currentChanged):
         if currentChanged == 3:
             self.subTitleLabel.setText(
-                self.tr(
-                    f"Aria2引擎高速驱动！ - 当前下载源：{settingsVariables.downloadSourceTextList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]}"  # noqa: E501
+                self.tr("Aria2引擎高速驱动！ - 当前下载源：{downloadSource}").format(
+                    downloadSource=settingsVariables.downloadSourceTextList[
+                        settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
+                    ]
                 )
             )
             self.downloadStackedWidget.setCurrentWidget(
@@ -1330,8 +1332,10 @@ class DownloadPage(QWidget):
         urlLineEdit = LineEdit()
         urlLineEdit.setPlaceholderText(self.tr("URL"))
         w = MessageBox(
-            "创建下载任务",
-            "使用MCSL2自带的高速Aria2下载引擎下载文件。\n请注意，部分网站可能会禁止(403)，无法正常下载。",
+            self.tr("创建下载任务"),
+            self.tr(
+                "使用MCSL2自带的高速Aria2下载引擎下载文件。\n请注意，部分网站可能会禁止(403)，无法正常下载。"
+            ),
             self,
         )
         w.textLayout.addWidget(urlLineEdit)

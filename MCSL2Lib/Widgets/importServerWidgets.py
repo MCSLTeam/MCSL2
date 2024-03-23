@@ -378,18 +378,18 @@ class ConfirmArgumentsWidget(SimpleCardWidget):
         self.Separator3.setSizePolicy(sizePolicy)
         self.Separator3.setObjectName("Separator3")
         self.gridLayout.addWidget(self.Separator3, 6, 1, 1, 2)
-        self.downloadJavaBtn.setText("下载Java")
+        self.downloadJavaBtn.setText(self.tr("下载Java"))
         self.javaTitle.setText("Java:")
-        self.selectJavaPrimaryPushBtn.setText("手动导入")
-        self.autoDetectJavaBtn.setText("自动查找Java")
-        self.javaListBtn.setText("Java列表")
-        self.jvmArgPlainTextEdit.setPlaceholderText("可选，用一个空格分组")
-        self.jvmArgTitle.setText("JVM参数：")
-        self.memTitle.setText("内存:")
+        self.selectJavaPrimaryPushBtn.setText(self.tr("手动导入"))
+        self.autoDetectJavaBtn.setText(self.tr("自动查找Java"))
+        self.javaListBtn.setText(self.tr("Java列表"))
+        self.jvmArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
+        self.jvmArgTitle.setText(self.tr("JVM参数："))
+        self.memTitle.setText(self.tr("内存:"))
         self.ToSymbol.setText("~")
-        self.outputTitle.setText("控制台输出编码（优先级高于全局设置）")
-        self.setDeEncodingTitle.setText("编码设置：")
-        self.inputTitle.setText("指令输入编码（优先级高于全局设置）")
+        self.outputTitle.setText(self.tr("控制台输出编码（优先级高于全局设置）"))
+        self.setDeEncodingTitle.setText(self.tr("编码设置："))
+        self.inputTitle.setText(self.tr("指令输入编码（优先级高于全局设置）"))
         self.memUnitComboBox.addItems(["M", "G"])
         self.outputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
         self.inputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")])
@@ -435,12 +435,12 @@ class ImportFileFolderWidget(SimpleCardWidget):
 
     def setFinished(self):
         self.statusIcon.setFinished()
-        self.statusText.setText("此项已完成，请查看下一步。")
+        self.statusText.setText(self.tr("此项已完成，请查看下一步。"))
         self.finishSignal.emit(True)
 
     def setNotFinished(self):
         self.statusIcon.setNotFinished()
-        self.statusText.setText("此项仍未完成。")
+        self.statusText.setText(self.tr("此项仍未完成。"))
 
     def _setUpUI(self):
         self.setObjectName("importFileFolderWidget")
@@ -504,12 +504,12 @@ class ImportFileFolderWidget(SimpleCardWidget):
         self.statusText.setObjectName("statusText")
         self.gridLayout.addWidget(self.statusText, 1, 1, 1, 2)
 
-        self.importFileBtn.setText("导入文件")
-        self.ImportFolderBtn.setText("导入文件夹")
-        self.statusText.setText("[状态文本]")
+        self.importFileBtn.setText(self.tr("导入文件"))
+        self.ImportFolderBtn.setText(self.tr("导入文件夹"))
+        self.statusText.setText(self.tr("[状态文本]"))
 
     def _initView(self, stepCount):
-        self.title.setText(f"{stepCount}. 导入文件/文件夹")
+        self.title.setText(self.tr("{stepCount}. 导入文件/文件夹").format(stepCount=stepCount))
 
 
 class ImportSingleWidget(SimpleCardWidget):
@@ -526,12 +526,12 @@ class ImportSingleWidget(SimpleCardWidget):
 
     def setFinished(self):
         self.statusIcon.setFinished()
-        self.statusText.setText("此项已完成，请查看下一步。")
+        self.statusText.setText(self.tr("此项已完成，请查看下一步。"))
         self.finishSignal.emit(True)
 
     def setNotFinished(self):
         self.statusIcon.setNotFinished()
-        self.statusText.setText("此项仍未完成。")
+        self.statusText.setText(self.tr("此项仍未完成。"))
 
     def _setUpUI(self):
         self.setObjectName("importSingleWidget")
@@ -584,7 +584,7 @@ class ImportSingleWidget(SimpleCardWidget):
         self.statusText.setSizePolicy(sizePolicy)
         self.statusText.setObjectName("statusText")
         self.gridLayout.addWidget(self.statusText, 1, 1, 1, 3)
-        self.statusText.setText("[状态文本]")
+        self.statusText.setText(self.tr("[状态文本]"))
 
     def _initView(self, stepCount, title, btnText):
         self.title.setText(f"{stepCount}. {title}")
@@ -617,12 +617,12 @@ class MyListWidget(SimpleCardWidget):
 
     def setFinished(self):
         self.statusIcon.setFinished()
-        self.statusText.setText("此项已完成，请查看下一步。")
+        self.statusText.setText(self.tr("此项已完成，请查看下一步。"))
         self.finishSignal.emit(True)
 
     def setNotFinished(self):
         self.statusIcon.setNotFinished()
-        self.statusText.setText("此项仍未完成。")
+        self.statusText.setText(self.tr("此项仍未完成。"))
 
     def _setUpUI(self):
         self.setObjectName("listWidget")
@@ -666,8 +666,8 @@ class MyListWidget(SimpleCardWidget):
         self.mainListWidget = ListWidget(self)
         self.mainListWidget.setObjectName("mainListWidget")
         self.gridLayout.addWidget(self.mainListWidget, 2, 2, 1, 2)
-        self.statusText.setText("[状态文本]")
-        self.title.setText("2.选择核心")
+        self.statusText.setText(self.tr("[状态文本]"))
+        self.title.setText(self.tr("2.选择核心"))
         self.mainListWidget.itemChanged.connect(self.setFinished)
 
     def _initView(self, stepCount, title):
@@ -703,12 +703,12 @@ class MyTreeWidget(SimpleCardWidget):
             self.setNotFinished()
             return
         self.statusIcon.setFinished()
-        self.statusText.setText("此项已完成，请查看下一步。")
+        self.statusText.setText(self.tr("此项已完成，请查看下一步。"))
         self.finishSignal.emit(True)
 
     def setNotFinished(self):
         self.statusIcon.setNotFinished()
-        self.statusText.setText("此项仍未完成。")
+        self.statusText.setText(self.tr("此项仍未完成。"))
 
     def _setUpUI(self):
         self.setObjectName("treeWidget")
@@ -750,8 +750,8 @@ class MyTreeWidget(SimpleCardWidget):
         self.gridLayout.addWidget(self.title, 0, 3, 1, 1)
         self.mainTreeWidget = TreeWidget(self)
         self.gridLayout.addWidget(self.mainTreeWidget, 2, 2, 1, 2)
-        self.statusText.setText("[状态文本]")
-        self.title.setText("2.选择核心")
+        self.statusText.setText(self.tr("[状态文本]"))
+        self.title.setText(self.tr("2.选择核心"))
         self.mainTreeWidget.setHeaderHidden(False)
         self.mainTreeWidget.itemClicked.connect(self.setFinished)
 
@@ -759,7 +759,7 @@ class MyTreeWidget(SimpleCardWidget):
         self.title.setText(f"{stepCount}. {title}")
 
     def createZipTree(self, zipFile: ZipFile, supportExt: str = ""):
-        item = ZipTreeModel("压缩包内目录（双击展开）", None)
+        item = ZipTreeModel(self.tr("压缩包内目录（双击展开）"), None)
         self.mainTreeWidget.addTopLevelItem(item)
         for fileInfo in zipFile.infolist():
             fileName = fileInfo.filename
@@ -830,11 +830,11 @@ class SaveWidget(SimpleCardWidget):
         self.saveSaveServerBtn.setMaximumSize(QSize(16777215, 30))
         self.saveSaveServerBtn.setObjectName("saveSaveServerBtn")
         self.gridLayout.addWidget(self.saveSaveServerBtn, 2, 1, 1, 1)
-        self.saveServerNameLineEdit.setPlaceholderText("设置服务器昵称，不能包含非法字符")
-        self.saveSaveServerBtn.setText("导入！")
+        self.saveServerNameLineEdit.setPlaceholderText(self.tr("设置服务器昵称，不能包含非法字符"))
+        self.saveSaveServerBtn.setText(self.tr("导入！"))
         self.saveServerNameLineEdit.textChanged.connect(
             lambda: self.saveSaveServerBtn.setEnabled(self.saveServerNameLineEdit.text() != "")
         )
 
     def _initView(self, stepCount):
-        self.title.setText(f"{stepCount}. 完成导入")
+        self.title.setText(self.tr("{stepCount}. 完成导入").format(stepCount=stepCount))

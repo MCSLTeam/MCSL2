@@ -128,9 +128,9 @@ def backupServer(serverName: str, parent):
     try:
         s = QFileDialog.getSaveFileName(
             parent,
-            f"MCSL2 - 备份服务器“{serverName}”",
+            parent.tr("MCSL2 - 备份服务器“{serverName}”").format(serverName),
             f"{serverName}_backup.zip",
-            "Zip压缩包(*.zip)",
+            parent.tr("Zip压缩包(*.zip)"),
         )[0]
         if s == "":
             return
@@ -139,8 +139,8 @@ def backupServer(serverName: str, parent):
         )
         tmpArchiveThread.successSignal.connect(
             lambda: InfoBar.success(
-                title="备份完毕",
-                content=f"已保存至{s}",
+                title=parent.tr("备份完毕"),
+                content=parent.tr("已保存至{s}").format(s),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -151,7 +151,7 @@ def backupServer(serverName: str, parent):
         tmpArchiveThread.start()
     except Exception:
         InfoBar.success(
-            title="备份失败",
+            title=parent.tr("备份失败"),
             content=str(Exception.args),
             orient=Qt.Horizontal,
             isClosable=True,
@@ -162,12 +162,12 @@ def backupServer(serverName: str, parent):
 
 
 def isBedrockServer(serverName):
-    directoryPath = f'./Servers/{serverName}/resource_packs'
+    directoryPath = f"./Servers/{serverName}/resource_packs"
     return exists(directoryPath) and isdir(directoryPath)
 
 
 def isBungeeCordServer(serverName):
-    filePath = f'./Servers/{serverName}/locations.yml'
+    filePath = f"./Servers/{serverName}/locations.yml"
     return exists(filePath)
 
 
@@ -191,9 +191,9 @@ def backupSaves(serverConfig: ServerVariables, parent):
                 rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
             s = QFileDialog.getSaveFileName(
                 parent,
-                f"MCSL2 - 备份服务器“{serverConfig.serverName}”的存档",
+                parent.tr("MCSL2 - 备份服务器存档"),
                 f"{serverConfig.serverName}_{levelName}_backup.zip",
-                "Zip压缩包(*.zip)",
+                parent.tr("Zip压缩包(*.zip)"),
             )[0]
             if s == "":
                 return
@@ -216,8 +216,10 @@ def backupSaves(serverConfig: ServerVariables, parent):
             )
             tmpArchiveThread.successSignal.connect(
                 lambda: InfoBar.success(
-                    title="备份完毕",
-                    content=f"已保存至{s}。\n备份了以下文件夹：\n{existsDir}",
+                    title=parent.tr("备份完毕"),
+                    content=parent.tr("已保存至{s}。\n备份了以下文件夹：\n{existsDir}").format(
+                        s=s, existsDir=existsDir
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -234,8 +236,8 @@ def backupSaves(serverConfig: ServerVariables, parent):
             tmpArchiveThread.start()
         else:
             InfoBar.warning(
-                title="保存失败",
-                content="代理服务端没有存档,无法保存",
+                title=parent.tr("保存失败"),
+                content=parent.tr("代理服务端没有存档,无法保存"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_LEFT,

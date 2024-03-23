@@ -1175,7 +1175,7 @@ class ConfigurePage(QWidget):
         self.extendedAutoDetectJavaPrimaryPushBtn.setText(self.tr("自动查找Java"))
         self.extendedJavaListPushBtn.setText(self.tr("Java列表"))
         self.extendedMemSubtitleLabel.setText(self.tr("内存:"))
-        self.extendedToSymbol.setText(self.tr("~"))
+        self.extendedToSymbol.setText("~")
         self.extendedDownloadCorePrimaryPushBtn.setText(self.tr("下载核心"))
         self.extendedManuallyAddCorePrimaryPushBtn.setText(self.tr("手动导入"))
         self.extendedAddCoreFromDownloadedPrimaryPushBtn.setText(self.tr("从下载的核心中导入"))

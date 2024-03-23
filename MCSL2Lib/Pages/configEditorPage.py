@@ -196,8 +196,8 @@ class ConfigEditorPage(QWidget):
                 text = readFile(filePath)
             except Exception as e:
                 InfoBar.info(
-                    title="抱歉",
-                    content=f"MCSL2无法打开此文件，原因：\n{e.with_traceback(None)}",
+                    title=self.tr("抱歉"),
+                    content=self.tr("MCSL2无法打开此文件，原因：\n") + e.with_traceback(None),
                     orient=Qt.Horizontal,
                     parent=self,
                     duration=1500,
@@ -233,8 +233,8 @@ class ConfigEditorPage(QWidget):
         if (newText := self.editorDict[filePath].toPlainText()) != tmpText:
             writeFile(filePath, newText)
             InfoBar.info(
-                title="提示",
-                content=f"已{'自动' if auto else ''}保存 {osp.basename(filePath)}",
+                title=self.tr("提示"),
+                content=self.tr("已保存 ") + osp.basename(filePath),
                 orient=Qt.Horizontal,
                 parent=self,
                 duration=1500,

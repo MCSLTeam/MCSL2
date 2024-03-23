@@ -49,6 +49,7 @@ all = ["tomli>=2.0.1", "ruff>=0.1.6", "pyqt5-stubs>=5.15.6.0"]
 main = "python MCSL2.py"
 build = "python -m lndl_nuitka . -y"
 build_github = "python -m lndl_nuitka . -y -- --disable-console"
+i18n = "python generate_i18n.py"
 
 [tool.ruff]
 target-version = "py38"

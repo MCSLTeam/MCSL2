@@ -773,7 +773,7 @@ class ServerManagerPage(QWidget):
             self.deletingServerStateToolTip.setState(True)
             self.deletingServerStateToolTip = None
         else:
-            self.deletingServerStateToolTip.setContent(self.tr("怪，删除失败！\n") + exit1Msg)
+            self.deletingServerStateToolTip.setContent(self.tr("删除失败！\n") + exit1Msg)
             self.deletingServerStateToolTip.setState(True)
             self.deletingServerStateToolTip = None
         self.refreshServers()
@@ -1357,7 +1357,7 @@ class ServerManagerPage(QWidget):
             self.installingForgeStateToolTip = None
         else:
             self.installingForgeStateToolTip.setContent(
-                self.tr("怪，安装失败！") + args if args is not ... else ""
+                self.tr("安装失败！") + args if args is not ... else ""
             )
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
@@ -1403,9 +1403,9 @@ class ServerManagerPage(QWidget):
         self.runningServerCardGenerated.emit(w.monitorWidget)
 
     def backup(self, index):
-        w = MessageBox("备份服务器", "请选择你需要备份的文件：", self)
-        w.yesButton.setText("服务器")
-        w.cancelButton.setText("仅存档")
+        w = MessageBox(self.tr("备份服务器"), self.tr("请选择你需要备份的文件："), self)
+        w.yesButton.setText(self.tr("服务器"))
+        w.cancelButton.setText(self.tr("仅存档"))
         w.yesSignal.connect(
             lambda: backupServer(
                 ServerConfigConstructor.loadServerConfig(index=index).serverName, parent=self

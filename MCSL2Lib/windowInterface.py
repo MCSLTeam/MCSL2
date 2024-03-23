@@ -97,7 +97,7 @@ class Window(VerifyFluentWindowBase):
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{' 测试版 ' if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''}"  # noqa: E501
+            f"MCServerLauncher {MCSL2VERSION}{self.tr(' 测试版 ') if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''}"  # noqa: E501
         )
 
         self.oldHook = sys.excepthook

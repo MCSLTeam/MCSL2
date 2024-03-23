@@ -305,20 +305,20 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.consoleSettingsGroup)
 
         # Software
-        self.programSettingsGroup = SettingCardGroup("程序设置", self.settingsWidget)
+        self.programSettingsGroup = SettingCardGroup(self.tr("程序设置"), self.settingsWidget)
         self.themeMode = OptionsSettingCard(
             cfg.themeMode,
             FIF.BRUSH,
-            title="主题",
-            content="本程序也要花里胡哨捏~",
+            title=self.tr("主题"),
+            content=self.tr("本程序也要花里胡哨捏~"),
             texts=["浅色", "深色", "跟随系统"],
             parent=self.programSettingsGroup,
         )
         self.themeColor = CustomColorSettingCard(
             configItem=cfg.themeColor,
             icon=FIF.PALETTE,
-            title="主题色",
-            content="本程序也要花里胡哨捏~",
+            title=self.tr("强调色"),
+            content=self.tr("本程序也要花里胡哨捏~"),
             parent=self.programSettingsGroup,
         )
         self.alwaysRunAsAdministrator = SwitchSettingCard(
@@ -347,7 +347,7 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.programSettingsGroup)
 
         # Update
-        self.updateSettingsGroup = SettingCardGroup("更新设置", self.settingsWidget)
+        self.updateSettingsGroup = SettingCardGroup(self.tr("更新设置"), self.settingsWidget)
         self.checkUpdateSetting = PrimaryPushSettingCard(
             icon=FIF.SYNC,
             text=self.tr("检查更新"),
@@ -395,7 +395,7 @@ class SettingsPage(QWidget):
         self.gridLayout.setObjectName("gridLayout")
 
         self.openOfficialWeb = HyperlinkButton(
-            "https://mcsl.com.cn", "打开官网", self.aboutContentWidget, FIF.HOME
+            "https://mcsl.com.cn", self.tr("打开官网"), self.aboutContentWidget, FIF.HOME
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -407,7 +407,7 @@ class SettingsPage(QWidget):
         self.gridLayout.addWidget(self.openOfficialWeb, 1, 1, 1, 1)
         self.openSourceCodeRepo = HyperlinkButton(
             "https://www.github.com/MCSLTeam/MCSL2",
-            "打开源码仓库",
+            self.tr("打开源码仓库"),
             self.aboutContentWidget,
             FIF.GITHUB,
         )
@@ -425,7 +425,7 @@ class SettingsPage(QWidget):
         self.gridLayout.addWidget(self.aboutContent, 0, 0, 1, 7)
         self.joinQQGroup = HyperlinkButton(
             "https://jq.qq.com/?_wv=1027&k=x2ISlviQ",
-            "加入官方群聊",
+            self.tr("加入官方QQ群"),
             self.aboutContentWidget,
             FIF.HELP,
         )
@@ -438,7 +438,7 @@ class SettingsPage(QWidget):
 
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
         self.generateSysReport = PrimaryPushButton(
-            icon=FIF.DICTIONARY, text="系统报告", parent=self.aboutContentWidget
+            icon=FIF.DICTIONARY, text=self.tr("系统报告"), parent=self.aboutContentWidget
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -448,7 +448,7 @@ class SettingsPage(QWidget):
         self.generateSysReport.setObjectName("generateSysReport")
 
         self.gridLayout.addWidget(self.generateSysReport, 1, 5, 1, 1)
-        self.uniqueCodeBtn = PrimaryPushButton(icon=FIF.PASTE, text="复制识别码", parent=self)
+        self.uniqueCodeBtn = PrimaryPushButton(icon=FIF.PASTE, text=self.tr("复制识别码"), parent=self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -461,7 +461,7 @@ class SettingsPage(QWidget):
         self.gridLayout.addItem(spacerItem30, 1, 6, 1, 2)
         self.sponsorsBtn = HyperlinkButton(
             "https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md",
-            "赞助者列表",
+            self.tr("赞助者列表"),
             self.aboutContentWidget,
             FIF.PEOPLE,
         )
@@ -474,7 +474,7 @@ class SettingsPage(QWidget):
 
         self.donateBtn = HyperlinkButton(
             "https://afdian.net/a/MCSLTeam",
-            "赞助此项目",
+            self.tr("赞助此项目"),
             self.aboutContentWidget,
             FIF.CAFE,
         )
@@ -508,15 +508,7 @@ class SettingsPage(QWidget):
         self.titleLabel.setText(self.tr("设置"))
         self.subTitleLabel.setText(self.tr("自定义你的MCSL2。"))
         self.aboutContent.setText(
-            self.tr("MCSL2是一个开源非营利性项目，遵循GNU General Public License 3.0开源协议。\n")
-            + self.tr("任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n")
-            + self.tr(
-                "但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n"
-            )
-            + self.tr("明显辨识度。\n")
-            + self.tr("\n")
-            + self.tr("Copyright © MCSLTeam. All right reserved.\n")
-            + self.tr("")
+            self.tr("MCSL2是一个开源非营利性项目，遵循GNU General Public License 3.0开源协议。\n任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n明显辨识度。\n\nCopyright © MCSLTeam. All right reserved.\n")  # noqa : E501
         )
         self.aboutTitle.setText(self.tr("关于"))
         self.generateSysReport.clicked.connect(self.generateSystemReport)

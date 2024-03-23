@@ -328,8 +328,8 @@ class DownloadMessageBox(MessageBox):
     def flush(self):
         self.downloadProgressWidget.fileSize.setText(self.tr("[文件大小]"))
         self.downloadProgressWidget.speed.setText(self.tr("[速度]"))
-        self.downloadProgressWidget.ETA.setText(self.tr("[ETA]"))
-        self.downloadProgressWidget.ProgressNum.setText(self.tr("NaN%"))
+        self.downloadProgressWidget.ETA.setText("[ETA]")
+        self.downloadProgressWidget.ProgressNum.setText("NaN%")
         self.downloadProgressWidget.ProgressBar.setValue(0)
         self.downloadProgressWidget.fileName.setText(self.tr("[文件名]"))
         self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(0)
@@ -399,9 +399,9 @@ class DownloadCard(SimpleCardWidget):
         self.gridLayout_2.addWidget(self.pauseBtn, 1, 1, 1, 1)
         self.progressNum.setText("NaN%")
         self.fileNameLabel.setText(fileName)
-        self.cancelBtn.setText("取消")
-        self.pauseBtn.setText("暂停")
-        self.downloadExtraInfoLabel.setText("[大小]  [速度]  [ETA]")
+        self.cancelBtn.setText(self.tr("取消"))
+        self.pauseBtn.setText(self.tr("暂停"))
+        self.downloadExtraInfoLabel.setText(self.tr("[大小]  [速度]  [ETA]"))
         self.downloading = False
         self.pauseSwitch = False
         self.uri = url
@@ -460,7 +460,7 @@ class DownloadCard(SimpleCardWidget):
         if dl is not None:
             if dl.status == "complete":
                 InfoBar.success(
-                    title=self.tr(f"{filename} 下载完成"),
+                    title=self.tr("{filename} 下载完成").format(filename=filename),
                     content="",
                     duration=1500,
                     isClosable=True,
@@ -476,7 +476,7 @@ class DownloadCard(SimpleCardWidget):
                 self.deleteLater()
             elif dl.status == "error":
                 errInfoBar = InfoBar.error(
-                    title=self.tr(f"{filename} 下载失败"),
+                    title=self.tr("{filename} 下载失败").format(filename=filename),
                     content="",
                     duration=-1,
                     isClosable=True,
@@ -499,7 +499,7 @@ class DownloadCard(SimpleCardWidget):
                     pass
         else:
             errInfoBar = InfoBar.error(
-                title=self.tr(f"{filename} 下载失败"),
+                title=self.tr("{filename} 下载失败").format(filename=filename),
                 content="",
                 duration=-1,
                 isClosable=True,
@@ -524,6 +524,6 @@ class DownloadCard(SimpleCardWidget):
     def flush(self):
         self.fileNameLabel.setText(self.tr("[文件名]"))
         self.downloadExtraInfoLabel.setText(self.tr("[大小]  [速度]  [ETA]"))
-        self.progressNum.setText(self.tr("NaN%"))
+        self.progressNum.setText("NaN%")
         self.ProgressBar.setValue(0)
         self.downloading = False

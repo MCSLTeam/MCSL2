@@ -92,9 +92,9 @@ class ErrorHandlerToggleButton(ToggleButton):
 
     def toggleToolTip(self):
         if self.isChecked():
-            self.tip = ToolTip("已开启")
+            self.tip = ToolTip(self.tr("已开启"))
         else:
-            self.tip = ToolTip("已关闭")
+            self.tip = ToolTip(self.tr("已关闭"))
 
     def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
         if a1.type() == QEvent.ToolTip:
@@ -275,7 +275,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.monitorWidget = None
         self.manageBtn = manageBtn
         self.manageBtn.setEnabled(False)
-        self.manageBtn.setText("已开启")
+        self.manageBtn.setText(self.tr("已开启"))
         self.manageBackupBtn = manageBackupBtn
         self.manageBackupBtn.setEnabled(False)
         self.isServerLoaded = False
@@ -332,7 +332,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 pass
             self.manageBtn.setEnabled(True)
             self.manageBackupBtn.setEnabled(True)
-            self.manageBtn.setText("启动")
+            self.manageBtn.setText(self.tr("启动"))
 
         super().closeEvent(a0)
         del self.serverConfig
@@ -349,17 +349,17 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         if save:
             return script
         else:
-            (w := MessageBox("生成启动脚本", "", parent=self)).contentLabel.setParent(None)
-            w.yesButton.setText("保存")
+            (w := MessageBox(self.tr("生成启动脚本"), "", parent=self)).contentLabel.setParent(None)
+            w.yesButton.setText(self.tr("保存"))
             w.yesSignal.connect(self.saveRunScript)
             (copyWidget := QWidget()).setLayout((cmdLayout := QHBoxLayout()))
 
-            copyBtn = PushButton(icon=FIF.COPY, text="复制", parent=w)
+            copyBtn = PushButton(icon=FIF.COPY, text=self.tr("复制"), parent=w)
             copyBtn.setFixedHeight(200)
             copyBtn.clicked.connect(lambda: QApplication.clipboard().setText(script))
             copyBtn.clicked.connect(
                 lambda: InfoBar.success(
-                    "已复制",
+                    self.tr("已复制"),
                     "",
                     orient=Qt.Horizontal,
                     isClosable=False,
@@ -384,7 +384,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             writeFile(
                 QFileDialog.getSaveFileName(
                     self,
-                    f"MCSL2服务器 - {self.serverConfig.serverName} 保存启动脚本",
+                    self.tr("MCSL2服务器 - 保存启动脚本"),
                     f"Run {self.serverConfig.serverName}.bat",
                     "Batch(*.bat);;Shell(*.sh)",
                 )[0],
@@ -392,8 +392,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
         except FileNotFoundError:
             InfoBar.warning(
-                "提示",
-                "已取消保存启动脚本",
+                self.tr("提示"),
+                self.tr("已取消保存启动脚本"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -404,8 +404,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def initSafelyQuitController(self):
         # 安全退出控件
         self.exitingMsgBox = MessageBox(
-            self.tr(f"安全关闭服务器“{self.serverConfig.serverName}”中..."),
-            "稍安勿躁。如果长时间没有反应，请尝试强制关闭服务器。",
+            self.tr("安全关闭服务器“{serverName}”中...").format(serverName=self.serverConfig.serverName),
+            self.tr("稍安勿躁。如果长时间没有反应，请尝试强制关闭服务器。"),
             parent=self,
         )
         self.exitingMsgBox.cancelButton.hide()
@@ -706,38 +706,42 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.tr("普通"),
             self.tr("困难"),
         ])
-        self.backupServerBtn.setText("备份服务器")
-        self.openServerFolder.setText("打开服务器目录")
-        self.backupSavesBtn.setText("备份存档")
-        self.genRunScriptBtn.setText("生成启动脚本")
-        self.toggleServerBtn.setText("启动服务器")
-        self.serverResMonitorTitle.setText("服务器资源占用")
+        self.backupServerBtn.setText(self.tr("备份服务器"))
+        self.openServerFolder.setText(self.tr("打开服务器目录"))
+        self.backupSavesBtn.setText(self.tr("备份存档"))
+        self.genRunScriptBtn.setText(self.tr("生成启动脚本"))
+        self.toggleServerBtn.setText(self.tr("启动服务器"))
+        self.serverResMonitorTitle.setText(self.tr("服务器资源占用"))
         self.serverRAMMonitorTitle.setText("RAM：[curr/max]")
         self.serverCPUMonitorTitle.setText("CPU：")
-        self.existPlayersTitle.setText("在线玩家列表")
-        self.quickMenuTitleLabel.setText("快捷菜单：")
-        self.difficulty.setText("游戏难度")
-        self.gamemode.setText("游戏模式")
-        self.whiteList.setText("白名单")
-        self.op.setText("管理员")
-        self.kickPlayers.setText("踢人")
-        self.banPlayers.setText("封禁")
-        self.saveServer.setText("保存存档")
-        self.exitServer.setText("关闭服务器")
-        self.killServer.setText("强制关闭")
-        self.errorHandler.setText("报错分析")
-        self.exportScheduleConfigBtn.setText("导出")
-        self.addScheduleTaskBtn.setText("添加计划任务")
-        self.importScheduleConfigBtn.setText("导入")
-        self.errTitle.setText("含报错的日志：")
-        self.startAnalyze.setText("开始分析")
-        self.resultTitle.setText("分析结果：")
-        self.copyResultBtn.setText("复制")
-        self.switchAnalyzeProviderBtn.setText("当前：使用本地模块分析")
-        self.switchAnalyzeProviderBtn.setOnText("当前：使用CrashMC分析")
-        self.switchAnalyzeProviderBtn.setOffText("当前：使用本地模块分析")
-        self.commandLineEdit.setPlaceholderText("在此输入指令，回车或点击右边按钮发送，不需要加/")
-        self.serverOutput.setPlaceholderText(self.tr("请先开启服务器！不开服务器没有日志！"))
+        self.existPlayersTitle.setText(self.tr("在线玩家列表"))
+        self.quickMenuTitleLabel.setText(self.tr("快捷菜单："))
+        self.difficulty.setText(self.tr("游戏难度"))
+        self.gamemode.setText(self.tr("游戏模式"))
+        self.whiteList.setText(self.tr("白名单"))
+        self.op.setText(self.tr("管理员"))
+        self.kickPlayers.setText(self.tr("踢人"))
+        self.banPlayers.setText(self.tr("封禁"))
+        self.saveServer.setText(self.tr("保存存档"))
+        self.exitServer.setText(self.tr("关闭服务器"))
+        self.killServer.setText(self.tr("强制关闭"))
+        self.errorHandler.setText(self.tr("报错分析"))
+        self.exportScheduleConfigBtn.setText(self.tr("导出"))
+        self.addScheduleTaskBtn.setText(self.tr("添加计划任务"))
+        self.importScheduleConfigBtn.setText(self.tr("导入"))
+        self.errTitle.setText(self.tr("含报错的日志："))
+        self.startAnalyze.setText(self.tr("开始分析"))
+        self.resultTitle.setText(self.tr("分析结果："))
+        self.copyResultBtn.setText(self.tr("复制"))
+        self.switchAnalyzeProviderBtn.setText(self.tr("当前：使用本地模块分析"))
+        self.switchAnalyzeProviderBtn.setOnText(self.tr("当前：使用CrashMC分析"))
+        self.switchAnalyzeProviderBtn.setOffText(self.tr("当前：使用本地模块分析"))
+        self.commandLineEdit.setPlaceholderText(
+            self.tr("在此输入指令，回车或点击右边按钮发送，不需要加/")
+        )
+        self.serverOutput.setPlaceholderText(
+            self.tr(self.tr("请先开启服务器！不开服务器没有日志！"))
+        )
 
     def initSlots(self):
         self.commandLineEdit.textChanged.connect(
@@ -768,31 +772,31 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def initNavigation(self):
         self.serverSegmentedWidget.addItem(
             routeKey="overviewPage",
-            text="服务器概览",
+            text=self.tr("服务器概览"),
             onClick=lambda: self.stackedWidget.setCurrentWidget(self.overviewPage),
             icon=FIF.INFO,
         )
         self.serverSegmentedWidget.addItem(
             routeKey="commandPage",
-            text="快捷终端",
+            text=self.tr("快捷终端"),
             onClick=lambda: self.stackedWidget.setCurrentWidget(self.commandPage),
             icon=FIF.COMMAND_PROMPT,
         )
         self.serverSegmentedWidget.addItem(
             routeKey="backupPage",
-            text="编辑配置文件",
+            text=self.tr("编辑配置文件"),
             onClick=lambda: self.stackedWidget.setCurrentWidget(self.configEditorPage),
             icon=FIF.LABEL,
         )
         self.serverSegmentedWidget.addItem(
             routeKey="scheduleTasksPage",
-            text="计划任务",
+            text=self.tr("计划任务"),
             onClick=lambda: self.stackedWidget.setCurrentWidget(self.scheduleTasksPage),
             icon=FIF.HISTORY,
         )
         self.serverSegmentedWidget.addItem(
             routeKey="analyzePage",
-            text="错误分析",
+            text=self.tr("错误分析"),
             onClick=lambda: self.stackedWidget.setCurrentWidget(self.analyzePage),
             icon=FIF.SEARCH_MIRROR,
         )
@@ -804,7 +808,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
         self.setTitleBar(ServerWindowTitleBar(self))
         cfg.themeChanged.connect(self.titleBar.setQss)
-        self.setWindowTitle(f"MCSL2服务器 - {self.serverConfig.serverName}")
+        self.setWindowTitle(
+            self.tr("MCSL2服务器 - {serverName}").format(serverName=self.serverConfig.serverName)
+        )
 
         self.setWindowIcon(QIcon(f":/built-InIcons/{self.serverConfig.serverIconName}"))
         desktop = QApplication.desktop().availableGeometry()
@@ -875,6 +881,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         w.yesSignal.connect(validator.acceptEula)
         w.yesSignal.connect(self.startServer)
         w.cancelButton.setText(self.tr("拒绝"))
+        w.cancelSignal.connect(self.closeEvent)
         eulaBtn = HyperlinkButton(url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK)
         w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
         w.exec_()
@@ -993,7 +1000,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         except (AttributeError, TypeError):
             pass
         self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
-        self.colorConsoleText("[MCSL2 | 提示]：服务器正在启动，请稍后...")
+        self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
 
     def unRegisterCommandOutput(self):
         try:
@@ -1028,10 +1035,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         if exitCode:
             if exitCode != 62097:
                 self.colorConsoleText(
-                    self.tr(
-                        "[MCSL2 | 提示]：服务器崩溃，进程退出码为 {exitCode} ！".format(
-                            exitCode=exitCode
-                        )
+                    self.tr("[MCSL2 | 提示]：服务器崩溃，进程退出码为 {exitCode} ！").format(
+                        exitCode=exitCode
                     )
                 )
                 if cfg.get(cfg.restartServerWhenCrashed):
@@ -1161,7 +1166,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             port = self.serverConfig.serverProperties.get("server-port", 25565)
             self.colorConsoleText(
                 self.tr(
-                    f"[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。")  # noqa: E501
+                    "[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。").format(ip=ip, port=port)  # noqa: E501
             )
             self.isServerLoaded = True
             if port == "25565":
@@ -1185,16 +1190,15 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.initQuickMenu_Difficulty()
 
     def showErrorHandlerReport(self):
-        if self.errMsg != "":
-            w = MessageBox("错误分析器日志", self.errMsg, self)
-            w.cancelButton.setParent(None)
-            w.exec_()
-        else:
-            w = MessageBox(
-                "错误分析器日志", "本次没有检测到任何MCSL2内置错误分析可用解决方案。", self
-            )
-            w.cancelButton.setParent(None)
-            w.exec_()
+        w = MessageBox(
+            self.tr("错误分析器日志"),
+            self.errMsg
+            if self.errMsg
+            else self.tr("本次没有检测到任何MCSL2内置错误分析可用解决方案。"),
+            self,
+        )
+        w.cancelButton.setParent(None)
+        w.exec_()
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
