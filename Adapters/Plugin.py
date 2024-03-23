@@ -256,9 +256,9 @@ class PluginManager(BasePluginManager):
 
             # 设置信息
             self.pluginWidget.pluginName.setText(f"{plugin.pluginName}")
-            self.pluginWidget.pluginVer.setText(f"版本:   {plugin.version}")
-            self.pluginWidget.pluginAuthor.setText(f"作者:   {plugin.author}")
-            self.pluginWidget.pluginTip.setText(f"注释:   {plugin.description}")
+            self.pluginWidget.pluginVer.setText(f"版本: {plugin.version}")
+            self.pluginWidget.pluginAuthor.setText(f"作者: {plugin.author}")
+            self.pluginWidget.pluginTip.setText(f"说明: {plugin.description}")
 
             # 设置槽函数
             self.pluginWidget.SwitchButton.selfCheckedChanged.connect(
@@ -294,8 +294,8 @@ class PluginManager(BasePluginManager):
 
     def deletePluginConfirm(self, pluginName, parent):
         self.isDelMsgShowed = 0
-        title = self.tr(f'你真的要删除插件"{pluginName}"?')
-        content = self.tr(f'此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"{pluginName}"，然后点击“删除”按钮：')  # noqa: E501
+        title = f'你真的要删除插件"{pluginName}"?'
+        content = f'此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"{pluginName}"，然后点击“删除”按钮：'  # noqa: E501
         w2 = MessageBox(title, content, parent)
         w2.yesButton.setText(self.tr("取消"))
         w2.cancelButton.setText(self.tr("删除"))
@@ -325,8 +325,8 @@ class PluginManager(BasePluginManager):
             rmtree(f"Plugins//{pluginName}")
         else:
             InfoBar.error(
-                title=self.tr("提示"),
-                content=self.tr(f"删除插件{pluginName}失败！"),
+                title="提示",
+                content=f"删除插件{pluginName}失败！",
                 duration=2000,
                 position=InfoBarPosition.BOTTOM_LEFT,
                 parent=parent,
