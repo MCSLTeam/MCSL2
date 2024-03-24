@@ -78,7 +78,9 @@ class SelectJavaPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.PlainText)
 
@@ -94,15 +96,19 @@ class SelectJavaPage(QWidget):
         self.selectJavaTip = BodyLabel(self.titleLimitWidget)
 
         self.gridLayout_2.addWidget(self.selectJavaTip, 0, 3, 3, 1)
-        titleLimitLayout = QSpacerItem(5, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        titleLimitLayout = QSpacerItem(
+            5, 20, QSizePolicy.Expanding, QSizePolicy.Minimum
+        )
         self.gridLayout_2.addItem(titleLimitLayout, 0, 2, 3, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         self.subTitleLabel.setText(
-            self.tr("以下是所有已知的Java，包括你自己添加的，和程序扫描到的。请选择。\n")
+            self.tr(
+                "以下是所有已知的 Java，包括你自己添加的，和程序扫描到的。请选择。\n"
+            )
         )
         self.selectJavaTip.setText(
             self.tr(
-                "请注意，如果您选择的Java版本不符合服务器的要求，可能会导致服务器无法启动。\n游戏版本1.16.5及以下的请使用Java 8\n游戏版本1.17~1.17.1的建议Java 17-18\n1.18及以上则使用Java 18-20\n基岩版与上方相同"  # noqa: E501
+                "请注意，如果您选择的 Java 版本不符合服务器的要求，可能会导致服务器无法启动。\n游戏版本 1.16.5 及以下的请使用 Java 8\n游戏版本 1.17~1.17.1 的建议 Java 17-18\n1.18 及以上则使用 Java 18-20\n基岩版与上方相同"  # noqa: E501
             )
         )
         self.titleLabel.setText("Java")

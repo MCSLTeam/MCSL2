@@ -69,7 +69,13 @@ from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWi
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
-from MCSL2Lib.utils import openLocalFile, readGlobalServerConfig, MCSL2Logger, readFile, writeFile
+from MCSL2Lib.utils import (
+    openLocalFile,
+    readGlobalServerConfig,
+    MCSL2Logger,
+    readFile,
+    writeFile,
+)
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 
 
@@ -89,7 +95,9 @@ class ServerManagerPage(QWidget):
         self.javaFindWorkThreadFactory = javaDetector.JavaFindWorkThreadFactory()
         self.javaFindWorkThreadFactory.fSearch = True
         self.javaFindWorkThreadFactory.signalConnect = self.autoDetectJavaFinished
-        self.javaFindWorkThreadFactory.finishSignalConnect = self.onJavaFindWorkThreadFinished
+        self.javaFindWorkThreadFactory.finishSignalConnect = (
+            self.onJavaFindWorkThreadFinished
+        )
 
         self.serverList = []
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -123,7 +131,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -147,7 +157,9 @@ class ServerManagerPage(QWidget):
 
         self.serversScrollAreaWidgetContents = QWidget()
         self.serversScrollAreaWidgetContents.setGeometry(QRect(0, 0, 640, 452))
-        self.serversScrollAreaWidgetContents.setObjectName("serversScrollAreaWidgetContents")
+        self.serversScrollAreaWidgetContents.setObjectName(
+            "serversScrollAreaWidgetContents"
+        )
 
         self.flowLayout = FlowLayout(self.serversScrollAreaWidgetContents)
         self.flowLayout.setContentsMargins(0, 0, 0, 0)
@@ -185,7 +197,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editSetJavaWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editSetJavaWidget.sizePolicy().hasHeightForWidth()
+        )
         self.editSetJavaWidget.setSizePolicy(sizePolicy)
         self.editSetJavaWidget.setMinimumSize(QSize(0, 120))
         self.editSetJavaWidget.setObjectName("editSetJavaWidget")
@@ -193,7 +207,9 @@ class ServerManagerPage(QWidget):
         self.gridLayout_6 = QGridLayout(self.editSetJavaWidget)
         self.gridLayout_6.setObjectName("gridLayout_6")
 
-        self.editAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(self.editSetJavaWidget)
+        self.editAutoDetectJavaPrimaryPushBtn = PrimaryPushButton(
+            self.editSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -202,14 +218,18 @@ class ServerManagerPage(QWidget):
         )
         self.editAutoDetectJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.editAutoDetectJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.editAutoDetectJavaPrimaryPushBtn.setObjectName("editAutoDetectJavaPrimaryPushBtn")
+        self.editAutoDetectJavaPrimaryPushBtn.setObjectName(
+            "editAutoDetectJavaPrimaryPushBtn"
+        )
 
         self.gridLayout_6.addWidget(self.editAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1)
         self.editJavaSubtitleLabel = SubtitleLabel(self.editSetJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editJavaSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editJavaSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editJavaSubtitleLabel.setSizePolicy(sizePolicy)
         self.editJavaSubtitleLabel.setObjectName("editJavaSubtitleLabel")
 
@@ -218,14 +238,18 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editJavaListPushBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editJavaListPushBtn.sizePolicy().hasHeightForWidth()
+        )
         self.editJavaListPushBtn.setSizePolicy(sizePolicy)
         self.editJavaListPushBtn.setMinimumSize(QSize(108, 31))
         self.editJavaListPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.editJavaListPushBtn.setObjectName("editJavaListPushBtn")
 
         self.gridLayout_6.addWidget(self.editJavaListPushBtn, 3, 2, 1, 1)
-        self.editManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(self.editSetJavaWidget)
+        self.editManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
+            self.editSetJavaWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -235,7 +259,9 @@ class ServerManagerPage(QWidget):
         self.editManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.editManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.editManuallyAddJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.editManuallyAddJavaPrimaryPushBtn.setObjectName("editManuallyAddJavaPrimaryPushBtn")
+        self.editManuallyAddJavaPrimaryPushBtn.setObjectName(
+            "editManuallyAddJavaPrimaryPushBtn"
+        )
 
         self.gridLayout_6.addWidget(self.editManuallyAddJavaPrimaryPushBtn, 2, 1, 1, 1)
         self.editDownloadJavaPrimaryPushBtn = PrimaryPushButton(self.editSetJavaWidget)
@@ -248,7 +274,9 @@ class ServerManagerPage(QWidget):
         self.editDownloadJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.editDownloadJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.editDownloadJavaPrimaryPushBtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.editDownloadJavaPrimaryPushBtn.setObjectName("editDownloadJavaPrimaryPushBtn")
+        self.editDownloadJavaPrimaryPushBtn.setObjectName(
+            "editDownloadJavaPrimaryPushBtn"
+        )
 
         self.gridLayout_6.addWidget(self.editDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
         self.editJavaTextEdit = TextEdit(self.editSetJavaWidget)
@@ -260,7 +288,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editSetMemWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editSetMemWidget.sizePolicy().hasHeightForWidth()
+        )
         self.editSetMemWidget.setSizePolicy(sizePolicy)
         self.editSetMemWidget.setObjectName("editSetMemWidget")
 
@@ -283,7 +313,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editMaxMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editMaxMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.editMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.editMaxMemLineEdit.setMinimumSize(QSize(0, 30))
         self.editMaxMemLineEdit.setObjectName("editMaxMemLineEdit")
@@ -293,7 +325,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editMemSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editMemSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editMemSubtitleLabel.setSizePolicy(sizePolicy)
         self.editMemSubtitleLabel.setObjectName("editMemSubtitleLabel")
 
@@ -304,7 +338,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editMinMemLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editMinMemLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.editMinMemLineEdit.setSizePolicy(sizePolicy)
         self.editMinMemLineEdit.setMinimumSize(QSize(0, 30))
         self.editMinMemLineEdit.setObjectName("editMinMemLineEdit")
@@ -315,7 +351,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editSetCoreWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editSetCoreWidget.sizePolicy().hasHeightForWidth()
+        )
         self.editSetCoreWidget.setSizePolicy(sizePolicy)
         self.editSetCoreWidget.setObjectName("editSetCoreWidget")
 
@@ -331,14 +369,18 @@ class ServerManagerPage(QWidget):
         )
         self.editDownloadCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.editDownloadCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.editDownloadCorePrimaryPushBtn.setObjectName("editDownloadCorePrimaryPushBtn")
+        self.editDownloadCorePrimaryPushBtn.setObjectName(
+            "editDownloadCorePrimaryPushBtn"
+        )
 
         self.gridLayout_8.addWidget(self.editDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
         self.editCoreSubtitleLabel = SubtitleLabel(self.editSetCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editCoreSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editCoreSubtitleLabel.setSizePolicy(sizePolicy)
         self.editCoreSubtitleLabel.setObjectName("editCoreSubtitleLabel")
 
@@ -347,7 +389,9 @@ class ServerManagerPage(QWidget):
         self.coreLineEdit.setObjectName("coreLineEdit")
 
         self.gridLayout_8.addWidget(self.coreLineEdit, 1, 1, 1, 1)
-        self.editManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.editSetCoreWidget)
+        self.editManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
+            self.editSetCoreWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -356,7 +400,9 @@ class ServerManagerPage(QWidget):
         )
         self.editManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.editManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
-        self.editManuallyAddCorePrimaryPushBtn.setObjectName("editManuallyAddCorePrimaryPushBtn")
+        self.editManuallyAddCorePrimaryPushBtn.setObjectName(
+            "editManuallyAddCorePrimaryPushBtn"
+        )
 
         self.gridLayout_8.addWidget(self.editManuallyAddCorePrimaryPushBtn, 1, 2, 1, 1)
         self.editNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetCoreWidget)
@@ -408,12 +454,16 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editInputDeEncodingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editInputDeEncodingLabel.setSizePolicy(sizePolicy)
         self.editInputDeEncodingLabel.setObjectName("editInputDeEncodingLabel")
 
         self.gridLayout_9.addWidget(self.editInputDeEncodingLabel, 3, 0, 1, 1)
-        self.editNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetDeEncodingWidget)
+        self.editNewServerScrollAreaVerticalLayout_2.addWidget(
+            self.editSetDeEncodingWidget
+        )
         self.editSetJVMArgWidget = QWidget(self.editServerScrollAreaContents)
         self.editSetJVMArgWidget.setObjectName("editSetJVMArgWidget")
 
@@ -424,7 +474,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editJVMArgSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editJVMArgSubtitleLabel.setSizePolicy(sizePolicy)
         self.editJVMArgSubtitleLabel.setObjectName("editJVMArgSubtitleLabel")
 
@@ -463,14 +515,18 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editServerPixmapLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editServerPixmapLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editServerPixmapLabel.setSizePolicy(sizePolicy)
         self.editServerPixmapLabel.setObjectName("editServerPixmapLabel")
 
         self.gridLayout_4.addWidget(self.editServerPixmapLabel, 4, 2, 1, 1)
         spacerItem3 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_4.addItem(spacerItem3, 4, 1, 1, 1)
-        self.editNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetServerIconWidget)
+        self.editNewServerScrollAreaVerticalLayout_2.addWidget(
+            self.editSetServerIconWidget
+        )
         self.editSetServerNameWidget = QWidget(self.editServerScrollAreaContents)
         self.editSetServerNameWidget.setObjectName("editSetServerNameWidget")
 
@@ -492,13 +548,17 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editServerNameLineEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
         self.editServerNameLineEdit.setSizePolicy(sizePolicy)
         self.editServerNameLineEdit.setMinimumSize(QSize(0, 30))
         self.editServerNameLineEdit.setObjectName("editServerNameLineEdit")
 
         self.verticalLayout_5.addWidget(self.editServerNameLineEdit)
-        self.editSaveServerPrimaryPushBtn = PrimaryPushButton(self.editSetServerNameWidget)
+        self.editSaveServerPrimaryPushBtn = PrimaryPushButton(
+            self.editSetServerNameWidget
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -510,7 +570,9 @@ class ServerManagerPage(QWidget):
         self.editSaveServerPrimaryPushBtn.setObjectName("editSaveServerPrimaryPushBtn")
 
         self.verticalLayout_5.addWidget(self.editSaveServerPrimaryPushBtn)
-        self.editNewServerScrollAreaVerticalLayout_2.addWidget(self.editSetServerNameWidget)
+        self.editNewServerScrollAreaVerticalLayout_2.addWidget(
+            self.editSetServerNameWidget
+        )
         spacerItem4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.editNewServerScrollAreaVerticalLayout_2.addItem(spacerItem4)
         self.editServerScrollArea.setWidget(self.editServerScrollAreaContents)
@@ -519,7 +581,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editServerTitleWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editServerTitleWidget.sizePolicy().hasHeightForWidth()
+        )
         self.editServerTitleWidget.setSizePolicy(sizePolicy)
         self.editServerTitleWidget.setObjectName("editServerTitleWidget")
 
@@ -536,7 +600,9 @@ class ServerManagerPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.editServerSubtitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.editServerSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.editServerSubtitleLabel.setSizePolicy(sizePolicy)
         self.editServerSubtitleLabel.setObjectName("editServerSubtitleLabel")
         self.horizontalLayout_4.addWidget(self.editServerSubtitleLabel)
@@ -551,26 +617,32 @@ class ServerManagerPage(QWidget):
 
         self.subTitleLabel.setText(self.tr("在此处，管理你所有的服务器。"))
         self.titleLabel.setText(self.tr("管理"))
-        self.editAutoDetectJavaPrimaryPushBtn.setText(self.tr("自动查找Java"))
-        self.editJavaSubtitleLabel.setText(self.tr("Java:"))
-        self.editJavaListPushBtn.setText(self.tr("Java列表"))
+        self.editAutoDetectJavaPrimaryPushBtn.setText(self.tr("自动查找 Java"))
+        self.editJavaSubtitleLabel.setText(self.tr("Java: "))
+        self.editJavaListPushBtn.setText(self.tr("Java 列表"))
         self.editManuallyAddJavaPrimaryPushBtn.setText(self.tr("手动导入"))
-        self.editDownloadJavaPrimaryPushBtn.setText(self.tr("下载Java"))
+        self.editDownloadJavaPrimaryPushBtn.setText(self.tr("下载 Java"))
         self.editToSymbol.setText("~")
-        self.editMemSubtitleLabel.setText(self.tr("内存:"))
+        self.editMemSubtitleLabel.setText(self.tr("内存"))
         self.editDownloadCorePrimaryPushBtn.setText(self.tr("下载核心"))
-        self.editCoreSubtitleLabel.setText(self.tr("核心："))
+        self.editCoreSubtitleLabel.setText(self.tr("核心"))
         self.editManuallyAddCorePrimaryPushBtn.setText(self.tr("重新导入"))
-        self.editDeEncodingSubtitleLabel.setText(self.tr("编码设置："))
-        self.editOutputDeEncodingLabel.setText(self.tr("控制台输出编码（优先级高于全局设置）"))
-        self.editInputDeEncodingLabel.setText(self.tr("指令输入编码（优先级高于全局设置）"))
-        self.editJVMArgSubtitleLabel.setText(self.tr("JVM参数："))
-        self.JVMArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
-        self.editServerIconSubtitleLabel.setText(self.tr("服务器图标："))
-        self.tipLabel.setText(
-            self.tr("提示：此处设置的是服务器在MCSL2中显示的图标，不能代表服务器MOTD的图标。")
+        self.editDeEncodingSubtitleLabel.setText(self.tr("编码设置"))
+        self.editOutputDeEncodingLabel.setText(
+            self.tr("控制台输出编码 (优先级高于全局设置)")
         )
-        self.editServerNameSubtitleLabel.setText(self.tr("服务器名称："))
+        self.editInputDeEncodingLabel.setText(
+            self.tr("指令输入编码 (优先级高于全局设置)")
+        )
+        self.editJVMArgSubtitleLabel.setText(self.tr("JVM 参数"))
+        self.JVMArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
+        self.editServerIconSubtitleLabel.setText(self.tr("服务器图标"))
+        self.tipLabel.setText(
+            self.tr(
+                "提示：此处设置的是服务器在 MCSL2 中显示的图标，不能代表服务器 MOTD 的图标。"
+            )
+        )
+        self.editServerNameSubtitleLabel.setText(self.tr("服务器名称"))
         self.editServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
         self.editSaveServerPrimaryPushBtn.setText(self.tr("保存！"))
         self.editServerBackPushBtn.clicked.connect(self.goBack)
@@ -582,18 +654,22 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.editServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
         self.JVMArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
-        self.editOutputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI(推荐)"),
-        ])
-        self.editInputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI(推荐)"),
-        ])
+        self.editOutputDeEncodingComboBox.addItems(
+            [
+                self.tr("跟随全局"),
+                self.tr("UTF-8"),
+                self.tr("GB18030"),
+                self.tr("ANSI (推荐)"),
+            ]
+        )
+        self.editInputDeEncodingComboBox.addItems(
+            [
+                self.tr("跟随全局"),
+                self.tr("UTF-8"),
+                self.tr("GB18030"),
+                self.tr("ANSI (推荐)"),
+            ]
+        )
         self.editMemUnitComboBox.addItems([self.tr("M"), self.tr("G")])
 
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
@@ -613,7 +689,7 @@ class ServerManagerPage(QWidget):
             self.tr("草径"),
             self.tr("Java"),
             self.tr("MCSL2"),
-            self.tr("Paper核心"),
+            self.tr("Paper 核心"),
             self.tr("红石块"),
             self.tr("关闭的红石灯"),
             self.tr("打开的红石灯"),
@@ -631,7 +707,7 @@ class ServerManagerPage(QWidget):
         else:
             w = MessageBox(
                 parent=self,
-                title=self.tr("是否要退出此页面?"),
+                title=self.tr("是否要退出此页面？"),
                 content=self.tr("任何没有保存的修改都会消失！你确定要这么做吗？"),
             )
             w.yesButton.setText(self.tr("取消"))
@@ -641,7 +717,9 @@ class ServerManagerPage(QWidget):
                 if isDarkTheme()
                 else GlobalMCSL2Variables.lightWarnBtnStyleSheet
             )
-            w.cancelButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
+            w.cancelButton.clicked.connect(
+                lambda: self.stackedWidget.setCurrentIndex(0)
+            )
             w.cancelButton.clicked.connect(self.disconnectEditServerSlot)
             w.cancelButton.clicked.connect(self.refreshServers)
             w.exec()
@@ -706,7 +784,9 @@ class ServerManagerPage(QWidget):
     def deleteServer_Step1(self, index):
         """删除服务器步骤1，询问是否删除"""
         globalConfig: list = readGlobalServerConfig()
-        title = self.tr('是否要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
+        title = (
+            self.tr('是否要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
+        )
         content = self.tr("此操作是不可逆的！你确定这么做吗？")
         w = MessageBox(title, content, self)
         w.yesButton.setText(self.tr("取消"))
@@ -722,11 +802,15 @@ class ServerManagerPage(QWidget):
     def deleteServer_Step2(self, index):
         """删除服务器步骤2：输入确认"""
         globalConfig: list = readGlobalServerConfig()
-        title = self.tr('你真的要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
+        title = (
+            self.tr('你真的要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
+        )
         content = (
-            self.tr('此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"')
+            self.tr(
+                '此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"'
+            )
             + globalConfig[index]["name"]
-            + self.tr('"，然后点击“删除”按钮：')
+            + self.tr('"，然后点击「删除」按钮：')
         )
         w2 = MessageBox(title, content, self)
         w2.yesButton.setText(self.tr("取消"))
@@ -743,7 +827,9 @@ class ServerManagerPage(QWidget):
                 name=globalConfig[index]["name"], LineEditText=confirmLineEdit.text()
             )
         )
-        confirmLineEdit.setPlaceholderText(self.tr('在此输入"') + globalConfig[index]["name"] + '"')
+        confirmLineEdit.setPlaceholderText(
+            self.tr('在此输入"') + globalConfig[index]["name"] + '"'
+        )
         self.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
         w2.cancelSignal.connect(lambda: self.deleteServer_Step3(index=index))
         w2.textLayout.addWidget(confirmLineEdit)
@@ -757,7 +843,9 @@ class ServerManagerPage(QWidget):
         self.deletingServerStateToolTip = StateToolTip(
             self.tr("删除服务器"), self.tr("请稍后，正在删除..."), self
         )
-        self.deletingServerStateToolTip.move(self.deletingServerStateToolTip.getSuitablePos())
+        self.deletingServerStateToolTip.move(
+            self.deletingServerStateToolTip.getSuitablePos()
+        )
         self.deletingServerStateToolTip.show()
 
         # 使用多线程防止假死
@@ -773,7 +861,9 @@ class ServerManagerPage(QWidget):
             self.deletingServerStateToolTip.setState(True)
             self.deletingServerStateToolTip = None
         else:
-            self.deletingServerStateToolTip.setContent(self.tr("删除失败！\n") + exit1Msg)
+            self.deletingServerStateToolTip.setContent(
+                self.tr("删除失败！\n") + exit1Msg
+            )
             self.deletingServerStateToolTip.setState(True)
             self.deletingServerStateToolTip = None
         self.refreshServers()
@@ -799,10 +889,14 @@ class ServerManagerPage(QWidget):
         self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
         self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
         self.editOutputDeEncodingComboBox.setCurrentIndex(
-            editServerVariables.consoleDeEncodingList.index(globalConfig[index]["output_decoding"])
+            editServerVariables.consoleDeEncodingList.index(
+                globalConfig[index]["output_decoding"]
+            )
         )
         self.editInputDeEncodingComboBox.setCurrentIndex(
-            editServerVariables.consoleDeEncodingList.index(globalConfig[index]["input_encoding"])
+            editServerVariables.consoleDeEncodingList.index(
+                globalConfig[index]["input_encoding"]
+            )
         )
         self.editMemUnitComboBox.setCurrentIndex(
             editServerVariables.memUnitList.index(globalConfig[index]["memory_unit"])
@@ -831,8 +925,12 @@ class ServerManagerPage(QWidget):
         editServerVariables.memUnit = globalConfig[index]["memory_unit"]
         editServerVariables.jvmArg = globalConfig[index]["jvm_arg"]
         editServerVariables.serverName = globalConfig[index]["name"]
-        (editServerVariables.consoleOutputDeEncoding) = globalConfig[index]["output_decoding"]
-        (editServerVariables.consoleInputDeEncoding) = globalConfig[index]["input_encoding"]
+        (editServerVariables.consoleOutputDeEncoding) = globalConfig[index][
+            "output_decoding"
+        ]
+        (editServerVariables.consoleInputDeEncoding) = globalConfig[index][
+            "input_encoding"
+        ]
         editServerVariables.icon = globalConfig[index]["icon"]
         try:
             editServerVariables.serverType = globalConfig[index]["server_type"]
@@ -851,8 +949,12 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldMemUnit = editServerVariables.memUnit
         editServerVariables.oldJVMArg = editServerVariables.jvmArg
         editServerVariables.oldServerName = editServerVariables.serverName
-        editServerVariables.oldConsoleOutputDeEncoding = editServerVariables.consoleOutputDeEncoding
-        editServerVariables.oldConsoleInputDeEncoding = editServerVariables.consoleInputDeEncoding
+        editServerVariables.oldConsoleOutputDeEncoding = (
+            editServerVariables.consoleOutputDeEncoding
+        )
+        editServerVariables.oldConsoleInputDeEncoding = (
+            editServerVariables.consoleInputDeEncoding
+        )
         editServerVariables.oldIcon = editServerVariables.icon
         editServerVariables.oldServerType = editServerVariables.serverType
         editServerVariables.oldExtraData = editServerVariables.extraData
@@ -863,8 +965,12 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
         self.editMemUnitComboBox.currentIndexChanged.connect(self.changeMemUnit)
         self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.changeCore)
-        self.editOutputDeEncodingComboBox.currentIndexChanged.connect(self.changeOutputDeEncoding)
-        self.editInputDeEncodingComboBox.currentIndexChanged.connect(self.changeInputDeEncoding)
+        self.editOutputDeEncodingComboBox.currentIndexChanged.connect(
+            self.changeOutputDeEncoding
+        )
+        self.editInputDeEncodingComboBox.currentIndexChanged.connect(
+            self.changeInputDeEncoding
+        )
         self.editServerIcon.currentIndexChanged.connect(
             lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
         )
@@ -887,7 +993,9 @@ class ServerManagerPage(QWidget):
         """改图标用"""
         editServerVariables.icon = editServerVariables.iconsFileNameList[iconIndex]
         self.editServerPixmapLabel.setPixmap(
-            QPixmap(f":/built-InIcons/{editServerVariables.iconsFileNameList[iconIndex]}")
+            QPixmap(
+                f":/built-InIcons/{editServerVariables.iconsFileNameList[iconIndex]}"
+            )
         )
         self.editServerPixmapLabel.setFixedSize(QSize(60, 60))
 
@@ -907,7 +1015,10 @@ class ServerManagerPage(QWidget):
         """手动更换服务器核心"""
         tmpCorePath = str(
             QFileDialog.getOpenFileName(
-                self, self.tr("选择*.jar文件"), getcwd(), self.tr("Java可执行文件(*.jar)")
+                self,
+                self.tr("选择 *.jar 文件"),
+                getcwd(),
+                self.tr("Java 可执行文件 (*.jar)"),
             )[0]
         )
         if tmpCorePath != "":
@@ -915,7 +1026,7 @@ class ServerManagerPage(QWidget):
             editServerVariables.coreFileName = tmpCorePath.split("/")[-1]
             InfoBar.success(
                 title=self.tr("已修改，但未保存"),
-                content=self.tr("核心文件名：") + editServerVariables.coreFileName,
+                content=self.tr("核心文件名: ") + editServerVariables.coreFileName,
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -935,14 +1046,18 @@ class ServerManagerPage(QWidget):
             )
 
     def changeOutputDeEncoding(self):
-        editServerVariables.consoleOutputDeEncoding = editServerVariables.consoleDeEncodingList[
-            self.editOutputDeEncodingComboBox.currentIndex()
-        ]
+        editServerVariables.consoleOutputDeEncoding = (
+            editServerVariables.consoleDeEncodingList[
+                self.editOutputDeEncodingComboBox.currentIndex()
+            ]
+        )
 
     def changeInputDeEncoding(self):
-        editServerVariables.consoleInputDeEncoding = editServerVariables.consoleDeEncodingList[
-            self.editInputDeEncodingComboBox.currentIndex()
-        ]
+        editServerVariables.consoleInputDeEncoding = (
+            editServerVariables.consoleDeEncodingList[
+                self.editInputDeEncodingComboBox.currentIndex()
+            ]
+        )
 
     def changeServerName(self):
         editServerVariables.serverName = self.editServerNameLineEdit.text()
@@ -954,7 +1069,10 @@ class ServerManagerPage(QWidget):
         """手动导入Java"""
         tmpJavaPath = str(
             QFileDialog.getOpenFileName(
-                self, self.tr("选择java.exe程序"), getcwd(), self.tr("Java主程序(java.exe)")
+                self,
+                self.tr("选择 java.exe 程序"),
+                getcwd(),
+                self.tr("Java 主程序 (java.exe)"),
             )[0]
         )
         if tmpJavaPath != "":
@@ -965,11 +1083,11 @@ class ServerManagerPage(QWidget):
                     InfoBar.success(
                         title=self.tr("已添加"),
                         content=self.tr(
-                            "Java路径："
+                            "Java路径: "
                             + tmpJavaPath
-                            + "\n版本："
+                            + "\n版本: "
                             + v
-                            + "\n但你还需要继续到Java列表中选取。"
+                            + "\n但你还需要继续到 Java 列表中选取。"
                         ),
                         orient=Qt.Horizontal,
                         isClosable=True,
@@ -981,7 +1099,7 @@ class ServerManagerPage(QWidget):
                     InfoBar.warning(
                         title=self.tr("未添加"),
                         content=self.tr(
-                            "此Java已被添加过，也有可能是自动查找Java时已经搜索到了。请检查Java列表。"
+                            "此 Java 已被添加过，也有可能是自动查找 Java 时已经搜索到了。请检查 Java 列表。"
                         ),
                         orient=Qt.Horizontal,
                         isClosable=True,
@@ -994,7 +1112,7 @@ class ServerManagerPage(QWidget):
             else:
                 InfoBar.error(
                     title=self.tr("添加失败"),
-                    content=self.tr("此Java无效！"),
+                    content=self.tr("此 Java 无效！"),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -1004,7 +1122,7 @@ class ServerManagerPage(QWidget):
         else:
             InfoBar.warning(
                 title=self.tr("未添加"),
-                content=self.tr("你并没有选择Java。"),
+                content=self.tr("你并没有选择 Java。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1026,12 +1144,14 @@ class ServerManagerPage(QWidget):
         if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
             remove("MCSL2/AutoDetectJavaHistory.json")
 
-        with open("MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8") as SaveFoundedJava:
+        with open(
+            "MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8"
+        ) as SaveFoundedJava:
             tmpNewJavaPath = editServerVariables.javaPath
             editServerVariables.javaPath = list(
-                {p[:-1] for p in SaveFoundedJava.readlines()}.union(
-                    set(editServerVariables.javaPath)
-                ).union(set(_JavaPaths))
+                {p[:-1] for p in SaveFoundedJava.readlines()}
+                .union(set(editServerVariables.javaPath))
+                .union(set(_JavaPaths))
             )
             editServerVariables.javaPath.sort(key=lambda x: x.version, reverse=False)
             for d in editServerVariables.javaPath:
@@ -1043,7 +1163,8 @@ class ServerManagerPage(QWidget):
             editServerVariables.javaPath = tmpNewJavaPath
 
             JavaPathList = [
-                {"Path": e.path, "Version": e.version} for e in editServerVariables.javaPath
+                {"Path": e.path, "Version": e.version}
+                for e in editServerVariables.javaPath
             ]
             dump(
                 {"java": JavaPathList},
@@ -1061,7 +1182,7 @@ class ServerManagerPage(QWidget):
                 title=self.tr("查找完毕"),
                 content=self.tr("一共搜索到了")
                 + str(len(editServerVariables.javaPath))
-                + self.tr("个Java。\n请单击“Java列表”按钮查看、选择。"),
+                + self.tr("个 Java。\n请单击「Java列表」按钮查看、选择。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1105,7 +1226,11 @@ class ServerManagerPage(QWidget):
             )
             # 如果出错
             if check[1] != 0:
-                title = self.tr("编辑服务器失败！存在") + str(check[1]) + self.tr("个问题。")
+                title = (
+                    self.tr("编辑服务器失败！存在")
+                    + str(check[1])
+                    + self.tr("个问题。")
+                )
                 content = (
                     check[0]
                     + "\n----------------------------\n"
@@ -1124,44 +1249,44 @@ class ServerManagerPage(QWidget):
                 totalJVMArg: str = "\n".join(editServerVariables.jvmArg)
                 title = self.tr("请再次检查你设置的参数是否有误：")
                 content = (
-                    self.tr("Java：")
+                    self.tr("Java: ")
                     + editServerVariables.selectedJavaPath
                     + "\n"
-                    + self.tr("Java版本：")
+                    + self.tr("Java版本: ")
                     + editServerVariables.selectedJavaVersion
                     + "\n"
-                    + self.tr("内存：")
+                    + self.tr("内存: ")
                     + str(editServerVariables.minMem)
                     + editServerVariables.memUnit
                     + "~"
                     + str(editServerVariables.maxMem)
                     + editServerVariables.memUnit
                     + "\n"
-                    + self.tr("服务器核心：")
+                    + self.tr("服务器核心: ")
                     + editServerVariables.corePath
                     + "\n"
-                    + self.tr("服务器核心文件名：")
+                    + self.tr("服务器核心文件名: ")
                     + editServerVariables.coreFileName
                     + "\n"
-                    + self.tr("输出编码设置：")
+                    + self.tr("输出编码设置: ")
                     + self.editOutputDeEncodingComboBox.itemText(
                         editServerVariables.consoleDeEncodingList.index(
                             editServerVariables.consoleOutputDeEncoding
                         )
                     )
                     + "\n"
-                    + self.tr("输入编码设置：")
+                    + self.tr("输入编码设置: ")
                     + self.editInputDeEncodingComboBox.itemText(
                         editServerVariables.consoleDeEncodingList.index(
                             editServerVariables.consoleInputDeEncoding
                         )
                     )
                     + "\n"
-                    + self.tr("JVM参数：\n")
+                    + self.tr("JVM参数: \n")
                     + "    "
                     + totalJVMArg
                     + "\n"
-                    + self.tr("服务器名称：")
+                    + self.tr("服务器名称: ")
                     + editServerVariables.serverName
                 )
                 w = MessageBox(title, content, self)
@@ -1173,8 +1298,10 @@ class ServerManagerPage(QWidget):
     def confirmForgeServer(self):
         if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
             w = MessageBox(
-                self.tr("这是不是一个Forge服务器？"),
-                self.tr("由于Forge的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"),
+                self.tr("这是不是一个 Forge 服务器？"),
+                self.tr(
+                    "由于 Forge 的安装比较离谱，所以我们需要询问您以对此类服务器进行特殊优化。"
+                ),
                 self,
             )
             w.yesButton.setText(self.tr("是"))
@@ -1188,8 +1315,16 @@ class ServerManagerPage(QWidget):
 
     def saveEditedServer(self):
         """真正的保存服务器函数"""
-        exit0Msg = self.tr('修改服务器"') + editServerVariables.serverName + self.tr('"成功！')
-        exit1Msg = self.tr('修改服务器"') + editServerVariables.serverName + self.tr('"失败！')
+        exit0Msg = (
+            self.tr("修改服务器「")
+            + editServerVariables.serverName
+            + self.tr("」成功！")
+        )
+        exit1Msg = (
+            self.tr("修改服务器「")
+            + editServerVariables.serverName
+            + self.tr("」失败！")
+        )
         exitCode = 0
 
         # 检查JVM参数防止意外无法启动服务器
@@ -1223,8 +1358,8 @@ class ServerManagerPage(QWidget):
                     content=self.tr("是否需要删除旧的服务器核心？"),
                     parent=self,
                 )
-                w2.yesButton.setText(self.tr("是的"))
-                w2.cancelButton.setText(self.tr("不用"))
+                w2.yesButton.setText(self.tr("需要"))
+                w2.cancelButton.setText(self.tr("不需要"))
                 w2.yesSignal.connect(
                     remove(
                         f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
@@ -1238,7 +1373,8 @@ class ServerManagerPage(QWidget):
                 != osp.getsize(
                     f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
                 )
-                and editServerVariables.coreFileName == editServerVariables.oldCoreFileName
+                and editServerVariables.coreFileName
+                == editServerVariables.oldCoreFileName
             ):
                 remove(
                     f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
@@ -1284,7 +1420,7 @@ class ServerManagerPage(QWidget):
                 InfoBar.info(
                     title=self.tr("功能提醒"),
                     content=self.tr(
-                        "您在设置中开启了“只保存全局服务器设置”。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                        "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
                     ),
                     orient=Qt.Horizontal,
                     isClosable=True,
@@ -1305,7 +1441,7 @@ class ServerManagerPage(QWidget):
                 and editServerVariables.serverName != editServerVariables.oldServerName
             ):
                 self.installingForgeStateToolTip = StateToolTip(
-                    self.tr("安装Forge"), self.tr("请稍后，正在安装..."), self
+                    self.tr("安装 Forge"), self.tr("请稍后，正在安装..."), self
                 )
                 self.installingForgeStateToolTip.move(
                     self.installingForgeStateToolTip.getSuitablePos()
@@ -1322,7 +1458,9 @@ class ServerManagerPage(QWidget):
                     editServerVariables.extraData["forge_version"] = (
                         self.forgeInstaller.forgeVersion
                     )
-                    self.forgeInstaller.installFinished.connect(self.afterInstallingForge)
+                    self.forgeInstaller.installFinished.connect(
+                        self.afterInstallingForge
+                    )
                     self.forgeInstaller.asyncInstall()
                 except Exception as e:
                     self.afterInstallingForge(False, e.args)
@@ -1376,7 +1514,8 @@ class ServerManagerPage(QWidget):
             editServerVariables.oldMinMem == editServerVariables.minMem
             and editServerVariables.oldMaxMem == editServerVariables.maxMem
             and editServerVariables.oldCoreFileName == editServerVariables.coreFileName
-            and editServerVariables.oldSelectedJavaPath == editServerVariables.selectedJavaPath
+            and editServerVariables.oldSelectedJavaPath
+            == editServerVariables.selectedJavaPath
             and editServerVariables.oldMemUnit == editServerVariables.memUnit
             and editServerVariables.oldJVMArg == editServerVariables.jvmArg
             and editServerVariables.oldServerName == editServerVariables.serverName
@@ -1403,16 +1542,19 @@ class ServerManagerPage(QWidget):
         self.runningServerCardGenerated.emit(w.monitorWidget)
 
     def backup(self, index):
-        w = MessageBox(self.tr("备份服务器"), self.tr("请选择你需要备份的文件："), self)
+        w = MessageBox(self.tr("备份服务器"), self.tr("请选择你需要备份的文件"), self)
         w.yesButton.setText(self.tr("服务器"))
         w.cancelButton.setText(self.tr("仅存档"))
         w.yesSignal.connect(
             lambda: backupServer(
-                ServerConfigConstructor.loadServerConfig(index=index).serverName, parent=self
+                ServerConfigConstructor.loadServerConfig(index=index).serverName,
+                parent=self,
             )
         )
         w.cancelSignal.connect(
-            lambda: backupSaves(ServerConfigConstructor.loadServerConfig(index=index), parent=self)
+            lambda: backupSaves(
+                ServerConfigConstructor.loadServerConfig(index=index), parent=self
+            )
         )
         w.exec_()
 

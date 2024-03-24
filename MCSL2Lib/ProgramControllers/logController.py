@@ -53,7 +53,7 @@ class _MCSL2Logger:
             format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
         )
         self.info(
-            f"\nMCSL2 - 日志\n本次启动时刻：{str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n{genSysReport()}"  # noqa: E501
+            f"\nMCSL2 - 日志\n本次启动时间: {str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}\n{genSysReport()}"  # noqa: E501
         )
 
     def _getLogFile(self) -> str:
@@ -155,12 +155,12 @@ def genSysReport() -> str:
         else f"{systemType()} {systemRelease()}"
     )
     return (
-        f"MCSL2版本：{MCSL2VERSION} {DEV_VERSION}\n"
-        f"Python版本：{pythonVersion()}\n"
-        f"Qt版本：{qVersion()}\n"
-        f"QFluentWidgets版本：{pfwVer}\n"
-        f"操作系统：{sysInfo}\n"
-        f"CPU：{systemProcessor()}\n"
-        f"架构：{systemArchitecture()[0]}\n"
-        f"内存占用：{str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))}MB"
+        f"MCSL2 版本: {MCSL2VERSION} {DEV_VERSION}\n"
+        f"Python 版本: {pythonVersion()}\n"
+        f"Qt 版本: {qVersion()}\n"
+        f"QFluentWidgets 版本: {pfwVer}\n"
+        f"操作系统: {sysInfo}\n"
+        f"CPU: {systemProcessor()}\n"
+        f"架构: {systemArchitecture()[0]}\n"
+        f"内存占用: {str(round(Process(getpid()).memory_full_info().uss / 1024 / 1024, 2))} MB"
     )

@@ -39,7 +39,7 @@ class DownloadEntryBox(MessageBoxBase):
         self.setModal(True)
         self.setMinimumSize(QSize(600, 0))
         self.setMaximumSize(QSize(16777215, 16777215))
-        self.titleLabel = SubtitleLabel(self.tr("下载项(正在加载...)"), self)
+        self.titleLabel = SubtitleLabel(self.tr("下载项 (正在加载...)"), self)
         self.entryView = TableWidget(self)
         self.viewLayout.addWidget(self.titleLabel)
         self.viewLayout.addWidget(self.entryView)
@@ -57,12 +57,14 @@ class DownloadEntryBox(MessageBoxBase):
         self.entryView.setColumnCount(4)
         self.columnSortOrder = [True] * 5
 
-        self.entryView.setHorizontalHeaderLabels([
-            self.tr("名称"),
-            self.tr("类型"),
-            self.tr("MC版本"),
-            self.tr("构建版本"),
-        ])
+        self.entryView.setHorizontalHeaderLabels(
+            [
+                self.tr("名称"),
+                self.tr("类型"),
+                self.tr("MC 版本"),
+                self.tr("构建版本"),
+            ]
+        )
         self.entryView.verticalHeader().hide()
         self.entryView.setWordWrap(False)
         self.entryView.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -115,12 +117,16 @@ class DownloadEntryBox(MessageBoxBase):
             self.entryView.setItem(i, 3, buildVersion)
         self.entryView.resizeRowsToContents()
         self.yesButton.setDisabled(True)
-        self.titleLabel.setText(self.tr("下载项(共") + str(len(entries)) + self.tr("项)"))
+        self.titleLabel.setText(
+            self.tr("下载项 (共 ") + str(len(entries)) + self.tr(" 项)")
+        )
 
     def onSectionClicked(self, index: int):
         self.entryView.horizontalHeader().setSortIndicatorShown(True)
         if self.columnSortOrder[index]:
-            self.entryView.horizontalHeader().setSortIndicator(index, Qt.DescendingOrder)
+            self.entryView.horizontalHeader().setSortIndicator(
+                index, Qt.DescendingOrder
+            )
             self.entryView.sortItems(index, Qt.DescendingOrder)
             self.columnSortOrder[index] = not self.columnSortOrder[index]
         else:

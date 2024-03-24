@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 <p align="left">
   <img align="left" height="200" src="https://img.fastmirror.net/s/2023/10/29/653deb00353b8.png" alt="MCSL2" style="float: left; border-radius: 10px;"/>
 </p>
@@ -45,7 +47,7 @@ ___
 
 ## 用到的开源项目
 
-请查看[此处](https://github.com/MCSLTeam/MCSL2/blob/master/pyproject.toml)  
+请查看 [此处](https://github.com/MCSLTeam/MCSL2/blob/master/pyproject.toml)  
 
 ## 从源码构建打包版
 
@@ -62,11 +64,11 @@ ___
 
 ## 相关链接
 
-MCSL 2官网：<https://mcsl.com.cn>  
-GitHub Issue：<https://github.com/MCSLTeam/MCSL2/issues>  
-QQ官方群聊：<https://mcsl.com.cn/links/mcsl2-qq-group.html>  
-GPLv3开源协议：<https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE>  
-QFluentWidgets：<https://qfluentwidgets.com>
+MCSL 2 官网: <https://mcsl.com.cn>  
+GitHub Issue: <https://github.com/MCSLTeam/MCSL2/issues>  
+QQ 官方群聊: <https://mcsl.com.cn/links/mcsl2-qq-group.html>  
+GPLv3 开源协议: <https://github.com/MCSLTeam/MCSL2/blob/master/LICENSE>  
+QFluentWidgets: <https://qfluentwidgets.com>
 
 ## 鸣谢
 

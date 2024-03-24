@@ -132,13 +132,15 @@ class Installer(QObject):
     def cancelInstall(self, cancelled=False):
         self.cancelled = True
         if not cancelled:
-            MCSL2Logger.warning("试图关闭ForgeInstaller...")
+            MCSL2Logger.warning("试图关闭 ForgeInstaller...")
             if self.workingProcess is not None:
                 self.workingProcess.kill()
                 self._cancelTimer.setSingleShot(True)
-                self._cancelTimer.timeout.connect(lambda: self.cancelInstall(True))  # 设置超时时间
+                self._cancelTimer.timeout.connect(
+                    lambda: self.cancelInstall(True)
+                )  # 设置超时时间
         else:
-            MCSL2Logger.error(msg="关闭ForgeInstaller超时,正在强制关闭...")
+            MCSL2Logger.error(msg="关闭 ForgeInstaller 超时,正在强制关闭...")
             self.workingProcess.kill()
             self._cancelTimer.stop()
             self._cancelTimer.deleteLater()
@@ -197,7 +199,9 @@ class BMCLAPIDownloader(QObject):
         self._reply = self._manager.get(request)
         self._reply.downloadProgress.connect(self.onDownloadProgress)
         # 连接重定向信号，打印重定向后的URL
-        self._reply.redirected.connect(lambda url: MCSL2Logger.info(f"Redirected to {url}"))
+        self._reply.redirected.connect(
+            lambda url: MCSL2Logger.info(f"Redirected to {url}")
+        )
 
     def onDownloadProgress(self, bytesReceived, bytesTotal):
         self.downloadProgress.emit(bytesReceived, bytesTotal)
@@ -262,8 +266,10 @@ class ForgeInstaller(Installer):
         else:
             raise InstallerError(
                 self.tr(
-                    "不支持的自动安装版本:{mcVersion}\nMCSL2的Forge自动安装仅支持Minecraft 1.8+"
-                ).format(mcVersion=self._mcVersion)  # noqa: E501
+                    "不支持的自动安装版本: {mcVersion}\nMCSL2 的 Forge 自动安装仅支持 Minecraft 1.8+"
+                ).format(
+                    mcVersion=self._mcVersion
+                )  # noqa: E501
             )
 
     def getInstallerData(self, jarFile):
@@ -290,15 +296,21 @@ class ForgeInstaller(Installer):
             .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
+            self._forgeVersion = (
+                versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
+            )
             return True
         elif "forge" in (version := self._profile.get("version", "")).lower():
             self._mcVersion = McVersion(version.split("-")[0])
-            self._forgeVersion = version.replace(str(self._mcVersion), "").replace("-", "")
+            self._forgeVersion = version.replace(str(self._mcVersion), "").replace(
+                "-", ""
+            )
             return True
         elif "forge" in (version := self._profile.get("id", "")).lower():
             self._mcVersion = McVersion(version.split("-")[0])
-            self._forgeVersion = version.replace(str(self._mcVersion), "").replace("-", "")
+            self._forgeVersion = version.replace(str(self._mcVersion), "").replace(
+                "-", ""
+            )
             return True
         else:
             return False
@@ -308,9 +320,9 @@ class ForgeInstaller(Installer):
             percent = bytesReceived * 100 / bytesTotal
         except ZeroDivisionError:
             percent = 0
-        MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
+        MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用 BMCLAPI 下载")
         self.downloadServerProgress.emit(
-            self.tr("(正在下载核心... {:.0f}%) 使用BMCLAPI下载").format(percent)
+            self.tr("(正在下载核心... {:.0f}%) 使用 BMCLAPI 下载").format(percent)
         )
 
     def onServerDownloadFinished(self, success: bool):
@@ -326,9 +338,11 @@ class ForgeInstaller(Installer):
 
         若安装过程中出现错误,则抛出InstallerError
         """
-        MCSL2Logger.debug(f"Forge安装：{self.__class__.__name__}{self._mcVersion}")
-        MCSL2Logger.debug(f"Forge安装：{self.__class__.__name__}, {self._forgeVersion}")
-        MCSL2Logger.debug(f"Forge安装：{self.thread().currentThreadId()=}")
+        MCSL2Logger.debug(f"Forge 安装: {self.__class__.__name__}{self._mcVersion}")
+        MCSL2Logger.debug(
+            f"Forge 安装: {self.__class__.__name__}, {self._forgeVersion}"
+        )
+        MCSL2Logger.debug(f"Forge 安装: {self.thread().currentThreadId()=}")
         if self.cancelled:
             self.installFinished.emit(False)
             return
@@ -369,11 +383,15 @@ class ForgeInstaller(Installer):
                 exist_ok=True,
             )
             self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
-            MCSL2Logger.debug(f"Forge安装：{cwd}")
+            MCSL2Logger.debug(f"Forge 安装: {cwd}")
             # self.onServerDownload(cwd, f"server-{self._mcVersion}.jar")
             self._bmclapiDownloader = BMCLAPIDownloader()
-            self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
-            self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
+            self._bmclapiDownloader.downloadProgress.connect(
+                self.onServerDownloadProgress
+            )
+            self._bmclapiDownloader.downloadFinished.connect(
+                self.onServerDownloadFinished
+            )
 
             if self._mcVersion >= McVersion("1.20"):
                 self._bmclapiDownloader.download(
@@ -389,8 +407,12 @@ class ForgeInstaller(Installer):
             self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
             # self.onServerDownload(self.cwd, f"minecraft_server.{self._mcVersion}.jar")
             self._bmclapiDownloader = BMCLAPIDownloader()
-            self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
-            self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
+            self._bmclapiDownloader.downloadProgress.connect(
+                self.onServerDownloadProgress
+            )
+            self._bmclapiDownloader.downloadFinished.connect(
+                self.onServerDownloadFinished
+            )
             self._bmclapiDownloader.download(
                 self._mcVersion, self.cwd, f"minecraft_server.{self._mcVersion}.jar"
             )
@@ -420,13 +442,15 @@ class ForgeInstaller(Installer):
             process = QProcess()
             process.setWorkingDirectory(self.cwd)
             process.setProgram(self.java)
-            process.setArguments([
-                "-jar",
-                self.file + ".tmp",
-                "--mirror",
-                "https://bmclapi2.bangbang93.com/maven/",
-                "--installServer",
-            ])
+            process.setArguments(
+                [
+                    "-jar",
+                    self.file + ".tmp",
+                    "--mirror",
+                    "https://bmclapi2.bangbang93.com/maven/",
+                    "--installServer",
+                ]
+            )
             process.readyReadStandardOutput.connect(
                 lambda: self._installerLogHandler(
                     "ForgeInstaller::PlanB"
@@ -457,14 +481,18 @@ class ForgeInstaller(Installer):
                             run = f.readlines()
                     # 找到java命令
                     try:
-                        command = list(filter(lambda x: x.startswith("java"), run)).pop()
+                        command = list(
+                            filter(lambda x: x.startswith("java"), run)
+                        ).pop()
                     except IndexError:
                         raise InstallerError("No java command found")
 
                     # 构造forge启动参数
                     try:
                         forgeArgs = list(
-                            filter(lambda x: x.startswith("@libraries"), command.split(" "))
+                            filter(
+                                lambda x: x.startswith("@libraries"), command.split(" ")
+                            )
                         ).pop()
                     except IndexError:
                         raise InstallerError("bad forge run script")
@@ -488,27 +516,37 @@ class ForgeInstaller(Installer):
                 try:
                     globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
                     d = globalServerList["MCSLServerList"][
-                        len(globalServerList["MCSLServerList"]) - 1
-                        if self.isEditing is None
-                        else self.isEditing
+                        (
+                            len(globalServerList["MCSLServerList"]) - 1
+                            if self.isEditing is None
+                            else self.isEditing
+                        )
                     ]
                     d["jvm_arg"].extend(forgeArgs)
-                    d.update({
-                        "icon": "Anvil.png",
-                        "server_type": "forge",
-                    })
+                    d.update(
+                        {
+                            "icon": "Anvil.png",
+                            "server_type": "forge",
+                        }
+                    )
                     globalServerList["MCSLServerList"].pop(
                         -1 if self.isEditing is None else self.isEditing
                     )
                     globalServerList["MCSLServerList"].append(d)
-                    writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+                    writeFile(
+                        r"MCSL2/MCSL2_ServerList.json",
+                        dumps(globalServerList, indent=4),
+                    )
                 except Exception as e:
                     raise e
 
                 # 写入单独配置
                 try:
                     if not cfg.get(cfg.onlySaveGlobalServerConfig):
-                        writeFile(osp.join(self.cwd, "MCSL2ServerConfig.json"), dumps(d, indent=4))
+                        writeFile(
+                            osp.join(self.cwd, "MCSL2ServerConfig.json"),
+                            dumps(d, indent=4),
+                        )
                 except Exception as e:
                     raise e
 
@@ -516,7 +554,8 @@ class ForgeInstaller(Installer):
             else:
                 self.installFinished.emit(False)
                 if (
-                    self.workingProcess.exitCode() != 0 and self.workingProcess.exitCode() != 62097
+                    self.workingProcess.exitCode() != 0
+                    and self.workingProcess.exitCode() != 62097
                 ):  # 62097是用户取消安装的错误码
                     raise InstallerError(
                         f"Forge installer exited with code {self.workingProcess.exitCode()}"
@@ -538,7 +577,9 @@ class ForgeInstaller(Installer):
         若是,则返回一个元组,包含mcVersion和forgeVersion : # type:McVersion, str
         若不是,则返回None
         """
-        if osp.getsize(fileName) > 10_000 * 1024:  # 若文件大于10MB,则几乎不可能是Forge安装器
+        if (
+            osp.getsize(fileName) > 10_000 * 1024
+        ):  # 若文件大于10MB,则几乎不可能是Forge安装器
             return None
         try:
             fileFile = ZipFile(fileName, mode="r")
@@ -644,9 +685,9 @@ class FabricInstaller(Installer):
 
     def onServerDownloadProgress(self, bytesReceived, bytesTotal):
         percent = bytesReceived * 100 / bytesTotal
-        MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用BMCLAPI下载")
+        MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用 BMCLAPI 下载")
         self.downloadServerProgress.emit(
-            self.tr("(正在下载核心... {:.0f}%) 使用BMCLAPI下载").format(percent)
+            self.tr("(正在下载核心... {:.0f}%) 使用 BMCLAPI 下载").format(percent)
         )
 
     def onServerDownloadFinished(self, success: bool):
@@ -656,7 +697,9 @@ class FabricInstaller(Installer):
         self.installFinished.emit(success)
 
     @classmethod
-    def isPossibleFabricInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
+    def isPossibleFabricInstaller(
+        cls, fileName: str
+    ) -> Optional[Tuple[McVersion, Any]]:
         """
         判断是否可能为Fabric安装器
         若是,则返回一个元组,包含mcVersion和fabricVersion : # type:McVersion, str

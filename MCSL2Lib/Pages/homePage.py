@@ -37,6 +37,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.singleton import Singleton
+
 try:
     from MCSL2Lib.verification import getAnnouncement
 except Exception:
@@ -62,7 +63,11 @@ class NoticeStrongBodyLabel(StrongBodyLabel):
     def mouseDoubleClickEvent(self, event):  # noqa: mouseDoubleClickEvent
         (QApplication.clipboard().setText(self.text().replace("公告: ", "")),)
         InfoBar.success(
-            "提示", "已复制公告", duration=1200, position=InfoBarPosition.TOP, parent=self.window()
+            "提示",
+            "已复制公告",
+            duration=1200,
+            position=InfoBarPosition.TOP,
+            parent=self.window(),
         )
         return super().mouseDoubleClickEvent(event)
 
@@ -108,7 +113,9 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setObjectName("subTitleLabel")
 
@@ -134,7 +141,9 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.home_btnWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.home_btnWidget.sizePolicy().hasHeightForWidth()
+        )
         self.home_btnWidget.setSizePolicy(sizePolicy)
         self.home_btnWidget.setMinimumSize(QSize(200, 135))
         self.home_btnWidget.setMaximumSize(QSize(200, 135))
@@ -165,7 +174,9 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.selectServerBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.selectServerBtn.sizePolicy().hasHeightForWidth()
+        )
         self.selectServerBtn.setSizePolicy(sizePolicy)
         self.selectServerBtn.setFixedSize(QSize(180, 65))
         self.selectServerBtn.setObjectName("selectServerBtn")
@@ -194,7 +205,7 @@ class HomePage(QWidget):
     @pyqtSlot(str)
     def afterSelectedServer(self, serverName):
         """选择服务器后的处理"""
-        self.startServerBtn.setText(self.tr("启动服务器：\n") + serverName)
+        self.startServerBtn.setText(self.tr("启动服务器: \n") + serverName)
 
 
 class GetNoticeThread(QThread):
@@ -212,7 +223,7 @@ class GetNoticeThread(QThread):
 
     def run(self):
         try:
-            notice = self.tr("公告: ") + getAnnouncement()
+            notice = self.tr("公告") + getAnnouncement()
             self.notice.emit(notice)
         except Exception:
             self.notice.emit(self.tr("网络连接失败，无法获取公告。"))

@@ -33,7 +33,9 @@ class ConsoleCenterPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.titleLayout.addWidget(self.subTitleLabel, 1, 0, 1, 1)
@@ -55,11 +57,15 @@ class ConsoleCenterPage(QWidget):
         self.runningServersScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.runningServersScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.runningServersScrollArea.setWidgetResizable(True)
-        self.runningServersScrollArea.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.runningServersScrollArea.setAlignment(
+            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop
+        )
 
         self.runningServersScrollAreaWidgetContents = QWidget()
         self.runningServersScrollAreaWidgetContents.setGeometry(QRect(0, 0, 670, 512))
-        self.runningServersScrollArea.setWidget(self.runningServersScrollAreaWidgetContents)
+        self.runningServersScrollArea.setWidget(
+            self.runningServersScrollAreaWidgetContents
+        )
         self.gridLayout.addWidget(self.runningServersScrollArea, 3, 2, 1, 1)
         self.flowLayout = FlowLayout(self.runningServersScrollAreaWidgetContents)
         self.flowLayout.setContentsMargins(0, 0, 0, 0)

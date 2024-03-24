@@ -384,7 +384,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             writeFile(
                 QFileDialog.getSaveFileName(
                     self,
-                    self.tr("MCSL2服务器 - 保存启动脚本"),
+                    self.tr("MCSL2 服务器 - 保存启动脚本"),
                     f"Run {self.serverConfig.serverName}.bat",
                     "Batch(*.bat);;Shell(*.sh)",
                 )[0],
@@ -404,7 +404,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def initSafelyQuitController(self):
         # 安全退出控件
         self.exitingMsgBox = MessageBox(
-            self.tr("安全关闭服务器“{serverName}”中...").format(serverName=self.serverConfig.serverName),
+            self.tr("安全关闭服务器「{serverName}」中...").format(serverName=self.serverConfig.serverName),
             self.tr("稍安勿躁。如果长时间没有反应，请尝试强制关闭服务器。"),
             parent=self,
         )
@@ -712,10 +712,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.genRunScriptBtn.setText(self.tr("生成启动脚本"))
         self.toggleServerBtn.setText(self.tr("启动服务器"))
         self.serverResMonitorTitle.setText(self.tr("服务器资源占用"))
-        self.serverRAMMonitorTitle.setText("RAM：[curr/max]")
-        self.serverCPUMonitorTitle.setText("CPU：")
+        self.serverRAMMonitorTitle.setText("RAM: [curr/max]")
+        self.serverCPUMonitorTitle.setText("CPU: ")
         self.existPlayersTitle.setText(self.tr("在线玩家列表"))
-        self.quickMenuTitleLabel.setText(self.tr("快捷菜单："))
+        self.quickMenuTitleLabel.setText(self.tr("快捷菜单: "))
         self.difficulty.setText(self.tr("游戏难度"))
         self.gamemode.setText(self.tr("游戏模式"))
         self.whiteList.setText(self.tr("白名单"))
@@ -733,11 +733,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.startAnalyze.setText(self.tr("开始分析"))
         self.resultTitle.setText(self.tr("分析结果："))
         self.copyResultBtn.setText(self.tr("复制"))
-        self.switchAnalyzeProviderBtn.setText(self.tr("当前：使用本地模块分析"))
-        self.switchAnalyzeProviderBtn.setOnText(self.tr("当前：使用CrashMC分析"))
-        self.switchAnalyzeProviderBtn.setOffText(self.tr("当前：使用本地模块分析"))
+        self.switchAnalyzeProviderBtn.setText(self.tr("当前: 使用本地模块分析"))
+        self.switchAnalyzeProviderBtn.setOnText(self.tr("当前: 使用 CrashMC 分析"))
+        self.switchAnalyzeProviderBtn.setOffText(self.tr("当前: 使用本地模块分析"))
         self.commandLineEdit.setPlaceholderText(
-            self.tr("在此输入指令，回车或点击右边按钮发送，不需要加/")
+            self.tr("在此输入指令，回车或点击右边按钮发送，不需要加 /")
         )
         self.serverOutput.setPlaceholderText(
             self.tr(self.tr("请先开启服务器！不开服务器没有日志！"))
@@ -809,7 +809,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.setTitleBar(ServerWindowTitleBar(self))
         cfg.themeChanged.connect(self.titleBar.setQss)
         self.setWindowTitle(
-            self.tr("MCSL2服务器 - {serverName}").format(serverName=self.serverConfig.serverName)
+            self.tr("MCSL2 服务器 - {serverName}").format(serverName=self.serverConfig.serverName)
         )
 
         self.setWindowIcon(QIcon(f":/built-InIcons/{self.serverConfig.serverIconName}"))
@@ -873,7 +873,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         w = MessageBox(
             title=self.tr("提示"),
             content=self.tr(
-                "你并未同意Minecraft的最终用户许可协议。\n请先同意EULA才可启动服务器。\n可点击下方的按钮查看Eula，或直接点击同意按钮。"
+                "你并未同意 Minecraft 的最终用户许可协议。\n请先同意 EULA 才可启动服务器。\n可点击下方的按钮查看 Eula，或直接点击同意按钮。"
             ),
             parent=self,
         )
@@ -1000,7 +1000,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         except (AttributeError, TypeError):
             pass
         self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
-        self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器正在启动，请稍后..."))
+        self.colorConsoleText(self.tr("[MCSL2 | 提示]: 服务器正在启动，请稍后..."))
 
     def unRegisterCommandOutput(self):
         try:
@@ -1035,21 +1035,21 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         if exitCode:
             if exitCode != 62097:
                 self.colorConsoleText(
-                    self.tr("[MCSL2 | 提示]：服务器崩溃，进程退出码为 {exitCode} ！").format(
+                    self.tr("[MCSL2 | 提示]: 服务器崩溃，进程退出码为 {exitCode} ！").format(
                         exitCode=exitCode
                     )
                 )
                 if cfg.get(cfg.restartServerWhenCrashed):
-                    self.colorConsoleText(self.tr("[MCSL2 | 提示]：正在重新启动服务器..."))
+                    self.colorConsoleText(self.tr("[MCSL2 | 提示]: 正在重新启动服务器..."))
                     self.unRegisterCommandOutput()
                     self.startServer()
                 else:
                     self.unRegisterCommandOutput()
             else:
-                self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器被强制结束进程。"))
+                self.colorConsoleText(self.tr("[MCSL2 | 提示]: 服务器被强制结束进程。"))
                 self.unRegisterCommandOutput()
         else:
-            self.colorConsoleText(self.tr("[MCSL2 | 提示]：服务器已关闭！"))
+            self.colorConsoleText(self.tr("[MCSL2 | 提示]: 服务器已关闭！"))
             self.unRegisterCommandOutput()
 
     @pyqtSlot(float)
@@ -1099,11 +1099,11 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             .replace("[m[", "[")
             .replace("[32m", "")
             .replace("Preparing spawn area", self.tr("准备生成点区域中"))
-            .replace("main/INFO", self.tr("主类/信息"))
-            .replace("main/WARN", self.tr("主类/警告"))
-            .replace("main/ERROR", self.tr("主类/错误"))
-            .replace("main/FATAL", self.tr("主类/致命错误"))
-            .replace("main/DEBUG", self.tr("主类/调试信息"))
+            .replace("main/INFO", self.tr("主类 | 信息"))
+            .replace("main/WARN", self.tr("主类 | 警告"))
+            .replace("main/ERROR", self.tr("主类 | 错误"))
+            .replace("main/FATAL", self.tr("主类 | 致命错误"))
+            .replace("main/DEBUG", self.tr("主类 | 调试信息"))
             .replace("INFO", self.tr("信息"))
             .replace("WARN", self.tr("警告"))
             .replace("ERROR", self.tr("错误"))
@@ -1112,10 +1112,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             .replace("Server thread", self.tr("服务器线程"))
             .replace("Server-Worker", self.tr("服务器工作进程"))
             .replace("DEBUG", self.tr("调试信息"))
-            .replace("Forge Version Check", self.tr("Forge版本检查"))
-            .replace("ModLauncher running: args", self.tr("ModLauncher运行中: 参数"))
+            .replace("Forge Version Check", self.tr("Forge 版本检查"))
+            .replace("ModLauncher running: args", self.tr("ModLauncher 运行中: 参数"))
             .replace("All chunks are saved", self.tr("所有区块已保存"))
-            .replace("Saving the game (this may take a moment!)", self.tr("保存游戏存档中（可能需要一些时间）"))  # noqa: E501
+            .replace("Saving the game (this may take a moment!)", self.tr("保存游戏存档中 (可能需要一些时间)"))  # noqa: E501
             .replace("Saved the game", self.tr("已保存游戏存档"))
             .replace("[33m[", "[")
             .replace("[", "[")
@@ -1133,7 +1133,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             fmt.setForeground(QBrush(color[1]))
             self.serverOutput.mergeCurrentCharFormat(fmt)
             self.serverOutput.appendPlainText(
-                self.tr("[MCSL2 | 警告]：服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")  # noqa: E501
+                self.tr("[MCSL2 | 警告]: 服务器疑似输出非法字符，也有可能是无法被当前编码解析的字符。请尝试更换编码。")  # noqa: E501
             )
             InfoBar.warning(
                 title=self.tr("警告"),
@@ -1166,12 +1166,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             port = self.serverConfig.serverProperties.get("server-port", 25565)
             self.colorConsoleText(
                 self.tr(
-                    "[MCSL2 | 提示]：服务器启动完毕！\n[MCSL2 | 提示]：在此电脑上连接，请使用 {ip}，端口为{port}。\n[MCSL2 | 提示]：在局域网内连接，请使用路由器分配的IP，端口为{port}。\n[MCSL2 | 提示]：如果非局域网内连接，请使用公网IP或内网穿透等服务，并使用相关服务地址连接。").format(ip=ip, port=port)  # noqa: E501
+                    "[MCSL2 | 提示]: 服务器启动完毕！\n[MCSL2 | 提示]: 在此电脑上连接，请使用 {ip}，端口为 {port}。\n[MCSL2 | 提示]: 在局域网内连接，请使用路由器分配的 IP，端口为 {port}。\n[MCSL2 | 提示]: 如果非局域网内连接，请使用公网 IP 或内网穿透等服务，并使用相关服务地址连接。").format(ip=ip, port=port)  # noqa: E501
             )
             self.isServerLoaded = True
             if port == "25565":
                 self.colorConsoleText(
-                    self.tr("[MCSL2 | 警告]：检测到您的服务器端口为25565，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
+                    self.tr("[MCSL2 | 警告]: 检测到您的服务器端口为 25565，如果服务器无法进入，请尝试删除端口后缀。")  # noqa: E501
                 )
             else:
                 pass
@@ -1194,7 +1194,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.tr("错误分析器日志"),
             self.errMsg
             if self.errMsg
-            else self.tr("本次没有检测到任何MCSL2内置错误分析可用解决方案。"),
+            else self.tr("本次没有检测到任何 MCSL2 内置错误分析可用解决方案。"),
             self,
         )
         w.cancelButton.setParent(None)
@@ -1360,17 +1360,17 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         """快捷菜单-白名单"""
         if self.getRunningStatus():
             whiteListWidget = playersController()
-            whiteListWidget.mode.addItems([self.tr("添加(add)"), self.tr("删除(remove)")])
+            whiteListWidget.mode.addItems([self.tr("添加 (add)"), self.tr("删除 (remove)")])
             whiteListWidget.who.textChanged.connect(
                 lambda: self.playersControllerLineEditTypeChecker(text=whiteListWidget.who.text())
             )
             whiteListWidget.playersTip.setText(self.getKnownServerPlayers())
             content = (
                 self.tr("请确保服务器的白名单功能处于启用状态。\n")
-                + self.tr("启用：/whitelist on\n")
-                + self.tr("关闭：/whitelist off\n")
-                + self.tr("列出当前白名单：/whitelist list\n")
-                + self.tr("重新加载白名单：/whitelist reload")
+                + self.tr("启用: /whitelist on\n")
+                + self.tr("关闭: /whitelist off\n")
+                + self.tr("列出当前白名单: /whitelist list\n")
+                + self.tr("重新加载白名单: /whitelist reload")
             )
             w = MessageBox(self.tr("白名单"), content, self)
             w.yesButton.setText(self.tr("确定"))
@@ -1526,5 +1526,5 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
         else:
             self.resultTextEdit.setPlainText(
-                "我们仍在积极与CrashMC对接，目前方案不可用，请使用本地分析。"
+                "我们仍在积极与 CrashMC 对接，目前方案不可用，请使用本地分析。"
             )

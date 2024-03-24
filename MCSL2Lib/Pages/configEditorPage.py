@@ -102,30 +102,32 @@ class ConfigEditorPage(QWidget):
         self.tabBar.hScrollBar.rangeChanged.connect(self.hScrollBarRangeChanged)
 
         self.treeModel.setRootPath("")
-        self.treeModel.setNameFilters([
-            "*.yml",
-            "*.json",
-            "*.conf",
-            "*.ini",
-            "*.properties",
-            "*.xml",
-            "*.yaml",
-            "*.tmlp",
-            "*.toml",
-            "*.txt",
-            "*.log",
-            "*.sh",
-            "*.bat",
-            "*.cmd",
-            "*.ps1",
-            "*.psm1",
-            "*.psd1",
-            "*.ps1xml",
-            "*.dsc",
-            "*.dscx",
-            "*.dscx12",
-            "*.*.ps1xml",
-        ])
+        self.treeModel.setNameFilters(
+            [
+                "*.yml",
+                "*.json",
+                "*.conf",
+                "*.ini",
+                "*.properties",
+                "*.xml",
+                "*.yaml",
+                "*.tmlp",
+                "*.toml",
+                "*.txt",
+                "*.log",
+                "*.sh",
+                "*.bat",
+                "*.cmd",
+                "*.ps1",
+                "*.psm1",
+                "*.psd1",
+                "*.ps1xml",
+                "*.dsc",
+                "*.dscx",
+                "*.dscx12",
+                "*.*.ps1xml",
+            ]
+        )
         self.treeModel.setNameFilterDisables(False)
 
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -197,7 +199,8 @@ class ConfigEditorPage(QWidget):
             except Exception as e:
                 InfoBar.info(
                     title=self.tr("抱歉"),
-                    content=self.tr("MCSL2无法打开此文件，原因：\n") + e.with_traceback(None),
+                    content=self.tr("MCSL2 无法打开此文件，原因：\n")
+                    + str(e.with_traceback(None)),
                     orient=Qt.Horizontal,
                     parent=self,
                     duration=1500,

@@ -1,3 +1,9 @@
+# Contribution Rules
+
+## Text Specification
+
+Follow [this rules](https://www.w3.org/International/clreq/).
+
 ## Commit Messages Specification
 
 - `Add | your msg` Add a new feature.

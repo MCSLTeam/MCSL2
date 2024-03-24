@@ -30,7 +30,13 @@ from aria2p import Client, API, Download
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
-from MCSL2Lib.utils import readFile, workingThreads, MCSL2Logger, writeFile, readBytesFile
+from MCSL2Lib.utils import (
+    readFile,
+    workingThreads,
+    MCSL2Logger,
+    writeFile,
+    readBytesFile,
+)
 
 
 class Aria2Controller:
@@ -294,9 +300,11 @@ class Aria2Controller:
         download: Download
         rv = {
             "connections": download.connections,
-            "speed": download.download_speed_string()
-            if download.status == "active"
-            else download.status,
+            "speed": (
+                download.download_speed_string()
+                if download.status == "active"
+                else download.status
+            ),
             "progress": download.progress_string(),
             "status": download.status,
             "totalLength": download.total_length_string(),
@@ -314,7 +322,7 @@ class Aria2Controller:
         * normally, this function is only used by Class:DownloadWatcher
         """
         try:
-            MCSL2Logger.info(f"Aria2下载已暂停: {cls._aria2.client.pause(gid)}")
+            MCSL2Logger.info(f"Aria2 下载已暂停: {cls._aria2.client.pause(gid)}")
             cls._downloadTasks.pop(gid)
         except Exception:
             pass
@@ -325,7 +333,7 @@ class Aria2Controller:
         Resume a download task by gid
         * normally, this function is only used by Class:DownloadWatcher
         """
-        MCSL2Logger.info(f"Aria2下载已恢复: {cls._aria2.client.unpause(gid)}")
+        MCSL2Logger.info(f"Aria2 下载已恢复: {cls._aria2.client.unpause(gid)}")
         cls._downloadTasks.update({gid: cls._aria2.get_download(gid).files})
 
     @classmethod
@@ -335,7 +343,7 @@ class Aria2Controller:
         * normally, this function is only used by Class:DownloadWatcher
         """
         try:
-            MCSL2Logger.info(f"Aria2下载已取消: {cls._aria2.client.remove(gid)}")
+            MCSL2Logger.info(f"Aria2 下载已取消: {cls._aria2.client.remove(gid)}")
         finally:
             if gid in cls._downloadTasks.keys():
                 cls._downloadTasks.pop(gid)
@@ -466,7 +474,7 @@ class Aria2BootThread(QThread):
         except Exception:
             self.loaded.emit(False)
         finally:
-            MCSL2Logger.info(f"启动Aria2耗时: {round(time.time() - time_time, 5)}秒")
+            MCSL2Logger.info(f"启动 Aria2 耗时: {round(time.time() - time_time, 5)} 秒")
 
 
 ###################
@@ -487,7 +495,9 @@ class Aria2ProcessThread(QThread):
     def run(self):
         MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
         MCSL2_Aria2Client.add_uris(self.DownloadURL)
-        process = Popen([self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT)
+        process = Popen(
+            [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
+        )
         process.wait()
 
 
@@ -885,7 +895,10 @@ class DL_EntryManager(QObject):
         """
         self.fileExisted()
         self.mutex.lock()
-        writeFile(self.file, json.dumps(self.entries, indent=4, ensure_ascii=False, sort_keys=True))
+        writeFile(
+            self.file,
+            json.dumps(self.entries, indent=4, ensure_ascii=False, sort_keys=True),
+        )
         self.mutex.unlock()
 
     def checkCoreEntry(self, coreName: str, originMd5: str, autoDelete=False):
@@ -1022,7 +1035,9 @@ class DL_EntryController(QObject):
 
         self.resultReady.connect(lambda _: self.worker.deleteLater())
         self.work.connect(self.worker.asyncDispatcher)
-        self.worker.onGetEntries.connect(lambda entries_: self.resultReady.emit(entries_))
+        self.worker.onGetEntries.connect(
+            lambda entries_: self.resultReady.emit(entries_)
+        )
         self.worker.onReadEntries.connect(lambda d: self.resultReady.emit(d))
 
 

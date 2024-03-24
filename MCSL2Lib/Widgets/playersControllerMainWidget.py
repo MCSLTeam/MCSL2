@@ -72,7 +72,9 @@ class playersController(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.targetSelectorTipTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.targetSelectorTipTitle.sizePolicy().hasHeightForWidth()
+        )
         self.targetSelectorTipTitle.setSizePolicy(sizePolicy)
         self.targetSelectorTipTitle.setObjectName("targetSelectorTipTitle")
 
@@ -81,7 +83,9 @@ class playersController(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.targetSelectorTip.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.targetSelectorTip.sizePolicy().hasHeightForWidth()
+        )
         self.targetSelectorTip.setSizePolicy(sizePolicy)
         self.targetSelectorTip.setObjectName("targetSelectorTip")
 
@@ -90,7 +94,9 @@ class playersController(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.playersTipTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.playersTipTitle.sizePolicy().hasHeightForWidth()
+        )
         self.playersTipTitle.setSizePolicy(sizePolicy)
         self.playersTipTitle.setObjectName("playersTipTitle")
 
@@ -110,11 +116,11 @@ class playersController(QWidget):
 
         self.who.setPlaceholderText(self.tr("填写玩家名或目标选择器"))
         self.targetSelectorTip.setText(
-            self.tr("@p - 最近的玩家(在控制台可能无法使用)\n")
+            self.tr("@p - 最近的玩家 (在控制台可能无法使用)\n")
             + self.tr("@r - 随机玩家\n")
             + self.tr("@a - 所有玩家\n")
-            + self.tr("@e - 所有实体(不包括死亡实体)\n")
-            + self.tr("@s - 命令执行者(控制台不可用)")
+            + self.tr("@e - 所有实体 (不包括死亡实体)\n")
+            + self.tr("@s - 命令执行者 (控制台不可用)")
         )
-        self.playersTipTitle.setText(self.tr("当前在线玩家：(可能不准确)"))
-        self.targetSelectorTipTitle.setText(self.tr("目标选择器提示:"))
+        self.playersTipTitle.setText(self.tr("当前在线玩家: (可能不准确)"))
+        self.targetSelectorTipTitle.setText(self.tr("目标选择器提示: "))

@@ -20,12 +20,11 @@ class ServerErrorHandler:
             cls.lineCount += 1
 
             if "UnsupportedClassVersionError" in errMsg:
-                cls.msg += "Java版本不正确，请更换Java。\n"
+                cls.msg += "Java 版本不正确，请更换 Java。\n"
                 a = int(
                     errMsg[
-                        errMsg.index("(class file version ") + 20 : errMsg.index(
-                            "(class file version "
-                        )
+                        errMsg.index("(class file version ")
+                        + 20 : errMsg.index("(class file version ")
                         + 22
                     ]
                 )
@@ -47,17 +46,15 @@ class ServerErrorHandler:
                 }
 
                 if a in versionMapping:
-                    cls.msg += f"根据错误报告，推荐使用{versionMapping[a]}。\n"
+                    cls.msg += f"根据错误报告，推荐使用 {versionMapping[a]}。\n"
 
             elif "Unsupported Java detected" in errMsg:
-                cls.msg += "该服务器正在使用的Java与服务器不兼容。\n"
-                cls.msg += f"请使用{errMsg[errMsg.index('Only up to ') + 11: errMsg.index('Only up to ') + 18]}\n"  # noqa: E501
+                cls.msg += "该服务器正在使用的 Java 与服务器不兼容。\n"
+                cls.msg += f"请使用 {errMsg[errMsg.index('Only up to ') + 11: errMsg.index('Only up to ') + 18]}\n"  # noqa: E501
 
             elif "requires running the server with" in errMsg:
-                cls.msg += "该服务器正在使用的Java与服务器不匹配。\n"
-                cls.msg += (
-                    f"请使用{errMsg[errMsg.index('Java') + 4: errMsg.index('Java') + 11]}！\n"
-                )
+                cls.msg += "该服务器正在使用的 Java 与服务器不匹配。\n"
+                cls.msg += f"请使用 {errMsg[errMsg.index('Java') + 4: errMsg.index('Java') + 11]}！\n"
 
             elif "OutOfMemoryError" in errMsg:
                 cls.msg += "服务器内存溢出。请检查服务器内存设置，不要超出可用内存，也不要太小。\n"
@@ -67,7 +64,7 @@ class ServerErrorHandler:
 
             elif "Unrecognized VM option" in errMsg:
                 cls.msg += (
-                    "服务器JVM参数有误，请前往服务器管理页修改或删除以下参数：\n"
+                    "服务器 JVM 参数有误，请前往服务器管理页修改或删除以下参数: \n"
                     + errMsg[errMsg.index("'") + 1 : errMsg.rindex(" '")]
                     + "\n"
                 )
@@ -81,7 +78,8 @@ class ServerErrorHandler:
             elif "进程无法访问" in errMsg:
                 if (
                     not cls.msg
-                    or "文件被占用，您的服务器可能多开，请检查任务管理器等。\n" not in cls.msg
+                    or "文件被占用，您的服务器可能多开，请检查任务管理器等。\n"
+                    not in cls.msg
                 ):
                     cls.msg += "文件被占用，您的服务器可能多开，请检查任务管理器等。\n"
 
@@ -89,53 +87,55 @@ class ServerErrorHandler:
                 cls.msg += "此服务器使用的端口已被占用，请使用第三方分析软件查找占用进程并解决。\n"
 
             elif "Unable to access jarfile" in errMsg:
-                cls.msg += "无法访问Jar可执行文件，请检查文件是否存在，或更换服务器核心或名称。\n"
+                cls.msg += "无法访问 Jar 可执行文件，请检查文件是否存在，或更换服务器核心或名称。\n"
 
             elif "加载 Java 代理时出错" in errMsg:
-                cls.msg += "无法访问Jar可执行文件，请检查文件是否存在，或更换服务器核心或名称。\n"
+                cls.msg += "无法访问 Jar 可执行文件，请检查文件是否存在，或更换服务器核心或名称。\n"
 
             elif "ArraylndexOutOfBoundsException" in errMsg:
                 cls.msg += "服务器发生数组越界错误，请尝试更换服务端。\n"
 
             elif "ClassCastException" in errMsg:
-                cls.msg += "服务器发生类转换异常，请检查Java版本是否匹配。\n"
+                cls.msg += "服务器发生类转换异常，请检查 Java 版本是否匹配。\n"
 
             elif "could not open" in errMsg and "jvm.cfg" in errMsg:
-                cls.msg += (
-                    "Java环境异常，请检查Java的安装是否完整，若无法确定原因，请尝试重装Java。\n"
-                )
+                cls.msg += "Java 环境异常，请检查 Java 的安装是否完整，若无法确定原因，请尝试重装Java。\n"
 
             elif "Failed to download vanilla jar" in errMsg:
-                cls.msg += "服务器下载原版核心文件失败，请检查网络，必要的情况下请使用代理。\n"
+                cls.msg += (
+                    "服务器下载原版核心文件失败，请检查网络，必要的情况下请使用代理。\n"
+                )
 
             elif 'Exception in thread "main"' in errMsg:
-                cls.msg += '服务端给出了如下报错：\nException in thread "main"\n请尝试更换Java版本或服务端。'  # noqa: E501
+                cls.msg += '服务端给出了如下报错：\nException in thread "main"\n请尝试更换 Java 版本或服务端。'  # noqa: E501
 
         if "Could not load" in errMsg and "plugin" in errMsg:
-            cls.msg += "无法加载下列插件：\n"
+            cls.msg += "无法加载下列插件:\n"
             startIdx = errMsg.index("Could not load '") + 16
             endIdx = errMsg.index("' ", startIdx)
             cls.msg += "{}\n".format(errMsg[startIdx:endIdx])
         elif "Error loading plugin" in errMsg:
-            cls.msg += "无法加载下列插件：\n"
+            cls.msg += "无法加载下列插件:\n"
             startIdx = errMsg.index(" '") + 2
             endIdx = errMsg.index("' ", startIdx)
             cls.msg += "{}\n".format(errMsg[startIdx:endIdx])
 
         elif "Error occurred while enabling " in errMsg:
-            cls.msg += (
-                f"在启用 {errMsg[errMsg.index('enabling ') + 9: errMsg.index(' (')]} 时发生了错误\n"
-            )
+            cls.msg += f"在启用 {errMsg[errMsg.index('enabling ') + 9: errMsg.index(' (')]} 时发生了错误\n"
 
         elif "Encountered an unexpected exception" in errMsg:
             cls.msg += "服务器出现意外崩溃，可能是由于模组冲突，请检查您的模组列表。\n如果使用的是整合包，请使用整合包制作方提供的服务器专用包开服。\n"  # noqa: E501
 
         elif "Mod" in errMsg and "requires" in errMsg:
             if "&" in errMsg:
-                errMsg = "".join(everyMsg[1:] for everyMsg in errMsg.split("&") if everyMsg)
+                errMsg = "".join(
+                    everyMsg[1:] for everyMsg in errMsg.split("&") if everyMsg
+                )
 
             elif "§" in errMsg:
-                errMsg = "".join(every_msg[1:] for every_msg in errMsg.split("§") if every_msg)
+                errMsg = "".join(
+                    every_msg[1:] for every_msg in errMsg.split("§") if every_msg
+                )
 
             elif "\x1B" in errMsg:
                 errMsg = "".join(

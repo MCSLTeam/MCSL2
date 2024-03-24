@@ -50,7 +50,10 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2BootThread, Aria2Controller
+from MCSL2Lib.ProgramControllers.aria2ClientController import (
+    Aria2BootThread,
+    Aria2Controller,
+)
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.updateController import (
     CheckUpdateThread,
@@ -61,6 +64,7 @@ from MCSL2Lib.ProgramControllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
+
 try:
     from MCSL2Lib.verification import generateUniqueCode
 except Exception:
@@ -91,7 +95,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.titleLimitWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.titleLimitWidget.sizePolicy().hasHeightForWidth()
+        )
         self.titleLimitWidget.setSizePolicy(sizePolicy)
 
         self.gridLayout_2 = QGridLayout(self.titleLimitWidget)
@@ -111,7 +117,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -136,32 +144,36 @@ class SettingsPage(QWidget):
             self.settingsScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
         )
         self.settingsScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.settingsScrollAreaWidgetContents.setObjectName("settingsScrollAreaWidgetContents")
+        self.settingsScrollAreaWidgetContents.setObjectName(
+            "settingsScrollAreaWidgetContents"
+        )
 
         self.settingsLayout = QVBoxLayout(self.settingsScrollAreaWidgetContents)
         self.settingsLayout.setContentsMargins(0, 0, 0, 0)
         self.settingsLayout.setObjectName("settingsLayout")
 
         # Server
-        self.serverSettingsGroup = SettingCardGroup(self.tr("服务器设置"), self.settingsWidget)
+        self.serverSettingsGroup = SettingCardGroup(
+            self.tr("服务器设置"), self.settingsWidget
+        )
         self.autoRunLastServer = SwitchSettingCard(
             icon=FIF.ROBOT,
-            title=self.tr("自动启动MCSL2时自动运行上次运行的服务器"),
+            title=self.tr("自动启动 MCSL2 时自动运行上次运行的服务器"),
             content=self.tr("此项由于大量资源占用已被暂时禁用。"),
             configItem=cfg.autoRunLastServer,
             parent=self.serverSettingsGroup,
         )
         self.acceptAllMojangEula = SwitchSettingCard(
             icon=FIF.ACCEPT,
-            title=self.tr("自动同意EULA"),
-            content=self.tr("创建时自动同意服务器的Minecraft Eula。"),
+            title=self.tr("自动同意 EULA"),
+            content=self.tr("创建时自动同意服务器的 Minecraft Eula。"),
             configItem=cfg.acceptAllMojangEula,
             parent=self.serverSettingsGroup,
         )
         self.sendStopInsteadOfKill = SwitchSettingCard(
             icon=FIF.VPN,
-            title=self.tr("总是向服务器发送“stop”以安全地关闭服务器"),
-            content=self.tr('此项因为安全性已被永久禁止更改。'),
+            title=self.tr("总是向服务器发送「stop」以安全地关闭服务器"),
+            content=self.tr("此项因为安全性已被永久禁止更改。"),
             configItem=cfg.sendStopInsteadOfKill,
             parent=self.serverSettingsGroup,
         )
@@ -190,7 +202,7 @@ class SettingsPage(QWidget):
             title=self.tr("新建服务器引导方式"),
             content=self.tr("有三种方式供你选择。"),
             texts=[
-                self.tr("初始（简易+进阶+导入）"),
+                self.tr("初始 (简易 + 进阶 + 导入)"),
                 self.tr("简易模式"),
                 self.tr("进阶模式"),
                 self.tr("导入"),
@@ -212,36 +224,42 @@ class SettingsPage(QWidget):
             parent=self.configureServerSettingsGroup,
         )
         self.configureServerSettingsGroup.addSettingCard(self.newServerType)
-        self.configureServerSettingsGroup.addSettingCard(self.onlySaveGlobalServerConfig)
-        self.configureServerSettingsGroup.addSettingCard(self.clearAllNewServerConfigInProgram)
+        self.configureServerSettingsGroup.addSettingCard(
+            self.onlySaveGlobalServerConfig
+        )
+        self.configureServerSettingsGroup.addSettingCard(
+            self.clearAllNewServerConfigInProgram
+        )
         self.settingsLayout.addWidget(self.configureServerSettingsGroup)
 
         # Download
-        self.downloadSettingsGroup = SettingCardGroup(self.tr("下载设置"), self.settingsWidget)
+        self.downloadSettingsGroup = SettingCardGroup(
+            self.tr("下载设置"), self.settingsWidget
+        )
         self.downloadSource = OptionsSettingCard(
             configItem=cfg.downloadSource,
             icon=FIF.IOT,
             title=self.tr("下载源"),
             content=self.tr("随你所好。"),
             texts=[
-                self.tr("FastMirror镜像站"),
+                self.tr("FastMirror 镜像站"),
                 self.tr("MCSLAPI"),
                 self.tr("极星·镜像站"),
-                self.tr("Akira Cloud镜像站"),
+                self.tr("Akira Cloud 镜像站"),
             ],
             parent=self.downloadSettingsGroup,
         )
         self.alwaysAskSaveDirectory = SwitchSettingCard(
             icon=FIF.CHAT,
             title=self.tr("总是询问保存路径"),
-            content=self.tr("不勾选则保存到MCSL2/Downloads文件夹。"),
+            content=self.tr("不勾选则保存到 MCSL2/Downloads 文件夹。"),
             configItem=cfg.alwaysAskSaveDirectory,
             parent=self.downloadSettingsGroup,
         )
         self.aria2Thread = RangeSettingCard(
             configItem=cfg.aria2Thread,
             icon=FIF.SPEED_HIGH,
-            title=self.tr("Aria2下载引擎线程数"),
+            title=self.tr("Aria2 下载引擎线程数"),
             content=self.tr("太高可不好哦。"),
             parent=self.downloadSettingsGroup,
         )
@@ -262,13 +280,15 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.downloadSettingsGroup)
 
         # Console
-        self.consoleSettingsGroup = SettingCardGroup(self.tr("终端设置"), self.settingsWidget)
+        self.consoleSettingsGroup = SettingCardGroup(
+            self.tr("终端设置"), self.settingsWidget
+        )
         self.outputDeEncoding = ComboBoxSettingCard(
             configItem=cfg.outputDeEncoding,
             icon=FIF.CODE,
             title=self.tr("控制台输出编码"),
             content=self.tr("优先级低于服务器配置设置。"),
-            texts=[self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI(推荐)")],
+            texts=[self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI (推荐)")],
             parent=self.consoleSettingsGroup,
         )
         self.inputDeEncoding = ComboBoxSettingCard(
@@ -280,7 +300,7 @@ class SettingsPage(QWidget):
                 self.tr("跟随控制台输出"),
                 self.tr("UTF-8"),
                 self.tr("GB18030"),
-                self.tr("ANSI(推荐)"),
+                self.tr("ANSI (推荐)"),
             ],
             parent=self.consoleSettingsGroup,
         )
@@ -305,7 +325,9 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.consoleSettingsGroup)
 
         # Software
-        self.programSettingsGroup = SettingCardGroup(self.tr("程序设置"), self.settingsWidget)
+        self.programSettingsGroup = SettingCardGroup(
+            self.tr("程序设置"), self.settingsWidget
+        )
         self.themeMode = OptionsSettingCard(
             cfg.themeMode,
             FIF.BRUSH,
@@ -337,8 +359,12 @@ class SettingsPage(QWidget):
         )
         self.alwaysRunAsAdministrator.setEnabled(False)
         self.startOnStartup.setEnabled(False)
-        self.themeColor.colorChanged.connect(lambda cl: setThemeColor(color=cl, lazy=True))
-        self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci), lazy=True))
+        self.themeColor.colorChanged.connect(
+            lambda cl: setThemeColor(color=cl, lazy=True)
+        )
+        self.themeMode.optionChanged.connect(
+            lambda ci: setTheme(cfg.get(ci), lazy=True)
+        )
         # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
@@ -347,18 +373,20 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.programSettingsGroup)
 
         # Update
-        self.updateSettingsGroup = SettingCardGroup(self.tr("更新设置"), self.settingsWidget)
+        self.updateSettingsGroup = SettingCardGroup(
+            self.tr("更新设置"), self.settingsWidget
+        )
         self.checkUpdateSetting = PrimaryPushSettingCard(
             icon=FIF.SYNC,
             text=self.tr("检查更新"),
             title=self.tr("检查更新"),
-            content=self.tr("当前版本：") + MCSL2VERSION,
+            content=self.tr("当前版本: ") + MCSL2VERSION,
             parent=self.updateSettingsGroup,
         )
         self.checkUpdateOnStart = SwitchSettingCard(
             icon=FIF.SPEED_MEDIUM,
             title=self.tr("启动时自动检查更新"),
-            content=self.tr("可确保你的MCSL2最新。"),
+            content=self.tr("可确保你的 MCSL2 最新。"),
             configItem=cfg.checkUpdateOnStart,
             parent=self.consoleSettingsGroup,
         )
@@ -387,7 +415,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aboutContentWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aboutContentWidget.sizePolicy().hasHeightForWidth()
+        )
         self.aboutContentWidget.setSizePolicy(sizePolicy)
         self.aboutContentWidget.setObjectName("aboutContentWidget")
 
@@ -395,12 +425,17 @@ class SettingsPage(QWidget):
         self.gridLayout.setObjectName("gridLayout")
 
         self.openOfficialWeb = HyperlinkButton(
-            "https://mcsl.com.cn", self.tr("打开官网"), self.aboutContentWidget, FIF.HOME
+            "https://mcsl.com.cn",
+            self.tr("打开官网"),
+            self.aboutContentWidget,
+            FIF.HOME,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openOfficialWeb.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openOfficialWeb.sizePolicy().hasHeightForWidth()
+        )
         self.openOfficialWeb.setSizePolicy(sizePolicy)
         self.openOfficialWeb.setObjectName("openOfficialWeb")
 
@@ -414,7 +449,9 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.openSourceCodeRepo.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.openSourceCodeRepo.sizePolicy().hasHeightForWidth()
+        )
         self.openSourceCodeRepo.setSizePolicy(sizePolicy)
         self.openSourceCodeRepo.setObjectName("openSourceCodeRepo")
 
@@ -438,21 +475,29 @@ class SettingsPage(QWidget):
 
         self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
         self.generateSysReport = PrimaryPushButton(
-            icon=FIF.DICTIONARY, text=self.tr("系统报告"), parent=self.aboutContentWidget
+            icon=FIF.DICTIONARY,
+            text=self.tr("系统报告"),
+            parent=self.aboutContentWidget,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.generateSysReport.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.generateSysReport.sizePolicy().hasHeightForWidth()
+        )
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
 
         self.gridLayout.addWidget(self.generateSysReport, 1, 5, 1, 1)
-        self.uniqueCodeBtn = PrimaryPushButton(icon=FIF.PASTE, text=self.tr("复制识别码"), parent=self)
+        self.uniqueCodeBtn = PrimaryPushButton(
+            icon=FIF.PASTE, text=self.tr("复制识别码"), parent=self
+        )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.uniqueCodeBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.uniqueCodeBtn.sizePolicy().hasHeightForWidth()
+        )
         self.uniqueCodeBtn.setSizePolicy(sizePolicy)
         self.uniqueCodeBtn.setObjectName("uniqueCodeBtn")
 
@@ -506,9 +551,11 @@ class SettingsPage(QWidget):
         self.gridLayout_3.addWidget(self.settingsWidget, 2, 1, 1, 1)
 
         self.titleLabel.setText(self.tr("设置"))
-        self.subTitleLabel.setText(self.tr("自定义你的MCSL2。"))
+        self.subTitleLabel.setText(self.tr("自定义你的 MCSL2。"))
         self.aboutContent.setText(
-            self.tr("MCSL2是一个开源非营利性项目，遵循GNU General Public License 3.0开源协议。\n任何人皆可使用MCSL2的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与“MCSL2”有\n明显辨识度。\n\nCopyright © MCSLTeam. All right reserved.\n")  # noqa : E501
+            self.tr(
+                "MCSL2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与「MCSL2」有\n明显辨识度。\n\nCopyright © MCSLTeam. All right reserved.\n"
+            )  # noqa : E501
         )
         self.aboutTitle.setText(self.tr("关于"))
         self.generateSysReport.clicked.connect(self.generateSystemReport)
@@ -529,7 +576,7 @@ class SettingsPage(QWidget):
     def showNeedRestartMsg(self):
         InfoBar.success(
             title=self.tr("已修改"),
-            content=self.tr("该配置将在重启MCSL2后生效"),
+            content=self.tr("该配置将在重启 MCSL2 后生效"),
             orient=Qt.Horizontal,
             isClosable=True,
             position=InfoBarPosition.TOP_RIGHT,
@@ -548,7 +595,7 @@ class SettingsPage(QWidget):
     def onAria2Reloaded(self, flag: bool):
         if flag:
             InfoBar.success(
-                title=self.tr("Aria2下载引擎重启成功。"),
+                title=self.tr("Aria2 下载引擎重启成功。"),
                 content="",
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -558,8 +605,8 @@ class SettingsPage(QWidget):
             )
         else:
             InfoBar.error(
-                title=self.tr("Aria2下载引擎重启失败"),
-                content=self.tr("请检查是否安装了Aria2。"),
+                title=self.tr("Aria2 下载引擎重启失败"),
+                content=self.tr("请检查是否安装了 Aria2。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -613,7 +660,7 @@ class SettingsPage(QWidget):
             self.checkUpdateSetting.button.setEnabled(True)
             return
         if compareVersion(latestVerInfo["latest"]):
-            title = self.tr("发现新版本：") + latestVerInfo["latest"]
+            title = self.tr("发现新版本: ") + latestVerInfo["latest"]
             w = MessageBox(title, latestVerInfo["update-log"], parent=self.tmpParent)
             w.contentLabel.setTextFormat(Qt.MarkdownText)
             w.yesButton.setText(self.tr("更新"))
@@ -625,7 +672,7 @@ class SettingsPage(QWidget):
                 w.yesSignal.connect(
                     lambda: InfoBar.error(
                         title=self.tr("不行"),
-                        content=self.tr("开发模式下更新会把Python删掉的"),
+                        content=self.tr("开发模式下更新会把 Python 删掉的"),
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP_RIGHT,
@@ -650,13 +697,13 @@ class SettingsPage(QWidget):
     def generateSystemReport(self):
         """创建系统报告"""
         report = (
-            self.tr("生成时间：")
+            self.tr("生成时间: ")
             + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             + "\n"
             + genSysReport()
         )
 
-        title = self.tr("MCServerLauncher 2系统报告")
+        title = self.tr("MCServerLauncher 2 系统报告")
         w = MessageBox(
             title,
             report + self.tr("\n\n点击复制按钮以复制到剪贴板。"),

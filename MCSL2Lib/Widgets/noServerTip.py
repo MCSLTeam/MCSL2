@@ -48,7 +48,9 @@ class NoServerWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.errPixmapWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.errPixmapWidget.sizePolicy().hasHeightForWidth()
+        )
         self.errPixmapWidget.setSizePolicy(sizePolicy)
         self.errPixmapWidget.setObjectName("errPixmapWidget")
         self.horizontalLayout_2 = QHBoxLayout(self.errPixmapWidget)
@@ -63,14 +65,18 @@ class NoServerWidget(QWidget):
         self.errPixmap.setSizePolicy(sizePolicy)
         self.errPixmap.setObjectName("errPixmap")
         self.horizontalLayout_2.addWidget(self.errPixmap)
-        spacerItem1 = QSpacerItem(270, 114, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        spacerItem1 = QSpacerItem(
+            270, 114, QSizePolicy.Expanding, QSizePolicy.Expanding
+        )
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout.addWidget(self.errPixmapWidget)
         self.errTextWidget = QWidget(self)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.errTextWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.errTextWidget.sizePolicy().hasHeightForWidth()
+        )
         self.errTextWidget.setSizePolicy(sizePolicy)
         self.errTextWidget.setObjectName("errTextWidget")
         self.horizontalLayout = QHBoxLayout(self.errTextWidget)
@@ -90,6 +96,8 @@ class NoServerWidget(QWidget):
         self.horizontalLayout.addItem(spacerItem3)
         self.verticalLayout.addWidget(self.errTextWidget)
 
-        self.errText.setText(self.tr("好像还没有添加过的服务器欸。先去“新建”页新建一个？"))
+        self.errText.setText(
+            self.tr("好像还没有添加过的服务器欸。先去「新建」页新建一个？")
+        )
         self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
         self.errPixmap.setFixedSize(QSize(80, 80))

@@ -28,20 +28,22 @@ class ServerValidator(QObject):
         c = self.checkCoreSet(v)
         d = self.checkServerNameSet(name, v)
         e = self.checkJVMArgSet(jvmArg, v)
-        return "\n".join([
-            a[0] if a[1] else "1",
-            b[0] if b[1] else "1",
-            c[0] if c[1] else "1",
-            d[0] if d[1] else "1",
-            e[0] if e[1] else "1",
-        ]).replace("1\n", "").replace("1", ""), int(a[1] + b[1] + c[1] + d[1] + e[1])
+        return "\n".join(
+            [
+                a[0] if a[1] else "1",
+                b[0] if b[1] else "1",
+                c[0] if c[1] else "1",
+                d[0] if d[1] else "1",
+                e[0] if e[1] else "1",
+            ]
+        ).replace("1\n", "").replace("1", ""), int(a[1] + b[1] + c[1] + d[1] + e[1])
 
     def checkJavaSet(self, v: BaseServerVariables):
         """检查Java设置"""
         if v.selectedJavaPath != "":
-            return self.tr("Java检查: 正常"), 0
+            return self.tr("Java 检查: 正常"), 0
         else:
-            return self.tr("Java检查: 出错，缺失"), 1
+            return self.tr("Java 检查: 出错，缺失"), 1
 
     def checkMemSet(self, minMem, maxMem, v: BaseServerVariables):
         """检查内存设置"""
@@ -59,7 +61,10 @@ class ServerValidator(QObject):
                         return self.tr("内存检查: 正常"), 0
 
                     else:
-                        return self.tr("内存检查: 出错, 最小内存必须小于等于最大内存"), 1
+                        return (
+                            self.tr("内存检查: 出错, 最小内存必须小于等于最大内存"),
+                            1,
+                        )
                 else:
                     return self.tr("内存检查: 出错, 不为整数"), 1
             else:
@@ -124,7 +129,7 @@ class ServerValidator(QObject):
         """检查JVM参数设置，同时设置"""
         if j != "":
             v.jvmArg = j.split(" ")
-            return self.tr("JVM参数检查：正常"), 0
+            return self.tr("JVM 参数检查: 正常"), 0
         else:
             v.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
-            return self.tr("JVM参数检查：正常（无参数，自动启用log4j2防护）"), 0
+            return self.tr("JVM 参数检查: 正常 (无参数，自动启用 log4j2 防护)"), 0

@@ -15,7 +15,14 @@ A single widget template for managing exist Minecraft servers.
 """
 
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QWidget, QSizePolicy, QGridLayout, QSpacerItem, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import (
+    QWidget,
+    QSizePolicy,
+    QGridLayout,
+    QSpacerItem,
+    QVBoxLayout,
+    QHBoxLayout,
+)
 from qfluentwidgets import (
     BodyLabel,
     SimpleCardWidget,
@@ -33,7 +40,9 @@ from MCSL2Lib.variables import GlobalMCSL2Variables
 class SingleServerManager(SimpleCardWidget):
     """单独的服务器管理Widget模板"""
 
-    def __init__(self, mem, coreFileName, javaPath, serverName, icon, btnSlot, i, parent=None):
+    def __init__(
+        self, mem, coreFileName, javaPath, serverName, icon, btnSlot, i, parent=None
+    ):
         super().__init__(parent)
 
         self.setObjectName("singleServerManagerWidget")
@@ -90,7 +99,9 @@ class SingleServerManager(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.serverInfoWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.serverInfoWidget.sizePolicy().hasHeightForWidth()
+        )
         self.serverInfoWidget.setSizePolicy(sizePolicy)
         self.serverInfoWidget.setMinimumSize(QSize(100, 70))
         self.serverInfoWidget.setObjectName("serverInfoWidget")
@@ -100,7 +111,9 @@ class SingleServerManager(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.coreFileNameTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.coreFileNameTitle.sizePolicy().hasHeightForWidth()
+        )
         self.coreFileNameTitle.setSizePolicy(sizePolicy)
         self.coreFileNameTitle.setObjectName("coreFileNameTitle")
         self.gridLayout_2.addWidget(self.coreFileNameTitle, 0, 0, 1, 1)
@@ -132,7 +145,9 @@ class SingleServerManager(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPathTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPathTitle.sizePolicy().hasHeightForWidth()
+        )
         self.javaPathTitle.setSizePolicy(sizePolicy)
         self.javaPathTitle.setObjectName("javaPathTitle")
         self.gridLayout_2.addWidget(self.javaPathTitle, 1, 0, 1, 1)
@@ -167,9 +182,9 @@ class SingleServerManager(SimpleCardWidget):
         self.backupBtn.setText(self.tr("备份"))
         self.openDataFolderBtn.setText(self.tr("打开文件夹"))
         self.deleteBtn.setText(self.tr("删除"))
-        self.coreFileNameTitle.setText(self.tr("核心："))
-        self.memTitle.setText(self.tr("内存设置："))
-        self.javaPathTitle.setText(self.tr("Java："))
+        self.coreFileNameTitle.setText(self.tr("核心: "))
+        self.memTitle.setText(self.tr("内存设置: "))
+        self.javaPathTitle.setText(self.tr("Java: "))
 
         self.serverName.setWordWrap(True)
         self.mem.setText(mem)

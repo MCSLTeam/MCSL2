@@ -142,7 +142,9 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
-                    processes.extend(searchingFile(_Path, keyword, ext, fSearch, _match))
+                    processes.extend(
+                        searchingFile(_Path, keyword, ext, fSearch, _match)
+                    )
         except PermissionError:
             pass
         except FileNotFoundError:
@@ -167,9 +169,13 @@ def detectJava(fSearch=True):
         for i in range(65, 91):
             path = chr(i) + ":\\"
             if osp.exists(path):
-                javaPathList.extend(searchFile(path, "java", "exe", fSearch, javaVersionMatcher))
+                javaPathList.extend(
+                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
+                )
     else:
-        javaPathList.extend(searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher))
+        javaPathList.extend(
+            searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher)
+        )
     return javaPathList
 
 
@@ -241,7 +247,7 @@ def combineJavaList(original: list, list_: list, invaild: ..., check=True):
         for e in s1 - s2:
             if not checkJavaAvailability(e):
                 s.remove(e)
-                MCSL2Logger.warning(f"{e}已失效")
+                MCSL2Logger.warning(f"{e} 已失效")
                 if isinstance(invaild, list):
                     invaild.append(e)
     return list(s)

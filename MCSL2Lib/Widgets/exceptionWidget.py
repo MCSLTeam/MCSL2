@@ -28,7 +28,9 @@ class ExceptionWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.exceptionScrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.exceptionScrollArea.sizePolicy().hasHeightForWidth()
+        )
         self.exceptionScrollArea.setSizePolicy(sizePolicy)
         self.exceptionScrollArea.setMinimumSize(QSize(480, 0))
         self.exceptionScrollArea.setMaximumSize(QSize(480, 320))
@@ -43,7 +45,9 @@ class ExceptionWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.exceptionLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.exceptionLabel.sizePolicy().hasHeightForWidth()
+        )
         self.exceptionLabel.setSizePolicy(sizePolicy)
         self.exceptionLabel.setMinimumSize(QSize(450, 200))
         self.exceptionLabel.setMaximumSize(QSize(450, 16777215))

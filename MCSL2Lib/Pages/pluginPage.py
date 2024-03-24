@@ -60,7 +60,9 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.installPluginBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.installPluginBtn.sizePolicy().hasHeightForWidth()
+        )
         self.installPluginBtn.setSizePolicy(sizePolicy)
         self.installPluginBtn.setMinimumSize(QSize(82, 32))
         self.installPluginBtn.setMaximumSize(QSize(82, 32))
@@ -73,7 +75,9 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.refreshPluginListBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.refreshPluginListBtn.sizePolicy().hasHeightForWidth()
+        )
         self.refreshPluginListBtn.setSizePolicy(sizePolicy)
         self.refreshPluginListBtn.setMinimumSize(QSize(82, 32))
         self.refreshPluginListBtn.setMaximumSize(QSize(82, 32))
@@ -90,7 +94,9 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.subTitleLabel.sizePolicy().hasHeightForWidth()
+        )
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -113,7 +119,9 @@ class PluginPage(QWidget):
 
         self.pluginsScrollAreaWidgetContents = QWidget()
         self.pluginsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 544, 470))
-        self.pluginsScrollAreaWidgetContents.setObjectName("pluginsScrollAreaWidgetContents")
+        self.pluginsScrollAreaWidgetContents.setObjectName(
+            "pluginsScrollAreaWidgetContents"
+        )
 
         self.gridLayout_3 = QGridLayout(self.pluginsScrollAreaWidgetContents)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -137,7 +145,7 @@ class PluginPage(QWidget):
 
         self.setObjectName("PluginsInterface")
 
-        self.subTitleLabel.setText(self.tr("添加属于你的插件，让你的MCSL2更加强大！"))
+        self.subTitleLabel.setText(self.tr("添加属于你的插件，让你的 MCSL2 更加强大！"))
         self.titleLabel.setText(self.tr("插件"))
         self.refreshPluginListBtn.setText(self.tr("刷新"))
         self.installPluginBtn.setText(self.tr("安装"))
@@ -159,7 +167,7 @@ class PluginPage(QWidget):
     def installPlugin(self):
         GlobalMCSL2Variables.installingPluginArchiveDirectory = str(
             QFileDialog.getOpenFileName(
-                self, self.tr("选择插件压缩包"), getcwd(), "Zip压缩包(*.zip)"
+                self, self.tr("选择插件压缩包"), getcwd(), "Zip 压缩包 (*.zip)"
             )[0]
         ).replace("/", "\\")
         if GlobalMCSL2Variables.installingPluginArchiveDirectory != "":
@@ -200,7 +208,9 @@ class InstallPluginThread(QThread):
 
     def run(self):
         try:
-            pluginArchive = ZipFile(GlobalMCSL2Variables.installingPluginArchiveDirectory, "r")
+            pluginArchive = ZipFile(
+                GlobalMCSL2Variables.installingPluginArchiveDirectory, "r"
+            )
             pluginArchive.extractall("./Plugins")
             pluginArchive.close()
             self.success.emit()

@@ -158,10 +158,14 @@ class Window(VerifyFluentWindowBase):
             self.passSignal.connect(lambda: self.homeInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.configureInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.downloadInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.consoleCenterInterface.setEnabled(True))
+            self.passSignal.connect(
+                lambda: self.consoleCenterInterface.setEnabled(True)
+            )
             self.passSignal.connect(lambda: self.pluginsInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.settingsInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.serverManagerInterface.setEnabled(True))
+            self.passSignal.connect(
+                lambda: self.serverManagerInterface.setEnabled(True)
+            )
             self.passSignal.connect(lambda: self.selectJavaPage.setEnabled(True))
             self.passSignal.connect(lambda: self.selectNewJavaPage.setEnabled(True))
             self.testVerifyBox.show()
@@ -184,7 +188,7 @@ class Window(VerifyFluentWindowBase):
     def onAria2Loaded(self, flag: bool):
         if flag:
             InfoBar.success(
-                title=self.tr("Aria2下载引擎启动成功。"),
+                title=self.tr("Aria2 下载引擎启动成功。"),
                 content="",
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -194,8 +198,8 @@ class Window(VerifyFluentWindowBase):
             )
         else:
             InfoBar.error(
-                title=self.tr("Aria2下载引擎启动失败"),
-                content=self.tr("请检查是否安装了Aria2。"),
+                title=self.tr("Aria2 下载引擎启动失败"),
+                content=self.tr("请检查是否安装了 Aria2。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -206,7 +210,7 @@ class Window(VerifyFluentWindowBase):
     def closeEvent(self, a0) -> None:
         if self.consoleCenterInterface.isAnyServerRunning():
             box = MessageBox(
-                self.tr("现在你无法退出MCSL2"),
+                self.tr("现在你无法退出 MCSL2"),
                 self.tr("仍有服务器正在运行。\n请在退出前关闭所有服务器。"),
                 parent=self,
             )
@@ -245,11 +249,11 @@ class Window(VerifyFluentWindowBase):
             return
 
         if mode == ExceptionFilterMode.PASS:
-            MCSL2Logger.info(f"忽略了异常：{ty} {value} {_traceback}")
+            MCSL2Logger.info(f"忽略了异常: {ty} {value} {_traceback}")
             return
 
         elif mode == ExceptionFilterMode.RAISE:
-            MCSL2Logger.error(msg=f"捕捉到异常：{ty} {value} {_traceback}")
+            MCSL2Logger.error(msg=f"捕捉到异常: {ty} {value} {_traceback}")
             return self.oldHook(ty, value, _traceback)
 
         elif mode == ExceptionFilterMode.RAISE_AND_PRINT:
@@ -267,7 +271,9 @@ class Window(VerifyFluentWindowBase):
             box.cancelButton.setText(self.tr("知道了"))
             del box.contentLabel
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
-            box.yesSignal.connect(lambda: QApplication.clipboard().setText(tracebackString))
+            box.yesSignal.connect(
+                lambda: QApplication.clipboard().setText(tracebackString)
+            )
             box.yesSignal.connect(box.deleteLater)
             box.cancelSignal.connect(box.deleteLater)
             box.yesSignal.connect(exceptionWidget.deleteLater)
@@ -278,7 +284,9 @@ class Window(VerifyFluentWindowBase):
     def initPluginSystem(self, firstLoad=True):
         """初始化插件系统"""
         self.pluginManager.readAllPlugins(firstLoad)
-        self.pluginManager.initSinglePluginsWidget(self.pluginsInterface.pluginsVerticalLayout)
+        self.pluginManager.initSinglePluginsWidget(
+            self.pluginsInterface.pluginsVerticalLayout
+        )
 
     def initNavigation(self):
         """初始化导航栏"""
@@ -372,7 +380,9 @@ class Window(VerifyFluentWindowBase):
                 settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             )
         )
-        self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
+        self.selectJavaPage.backBtn.clicked.connect(
+            lambda: self.switchTo(self.configureInterface)
+        )
         self.configureInterface.noobJavaListPushBtn.clicked.connect(
             lambda: self.switchTo(self.selectJavaPage)
         )
@@ -408,8 +418,8 @@ class Window(VerifyFluentWindowBase):
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: InfoBar.info(
-                title=self.tr("切换到MCSLAPI"),
-                content=self.tr("因为FastMirror没有Java啊 ("),
+                title=self.tr("切换到 MCSLAPI"),
+                content=self.tr("因为 FastMirror 没有 Java 啊 ("),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -437,7 +447,9 @@ class Window(VerifyFluentWindowBase):
         self.selectNewJavaPage.backBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)
         )
-        self.selectNewJavaPage.setJavaPath.connect(self.serverManagerInterface.setJavaPath)
+        self.selectNewJavaPage.setJavaPath.connect(
+            self.serverManagerInterface.setJavaPath
+        )
 
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)

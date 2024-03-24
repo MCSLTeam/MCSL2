@@ -56,7 +56,9 @@ class MCSL2FileUpdater(QObject):
         super().__init__(parent)
         self.updateOSName = "Windows" if osname == "nt" else "Linux"
         self.updateProcessExt = "." + cfg.get(cfg.oldExecuteable).split(".")[1]
-        self.updateVerificationFileName = "verification." + ("pyd" if osname == "nt" else "so")
+        self.updateVerificationFileName = "verification." + (
+            "pyd" if osname == "nt" else "so"
+        )
         self.updateArchitecture: str = ""
         self.isUpdateAvailable = True
         if "64" in architecture()[0]:
@@ -83,7 +85,7 @@ class MCSL2FileUpdater(QObject):
                     box = MessageBox(
                         title=self.tr("无法更新"),
                         content=self.tr(
-                            "MCSL2的Aria2可能未安装或启动失败。\n已尝试重新启动Aria2。"
+                            "MCSL2 的 Aria2 可能未安装或启动失败。\n已尝试重新启动 Aria2。"
                         ),
                         parent=self.parent(),
                     )
@@ -95,7 +97,7 @@ class MCSL2FileUpdater(QObject):
                 if showInfoBar:
                     InfoBar.info(
                         title=self.tr("正在下载更新"),
-                        content=self.tr("MCSL2稍后将自动重启"),
+                        content=self.tr("MCSL2 稍后将自动重启"),
                         position=InfoBarPosition.BOTTOM_RIGHT,
                         duration=-1,
                         parent=self.parent().window(),

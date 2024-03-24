@@ -21,7 +21,7 @@ from qfluentwidgets import MessageBoxBase, SubtitleLabel, PlainTextEdit
 class ForgeInstallerProgressBox(MessageBoxBase):
     def __init__(self, textSignal: pyqtSignal, parent=None):
         super().__init__(parent)
-        self.titleLabel = SubtitleLabel(self.tr("Forge安装器(正在安装...)"), self)
+        self.titleLabel = SubtitleLabel(self.tr("Forge 安装器 (正在安装...)"), self)
         self.forgeLogViewer = PlainTextEdit(self)
         self.forgeLogViewer.setMaximumBlockCount(1000)
         self.textSignal = textSignal

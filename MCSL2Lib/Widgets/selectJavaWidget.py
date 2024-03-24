@@ -52,7 +52,9 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaVerWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaVerWidget.sizePolicy().hasHeightForWidth()
+        )
         self.javaVerWidget.setSizePolicy(sizePolicy)
         self.javaVerWidget.setMinimumSize(QSize(280, 50))
         self.javaVerWidget.setMaximumSize(QSize(16777215, 50))
@@ -76,7 +78,9 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.finishSelectJavaBtn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.finishSelectJavaBtn.sizePolicy().hasHeightForWidth()
+        )
         self.finishSelectJavaBtn.setSizePolicy(sizePolicy)
         self.finishSelectJavaBtn.setMinimumSize(QSize(0, 0))
         self.finishSelectJavaBtn.setMaximumSize(QSize(16777215, 16777215))
@@ -86,7 +90,9 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPixmapLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPixmapLabel.sizePolicy().hasHeightForWidth()
+        )
         self.javaPixmapLabel.setSizePolicy(sizePolicy)
         self.javaPixmapLabel.setFixedSize(QSize(50, 50))
         self.javaPixmapLabel.setObjectName("javaPixmapLabel")
@@ -95,7 +101,9 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPathWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPathWidget.sizePolicy().hasHeightForWidth()
+        )
         self.javaPathWidget.setSizePolicy(sizePolicy)
         self.javaPathWidget.setMinimumSize(QSize(280, 50))
         self.javaPathWidget.setMaximumSize(QSize(16777215, 50))
@@ -107,7 +115,9 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.javaPathTitle.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.javaPathTitle.sizePolicy().hasHeightForWidth()
+        )
         self.javaPathTitle.setSizePolicy(sizePolicy)
         self.javaPathTitle.setObjectName("javaPathTitle")
         self.gridLayout_2.addWidget(self.javaPathTitle, 1, 0, 1, 1)
@@ -124,8 +134,8 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         self.gridLayout.addWidget(self.javaPathWidget, 1, 1, 1, 1)
 
         self.finishSelectJavaBtn.setText(self.tr("选择"))
-        self.javaVerTitle.setText(self.tr("版本:"))
-        self.javaPathTitle.setText(self.tr("路径:"))
+        self.javaVerTitle.setText(self.tr("版本: "))
+        self.javaPathTitle.setText(self.tr("路径: "))
         self.javaPixmapLabel.setPixmap(QPixmap(":/built-InIcons/Java.svg"))
         self.javaPixmapLabel.setFixedSize(QSize(50, 50))
 
