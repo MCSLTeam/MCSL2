@@ -10,6 +10,7 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
+from typing import List
 from PyQt5.QtCore import (
     Qt,
     QSize,
@@ -58,6 +59,7 @@ from qfluentwidgets import (
     isDarkTheme,
     InfoBarPosition,
     InfoBar,
+    Action,
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
@@ -260,10 +262,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         config: ServerVariables,
         launcher: ServerLauncher,
         manageBtn: PrimaryPushButton,
-        manageBackupBtn: PushButton,
+        manageBackupBtnList: List[Action],
+        isEditingConfig: bool = False,
     ):
         self._isMicaEnabled = False
         super().__init__()
+        self.isCalledByConfigEditor = isEditingConfig
         self.errMsg = ""
         self.userCommandHistory = []
         self.upT = 0
@@ -276,8 +280,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.manageBtn = manageBtn
         self.manageBtn.setEnabled(False)
         self.manageBtn.setText(self.tr("已开启"))
-        self.manageBackupBtn = manageBackupBtn
-        self.manageBackupBtn.setEnabled(False)
+        self.manageBackupBtnList = manageBackupBtnList
+        for btn in self.manageBackupBtnList:
+            btn.setEnabled(False)
         self.isServerLoaded = False
         self.initWindow()
         self.setupInterface()
@@ -293,10 +298,25 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         cfg.themeChangedFinished.connect(self._onThemeChangedFinished)
         self.setMicaEffectEnabled(True)
         self.initSlots()
-        self.startServer()
-        self.initSafelyQuitController()
+        if not self.isCalledByConfigEditor:
+            self.startServer()
+            self.initSafelyQuitController()
+        else:
+            self.stackedWidget.setCurrentWidget(self.configEditorPage)
 
     def closeEvent(self, a0) -> None:
+        if self.isCalledByConfigEditor:
+            try:
+                self.monitorWidget.setParent(None)
+            except Exception:
+                pass
+            self.manageBtn.setEnabled(True)
+            for btn in self.manageBackupBtnList:
+                btn.setEnabled(True)
+            self.manageBtn.setText(self.tr("启动"))
+            del self.serverConfig
+            del self.serverLauncher
+            return super().closeEvent(a0)
         if self.serverBridge.isServerRunning():
             box = MessageBox(
                 self.tr("是否关闭此窗口？"),
@@ -331,7 +351,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             except Exception:
                 pass
             self.manageBtn.setEnabled(True)
-            self.manageBackupBtn.setEnabled(True)
+            for btn in self.manageBackupBtnList:
+                btn.setEnabled(True)
             self.manageBtn.setText(self.tr("启动"))
 
         super().closeEvent(a0)
@@ -404,7 +425,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     def initSafelyQuitController(self):
         # 安全退出控件
         self.exitingMsgBox = MessageBox(
-            self.tr("安全关闭服务器「{serverName}」中...").format(serverName=self.serverConfig.serverName),
+            self.tr("安全关闭服务器「{serverName}」中...").format(
+                serverName=self.serverConfig.serverName
+            ),
             self.tr("稍安勿躁。如果长时间没有反应，请尝试强制关闭服务器。"),
             parent=self,
         )
@@ -783,7 +806,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             icon=FIF.COMMAND_PROMPT,
         )
         self.serverSegmentedWidget.addItem(
-            routeKey="backupPage",
+            routeKey="editorPage",
             text=self.tr("编辑配置文件"),
             onClick=lambda: self.stackedWidget.setCurrentWidget(self.configEditorPage),
             icon=FIF.LABEL,
@@ -910,6 +933,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 self.registerResMonitor()
                 self.registerCommandOutput()
                 self.registerStartServerComponents()
+        if self.isCalledByConfigEditor:
+            self.initSafelyQuitController()
+            self.isCalledByConfigEditor = False
 
     def stopServer(self, forceNoErrorHandler=False):
         if self.serverBridge is not None:
@@ -966,7 +992,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
         self.backupSavesBtn.setEnabled(False)
         self.backupServerBtn.setEnabled(False)
-        self.manageBackupBtn.setEnabled(False)
+        for btn in self.manageBackupBtnList:
+            btn.setEnabled(False)
         InfoBar.info(
             title=self.tr("提示"),
             content=self.tr("服务器正在启动，请稍后..."),
@@ -992,7 +1019,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.clicked.connect(self.startServer)
         self.backupSavesBtn.setEnabled(True)
         self.backupServerBtn.setEnabled(True)
-        self.manageBackupBtn.setEnabled(True)
+        for btn in self.manageBackupBtnList:
+            btn.setEnabled(True)
 
     def registerCommandOutput(self):
         try:
@@ -1250,7 +1278,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def showServerNotOpenMsg(self):
         """弹出服务器未开启提示"""
-        print(self.sender().objectName())
         w = MessageBox(
             title=self.tr("失败"),
             content=self.tr("服务器并未开启，请先开启服务器。"),
