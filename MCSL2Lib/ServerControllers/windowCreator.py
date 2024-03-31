@@ -1051,10 +1051,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         else:
             self.colorConsoleText(self.tr("[MCSL2 | 提示]: 服务器已关闭！"))
             self.unRegisterCommandOutput()
-            
         self.playersList.clear()
         self.existPlayersListWidget.clear()
-        self.existPlayersListWidget.setItems(self.playersList)
 
     @pyqtSlot(float)
     def setMemView(self, mem):
