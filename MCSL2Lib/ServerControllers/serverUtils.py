@@ -132,7 +132,7 @@ def backupServer(serverName: str, parent):
     try:
         s = QFileDialog.getSaveFileName(
             parent,
-            parent.tr("MCSL2 - 备份服务器「{serverName}」").format(serverName),
+            parent.tr("MCSL2 - 备份服务器「{serverName}」").format(serverName=serverName),
             f"{serverName}_backup.zip",
             parent.tr("Zip 压缩包 (*.zip)"),
         )[0]
@@ -144,7 +144,7 @@ def backupServer(serverName: str, parent):
         tmpArchiveThread.successSignal.connect(
             lambda: InfoBar.success(
                 title=parent.tr("备份完毕"),
-                content=parent.tr("已保存至 {s}").format(s),
+                content=parent.tr("已保存至 {s}").format(s=s),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
