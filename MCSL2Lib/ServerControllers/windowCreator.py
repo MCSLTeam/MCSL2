@@ -1507,6 +1507,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.serverBridge.sendCommand(command=f"{commandPrefixList[mode]} {player}")
 
     def runQuickMenu_StopServer(self):
+        if self.isCalledByConfigEditor:
+            self.close()
         if self.getRunningStatus():
             self.killServer.setEnabled(False)
             self.toggleServerBtn.setEnabled(False)
