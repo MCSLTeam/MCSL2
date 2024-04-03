@@ -95,9 +95,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.titleLimitWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.titleLimitWidget.sizePolicy().hasHeightForWidth())
         self.titleLimitWidget.setSizePolicy(sizePolicy)
 
         self.gridLayout_2 = QGridLayout(self.titleLimitWidget)
@@ -117,9 +115,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -144,18 +140,14 @@ class SettingsPage(QWidget):
             self.settingsScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
         )
         self.settingsScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.settingsScrollAreaWidgetContents.setObjectName(
-            "settingsScrollAreaWidgetContents"
-        )
+        self.settingsScrollAreaWidgetContents.setObjectName("settingsScrollAreaWidgetContents")
 
         self.settingsLayout = QVBoxLayout(self.settingsScrollAreaWidgetContents)
         self.settingsLayout.setContentsMargins(0, 0, 0, 0)
         self.settingsLayout.setObjectName("settingsLayout")
 
         # Server
-        self.serverSettingsGroup = SettingCardGroup(
-            self.tr("服务器设置"), self.settingsWidget
-        )
+        self.serverSettingsGroup = SettingCardGroup(self.tr("服务器设置"), self.settingsWidget)
         self.autoRunLastServer = SwitchSettingCard(
             icon=FIF.ROBOT,
             title=self.tr("自动启动 MCSL2 时自动运行上次运行的服务器"),
@@ -224,18 +216,12 @@ class SettingsPage(QWidget):
             parent=self.configureServerSettingsGroup,
         )
         self.configureServerSettingsGroup.addSettingCard(self.newServerType)
-        self.configureServerSettingsGroup.addSettingCard(
-            self.onlySaveGlobalServerConfig
-        )
-        self.configureServerSettingsGroup.addSettingCard(
-            self.clearAllNewServerConfigInProgram
-        )
+        self.configureServerSettingsGroup.addSettingCard(self.onlySaveGlobalServerConfig)
+        self.configureServerSettingsGroup.addSettingCard(self.clearAllNewServerConfigInProgram)
         self.settingsLayout.addWidget(self.configureServerSettingsGroup)
 
         # Download
-        self.downloadSettingsGroup = SettingCardGroup(
-            self.tr("下载设置"), self.settingsWidget
-        )
+        self.downloadSettingsGroup = SettingCardGroup(self.tr("下载设置"), self.settingsWidget)
         self.downloadSource = OptionsSettingCard(
             configItem=cfg.downloadSource,
             icon=FIF.IOT,
@@ -280,9 +266,7 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.downloadSettingsGroup)
 
         # Console
-        self.consoleSettingsGroup = SettingCardGroup(
-            self.tr("终端设置"), self.settingsWidget
-        )
+        self.consoleSettingsGroup = SettingCardGroup(self.tr("终端设置"), self.settingsWidget)
         self.outputDeEncoding = ComboBoxSettingCard(
             configItem=cfg.outputDeEncoding,
             icon=FIF.CODE,
@@ -325,9 +309,7 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.consoleSettingsGroup)
 
         # Software
-        self.programSettingsGroup = SettingCardGroup(
-            self.tr("程序设置"), self.settingsWidget
-        )
+        self.programSettingsGroup = SettingCardGroup(self.tr("程序设置"), self.settingsWidget)
         self.themeMode = OptionsSettingCard(
             cfg.themeMode,
             FIF.BRUSH,
@@ -359,12 +341,8 @@ class SettingsPage(QWidget):
         )
         self.alwaysRunAsAdministrator.setEnabled(False)
         self.startOnStartup.setEnabled(False)
-        self.themeColor.colorChanged.connect(
-            lambda cl: setThemeColor(color=cl, lazy=True)
-        )
-        self.themeMode.optionChanged.connect(
-            lambda ci: setTheme(cfg.get(ci), lazy=True)
-        )
+        self.themeColor.colorChanged.connect(lambda cl: setThemeColor(color=cl, lazy=True))
+        self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci), lazy=True))
         # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
@@ -373,9 +351,7 @@ class SettingsPage(QWidget):
         self.settingsLayout.addWidget(self.programSettingsGroup)
 
         # Update
-        self.updateSettingsGroup = SettingCardGroup(
-            self.tr("更新设置"), self.settingsWidget
-        )
+        self.updateSettingsGroup = SettingCardGroup(self.tr("更新设置"), self.settingsWidget)
         self.checkUpdateSetting = PrimaryPushSettingCard(
             icon=FIF.SYNC,
             text=self.tr("检查更新"),
@@ -415,9 +391,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.aboutContentWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.aboutContentWidget.sizePolicy().hasHeightForWidth())
         self.aboutContentWidget.setSizePolicy(sizePolicy)
         self.aboutContentWidget.setObjectName("aboutContentWidget")
 
@@ -433,9 +407,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openOfficialWeb.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.openOfficialWeb.sizePolicy().hasHeightForWidth())
         self.openOfficialWeb.setSizePolicy(sizePolicy)
         self.openOfficialWeb.setObjectName("openOfficialWeb")
 
@@ -449,9 +421,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openSourceCodeRepo.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.openSourceCodeRepo.sizePolicy().hasHeightForWidth())
         self.openSourceCodeRepo.setSizePolicy(sizePolicy)
         self.openSourceCodeRepo.setObjectName("openSourceCodeRepo")
 
@@ -482,9 +452,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.generateSysReport.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.generateSysReport.sizePolicy().hasHeightForWidth())
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
 
@@ -495,9 +463,7 @@ class SettingsPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.uniqueCodeBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.uniqueCodeBtn.sizePolicy().hasHeightForWidth())
         self.uniqueCodeBtn.setSizePolicy(sizePolicy)
         self.uniqueCodeBtn.setObjectName("uniqueCodeBtn")
 
@@ -554,8 +520,8 @@ class SettingsPage(QWidget):
         self.subTitleLabel.setText(self.tr("自定义你的 MCSL2。"))
         self.aboutContent.setText(
             self.tr(
-                "MCSL2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与「MCSL2」有\n明显辨识度。\n\nCopyright © MCSLTeam. All right reserved.\n"
-            )  # noqa : E501
+                "MCServerLauncher 2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与 “MCSL2” 有明显辨识度。\n“MCServerLauncher 2 软件” 已进行中华人民共和国计算机软件著作权登记，一切侵权行为将依法追究。\n计算机软件著作权登记号: 2024SR0343868\n\n© 2022 - 2024 MCSL开发组 保留所有权利。\n"  # noqa : E501
+            )
         )
         self.aboutTitle.setText(self.tr("关于"))
         self.generateSysReport.clicked.connect(self.generateSystemReport)
