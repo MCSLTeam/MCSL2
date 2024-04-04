@@ -20,6 +20,7 @@ from PyQt5.QtWidgets import QFileDialog
 from psutil import NoSuchProcess, Process, AccessDenied
 from MCSL2Lib.ServerControllers.processCreator import _ServerProcessBridge
 from MCSL2Lib.variables import ServerVariables
+# from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 from os import path as osp, mkdir
 from os.path import isdir, exists
 from qfluentwidgets import InfoBar, InfoBarPosition
@@ -50,9 +51,7 @@ class MinecraftServerResMonitorUtil(QObject):
         try:
             if self.bridge.isServerRunning():
                 serverMem = (
-                    Process(self.bridge.handledServer.process.processId())
-                    .memory_full_info()
-                    .uss
+                    Process(self.bridge.handledServer.process.processId()).memory_full_info().uss
                     / divisionNum
                 )
                 self.memPercent.emit(float("{:.4f}".format(serverMem)))
@@ -68,9 +67,9 @@ class MinecraftServerResMonitorUtil(QObject):
     def getServerCPU(self):
         try:
             if self.bridge.isServerRunning():
-                serverCPU = Process(
-                    self.bridge.handledServer.process.processId()
-                ).cpu_percent(interval=0.01)
+                serverCPU = Process(self.bridge.handledServer.process.processId()).cpu_percent(
+                    interval=0.01
+                )
                 self.cpuPercent.emit(float("{:.4f}".format(serverCPU / 10)))
             else:
                 self.cpuPercent.emit(0.0000)
@@ -104,6 +103,32 @@ def readServerProperties(serverConfig: ServerVariables):
                     serverConfig.serverProperties[key.strip()] = value.strip()
     except FileNotFoundError:
         serverConfig.serverProperties.update({"msg": "File not found"})
+
+
+# class CrashMCAnalyzerThread(QThread):
+#     resSignal = pyqtSignal(str)
+
+#     def __init__(self, log: str, parent=None):
+#         super().__init__(parent)
+#         self.log = log
+
+#     def run(self):
+#         headers = MCSLNetworkSession.MCSLNetworkHeaders
+#         headers["Content-Type"] = "text/plain"
+#         headers["Accept"] = "application/json"
+
+#         apiResult = MCSLNetworkSession().post(
+#             url="https://api.crashmc.com/v0/analyze/",
+#             data=self.log,
+#             headers=headers,
+#         )
+#         if apiResult.status_code == 200:
+#             if apiResult.json().get("res"):
+#                 error = ""
+#                 for matchError in apiResult.json().get("res"):
+#                     pass
+#         else:
+#             self.resSignal.emit(f"CrashMC接口请求失败，HTTP Status Code: {apiResult.status_code}")
 
 
 class MakeArchiveThread(QThread):
@@ -206,9 +231,7 @@ def backupSaves(serverConfig: ServerVariables, parent):
                 try:
                     copytree(
                         osp.abspath(f"Servers/{serverConfig.serverName}/{dir}/"),
-                        osp.abspath(
-                            f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"
-                        ),
+                        osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
                     )
                 except FileNotFoundError:
                     levelNameList.remove(dir)
@@ -223,9 +246,9 @@ def backupSaves(serverConfig: ServerVariables, parent):
             tmpArchiveThread.successSignal.connect(
                 lambda: InfoBar.success(
                     title=parent.tr("备份完毕"),
-                    content=parent.tr(
-                        "已保存至 {s}。\n备份了以下文件夹:\n{existsDir}"
-                    ).format(s=s, existsDir=existsDir),
+                    content=parent.tr("已保存至 {s}。\n备份了以下文件夹:\n{existsDir}").format(
+                        s=s, existsDir=existsDir
+                    ),
                     orient=Qt.Horizontal,
                     isClosable=True,
                     position=InfoBarPosition.TOP,
@@ -234,14 +257,10 @@ def backupSaves(serverConfig: ServerVariables, parent):
                 )
             )
             tmpArchiveThread.successSignal.connect(
-                lambda: rmtree(
-                    osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
-                )
+                lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
             )
             tmpArchiveThread.errorSignal.connect(
-                lambda: rmtree(
-                    osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
-                )
+                lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
             )
             tmpArchiveThread.start()
         else:

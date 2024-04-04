@@ -113,13 +113,14 @@ class MCSL2FileUpdater(QObject):
         """下载MCSL2验证模块，在下载主程序之后调用"""
         if GlobalMCSL2Variables.devMode:
             return
-        if not osp.exists(f"MCSL2/Downloads/MCSL2{self.updateProcessExt}"):
+        if not osp.exists(f"MCSL2/Downloads/{self.updateVerificationFileName}"):
             self.downloadUpdate(showInfoBar=False)
             return
         else:
             Aria2Controller.download(
                 uri=self.verificationUpdateLink,
                 watch=False,
+                interval=0.2,
                 stopped=self.renameUpdate,
             )
 
