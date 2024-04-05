@@ -8,6 +8,10 @@
 <!-- AFDIAN-ACTION:START -->
 
 
+<a href="https://afdian.net/u/b7700b762ec911ee96e65254001e7c00">
+爱发电用户_yxC8
+</a>
+<span>（ 1 次赞助, 共 6.66 元）</span><br>
 <a href="https://afdian.net/u/e8c3bf5af30511eeb1835254001e7c00">
 Schicksal
 </a>
