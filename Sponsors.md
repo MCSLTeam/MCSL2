@@ -8,6 +8,14 @@
 <!-- AFDIAN-ACTION:START -->
 
 
+<a href="https://afdian.net/u/e8c3bf5af30511eeb1835254001e7c00">
+Schicksal
+</a>
+<span>（ 1 次赞助, 共 36.66 元）</span><br>
+<a href="https://afdian.net/u/a6fb35ae3a7411ecba1952540025c377">
+ECAB
+</a>
+<span>（ 1 次赞助, 共 50 元）</span><br>
 <a href="https://afdian.net/u/08143f36270e11eca31452540025c377">
 爱发电用户_08143
 </a>
