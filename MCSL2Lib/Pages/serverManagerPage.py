@@ -1281,7 +1281,7 @@ class ServerManagerPage(QWidget):
 
         # 写入全局配置
         try:
-            globalServerList = readFile(r"MCSL2/MCSL2_ServerList.json")
+            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
             globalServerList["MCSLServerList"].pop(self.serverIndex)
             globalServerList["MCSLServerList"].insert(0, serverConfig)
             writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
