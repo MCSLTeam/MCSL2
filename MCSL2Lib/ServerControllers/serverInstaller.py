@@ -32,10 +32,9 @@ from PyQt5.QtCore import (
     QIODevice,
 )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
-from python_hosts.hosts import Hosts, HostsEntry
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.utils import MCSL2Logger, AUTHOR_SERVERS, ServicesUrl, readFile, writeFile
+from MCSL2Lib.utils import MCSL2Logger, ServicesUrl, readFile, writeFile
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -228,8 +227,6 @@ class ForgeInstaller(Installer):
     downloadServerProgress = pyqtSignal(str)
     downloadServerFinished = pyqtSignal(bool)
 
-    HOST_ENTRY_TAG = "MCSL2_FORGE_INSTALLER"
-
     class InstallPlan(Enum):
         PlanA = 0
         PlanB = 1
@@ -349,25 +346,6 @@ class ForgeInstaller(Installer):
         self.__asyncInstallRoutine()
 
     def __asyncInstallRoutine(self):
-        hosts = Hosts()
-        if not hosts.find_all_matching(name="authserver.mojang.com"):
-            self._needHost = True
-            hosts.add(
-                entries=[
-                    HostsEntry(
-                        entry_type="ipv4",
-                        address=ipv4,
-                        names=["authserver.mojang.com"],
-                        comment=self.HOST_ENTRY_TAG,
-                    )
-                    for ipv4 in AUTHOR_SERVERS
-                ]
-            )
-            hosts.write()
-
-            if "Windows" in platform.platform():
-                (_ := QProcess()).start("ipconfig /flushdns")
-
         if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
             makedirs(
                 name=(
@@ -560,15 +538,6 @@ class ForgeInstaller(Installer):
                     raise InstallerError(
                         f"Forge installer exited with code {self.workingProcess.exitCode()}"
                     )
-
-            # recover hosts
-            if self._needHost:
-                hosts = Hosts()
-                hosts.remove_all_matching(name="authserver.mojang.com")
-                hosts.write()
-
-                if "Windows" in platform.platform():
-                    (_ := QProcess()).start("ipconfig /flushdns")
 
     @classmethod
     def isPossibleForgeInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
