@@ -363,7 +363,11 @@ class ForgeInstaller(Installer):
                     for ipv4 in AUTHOR_SERVERS
                 ]
             )
-            hosts.write()
+            try:
+                hosts.write()
+            except PermissionError:
+                self.installFinished.emit(False)
+                return
 
             if "Windows" in platform.platform():
                 (_ := QProcess()).start("ipconfig /flushdns")
