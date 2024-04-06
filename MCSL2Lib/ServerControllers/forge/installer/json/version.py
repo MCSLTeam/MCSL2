@@ -90,14 +90,17 @@ public class Version {
 
 
 """
-from dataclasses import dataclass
-from typing import Dict, Optional
+from __future__ import annotations
 
-from MCSL2Lib.ServerControllers.forge.json.artifact import Artifact
+from dataclasses import dataclass
+from typing import Dict, Optional, Set
+
+from .artifact import Artifact
+from .base_model import BaseModel
 
 
 @dataclass
-class Version:
+class Version(BaseModel):
     id: str
     downloads: Dict[str, 'Version.Download']
     libraries: list
@@ -124,12 +127,46 @@ class Version:
             super().__init__(sha1, size, url, provided)
             self.path = path
 
-    @dataclass
-    class Downloads:
-        artifact: 'Version.LibraryDownload'
-        classifiers: Dict[str, 'Version.LibraryDownload']
+        def getPath(self) -> str:
+            return self.path
+
+        def getProvided(self) -> bool:
+            return self.provided
 
     @dataclass
-    class Library:
+    class Downloads(BaseModel):
+        artifact: 'Version.LibraryDownload'
+        classifiers: Dict[str, 'Version.LibraryDownload'] = None
+
+        def getArtifact(self) -> 'Version.LibraryDownload':
+            return self.artifact
+
+        def getClassifiers(self) -> Set['Version.LibraryDownload']:
+            return set() if self.classifiers is None else set(self.classifiers.values())
+
+        @classmethod
+        def artifact_factory(cls, item) -> 'Version.LibraryDownload':
+            return Version.LibraryDownload(**item)
+
+        @classmethod
+        def classifiers_factory(cls, items) -> Dict[str, 'Version.LibraryDownload']:
+            return {k: Version.LibraryDownload(**v) for k, v in items.items()} if items is not None else None
+
+    @dataclass
+    class Library(BaseModel):
         name: Artifact
         downloads: 'Version.Downloads'
+
+        def getName(self) -> Artifact:
+            return self.name
+
+        def getDownloads(self) -> 'Version.Downloads':
+            return self.downloads
+
+        @classmethod
+        def name_factory(cls, item) -> Artifact:
+            return Artifact.from_(item)
+
+        @classmethod
+        def downloads_factory(cls, item) -> 'Version.Downloads':
+            return Version.Downloads.from_dict(item)

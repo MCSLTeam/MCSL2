@@ -1,0 +1,2 @@
+class SimpleInstaller:
+    mirror = None

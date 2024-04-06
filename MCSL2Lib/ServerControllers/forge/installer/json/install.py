@@ -1,10 +1,16 @@
+from __future__ import annotations
+
+import json
 import random
 from dataclasses import dataclass
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Iterable, Mapping
 
 from .artifact import Artifact
+from .base_model import BaseModel
 from .mirror import Mirror
+from .spec import Spec
 from .version import Version
+from ..download_utils import DownloadUtils
 
 """
 public class Install extends Spec {
@@ -198,7 +204,7 @@ public class Install extends Spec {
 
 
 @dataclass
-class Install:
+class Install(Spec):
     profile: str
     version: str
     icon: str
@@ -211,8 +217,8 @@ class Install:
     mirrorList: str
 
     libraries: List[Version.Library]
-    processors: List['Install.Processor']
-    data: Dict[str, 'Install.DataFile']
+    processors: List['Install.Processor']  # type: List[Install.Processor]
+    data: Dict[str, 'Install.DataFile']  # type: Dict[str, Install.DataFile]
 
     # non-serializable
     mirror: Mirror
@@ -254,10 +260,14 @@ class Install:
         return self.mirrorList
 
     def getMirror(self) -> Optional[Mirror]:
+        from ..simple_installer import SimpleInstaller
+
+        custom_mirror = SimpleInstaller.mirror
+
         if (self.mirror is not None):
             return self.mirror
-        if (SimpleInstall.mirror != None):
-            self.mirror = Mirror("Mirror", "", "", str(SimpleInstall.mirror))
+        if (custom_mirror != None):
+            self.mirror = Mirror("Mirror", "", "", custom_mirror if custom_mirror is None else "")
             return self.mirror
         if self.getMirrorList() is None:
             return None
@@ -280,7 +290,23 @@ class Install:
             return {}
         return {k: (v.client if client else v.server) for k, v in self.data.items()}
 
-    class Processor:
+    @classmethod
+    def libraries_factory(cls, items: Iterable):
+        rv = []
+        for i in items:
+            rv.append(Version.Library.from_dict(i))
+        return rv
+
+    @classmethod
+    def processors_factory(cls, items: Iterable):
+        return [Install.Processor.from_dict(i) for i in items]
+
+    @classmethod
+    def data_factory(cls, items: Mapping[str,Mapping]):
+        return {k: Install.DataFile(**v) for k, v in items.items()}
+
+    @dataclass
+    class Processor(BaseModel):
         sides: List[str] = None
         jar: Artifact = None
         classpath: List[Artifact] = None
@@ -302,6 +328,15 @@ class Install:
         def getOutputs(self) -> Dict[str, str]:
             return {} if self.outputs is None else self.outputs
 
+        @classmethod
+        def jar_factory(cls, item):
+            return Artifact.from_(json.dumps(item))
+
+        @classmethod
+        def classpath_factory(cls, items: Iterable):
+            return [Artifact.from_(json.dumps(i)) for i in items]
+
+    @dataclass
     class DataFile:
         # /**
         #  * Can be in the following formats:

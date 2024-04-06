@@ -90,12 +90,17 @@ public class Artifact {
 }
 
 """
+from __future__ import annotations
+
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
+from .base_model import BaseModel
+
 
 @dataclass
-class Artifact:
+class Artifact(BaseModel):
     domain: str
     name: str
     version: str
@@ -107,7 +112,8 @@ class Artifact:
     file: str = None
     descriptor: str = None
 
-    def from_(self, descriptor: str) -> 'Artifact':
+    @staticmethod
+    def from_(descriptor: str) -> 'Artifact':
         pts = descriptor.split(":")
         domain = pts[0]
         name = pts[1]
@@ -141,35 +147,33 @@ class Artifact:
             file=file,
             descriptor=descriptor,
         )
-    
+
     def getLocalPath(self, base: Path) -> Path:
-        return base / self.path.replace("/", Path.sep)
-    
+        return base / self.path.replace("/", os.sep)
+
     def getDescriptor(self) -> str:
         return self.descriptor
-    
+
     def getPath(self) -> str:
         return self.path
-    
+
     def getDomain(self) -> str:
         return self.domain
-    
+
     def getName(self) -> str:
         return self.name
-    
+
     def getVersion(self) -> str:
         return self.version
-    
+
     def getClassifier(self) -> str:
         return self.classifier
-    
+
     def getExt(self) -> str:
         return self.ext
-    
+
     def getFilename(self) -> str:
         return self.file
-    
+
     def __str__(self) -> str:
         return self.descriptor
-    
-    # TODO: custom json adapter
