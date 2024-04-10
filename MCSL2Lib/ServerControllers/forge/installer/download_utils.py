@@ -64,22 +64,30 @@ class DownloadUtils:
     @staticmethod
     def extractFile(art: Artifact, target: Path, checksum: Optional[str] = None) -> bool:
         buf = BytesIO(target.read_bytes())
-        with zipfile.ZipFile(buf, "r") as archive:
-            location = str(Path("maven") / art.getPath()).replace("\\", "/")
-            try:
-                data = archive.read(location)
-                if not target.parent.exists():
-                    target.parent.mkdir(parents=True)
 
-                try:
-                    target.write_bytes(data)
-                    return DownloadUtils.checksumValid(target, checksum)
-                except IOError as e:
-                    traceback.print_exception(e)
-                    return False
-            except KeyError:
-                print(f"File not found in installer archive: /maven/{art.getPath()}")
+        location = Path("maven") / art.getPath()
+        try:
+            data = DownloadUtils.readFileInZip(buf, location)
+            buf.close()
+            if not target.parent.exists():
+                target.parent.mkdir(parents=True)
+            try:
+                target.write_bytes(data)
+                return DownloadUtils.checksumValid(target, checksum)
+            except IOError as e:
+                traceback.print_exception(e)
                 return False
+        except KeyError:
+            print(f"File not found in installer archive: /maven/{art.getPath()}")
+            return False
+
+    @staticmethod
+    def readFileInZip(archiveBuf: BytesIO, relative: Path) -> Optional[bytes]:
+        """
+        :raise KeyError | IOError
+        """
+        with zipfile.ZipFile(archiveBuf, "r") as archive:
+            return archive.read(str(relative).replace("\\", "/"))
 
     @staticmethod
     def checksumValid(target: Path, checksum: Optional[str]) -> bool:
@@ -108,6 +116,7 @@ class DownloadUtils:
             mirror: Mirror,
             library: Version.Library,
             root: Path,
+            installerBuf: BytesIO,
             grabbed: List[Artifact],
             additionalLibraryDirs: List[Path]
     ):
@@ -255,4 +264,66 @@ class DownloadUtils:
         target.parent.mkdir(exist_ok=True)
 
         # try extract first
-        DownloadUtils.extractFile()
+        try:
+            data = DownloadUtils.readFileInZip(installerBuf, Path("maven") / artifact.getPath())
+
+            monitor.message(f"  Extracting library from /maven/{artifact.getPath()}")
+            target.write_bytes(data)
+            if download.sha1 is not None:
+                sha1 = DownloadUtils.getSha1(target)
+                if sha1 == download.sha1:
+                    monitor.message("  Extraction completed: Checksum validated.")
+                    grabbed.append(artifact)
+                    return True
+                monitor.message(f"  Extraction failed: Checksum invalid, deleting file:")
+                monitor.message(f"    Expected: {download.sha1}")
+                monitor.message(f"    Actual:   {sha1}")
+                target.unlink(missing_ok=True)
+                return False
+            else:
+                monitor.message("  Extraction completed: No checksum, Assuming valid.")
+                grabbed.append(artifact)
+                return True
+        except zipfile.BadZipFile as e:
+            traceback.print_exception(e)
+            return False
+        except KeyError:
+
+            # Try searching local installs if the file can be validated
+            if (providedSha1 := download.getSha1()) is not None:
+                for libDir in additionalLibraryDirs:
+                    inLibDir = Path(libDir) / artifact.getPath()
+                    if inLibDir.exists():
+                        monitor.message(f"  Found artifact in local folder {libDir}")
+                        sha1 = DownloadUtils.getSha1(inLibDir)
+                        if providedSha1 == sha1:
+                            monitor.message("    Checksum validated")
+                        else:
+                            # Do not fail immediately. We may have other sources
+                            monitor.message("    Invalid checksum. Not using.")
+                            continue
+                        # Valid checksum,copy the lib
+                        try:
+                            target.write_bytes(inLibDir.read_bytes())
+                            monitor.message("    Successfully copied local file")
+                            grabbed.append(artifact)
+                            return True
+                        except Exception as e:
+                            # The copy may have failed when the file is in use. Don't abort, we may have other sources
+                            traceback.print_exception(e)
+                            monitor.message(f"    Failed to copy from local folder: {e}")
+                            # Clean up the file that may have been created if the copy failed
+                            if target.exists():
+                                target.unlink(missing_ok=True)
+                                return False
+
+        url = download.url
+        if url is None or url != "":
+            monitor.message("  Invalid library, missing url")
+            return False
+
+        if (download(monitor,mirror,download,target)):
+            grabbed.append(artifact)
+            return True
+
+        return False
