@@ -1,0 +1,25 @@
+import abc
+import typing
+from functools import partial
+
+T = typing.TypeVar('T')
+
+
+class Supplier(metaclass=abc.ABCMeta, typing.Generic[T]):
+
+    @abc.abstractmethod
+    def get(self) -> T:
+        ...
+
+    @classmethod
+    def of(cls, supplier: typing.Callable[[], T]) -> 'Supplier[T]':
+        return _SupplierInstance(supplier)
+
+
+class _SupplierInstance(Supplier[T]):
+
+    def __init__(self, supplier: typing.Callable[[], T]):
+        self.__supplier = partial(supplier)
+
+    def get(self) -> T:
+        return self.__supplier()
