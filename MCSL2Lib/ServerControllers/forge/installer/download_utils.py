@@ -4,14 +4,15 @@ import traceback
 import zipfile
 from io import BytesIO
 from pathlib import Path
-from typing import Callable, List, Optional, TypeVar, Dict
+from typing import Callable, List, Optional, TypeVar
 
 import requests
 
+from .actions.progress_callback import ProgressCallback
 from .json.artifact import Artifact
 from .json.manifest import Manifest
 from .json.mirror import Mirror
-
+from .json.version import Version
 
 T = TypeVar("T")
 
@@ -89,8 +90,169 @@ class DownloadUtils:
 
     @staticmethod
     def downloadManifest() -> Manifest:
-        return DownloadUtils.downloadString(DownloadUtils.MANIFEST_URL, DownloadUtils.loadManifest)
+        from .json.util import Util
+        return DownloadUtils.downloadString(DownloadUtils.MANIFEST_URL, Util.loadManifest)
 
     @staticmethod
-    def loadManifest(data: Dict) -> Manifest:
-        return Manifest.from_dict(data)
+    def download(monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path):
+        DownloadUtils._download(monitor, mirror, download, target, download.url)
+
+    @staticmethod
+    def _download(monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path, url: str):
+        # TODO
+        ...
+
+    @staticmethod
+    def downloadLibrary(
+            monitor: ProgressCallback,
+            mirror: Mirror,
+            library: Version.Library,
+            root: Path,
+            grabbed: List[Artifact],
+            additionalLibraryDirs: List[Path]
+    ):
+        """
+         public static boolean downloadLibrary(ProgressCallback monitor, Mirror mirror, Library library, File root, List<Artifact> grabbed, List<File> additionalLibraryDirs) {
+        Artifact artifact = library.getName();
+        File target = artifact.getLocalPath(root);
+        LibraryDownload download = library.getDownloads() == null ? null :  library.getDownloads().getArtifact();
+        if (download == null) {
+            download = new LibraryDownload();
+            download.setPath(artifact.getPath());
+        }
+
+        monitor.message(String.format("Considering library %s", artifact.getDescriptor()));
+
+        if (target.exists()) {
+            if (download.getSha1() != null) {
+                String sha1 = getSha1(target);
+                if (download.getSha1().equals(sha1)) {
+                    monitor.message("  File exists: Checksum validated.");
+                    return true;
+                }
+                monitor.message("  File exists: Checksum invalid, deleting file:");
+                monitor.message("    Expected: " + download.getSha1());
+                monitor.message("    Actual:   " + sha1);
+                if (!target.delete()) {
+                    monitor.stage("    Failed to delete file, aborting.");
+                    return false;
+                }
+            } else {
+                monitor.message("  File exists: No checksum, Assuming valid.");
+                return true;
+            }
+        }
+
+        target.getParentFile().mkdirs();
+
+        // Try extracting first
+        try (final InputStream input = DownloadUtils.class.getResourceAsStream("/maven/" + artifact.getPath())) {
+            if (input != null) {
+                monitor.message("  Extracting library from /maven/" + artifact.getPath());
+                Files.copy(input, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                if (download.getSha1() != null) {
+                    String sha1 = getSha1(target);
+                    if (download.getSha1().equals(sha1)) {
+                        monitor.message("    Extraction completed: Checksum validated.");
+                        grabbed.add(artifact);
+                        return true;
+                    }
+                    monitor.message("    Extraction failed: Checksum invalid, deleting file:");
+                    monitor.message("      Expected: " + download.getSha1());
+                    monitor.message("      Actual:   " + sha1);
+                    if (!target.delete()) {
+                        monitor.stage("      Failed to delete file, aborting.");
+                        return false;
+                    }
+                    return false;
+                } else {
+                    monitor.message("    Extraction completed: No checksum, Assuming valid.");
+                }
+                grabbed.add(artifact);
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // Try searching local installs if the file can be validated
+        if (download.getSha1() != null) {
+            String providedSha1 = download.getSha1();
+            for (File libDir : additionalLibraryDirs) {
+                File inLibDir = new File(libDir, artifact.getPath());
+                if (inLibDir.exists()) {
+                    monitor.message(String.format("  Found artifact in local folder %s", libDir.toString()));
+                    String sha1 = DownloadUtils.getSha1(inLibDir);
+                    if (providedSha1.equals(sha1)) {
+                        monitor.message("    Checksum validated");
+                    } else {
+                        // Do not fail immediately. We may have other sources
+                        monitor.message("    Invalid checksum. Not using.");
+                        continue;
+                    }
+                    // Valid checksum, copy the lib
+                    try {
+                        Files.copy(inLibDir.toPath(), target.toPath());
+                        monitor.message("    Successfully copied local file");
+                        grabbed.add(artifact);
+                        return true;
+                    } catch (IOException e) {
+                        // The copy may have failed when the file is in use. Don't abort, we may have other sources
+                        e.printStackTrace();
+                        monitor.message(String.format("    Failed to copy from local folder: %s", e.toString()));
+                        // Clean up the file that may have been created if the copy failed
+                        if (target.exists()) {
+                            if (!target.delete()) {
+                                monitor.message("    Failed to delete failed copy, aborting");
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        String url = download.getUrl();
+        if (url == null || url.isEmpty()) {
+            monitor.message("  Invalid library, missing url");
+            return false;
+        }
+
+        if (download(monitor, mirror, download, target)) {
+            grabbed.add(artifact);
+            return true;
+        }
+        return false;
+    }
+        """
+
+        artifact = library.getName()
+        target = artifact.getLocalPath(root)
+        download = None if library.getDownloads() else library.getDownloads().getArtifact()
+        if download is None:
+            download = Version.LibraryDownload.of({
+                "path": artifact.getPath()
+            })
+
+        monitor.message(f"Considering library {artifact.getDescriptor()}")
+
+        if target.exists():
+            if download.getSha1() is not None:
+                sha1 = DownloadUtils.getSha1(target)
+                if download.getSha1() == sha1:
+                    monitor.message("  File exists: Checksum validated.")
+                    return True
+                monitor.message(f"  File exists: Checksum invalid, deleting file:")
+                monitor.message(f"    Expected: {download.getSha1()}")
+                monitor.message(f"    Actual:   {sha1}")
+                target.unlink(missing_ok=True)
+
+            else:
+                monitor.message("  File exists: No checksum, Assuming valid.")
+                return True
+
+        target.parent.mkdir(exist_ok=True)
+
+        # try extract first
+        DownloadUtils.extractFile()

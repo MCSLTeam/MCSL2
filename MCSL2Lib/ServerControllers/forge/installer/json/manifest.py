@@ -26,5 +26,6 @@ class Manifest(BaseModel):
         except StopIteration:
             return None
 
-    def version_factory(cls, item) -> Info:
+    @classmethod
+    def version_factory(cls, item) -> List[Info]:
         return Manifest.Info(**item)

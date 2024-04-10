@@ -294,12 +294,12 @@ class Install(Spec):
     def libraries_factory(cls, items: Iterable):
         rv = []
         for i in items:
-            rv.append(Version.Library.from_dict(i))
+            rv.append(Version.Library.of(i))
         return rv
 
     @classmethod
     def processors_factory(cls, items: Iterable):
-        return [Install.Processor.from_dict(i) for i in items]
+        return [Install.Processor.of(i) for i in items]
 
     @classmethod
     def data_factory(cls, items: Mapping[str,Mapping]):

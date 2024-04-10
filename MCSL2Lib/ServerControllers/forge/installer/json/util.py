@@ -1,13 +1,12 @@
 import json
-import traceback
-import zipfile
 import re
-from io import BytesIO
-from pathlib import Path
+import traceback
 from typing import List, Dict, Optional
 
 from .installV1 import InstallV1
+from .manifest import Manifest
 from .mirror import Mirror
+from .version import Version
 from ..download_utils import DownloadUtils
 from ..java2python import Supplier
 
@@ -28,14 +27,14 @@ class Util:
         spec = profile.get("spec", 0)
 
         if spec == 0:
-            return InstallV1.from_installV0(Install.from_dict(profile))
+            return InstallV1.from_installV0(Install.of(profile))
         elif spec == 1:
-            return InstallV1.from_dict(profile)
+            return InstallV1.of(profile)
 
     @staticmethod
     def loadVersion(profile: InstallV1):
         from .version import Version
-        return Version.from_dict(json.loads(profile.getJson()))
+        return Version.of(json.loads(profile.getJson()))
 
     @staticmethod
     def replaceTokens(tokens: Dict[str, Supplier[str]], value: str):
@@ -93,5 +92,29 @@ class Util:
         return buf
 
     @staticmethod
-    def getVanillaVersion(version: str):
-        DownloadUtils.downloadManifest()
+    def getVanillaVersion(version: str) -> Optional[Version]:
+        manifest = DownloadUtils.downloadManifest()
+        if manifest is None:
+            return None
+        url = manifest.getUrl(version)
+        if url is None:
+            return None
+        return DownloadUtils.downloadString(url, Util.loadVersionFromText)
+
+    @staticmethod
+    def loadManifest(text: str) -> Optional[Manifest]:
+        try:
+            data = json.loads(text)
+            return Manifest.of(data)
+        except Exception as e:
+            traceback.print_exception(e)
+            return None
+
+    @staticmethod
+    def loadVersionFromText(text: str) -> Optional[Version]:
+        try:
+            data = json.loads(text)
+            return Version.of(data)
+        except Exception as e:
+            traceback.print_exception(e)
+            return None

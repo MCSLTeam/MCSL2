@@ -2,7 +2,7 @@ import traceback
 import zipfile
 from io import BytesIO
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
 from .action import Action
 from .progress_callback import ProgressCallback
@@ -10,6 +10,7 @@ from ..download_utils import DownloadUtils
 from ..java2python import Supplier
 from ..json.installV1 import InstallV1
 from ..json.util import Util
+from ..json.version import Version
 
 
 class ServerInstall(Action):
@@ -52,6 +53,20 @@ class ServerInstall(Action):
         path = Util.replaceTokens(tokens, self.profile.getServerJarPath())
         serverTarget = Path(path)
 
+        if not self.downloadVanilla(serverTarget, installerDataBuf, "server"):
+            return False
+
+        self.checkCancel()
+
+        # Download Libraries
+        libDirs = []
+        mcLibDir = installer.parent / "libraries"
+        if mcLibDir.exists():
+            libDirs.append(mcLibDir)
+
+        if not self.downloadLibraries(target, installerDataBuf, libDirs):
+            return False
+
     def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str):
         if not target.exists():
             parent = target.parent
@@ -67,4 +82,37 @@ class ServerInstall(Action):
                     self.error("Failed to download version manifest, can not find " + side + " jar URL.")
                     return False
 
-            Util.getVanillaVersion(self.profile.getMinecraft())
+            vanilla = Util.getVanillaVersion(self.profile.getMinecraft())
+            if vanilla is None:
+                self.error("Failed to download version manifest, can not find " + side + " jar URL.")
+                return False
+
+            dl = vanilla.getDownload(side)
+            if dl is None:
+                self.error("Failed to download minecraft " + side + " jar, info missing from manifest")
+                return False
+
+            if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target):
+                target.unlink(missing_ok=True)
+                self.error(
+                    "Downloading minecraft " + side + " failed, invalid checksum.\n" + \
+                    "Try again, or manually place server jar to skip download."
+                )
+                return False
+
+        return True
+
+    def downloadLibraries(self, target: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]):
+        self.monitor.start("Downloading libraries")
+        self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
+
+        libraries = self.getLibraries()
+        output = ""
+
+    def getLibraries(self) -> List[Version.Library]:
+        libraries = set()
+        for lib in self.version.getLibraries():
+            libraries.add(lib)
+        for lib in self.processors.getLibraries():
+            libraries.add(lib)
+        return list(libraries)

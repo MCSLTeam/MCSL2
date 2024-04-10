@@ -10,7 +10,7 @@ class InstallV1(Install):
 
     @staticmethod
     def from_installV0(v0: Install) -> 'InstallV1':
-        self = InstallV1.from_dict({})
+        self = InstallV1.of({})
         self.profile = v0.profile
         self.version = v0.version
         self.icon = v0.icon

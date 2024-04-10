@@ -82,7 +82,7 @@ class BaseModel:
     GenericAlias = getattr(typing, "_GenericAlias")
 
     @classmethod
-    def from_dict(cls, data: dict):
+    def of(cls, data: dict):
         # cls_fields = {field.name for field in fields(cls)}
         # return cls(**{k:data.get(k, None)  for k in cls_fields})
         cls_fields: typing.Dict[str, Field] = {field.name: field for field in fields(cls)}
@@ -124,6 +124,8 @@ class BaseModel:
     def _get_type(cls, type_hint: typing.Type):
         if hasattr(type_hint, "__origin__"):
             return type_hint.__origin__
+        if hasattr(type_hint,"__forward_arg__"):
+            raise RuntimeError(f"{type_hint.__forward_arg__} Out of context.")
         return type_hint
 
     @classmethod

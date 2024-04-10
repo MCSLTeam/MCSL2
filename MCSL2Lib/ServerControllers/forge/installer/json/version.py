@@ -93,7 +93,7 @@ public class Version {
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Optional, Set
+from typing import Dict, Optional, Set, List
 
 from .artifact import Artifact
 from .base_model import BaseModel
@@ -108,10 +108,14 @@ class Version(BaseModel):
     def getDownload(self, key: str) -> Optional['Version.Download']:
         return self.downloads.get(key)
 
-    class Download:
-        sha1: str
-        size: int
-        url: str
+    def getLibraries(self) -> List[Library]:
+        return self.libraries or []
+
+    @dataclass
+    class Download(BaseModel):
+        sha1: str = None
+        size: int = None
+        url: str = None
         provided: bool = False
 
         def __init__(self, sha1: str, size: int, url: str, provided: bool = False):
@@ -120,8 +124,9 @@ class Version(BaseModel):
             self.url = url
             self.provided = provided
 
+    @dataclass
     class LibraryDownload(Download):
-        path: str
+        path: str = None
 
         def __init__(self, sha1: str, size: int, url: str, path: str, provided: bool = False):
             super().__init__(sha1, size, url, provided)
@@ -169,4 +174,4 @@ class Version(BaseModel):
 
         @classmethod
         def downloads_factory(cls, item) -> 'Version.Downloads':
-            return Version.Downloads.from_dict(item)
+            return Version.Downloads.of(item)

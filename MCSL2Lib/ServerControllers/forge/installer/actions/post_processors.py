@@ -498,7 +498,7 @@ class PostProcessors:
         self.hasTasks = len(self.processors) > 0
 
     def getLibraries(self) -> List[Version.Library]:
-        return self.profile.getLibraries()
+        return self.profile.getLibraries() if self.hasTasks else []
 
     def getTaskCount(self) -> int:
         return 0 if self.hasTasks else len(self.profile.getLibraries()) + len(self.processors) + len(
