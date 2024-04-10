@@ -11,7 +11,7 @@ import requests
 from .json.artifact import Artifact
 from .json.manifest import Manifest
 from .json.mirror import Mirror
-from .json.util import Util
+
 
 T = TypeVar("T")
 
@@ -22,6 +22,7 @@ class DownloadUtils:
 
     @staticmethod
     def downloadMirrors(url: str) -> Optional[List[Mirror]]:
+        from .json.util import Util
         return DownloadUtils.downloadString(url, Util.loadMirrorList)
 
     @staticmethod
@@ -43,6 +44,7 @@ class DownloadUtils:
 
     @staticmethod
     def getMainClass(jar: Path) -> Optional[str]:
+        from .json.util import Util
         jarDataBuffer = BytesIO(jar.read_bytes())
         try:
             with zipfile.ZipFile(jarDataBuffer, "r") as jarAsArchive:
