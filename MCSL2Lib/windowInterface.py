@@ -64,7 +64,7 @@ from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.utils import (
     exceptionFilter,
     ExceptionFilterMode,
-    workingThreads,
+    WorkingThreads,
 )
 from MCSL2Lib.variables import (
     ConfigureServerVariables,
@@ -227,7 +227,7 @@ class Window(VerifyFluentWindowBase):
         QThreadPool.globalInstance().deleteLater()
 
         try:
-            workingThreads.closeAllThreads()
+            WorkingThreads.closeAllThreads()
             if Aria2Controller.shutDown():
                 super().closeEvent(a0)
         finally:

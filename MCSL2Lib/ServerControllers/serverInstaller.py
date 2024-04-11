@@ -15,11 +15,9 @@ Minecraft Forge Servers Installer.
 """
 
 import json
-import platform
-import shutil
 from enum import Enum
 from json import loads, dumps
-from os import path as osp, name as osname, remove, makedirs
+from os import path as osp, name as osname, makedirs
 from typing import Optional, Tuple, Any
 from zipfile import BadZipFile, ZipFile
 
@@ -29,13 +27,12 @@ from PyQt5.QtCore import (
     pyqtSignal,
     QTimer,
     QFile,
-    QIODevice,
-)
+    QIODevice, )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
-from python_hosts.hosts import Hosts, HostsEntry
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.utils import MCSL2Logger, AUTHOR_SERVERS, ServicesUrl, readFile, writeFile
+from MCSL2Lib.ServerControllers.forge import ForgeInstallThread
+from MCSL2Lib.utils import MCSL2Logger, ServicesUrl, readFile, writeFile
 from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
@@ -192,7 +189,8 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",  # noqa: E501
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
+            # noqa: E501
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
@@ -228,20 +226,18 @@ class ForgeInstaller(Installer):
     downloadServerProgress = pyqtSignal(str)
     downloadServerFinished = pyqtSignal(bool)
 
-    HOST_ENTRY_TAG = "MCSL2_FORGE_INSTALLER"
-
     class InstallPlan(Enum):
         PlanA = 0
         PlanB = 1
 
     def __init__(
-        self,
-        serverPath,
-        file,
-        isEditing: Optional[str] = "",
-        java=None,
-        installerPath=None,
-        logDecode="utf-8",
+            self,
+            serverPath,
+            file,
+            isEditing: Optional[str] = "",
+            java=None,
+            installerPath=None,
+            logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -277,8 +273,8 @@ class ForgeInstaller(Installer):
         # 读取version.json
 
         with ZipFile(
-            jarFile,
-            mode="r",
+                jarFile,
+                mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -290,10 +286,10 @@ class ForgeInstaller(Installer):
 
     def checkInstaller(self) -> bool:
         if (
-            (versionInfo := self._profile.get("versionInfo", {}))
-            .get("id", "")
-            .lower()
-            .startswith("forge")
+                (versionInfo := self._profile.get("versionInfo", {}))
+                        .get("id", "")
+                        .lower()
+                        .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = (
@@ -349,29 +345,6 @@ class ForgeInstaller(Installer):
         self.__asyncInstallRoutine()
 
     def __asyncInstallRoutine(self):
-        hosts = Hosts()
-        if not hosts.find_all_matching(name="authserver.mojang.com"):
-            self._needHost = True
-            hosts.add(
-                entries=[
-                    HostsEntry(
-                        entry_type="ipv4",
-                        address=ipv4,
-                        names=["authserver.mojang.com"],
-                        comment=self.HOST_ENTRY_TAG,
-                    )
-                    for ipv4 in AUTHOR_SERVERS
-                ]
-            )
-            try:
-                hosts.write()
-            except PermissionError:
-                self.installFinished.emit(False)
-                return
-
-            if "Windows" in platform.platform():
-                (_ := QProcess()).start("ipconfig /flushdns")
-
         if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
             makedirs(
                 name=(
@@ -386,7 +359,7 @@ class ForgeInstaller(Installer):
                 ),
                 exist_ok=True,
             )
-            self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
+            self.downloadServerFinished.connect(lambda _: self.__asyncPreInstall())
             MCSL2Logger.debug(f"Forge 安装: {cwd}")
             # self.onServerDownload(cwd, f"server-{self._mcVersion}.jar")
             self._bmclapiDownloader = BMCLAPIDownloader()
@@ -408,7 +381,7 @@ class ForgeInstaller(Installer):
 
         elif self.installPlan == ForgeInstaller.InstallPlan.PlanA:
             # 预下载核心并安装...
-            self.downloadServerFinished.connect(lambda _: self.__asyncInstall())
+            self.downloadServerFinished.connect(lambda _: self.__asyncPreInstall())
             # self.onServerDownload(self.cwd, f"minecraft_server.{self._mcVersion}.jar")
             self._bmclapiDownloader = BMCLAPIDownloader()
             self._bmclapiDownloader.downloadProgress.connect(
@@ -421,158 +394,126 @@ class ForgeInstaller(Installer):
                 self._mcVersion, self.cwd, f"minecraft_server.{self._mcVersion}.jar"
             )
 
-    def __asyncInstall(self, installed=False):
-        if not installed:
-            # set forge runtime java path
-            if self.java is None:
-                try:
-                    self.java = (
-                        configureServerVariables.selectedJavaPath
-                        if self.isEditing is None
-                        else editServerVariables.selectedJavaPath
-                    )
-                except IndexError:
-                    raise InstallerError("No Java path found")
-            # copy tmp file of forge installer
-            shutil.copyfile(
-                osp.join(self.cwd, self.file),
-                osp.join(self.cwd, self.file + ".tmp"),
-            )
+    def __asyncPreInstall(self):
+        # set forge runtime java path
+        if self.java is None:
+            try:
+                self.java = (
+                    configureServerVariables.selectedJavaPath
+                    if self.isEditing is None
+                    else editServerVariables.selectedJavaPath
+                )
+            except IndexError:
+                raise InstallerError("No Java path found")
 
-            if self.cancelled:  # 如果取消了安装,则不创建QProcess安装进程
-                self.installFinished.emit(False)
-                return
+        if self.cancelled:  # 如果取消了安装,则不创建QProcess安装进程
+            self.installFinished.emit(False)
+            return
 
-            process = QProcess()
-            process.setWorkingDirectory(self.cwd)
-            process.setProgram(self.java)
-            process.setArguments(
-                [
-                    "-jar",
-                    self.file + ".tmp",
-                    "--mirror",
-                    "https://bmclapi2.bangbang93.com/maven/",
-                    "--installServer",
-                ]
-            )
-            process.readyReadStandardOutput.connect(
-                lambda: self._installerLogHandler(
+        self.worker = ForgeInstallThread(self.file, self.cwd, self.java)
+
+        self.worker.output.connect(
+            lambda msg: self.installerLogOutput.emit(
+                (
                     "ForgeInstaller::PlanB"
                     if self.installPlan == ForgeInstaller.InstallPlan.PlanB
                     else "ForgeInstaller::PlanA"
-                )
+                ) + ": " + msg
             )
-            process.finished.connect(lambda a, b: self.__asyncInstall(True))
-            self.workingProcess = process
-            self.workingProcess.start()
+        )
 
-        else:
-            self._cancelTimer: QTimer
-            self._cancelTimer.stop()
-            MCSL2Logger.success("PlanB::forge installed callback entered")
-            # 删除tmp
-            remove(osp.join(self.cwd, self.file + ".tmp"))
+        self.worker.finished.connect(self.__asyncPostInstall)
 
-            if self.workingProcess.exitCode() == 0:
-                # 1.17以上版本: PlanB
-                if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
-                    # 判断系统，分别读取run.bat和run.sh
-                    if osname == "nt":
-                        with open(osp.join(self.cwd, "run.bat"), mode="r") as f:
-                            run = f.readlines()
-                    else:
-                        with open(osp.join(self.cwd, "run.sh"), mode="r") as f:
-                            run = f.readlines()
-                    # 找到java命令
-                    try:
-                        command = list(
-                            filter(lambda x: x.startswith("java"), run)
-                        ).pop()
-                    except IndexError:
-                        raise InstallerError("No java command found")
+        self.worker.start()
 
-                    # 构造forge启动参数
-                    try:
-                        forgeArgs = list(
-                            filter(
-                                lambda x: x.startswith("@libraries"), command.split(" ")
-                            )
-                        ).pop()
-                    except IndexError:
-                        raise InstallerError("bad forge run script")
+    def __asyncPostInstall(self, success: bool):
+        self._cancelTimer: QTimer
+        self._cancelTimer.stop()
 
-                    forgeArgs = [forgeArgs]  # 转成列表，与下面相一致
-
-                # 1.17以下版本: PlanA
+        if success:
+            # 1.17以上版本: PlanB
+            if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
+                # 判断系统，分别读取run.bat和run.sh
+                if osname == "nt":
+                    with open(osp.join(self.cwd, "run.bat"), mode="r") as f:
+                        run = f.readlines()
                 else:
-                    for entry in self._profile["libraries"]:
-                        if entry["name"].startswith("net.minecraftforge:forge:"):
-                            coreFile = entry["downloads"]["artifact"]["path"].replace(
-                                "-universal", ""
-                            )
-                            forgeArgs = ["-jar", osp.basename(coreFile).strip()]
-                            break
-                    if self.isEditing is None:
-                        configureServerVariables.jvmArg.extend(forgeArgs)
-                    else:
-                        editServerVariables.jvmArg.extend(forgeArgs)
-                # 写入全局配置
+                    with open(osp.join(self.cwd, "run.sh"), mode="r") as f:
+                        run = f.readlines()
+                # 找到java命令
                 try:
-                    globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
-                    d = globalServerList["MCSLServerList"][
-                        (
-                            len(globalServerList["MCSLServerList"]) - 1
-                            if self.isEditing is None
-                            else self.isEditing
-                        )
-                    ]
-                    d["jvm_arg"].extend(forgeArgs)
-                    d.update(
-                        {
-                            "icon": "Anvil.png",
-                            "server_type": "forge",
-                        }
-                    )
-                    globalServerList["MCSLServerList"].pop(
-                        -1 if self.isEditing is None else self.isEditing
-                    )
-                    globalServerList["MCSLServerList"].append(d)
-                    writeFile(
-                        r"MCSL2/MCSL2_ServerList.json",
-                        dumps(globalServerList, indent=4),
-                    )
-                except Exception as e:
-                    raise e
+                    command = list(
+                        filter(lambda x: x.startswith("java"), run)
+                    ).pop()
+                except IndexError:
+                    raise InstallerError("No java command found")
 
-                # 写入单独配置
+                # 构造forge启动参数
                 try:
-                    if not cfg.get(cfg.onlySaveGlobalServerConfig):
-                        writeFile(
-                            osp.join(self.cwd, "MCSL2ServerConfig.json"),
-                            dumps(d, indent=4),
+                    forgeArgs = list(
+                        filter(
+                            lambda x: x.startswith("@libraries"), command.split(" ")
                         )
-                except Exception as e:
-                    raise e
+                    ).pop()
+                except IndexError:
+                    raise InstallerError("bad forge run script")
 
-                self.installFinished.emit(True)
+                forgeArgs = [forgeArgs]  # 转成列表，与下面相一致
+
+            # 1.17以下版本: PlanA
             else:
-                self.installFinished.emit(False)
-                if (
-                    self.workingProcess.exitCode() != 0
-                    and self.workingProcess.exitCode() != 62097
-                ):  # 62097是用户取消安装的错误码
-                    raise InstallerError(
-                        f"Forge installer exited with code {self.workingProcess.exitCode()}"
+                for entry in self._profile["libraries"]:
+                    if entry["name"].startswith("net.minecraftforge:forge:"):
+                        coreFile = entry["downloads"]["artifact"]["path"].replace(
+                            "-universal", ""
+                        )
+                        forgeArgs = ["-jar", osp.basename(coreFile).strip()]
+                        break
+                if self.isEditing is None:
+                    configureServerVariables.jvmArg.extend(forgeArgs)
+                else:
+                    editServerVariables.jvmArg.extend(forgeArgs)
+            # 写入全局配置
+            try:
+                globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+                d = globalServerList["MCSLServerList"][
+                    (
+                        len(globalServerList["MCSLServerList"]) - 1
+                        if self.isEditing is None
+                        else self.isEditing
                     )
+                ]
+                d["jvm_arg"].extend(forgeArgs)
+                d.update(
+                    {
+                        "icon": "Anvil.png",
+                        "server_type": "forge",
+                    }
+                )
+                globalServerList["MCSLServerList"].pop(
+                    -1 if self.isEditing is None else self.isEditing
+                )
+                globalServerList["MCSLServerList"].append(d)
+                writeFile(
+                    r"MCSL2/MCSL2_ServerList.json",
+                    dumps(globalServerList, indent=4),
+                )
+            except Exception as e:
+                raise e
 
-            # recover hosts
-            if self._needHost:
-                hosts = Hosts()
-                hosts.remove_all_matching(name="authserver.mojang.com")
-                hosts.write()
+            # 写入单独配置
+            try:
+                if not cfg.get(cfg.onlySaveGlobalServerConfig):
+                    writeFile(
+                        osp.join(self.cwd, "MCSL2ServerConfig.json"),
+                        dumps(d, indent=4),
+                    )
+            except Exception as e:
+                raise e
 
-                if "Windows" in platform.platform():
-                    (_ := QProcess()).start("ipconfig /flushdns")
+        self.installFinished.emit(success)
+        self.worker.join()
+        self.worker = None
 
     @classmethod
     def isPossibleForgeInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
@@ -582,7 +523,7 @@ class ForgeInstaller(Installer):
         若不是,则返回None
         """
         if (
-            osp.getsize(fileName) > 10_000 * 1024
+                osp.getsize(fileName) > 10_000 * 1024
         ):  # 若文件大于10MB,则几乎不可能是Forge安装器
             return None
         try:
@@ -637,12 +578,12 @@ class FabricInstaller(Installer):
         PlanB = 1
 
     def __init__(
-        self,
-        serverPath,
-        file,
-        java=None,
-        installerPath=None,
-        logDecode="utf-8",
+            self,
+            serverPath,
+            file,
+            java=None,
+            installerPath=None,
+            logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -663,8 +604,8 @@ class FabricInstaller(Installer):
         # 打开Installer压缩包
 
         with ZipFile(
-            jarFile,
-            mode="r",
+                jarFile,
+                mode="r",
         ) as zipfile:
             try:
                 props = str(zipfile.read("install.properties")).split("\n")
@@ -702,7 +643,7 @@ class FabricInstaller(Installer):
 
     @classmethod
     def isPossibleFabricInstaller(
-        cls, fileName: str
+            cls, fileName: str
     ) -> Optional[Tuple[McVersion, Any]]:
         """
         判断是否可能为Fabric安装器

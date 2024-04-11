@@ -51,6 +51,7 @@ from qfluentwidgets import (
     isDarkTheme,
     FlowLayout,
 )
+from python_hosts.hosts import Hosts
 
 from MCSL2Lib.ProgramControllers import javaDetector
 from MCSL2Lib.ProgramControllers.interfaceController import ChildStackedWidget
@@ -74,7 +75,7 @@ from MCSL2Lib.utils import (
     readGlobalServerConfig,
     MCSL2Logger,
     readFile,
-    writeFile,
+    writeFile, getAvailableAuthorServer,
 )
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 
@@ -1328,6 +1329,35 @@ class ServerManagerPage(QWidget):
                     self.installingForgeStateToolTip.getSuitablePos()
                 )
                 self.installingForgeStateToolTip.show()
+
+                hosts = Hosts()
+                if not hosts.find_all_matching(name='authserver.mojang.com'):
+                    ipv4 = getAvailableAuthorServer()
+                    if ipv4 is None:
+                        box = MessageBox(
+                            title=self.tr("提示"),
+                            content=self.tr(
+                                "未设置服务器 Mojang 认证服务器host，可能会导致Forge安装失败。\n"
+                                "请检查authserver.mojang.com的连接性\n"
+                                "若不能连通,请手动解析authserver.mojang.com并写入hosts"
+                            ),
+                            parent=self
+                        )
+
+                    else:
+                        box = MessageBox(
+                            title=self.tr("提示"),
+                            content=self.tr(
+                                "未设置服务器 Mojang 认证服务器host，可能会导致Forge安装失败。\n"
+                                "请检查authserver.mojang.com的连接性\n"
+                                f"若不能连通,将:\"{ipv4} authserver.mojang.com\"写入hosts"
+                            ),
+                            parent=self
+                        )
+                    box.exec()
+                    self.afterInstallingForge(False)
+                    self.refreshServers()
+                    return
                 try:
                     self.forgeInstaller = ForgeInstaller(
                         serverPath=f"Servers//{editServerVariables.serverName}",

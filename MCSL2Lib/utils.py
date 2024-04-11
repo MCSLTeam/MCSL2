@@ -25,13 +25,14 @@ from typing import Type, Optional, Iterable, Callable, Dict, List
 
 import aria2p
 import psutil
+import requests
 from PyQt5.QtCore import QUrl, QThread, QThreadPool, QFile
 from PyQt5.QtGui import QDesktopServices
 
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
 MCSL2Logger = _MCSL2Logger()
-AUTHOR_SERVERS = ["18.65.216.60"]
+AUTHOR_SERVERS = ["18.65.216.60", "13.35.58.36", "18.65.216.14", "13.35.58.102", "18.65.216.5"]
 
 
 class ServicesUrl:
@@ -196,7 +197,7 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
@@ -204,7 +205,7 @@ def exceptionFilter(
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.SILENT
     if isinstance(
-        value, aria2p.ClientException
+            value, aria2p.ClientException
     ) and "Active Download not found for GID" in str(value):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
@@ -216,7 +217,7 @@ def exceptionFilter(
     if isinstance(value, Exception) and "print test" in str(value):
         return ExceptionFilterMode.RAISE_AND_PRINT
     if isinstance(
-        value, Exception
+            value, Exception
     ) and "RunningServerHeaderCardWidget cannot be converted to PyQt5.QtWidgets.QLayoutItem" in str(
         value
     ):
@@ -228,14 +229,13 @@ def exceptionFilter(
 
 
 def checkSHA1(
-    fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
+        fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
 ) -> List[Dict]:
     """
     检查文件的SHA1值是否正确
     """
     rv = []
     if _filter is None:
-
         def _filter(a, b):
             return True
 
@@ -252,7 +252,7 @@ def checkSHA1(
     return rv
 
 
-class workingThreads:
+class WorkingThreads:
     threads = {}
 
     @classmethod
@@ -315,3 +315,13 @@ class workingThreads:
 
     def __call__(self, *args, **kwargs):
         raise RuntimeError("This class is not allowed to be instantiated.")
+
+
+def getAvailableAuthorServer() -> Optional[str]:
+    for e in AUTHOR_SERVERS:
+        try:
+            requests.get(e, timeout=1)
+            return e
+        except ConnectionError:
+            continue
+    return None
