@@ -30,7 +30,11 @@ class TypeFactory(metaclass=abc.ABCMeta):
         ...
 
     @classmethod
-    def from_supplier(cls, supplier: typing.Callable[[typing.Any], typing.Any]) -> 'TypeFactory':
+    def from_supplier(cls, supplier) -> 'TypeFactory':
+        """
+        supplier: bound method with 1 parameter OR function with 2 parameter (first parameter is cls)
+        """
+
         return type("TypeFactoryInstance", (TypeFactory,), {
             "get": lambda self, data: supplier(data)
         })()
@@ -45,9 +49,9 @@ class TypeFactory(metaclass=abc.ABCMeta):
     @classmethod
     def base_model(cls, type_hint: type) -> 'TypeFactory':
         """
-        invoke <? impl BaseModel>.from_dict with data
+        invoke <? impl BaseModel>.of with data
         """
-        return cls.from_supplier(lambda data: type_hint.from_dict(data))
+        return cls.from_supplier(lambda data: type_hint.of(data))
 
     @classmethod
     def inject(cls, factory: typing.Callable) -> 'TypeFactory':
@@ -74,12 +78,10 @@ def add_generic_factory(type_hint: typing.Type, supplier: typing.Callable[[typin
     """
     USER_DEFINED_GENERIC_FACTORIES[type_hint] = TypeFactory.from_supplier(supplier)
 
-
-@dataclass
 class BaseModel:
-    BASE_VAR_TYPES = (int, float, str, bool, list, dict, tuple, complex, None)
-    INJECT_WHITELIST = {}
-    GenericAlias = getattr(typing, "_GenericAlias")
+    BASE_VAR_TYPES:typing.Tuple[typing.Type] = (int, float, str, bool, list, dict, tuple, complex, type(None))
+    INJECT_WHITELIST:typing.Set[typing.Type] = set()
+    GenericAlias:typing.Type = getattr(typing, "_GenericAlias")
 
     @classmethod
     def of(cls, data: dict):
@@ -134,7 +136,7 @@ class BaseModel:
         for field, field_hint_type in fields_with_factory.items():
             factory = getattr(cls, field + "_factory", None)
             if factory is not None:
-                factories[field] = TypeFactory.from_supplier(factory)
+                factories[field] = TypeFactory.from_supplier(factory if inspect.ismethod(factory) else functools.partial(factory, cls))
             elif hasattr(field_hint_type, "__origin__"):  # assumed to be generic
                 try:
                     factories[field] = cls._get_generic_type_factory(
@@ -224,7 +226,7 @@ class BaseModel:
             default_supplier: typing.Callable = None,
     ) -> typing.Callable:
         if cls._is_base_model(type_hint):
-            return base_model_supplier or type_hint.from_dict
+            return base_model_supplier or type_hint.of
         elif cls._is_base_type(type_hint):
             return base_var_type_supplier or (lambda _: _)
         else:
@@ -265,3 +267,22 @@ class BaseModel:
 
         bound_args = signature.bind_partial(**params_to_bind)
         return TypeFactory.inject(functools.partial(type_hint, **bound_args.arguments))
+
+
+class _BaseModels:
+    def __init__(self):
+        self.classes: typing.List[BaseModel] = []
+        self.updated = False
+
+    def updateForwardRef(self):
+        if not self.updated:
+            for c in self.classes:
+                c.model_rebuild()
+
+_modelsHelp = _BaseModels()
+
+
+def registerModel(cls):
+    _modelsHelp.classes.append(cls)
+    # add dataclass feature
+    return dataclass(cls)

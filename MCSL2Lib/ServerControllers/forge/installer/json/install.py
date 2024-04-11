@@ -114,6 +114,10 @@ class Install(Spec):
     @classmethod
     def data_factory(cls, items: Mapping[str, Mapping]):
         return {k: Install.DataFile(**v) for k, v in items.items()}
+    
+    @classmethod
+    def path_factory(cls, item):
+        return Artifact.from_(item)
 
     @dataclass
     class Processor(BaseModel):
@@ -140,11 +144,11 @@ class Install(Spec):
 
         @classmethod
         def jar_factory(cls, item):
-            return Artifact.from_(json.dumps(item))
+            return Artifact.from_(item)
 
         @classmethod
         def classpath_factory(cls, items: Iterable):
-            return [Artifact.from_(json.dumps(i)) for i in items]
+            return [Artifact.from_(i) for i in items]
 
     @dataclass
     class DataFile:

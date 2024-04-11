@@ -59,24 +59,22 @@ class DownloadUtils:
         except (KeyError, zipfile.BadZipfile):
             return None
         except Exception as e:
-            traceback.print_exception(e)
+            traceback.print_exc()
             return None
 
     @staticmethod
-    def extractFile(art: Artifact, target: Path, checksum: Optional[str] = None) -> bool:
-        buf = BytesIO(target.read_bytes())
+    def extractFile(art: Artifact, buf: BytesIO, target: Path, checksum: Optional[str] = None) -> bool:
 
         location = Path("maven") / art.getPath()
         try:
             data = DownloadUtils.readFileInZip(buf, location)
-            buf.close()
             if not target.parent.exists():
                 target.parent.mkdir(parents=True)
             try:
                 target.write_bytes(data)
                 return DownloadUtils.checksumValid(target, checksum)
             except IOError as e:
-                traceback.print_exception(e)
+                traceback.print_exc()
                 return False
         except KeyError:
             print(f"File not found in installer archive: /maven/{art.getPath()}")
@@ -88,7 +86,10 @@ class DownloadUtils:
         :raise KeyError | IOError
         """
         with zipfile.ZipFile(archiveBuf, "r") as archive:
-            return archive.read(str(relative).replace("\\", "/"))
+            location = str(relative).replace("\\", "/")
+            if location.startswith("/"):
+                location = location[1:]
+            return archive.read(location)
 
     @staticmethod
     def checksumValid(target: Path, checksum: Optional[str]) -> bool:
@@ -103,13 +104,42 @@ class DownloadUtils:
         return DownloadUtils.downloadString(DownloadUtils.MANIFEST_URL, Util.loadManifest)
 
     @staticmethod
-    def download(monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path):
-        DownloadUtils._download(monitor, mirror, download, target, download.url)
+    def download(monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path) -> bool:
+        return DownloadUtils._download(monitor, mirror, download, target, download.url)
 
     @staticmethod
-    def _download(monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path, url: str):
+    def _download(monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path,
+                  url: str) -> bool:
         # TODO
-        ...
+        monitor.message(f"  Downloading library from {url}")
+        try:
+            with requests.get(url, stream=True) as response:
+                total = int(response.headers.get("content-length", 0))
+                downloaded = 0
+                with target.open("wb") as f:
+                    for data in response.iter_content(chunk_size=16384):
+                        downloaded += len(data)
+                        f.write(data)
+                        monitor.progress(downloaded, total)
+                    monitor.message("")
+
+                if download.url is not None:
+                    sha1 = DownloadUtils.getSha1(target)
+                    if sha1 == download.sha1:
+                        monitor.message("    Download completed: Checksum validated.")
+                        return True
+                    monitor.message("    Download failed: Checksum invalid, deleting file:")
+                    monitor.message("      Expected: " + download.sha1)
+                    monitor.message("      Actual:   " + sha1)
+                    try:
+                        target.unlink()
+                    except IOError:
+                        monitor.stage("      Failed to delete file, aborting.")
+                        return False
+                monitor.message("    Download completed: No checksum, Assuming valid.")
+        except:
+            traceback.print_exc()
+        return False
 
     @staticmethod
     def downloadLibrary(
@@ -124,7 +154,7 @@ class DownloadUtils:
 
         artifact = library.getName()
         target = artifact.getLocalPath(root)
-        download = None if library.getDownloads() else library.getDownloads().getArtifact()
+        download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
         if download is None:
             download = Version.LibraryDownload.of({
                 "path": artifact.getPath()
@@ -147,7 +177,7 @@ class DownloadUtils:
                 monitor.message("  File exists: No checksum, Assuming valid.")
                 return True
 
-        target.parent.mkdir(exist_ok=True)
+        target.parent.mkdir(exist_ok=True, parents=True)
 
         # try extract first
         try:
@@ -171,12 +201,12 @@ class DownloadUtils:
                 grabbed.append(artifact)
                 return True
         except zipfile.BadZipFile as e:
-            traceback.print_exception(e)
+            traceback.print_exc()
             return False
         except KeyError:
 
             # Try searching local installs if the file can be validated
-            if (providedSha1 := download.getSha1()) is not None:
+            if (providedSha1 := download.sha1) is not None:
                 for libDir in additionalLibraryDirs:
                     inLibDir = Path(libDir) / artifact.getPath()
                     if inLibDir.exists():
@@ -196,7 +226,7 @@ class DownloadUtils:
                             return True
                         except Exception as e:
                             # The copy may have failed when the file is in use. Don't abort, we may have other sources
-                            traceback.print_exception(e)
+                            traceback.print_exc()
                             monitor.message(f"    Failed to copy from local folder: {e}")
                             # Clean up the file that may have been created if the copy failed
                             if target.exists():
@@ -204,11 +234,11 @@ class DownloadUtils:
                                 return False
 
         url = download.url
-        if url is None or url != "":
+        if url is None or url == "":
             monitor.message("  Invalid library, missing url")
             return False
 
-        if (download(monitor, mirror, download, target)):
+        if (DownloadUtils.download(monitor, mirror, download, target)):
             grabbed.append(artifact)
             return True
 

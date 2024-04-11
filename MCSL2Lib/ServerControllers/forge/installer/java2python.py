@@ -1,4 +1,5 @@
 import abc
+from functools import partial
 import typing
 
 T = typing.TypeVar('T')
@@ -27,22 +28,21 @@ def FunctionalInterface(cls):
     return cls
 
 
-@FunctionalInterface
 class Supplier(typing.Generic[T], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get(self) -> T:
         ...
 
-#     @classmethod
-#     def of(cls, supplier: typing.Callable[[], T]) -> 'Supplier[T]':
-#         return _SupplierInstance(supplier)
-#
-#
-# class _SupplierInstance(Supplier[T]):
-#
-#     def __init__(self, supplier: typing.Callable[[], T]):
-#         self.__supplier = partial(supplier)
-#
-#     def get(self) -> T:
-#         return self.__supplier()
+    @classmethod
+    def of(cls, supplier: typing.Callable[[], T]) -> 'Supplier[T]':
+        return _SupplierInstance(supplier)
+
+
+class _SupplierInstance(Supplier[T]):
+
+    def __init__(self, supplier: typing.Callable[[], T]):
+        self.__supplier = partial(supplier)
+
+    def get(self) -> T:
+        return self.__supplier()

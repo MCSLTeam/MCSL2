@@ -94,7 +94,8 @@ class PostProcessors:
 
         rv = set()
         for x in range(len(self.processors)):
-            self.monitor.progress((x + 1) / len(self.processors))
+            self.monitor.progress((x + 1), len(self.processors))
+            self.monitor.message("")
             self.log("===============================================================================")
             proc = self.processors[x]
             outputs = allOutputs[x]
@@ -140,7 +141,7 @@ class PostProcessors:
                                         miss = True
                                         output.file.unlink(missing_ok=True)
                                 except IOError as e:
-                                    traceback.print_exception(e)
+                                    traceback.print_exc()
                                     return None
 
                     else:

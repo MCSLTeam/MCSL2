@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Optional, Set, List
+from typing import Dict, Optional, Set, List, Mapping, Iterable
 
 from .artifact import Artifact
 from .base_model import BaseModel
@@ -11,13 +11,19 @@ from .base_model import BaseModel
 class Version(BaseModel):
     id: str
     downloads: Dict[str, 'Version.Download']
-    libraries: list
+    libraries: List['Version.Library']
 
     def getDownload(self, key: str) -> Optional['Version.Download']:
         return self.downloads.get(key)
 
     def getLibraries(self) -> List[Library]:
         return self.libraries or []
+
+    def downloads_factory(cls, items: Mapping[str, Mapping]) -> Dict[str, 'Version.Download']:
+        return {k: Version.Download(**v) for k, v in items.items()}
+
+    def libraries_factory(cls, items: Iterable) -> List['Version.Library']:
+        return [Version.Library.of(i) for i in items]
 
     @dataclass
     class Download(BaseModel):
@@ -42,6 +48,9 @@ class Version(BaseModel):
 
         def getPath(self) -> str:
             return self.path
+
+        def getSha1(self) -> str:
+            return self.sha1
 
         def getProvided(self) -> bool:
             return self.provided
@@ -81,5 +90,5 @@ class Version(BaseModel):
             return Artifact.from_(item)
 
         @classmethod
-        def downloads_factory(cls, item) -> 'Version.Downloads':
-            return Version.Downloads.of(item)
+        def downloads_factory(cls, items) -> 'Version.Downloads':
+            return Version.Downloads.of(items)

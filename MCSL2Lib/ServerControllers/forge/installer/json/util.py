@@ -3,7 +3,6 @@ import re
 import traceback
 from typing import List, Dict, Optional
 
-from .installV1 import InstallV1
 from .manifest import Manifest
 from .mirror import Mirror
 from .version import Version
@@ -32,9 +31,9 @@ class Util:
             return InstallV1.of(profile)
 
     @staticmethod
-    def loadVersion(profile: InstallV1):
+    def loadVersion(text: str):
         from .version import Version
-        return Version.of(json.loads(profile.getJson()))
+        return Version.of(json.loads(text))
 
     @staticmethod
     def replaceTokens(tokens: Dict[str, Supplier[str]], value: str):
@@ -107,7 +106,7 @@ class Util:
             data = json.loads(text)
             return Manifest.of(data)
         except Exception as e:
-            traceback.print_exception(e)
+            traceback.print_exc()
             return None
 
     @staticmethod
@@ -116,5 +115,5 @@ class Util:
             data = json.loads(text)
             return Version.of(data)
         except Exception as e:
-            traceback.print_exception(e)
+            traceback.print_exc()
             return None
