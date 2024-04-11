@@ -19,7 +19,7 @@ class ServerInstall(Action):
         super().__init__(profile, monitor, installer, False)
         self.grabbed = []
 
-    def run(self, target: Path) -> bool:
+    def run(self, target: Path, java: Path = None) -> bool:
         try:
 
             if target.exists() and not target.is_dir():
@@ -72,7 +72,8 @@ class ServerInstall(Action):
             self.monitor.stage("Cancelled")
             return False
 
-        ret = self.offlineInstall(self.installer)
+        self.monitor.stage("Installing server, please wait ...")
+        ret = self.offlineInstall(self.installer, java)
         if ret != 0:
             self.error(f"Failed to install server: installer return code: {ret}")
             return False
@@ -80,10 +81,11 @@ class ServerInstall(Action):
 
     def offlineInstall(self, installer: Path, java: Path = None) -> int:
         javaPath = java or "java"
+        jvmArgs = f"{javaPath} -jar {installer.absolute()} --offline --installServer"
+        print(jvmArgs, self.installer.parent)
         return subprocess.run(
-            f"{javaPath} -jar {installer.absolute()} --offline --installServer",
+            jvmArgs,
             cwd=str(self.installer.parent),
-            shell=True
         ).returncode
 
     def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str):

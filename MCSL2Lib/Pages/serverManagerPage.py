@@ -1358,7 +1358,7 @@ class ServerManagerPage(QWidget):
                     self.afterInstallingForge(False)
                     self.refreshServers()
                     return
-            try:
+                try:
                     self.forgeInstaller = ForgeInstaller(
                         serverPath=f"Servers//{editServerVariables.serverName}",
                         file=editServerVariables.coreFileName,

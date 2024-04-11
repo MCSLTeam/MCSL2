@@ -252,7 +252,7 @@ def checkSHA1(
     return rv
 
 
-class workingThreads:
+class WorkingThreads:
     threads = {}
 
     @classmethod

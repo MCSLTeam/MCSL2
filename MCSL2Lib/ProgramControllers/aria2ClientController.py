@@ -32,7 +32,7 @@ from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 from MCSL2Lib.utils import (
     readFile,
-    workingThreads,
+    WorkingThreads,
     MCSL2Logger,
     writeFile,
     readBytesFile,
@@ -1010,7 +1010,7 @@ class DL_EntryManager(QObject):
     #     raise Exception("请勿实例化本类,请使用类方法!")
 
 
-workingThreads.register("DL_Entry")
+WorkingThreads.register("DL_Entry")
 
 
 class DL_EntryController(QObject):
@@ -1031,7 +1031,7 @@ class DL_EntryController(QObject):
         self.entries = entries
         self.worker = DL_EntryManager(self.entries, self.mutex)
         self.worker.read()
-        self.worker.moveToThread(workingThreads.getThread("DL_Entry"))
+        self.worker.moveToThread(WorkingThreads.getThread("DL_Entry"))
 
         self.resultReady.connect(lambda _: self.worker.deleteLater())
         self.work.connect(self.worker.asyncDispatcher)

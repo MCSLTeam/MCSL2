@@ -3,17 +3,22 @@ import zipfile
 from io import BytesIO
 from pathlib import Path
 
-from .actions.progress_callback import TO_STD_OUT
+from .actions.progress_callback import TO_STD_OUT, ProgressCallback
 from .actions.server_install import ServerInstall
 from .json.util import Util
 
 
 class SimpleInstaller:
-    mirror = None
+    # TODO 使镜像源下载生效
+    mirror = "https://bmclapi2.bangbang93.com/maven/"
 
     @staticmethod
-    def installServer(installer: Path, targetDir: Path) -> bool:
-        monitor = TO_STD_OUT
+    def installServer(
+            installer: Path,
+            targetDir: Path,
+            monitor: ProgressCallback = TO_STD_OUT,
+            java: Path = None
+    ) -> bool:
 
         installerBuf = BytesIO(installer.read_bytes())
         try:
@@ -25,6 +30,6 @@ class SimpleInstaller:
             monitor.stage(f"Failed to load install profile: {e}")
             return False
         serverInstaller = ServerInstall(profile, installer, monitor)
-        run = serverInstaller.run(targetDir)
+        run = serverInstaller.run(targetDir, java)
         installerBuf.close()
         return run
