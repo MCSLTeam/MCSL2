@@ -636,7 +636,7 @@ class PostProcessors:
             """
              monitor.message("  Args: " + args.stream().map(a -> a.indexOf(' ') != -1 || a.indexOf(',') != -1 ? '"' + a + '"' : a).collect(Collectors.joining(", ")));
             """
-            self.monitor.message(f"  Args: " + str([
+            self.monitor.message("  Args: " + str([
                 a if a.indexOf(' ') != -1 or a.indexOf(',') != -1 else f'"{a}"' for a in args
             ]))
             # TODO: continue translate PostProcessors.java:210

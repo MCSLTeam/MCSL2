@@ -20,6 +20,7 @@ T = TypeVar("T")
 class DownloadUtils:
     MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
     LIBRARIES_URL = "https://libraries.minecraft.net/"
+    OFFLINE_MODE = True
 
     @staticmethod
     def downloadMirrors(url: str) -> Optional[List[Mirror]]:
@@ -252,7 +253,7 @@ class DownloadUtils:
                 if download.getSha1() == sha1:
                     monitor.message("  File exists: Checksum validated.")
                     return True
-                monitor.message(f"  File exists: Checksum invalid, deleting file:")
+                monitor.message("  File exists: Checksum invalid, deleting file:")
                 monitor.message(f"    Expected: {download.getSha1()}")
                 monitor.message(f"    Actual:   {sha1}")
                 target.unlink(missing_ok=True)
@@ -275,7 +276,7 @@ class DownloadUtils:
                     monitor.message("  Extraction completed: Checksum validated.")
                     grabbed.append(artifact)
                     return True
-                monitor.message(f"  Extraction failed: Checksum invalid, deleting file:")
+                monitor.message("  Extraction failed: Checksum invalid, deleting file:")
                 monitor.message(f"    Expected: {download.sha1}")
                 monitor.message(f"    Actual:   {sha1}")
                 target.unlink(missing_ok=True)
@@ -322,7 +323,7 @@ class DownloadUtils:
             monitor.message("  Invalid library, missing url")
             return False
 
-        if (download(monitor,mirror,download,target)):
+        if (download(monitor, mirror, download, target)):
             grabbed.append(artifact)
             return True
 

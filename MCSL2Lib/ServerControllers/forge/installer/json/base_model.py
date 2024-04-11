@@ -124,7 +124,7 @@ class BaseModel:
     def _get_type(cls, type_hint: typing.Type):
         if hasattr(type_hint, "__origin__"):
             return type_hint.__origin__
-        if hasattr(type_hint,"__forward_arg__"):
+        if hasattr(type_hint, "__forward_arg__"):
             raise RuntimeError(f"{type_hint.__forward_arg__} Out of context.")
         return type_hint
 
@@ -242,7 +242,7 @@ class BaseModel:
         # inspect type_hint`s constructor
         # TODO support generic type
 
-        if type_hint not in BaseModel.INJECT_WHITELIST: # pass through if not in inject whitelist
+        if type_hint not in BaseModel.INJECT_WHITELIST:  # pass through if not in inject whitelist
             return TypeFactory.pass_through()
 
         signature = inspect.signature(type_hint.__init__)

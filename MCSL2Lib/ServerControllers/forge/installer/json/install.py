@@ -302,7 +302,7 @@ class Install(Spec):
         return [Install.Processor.of(i) for i in items]
 
     @classmethod
-    def data_factory(cls, items: Mapping[str,Mapping]):
+    def data_factory(cls, items: Mapping[str, Mapping]):
         return {k: Install.DataFile(**v) for k, v in items.items()}
 
     @dataclass

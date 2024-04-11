@@ -15,14 +15,15 @@ from ..json.version import Version
 
 class ServerInstall(Action):
     def __init__(self, profile: InstallV1, monitor: ProgressCallback):
-
         super().__init__(profile, monitor, False)
+        self.grabbed = []
 
     def run(self, target: Path, installer: Path) -> bool:
         installerDataBuf = BytesIO(installer.read_bytes())
 
         if target.exists() and not target.is_dir():
             self.monitor.error("There is a file at this location, the server cannot be installed here!")
+            installerDataBuf.close()
             return False
 
         librariesDir = Path(target).joinpath("libraries")
@@ -37,6 +38,7 @@ class ServerInstall(Action):
             self.monitor.stage("Extracting main jar:")
             if not DownloadUtils.extractFile(contained, target / contained.getFilename()):
                 self.monitor.error(f"  Failed to extract main jar: {contained.getFilename()}")
+                installerDataBuf.close()
                 return False
             else:
                 self.monitor.stage("  Extracted successfully")
@@ -54,6 +56,8 @@ class ServerInstall(Action):
         serverTarget = Path(path)
 
         if not self.downloadVanilla(serverTarget, installerDataBuf, "server"):
+            self.monitor.error("Failed to download minecraft server jar")
+            installerDataBuf.close()
             return False
 
         self.checkCancel()
@@ -65,6 +69,7 @@ class ServerInstall(Action):
             libDirs.append(mcLibDir)
 
         if not self.downloadLibraries(target, installerDataBuf, libDirs):
+            installerDataBuf.close()
             return False
 
     def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str):
@@ -80,16 +85,19 @@ class ServerInstall(Action):
                 except Exception as e:
                     traceback.print_exception(e)
                     self.error("Failed to download version manifest, can not find " + side + " jar URL.")
+                    installerDataBuf.close()
                     return False
 
             vanilla = Util.getVanillaVersion(self.profile.getMinecraft())
             if vanilla is None:
                 self.error("Failed to download version manifest, can not find " + side + " jar URL.")
+                installerDataBuf.close()
                 return False
 
             dl = vanilla.getDownload(side)
             if dl is None:
                 self.error("Failed to download minecraft " + side + " jar, info missing from manifest")
+                installerDataBuf.close()
                 return False
 
             if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target):
@@ -98,16 +106,36 @@ class ServerInstall(Action):
                     "Downloading minecraft " + side + " failed, invalid checksum.\n" + \
                     "Try again, or manually place server jar to skip download."
                 )
+                installerDataBuf.close()
                 return False
 
+        installerDataBuf.close()
         return True
 
-    def downloadLibraries(self, target: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]):
+    def downloadLibraries(self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]):
         self.monitor.start("Downloading libraries")
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
         libraries = self.getLibraries()
-        output = ""
+        bad = ""
+        for lib in libraries:  # TODO:Async Download
+            self.checkCancel()
+            if not DownloadUtils.downloadLibrary(
+                    self.monitor,
+                    self.profile.getMirror(),
+                    lib,
+                    librariesDir,
+                    installerDataBuf,
+                    self.grabbed,
+                    additionalLibDirs
+            ):
+                download = None if lib.getDownloads() is None else lib.getDownloads().getArtifact()
+                if download is not None and download.url != '':
+                    bad += f"\n{lib.getName()}"
+        if bad != '':
+            self.monitor.error(f"Failed to download libraries:\n{bad}")
+            return False
+        return True
 
     def getLibraries(self) -> List[Version.Library]:
         libraries = set()

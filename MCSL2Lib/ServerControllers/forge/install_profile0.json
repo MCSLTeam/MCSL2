@@ -14,10 +14,10 @@
     "minecraft": "1.12.2",
     "welcome": "Welcome to the simple Forge installer.",
     "data": {
-        
+
     },
     "processors": [
-        
+
     ],
     "libraries": [
         {

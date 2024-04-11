@@ -65,7 +65,7 @@ class Util:
                     if d == '\\':
                         if y == len(value) - 1:
                             raise ValueError("Illegal pattern (Bad escape): " + value)
-                        key += value[y + 1];
+                        key += value[y + 1]
                         y += 1
                     elif c == '{' and d == '}':
                         x = y

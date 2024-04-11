@@ -83,7 +83,7 @@ class Mirror:
                 if self.getImageAddress():
                     # TODO
                     image_bytes = bytes()
-                    self._image_ = QImage.fromData(base64.b64encode(self.image.replace("data:image/png;base64","")))
+                    self._image_ = QImage.fromData(base64.b64encode(self.image.replace("data:image/png;base64", "")))
             except Exception as e:
                 print(e.args)
                 self._image_ = None

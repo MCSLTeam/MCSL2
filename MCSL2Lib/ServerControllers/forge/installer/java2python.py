@@ -5,7 +5,7 @@ from functools import partial
 T = typing.TypeVar('T')
 
 
-class Supplier(typing.Generic[T],metaclass=abc.ABCMeta):
+class Supplier(typing.Generic[T], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get(self) -> T:
