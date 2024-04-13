@@ -17,6 +17,8 @@ Manage exists Minecraft servers.
 from json import dump, loads, dumps
 from os import getcwd, rename, path as osp, remove
 from shutil import copy, rmtree
+from typing import Tuple
+from pyqt5_concurrent.TaskExecutor import TaskExecutor # type: ignore
 
 from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal, QThread
 from PyQt5.QtGui import QPixmap, QCursor
@@ -74,7 +76,7 @@ from MCSL2Lib.utils import (
     readGlobalServerConfig,
     MCSL2Logger,
     readFile,
-    writeFile, getAvailableAuthorServer,
+    writeFile,
 )
 from MCSL2Lib.variables import GlobalMCSL2Variables, EditServerVariables
 
@@ -715,6 +717,7 @@ class ServerManagerPage(QWidget):
     ##################
     def deleteServer_Step1(self, index):
         """删除服务器步骤1，询问是否删除"""
+        # exec() 返回1:取消，0:继续(此处)
         title = self.tr('是否要删除服务器"') + self.globalServerConfig[index]["name"] + '"?'
         content = self.tr("此操作是不可逆的！你确定这么做吗？")
         w = MessageBox(title, content, self)
@@ -725,17 +728,16 @@ class ServerManagerPage(QWidget):
             if isDarkTheme()
             else GlobalMCSL2Variables.lightWarnBtnStyleSheet
         )
-        w.cancelSignal.connect(lambda: self.deleteServer_Step2(index=index))
-        w.exec()
+        if w.exec() == 1:
+            return
 
-    def deleteServer_Step2(self, index):
         """删除服务器步骤2：输入确认"""
         globalConfig: list = readGlobalServerConfig()
         title = self.tr('你真的要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
         content = (
-            self.tr('此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"')
-            + globalConfig[index]["name"]
-            + self.tr('"，然后点击「删除」按钮：')
+                self.tr('此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"')
+                + globalConfig[index]["name"]
+                + self.tr('"，然后点击「删除」按钮：')
         )
         w2 = MessageBox(title, content, self)
         w2.yesButton.setText(self.tr("取消"))
@@ -754,11 +756,10 @@ class ServerManagerPage(QWidget):
         )
         confirmLineEdit.setPlaceholderText(self.tr('在此输入"') + globalConfig[index]["name"] + '"')
         self.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
-        w2.cancelSignal.connect(lambda: self.deleteServer_Step3(index=index))
         w2.textLayout.addWidget(confirmLineEdit)
-        w2.exec()
+        if w2.exec() == 1:
+            return
 
-    def deleteServer_Step3(self, index):
         """删除服务器步骤3：弹窗提示正在删除"""
         globalConfig: list = readGlobalServerConfig()
         delServerName = globalConfig[index]["name"]
@@ -769,23 +770,22 @@ class ServerManagerPage(QWidget):
         self.deletingServerStateToolTip.move(self.deletingServerStateToolTip.getSuitablePos())
         self.deletingServerStateToolTip.show()
 
-        # 使用多线程防止假死
-        self.thread = DeleteServerThread(index=index, delServerName=delServerName)
-        self.thread.exit1Msg.connect(self.deleteServer_Step4)
-        self.thread.start()
+        # 真正删除服务器文件夹
 
-    @pyqtSlot(str)
-    def deleteServer_Step4(self, exit1Msg):
-        """删除服务器步骤4：弹窗提示删除成功或失败"""
-        if exit1Msg == "":
-            self.deletingServerStateToolTip.setContent(self.tr("删除完毕。"))
+        globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+        globalServerList["MCSLServerList"].pop(index)
+        writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+
+        def onFinished(_):
             self.deletingServerStateToolTip.setState(True)
             self.deletingServerStateToolTip = None
-        else:
-            self.deletingServerStateToolTip.setContent(self.tr("删除失败！\n") + exit1Msg)
-            self.deletingServerStateToolTip.setState(True)
-            self.deletingServerStateToolTip = None
-        self.refreshServers()
+            self.refreshServers()
+
+        TaskExecutor.run(rmtree, f"Servers/{delServerName}").then(
+            onSuccess=lambda: self.deletingServerStateToolTip.setContent(self.tr("删除完毕。")),
+            onFailed=lambda e:self.deletingServerStateToolTip.setContent(self.tr("删除失败！\n") + str(e)),
+            onFinished=onFinished
+        )
 
     def compareDeleteServerName(self, name, LineEditText):
         """删除服务器步骤2：输入确认的检查，不一样就不启用删除按钮直到输入正确"""
@@ -1438,38 +1438,3 @@ class ServerManagerPage(QWidget):
         ).itSelf
         self.runningServerCardGenerated.emit(w.monitorWidget)
 
-
-class DeleteServerThread(QThread):
-    """
-    用来删除服务器的线程\n
-    使用多线程防止假死
-    """
-
-    exitCode = pyqtSignal(int)
-    exit1Msg = pyqtSignal(str)
-
-    def __init__(self, index, delServerName, parent=None):
-        super().__init__(parent)
-        self.index = index
-        self.delServerName = delServerName
-        self.setObjectName("DeleteServerThread")
-
-    def run(self):
-        exit1Msg = ""
-        # 删配置
-        try:
-            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
-            globalServerList["MCSLServerList"].pop(self.index)
-            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
-        except Exception as e:
-            self.exitCode.emit(1)
-            exit1Msg += f"\n{e}"
-
-        # 删文件
-        try:
-            rmtree(f"Servers//{self.delServerName}")
-        except Exception as e:
-            self.exitCode.emit(1)
-            exit1Msg += f"\n{e}"
-
-        self.exit1Msg.emit(exit1Msg)
