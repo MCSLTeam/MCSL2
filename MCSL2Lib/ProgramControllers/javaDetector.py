@@ -15,14 +15,18 @@ An auto-detect Java function.
 """
 
 import json
-from os import listdir, remove
+from os import environ as env
 from os import path as osp
+from os import pathsep, remove, listdir
 from platform import system
 from re import search
 
-from PyQt5.QtCore import QThread, pyqtSignal, QProcess
-from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
+if "windows" in system().lower():
+    import winreg
 
+from PyQt5.QtCore import QThread, pyqtSignal, QProcess
+
+from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
 foundJava = []
 fSearch = True
@@ -93,65 +97,6 @@ def getJavaVersion(File):
         return ""
 
 
-def findStr(s):
-    for _s in excludedKeywords:
-        if _s in s:
-            return False
-    for _s in matchKeywords:
-        if _s in s:
-            return True
-    return False
-
-
-def searchFile(path, keyword, ext, fSearch, _match):
-    # construct _match function
-    if "windows" in system().lower():
-
-        def match(P, F):
-            return osp.join(P, F).endswith(r"bin\java.exe")
-
-    else:
-
-        def match(P, F):
-            return osp.join(P, F).endswith(r"bin/java")
-
-    processes = searchingFile(path, keyword, ext, fSearch, match)
-    rv = []
-    for process in processes:
-        process.waitForFinished()
-        try:
-            if match := _match(process.readAllStandardError().data().decode("utf-8")):
-                rv.append(Java(process.program(), match))
-        except UnicodeDecodeError:
-            if match := _match(process.readAllStandardError().data().decode("gbk")):
-                rv.append(Java(process.program(), match))
-    return rv
-
-
-def searchingFile(path, keyword, ext, fSearch, _match):
-    processes = []
-    if fSearch:
-        if osp.isfile(path) or "x86_64-linux-gnu" in path:
-            return processes
-        try:
-            for File in listdir(path):
-                _Path = osp.join(path, File)
-                if osp.isfile(_Path):
-                    if _match(path, File):
-                        process = QProcess()
-                        process.start(_Path, ["-version"])
-                        processes.append(process)
-                elif findStr(File.lower()):
-                    processes.extend(
-                        searchingFile(_Path, keyword, ext, fSearch, _match)
-                    )
-        except PermissionError:
-            pass
-        except FileNotFoundError:
-            pass
-    return processes
-
-
 def javaVersionMatcher(s):
     pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
     match = search(pattern, s)
@@ -163,19 +108,144 @@ def javaVersionMatcher(s):
 
 
 def detectJava(fSearch=True):
+    """
+    检测所有已安装的Java路径，三端通用
+    """
+    javaList = []
     javaPathList = []
     foundJava.clear()
-    if "windows" in system().lower():
-        for i in range(65, 91):
-            path = chr(i) + ":\\"
-            if osp.exists(path):
-                javaPathList.extend(
-                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
-                )
-    else:
-        javaPathList.extend(
-            searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher)
-        )
+    # 检测环境变量中的Java（不是Java的PATH会在最后筛选时过滤）
+    javaPathList.extend(env.get("PATH").split(pathsep))
+
+    # 针对不同系统的寻找
+    if "windows" in system().lower():  # windows
+        # 检测JAVA_HOME环境变量
+        javaPathList.extend(env.get("JAVA_HOME").split(pathsep))
+
+        # 检测默认安装路径
+        javaInstallationPaths = [
+            r"C:\Program Files\Java",
+            r"C:\Program Files (x86)\Java",
+            r"C:\Program Files\Eclipse Adoptium",
+            r"C:\Program Files (x86)\Eclipse Adoptium",
+        ]
+
+        for path in javaInstallationPaths:
+            for subPath in listdir(path):
+                javaPathList.extend(osp.join(subPath, r"bin"))
+
+        # 检测注册表
+        javaRegKeyPaths = [
+            r"SOFTWARE\JavaSoft\Java Runtime Environment",
+            r"SOFTWARE\JavaSoft\Java Development Kit",
+            r"SOFTWARE\\JavaSoft\\JRE",
+            r"SOFTWARE\\JavaSoft\\JDK",
+            r"SOFTWARE\\Eclipse Foundation\\JDK",
+            r"SOFTWARE\\Eclipse Adoptium\\JRE",
+            r"SOFTWARE\\Eclipse Foundation\\JDK",
+            r"SOFTWARE\\Microsoft\\JDK",
+        ]
+
+        accessFlags = winreg.KEY_READ
+        for keyPath in javaRegKeyPaths:
+            try:
+                # 32位注册表视图
+                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyPath, 0,
+                                    accessFlags | winreg.KEY_WOW64_32KEY) as java_key_32:
+                    javaPaths = getJavaInRegistryKey(java_key_32)
+                    javaPathList.extend(javaPaths)
+
+                # 64位注册表视图（如果可用）
+                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyPath, 0,
+                                    accessFlags | winreg.KEY_WOW64_64KEY) as java_key_64:
+                    javaPaths = getJavaVersion(java_key_64)
+                    javaPathList.extend(javaPaths)
+            except WindowsError:
+                # 如果键不存在，则忽略错误并继续
+                pass
+    elif "darwin" in system().lower():  # macOS
+        # 检测第三方App内置Java路径
+        javaInstallationPaths = [
+            r"/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java",
+            r"/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home",
+            r"/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands",
+        ]
+        javaPathList.extend(javaInstallationPaths)
+        # 检测默认安装路径
+        basePath = "/Library/Java/JavaVirtualMachines/"
+        if osp.isdir(basePath):
+            for entry in listdir(basePath):
+                if osp.isdir(entry):
+                    javaPathList.append(osp.join(entry, "Contents/Home/bin"))
+    else:  # linux
+        # 检测默认安装路径
+        javaInstallationPaths = [
+            r"/usr",
+            r"/usr/java",
+            r"/usr/lib/jvm",
+            r"/usr/lib64/jvm",
+            r"/opt/jdk",
+            r"/opt/jdks",
+        ]
+
+        for path in javaInstallationPaths:
+            # 尝试插入jre/bin和bin目录
+            javaPathList.append(osp.join(path, "/jre/bin"))
+            javaPathList.append(osp.join(path, "/bin"))
+
+            # 如果目录存在，则遍历其内容
+            if osp.isdir(path):
+                for entry in listdir(path):
+                    if osp.isdir(path):
+                        # 尝试插入每个子目录的jre/bin和bin目录
+                        javaPathList.append(osp.join(entry, "/jre/bin"))
+                        javaPathList.append(osp.join(entry, "/bin"))
+
+    # 筛选Java路径
+    for path in javaPathList:
+        path = osp.join(path, "javaw.exe") if "windows" in system().lower() else osp.join(path, "java")
+        if osp.exists(path):
+            version = getJavaVersion(path)
+            if version != "":
+                java = Java(path, version)
+                if not java in javaList:
+                    javaList.append(Java(path, version))
+
+    return javaList
+
+
+def getJavaInRegistryKey(keyPath):
+    """
+    检测注册表中的Java路径，仅windows
+    """
+    javaPathList = []
+    # 打开注册表键
+    try:
+        key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyPath)
+    except FileNotFoundError:
+        return javaPathList
+
+    # 遍历子键
+    i = 0
+    while True:
+        try:
+            subKeyName, _, _ = winreg.EnumValue(key, i)
+            subKey = winreg.OpenKey(key, subKeyName)
+
+            # 检查特定的值
+            subKeyValueNames = ["JavaHome", "InstallationPath", "\\\\hotspot\\\\MSI"]
+            for subKeyValue in subKeyValueNames:
+                try:
+                    javaPath, _ = winreg.QueryValueEx(subKey, subKeyValue)
+                    javaPathList.extend(osp.join(javaPath, r"bin\javaw.exe"))
+                except FileNotFoundError:
+                    continue
+
+            i += 1
+        except OSError:
+            break  # 如果没有更多子键，则跳出循环
+
+    winreg.CloseKey(key)
     return javaPathList
 
 
