@@ -19,7 +19,7 @@ dependencies = [
     # qt
     "PyQt5",
     "PyQt-Fluent-Widgets[full]",
-    "pyqt5-qt5==5.15.2",
+    "pyqt5-qt5==5.15.12",
     # 系统信息
     "psutil==5.9.5",
     "loguru==0.7.2",
