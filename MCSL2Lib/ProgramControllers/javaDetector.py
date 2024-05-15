@@ -97,6 +97,65 @@ def getJavaVersion(File):
         return ""
 
 
+def findStr(s):
+    for _s in excludedKeywords:
+        if _s in s:
+            return False
+    for _s in matchKeywords:
+        if _s in s:
+            return True
+    return False
+
+
+def searchFile(path, keyword, ext, fSearch, _match):
+    # construct _match function
+    if "windows" in system().lower():
+
+        def match(P, F):
+            return osp.join(P, F).endswith(r"bin\java.exe")
+
+    else:
+
+        def match(P, F):
+            return osp.join(P, F).endswith(r"bin/java")
+
+    processes = searchingFile(path, keyword, ext, fSearch, match)
+    rv = []
+    for process in processes:
+        process.waitForFinished()
+        try:
+            if match := _match(process.readAllStandardError().data().decode("utf-8")):
+                rv.append(Java(process.program(), match))
+        except UnicodeDecodeError:
+            if match := _match(process.readAllStandardError().data().decode("gbk")):
+                rv.append(Java(process.program(), match))
+    return rv
+
+
+def searchingFile(path, keyword, ext, fSearch, _match):
+    processes = []
+    if fSearch:
+        if osp.isfile(path) or "x86_64-linux-gnu" in path:
+            return processes
+        try:
+            for File in listdir(path):
+                _Path = osp.join(path, File)
+                if osp.isfile(_Path):
+                    if _match(path, File):
+                        process = QProcess()
+                        process.start(_Path, ["-version"])
+                        processes.append(process)
+                elif findStr(File.lower()):
+                    processes.extend(
+                        searchingFile(_Path, keyword, ext, fSearch, _match)
+                    )
+        except PermissionError:
+            pass
+        except FileNotFoundError:
+            pass
+    return processes
+
+
 def javaVersionMatcher(s):
     pattern = r"(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[._](\d+))?(?:-(.+))?"
     match = search(pattern, s)
