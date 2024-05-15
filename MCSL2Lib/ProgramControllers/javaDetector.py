@@ -120,7 +120,9 @@ def detectJava(fSearch=True):
     # 针对不同系统的寻找
     if "windows" in system().lower():  # windows
         # 检测JAVA_HOME环境变量
-        javaPathList.extend(env.get("JAVA_HOME").split(pathsep))
+        pathEnv = env.get("JAVA_HOME")
+        if pathEnv is not None:
+            javaPathList.extend(env.split(pathsep))
 
         # 检测默认安装路径
         javaInstallationPaths = [
@@ -131,8 +133,9 @@ def detectJava(fSearch=True):
         ]
 
         for path in javaInstallationPaths:
-            for subPath in listdir(path):
-                javaPathList.extend(osp.join(subPath, r"bin"))
+            if osp.exists(path):
+                for subPath in listdir(path):
+                    javaPathList.extend(osp.join(subPath, r"bin"))
 
         # 检测注册表
         javaRegKeyPaths = [
@@ -194,7 +197,7 @@ def detectJava(fSearch=True):
             javaPathList.append(osp.join(path, "/bin"))
 
             # 如果目录存在，则遍历其内容
-            if osp.isdir(path):
+            if osp.exists(path) and osp.isdir(path):
                 for entry in listdir(path):
                     if osp.isdir(path):
                         # 尝试插入每个子目录的jre/bin和bin目录
