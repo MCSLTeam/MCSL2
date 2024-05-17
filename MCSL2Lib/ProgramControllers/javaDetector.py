@@ -21,12 +21,9 @@ from os import pathsep, remove, listdir
 from platform import system
 from re import search
 
-if "windows" in system().lower():
-    import winreg
-
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
-
 from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
+
 
 foundJava = []
 fSearch = True
@@ -170,62 +167,25 @@ def detectJava(fSearch=True):
     """
     检测所有已安装的Java路径，三端通用
     """
-    javaList = []
     javaPathList = []
     foundJava.clear()
+
+    # Windows
+    if "windows" in system().lower():
+        for i in range(65, 91):
+            path = chr(i) + ":\\"
+            if osp.exists(path):
+                javaPathList.extend(
+                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
+                )
+        return javaPathList
+
+    # macOS & linux
+    javaList = []
     # 检测环境变量中的Java（不是Java的PATH会在最后筛选时过滤）
     javaPathList.extend(env.get("PATH").split(pathsep))
-
     # 针对不同系统的寻找
-    if "windows" in system().lower():  # windows
-        # 检测JAVA_HOME环境变量
-        pathEnv = env.get("JAVA_HOME")
-        if pathEnv is not None:
-            javaPathList.extend(env.split(pathsep))
-
-        # 检测默认安装路径
-        javaInstallationPaths = [
-            r"C:\Program Files\Java",
-            r"C:\Program Files (x86)\Java",
-            r"C:\Program Files\Eclipse Adoptium",
-            r"C:\Program Files (x86)\Eclipse Adoptium",
-        ]
-
-        for path in javaInstallationPaths:
-            if osp.exists(path):
-                for subPath in listdir(path):
-                    javaPathList.extend(osp.join(subPath, r"bin"))
-
-        # 检测注册表
-        javaRegKeyPaths = [
-            r"SOFTWARE\JavaSoft\Java Runtime Environment",
-            r"SOFTWARE\JavaSoft\Java Development Kit",
-            r"SOFTWARE\\JavaSoft\\JRE",
-            r"SOFTWARE\\JavaSoft\\JDK",
-            r"SOFTWARE\\Eclipse Foundation\\JDK",
-            r"SOFTWARE\\Eclipse Adoptium\\JRE",
-            r"SOFTWARE\\Eclipse Foundation\\JDK",
-            r"SOFTWARE\\Microsoft\\JDK",
-        ]
-
-        accessFlags = winreg.KEY_READ
-        for keyPath in javaRegKeyPaths:
-            try:
-                # 32位注册表视图
-                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyPath, 0,
-                                    accessFlags | winreg.KEY_WOW64_32KEY) as java_key_32:
-                    javaPaths = getJavaInRegistryKey(java_key_32)
-                    javaPathList.extend(javaPaths)
-
-                # 64位注册表视图（如果可用）
-                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyPath, 0,
-                                    accessFlags | winreg.KEY_WOW64_64KEY) as java_key_64:
-                    javaPaths = getJavaVersion(java_key_64)
-                    javaPathList.extend(javaPaths)
-            except WindowsError:
-                # 如果键不存在，则忽略错误并继续
-                pass
-    elif "darwin" in system().lower():  # macOS
+    if "darwin" in system().lower():  # macOS
         # 检测第三方App内置Java路径
         javaInstallationPaths = [
             r"/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java",
@@ -265,7 +225,7 @@ def detectJava(fSearch=True):
 
     # 筛选Java路径
     for path in javaPathList:
-        path = osp.join(path, "javaw.exe") if "windows" in system().lower() else osp.join(path, "java")
+        path = osp.join(path, "java.exe") if "windows" in system().lower() else osp.join(path, "java")
         if osp.exists(path):
             version = getJavaVersion(path)
             if version != "":
@@ -274,42 +234,6 @@ def detectJava(fSearch=True):
                     javaList.append(Java(path, version))
 
     return javaList
-
-
-def getJavaInRegistryKey(keyPath):
-    """
-    检测注册表中的Java路径，仅windows
-    """
-    javaPathList = []
-    # 打开注册表键
-    try:
-        key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyPath)
-    except FileNotFoundError:
-        return javaPathList
-
-    # 遍历子键
-    i = 0
-    while True:
-        try:
-            subKeyName, _, _ = winreg.EnumValue(key, i)
-            subKey = winreg.OpenKey(key, subKeyName)
-
-            # 检查特定的值
-            subKeyValueNames = ["JavaHome", "InstallationPath", "\\\\hotspot\\\\MSI"]
-            for subKeyValue in subKeyValueNames:
-                try:
-                    javaPath, _ = winreg.QueryValueEx(subKey, subKeyValue)
-                    javaPathList.extend(osp.join(javaPath, r"bin\javaw.exe"))
-                except FileNotFoundError:
-                    continue
-
-            i += 1
-        except OSError:
-            break  # 如果没有更多子键，则跳出循环
-
-    winreg.CloseKey(key)
-    return javaPathList
-
 
 def checkJavaAvailability(java: Java):
     if osp.exists(java.path):
