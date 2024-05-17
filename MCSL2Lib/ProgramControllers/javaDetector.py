@@ -22,8 +22,8 @@ from platform import system
 from re import search
 
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
-from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
+from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
 foundJava = []
 fSearch = True
@@ -132,7 +132,7 @@ def searchFile(path, keyword, ext, fSearch, _match):
 def searchingFile(path, keyword, ext, fSearch, _match):
     processes = []
     if fSearch:
-        if osp.isfile(path) or "x86_64-linux-gnu" in path:
+        if osp.isfile(path):
             return processes
         try:
             for File in listdir(path):
@@ -149,6 +149,8 @@ def searchingFile(path, keyword, ext, fSearch, _match):
         except PermissionError:
             pass
         except FileNotFoundError:
+            pass
+        except NotADirectoryError:
             pass
     return processes
 
@@ -225,7 +227,7 @@ def detectJava(fSearch=True):
 
     # 筛选Java路径
     for path in javaPathList:
-        path = osp.join(path, "java.exe") if "windows" in system().lower() else osp.join(path, "java")
+        path = osp.join(path, "java")
         if osp.exists(path):
             version = getJavaVersion(path)
             if version != "":
@@ -234,6 +236,7 @@ def detectJava(fSearch=True):
                     javaList.append(Java(path, version))
 
     return javaList
+
 
 def checkJavaAvailability(java: Java):
     if osp.exists(java.path):
