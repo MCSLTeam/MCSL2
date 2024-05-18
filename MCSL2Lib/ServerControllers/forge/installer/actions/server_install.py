@@ -21,9 +21,10 @@ class ServerInstall(Action):
 
     def run(self, target: Path, java: Path = None) -> bool:
         try:
-
             if target.exists() and not target.is_dir():
-                self.monitor.error("There is a file at this location, the server cannot be installed here!")
+                self.monitor.error(
+                    "There is a file at this location, the server cannot be installed here!"
+                )
                 return False
 
             librariesDir = Path(target).joinpath("libraries")
@@ -36,7 +37,9 @@ class ServerInstall(Action):
             contained = self.profile.getPath()
             if contained is not None:
                 self.monitor.stage("Extracting main jar:")
-                if not DownloadUtils.extractFile(contained, self.installerDataBuf, target / contained.getFilename()):
+                if not DownloadUtils.extractFile(
+                    contained, self.installerDataBuf, target / contained.getFilename()
+                ):
                     self.monitor.error(f"  Failed to extract main jar: {contained.getFilename()}")
                     return False
                 else:
@@ -48,7 +51,7 @@ class ServerInstall(Action):
             tokens: Dict[str, Supplier[str]] = {
                 "ROOT": Supplier.of(lambda: str(target.absolute())),
                 "MINECRAFT_VERSION": Supplier.of(self.profile.getMinecraft),
-                "LIBRARY_DIR": Supplier.of(lambda: str(librariesDir.absolute()))
+                "LIBRARY_DIR": Supplier.of(lambda: str(librariesDir.absolute())),
             }
 
             path = Util.replaceTokens(tokens, self.profile.getServerJarPath())
@@ -100,32 +103,42 @@ class ServerInstall(Action):
                     target.write_bytes(installer.read(res))
                 except KeyError:
                     pass
-                except Exception as e:
+                except Exception:
                     traceback.print_exc()
-                    self.error("Failed to download version manifest, can not find " + side + " jar URL.")
+                    self.error(
+                        "Failed to download version manifest, can not find " + side + " jar URL."
+                    )
                     return False
 
             vanilla = Util.getVanillaVersion(self.profile.getMinecraft())
             if vanilla is None:
-                self.error("Failed to download version manifest, can not find " + side + " jar URL.")
+                self.error(
+                    "Failed to download version manifest, can not find " + side + " jar URL."
+                )
                 return False
 
             dl = vanilla.getDownload(side)
             if dl is None:
-                self.error("Failed to download minecraft " + side + " jar, info missing from manifest")
+                self.error(
+                    "Failed to download minecraft " + side + " jar, info missing from manifest"
+                )
                 return False
 
             if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target):
                 target.unlink(missing_ok=True)
                 self.error(
-                    "Downloading minecraft " + side + " failed, invalid checksum.\n" + \
-                    "Try again, or manually place server jar to skip download."
+                    "Downloading minecraft "
+                    + side
+                    + " failed, invalid checksum.\n"
+                    + "Try again, or manually place server jar to skip download."
                 )
                 return False
 
         return True
 
-    def downloadLibraries(self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]):
+    def downloadLibraries(
+        self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]
+    ):
         self.monitor.start("Downloading libraries")
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
@@ -134,18 +147,18 @@ class ServerInstall(Action):
         for lib in libraries:  # TODO:Async Download
             # self.checkCancel()
             if not DownloadUtils.downloadLibrary(
-                    self.monitor,
-                    self.profile.getMirror(),
-                    lib,
-                    librariesDir,
-                    installerDataBuf,
-                    self.grabbed,
-                    additionalLibDirs
+                self.monitor,
+                self.profile.getMirror(),
+                lib,
+                librariesDir,
+                installerDataBuf,
+                self.grabbed,
+                additionalLibDirs,
             ):
                 download = None if lib.getDownloads() is None else lib.getDownloads().getArtifact()
-                if download is not None and download.url != '':
+                if download is not None and download.url != "":
                     bad += f"\n{lib.getName()}"
-        if bad != '':
+        if bad != "":
             self.error(f"Failed to download libraries:\n{bad}")
             return False
         return True

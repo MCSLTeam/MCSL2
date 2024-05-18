@@ -13,7 +13,6 @@ class InstallerControllerSignal(QObject):
 
 
 class ForgeInstallThread(threading.Thread):
-
     def __init__(self, installer: str, targetDir: str, java: str):
         super().__init__()
         # external signal
@@ -29,7 +28,9 @@ class ForgeInstallThread(threading.Thread):
     def installServer(self):
         target = Path(self.targetDir)
         self.finished.emit(
-            SimpleInstaller.installServer(target / self.installer, target, self.monitor, Path(self.java))
+            SimpleInstaller.installServer(
+                target / self.installer, target, self.monitor, Path(self.java)
+            )
         )
 
     def run(self):

@@ -2,16 +2,20 @@ import abc
 from functools import partial
 import typing
 
-T = typing.TypeVar('T')
+T = typing.TypeVar("T")
 
 
 def FunctionalInterface(cls):
     if cls.__class__ is not abc.ABCMeta:
         raise TypeError("@FunctionalInterface can only be applied to abstract classes")
 
-    abstract_methods = {name for name, val in cls.__dict__.items() if getattr(val, "__isabstractmethod__", False)}
+    abstract_methods = {
+        name for name, val in cls.__dict__.items() if getattr(val, "__isabstractmethod__", False)
+    }
     if len(abstract_methods) != 1:
-        raise TypeError("@FunctionalInterface can only be applied to classes with exactly one abstract method")
+        raise TypeError(
+            "@FunctionalInterface can only be applied to classes with exactly one abstract method"
+        )
 
     abstract_method_name = abstract_methods.pop()
 
@@ -23,24 +27,21 @@ def FunctionalInterface(cls):
         new_cls_dict[abstract_method_name] = func
         return type(cls.__name__, (cls,), new_cls_dict)()
 
-    setattr(cls, 'of', of)
+    setattr(cls, "of", of)
 
     return cls
 
 
 class Supplier(typing.Generic[T], metaclass=abc.ABCMeta):
-
     @abc.abstractmethod
-    def get(self) -> T:
-        ...
+    def get(self) -> T: ...
 
     @classmethod
-    def of(cls, supplier: typing.Callable[[], T]) -> 'Supplier[T]':
+    def of(cls, supplier: typing.Callable[[], T]) -> "Supplier[T]":
         return _SupplierInstance(supplier)
 
 
 class _SupplierInstance(Supplier[T]):
-
     def __init__(self, supplier: typing.Callable[[], T]):
         self.__supplier = partial(supplier)
 

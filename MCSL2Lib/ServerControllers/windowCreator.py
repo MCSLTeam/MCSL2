@@ -896,7 +896,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         w = MessageBox(
             title=self.tr("提示"),
             content=self.tr(
-                "你并未同意 Minecraft 的最终用户许可协议。\n请先同意 EULA 才可启动服务器。\n可点击下方的按钮查看 Eula，或直接点击同意按钮。"
+                "你并未同意 Minecraft 的最终用户许可协议，无法直接启动服务器。\n可点击下方的按钮查看 Eula，或直接点击同意按钮。"  # noqa: E501
             ),
             parent=self,
         )

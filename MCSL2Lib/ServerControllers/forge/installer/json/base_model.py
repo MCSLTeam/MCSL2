@@ -26,62 +26,76 @@ class TypeFactory(metaclass=abc.ABCMeta):
         return super.__call__(*args, **kwargs)
 
     @abc.abstractmethod
-    def get(self, data: typing.Any):
-        ...
+    def get(self, data: typing.Any): ...
 
     @classmethod
-    def from_supplier(cls, supplier) -> 'TypeFactory':
+    def from_supplier(cls, supplier) -> "TypeFactory":
         """
-        supplier: bound method with 1 parameter OR function with 2 parameter (first parameter is cls)
+        supplier: bound method with 1 parameter OR function with 2 parameter
+        (first parameter is cls)
         """
 
-        return type("TypeFactoryInstance", (TypeFactory,), {
-            "get": lambda self, data: supplier(data)
-        })()
+        return type(
+            "TypeFactoryInstance", (TypeFactory,), {"get": lambda self, data: supplier(data)}
+        )()
 
     @classmethod
-    def default(cls, factory: typing.Callable) -> 'TypeFactory':
+    def default(cls, factory: typing.Callable) -> "TypeFactory":
         """
         invoke factory with data
         """
         return cls.from_supplier(factory)
 
     @classmethod
-    def base_model(cls, type_hint: type) -> 'TypeFactory':
+    def base_model(cls, type_hint: type) -> "TypeFactory":
         """
         invoke <? impl BaseModel>.of with data
         """
         return cls.from_supplier(lambda data: type_hint.of(data))
 
     @classmethod
-    def inject(cls, factory: typing.Callable) -> 'TypeFactory':
+    def inject(cls, factory: typing.Callable) -> "TypeFactory":
         """
         directly invoke factory
         """
         return cls.from_supplier(lambda _: factory())
 
     @classmethod
-    def pass_through(cls) -> 'TypeFactory':
+    def pass_through(cls) -> "TypeFactory":
         """
         directly pass through data
         """
         return cls.from_supplier(lambda data: data)
 
 
-USER_DEFINED_GENERIC_FACTORIES = {}  # Does not support user defined generic!!! only typing provided are valid
+# Does not support user defined generic!!! only typing provided are valid
+USER_DEFINED_GENERIC_FACTORIES = {}
 
 
-def add_generic_factory(type_hint: typing.Type, supplier: typing.Callable[[typing.Any], typing.Any]):
+def add_generic_factory(
+    type_hint: typing.Type, supplier: typing.Callable[[typing.Any], typing.Any]
+):
     """
     *** Does not support user defined generic ***
     *** only typing provided are valid ***
     """
     USER_DEFINED_GENERIC_FACTORIES[type_hint] = TypeFactory.from_supplier(supplier)
 
+
 class BaseModel:
-    BASE_VAR_TYPES:typing.Tuple[typing.Type] = (int, float, str, bool, list, dict, tuple, complex, type(None))
-    INJECT_WHITELIST:typing.Set[typing.Type] = set()
-    GenericAlias:typing.Type = getattr(typing, "_GenericAlias")
+    BASE_VAR_TYPES: typing.Tuple[typing.Type] = (
+        int,
+        float,
+        str,
+        bool,
+        list,
+        dict,
+        tuple,
+        complex,
+        type(None),
+    )
+    INJECT_WHITELIST: typing.Set[typing.Type] = set()
+    GenericAlias: typing.Type = getattr(typing, "_GenericAlias")
 
     @classmethod
     def of(cls, data: dict):
@@ -109,11 +123,14 @@ class BaseModel:
         custom_factories.update({
             field: cls._init_inject(filtered_dict[field], all_fields_types[field])
             for field in default_factories_field
-            if not cls._is_base_type(all_fields_types[field])  # apply injection if no custom factory
+            if not cls._is_base_type(
+                all_fields_types[field]
+            )  # apply injection if no custom factory
         })
 
         for field in custom_factories:
-            if filtered_dict[field] is None: continue
+            if filtered_dict[field] is None:
+                continue
             filtered_dict[field] = custom_factories[field].get(filtered_dict[field])
 
         return cls(**filtered_dict)
@@ -131,17 +148,20 @@ class BaseModel:
         return type_hint
 
     @classmethod
-    def _get_factories(cls, fields_with_factory: typing.Dict[str, typing.Type]) -> typing.Dict[str, TypeFactory]:
+    def _get_factories(
+        cls, fields_with_factory: typing.Dict[str, typing.Type]
+    ) -> typing.Dict[str, TypeFactory]:
         factories = {}
         for field, field_hint_type in fields_with_factory.items():
             factory = getattr(cls, field + "_factory", None)
             if factory is not None:
-                factories[field] = TypeFactory.from_supplier(factory if inspect.ismethod(factory) else functools.partial(factory, cls))
+                factories[field] = TypeFactory.from_supplier(
+                    factory if inspect.ismethod(factory) else functools.partial(factory, cls)
+                )
             elif hasattr(field_hint_type, "__origin__"):  # assumed to be generic
                 try:
                     factories[field] = cls._get_generic_type_factory(
-                        field_hint_type,
-                        *getattr(field_hint_type, "__args__")
+                        field_hint_type, *getattr(field_hint_type, "__args__")
                     )
                 except AttributeError:
                     print("type:", field_hint_type, ",is not a generic type")
@@ -160,11 +180,9 @@ class BaseModel:
         *** AUTOMATICALLY REGISTERED *** (use getattr in cls._get_generic_type_factory)
         """
         # TODO: 递归的扫描泛型
-        return TypeFactory.from_supplier(lambda data: [
-            cls._get_type_supplier(
-                type_hint=element_type
-            )(e) for e in data
-        ])
+        return TypeFactory.from_supplier(
+            lambda data: [cls._get_type_supplier(type_hint=element_type)(e) for e in data]
+        )
 
     @classmethod
     def _dict_factory(cls, KT: typing.Type, VT: typing.Type) -> TypeFactory:
@@ -179,9 +197,9 @@ class BaseModel:
         KT_supplier = cls._get_type_supplier(type_hint=KT)
         VT_supplier = cls._get_type_supplier(type_hint=VT)
 
-        return TypeFactory.from_supplier(lambda data: {
-            KT_supplier(k): VT_supplier(v) for k, v in data.items()
-        })
+        return TypeFactory.from_supplier(
+            lambda data: {KT_supplier(k): VT_supplier(v) for k, v in data.items()}
+        )
 
     @classmethod
     def _get_generic_type_factory(cls, type_hint: typing._GenericAlias, *args) -> TypeFactory:
@@ -219,11 +237,11 @@ class BaseModel:
 
     @classmethod
     def _get_type_supplier(
-            cls,
-            type_hint: typing.Type,
-            base_model_supplier: typing.Callable = None,
-            base_var_type_supplier: typing.Callable = None,
-            default_supplier: typing.Callable = None,
+        cls,
+        type_hint: typing.Type,
+        base_model_supplier: typing.Callable = None,
+        base_var_type_supplier: typing.Callable = None,
+        default_supplier: typing.Callable = None,
     ) -> typing.Callable:
         if cls._is_base_model(type_hint):
             return base_model_supplier or type_hint.of
@@ -237,7 +255,9 @@ class BaseModel:
         return issubclass(cls._get_type(type_hint), BaseModel)
 
     @classmethod
-    def _init_inject(cls, data: typing.Dict, type_hint: typing.Type, strict_mode: bool = False) -> TypeFactory:
+    def _init_inject(
+        cls, data: typing.Dict, type_hint: typing.Type, strict_mode: bool = False
+    ) -> TypeFactory:
         """
         return a class factory
         """
@@ -258,9 +278,9 @@ class BaseModel:
 
             value = data[sig]
             if (
-                    strict_mode
-                    and param.annotation is not inspect.Parameter.empty
-                    and not isinstance(value, param.annotation)
+                strict_mode
+                and param.annotation is not inspect.Parameter.empty
+                and not isinstance(value, param.annotation)
             ):  # TODO: support generic type and typing._SpecialForm
                 raise InjectError(f"{type_hint.__name__} argument {sig} type error")
             params_to_bind[sig] = value
@@ -278,6 +298,7 @@ class _BaseModels:
         if not self.updated:
             for c in self.classes:
                 c.model_rebuild()
+
 
 _modelsHelp = _BaseModels()
 

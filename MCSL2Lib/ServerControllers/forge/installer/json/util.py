@@ -105,7 +105,7 @@ class Util:
         try:
             data = json.loads(text)
             return Manifest.of(data)
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
             return None
 
@@ -114,6 +114,6 @@ class Util:
         try:
             data = json.loads(text)
             return Version.of(data)
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
             return None

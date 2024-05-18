@@ -65,10 +65,17 @@ class PostProcessors:
         return self.profile.getLibraries() if self.hasTasks else []
 
     def getTaskCount(self) -> int:
-        return 0 if self.hasTasks else len(self.profile.getLibraries()) + len(self.processors) + len(
-            self.profile.getData(self.isClient))
+        return (
+            0
+            if self.hasTasks
+            else len(self.profile.getLibraries())
+            + len(self.processors)
+            + len(self.profile.getData(self.isClient))
+        )
 
-    def process(self, librariesDir: Path, minecraft: Path, root: Path, installer: Path) -> Optional[Set[Path]]:
+    def process(
+        self, librariesDir: Path, minecraft: Path, root: Path, installer: Path
+    ) -> Optional[Set[Path]]:
         data = self.__loadData(librariesDir)
         if data is None:
             return None
@@ -96,7 +103,9 @@ class PostProcessors:
         for x in range(len(self.processors)):
             self.monitor.progress((x + 1), len(self.processors))
             self.monitor.message("")
-            self.log("===============================================================================")
+            self.log(
+                "==============================================================================="
+            )
             proc = self.processors[x]
             outputs = allOutputs[x]
 
@@ -108,14 +117,16 @@ class PostProcessors:
                         self.log(f"    {output.file} Missing")
                         miss = False
 
-                        if not (outputFile := str(output.file.absolute())).startswith(str(libPrefix)):
+                        if not (outputFile := str(output.file.absolute())).startswith(
+                            str(libPrefix)
+                        ):
                             miss = True
                         else:
-                            suffix = outputFile[len(str(libPrefix)):].replace("\\", "/")
+                            suffix = outputFile[len(str(libPrefix)) :].replace("\\", "/")
                             if suffix.startswith("/"):
                                 suffix = suffix[1:]
 
-                            relative = f'./cache/{suffix}'
+                            relative = f"./cache/{suffix}"
 
                             inputPath = Path(relative)
                             if not inputPath.exists():
@@ -140,7 +151,7 @@ class PostProcessors:
                                         self.log("      Actual:   " + sha1)
                                         miss = True
                                         output.file.unlink(missing_ok=True)
-                                except IOError as e:
+                                except IOError:
                                     traceback.print_exc()
                                     return None
 
@@ -198,12 +209,13 @@ class PostProcessors:
             if err:
                 self.error(f"  Missing Processor data values: {err}")
                 return None
-            """
-             monitor.message("  Args: " + args.stream().map(a -> a.indexOf(' ') != -1 || a.indexOf(',') != -1 ? '"' + a + '"' : a).collect(Collectors.joining(", ")));
-            """
-            self.monitor.message("  Args: " + str([
-                a if a.indexOf(' ') != -1 or a.indexOf(',') != -1 else f'"{a}"' for a in args
-            ]))
+            # monitor.message("  Args: " + args.stream().map(a -> a.indexOf(' ') != -1 || a.indexOf(',') != -1 ? '"' + a + '"' : a).collect(Collectors.joining(", ")));  # noqa: E501
+            self.monitor.message(
+                "  Args: "
+                + str([
+                    a if a.indexOf(" ") != -1 or a.indexOf(",") != -1 else f'"{a}"' for a in args
+                ])
+            )
             # TODO: continue translate PostProcessors.java:210
 
     def __loadData(self, librariesDir: Path) -> Optional[Dict[str, __DataEntry]]:
@@ -261,7 +273,6 @@ class PostProcessors:
 
             pout: List[PostProcessors.__Output] = []
             for key in outputs.keys():
-
                 file: str
                 if key.startswith("[") and key.endswith("]"):  # Artifact
                     file = str(Artifact.from_(key[1:-1]).getLocalPath(librariesDir).absolute())
@@ -272,7 +283,7 @@ class PostProcessors:
                 if value is not None:
                     value = Util.replaceTokens(data, value)
 
-                if (key is None or value is None):
+                if key is None or value is None:
                     self.error(f"  Invalid configuration, bad output config: [{key}: {value}]")
                     return None
 
@@ -282,5 +293,4 @@ class PostProcessors:
 
         return rv
 
-    def log(self, msg: str):
-        ...
+    def log(self, msg: str): ...

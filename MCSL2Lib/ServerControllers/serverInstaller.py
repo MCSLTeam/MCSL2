@@ -27,7 +27,8 @@ from PyQt5.QtCore import (
     pyqtSignal,
     QTimer,
     QFile,
-    QIODevice, )
+    QIODevice,
+)
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
@@ -133,9 +134,7 @@ class Installer(QObject):
             if self.workingProcess is not None:
                 self.workingProcess.kill()
                 self._cancelTimer.setSingleShot(True)
-                self._cancelTimer.timeout.connect(
-                    lambda: self.cancelInstall(True)
-                )  # 设置超时时间
+                self._cancelTimer.timeout.connect(lambda: self.cancelInstall(True))  # 设置超时时间
         else:
             MCSL2Logger.error(msg="关闭 ForgeInstaller 超时,正在强制关闭...")
             self.workingProcess.kill()
@@ -189,17 +188,14 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
-            # noqa: E501
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",  # noqa: E501
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
         self._reply = self._manager.get(request)
         self._reply.downloadProgress.connect(self.onDownloadProgress)
         # 连接重定向信号，打印重定向后的URL
-        self._reply.redirected.connect(
-            lambda url: MCSL2Logger.info(f"Redirected to {url}")
-        )
+        self._reply.redirected.connect(lambda url: MCSL2Logger.info(f"Redirected to {url}"))
 
     def onDownloadProgress(self, bytesReceived, bytesTotal):
         self.downloadProgress.emit(bytesReceived, bytesTotal)
@@ -231,13 +227,13 @@ class ForgeInstaller(Installer):
         PlanB = 1
 
     def __init__(
-            self,
-            serverPath,
-            file,
-            isEditing: Optional[str] = "",
-            java=None,
-            installerPath=None,
-            logDecode="utf-8",
+        self,
+        serverPath,
+        file,
+        isEditing: Optional[str] = "",
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -262,10 +258,8 @@ class ForgeInstaller(Installer):
         else:
             raise InstallerError(
                 self.tr(
-                    "不支持的自动安装版本: {mcVersion}\nMCSL2 的 Forge 自动安装仅支持 Minecraft 1.8+"
-                ).format(
-                    mcVersion=self._mcVersion
-                )  # noqa: E501
+                    "不支持的自动安装版本: {mcVersion}\nMCSL2 的 Forge 自动安装仅支持 Minecraft 1.8+"  # noqa: E501
+                ).format(mcVersion=self._mcVersion)  # noqa: E501
             )
 
     def getInstallerData(self, jarFile):
@@ -273,8 +267,8 @@ class ForgeInstaller(Installer):
         # 读取version.json
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -286,27 +280,21 @@ class ForgeInstaller(Installer):
 
     def checkInstaller(self) -> bool:
         if (
-                (versionInfo := self._profile.get("versionInfo", {}))
-                        .get("id", "")
-                        .lower()
-                        .startswith("forge")
+            (versionInfo := self._profile.get("versionInfo", {}))
+            .get("id", "")
+            .lower()
+            .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self._forgeVersion = (
-                versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
-            )
+            self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
             return True
         elif "forge" in (version := self._profile.get("version", "")).lower():
             self._mcVersion = McVersion(version.split("-")[0])
-            self._forgeVersion = version.replace(str(self._mcVersion), "").replace(
-                "-", ""
-            )
+            self._forgeVersion = version.replace(str(self._mcVersion), "").replace("-", "")
             return True
         elif "forge" in (version := self._profile.get("id", "")).lower():
             self._mcVersion = McVersion(version.split("-")[0])
-            self._forgeVersion = version.replace(str(self._mcVersion), "").replace(
-                "-", ""
-            )
+            self._forgeVersion = version.replace(str(self._mcVersion), "").replace("-", "")
             return True
         else:
             return False
@@ -335,9 +323,7 @@ class ForgeInstaller(Installer):
         若安装过程中出现错误,则抛出InstallerError
         """
         MCSL2Logger.debug(f"Forge 安装: {self.__class__.__name__}{self._mcVersion}")
-        MCSL2Logger.debug(
-            f"Forge 安装: {self.__class__.__name__}, {self._forgeVersion}"
-        )
+        MCSL2Logger.debug(f"Forge 安装: {self.__class__.__name__}, {self._forgeVersion}")
         MCSL2Logger.debug(f"Forge 安装: {self.thread().currentThreadId()=}")
         if self.cancelled:
             self.installFinished.emit(False)
@@ -363,12 +349,8 @@ class ForgeInstaller(Installer):
             MCSL2Logger.debug(f"Forge 安装: {cwd}")
             # self.onServerDownload(cwd, f"server-{self._mcVersion}.jar")
             self._bmclapiDownloader = BMCLAPIDownloader()
-            self._bmclapiDownloader.downloadProgress.connect(
-                self.onServerDownloadProgress
-            )
-            self._bmclapiDownloader.downloadFinished.connect(
-                self.onServerDownloadFinished
-            )
+            self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
+            self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
 
             if self._mcVersion >= McVersion("1.20"):
                 self._bmclapiDownloader.download(
@@ -384,12 +366,8 @@ class ForgeInstaller(Installer):
             self.downloadServerFinished.connect(lambda _: self.__asyncPreInstall())
             # self.onServerDownload(self.cwd, f"minecraft_server.{self._mcVersion}.jar")
             self._bmclapiDownloader = BMCLAPIDownloader()
-            self._bmclapiDownloader.downloadProgress.connect(
-                self.onServerDownloadProgress
-            )
-            self._bmclapiDownloader.downloadFinished.connect(
-                self.onServerDownloadFinished
-            )
+            self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
+            self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
             self._bmclapiDownloader.download(
                 self._mcVersion, self.cwd, f"minecraft_server.{self._mcVersion}.jar"
             )
@@ -418,7 +396,9 @@ class ForgeInstaller(Installer):
                     "ForgeInstaller::PlanB"
                     if self.installPlan == ForgeInstaller.InstallPlan.PlanB
                     else "ForgeInstaller::PlanA"
-                ) + ": " + msg
+                )
+                + ": "
+                + msg
             )
         )
 
@@ -442,18 +422,14 @@ class ForgeInstaller(Installer):
                         run = f.readlines()
                 # 找到java命令
                 try:
-                    command = list(
-                        filter(lambda x: x.startswith("java"), run)
-                    ).pop()
+                    command = list(filter(lambda x: x.startswith("java"), run)).pop()
                 except IndexError:
                     raise InstallerError("No java command found")
 
                 # 构造forge启动参数
                 try:
                     forgeArgs = list(
-                        filter(
-                            lambda x: x.startswith("@libraries"), command.split(" ")
-                        )
+                        filter(lambda x: x.startswith("@libraries"), command.split(" "))
                     ).pop()
                 except IndexError:
                     raise InstallerError("bad forge run script")
@@ -464,9 +440,7 @@ class ForgeInstaller(Installer):
             else:
                 for entry in self._profile["libraries"]:
                     if entry["name"].startswith("net.minecraftforge:forge:"):
-                        coreFile = entry["downloads"]["artifact"]["path"].replace(
-                            "-universal", ""
-                        )
+                        coreFile = entry["downloads"]["artifact"]["path"].replace("-universal", "")
                         forgeArgs = ["-jar", osp.basename(coreFile).strip()]
                         break
                 if self.isEditing is None:
@@ -484,12 +458,10 @@ class ForgeInstaller(Installer):
                     )
                 ]
                 d["jvm_arg"].extend(forgeArgs)
-                d.update(
-                    {
-                        "icon": "Anvil.png",
-                        "server_type": "forge",
-                    }
-                )
+                d.update({
+                    "icon": "Anvil.png",
+                    "server_type": "forge",
+                })
                 globalServerList["MCSLServerList"].pop(
                     -1 if self.isEditing is None else self.isEditing
                 )
@@ -522,9 +494,7 @@ class ForgeInstaller(Installer):
         若是,则返回一个元组,包含mcVersion和forgeVersion : # type:McVersion, str
         若不是,则返回None
         """
-        if (
-                osp.getsize(fileName) > 10_000 * 1024
-        ):  # 若文件大于10MB,则几乎不可能是Forge安装器
+        if osp.getsize(fileName) > 10_000 * 1024:  # 若文件大于10MB,则几乎不可能是Forge安装器
             return None
         try:
             fileFile = ZipFile(fileName, mode="r")
@@ -578,12 +548,12 @@ class FabricInstaller(Installer):
         PlanB = 1
 
     def __init__(
-            self,
-            serverPath,
-            file,
-            java=None,
-            installerPath=None,
-            logDecode="utf-8",
+        self,
+        serverPath,
+        file,
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -604,8 +574,8 @@ class FabricInstaller(Installer):
         # 打开Installer压缩包
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 props = str(zipfile.read("install.properties")).split("\n")
@@ -642,9 +612,7 @@ class FabricInstaller(Installer):
         self.installFinished.emit(success)
 
     @classmethod
-    def isPossibleFabricInstaller(
-            cls, fileName: str
-    ) -> Optional[Tuple[McVersion, Any]]:
+    def isPossibleFabricInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
         """
         判断是否可能为Fabric安装器
         若是,则返回一个元组,包含mcVersion和fabricVersion : # type:McVersion, str

@@ -17,10 +17,9 @@ Manage exists Minecraft servers.
 from json import dump, loads, dumps
 from os import getcwd, rename, path as osp, remove
 from shutil import copy, rmtree
-from typing import Tuple
-from pyqt5_concurrent.TaskExecutor import TaskExecutor # type: ignore
+from pyqt5_concurrent.TaskExecutor import TaskExecutor  # type: ignore
 
-from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal, QThread
+from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -735,9 +734,9 @@ class ServerManagerPage(QWidget):
         globalConfig: list = readGlobalServerConfig()
         title = self.tr('你真的要删除服务器"') + globalConfig[index]["name"] + self.tr('"?')
         content = (
-                self.tr('此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"')
-                + globalConfig[index]["name"]
-                + self.tr('"，然后点击「删除」按钮：')
+            self.tr('此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"')
+            + globalConfig[index]["name"]
+            + self.tr('"，然后点击「删除」按钮：')
         )
         w2 = MessageBox(title, content, self)
         w2.yesButton.setText(self.tr("取消"))
@@ -783,8 +782,10 @@ class ServerManagerPage(QWidget):
 
         TaskExecutor.run(rmtree, f"Servers/{delServerName}").then(
             onSuccess=lambda: self.deletingServerStateToolTip.setContent(self.tr("删除完毕。")),
-            onFailed=lambda e:self.deletingServerStateToolTip.setContent(self.tr("删除失败！\n") + str(e)),
-            onFinished=onFinished
+            onFailed=lambda e: self.deletingServerStateToolTip.setContent(
+                self.tr("删除失败！\n") + str(e)
+            ),
+            onFinished=onFinished,
         )
 
     def compareDeleteServerName(self, name, LineEditText):
@@ -996,7 +997,7 @@ class ServerManagerPage(QWidget):
                     InfoBar.warning(
                         title=self.tr("未添加"),
                         content=self.tr(
-                            "此 Java 已被添加过，也有可能是自动查找 Java 时已经搜索到了。请检查 Java 列表。"
+                            "此 Java 已被添加过，也有可能是自动查找 Java 时已经搜索到了。请检查 Java 列表。"  # noqa: E501
                         ),
                         orient=Qt.Horizontal,
                         isClosable=True,
@@ -1416,8 +1417,7 @@ class ServerManagerPage(QWidget):
                     manageBackupBtnList=self.sender()
                     .parent()
                     .parent()
-                    .actionsCommandBar
-                    .backupActionsList,
+                    .actionsCommandBar.backupActionsList,
                     isEditingConfig=isEditingConfig,
                 )
             ).show()
@@ -1427,9 +1427,7 @@ class ServerManagerPage(QWidget):
                     v,
                     ServerLauncher(v),
                     manageBtn=self.sender().parent().parent().parent().runBtn,
-                    manageBackupBtnList=self.sender()
-                    .parent()
-                    .backupActionsList,
+                    manageBackupBtnList=self.sender().parent().backupActionsList,
                     isEditingConfig=isEditingConfig,
                 )
             ).show()
@@ -1437,4 +1435,3 @@ class ServerManagerPage(QWidget):
             serverName=v.serverName, serverConsole=w
         ).itSelf
         self.runningServerCardGenerated.emit(w.monitorWidget)
-

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import random
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Iterable, Mapping
@@ -27,8 +26,8 @@ class Install(Spec):
     mirrorList: str
 
     libraries: List[Version.Library]
-    processors: List['Install.Processor']  # type: List[Install.Processor]
-    data: Dict[str, 'Install.DataFile']  # type: Dict[str, Install.DataFile]
+    processors: List["Install.Processor"]  # type: List[Install.Processor]
+    data: Dict[str, "Install.DataFile"]  # type: Dict[str, Install.DataFile]
 
     # non-serializable
     mirror: Mirror
@@ -74,14 +73,14 @@ class Install(Spec):
 
         custom_mirror = SimpleInstaller.mirror
 
-        if (self.mirror is not None):
+        if self.mirror is not None:
             return self.mirror
-        if (custom_mirror != None):
+        if custom_mirror is not None:
             self.mirror = Mirror("Mirror", "", "", custom_mirror if custom_mirror is None else "")
             return self.mirror
         if self.getMirrorList() is None:
             return None
-        if (not self.triedMirrors):
+        if not self.triedMirrors:
             self.triedMirrors = True
             list_: List[Mirror] = DownloadUtils.downloadMirrors(self.getMirrorList())
             self.mirror = None if not list_ else list_[random.randint(0, len(list_) - 1)]
@@ -90,7 +89,7 @@ class Install(Spec):
     def getLibraries(self) -> List[Version.Library]:
         return [] if self.libraries is None else self.libraries
 
-    def getProcessors(self, side: str) -> List['Install.Processor']:
+    def getProcessors(self, side: str) -> List["Install.Processor"]:
         if self.processors is None:
             return []
         return [p for p in self.processors if p.isSide(side)]
@@ -114,7 +113,7 @@ class Install(Spec):
     @classmethod
     def data_factory(cls, items: Mapping[str, Mapping]):
         return {k: Install.DataFile(**v) for k, v in items.items()}
-    
+
     @classmethod
     def path_factory(cls, item):
         return Artifact.from_(item)
@@ -152,12 +151,17 @@ class Install(Spec):
 
     @dataclass
     class DataFile:
-        # /**
-        #  * Can be in the following formats:
-        #  * [value] - An absolute path to an artifact located in the target maven style repo.
-        #  * 'value' - A string literal, remove the 's and use this value
-        #  * value - A file in the installer package, to be extracted to a temp folder, and then have the absolute path in replacements.
-        #  */
+        """
+        Can be in the following formats:
+
+        [value] - An absolute path to an artifact located in the target maven style repo.
+
+        'value' - A string literal, remove the 's and use this value
+
+        value - A file in the installer package, to be extracted to a temp folder, and then
+        have the absolute path in replacements.
+
+        """
 
         client: str = None
         server: str = None

@@ -10,19 +10,19 @@ from .base_model import BaseModel
 @dataclass
 class Version(BaseModel):
     id: str
-    downloads: Dict[str, 'Version.Download']
-    libraries: List['Version.Library']
+    downloads: Dict[str, "Version.Download"]
+    libraries: List["Version.Library"]
 
-    def getDownload(self, key: str) -> Optional['Version.Download']:
+    def getDownload(self, key: str) -> Optional["Version.Download"]:
         return self.downloads.get(key)
 
     def getLibraries(self) -> List[Library]:
         return self.libraries or []
 
-    def downloads_factory(cls, items: Mapping[str, Mapping]) -> Dict[str, 'Version.Download']:
+    def downloads_factory(cls, items: Mapping[str, Mapping]) -> Dict[str, "Version.Download"]:
         return {k: Version.Download(**v) for k, v in items.items()}
 
-    def libraries_factory(cls, items: Iterable) -> List['Version.Library']:
+    def libraries_factory(cls, items: Iterable) -> List["Version.Library"]:
         return [Version.Library.of(i) for i in items]
 
     @dataclass
@@ -57,32 +57,36 @@ class Version(BaseModel):
 
     @dataclass
     class Downloads(BaseModel):
-        artifact: 'Version.LibraryDownload'
-        classifiers: Dict[str, 'Version.LibraryDownload'] = None
+        artifact: "Version.LibraryDownload"
+        classifiers: Dict[str, "Version.LibraryDownload"] = None
 
-        def getArtifact(self) -> 'Version.LibraryDownload':
+        def getArtifact(self) -> "Version.LibraryDownload":
             return self.artifact
 
-        def getClassifiers(self) -> Set['Version.LibraryDownload']:
+        def getClassifiers(self) -> Set["Version.LibraryDownload"]:
             return set() if self.classifiers is None else set(self.classifiers.values())
 
         @classmethod
-        def artifact_factory(cls, item) -> 'Version.LibraryDownload':
+        def artifact_factory(cls, item) -> "Version.LibraryDownload":
             return Version.LibraryDownload(**item)
 
         @classmethod
-        def classifiers_factory(cls, items) -> Dict[str, 'Version.LibraryDownload']:
-            return {k: Version.LibraryDownload(**v) for k, v in items.items()} if items is not None else None
+        def classifiers_factory(cls, items) -> Dict[str, "Version.LibraryDownload"]:
+            return (
+                {k: Version.LibraryDownload(**v) for k, v in items.items()}
+                if items is not None
+                else None
+            )
 
     @dataclass
     class Library(BaseModel):
         name: Artifact
-        downloads: 'Version.Downloads'
+        downloads: "Version.Downloads"
 
         def getName(self) -> Artifact:
             return self.name
 
-        def getDownloads(self) -> 'Version.Downloads':
+        def getDownloads(self) -> "Version.Downloads":
             return self.downloads
 
         @classmethod
@@ -90,5 +94,5 @@ class Version(BaseModel):
             return Artifact.from_(item)
 
         @classmethod
-        def downloads_factory(cls, items) -> 'Version.Downloads':
+        def downloads_factory(cls, items) -> "Version.Downloads":
             return Version.Downloads.of(items)

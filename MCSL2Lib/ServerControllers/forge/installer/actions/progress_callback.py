@@ -23,9 +23,9 @@ class ProgressCallback(metaclass=abc.ABCMeta):
             print("·" * (percent - self.lastProgress), end="")
             self.lastProgress = percent
         else:
-            if self.lastProgress-percent > 0:
+            if self.lastProgress - percent > 0:
                 print()
-                print("·" * (self.lastProgress - percent),end='')
+                print("·" * (self.lastProgress - percent), end='')
                 self.lastProgress = percent
 
 
