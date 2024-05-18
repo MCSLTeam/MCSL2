@@ -11,18 +11,19 @@
 #
 ################################################################################
 """
-An auto-detect Java function.
+An auto-detect Java module.
 """
 
 import json
-from os import listdir, remove
+from os import environ as env
 from os import path as osp
+from os import pathsep, remove, listdir
 from platform import system
 from re import search
 
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
-from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
+from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 
 foundJava = []
 fSearch = True
@@ -131,7 +132,7 @@ def searchFile(path, keyword, ext, fSearch, _match):
 def searchingFile(path, keyword, ext, fSearch, _match):
     processes = []
     if fSearch:
-        if osp.isfile(path) or "x86_64-linux-gnu" in path:
+        if osp.isfile(path):
             return processes
         try:
             for File in listdir(path):
@@ -142,12 +143,12 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
-                    processes.extend(
-                        searchingFile(_Path, keyword, ext, fSearch, _match)
-                    )
+                    processes.extend(searchingFile(_Path, keyword, ext, fSearch, _match))
         except PermissionError:
             pass
         except FileNotFoundError:
+            pass
+        except NotADirectoryError:
             pass
     return processes
 
@@ -163,20 +164,74 @@ def javaVersionMatcher(s):
 
 
 def detectJava(fSearch=True):
+    """
+    检测所有已安装的Java路径，三端通用
+    """
     javaPathList = []
     foundJava.clear()
+
+    # Windows
     if "windows" in system().lower():
         for i in range(65, 91):
             path = chr(i) + ":\\"
             if osp.exists(path):
-                javaPathList.extend(
-                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
-                )
-    else:
-        javaPathList.extend(
-            searchFile("/usr/lib", "java", "", fSearch, javaVersionMatcher)
-        )
-    return javaPathList
+                javaPathList.extend(searchFile(path, "java", "exe", fSearch, javaVersionMatcher))
+        return javaPathList
+
+    # macOS & linux
+    javaList = []
+    # 检测环境变量中的Java（不是Java的PATH会在最后筛选时过滤）
+    javaPathList.extend(env.get("PATH").split(pathsep))
+    # 针对不同系统的寻找
+    if "darwin" in system().lower():  # macOS
+        # 检测第三方App内置Java路径
+        javaInstallationPaths = [
+            r"/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java",  # noqa: E501
+            r"/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home",
+            r"/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands",
+        ]
+        javaPathList.extend(javaInstallationPaths)
+        # 检测默认安装路径
+        basePath = "/Library/Java/JavaVirtualMachines/"
+        if osp.isdir(basePath):
+            for entry in listdir(basePath):
+                if osp.isdir(entry):
+                    javaPathList.append(osp.join(entry, "Contents/Home/bin"))
+    else:  # linux
+        # 检测默认安装路径
+        javaInstallationPaths = [
+            r"/usr",
+            r"/usr/java",
+            r"/usr/lib/jvm",
+            r"/usr/lib64/jvm",
+            r"/opt/jdk",
+            r"/opt/jdks",
+        ]
+
+        for path in javaInstallationPaths:
+            # 尝试插入jre/bin和bin目录
+            javaPathList.append(osp.join(path, "/jre/bin"))
+            javaPathList.append(osp.join(path, "/bin"))
+
+            # 如果目录存在，则遍历其内容
+            if osp.exists(path) and osp.isdir(path):
+                for entry in listdir(path):
+                    if osp.isdir(path):
+                        # 尝试插入每个子目录的jre/bin和bin目录
+                        javaPathList.append(osp.join(entry, "/jre/bin"))
+                        javaPathList.append(osp.join(entry, "/bin"))
+
+    # 筛选Java路径
+    for path in javaPathList:
+        path = osp.join(path, "java")
+        if osp.exists(path):
+            version = getJavaVersion(path)
+            if version != "":
+                java = Java(path, version)
+                if java not in javaList:
+                    javaList.append(Java(path, version))
+
+    return javaList
 
 
 def checkJavaAvailability(java: Java):
