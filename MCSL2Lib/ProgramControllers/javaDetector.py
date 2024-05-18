@@ -11,7 +11,7 @@
 #
 ################################################################################
 """
-An auto-detect Java function.
+An auto-detect Java module.
 """
 
 import json
@@ -143,9 +143,7 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
-                    processes.extend(
-                        searchingFile(_Path, keyword, ext, fSearch, _match)
-                    )
+                    processes.extend(searchingFile(_Path, keyword, ext, fSearch, _match))
         except PermissionError:
             pass
         except FileNotFoundError:
@@ -177,9 +175,7 @@ def detectJava(fSearch=True):
         for i in range(65, 91):
             path = chr(i) + ":\\"
             if osp.exists(path):
-                javaPathList.extend(
-                    searchFile(path, "java", "exe", fSearch, javaVersionMatcher)
-                )
+                javaPathList.extend(searchFile(path, "java", "exe", fSearch, javaVersionMatcher))
         return javaPathList
 
     # macOS & linux
@@ -190,7 +186,7 @@ def detectJava(fSearch=True):
     if "darwin" in system().lower():  # macOS
         # 检测第三方App内置Java路径
         javaInstallationPaths = [
-            r"/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java",
+            r"/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java",  # noqa: E501
             r"/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home",
             r"/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands",
         ]
@@ -232,7 +228,7 @@ def detectJava(fSearch=True):
             version = getJavaVersion(path)
             if version != "":
                 java = Java(path, version)
-                if not java in javaList:
+                if java not in javaList:
                     javaList.append(Java(path, version))
 
     return javaList
