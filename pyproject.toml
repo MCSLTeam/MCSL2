@@ -57,6 +57,7 @@ line-length = 100
 src = ["MCSL2Lib", "PluginExample", "Tools", "Adapters"]
 output-format = "grouped"
 preview = true
+exclude = ["generate_i18n.py", "Tools/ParseOneDriveLink/ParseOneDriveLink.py"]
 
 [tool.ruff.lint]
 select = [
