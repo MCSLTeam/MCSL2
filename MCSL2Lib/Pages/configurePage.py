@@ -2168,7 +2168,7 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip = None
         else:
             self.installingForgeStateToolTip.setContent(
-                self.tr("怪，安装失败！" + (args if args is not ... else ""))
+                self.tr("怪，安装失败！" + (args if type(args) != tuple else " ".join(map(str, args))))
             )
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None

@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD033 -->
+﻿<!-- markdownlint-disable MD033 -->
 
 ### 爱发电赞助者
 
@@ -7,8 +7,12 @@
 <!-- AFDIAN-ACTION:START -->
 
 
+<a href="https://afdian.net/u/058eb6ba98b911edb5d852540025c377">
+DawnHe🙃
+</a>
+<span>（ 1 次赞助, 共 166 元）</span><br>
 <a href="https://afdian.net/u/b7700b762ec911ee96e65254001e7c00">
-爱发电用户_yxC8
+芝不士白熊
 </a>
 <span>（ 1 次赞助, 共 6.66 元）</span><br>
 <a href="https://afdian.net/u/e8c3bf5af30511eeb1835254001e7c00">
