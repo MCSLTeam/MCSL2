@@ -140,7 +140,7 @@ class PostProcessors:
                                         self.log("      Actual:   " + sha1)
                                         miss = True
                                         output.file.unlink(missing_ok=True)
-                                except IOError as e:
+                                except IOError:
                                     traceback.print_exc()
                                     return None
 

@@ -58,7 +58,7 @@ class DownloadUtils:
                 return None
         except (KeyError, zipfile.BadZipfile):
             return None
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
             return None
 
@@ -73,7 +73,7 @@ class DownloadUtils:
             try:
                 target.write_bytes(data)
                 return DownloadUtils.checksumValid(target, checksum)
-            except IOError as e:
+            except IOError:
                 traceback.print_exc()
                 return False
         except KeyError:
@@ -137,7 +137,7 @@ class DownloadUtils:
                         monitor.stage("      Failed to delete file, aborting.")
                         return False
                 monitor.message("    Download completed: No checksum, Assuming valid.")
-        except:
+        except Exception:
             traceback.print_exc()
         return False
 
@@ -200,7 +200,7 @@ class DownloadUtils:
                 monitor.message("  Extraction completed: No checksum, Assuming valid.")
                 grabbed.append(artifact)
                 return True
-        except zipfile.BadZipFile as e:
+        except zipfile.BadZipFile:
             traceback.print_exc()
             return False
         except KeyError:

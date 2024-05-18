@@ -1,6 +1,6 @@
 import abc
-from functools import partial
 import typing
+from functools import partial
 
 T = typing.TypeVar('T')
 

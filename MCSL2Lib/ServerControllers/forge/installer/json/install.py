@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import random
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Iterable, Mapping
@@ -76,7 +75,7 @@ class Install(Spec):
 
         if (self.mirror is not None):
             return self.mirror
-        if (custom_mirror != None):
+        if (custom_mirror is not None):
             self.mirror = Mirror("Mirror", "", "", custom_mirror if custom_mirror is None else "")
             return self.mirror
         if self.getMirrorList() is None:
@@ -114,7 +113,7 @@ class Install(Spec):
     @classmethod
     def data_factory(cls, items: Mapping[str, Mapping]):
         return {k: Install.DataFile(**v) for k, v in items.items()}
-    
+
     @classmethod
     def path_factory(cls, item):
         return Artifact.from_(item)

@@ -100,7 +100,7 @@ class ServerInstall(Action):
                     target.write_bytes(installer.read(res))
                 except KeyError:
                     pass
-                except Exception as e:
+                except Exception:
                     traceback.print_exc()
                     self.error("Failed to download version manifest, can not find " + side + " jar URL.")
                     return False

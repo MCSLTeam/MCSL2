@@ -78,10 +78,11 @@ def add_generic_factory(type_hint: typing.Type, supplier: typing.Callable[[typin
     """
     USER_DEFINED_GENERIC_FACTORIES[type_hint] = TypeFactory.from_supplier(supplier)
 
+
 class BaseModel:
-    BASE_VAR_TYPES:typing.Tuple[typing.Type] = (int, float, str, bool, list, dict, tuple, complex, type(None))
-    INJECT_WHITELIST:typing.Set[typing.Type] = set()
-    GenericAlias:typing.Type = getattr(typing, "_GenericAlias")
+    BASE_VAR_TYPES: typing.Tuple[typing.Type] = (int, float, str, bool, list, dict, tuple, complex, type(None))
+    INJECT_WHITELIST: typing.Set[typing.Type] = set()
+    GenericAlias: typing.Type = getattr(typing, "_GenericAlias")
 
     @classmethod
     def of(cls, data: dict):
@@ -113,7 +114,8 @@ class BaseModel:
         })
 
         for field in custom_factories:
-            if filtered_dict[field] is None: continue
+            if filtered_dict[field] is None:
+                continue
             filtered_dict[field] = custom_factories[field].get(filtered_dict[field])
 
         return cls(**filtered_dict)
@@ -136,7 +138,8 @@ class BaseModel:
         for field, field_hint_type in fields_with_factory.items():
             factory = getattr(cls, field + "_factory", None)
             if factory is not None:
-                factories[field] = TypeFactory.from_supplier(factory if inspect.ismethod(factory) else functools.partial(factory, cls))
+                factories[field] = TypeFactory.from_supplier(
+                    factory if inspect.ismethod(factory) else functools.partial(factory, cls))
             elif hasattr(field_hint_type, "__origin__"):  # assumed to be generic
                 try:
                     factories[field] = cls._get_generic_type_factory(
@@ -278,6 +281,7 @@ class _BaseModels:
         if not self.updated:
             for c in self.classes:
                 c.model_rebuild()
+
 
 _modelsHelp = _BaseModels()
 
