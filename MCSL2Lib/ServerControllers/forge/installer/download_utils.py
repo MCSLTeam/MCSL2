@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Callable, List, Optional, TypeVar
 
 import requests
-
+from .bmclapi import getLibraryUrl as getBmclapiLibUrl
 from .actions.progress_callback import ProgressCallback
 from .json.artifact import Artifact
 from .json.manifest import Manifest
@@ -245,7 +245,8 @@ class DownloadUtils:
         if url is None or url == "":
             monitor.message("  Invalid library, missing url")
             return False
-
+        # replace url with bmclapi
+        download.url = getBmclapiLibUrl(url)
         if DownloadUtils.download(monitor, mirror, download, target):
             grabbed.append(artifact)
             return True

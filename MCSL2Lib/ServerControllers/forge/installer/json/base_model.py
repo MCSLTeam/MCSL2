@@ -115,18 +115,20 @@ class BaseModel:
 
         all_fields_types = typing.get_type_hints(cls)
 
-        custom_factories: typing.Dict[str, TypeFactory] = cls._get_factories({
-            k: all_fields_types[k] for k in all_fields_types if k in cls_fields
-        })  # scan custom factories
+        custom_factories: typing.Dict[str, TypeFactory] = cls._get_factories(
+            {k: all_fields_types[k] for k in all_fields_types if k in cls_fields}
+        )  # scan custom factories
 
         default_factories_field = set(cls_fields.keys()) - set(custom_factories.keys())
-        custom_factories.update({
-            field: cls._init_inject(filtered_dict[field], all_fields_types[field])
-            for field in default_factories_field
-            if not cls._is_base_type(
-                all_fields_types[field]
-            )  # apply injection if no custom factory
-        })
+        custom_factories.update(
+            {
+                field: cls._init_inject(filtered_dict[field], all_fields_types[field])
+                for field in default_factories_field
+                if not cls._is_base_type(
+                    all_fields_types[field]
+                )  # apply injection if no custom factory
+            }
+        )
 
         for field in custom_factories:
             if filtered_dict[field] is None:

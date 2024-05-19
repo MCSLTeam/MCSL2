@@ -9,7 +9,7 @@ class InstallV1(Install):
     serverJarPath: Optional[str] = None
 
     @staticmethod
-    def from_installV0(v0: Install) -> 'InstallV1':
+    def from_installV0(v0: Install) -> "InstallV1":
         self = InstallV1.of({})
         self.profile = v0.profile
         self.version = v0.version
@@ -30,7 +30,7 @@ class InstallV1(Install):
         return self
 
     def getServerJarPath(self) -> str:
-        if (self.serverJarPath is None):
+        if self.serverJarPath is None:
             return "{ROOT}/minecraft_server.{MINECRAFT_VERSION}.jar"
 
         return self.serverJarPath

@@ -79,14 +79,16 @@ class PostProcessors:
         data = self.__loadData(librariesDir)
         if data is None:
             return None
-        data.update({
-            "SIDE": PostProcessors.__DataEntry("client" if self.isClient else "server"),
-            "MINECRAFT_JAR": PostProcessors.__FileEntry(minecraft),
-            "MINECRAFT_VERSION": PostProcessors.__DataEntry(self.profile.getMinecraft()),
-            "ROOT": PostProcessors.__FileEntry(root),
-            "INSTALLER": PostProcessors.__FileEntry(installer),
-            "LIBRARY_DIR": PostProcessors.__FileEntry(librariesDir),
-        })
+        data.update(
+            {
+                "SIDE": PostProcessors.__DataEntry("client" if self.isClient else "server"),
+                "MINECRAFT_JAR": PostProcessors.__FileEntry(minecraft),
+                "MINECRAFT_VERSION": PostProcessors.__DataEntry(self.profile.getMinecraft()),
+                "ROOT": PostProcessors.__FileEntry(root),
+                "INSTALLER": PostProcessors.__FileEntry(installer),
+                "LIBRARY_DIR": PostProcessors.__FileEntry(librariesDir),
+            }
+        )
 
         if len(self.processors) == 1:
             self.monitor.stage("Building Processor")
@@ -212,9 +214,9 @@ class PostProcessors:
             # monitor.message("  Args: " + args.stream().map(a -> a.indexOf(' ') != -1 || a.indexOf(',') != -1 ? '"' + a + '"' : a).collect(Collectors.joining(", ")));  # noqa: E501
             self.monitor.message(
                 "  Args: "
-                + str([
-                    a if a.indexOf(" ") != -1 or a.indexOf(",") != -1 else f'"{a}"' for a in args
-                ])
+                + str(
+                    [a if a.indexOf(" ") != -1 or a.indexOf(",") != -1 else f'"{a}"' for a in args]
+                )
             )
             # TODO: continue translate PostProcessors.java:210
 

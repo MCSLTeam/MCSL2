@@ -33,6 +33,7 @@ class Util:
     @staticmethod
     def loadVersion(text: str):
         from .version import Version
+
         return Version.of(json.loads(text))
 
     @staticmethod
@@ -45,7 +46,6 @@ class Util:
 
         x = 0  # for (int x = 0; x < value.length(); x++)
         while x < len(value):  # for (int x = 0; x < value.length(); x++)
-
             c = value[x]
             if c == "\\":
                 if x == len(value) - 1:
@@ -61,12 +61,12 @@ class Util:
                         raise ValueError("Illegal pattern (Unclosed " + c + "): " + value)
 
                     d = value[y]
-                    if d == '\\':
+                    if d == "\\":
                         if y == len(value) - 1:
                             raise ValueError("Illegal pattern (Bad escape): " + value)
                         key += value[y + 1]
                         y += 1
-                    elif c == '{' and d == '}':
+                    elif c == "{" and d == "}":
                         x = y
                         break
                     elif c == "'" and d == "'":

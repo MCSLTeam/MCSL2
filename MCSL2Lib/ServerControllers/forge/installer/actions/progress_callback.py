@@ -14,8 +14,7 @@ class ProgressCallback(metaclass=abc.ABCMeta):
         self.message(message)
 
     @abc.abstractmethod
-    def message(self, message: str):
-        ...
+    def message(self, message: str): ...
 
     def progress(self, progress: float, total: float):
         percent = int(progress / total * 100 + 0.5)
@@ -25,7 +24,7 @@ class ProgressCallback(metaclass=abc.ABCMeta):
         else:
             if self.lastProgress - percent > 0:
                 print()
-                print("·" * (self.lastProgress - percent), end='')
+                print("·" * (self.lastProgress - percent), end="")
                 self.lastProgress = percent
 
 

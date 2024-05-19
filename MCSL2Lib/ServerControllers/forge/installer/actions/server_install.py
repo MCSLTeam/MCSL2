@@ -1,12 +1,17 @@
+import functools
 import subprocess
 import traceback
 import zipfile
 from io import BytesIO
 from pathlib import Path
 from typing import Dict, List
+from os import cpu_count
+
+from pyqt5_concurrent.TaskExecutor import UniqueTaskExecutor
 
 from .action import Action, ActionCanceledException
 from .progress_callback import ProgressCallback
+from .. import bmclapi
 from ..download_utils import DownloadUtils
 from ..java2python import Supplier
 from ..json.installV1 import InstallV1
@@ -117,7 +122,8 @@ class ServerInstall(Action):
                 )
                 return False
 
-            dl = vanilla.getDownload(side)
+            # dl = vanilla.getDownload(side)
+            dl = bmclapi.getMinecraftDownload(vanilla, side)
             if dl is None:
                 self.error(
                     "Failed to download minecraft " + side + " jar, info missing from manifest"
@@ -143,21 +149,50 @@ class ServerInstall(Action):
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
         libraries = self.getLibraries()
-        bad = ""
-        for lib in libraries:  # TODO:Async Download
-            # self.checkCancel()
-            if not DownloadUtils.downloadLibrary(
-                self.monitor,
-                self.profile.getMirror(),
-                lib,
-                librariesDir,
-                installerDataBuf,
-                self.grabbed,
-                additionalLibDirs,
-            ):
-                download = None if lib.getDownloads() is None else lib.getDownloads().getArtifact()
-                if download is not None and download.url != "":
-                    bad += f"\n{lib.getName()}"
+        bad = []
+        tasks = []
+
+        def downloadLibraryCallback(_lib: Version.LibraryDownload, _success: bool):
+            if not _success:
+                _download = (
+                    None if _lib.getDownloads() is None else _lib.getDownloads().getArtifact()
+                )
+                if _download is not None and _download.url != "":
+                    bad.append(_download.url)
+
+        with UniqueTaskExecutor(cpu_count()) as executor:
+            for lib in libraries:
+                # self.checkCancel()
+
+                # if not DownloadUtils.downloadLibrary(
+                #         self.monitor,
+                #         self.profile.getMirror(),
+                #         lib,
+                #         librariesDir,
+                #         installerDataBuf,
+                #         self.grabbed,
+                #         additionalLibDirs,
+                # ):
+                #     download = None if lib.getDownloads() is None else lib.getDownloads().getArtifact()
+                #     if download is not None and download.url != "":
+                #         bad += f"\n{lib.getName()}"
+                tasks.append(
+                    executor.createTask(
+                        functools.partial(
+                            DownloadUtils.downloadLibrary,
+                            self.monitor,
+                            self.profile.getMirror(),
+                            lib,
+                            librariesDir,
+                            installerDataBuf,
+                            self.grabbed,
+                            additionalLibDirs,
+                        )
+                    ).then(functools.partial(downloadLibraryCallback, lib))
+                )
+
+            executor.runTasks(tasks)
+        bad = "\n".join(bad)
         if bad != "":
             self.error(f"Failed to download libraries:\n{bad}")
             return False

@@ -14,12 +14,8 @@ class SimpleInstaller:
 
     @staticmethod
     def installServer(
-            installer: Path,
-            targetDir: Path,
-            monitor: ProgressCallback = TO_STD_OUT,
-            java: Path = None
+        installer: Path, targetDir: Path, monitor: ProgressCallback = TO_STD_OUT, java: Path = None
     ) -> bool:
-
         installerBuf = BytesIO(installer.read_bytes())
         try:
             with zipfile.ZipFile(installerBuf) as archive:
