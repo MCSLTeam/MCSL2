@@ -17,6 +17,7 @@ Configure new server page.
 from json import loads, dumps
 from os import getcwd, mkdir, remove, path as osp
 from shutil import copy, rmtree
+from typing import Iterable
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QCursor
@@ -1930,7 +1931,7 @@ class ConfigurePage(QWidget):
         else:
             self.installingForgeStateToolTip.setContent(
                 self.tr(
-                    "怪，安装失败！" + (args if type(args) is tuple else " ".join(map(str, args)))
+                    "怪，安装失败！" + ((str(args) if not isinstance(args, Iterable) or isinstance(args, str) else " ".join(map(str, args))))
                 )
             )
             self.installingForgeStateToolTip.setState(True)
