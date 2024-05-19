@@ -362,7 +362,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def genRunScript(self, save=False):
         script = (
-            f"cd \"{osp.abspath('Servers' + self.serverConfig.serverName)}\"\n"
+            f"cd \"{osp.abspath('Servers' + osp.pathsep + self.serverConfig.serverName)}\"\n"
             + self.serverConfig.javaPath
             + " "
             + " ".join(self.serverLauncher.jvmArg)
