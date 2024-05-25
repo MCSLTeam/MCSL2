@@ -83,7 +83,8 @@ if __name__ == "__main__":
         from MCSL2Lib.noVerification import countUserAPI
 
     try:
-        countUserAPI()
+        from PyQt5.QtCore import QThreadPool
+        QThreadPool.globalInstance().start(countUserAPI)
     except Exception as err:
         MCSL2Logger.critical(err)
     del countUserAPI
