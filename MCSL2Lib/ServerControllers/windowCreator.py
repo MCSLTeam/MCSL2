@@ -362,15 +362,19 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def genRunScript(self, save=False):
         script = (
-            f"cd \"{osp.abspath('Servers' + self.serverConfig.serverName)}\"\n"
-            + self.serverConfig.javaPath
-            + " "
-            + " ".join(self.serverLauncher.jvmArg)
+            f"$host.ui.RawUI.WindowTitle=\"{self.serverConfig.serverName}\""
+            f"\ncd \"{osp.abspath('Servers' + osp.sep + self.serverConfig.serverName)}\""
+            + f'\n$JavaPath = "{self.serverConfig.javaPath}"'
+            + f"\n$JavaArgs = \"{' '.join(self.serverLauncher.jvmArg)}\"\n"
+            + "Start-Process -FilePath $JavaPath -ArgumentList $JavaArgs -NoNewWindow -Wait\n"
+            + "pause"
         )
         if save:
             return script
         else:
-            (w := MessageBox(self.tr("生成启动脚本"), "", parent=self)).contentLabel.setParent(None)
+            (
+                w := MessageBox(self.tr("生成启动脚本 (PowerShell)"), "", parent=self)
+            ).contentLabel.setParent(None)
             w.yesButton.setText(self.tr("保存"))
             w.yesSignal.connect(self.saveRunScript)
             (copyWidget := QWidget()).setLayout((cmdLayout := QHBoxLayout()))
@@ -406,8 +410,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 QFileDialog.getSaveFileName(
                     self,
                     self.tr("MCSL2 服务器 - 保存启动脚本"),
-                    f"Run {self.serverConfig.serverName}.bat",
-                    "Batch(*.bat);;Shell(*.sh)",
+                    f"Run {self.serverConfig.serverName}.ps1",
+                    "Powershell 脚本(*.ps1)",
                 )[0],
                 self.genRunScript(save=True),
             )
