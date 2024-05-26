@@ -3,10 +3,12 @@ import subprocess
 import traceback
 import zipfile
 from io import BytesIO
+from os import cpu_count
 from pathlib import Path
 from typing import Dict, List
-from os import cpu_count
+from collections import deque
 
+import requests
 from pyqt5_concurrent.TaskExecutor import UniqueTaskExecutor
 
 from .action import Action, ActionCanceledException
@@ -22,7 +24,7 @@ from ..json.version import Version
 class ServerInstall(Action):
     def __init__(self, profile: InstallV1, installer: Path, monitor: ProgressCallback):
         super().__init__(profile, monitor, installer, False)
-        self.grabbed = []
+        self.grabbed = deque()  # thread-safe
 
     def run(self, target: Path, java: Path = None) -> bool:
         try:
@@ -43,7 +45,7 @@ class ServerInstall(Action):
             if contained is not None:
                 self.monitor.stage("Extracting main jar:")
                 if not DownloadUtils.extractFile(
-                    contained, self.installerDataBuf, target / contained.getFilename()
+                        contained, self.installerDataBuf, target / contained.getFilename()
                 ):
                     self.monitor.error(f"  Failed to extract main jar: {contained.getFilename()}")
                     return False
@@ -143,7 +145,7 @@ class ServerInstall(Action):
         return True
 
     def downloadLibraries(
-        self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]
+            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]
     ):
         self.monitor.start("Downloading libraries")
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
@@ -160,22 +162,9 @@ class ServerInstall(Action):
                 if _download is not None and _download.url != "":
                     bad.append(_download.url)
 
+        session = requests.Session()
         with UniqueTaskExecutor(cpu_count()) as executor:
             for lib in libraries:
-                # self.checkCancel()
-
-                # if not DownloadUtils.downloadLibrary(
-                #         self.monitor,
-                #         self.profile.getMirror(),
-                #         lib,
-                #         librariesDir,
-                #         installerDataBuf,
-                #         self.grabbed,
-                #         additionalLibDirs,
-                # ):
-                #     download = None if lib.getDownloads() is None else lib.getDownloads().getArtifact()
-                #     if download is not None and download.url != "":
-                #         bad += f"\n{lib.getName()}"
                 tasks.append(
                     executor.createTask(
                         functools.partial(
@@ -190,8 +179,7 @@ class ServerInstall(Action):
                         )
                     ).then(functools.partial(downloadLibraryCallback, lib))
                 )
-
-            executor.runTasks(tasks)
+            executor.runTasks(tasks).then(lambda *args: None, onFinished=lambda *args: session.close()).wait()
         bad = "\n".join(bad)
         if bad != "":
             self.error(f"Failed to download libraries:\n{bad}")

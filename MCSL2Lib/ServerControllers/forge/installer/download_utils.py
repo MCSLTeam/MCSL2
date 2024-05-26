@@ -4,7 +4,7 @@ import traceback
 import zipfile
 from io import BytesIO
 from pathlib import Path
-from typing import Callable, List, Optional, TypeVar
+from typing import Callable, List, Optional, TypeVar, Deque
 
 import requests
 from .bmclapi import getLibraryUrl as getBmclapiLibUrl
@@ -109,9 +109,13 @@ class DownloadUtils:
 
     @staticmethod
     def download(
-        monitor: ProgressCallback, mirror: Mirror, download: Version.Download, target: Path
+        monitor: ProgressCallback,
+        mirror: Mirror,
+        download: Version.Download,
+        target: Path,
+        session: Optional[requests.Session] = None
     ) -> bool:
-        return DownloadUtils._download(monitor, mirror, download, target, download.url)
+        return DownloadUtils._download(monitor, mirror, download, target, download.url, session or requests.Session())
 
     @staticmethod
     def _download(
@@ -120,11 +124,12 @@ class DownloadUtils:
         download: Version.Download,
         target: Path,
         url: str,
+        session: requests.Session
     ) -> bool:
         # TODO
         monitor.message(f"  Downloading library from {url}")
         try:
-            with requests.get(url, stream=True) as response:
+            with session.get(url, stream=True) as response:
                 total = int(response.headers.get("content-length", 0))
                 downloaded = 0
                 with target.open("wb") as f:
@@ -159,8 +164,9 @@ class DownloadUtils:
         library: Version.Library,
         root: Path,
         installerBuf: BytesIO,
-        grabbed: List[Artifact],
+        grabbed: Deque[Artifact],
         additionalLibraryDirs: List[Path],
+        session: Optional[requests.Session] = None
     ):
         artifact = library.getName()
         target = artifact.getLocalPath(root)
@@ -247,7 +253,8 @@ class DownloadUtils:
             return False
         # replace url with bmclapi
         download.url = getBmclapiLibUrl(url)
-        if DownloadUtils.download(monitor, mirror, download, target):
+        print(f"{url} -> {download.url}")
+        if DownloadUtils.download(monitor, mirror, download, target, session):
             grabbed.append(artifact)
             return True
 
