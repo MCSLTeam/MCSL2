@@ -304,7 +304,6 @@ class ForgeInstaller(Installer):
             percent = bytesReceived * 100 / bytesTotal
         except ZeroDivisionError:
             percent = 0
-        MCSL2Logger.info(f"(正在下载核心... {percent:.0f}%) 使用 BMCLAPI 下载")
         self.downloadServerProgress.emit(
             self.tr("(正在下载核心... {:.0f}%) 使用 BMCLAPI 下载").format(percent)
         )
