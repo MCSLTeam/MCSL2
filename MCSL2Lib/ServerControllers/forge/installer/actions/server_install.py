@@ -9,7 +9,7 @@ from typing import Dict, List
 from collections import deque
 
 import requests
-from pyqt5_concurrent.TaskExecutor import UniqueTaskExecutor
+from pyqt5_concurrent.TaskExecutor import TaskExecutor
 
 from .action import Action, ActionCanceledException
 from .progress_callback import ProgressCallback
@@ -163,7 +163,7 @@ class ServerInstall(Action):
                     bad.append(_download.url)
 
         session = requests.Session()
-        with UniqueTaskExecutor(cpu_count()) as executor:
+        with TaskExecutor(cpu_count()) as executor:
             for lib in libraries:
                 tasks.append(
                     executor.createTask(
