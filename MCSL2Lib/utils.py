@@ -235,15 +235,12 @@ def checkSHA1(
     检查文件的SHA1值是否正确
     """
     rv = []
-    if _filter is None:
-        def _filter(a, b):
-            return True
 
     for file, sha1 in fileAndSha1:
         if not osp.exists(file):
             rv.append({"file": file, "result": False})
             continue
-        if _filter(file, sha1):
+        if _filter is None or _filter(file, sha1):
             # check sha1
             fileSha1 = hashlib.sha1(readBytesFile(file)).hexdigest()
             rv.append({"file": file, "result": fileSha1 == sha1})
