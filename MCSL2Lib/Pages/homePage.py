@@ -225,6 +225,6 @@ class GetNoticeThread(QThread):
         try:
             notice = self.tr("公告") + getAnnouncement()
             self.notice.emit(notice)
-        except Exception:
-            self.notice.emit(self.tr("网络连接失败，无法获取公告。"))
+        except Exception as e:
+            self.notice.emit(self.tr(f"网络连接失败，无法获取公告。\n{e.args}"))
         self.ringVisible.emit(False)
