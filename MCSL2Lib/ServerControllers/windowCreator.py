@@ -1332,7 +1332,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     def initQuickMenu_Difficulty(self):
         """快捷菜单-服务器游戏难度"""
-        textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
+        textDifficultyList = ["peaceful", "easy", "normal", "hard"]
         if self.getRunningStatus():
             try:
                 self.difficulty.setCurrentIndex(
@@ -1340,7 +1340,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 )
             except ValueError:
                 self.difficulty.setCurrentIndex(
-                    int(textDiffiultyList.index(self.serverConfig.serverProperties["difficulty"]))
+                    int(textDifficultyList.index(self.serverConfig.serverProperties["difficulty"]))
                 )
             except Exception:
                 pass
@@ -1349,8 +1349,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.showServerNotOpenMsg()
 
     def runQuickMenu_Difficulty(self):
-        textDiffiultyList = ["peaceful", "easy", "normal", "hard"]
-        self.sendCommand(f"difficulty {textDiffiultyList[self.difficulty.currentIndex()]}")
+        textDifficultyList = ["peaceful", "easy", "normal", "hard"]
+        self.sendCommand(f"difficulty {textDifficultyList[self.difficulty.currentIndex()]}")
 
     def initQuickMenu_GameMode(self):
         """快捷菜单-游戏模式"""
