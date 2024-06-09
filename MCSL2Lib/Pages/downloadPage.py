@@ -1432,6 +1432,17 @@ class DownloadPage(QWidget):
             self.downloadFile(fileName, fileFormat, uri, extraData)
 
     def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
+        InfoBar.info(
+            title=self.tr("开始下载"),
+            content=self.tr("{fileName}.{fileFormat}").format(
+                fileName=fileName, fileFormat=fileFormat
+            ),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.BOTTOM_RIGHT,
+            duration=1500,
+            parent=self,
+        )
         downloadingInfoWidget = DownloadCard(
             fileName=f"{fileName}.{fileFormat}", url=uri, parent=self
         )
