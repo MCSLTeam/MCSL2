@@ -45,8 +45,6 @@ class BaseEvent(metaclass=ABCMeta):
         self.handlers.append()
     """
 
-    # TODO: 不可否认的是这个方法并未起到效果, 并且作为 abstract method 也未被子类实现, 其及其子类在实际应用场景中也无用处.
-    #       并且该段代码已经存在近一年时间.
     @abstractmethod
     def registerHandle(self, func, priority: int):
         pass
