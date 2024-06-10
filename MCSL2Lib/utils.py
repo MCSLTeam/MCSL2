@@ -347,7 +347,9 @@ def setStartOnStartup():
     shortcut = pythoncom.CoCreateInstance(shell.CLSID_ShellLink, None,
                                           pythoncom.CLSCTX_INPROC_SERVER,
                                           shell.IID_IShellLink)
-    pythonPath = sys.executable  # 可执行文件全路径
+    pythonPath = sys.executable.replace("python.exe", "pythonw.exe")  # 可执行文件全路径
+    if not os.path.exists(pythonPath):
+        pythonPath = sys.executable
     shortcut.SetPath(pythonPath)
     shortcut.SetArguments(getCurrentMainFile())
     shortcut.SetDescription(pythonPath)
@@ -361,9 +363,6 @@ def removeStartOnStartup():
     """
     shortcut = (os.getenv('USERPROFILE') +
                 r"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MCSL2.lnk")
-    print(shortcut)
     if not os.path.exists(shortcut):
-        print(123)
         raise FileNotFoundError(f"{shortcut} not found! Check again or ask others for help")
     os.remove(shortcut)
-    print(12)

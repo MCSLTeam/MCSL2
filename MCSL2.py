@@ -13,7 +13,7 @@
 """
 Main entry.
 """
-
+import os
 import sys
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
@@ -36,6 +36,9 @@ class MCSL2Application(QApplication):
 
 
 if __name__ == "__main__":
+    # Override cwd
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
     # Debug
     # tracer = VizTracer()
     # tracer.enable_thread_tracing()

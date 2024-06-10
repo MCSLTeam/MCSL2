@@ -335,7 +335,7 @@ class SettingsPage(QWidget):
         self.startOnStartup = SwitchSettingCard(
             icon=FIF.POWER_BUTTON,
             title=self.tr("开机自启动"),
-            content=self.tr("好像还做不到啊。仅限 Windows。( WIP )"),
+            content=self.tr("仅限 Windows。"),
             configItem=cfg.startOnStartup,
             parent=self.consoleSettingsGroup,
         )
