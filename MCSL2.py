@@ -13,10 +13,13 @@
 """
 Main entry.
 """
+
 import os
 import sys
+
 from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
+
 
 # from viztracer import VizTracer
 
@@ -63,10 +66,10 @@ if __name__ == "__main__":
     from MCSL2Lib.variables import GlobalMCSL2Variables
 
     if (
-        cfg.get(cfg.oldExecuteable) == "python"
-        or cfg.get(cfg.oldExecuteable) == "python.exe"
-        or cfg.get(cfg.oldExecuteable) == "py"
-        or cfg.get(cfg.oldExecuteable) == "py.exe"
+            cfg.get(cfg.oldExecuteable) == "python"
+            or cfg.get(cfg.oldExecuteable) == "python.exe"
+            or cfg.get(cfg.oldExecuteable) == "py"
+            or cfg.get(cfg.oldExecuteable) == "py.exe"
     ):
         GlobalMCSL2Variables.devMode = True
     else:

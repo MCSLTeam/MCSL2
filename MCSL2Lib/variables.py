@@ -15,8 +15,8 @@ These are the built-in variables of MCSL2.
 """
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.utils import readGlobalServerConfig
 
 
 class BaseServerVariables:
