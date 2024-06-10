@@ -13,7 +13,7 @@
 """
 Settings page.
 """
-
+import os
 from datetime import datetime
 
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
@@ -49,7 +49,7 @@ from qfluentwidgets import (
     setThemeColor,
 )
 
-from MCSL2Lib import MCSL2VERSION
+from MCSL2Lib import MCSL2VERSION, utils
 from MCSL2Lib.ProgramControllers.aria2ClientController import (
     Aria2BootThread,
     Aria2Controller,
@@ -335,14 +335,18 @@ class SettingsPage(QWidget):
         self.startOnStartup = SwitchSettingCard(
             icon=FIF.POWER_BUTTON,
             title=self.tr("开机自启动"),
-            content=self.tr("好像还做不到啊。"),
+            content=self.tr("好像还做不到啊。仅限 Windows。( WIP )"),
             configItem=cfg.startOnStartup,
             parent=self.consoleSettingsGroup,
         )
         self.alwaysRunAsAdministrator.setEnabled(False)
-        self.startOnStartup.setEnabled(False)
+        if os.name == 'nt':
+            self.startOnStartup.setEnabled(True)
+        else:
+            self.startOnStartup.setEnabled(False)
         self.themeColor.colorChanged.connect(lambda cl: setThemeColor(color=cl, lazy=True))
         self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci), lazy=True))
+        self.startOnStartup.checkedChanged.connect(self.setStartup)
         # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
@@ -690,3 +694,10 @@ class SettingsPage(QWidget):
             )
         )
         w.exec()
+
+    @staticmethod
+    def setStartup(state: bool):
+        if state:
+            utils.setStartOnStartup()
+        else:
+            utils.removeStartOnStartup()

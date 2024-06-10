@@ -18,6 +18,8 @@ import enum
 import functools
 import hashlib
 import inspect
+import os.path
+import sys
 from json import dumps, loads
 from os import makedirs, path as osp
 from types import TracebackType
@@ -25,9 +27,11 @@ from typing import Type, Optional, Iterable, Callable, Dict, List
 
 import aria2p
 import psutil
+import pythoncom
 import requests
 from PyQt5.QtCore import QUrl, QThread, QThreadPool, QFile
 from PyQt5.QtGui import QDesktopServices
+from win32comext.shell import shell
 
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
@@ -322,3 +326,44 @@ def getAvailableAuthorServer() -> Optional[str]:
         except ConnectionError:
             continue
     return None
+
+
+def getCurrentMainFile() -> str:
+    """
+    返回可执行文件 / 脚本的路径
+    """
+    return sys.argv[0]
+
+
+def setStartOnStartup():
+    """
+    在相应位置创建一个快捷方式, 使得本应用能够开机自启动
+    仅限于 Windows 操作系统
+    """
+    # Refs:
+    # - https://github.com/pearu/iocbio/blob/master/installer/utils.py
+    # - https://blog.csdn.net/thundor/article/details/5968581
+    targetDirectory = os.getenv('USERPROFILE') + r'\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup'
+    shortcut = pythoncom.CoCreateInstance(shell.CLSID_ShellLink, None,
+                                          pythoncom.CLSCTX_INPROC_SERVER,
+                                          shell.IID_IShellLink)
+    pythonPath = sys.executable  # 可执行文件全路径
+    shortcut.SetPath(pythonPath)
+    shortcut.SetArguments(getCurrentMainFile())
+    shortcut.SetDescription(pythonPath)
+    shortcut.SetIconLocation(sys.executable, 0)
+    shortcut.QueryInterface(pythoncom.IID_IPersistFile).Save(targetDirectory + r"\MCSL2.lnk", 0)  # 保存快捷方式文件
+
+
+def removeStartOnStartup():
+    """
+    移除先前创建的开机自启动快捷方式
+    """
+    shortcut = (os.getenv('USERPROFILE') +
+                r"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MCSL2.lnk")
+    print(shortcut)
+    if not os.path.exists(shortcut):
+        print(123)
+        raise FileNotFoundError(f"{shortcut} not found! Check again or ask others for help")
+    os.remove(shortcut)
+    print(12)
