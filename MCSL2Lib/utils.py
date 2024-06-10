@@ -350,6 +350,8 @@ def setStartOnStartup():
     pythonPath = sys.executable.replace("python.exe", "pythonw.exe")  # 可执行文件全路径
     if not os.path.exists(pythonPath):
         pythonPath = sys.executable
+    if getCurrentMainFile().endswith(".exe"):
+        pythonPath = ""
     shortcut.SetPath(pythonPath)
     shortcut.SetArguments(getCurrentMainFile())
     shortcut.SetDescription(pythonPath)
