@@ -19,7 +19,6 @@ from PyQt5.QtCore import Qt, QLocale, QObject, QEvent
 from PyQt5.QtWidgets import QApplication
 
 # from viztracer import VizTracer
-from MCSL2Lib.utils import MCSL2Logger
 
 
 class MCSL2Application(QApplication):
@@ -38,6 +37,9 @@ class MCSL2Application(QApplication):
 if __name__ == "__main__":
     # Override cwd
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+    # Import after overriding cwd to export the logs to the correct place
+    from MCSL2Lib.utils import MCSL2Logger
 
     # Debug
     # tracer = VizTracer()
