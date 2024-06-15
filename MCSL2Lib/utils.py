@@ -19,6 +19,8 @@ import functools
 import hashlib
 import inspect
 import os.path
+import platform
+import subprocess
 import sys
 from json import dumps, loads
 from os import makedirs, path as osp
@@ -27,12 +29,10 @@ from typing import Type, Optional, Iterable, Callable, Dict, List
 
 import aria2p
 import psutil
-import pythoncom
 import requests
 from PyQt5.QtCore import QUrl, QThread, QThreadPool, QFile
 from PyQt5.QtGui import QDesktopServices
-from win32comext.shell import shell
-
+from platform import system
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
 MCSL2Logger = _MCSL2Logger()
@@ -337,12 +337,35 @@ def getCurrentMainFile() -> str:
 
 def setStartOnStartup():
     """
+    Decide which method to run according to the operating system
+    """
+    if system() == "Windows":
+        setStartOnStartupWindows()
+    elif system() == "Linux":
+        setStartOnStartupLinux()
+
+
+def setStartOnStartupLinux():
+    """
+    在相应位置创建一个快捷方式, 使得本应用能够开机自启动
+    仅限于 Linux 操作系统
+    """
+    raise NotImplementedError("You cannot currently do this.")
+
+
+def setStartOnStartupWindows():
+    """
     在相应位置创建一个快捷方式, 使得本应用能够开机自启动
     仅限于 Windows 操作系统
     """
     # Refs:
     # - https://github.com/pearu/iocbio/blob/master/installer/utils.py
     # - https://blog.csdn.net/thundor/article/details/5968581
+
+    # Operating system import check
+    from win32comext.shell import shell
+    import pythoncom
+
     targetDirectory = os.getenv('USERPROFILE') + r'\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup'
     shortcut = pythoncom.CoCreateInstance(shell.CLSID_ShellLink, None,
                                           pythoncom.CLSCTX_INPROC_SERVER,
@@ -362,6 +385,25 @@ def setStartOnStartup():
 def removeStartOnStartup():
     """
     移除先前创建的开机自启动快捷方式
+    """
+    if system() == "Windows":
+        removeStartOnStartupWindows()
+    elif system() == "Linux":
+        removeStartOnStartupLinux()
+
+
+def removeStartOnStartupLinux():
+    """
+    移除先前创建的开机自启动快捷方式
+    仅限于 Linux 操作系统
+    """
+    raise NotImplementedError("You cannot currently do this.")
+
+
+def removeStartOnStartupWindows():
+    """
+    移除先前创建的开机自启动快捷方式
+    仅限于 Windows 操作系统
     """
     shortcut = (os.getenv('USERPROFILE') +
                 r"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MCSL2.lnk")
