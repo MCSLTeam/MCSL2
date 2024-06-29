@@ -42,7 +42,7 @@ jobs:
 
       - name: Build
         run: |
-          python -m lndl_nuitka . -y -- --disable-console
+          python -m lndl_nuitka . -y
 
       - name: Optimize
         shell: pwsh
