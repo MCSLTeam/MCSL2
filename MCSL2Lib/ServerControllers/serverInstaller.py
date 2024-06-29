@@ -387,7 +387,7 @@ class ForgeInstaller(Installer):
             self.installFinished.emit(False)
             return
 
-        self.worker = ForgeInstallThread(self.file, self.cwd, self.java)
+        # self.worker = ForgeInstallThread(self.file, self.cwd, self.java)
 
         self.worker.output.connect(
             lambda msg: self.installerLogOutput.emit(
