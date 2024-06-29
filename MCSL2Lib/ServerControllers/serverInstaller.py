@@ -31,10 +31,10 @@ from PyQt5.QtCore import (
 )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
-from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.ServerControllers.forge import ForgeInstallThread
-from MCSL2Lib.utils import MCSL2Logger, ServicesUrl, readFile, writeFile
-from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
+from ..ProgramControllers.settingsController import cfg
+from .forge.install_thread import ForgeInstallThread
+from ..utils import MCSL2Logger, ServicesUrl, readFile, writeFile
+from ..variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
