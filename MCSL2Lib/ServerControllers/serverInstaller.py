@@ -32,7 +32,7 @@ from PyQt5.QtCore import (
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
 from ..ProgramControllers.settingsController import cfg
-from .forge.install_thread import ForgeInstallThread
+# from .forge.install_thread import ForgeInstallThread
 from ..utils import MCSL2Logger, ServicesUrl, readFile, writeFile
 from ..variables import ConfigureServerVariables, EditServerVariables
 
