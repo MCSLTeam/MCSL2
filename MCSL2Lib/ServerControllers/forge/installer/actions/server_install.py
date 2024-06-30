@@ -1,22 +1,24 @@
+import asyncio
 import functools
 import subprocess
 import traceback
 import zipfile
-from io import BytesIO
-from os import cpu_count
-from pathlib import Path
-from typing import Dict, List
 from collections import deque
+from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
+from pathlib import Path
+from typing import Dict, List, Deque, Optional, Sequence
 
 import requests
-from pyqt5_concurrent.TaskExecutor import UniqueTaskExecutor
 
 from .action import Action, ActionCanceledException
 from .progress_callback import ProgressCallback
 from .. import bmclapi
 from ..download_utils import DownloadUtils
 from ..java2python import Supplier
+from ..json.artifact import Artifact
 from ..json.installV1 import InstallV1
+from ..json.mirror import Mirror
 from ..json.util import Util
 from ..json.version import Version
 
@@ -26,7 +28,7 @@ class ServerInstall(Action):
         super().__init__(profile, monitor, installer, False)
         self.grabbed = deque()  # thread-safe
 
-    def run(self, target: Path, java: Path = None) -> bool:
+    async def run(self, target: Path, java: Path = None) -> bool:
         try:
             if target.exists() and not target.is_dir():
                 self.monitor.error(
@@ -76,7 +78,7 @@ class ServerInstall(Action):
             if mcLibDir.exists():
                 libDirs.append(mcLibDir)
 
-            if not self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs):
+            if not await self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs):
                 return False
         except ActionCanceledException:
             self.monitor.stage("Cancelled")
@@ -144,31 +146,89 @@ class ServerInstall(Action):
 
         return True
 
-    def downloadLibraries(
-            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]
+    async def downloadLibraries(
+            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path], retry: int = 3
     ):
+        from ..simple_installer import SimpleInstaller
         self.monitor.start("Downloading libraries")
+        bad = await self._downloadLibraries(
+            librariesDir,
+            installerDataBuf,
+            additionalLibDirs,
+            self.getLibraries(),
+            SimpleInstaller.LIBRARIES_MAX_CONCURRENT
+        )
+
+        if not bad:
+            self.monitor.message("All libraries downloaded successfully")
+            return True
+
+        for i in range(1, retry + 1):
+            print("\n /////////////////////////////////////////////////////////////////// \n")
+            self.monitor.message(f"Retrying {i} of {retry}")
+            bad = await self._downloadLibraries(
+                    librariesDir,
+                    installerDataBuf,
+                    additionalLibDirs,
+                    bad,
+                    SimpleInstaller.LIBRARIES_MAX_CONCURRENT
+            )
+            if not bad:
+                return True
+
+        if bad:
+            _bad = '\n'.join(bad)
+            self.error(f"Failed to download libraries:\n{_bad}")
+        return False
+
+    async def _downloadLibraries(
+            self,
+            librariesDir: Path,
+            installerDataBuf: BytesIO,
+            additionalLibDirs: List[Path],
+            libraries: Sequence[Version.Library],
+            max_concurrent: int
+    ):
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
-        libraries = self.getLibraries()
-        bad = []
-        tasks = []
+        bad = deque()
 
-        def downloadLibraryCallback(_lib: Version.LibraryDownload, _success: bool):
-            if not _success:
-                _download = (
-                    None if _lib.getDownloads() is None else _lib.getDownloads().getArtifact()
-                )
+        def task(
+                monitor: ProgressCallback,
+                mirror: Mirror,
+                library: Version.Library,
+                root: Path,
+                installerBuf: BytesIO,
+                grabbed: Deque[Artifact],
+                additionalLibraryDirs: List[Path],
+                session_: Optional[requests.Session] = None
+        ):
+            nonlocal bad
+            success = DownloadUtils.downloadLibrary(
+                monitor,
+                mirror,
+                library,
+                root,
+                installerBuf,
+                grabbed,
+                additionalLibraryDirs,
+                session_
+            )
+            if not success:
+                _download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
                 if _download is not None and _download.url != "":
-                    bad.append(_download.url)
+                    bad.append(lib)
 
         session = requests.Session()
-        with UniqueTaskExecutor(cpu_count()) as executor:
+        loop = asyncio.get_event_loop()
+        with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+            futures = []
             for lib in libraries:
-                tasks.append(
-                    executor.createTask(
+                futures.append(
+                    loop.run_in_executor(
+                        executor,
                         functools.partial(
-                            DownloadUtils.downloadLibrary,
+                            task,
                             self.monitor,
                             self.profile.getMirror(),
                             lib,
@@ -176,15 +236,14 @@ class ServerInstall(Action):
                             installerDataBuf,
                             self.grabbed,
                             additionalLibDirs,
-                        )
-                    ).then(functools.partial(downloadLibraryCallback, lib))
-                )
-            executor.runTasks(tasks).then(lambda *args: None, onFinished=lambda *args: session.close()).wait()
-        bad = "\n".join(bad)
-        if bad != "":
-            self.error(f"Failed to download libraries:\n{bad}")
-            return False
-        return True
+                            session
+                        )))
+            await asyncio.gather(*futures)
+        session.close()
+
+        if bad:
+            self.monitor.message(f"\nFound {len(bad)} bad libraries.\n >>> {[lib.name for lib in bad]}")
+        return bad
 
     def getLibraries(self) -> List[Version.Library]:
         libraries = []

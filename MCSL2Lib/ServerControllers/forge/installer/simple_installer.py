@@ -12,8 +12,9 @@ class SimpleInstaller:
     # TODO 使镜像源下载生效
     mirror = "https://bmclapi2.bangbang93.com/maven/"
 
+    LIBRARIES_MAX_CONCURRENT = 4
     @staticmethod
-    def installServer(
+    async def installServer(
         installer: Path, targetDir: Path, monitor: ProgressCallback = TO_STD_OUT, java: Path = None
     ) -> bool:
         installerBuf = BytesIO(installer.read_bytes())
@@ -26,6 +27,6 @@ class SimpleInstaller:
             monitor.stage(f"Failed to load install profile: {e}")
             return False
         serverInstaller = ServerInstall(profile, installer, monitor)
-        run = serverInstaller.run(targetDir, java)
+        run = await serverInstaller.run(targetDir, java)
         installerBuf.close()
         return run

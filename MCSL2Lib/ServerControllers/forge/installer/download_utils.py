@@ -1,4 +1,5 @@
 import hashlib
+import os
 import re
 import traceback
 import zipfile
@@ -148,12 +149,13 @@ class DownloadUtils:
                     monitor.message("      Expected: " + download.sha1)
                     monitor.message("      Actual:   " + sha1)
                     try:
-                        target.unlink()
+                        target.unlink(missing_ok=False)
                     except IOError:
                         monitor.stage("      Failed to delete file, aborting.")
                         return False
                 monitor.message("    Download completed: No checksum, Assuming valid.")
         except Exception:
+            target.unlink(missing_ok=True)
             traceback.print_exc()
         return False
 
@@ -167,7 +169,7 @@ class DownloadUtils:
         grabbed: Deque[Artifact],
         additionalLibraryDirs: List[Path],
         session: Optional[requests.Session] = None
-    ):
+    ) -> bool:
         artifact = library.getName()
         target = artifact.getLocalPath(root)
         download = None if library.getDownloads() is None else library.getDownloads().getArtifact()

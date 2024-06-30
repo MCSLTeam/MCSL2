@@ -1,4 +1,8 @@
+import asyncio
+import sys
 from pathlib import Path
+
+from PyQt5.QtCore import QCoreApplication
 
 from installer.simple_installer import SimpleInstaller
 
@@ -19,4 +23,4 @@ if __name__ == "__main__":
     # print(art)
     # version = Version.of(json.loads(Path("version.json").read_text()))
     # print(version)
-    SimpleInstaller.installServer(Path("./Server/Forge-1.20.4-49.0.26.jar"), Path("./Server/"))
+    asyncio.run(SimpleInstaller.installServer(Path("./Server/Forge-1.21-51.0.18.jar"), Path("./Server/")))

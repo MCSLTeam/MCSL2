@@ -1,4 +1,5 @@
 import threading
+import asyncio
 from pathlib import Path
 
 from PyQt5.QtCore import QObject, pyqtSignal
@@ -25,13 +26,13 @@ class ForgeInstallThread(threading.Thread):
         self.java = java
         self.monitor = ProgressCallback.of(lambda self_, msg: self.output.emit(msg))
 
-    def installServer(self):
+    async def installServer(self):
         target = Path(self.targetDir)
         self.finished.emit(
-            SimpleInstaller.installServer(
+            await SimpleInstaller.installServer(
                 target / self.installer, target, self.monitor, Path(self.java)
             )
         )
 
     def run(self):
-        self.installServer()
+        asyncio.run(self.installServer())
