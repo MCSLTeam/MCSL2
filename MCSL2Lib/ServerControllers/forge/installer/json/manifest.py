@@ -4,9 +4,7 @@ from typing import List, Optional
 from .base_model import BaseModel
 
 
-@dataclass
 class Manifest(BaseModel):
-    @dataclass
     class Info(BaseModel):
         id: str
         url: str

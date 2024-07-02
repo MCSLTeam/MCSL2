@@ -8,7 +8,6 @@ from typing import Any
 from .base_model import BaseModel
 
 
-@dataclass
 class Artifact(BaseModel):
     domain: str
     name: str

@@ -4,7 +4,6 @@ from typing import Optional
 from .install import Install
 
 
-@dataclass
 class InstallV1(Install):
     serverJarPath: Optional[str] = None
 

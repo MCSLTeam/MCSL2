@@ -2,7 +2,9 @@ import builtins
 import dataclasses
 import functools
 import inspect
+import json
 import sys
+import traceback
 import typing
 
 InjectError = Exception
@@ -196,7 +198,7 @@ class Utils:
     @staticmethod
     def get_type_string(t_type: typing.Any):
         if t_type in (None, ...):
-            return str(t_type)
+            return t_type
         if t_type.__module__ == "typing":
             return str(t_type)
         else:
@@ -227,25 +229,30 @@ class Utils:
         exec(txt, globals_, rv)
         return rv['_gen_fn'](**locals_)
 
+    @staticmethod
+    def is_init_overridden(cls):
+        base_init = cls.__base__.__init__
+        current_init = cls.__init__
+        return not (current_init is base_init or
+                    inspect.unwrap(current_init) is inspect.unwrap(base_init))
+
 
 class BaseModelMeta(type):
-    # def __new__(mcs, name, bases, dct):
-    #     if name == "BaseModel":
-    #         return super().__new__(mcs, name, bases, dct)
-    #
-    #     annotations = dct.get("__annotations__", {})
-    #     __slots__ = tuple(annotations.keys())
-    #
-    #     dct["__slots__"] = __slots__
-    #
-    #     return super().__new__(mcs, name, bases, dct)
+    """
+    自动注册根据__annotations__注册__init__，类似dataclass,
+    若__init__被重写，则不会自动注册
+
+    提供__base_model_fields__
+    """
 
     def __init__(cls, name, bases, dct):
         super().__init__(name, bases, dct)
         if name == "BaseModel":
             return
 
-        cls_annotations = getattr(cls, "__annotations__", {})
+        cls_annotations = typing.get_type_hints(cls)  # recursively scan to solve inheritance
+        cls.__base_model_fields__ = tuple(cls_annotations.keys())
+
         if cls.__module__ in sys.modules:
             globals_ = sys.modules[cls.__module__].__dict__
         else:
@@ -273,9 +280,26 @@ class BaseModelMeta(type):
             globals_=globals_,
             locals_=locals_
         )
+        # check init if is user defined
+        if not Utils.is_init_overridden(cls):
+            cls.__init__ = __init__
+
+
+class BaseModelJsonEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, BaseModel):
+            fields = o.__base_model_fields__
+            return {k: getattr(o, k) for k in fields}
+        return json.JSONEncoder.default(self, o)
 
 
 class BaseModel(metaclass=BaseModelMeta):
+    """
+    dataclass pro版，
+    解决无法递归的反序列化类的问题，
+
+    反序列化类: cls.of
+    """
 
     @classmethod
     def of(cls, provided: typing.Dict[str, typing.Any]):
@@ -296,5 +320,10 @@ class BaseModel(metaclass=BaseModelMeta):
                 data[k] = getattr(cls, k)  # use default value
             else:
                 raise ValueError(f"{cls.__name__}.{k} is not provided.")
-
         return cls(**data)
+
+    def to_dict(self):
+        try:
+            return json.loads(json.dumps(self, cls=BaseModelJsonEncoder))
+        except:
+            traceback.print_exc()

@@ -12,7 +12,6 @@ from .version import Library
 from ..download_utils import DownloadUtils
 
 
-@dataclass
 class Processor(BaseModel):
     sides: List[str] = None
     jar: Artifact = None
@@ -44,8 +43,7 @@ class Processor(BaseModel):
         return [Artifact.from_(i) for i in items]
 
 
-@dataclass
-class DataFile:
+class DataFile(BaseModel):
     """
     Can be in the following formats:
 
@@ -68,7 +66,6 @@ class DataFile:
         return self.server
 
 
-@dataclass
 class Install(Spec):
     profile: str
     version: str

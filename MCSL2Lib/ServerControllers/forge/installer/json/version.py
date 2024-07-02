@@ -7,7 +7,6 @@ from .artifact import Artifact
 from .base_model import BaseModel
 
 
-@dataclass
 class Download(BaseModel):
     sha1: str = None
     size: int = None
@@ -21,7 +20,6 @@ class Download(BaseModel):
         self.provided = provided
 
 
-@dataclass
 class LibraryDownload(Download):
     path: str = None
 
@@ -39,7 +37,6 @@ class LibraryDownload(Download):
         return self.provided
 
 
-@dataclass
 class Downloads(BaseModel):
     artifact: LibraryDownload
     classifiers: Dict[str, LibraryDownload] = None
@@ -51,7 +48,6 @@ class Downloads(BaseModel):
         return set() if self.classifiers is None else set(self.classifiers.values())
 
 
-@dataclass
 class Library(BaseModel):
     name: Artifact
     downloads: Downloads
