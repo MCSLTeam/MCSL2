@@ -30,6 +30,3 @@ class Manifest(BaseModel):
         except StopIteration:
             return None
 
-    @classmethod
-    def version_factory(cls, item) -> List[Info]:
-        return [Manifest.Info.of(i) for i in item]

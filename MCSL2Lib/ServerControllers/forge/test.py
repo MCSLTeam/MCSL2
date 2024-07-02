@@ -23,4 +23,5 @@ if __name__ == "__main__":
     # print(art)
     # version = Version.of(json.loads(Path("version.json").read_text()))
     # print(version)
+
     asyncio.run(SimpleInstaller.installServer(Path("./Server/Forge-1.21-51.0.18.jar"), Path("./Server/")))

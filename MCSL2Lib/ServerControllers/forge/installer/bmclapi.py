@@ -2,7 +2,7 @@ from typing import Dict, Optional
 
 import requests
 
-from .json.version import Version
+from .json.version import Version, Download
 
 BMCLAPI_ROOT = "https://bmclapi2.bangbang93.com"
 
@@ -19,12 +19,12 @@ def getDownloadInfo(url) -> Optional[Dict[str, str]]:
             }
 
 
-def getMinecraftDownload(version: Version, side: str) -> Optional[Version.Download]:
+def getMinecraftDownload(version: Version, side: str) -> Optional[Download]:
     url = BMCLAPI_ROOT + f"/version/{version.id}/{side}"
     info = getDownloadInfo(url)
     if info is None:
         return None
-    return Version.Download.of(
+    return Download.of(
         {"sha1": info.get("sha1"), "size": info.get("size"), "url": url, "provided": False}
     )
 

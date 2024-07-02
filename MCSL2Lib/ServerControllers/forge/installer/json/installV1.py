@@ -18,7 +18,7 @@ class InstallV1(Install):
         self.json = v0.json
         self.logo = v0.logo
         self.path = v0.path
-        self.urlIcon = v0.urlIcon
+
         self.welcome = v0.welcome
         self.mirrorList = v0.mirrorList
         self.hideClient = v0.hideClient
@@ -27,6 +27,8 @@ class InstallV1(Install):
         self.libraries = v0.libraries
         self.processors = v0.processors
         self.data = v0.data
+        # for not used
+        # self.urlIcon = v0.urlIcon
         return self
 
     def getServerJarPath(self) -> str:

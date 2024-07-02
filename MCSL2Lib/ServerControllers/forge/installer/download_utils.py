@@ -1,5 +1,4 @@
 import hashlib
-import os
 import re
 import traceback
 import zipfile
@@ -13,7 +12,7 @@ from .actions.progress_callback import ProgressCallback
 from .json.artifact import Artifact
 from .json.manifest import Manifest
 from .json.mirror import Mirror
-from .json.version import Version
+from .json.version import Download, Library, LibraryDownload
 
 T = TypeVar("T")
 
@@ -112,7 +111,7 @@ class DownloadUtils:
     def download(
         monitor: ProgressCallback,
         mirror: Mirror,
-        download: Version.Download,
+        download: Download,
         target: Path,
         session: Optional[requests.Session] = None
     ) -> bool:
@@ -122,7 +121,7 @@ class DownloadUtils:
     def _download(
         monitor: ProgressCallback,
         mirror: Mirror,
-        download: Version.Download,
+        download: Download,
         target: Path,
         url: str,
         session: requests.Session
@@ -163,7 +162,7 @@ class DownloadUtils:
     def downloadLibrary(
         monitor: ProgressCallback,
         mirror: Mirror,
-        library: Version.Library,
+        library: Library,
         root: Path,
         installerBuf: BytesIO,
         grabbed: Deque[Artifact],
@@ -174,7 +173,7 @@ class DownloadUtils:
         target = artifact.getLocalPath(root)
         download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
         if download is None:
-            download = Version.LibraryDownload.of({"path": artifact.getPath()})
+            download = LibraryDownload.of({"path": artifact.getPath()})
 
         monitor.message(f"Considering library {artifact.getDescriptor()}")
 

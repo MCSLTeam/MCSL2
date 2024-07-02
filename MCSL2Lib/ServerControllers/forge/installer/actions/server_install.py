@@ -20,7 +20,7 @@ from ..json.artifact import Artifact
 from ..json.installV1 import InstallV1
 from ..json.mirror import Mirror
 from ..json.util import Util
-from ..json.version import Version
+from ..json.version import Version, Library
 
 
 class ServerInstall(Action):
@@ -186,7 +186,7 @@ class ServerInstall(Action):
             librariesDir: Path,
             installerDataBuf: BytesIO,
             additionalLibDirs: List[Path],
-            libraries: Sequence[Version.Library],
+            libraries: Sequence[Library],
             max_concurrent: int
     ):
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
@@ -196,7 +196,7 @@ class ServerInstall(Action):
         def task(
                 monitor: ProgressCallback,
                 mirror: Mirror,
-                library: Version.Library,
+                library: Library,
                 root: Path,
                 installerBuf: BytesIO,
                 grabbed: Deque[Artifact],
@@ -245,7 +245,7 @@ class ServerInstall(Action):
             self.monitor.message(f"\nFound {len(bad)} bad libraries.\n >>> {[lib.name for lib in bad]}")
         return bad
 
-    def getLibraries(self) -> List[Version.Library]:
+    def getLibraries(self) -> List[Library]:
         libraries = []
         for lib in self.version.getLibraries():
             libraries.append(lib)
