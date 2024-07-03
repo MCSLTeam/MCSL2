@@ -81,7 +81,6 @@ class ForgeInstallerDownloadView(MessageBoxBase):
         self.widgetMap = {}
 
     def onProgress(self, filename, progress, speed, done, allDone):
-        print(filename, speed, progress, done, allDone)
         if filename not in self.widgetMap:
             w = DownloadEntryWidget.getWidget(filename, self)
             self.widgetMap[filename] = w
