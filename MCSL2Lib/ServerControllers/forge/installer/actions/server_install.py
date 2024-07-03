@@ -11,7 +11,8 @@ from typing import Dict, List, Deque, Optional, Sequence
 
 import requests
 
-from .action import Action, ActionCanceledException
+from .action import Action
+from ..utils import ActionCanceledException
 from .progress_callback import ProgressCallback
 from .. import bmclapi
 from ..download_utils import DownloadUtils
@@ -20,7 +21,7 @@ from ..json.artifact import Artifact
 from ..json.installV1 import InstallV1
 from ..json.mirror import Mirror
 from ..json.util import Util
-from ..json.version import Version, Library
+from ..json.version import Library
 
 
 class ServerInstall(Action):
@@ -28,7 +29,7 @@ class ServerInstall(Action):
         super().__init__(profile, monitor, installer, False)
         self.grabbed = deque()  # thread-safe
 
-    async def run(self, target: Path, java: Path = None) -> bool:
+    async def run(self, target: Path, java: Path = None, detailed: bool = False) -> bool:
         try:
             if target.exists() and not target.is_dir():
                 self.monitor.error(
@@ -53,7 +54,8 @@ class ServerInstall(Action):
                     return False
                 else:
                     self.monitor.stage("  Extracted successfully")
-            # self.checkCancel()
+
+            self.monitor.checkCancelled()
 
             # Download MC Server jar
             self.monitor.stage("Considering minecraft server jar")
@@ -66,11 +68,14 @@ class ServerInstall(Action):
             path = Util.replaceTokens(tokens, self.profile.getServerJarPath())
             serverTarget = Path(path)
 
-            if not self.downloadVanilla(serverTarget, self.installerDataBuf, "server"):
+            rv = self.downloadVanilla(serverTarget, self.installerDataBuf, "server", detailed)
+            self.monitor.checkCancelled()
+
+            if not rv:
                 self.error("Failed to download minecraft server jar")
                 return False
 
-            # self.checkCancel()
+            self.monitor.checkCancelled()
 
             # Download Libraries
             libDirs = []
@@ -78,16 +83,23 @@ class ServerInstall(Action):
             if mcLibDir.exists():
                 libDirs.append(mcLibDir)
 
-            if not await self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs):
+            rv = await self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs, detailed)
+            self.monitor.allDownloadsDone()  # info queue ended
+
+            self.monitor.checkCancelled()
+            if rv is False:
                 return False
         except ActionCanceledException:
             self.monitor.stage("Cancelled")
+            self.monitor.endInfoQueue()
             return False
 
         self.monitor.stage("Installing server, please wait ...")
         ret = self.offlineInstall(self.installer, java)
         if ret != 0:
             self.error(f"Failed to install server: installer return code: {ret}")
+            return False
+        if self.monitor.isCancelled():
             return False
         return True
 
@@ -98,9 +110,10 @@ class ServerInstall(Action):
         return subprocess.run(
             jvmArgs,
             cwd=str(self.installer.parent),
+            stdout=subprocess.DEVNULL
         ).returncode
 
-    def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str):
+    def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str, detailed: bool):
         if not target.exists():
             parent = target.parent
             if not parent.exists():
@@ -134,7 +147,7 @@ class ServerInstall(Action):
                 )
                 return False
 
-            if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target):
+            if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target, detailed=detailed):
                 target.unlink(missing_ok=True)
                 self.error(
                     "Downloading minecraft "
@@ -143,11 +156,13 @@ class ServerInstall(Action):
                     + "Try again, or manually place server jar to skip download."
                 )
                 return False
+            self.monitor.checkCancelled()
 
         return True
 
     async def downloadLibraries(
-            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path], retry: int = 3
+            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path], detailed: bool = False,
+            retry: int = 3
     ):
         from ..simple_installer import SimpleInstaller
         self.monitor.start("Downloading libraries")
@@ -156,22 +171,30 @@ class ServerInstall(Action):
             installerDataBuf,
             additionalLibDirs,
             self.getLibraries(),
-            SimpleInstaller.LIBRARIES_MAX_CONCURRENT
+            SimpleInstaller.LIBRARIES_MAX_CONCURRENT,
+            detailed
         )
+
+        if self.monitor.isCancelled():
+            return False
 
         if not bad:
             self.monitor.message("All libraries downloaded successfully")
             return True
 
         for i in range(1, retry + 1):
+            if self.monitor.isCancelled():
+                return False
+
             print("\n /////////////////////////////////////////////////////////////////// \n")
             self.monitor.message(f"Retrying {i} of {retry}")
             bad = await self._downloadLibraries(
-                    librariesDir,
-                    installerDataBuf,
-                    additionalLibDirs,
-                    bad,
-                    SimpleInstaller.LIBRARIES_MAX_CONCURRENT
+                librariesDir,
+                installerDataBuf,
+                additionalLibDirs,
+                bad,
+                SimpleInstaller.LIBRARIES_MAX_CONCURRENT,
+                detailed
             )
             if not bad:
                 return True
@@ -187,7 +210,8 @@ class ServerInstall(Action):
             installerDataBuf: BytesIO,
             additionalLibDirs: List[Path],
             libraries: Sequence[Library],
-            max_concurrent: int
+            max_concurrent: int,
+            detailed: bool = False
     ):
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
@@ -201,7 +225,8 @@ class ServerInstall(Action):
                 installerBuf: BytesIO,
                 grabbed: Deque[Artifact],
                 additionalLibraryDirs: List[Path],
-                session_: Optional[requests.Session] = None
+                session_: Optional[requests.Session] = None,
+                detailed: bool = False
         ):
             nonlocal bad
             success = DownloadUtils.downloadLibrary(
@@ -212,7 +237,8 @@ class ServerInstall(Action):
                 installerBuf,
                 grabbed,
                 additionalLibraryDirs,
-                session_
+                session_,
+                detailed
             )
             if not success:
                 _download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
@@ -236,7 +262,8 @@ class ServerInstall(Action):
                             installerDataBuf,
                             self.grabbed,
                             additionalLibDirs,
-                            session
+                            session,
+                            detailed
                         )))
             await asyncio.gather(*futures)
         session.close()

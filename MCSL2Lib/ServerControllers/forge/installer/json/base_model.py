@@ -306,6 +306,9 @@ class BaseModel(metaclass=BaseModelMeta):
         """
         从json中构造一个类, (如果有__from_raw__(cls,data:Any) -> Self存在，则使用__from_raw__)
         """
+        if provided is None:
+            return None
+
         if hasattr(cls, "__from_raw__"):  # get raw supplier
             return cls.__from_raw__(provided)
 
