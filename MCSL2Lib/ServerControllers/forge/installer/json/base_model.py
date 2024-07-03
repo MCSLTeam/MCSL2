@@ -6,6 +6,7 @@ import json
 import sys
 import traceback
 import typing
+import warnings
 
 InjectError = Exception
 
@@ -236,6 +237,16 @@ class Utils:
         return not (current_init is base_init or
                     inspect.unwrap(current_init) is inspect.unwrap(base_init))
 
+    @staticmethod
+    def get_builtins_type_factory(t_type: typing.Any) -> typing.Optional[typing.Callable]:
+        """
+        get default type factory for cls
+        """
+        r_type = Utils.get_type(t_type)
+        if r_type in (int, float, str, bool, list, dict, set, tuple, bytes, bytearray,):
+            return r_type
+        return None
+
 
 class BaseModelMeta(type):
     """
@@ -322,7 +333,12 @@ class BaseModel(metaclass=BaseModelMeta):
             elif hasattr(cls, k):
                 data[k] = getattr(cls, k)  # use default value
             else:
-                raise ValueError(f"{cls.__name__}.{k} is not provided.")
+                default_supplier = Utils.get_builtins_type_factory(v)
+                if default_supplier is None:
+                    data[k] = None
+                    warnings.warn(f"{cls.__name__} has no default value for {k}")
+                else:
+                    data[k] = default_supplier()
         return cls(**data)
 
     def to_dict(self):

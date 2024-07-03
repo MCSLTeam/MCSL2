@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import random
-from dataclasses import dataclass
 from typing import List, Dict, Optional, Iterable, Mapping
 
 from .artifact import Artifact
@@ -77,7 +76,7 @@ class Install(Spec):
     # for not used
     # urlIcon: str
     welcome: str
-    mirrorList: str
+    mirrorList: str = ""
 
     libraries: List[Library]
     processors: List[Processor]  # type: List[Processor]
