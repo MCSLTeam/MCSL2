@@ -2,6 +2,7 @@ import traceback
 import zipfile
 from io import BytesIO
 from pathlib import Path
+from queue import Queue
 
 from .actions.progress_callback import TO_STD_OUT, ProgressCallback
 from .actions.server_install import ServerInstall
@@ -12,10 +13,19 @@ class SimpleInstaller:
     # TODO 使镜像源下载生效
     mirror = "https://bmclapi2.bangbang93.com/maven/"
 
-    @staticmethod
-    def installServer(
-        installer: Path, targetDir: Path, monitor: ProgressCallback = TO_STD_OUT, java: Path = None
+    LIBRARIES_MAX_CONCURRENT = 4
+
+    def __init__(self, detailed: bool = False, infoQueue: Queue = None):
+        self.detailed = detailed
+        if detailed:
+            self.infoQueue = infoQueue or Queue(32)
+
+    async def installServer(
+            self, installer: Path, targetDir: Path, monitor: ProgressCallback, java: Path = None,
     ) -> bool:
+        if self.detailed:
+            monitor.setInfoQueue(self.infoQueue)
+
         installerBuf = BytesIO(installer.read_bytes())
         try:
             with zipfile.ZipFile(installerBuf) as archive:
@@ -26,6 +36,6 @@ class SimpleInstaller:
             monitor.stage(f"Failed to load install profile: {e}")
             return False
         serverInstaller = ServerInstall(profile, installer, monitor)
-        run = serverInstaller.run(targetDir, java)
+        run = await serverInstaller.run(targetDir, java, self.detailed)
         installerBuf.close()
         return run

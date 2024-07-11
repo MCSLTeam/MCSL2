@@ -1,3 +1,5 @@
+import asyncio
+import queue
 import threading
 from pathlib import Path
 
@@ -13,7 +15,8 @@ class InstallerControllerSignal(QObject):
 
 
 class ForgeInstallThread(threading.Thread):
-    def __init__(self, installer: str, targetDir: str, java: str):
+    def __init__(self, installer: str, targetDir: str, java: str, detailed: bool = False,
+                 dlInfoQueue: queue.Queue = None):
         super().__init__()
         # external signal
         self.signal = InstallerControllerSignal()
@@ -24,14 +27,20 @@ class ForgeInstallThread(threading.Thread):
         self.targetDir = targetDir
         self.java = java
         self.monitor = ProgressCallback.of(lambda self_, msg: self.output.emit(msg))
+        self.downloadInfoQueue = dlInfoQueue
 
-    def installServer(self):
+        self.simpleInstaller = SimpleInstaller(detailed, self.downloadInfoQueue)
+
+    async def installServer(self):
         target = Path(self.targetDir)
         self.finished.emit(
-            SimpleInstaller.installServer(
+            await self.simpleInstaller.installServer(
                 target / self.installer, target, self.monitor, Path(self.java)
             )
         )
 
+    def cancel(self):
+        self.monitor.setCancelled(True)
+
     def run(self):
-        self.installServer()
+        asyncio.run(self.installServer())

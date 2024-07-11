@@ -7,9 +7,10 @@ from .progress_callback import ProgressCallback
 from ..download_utils import DownloadUtils
 from ..java2python import Supplier
 from ..json.artifact import Artifact
+from ..json.install import Processor
 from ..json.installV1 import InstallV1
 from ..json.util import Util
-from ..json.version import Version
+from ..json.version import Library
 
 
 class PostProcessors:
@@ -17,7 +18,7 @@ class PostProcessors:
     isClient: bool
     monitor: ProgressCallback
     hasTasks: bool = False
-    processors: List[InstallV1.Processor]
+    processors: List[Processor]
 
     class __DataEntry(Supplier[str]):
         value: str
@@ -61,7 +62,7 @@ class PostProcessors:
         self.processors = profile.getProcessors("client" if isClient else "server")
         self.hasTasks = len(self.processors) > 0
 
-    def getLibraries(self) -> List[Version.Library]:
+    def getLibraries(self) -> List[Library]:
         return self.profile.getLibraries() if self.hasTasks else []
 
     def getTaskCount(self) -> int:

@@ -3,11 +3,11 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from .base_model import BaseModel
 
 
-@dataclass
 class Artifact(BaseModel):
     domain: str
     name: str
@@ -30,7 +30,7 @@ class Artifact(BaseModel):
         idx = pts[last].find("@")
 
         if idx != -1:
-            ext = pts[last][idx + 1 :]
+            ext = pts[last][idx + 1:]
             pts[last] = pts[last][:idx]
         else:
             ext = "jar"
@@ -55,6 +55,10 @@ class Artifact(BaseModel):
             file=file,
             descriptor=descriptor,
         )
+
+    @classmethod
+    def __from_raw__(cls, data: Any) -> "Artifact":
+        return Artifact.from_(data)
 
     def getLocalPath(self, base: Path) -> Path:
         return base / self.path.replace("/", os.sep)

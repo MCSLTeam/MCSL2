@@ -30,14 +30,6 @@ class Action:
             )
         )
 
-    def checkCancel(self):
-        # TODO: change cancel checking
-        try:
-            time.sleep(1)
-        except KeyboardInterrupt:
-            self.monitor.message("Canceling...")
-            raise ActionCanceledException
-
     def error(self, message: str):
         self.monitor.stage(message)
 
@@ -45,6 +37,4 @@ class Action:
         self.installerDataBuf.close()
 
 
-class ActionCanceledException(Exception):
-    def __init__(self):
-        super().__init__()
+

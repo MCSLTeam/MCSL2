@@ -4,9 +4,7 @@ from typing import List, Optional
 from .base_model import BaseModel
 
 
-@dataclass
 class Manifest(BaseModel):
-    @dataclass
     class Info(BaseModel):
         id: str
         url: str
@@ -30,6 +28,3 @@ class Manifest(BaseModel):
         except StopIteration:
             return None
 
-    @classmethod
-    def version_factory(cls, item) -> List[Info]:
-        return [Manifest.Info.of(i) for i in item]

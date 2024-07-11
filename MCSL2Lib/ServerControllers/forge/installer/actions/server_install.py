@@ -1,24 +1,27 @@
+import asyncio
 import functools
 import subprocess
 import traceback
 import zipfile
-from io import BytesIO
-from os import cpu_count
-from pathlib import Path
-from typing import Dict, List
 from collections import deque
+from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
+from pathlib import Path
+from typing import Dict, List, Deque, Optional, Sequence
 
 import requests
-from pyqt5_concurrent.TaskExecutor import UniqueTaskExecutor
 
-from .action import Action, ActionCanceledException
+from .action import Action
+from ..utils import ActionCanceledException
 from .progress_callback import ProgressCallback
 from .. import bmclapi
 from ..download_utils import DownloadUtils
 from ..java2python import Supplier
+from ..json.artifact import Artifact
 from ..json.installV1 import InstallV1
+from ..json.mirror import Mirror
 from ..json.util import Util
-from ..json.version import Version
+from ..json.version import Library
 
 
 class ServerInstall(Action):
@@ -26,7 +29,7 @@ class ServerInstall(Action):
         super().__init__(profile, monitor, installer, False)
         self.grabbed = deque()  # thread-safe
 
-    def run(self, target: Path, java: Path = None) -> bool:
+    async def run(self, target: Path, java: Path = None, detailed: bool = False) -> bool:
         try:
             if target.exists() and not target.is_dir():
                 self.monitor.error(
@@ -51,7 +54,8 @@ class ServerInstall(Action):
                     return False
                 else:
                     self.monitor.stage("  Extracted successfully")
-            # self.checkCancel()
+
+            self.monitor.checkCancelled()
 
             # Download MC Server jar
             self.monitor.stage("Considering minecraft server jar")
@@ -64,11 +68,14 @@ class ServerInstall(Action):
             path = Util.replaceTokens(tokens, self.profile.getServerJarPath())
             serverTarget = Path(path)
 
-            if not self.downloadVanilla(serverTarget, self.installerDataBuf, "server"):
+            rv = self.downloadVanilla(serverTarget, self.installerDataBuf, "server", detailed)
+            self.monitor.checkCancelled()
+
+            if not rv:
                 self.error("Failed to download minecraft server jar")
                 return False
 
-            # self.checkCancel()
+            self.monitor.checkCancelled()
 
             # Download Libraries
             libDirs = []
@@ -76,16 +83,23 @@ class ServerInstall(Action):
             if mcLibDir.exists():
                 libDirs.append(mcLibDir)
 
-            if not self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs):
+            rv = await self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs, detailed)
+            self.monitor.allDownloadsDone()  # info queue ended
+
+            self.monitor.checkCancelled()
+            if rv is False:
                 return False
         except ActionCanceledException:
             self.monitor.stage("Cancelled")
+            self.monitor.endInfoQueue()
             return False
 
         self.monitor.stage("Installing server, please wait ...")
         ret = self.offlineInstall(self.installer, java)
         if ret != 0:
             self.error(f"Failed to install server: installer return code: {ret}")
+            return False
+        if self.monitor.isCancelled():
             return False
         return True
 
@@ -96,9 +110,10 @@ class ServerInstall(Action):
         return subprocess.run(
             jvmArgs,
             cwd=str(self.installer.parent),
+            stdout=subprocess.DEVNULL
         ).returncode
 
-    def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str):
+    def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str, detailed: bool):
         if not target.exists():
             parent = target.parent
             if not parent.exists():
@@ -132,7 +147,7 @@ class ServerInstall(Action):
                 )
                 return False
 
-            if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target):
+            if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target, detailed=detailed):
                 target.unlink(missing_ok=True)
                 self.error(
                     "Downloading minecraft "
@@ -141,34 +156,105 @@ class ServerInstall(Action):
                     + "Try again, or manually place server jar to skip download."
                 )
                 return False
+            self.monitor.checkCancelled()
 
         return True
 
-    def downloadLibraries(
-            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path]
+    async def downloadLibraries(
+            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path], detailed: bool = False,
+            retry: int = 3
     ):
+        from ..simple_installer import SimpleInstaller
         self.monitor.start("Downloading libraries")
+        bad = await self._downloadLibraries(
+            librariesDir,
+            installerDataBuf,
+            additionalLibDirs,
+            self.getLibraries(),
+            SimpleInstaller.LIBRARIES_MAX_CONCURRENT,
+            detailed
+        )
+
+        if self.monitor.isCancelled():
+            return False
+
+        if not bad:
+            self.monitor.message("All libraries downloaded successfully")
+            return True
+
+        for i in range(1, retry + 1):
+            if self.monitor.isCancelled():
+                return False
+
+            print("\n /////////////////////////////////////////////////////////////////// \n")
+            self.monitor.message(f"Retrying {i} of {retry}")
+            bad = await self._downloadLibraries(
+                librariesDir,
+                installerDataBuf,
+                additionalLibDirs,
+                bad,
+                SimpleInstaller.LIBRARIES_MAX_CONCURRENT,
+                detailed
+            )
+            if not bad:
+                return True
+
+        if bad:
+            _bad = '\n'.join(bad)
+            self.error(f"Failed to download libraries:\n{_bad}")
+        return False
+
+    async def _downloadLibraries(
+            self,
+            librariesDir: Path,
+            installerDataBuf: BytesIO,
+            additionalLibDirs: List[Path],
+            libraries: Sequence[Library],
+            max_concurrent: int,
+            detailed: bool = False
+    ):
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
-        libraries = self.getLibraries()
-        bad = []
-        tasks = []
+        bad = deque()
 
-        def downloadLibraryCallback(_lib: Version.LibraryDownload, _success: bool):
-            if not _success:
-                _download = (
-                    None if _lib.getDownloads() is None else _lib.getDownloads().getArtifact()
-                )
+        def task(
+                monitor: ProgressCallback,
+                mirror: Mirror,
+                library: Library,
+                root: Path,
+                installerBuf: BytesIO,
+                grabbed: Deque[Artifact],
+                additionalLibraryDirs: List[Path],
+                session_: Optional[requests.Session] = None,
+                detailed: bool = False
+        ):
+            nonlocal bad
+            success = DownloadUtils.downloadLibrary(
+                monitor,
+                mirror,
+                library,
+                root,
+                installerBuf,
+                grabbed,
+                additionalLibraryDirs,
+                session_,
+                detailed
+            )
+            if not success:
+                _download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
                 if _download is not None and _download.url != "":
-                    bad.append(_download.url)
+                    bad.append(lib)
 
         session = requests.Session()
-        with UniqueTaskExecutor(cpu_count()) as executor:
+        loop = asyncio.get_event_loop()
+        with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+            futures = []
             for lib in libraries:
-                tasks.append(
-                    executor.createTask(
+                futures.append(
+                    loop.run_in_executor(
+                        executor,
                         functools.partial(
-                            DownloadUtils.downloadLibrary,
+                            task,
                             self.monitor,
                             self.profile.getMirror(),
                             lib,
@@ -176,17 +262,17 @@ class ServerInstall(Action):
                             installerDataBuf,
                             self.grabbed,
                             additionalLibDirs,
-                        )
-                    ).then(functools.partial(downloadLibraryCallback, lib))
-                )
-            executor.runTasks(tasks).then(lambda *args: None, onFinished=lambda *args: session.close()).wait()
-        bad = "\n".join(bad)
-        if bad != "":
-            self.error(f"Failed to download libraries:\n{bad}")
-            return False
-        return True
+                            session,
+                            detailed
+                        )))
+            await asyncio.gather(*futures)
+        session.close()
 
-    def getLibraries(self) -> List[Version.Library]:
+        if bad:
+            self.monitor.message(f"\nFound {len(bad)} bad libraries.\n >>> {[lib.name for lib in bad]}")
+        return bad
+
+    def getLibraries(self) -> List[Library]:
         libraries = []
         for lib in self.version.getLibraries():
             libraries.append(lib)

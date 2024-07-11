@@ -1,5 +1,6 @@
 import hashlib
 import re
+import time
 import traceback
 import zipfile
 from io import BytesIO
@@ -7,14 +8,41 @@ from pathlib import Path
 from typing import Callable, List, Optional, TypeVar, Deque
 
 import requests
-from .bmclapi import getLibraryUrl as getBmclapiLibUrl
+
 from .actions.progress_callback import ProgressCallback
+from .bmclapi import getLibraryUrl as getBmclapiLibUrl
 from .json.artifact import Artifact
 from .json.manifest import Manifest
 from .json.mirror import Mirror
-from .json.version import Version
+from .json.version import Download, Library, LibraryDownload
 
 T = TypeVar("T")
+
+DOWNLOAD_CHUNK_SIZE = 64  # KB
+
+
+class SpeedCounter:
+    def __init__(self, buffer_size):
+        self.buffer = [0.0] * buffer_size
+        self.buffer_size = buffer_size
+        self.ptr = 0
+
+        self.full = False
+
+    def append(self, speed):
+        if self.ptr == self.buffer_size - 1:
+            self.full = True
+
+        self.buffer[self.ptr] = speed
+        self.ptr = (self.ptr + 1) % self.buffer_size
+
+    def average(self):
+        if not self.full and self.ptr == 0:
+            return round(sum(self.buffer) / self.buffer_size, 2)
+        elif not self.full:
+            return round(sum(self.buffer[:self.ptr]) / self.ptr, 2)
+        else:
+            return round(sum(self.buffer) / self.buffer_size, 2)
 
 
 class DownloadUtils:
@@ -66,7 +94,7 @@ class DownloadUtils:
 
     @staticmethod
     def extractFile(
-        art: Artifact, buf: BytesIO, target: Path, checksum: Optional[str] = None
+            art: Artifact, buf: BytesIO, target: Path, checksum: Optional[str] = None
     ) -> bool:
         location = Path("maven") / art.getPath()
         try:
@@ -109,22 +137,25 @@ class DownloadUtils:
 
     @staticmethod
     def download(
-        monitor: ProgressCallback,
-        mirror: Mirror,
-        download: Version.Download,
-        target: Path,
-        session: Optional[requests.Session] = None
+            monitor: ProgressCallback,
+            mirror: Mirror,
+            download: Download,
+            target: Path,
+            session: Optional[requests.Session] = None,
+            detailed: bool = False,
     ) -> bool:
-        return DownloadUtils._download(monitor, mirror, download, target, download.url, session or requests.Session())
+        return DownloadUtils._download(monitor, mirror, download, target, download.url, session or requests.Session(),
+                                       detailed)
 
     @staticmethod
     def _download(
-        monitor: ProgressCallback,
-        mirror: Mirror,
-        download: Version.Download,
-        target: Path,
-        url: str,
-        session: requests.Session
+            monitor: ProgressCallback,
+            mirror: Mirror,
+            download: Download,
+            target: Path,
+            url: str,
+            session: requests.Session,
+            detailed: bool,
     ) -> bool:
         # TODO
         monitor.message(f"  Downloading library from {url}")
@@ -132,11 +163,33 @@ class DownloadUtils:
             with session.get(url, stream=True) as response:
                 total = int(response.headers.get("content-length", 0))
                 downloaded = 0
+                speedCounter = SpeedCounter(10)
+                timer = time.time_ns()
                 with target.open("wb") as f:
-                    for data in response.iter_content(chunk_size=16384):
-                        downloaded += len(data)
+                    for data in response.iter_content(chunk_size=DOWNLOAD_CHUNK_SIZE * 1024):
+
+                        if monitor.isCancelled():
+                            return False
+
+                        data_len = len(data)
+                        downloaded += data_len
                         f.write(data)
-                        monitor.progress(downloaded, total)
+
+                        try:
+                            speedCounter.append(
+                                round(data_len / ((new_timer := time.time_ns()) - timer) * 1_000_000, 2)
+                            )
+                            monitor.downloadProgress(
+                                target.name,
+                                downloaded,
+                                total,
+                                speedCounter.average(),
+                                False
+                            )
+                        except ZeroDivisionError:
+                            pass
+                        timer = new_timer
+                    monitor.downloadProgress(target.name, total, total, 0, True)
                     monitor.message("")
 
                 if download.url is not None:
@@ -148,31 +201,33 @@ class DownloadUtils:
                     monitor.message("      Expected: " + download.sha1)
                     monitor.message("      Actual:   " + sha1)
                     try:
-                        target.unlink()
+                        target.unlink(missing_ok=False)
                     except IOError:
                         monitor.stage("      Failed to delete file, aborting.")
                         return False
                 monitor.message("    Download completed: No checksum, Assuming valid.")
         except Exception:
+            target.unlink(missing_ok=True)
             traceback.print_exc()
         return False
 
     @staticmethod
     def downloadLibrary(
-        monitor: ProgressCallback,
-        mirror: Mirror,
-        library: Version.Library,
-        root: Path,
-        installerBuf: BytesIO,
-        grabbed: Deque[Artifact],
-        additionalLibraryDirs: List[Path],
-        session: Optional[requests.Session] = None
-    ):
+            monitor: ProgressCallback,
+            mirror: Mirror,
+            library: Library,
+            root: Path,
+            installerBuf: BytesIO,
+            grabbed: Deque[Artifact],
+            additionalLibraryDirs: List[Path],
+            session: Optional[requests.Session] = None,
+            detailed: bool = False
+    ) -> bool:
         artifact = library.getName()
         target = artifact.getLocalPath(root)
         download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
         if download is None:
-            download = Version.LibraryDownload.of({"path": artifact.getPath()})
+            download = LibraryDownload.of({"path": artifact.getPath()})
 
         monitor.message(f"Considering library {artifact.getDescriptor()}")
 
@@ -254,7 +309,7 @@ class DownloadUtils:
         # replace url with bmclapi
         download.url = getBmclapiLibUrl(url)
         print(f"{url} -> {download.url}")
-        if DownloadUtils.download(monitor, mirror, download, target, session):
+        if DownloadUtils.download(monitor, mirror, download, target, session, detailed):
             grabbed.append(artifact)
             return True
 

@@ -63,3 +63,7 @@ body:
         required: true
       - label: "我确保我的Issue没有和别人的重复"
         required: true
+      - label: "我确保我的Issue真的没有和别人的重复，并已知晓随意新建相同话题的议题可能导致被封禁"
+        required: true
+      - label: "我保证我的Issue没有和别人的重复，并且愿意承担随意回答此问题的后果"
+        required: true

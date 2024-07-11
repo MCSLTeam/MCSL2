@@ -15,9 +15,11 @@ Minecraft Forge Servers Installer.
 """
 
 import json
+import queue
 from enum import Enum
 from json import loads, dumps
-from os import path as osp, name as osname, makedirs
+from os import path as osp, name as osname
+from queue import Queue
 from typing import Optional, Tuple, Any
 from zipfile import BadZipFile, ZipFile
 
@@ -27,14 +29,14 @@ from PyQt5.QtCore import (
     pyqtSignal,
     QTimer,
     QFile,
-    QIODevice,
+    QIODevice, QThread,
 )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
-from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.ServerControllers.forge import ForgeInstallThread
-from MCSL2Lib.utils import MCSL2Logger, ServicesUrl, readFile, writeFile
-from MCSL2Lib.variables import ConfigureServerVariables, EditServerVariables
+from .forge.install_thread import ForgeInstallThread
+from ..ProgramControllers.settingsController import cfg
+from ..utils import MCSL2Logger, ServicesUrl, readFile, writeFile
+from ..variables import ConfigureServerVariables, EditServerVariables
 
 configureServerVariables = ConfigureServerVariables()
 editServerVariables = EditServerVariables()
@@ -42,6 +44,24 @@ editServerVariables = EditServerVariables()
 
 class InstallerError(Exception):
     pass
+
+
+class InstallerDownloadsMonitor(QThread):
+    progressed = pyqtSignal(str, float, int, bool, bool)  # filename, dl_percent, speed, done, all_done
+
+    def __init__(self, infoQueue: Queue, parent: QObject = None):
+        super().__init__(parent)
+        self.infoQueue = infoQueue
+
+    def run(self):
+        while True:
+            rv = self.infoQueue.get()
+            if rv is None:
+                return  # cancel when installer is downloading sth.
+            filename, speed, progress, done, allDone = rv
+            self.progressed.emit(filename, progress, speed, done, allDone)
+            if allDone:
+                return # all downloads finished
 
 
 class McVersion:
@@ -188,7 +208,8 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",  # noqa: E501
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
+            # noqa: E501
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
@@ -219,21 +240,20 @@ class BMCLAPIDownloader(QObject):
 
 
 class ForgeInstaller(Installer):
-    downloadServerProgress = pyqtSignal(str)
-    downloadServerFinished = pyqtSignal(bool)
+    downloadInfo = pyqtSignal(str, float, int, bool, bool)  # filename, dl_percent, speed, done, allDone
 
     class InstallPlan(Enum):
         PlanA = 0
         PlanB = 1
 
     def __init__(
-        self,
-        serverPath,
-        file,
-        isEditing: Optional[str] = "",
-        java=None,
-        installerPath=None,
-        logDecode="utf-8",
+            self,
+            serverPath,
+            file,
+            isEditing: Optional[str] = "",
+            java=None,
+            installerPath=None,
+            logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -247,6 +267,8 @@ class ForgeInstaller(Installer):
         self._serverJarTargetPath = ""
         self._serverJarFileName = ""
         self._needHost = False
+        self._dlInfoMonitor = None
+        self._dlInfoQueue = None
 
         self.getInstallerData(
             osp.join(serverPath, file) if installerPath is None else installerPath
@@ -267,8 +289,8 @@ class ForgeInstaller(Installer):
         # 读取version.json
 
         with ZipFile(
-            jarFile,
-            mode="r",
+                jarFile,
+                mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -280,10 +302,10 @@ class ForgeInstaller(Installer):
 
     def checkInstaller(self) -> bool:
         if (
-            (versionInfo := self._profile.get("versionInfo", {}))
-            .get("id", "")
-            .lower()
-            .startswith("forge")
+                (versionInfo := self._profile.get("versionInfo", {}))
+                        .get("id", "")
+                        .lower()
+                        .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
@@ -298,20 +320,6 @@ class ForgeInstaller(Installer):
             return True
         else:
             return False
-
-    def onServerDownloadProgress(self, bytesReceived, bytesTotal):
-        try:
-            percent = bytesReceived * 100 / bytesTotal
-        except ZeroDivisionError:
-            percent = 0
-        self.downloadServerProgress.emit(
-            self.tr("(正在下载核心... {:.0f}%) 使用 BMCLAPI 下载").format(percent)
-        )
-
-    def onServerDownloadFinished(self, success: bool):
-        self.downloadServerFinished.emit(success)
-        self._bmclapiDownloader.deleteLater()
-        self._bmclapiDownloader = None
 
     def asyncInstall(self):
         """
@@ -330,46 +338,7 @@ class ForgeInstaller(Installer):
         self.__asyncInstallRoutine()
 
     def __asyncInstallRoutine(self):
-        if self.installPlan == ForgeInstaller.InstallPlan.PlanB:
-            makedirs(
-                name=(
-                    cwd := osp.join(
-                        self.cwd,
-                        "libraries",
-                        "net",
-                        "minecraft",
-                        "server",
-                        str(self._mcVersion),
-                    )
-                ),
-                exist_ok=True,
-            )
-            self.downloadServerFinished.connect(lambda _: self.__asyncPreInstall())
-            MCSL2Logger.debug(f"Forge 安装: {cwd}")
-            # self.onServerDownload(cwd, f"server-{self._mcVersion}.jar")
-            self._bmclapiDownloader = BMCLAPIDownloader()
-            self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
-            self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
-
-            if self._mcVersion >= McVersion("1.20"):
-                self._bmclapiDownloader.download(
-                    self._mcVersion, cwd, f"server-{self._mcVersion}-bundled.jar"
-                )
-            else:
-                self._bmclapiDownloader.download(
-                    self._mcVersion, cwd, f"server-{self._mcVersion}.jar"
-                )
-
-        elif self.installPlan == ForgeInstaller.InstallPlan.PlanA:
-            # 预下载核心并安装...
-            self.downloadServerFinished.connect(lambda _: self.__asyncPreInstall())
-            # self.onServerDownload(self.cwd, f"minecraft_server.{self._mcVersion}.jar")
-            self._bmclapiDownloader = BMCLAPIDownloader()
-            self._bmclapiDownloader.downloadProgress.connect(self.onServerDownloadProgress)
-            self._bmclapiDownloader.downloadFinished.connect(self.onServerDownloadFinished)
-            self._bmclapiDownloader.download(
-                self._mcVersion, self.cwd, f"minecraft_server.{self._mcVersion}.jar"
-            )
+        self.__asyncPreInstall()
 
     def __asyncPreInstall(self):
         # set forge runtime java path
@@ -387,7 +356,10 @@ class ForgeInstaller(Installer):
             self.installFinished.emit(False)
             return
 
-        self.worker = ForgeInstallThread(self.file, self.cwd, self.java)
+        self._dlInfoQueue = queue.Queue()
+        self.worker = ForgeInstallThread(self.file, self.cwd, self.java, detailed=True, dlInfoQueue=self._dlInfoQueue)
+        self._dlInfoMonitor = InstallerDownloadsMonitor(self._dlInfoQueue)
+        self._dlInfoMonitor.progressed.connect(self.downloadInfo.emit)
 
         self.worker.output.connect(
             lambda msg: self.installerLogOutput.emit(
@@ -403,11 +375,19 @@ class ForgeInstaller(Installer):
 
         self.worker.finished.connect(self.__asyncPostInstall)
 
+        self._dlInfoMonitor.start()
         self.worker.start()
 
     def __asyncPostInstall(self, success: bool):
         self._cancelTimer: QTimer
         self._cancelTimer.stop()
+
+        # safely quit dlInfoMonitor
+        self._dlInfoQueue.put(None)
+        self._dlInfoMonitor.quit()
+        self._dlInfoMonitor.wait()
+        self._dlInfoMonitor = None
+        self._dlInfoQueue = None
 
         if success:
             # 1.17以上版本: PlanB
@@ -526,8 +506,8 @@ class ForgeInstaller(Installer):
 
     def cancelInstall(self, cancelled=False):
         super().cancelInstall(cancelled)
-        if self._bmclapiDownloader is not None:
-            self._bmclapiDownloader.cancelCurrentDownload()
+        if self.worker is not None:
+            self.worker.cancel()
 
     @property
     def forgeVersion(self):
@@ -547,12 +527,12 @@ class FabricInstaller(Installer):
         PlanB = 1
 
     def __init__(
-        self,
-        serverPath,
-        file,
-        java=None,
-        installerPath=None,
-        logDecode="utf-8",
+            self,
+            serverPath,
+            file,
+            java=None,
+            installerPath=None,
+            logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -573,8 +553,8 @@ class FabricInstaller(Installer):
         # 打开Installer压缩包
 
         with ZipFile(
-            jarFile,
-            mode="r",
+                jarFile,
+                mode="r",
         ) as zipfile:
             try:
                 props = str(zipfile.read("install.properties")).split("\n")
