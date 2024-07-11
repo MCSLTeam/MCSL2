@@ -17,6 +17,7 @@ An auto-detect Java module.
 import json
 from os import environ as env
 from os import path as osp
+from os import getlogin
 from os import pathsep, remove, listdir
 from platform import system
 from re import search
@@ -28,18 +29,17 @@ from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 foundJava = []
 fSearch = True
 # fmt: off
-matchKeywords = {
-    '1.', 'bin', 'cache', 'client', 'corretto', 'craft', 'data', 'download', 'eclipse',
-    'env', 'ext', 'file', 'forge', 'fabric', 'game', 'hmcl', 'hotspot', 'java', 'jdk', 'jre',
-    'zulu', 'dragonwell', 'jvm', 'launch', 'mc', 'microsoft', 'mod', 'mojang', 'net', 'netease',
+matchKeywords = [
+    '1.', 'bin', 'cache', 'client', 'craft', 'data', 'download', 'eclipse', 'mine', 'mc', 'launch',
+    'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell', 'jvm', 'microsoft', 'corretto',
+    'mod', 'mojang', 'net', 'netease', 'forge', 'liteloader', 'fabric', 'game', 'vanilla',
     'optifine', 'oracle', 'path', 'program', 'roaming', 'run', 'runtime', 'server', 'software',
-    'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr',
-    '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
-    '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清'
-}
-excludedKeywords = {
-    "$", "{", "}", "__"
-}
+    'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr', 'env', 'ext', 'file', 'data',
+    '我的', '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
+    getlogin(), '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清',
+    'badlion', 'blc', 'lunar', 'tlauncher', 'cb', 'cheatbreaker', 'hmcl', 'pcl', 'bakaxl', 'fsm'
+]
+excludedKeywords = ["$", "{", "}", "__"]
 
 
 # fmt: on
@@ -143,6 +143,7 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
+                    print(_Path)
                     processes.extend(searchingFile(_Path, keyword, ext, fSearch, _match))
         except PermissionError:
             pass
