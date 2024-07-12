@@ -32,12 +32,12 @@ fSearch = True
 matchKeywords = [
     '1.', 'bin', 'cache', 'client', 'craft', 'data', 'download', 'eclipse', 'mine', 'mc', 'launch',
     'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell', 'jvm', 'microsoft', 'corretto',
-    'mod', 'mojang', 'net', 'netease', 'forge', 'liteloader', 'fabric', 'game', 'vanilla',
-    'optifine', 'oracle', 'path', 'program', 'roaming', 'run', 'runtime', 'server', 'software',
+    'mod', 'mojang', 'net', 'netease', 'forge', 'liteloader', 'fabric', 'game', 'vanilla', 'server',
+    'optifine', 'oracle', 'path', 'program', 'roaming', 'local', 'run', 'runtime', 'software',
     'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr', 'env', 'ext', 'file', 'data',
     '我的', '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
     getlogin(), '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清',
-    'badlion', 'blc', 'lunar', 'tlauncher', 'cb', 'cheatbreaker', 'hmcl', 'pcl', 'bakaxl', 'fsm'
+    'badlion', 'blc', 'lunar', 'tlauncher', 'soar', 'cheatbreaker', 'hmcl', 'pcl', 'bakaxl', 'fsm'
 ]
 excludedKeywords = ["$", "{", "}", "__"]
 
@@ -160,7 +160,7 @@ def javaVersionMatcher(s):
     if match is not None:
         match = ".".join(filter(None, match.groups()))
     else:
-        match = "unknown"
+        match = None
     return match
 
 
