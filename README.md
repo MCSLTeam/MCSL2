@@ -72,7 +72,7 @@ QFluentWidgets: <https://qfluentwidgets.com>
 
 ## 鸣谢
 
-请前往<https://mcsl.com.cn/links/>查看相关链接。
+请前往<https://mcsl.com.cn/>查看相关链接。
 
 还有所有的贡献者们！  
 
