@@ -31,15 +31,17 @@ fSearch = True
 # fmt: off
 matchKeywords = [
     '1.', 'bin', 'cache', 'client', 'craft', 'data', 'download', 'eclipse', 'mine', 'mc', 'launch',
-    'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell', 'jvm', 'microsoft', 'corretto',
+    'hotspot', 'java', 'jdk', 'jre', 'zulu', 'dragonwell', 'jvm', 'microsoft', 'corretto', 'sigma',
     'mod', 'mojang', 'net', 'netease', 'forge', 'liteloader', 'fabric', 'game', 'vanilla', 'server',
-    'optifine', 'oracle', 'path', 'program', 'roaming', 'local', 'run', 'runtime', 'software',
-    'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr', 'env', 'ext', 'file', 'data',
+    'optifine', 'oracle', 'path', 'program', 'roaming', 'local', 'run', 'runtime', 'software', 'daemon',  # noqa: E501
+    'temp', 'users', 'users', 'x64', 'x86', 'lib', 'usr', 'env', 'ext', 'file', 'data', 'green', 'vape',  # noqa: E501
     '我的', '世界', '前置', '原版', '启动', '启动', '国服', '官启', '官方', '客户', '应用', '整合',
-    getlogin(), '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清',
-    'badlion', 'blc', 'lunar', 'tlauncher', 'soar', 'cheatbreaker', 'hmcl', 'pcl', 'bakaxl', 'fsm'
+    getlogin(), '新建文件夹', '服务', '游戏', '环境', '程序', '网易', '软件', '运行', '高清', '组件',  # noqa: E501
+    'badlion', 'blc', 'lunar', 'tlauncher', 'soar', 'cheatbreaker', 'hmcl', 'pcl', 'bakaxl', 'fsm',
+    'jetbrains', 'intellij', 'idea', 'pycharm', 'webstorm', 'clion', 'goland', 'rider', 'datagrip',
+    'rider', 'appcode', 'phpstorm', 'rubymine', 'jbr', 'android', 'mcsm', 'msl', 'mcsl', '3dmark', 'arctime',  # noqa: E501
 ]
-excludedKeywords = ["$", "{", "}", "__"]
+excludedKeywords = ['$', '{', '}', '__']
 
 
 # fmt: on
@@ -143,7 +145,6 @@ def searchingFile(path, keyword, ext, fSearch, _match):
                         process.start(_Path, ["-version"])
                         processes.append(process)
                 elif findStr(File.lower()):
-                    print(_Path)
                     processes.extend(searchingFile(_Path, keyword, ext, fSearch, _match))
         except PermissionError:
             pass
