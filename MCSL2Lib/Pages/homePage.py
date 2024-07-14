@@ -202,11 +202,6 @@ class HomePage(QWidget):
         self.noticeThread.notice.connect(self.subTitleLabel.setText)
         self.noticeThread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
 
-    @pyqtSlot(str)
-    def afterSelectedServer(self, serverName):
-        """选择服务器后的处理"""
-        self.startServerBtn.setText(self.tr("启动服务器: \n") + serverName)
-
 
 class GetNoticeThread(QThread):
     """
