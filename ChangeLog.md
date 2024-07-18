@@ -3,12 +3,11 @@
 > 您可前往[该页面](https://mcsl.com.cn/join-preview.html)申请内测权限。   -->
 ### 新功能
 
-> 全新 Forge 安装器
+> Forge 安装器 UI
 
 ### 修复
 
-> 无法安装 Forge 服务器问题  
-> Forge服务器安装失败后弹窗文本的格式转换问题
+> 部分 Forge 服务器资源下载失败的问题
 
 
 ### 优化
