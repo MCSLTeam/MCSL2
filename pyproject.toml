@@ -26,8 +26,8 @@ dependencies = [
     "requests==2.31.0",
     "aria2p==0.11.3",
     # 构建需要
-    "lib-not-dr[nuitka]>=0.3",
-    "nuitka==2.3.10",
+    "lib-not-dr[nuitka]>=0.4",
+    "nuitka==2.4.6",
     "QScintilla>=2.14.1",
     "pyqt5-concurrent>=0.1.6",
 ]
