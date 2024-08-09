@@ -21,13 +21,13 @@ dependencies = [
     "PyQt-Fluent-Widgets[full]",
     "pyqt5-qt5==5.15.2",
     # 系统信息
-    "psutil==5.9.5",
+    "psutil==6.0.0",
     "loguru==0.7.2",
     "requests==2.31.0",
     "aria2p==0.11.3",
     # 构建需要
     "lib-not-dr[nuitka]>=0.4",
-    "nuitka==2.4.6",
+    "nuitka==2.4.5",
     "QScintilla>=2.14.1",
     "pyqt5-concurrent>=0.1.6",
 ]
