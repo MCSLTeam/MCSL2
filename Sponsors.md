@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD033 -->
+﻿<!-- markdownlint-disable MD033 -->
 
 ### 爱发电赞助者
 
@@ -7,6 +7,22 @@
 <!-- AFDIAN-ACTION:START -->
 
 
+<a href="https://afdian.net/u/98f4d256a0c711eeb9ef52540025c377">
+爱发电用户_gJXT
+</a>
+<span>（ 1 次赞助, 共 6.66 元）</span><br>
+<a href="https://afdian.net/u/1feadc9e64c711edb37352540025c377">
+不安的亡命樱
+</a>
+<span>（ 1 次赞助, 共 36.66 元）</span><br>
+<a href="https://afdian.net/u/b517cc2eaf4011ec8d0c52540025c377">
+chy224
+</a>
+<span>（ 1 次赞助, 共 16.66 元）</span><br>
+<a href="https://afdian.net/u/2b71f6c2e09911ec97aa52540025c377">
+蓝桥易
+</a>
+<span>（ 1 次赞助, 共 36.66 元）</span><br>
 <a href="https://afdian.net/u/093b00e4e4e211ea827452540025c377">
 姜胤
 </a>
@@ -64,7 +80,7 @@ shenjack
 </a>
 <span>（ 1 次赞助, 共 26.66 元）</span><br>
 <a href="https://afdian.net/u/3e814cb6249211eea2f752540025c377">
-SKWStudios
+Wynn Zeng
 </a>
 <span>（ 1 次赞助, 共 16.66 元）</span><br>
 <a href="https://afdian.net/u/a5d575eabc3f11eaa5a452540025c377">
