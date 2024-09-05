@@ -152,6 +152,8 @@ def searchingFile(path, keyword, ext, fSearch, _match):
             pass
         except NotADirectoryError:
             pass
+        except Exception as error:
+            MCSL2Logger.error(f"[Java Detector] error occurred when access {path=}, {error=}")
     return processes
 
 
