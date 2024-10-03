@@ -13,7 +13,8 @@
 """
 Settings page.
 """
-
+import os
+import platform
 from datetime import datetime
 
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
@@ -49,7 +50,7 @@ from qfluentwidgets import (
     setThemeColor,
 )
 
-from MCSL2Lib import MCSL2VERSION
+from MCSL2Lib import MCSL2VERSION, utils
 from MCSL2Lib.ProgramControllers.aria2ClientController import (
     Aria2BootThread,
     Aria2Controller,
@@ -335,14 +336,18 @@ class SettingsPage(QWidget):
         self.startOnStartup = SwitchSettingCard(
             icon=FIF.POWER_BUTTON,
             title=self.tr("开机自启动"),
-            content=self.tr("好像还做不到啊。"),
+            content=self.tr("仅限 Windows。"),
             configItem=cfg.startOnStartup,
             parent=self.consoleSettingsGroup,
         )
         self.alwaysRunAsAdministrator.setEnabled(False)
-        self.startOnStartup.setEnabled(False)
+        if platform.system() == 'Linux' or 'Windows':
+            self.startOnStartup.setEnabled(True)
+        else:
+            self.startOnStartup.setEnabled(False)
         self.themeColor.colorChanged.connect(lambda cl: setThemeColor(color=cl, lazy=True))
         self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci), lazy=True))
+        self.startOnStartup.checkedChanged.connect(self.setStartup)
         # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
@@ -520,7 +525,8 @@ class SettingsPage(QWidget):
         self.subTitleLabel.setText(self.tr("自定义你的 MCSL2。"))
         self.aboutContent.setText(
             self.tr(
-                "MCServerLauncher 2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与 “MCSL2” 有明显辨识度。\n“MCServerLauncher 2 软件” 已进行中华人民共和国计算机软件著作权登记，一切侵权行为将依法追究。\n计算机软件著作权登记号: 2024SR0343868\n\n© 2022 - 2024 MCSL开发组 保留所有权利。\n"  # noqa : E501
+                "MCServerLauncher 2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与 “MCSL2” 有明显辨识度。\n“MCServerLauncher 2 软件” 已进行中华人民共和国计算机软件著作权登记，一切侵权行为将依法追究。\n计算机软件著作权登记号: 2024SR0343868\n\n© 2022 - 2024 MCSL开发组 保留所有权利。\n"
+                # noqa : E501
             )
         )
         self.aboutTitle.setText(self.tr("关于"))
@@ -663,10 +669,10 @@ class SettingsPage(QWidget):
     def generateSystemReport(self):
         """创建系统报告"""
         report = (
-            self.tr("生成时间: ")
-            + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            + "\n"
-            + genSysReport()
+                self.tr("生成时间: ")
+                + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                + "\n"
+                + genSysReport()
         )
 
         title = self.tr("MCServerLauncher 2 系统报告")
@@ -690,3 +696,10 @@ class SettingsPage(QWidget):
             )
         )
         w.exec()
+
+    @staticmethod
+    def setStartup(state: bool):
+        if state:
+            utils.setStartOnStartup()
+        else:
+            utils.removeStartOnStartup()
