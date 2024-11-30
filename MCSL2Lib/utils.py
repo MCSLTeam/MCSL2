@@ -18,6 +18,10 @@ import enum
 import functools
 import hashlib
 import inspect
+import os.path
+import platform
+import subprocess
+import sys
 from json import dumps, loads
 from os import makedirs, path as osp
 from types import TracebackType
@@ -28,7 +32,7 @@ import psutil
 import requests
 from PyQt5.QtCore import QUrl, QThread, QThreadPool, QFile
 from PyQt5.QtGui import QDesktopServices
-
+from platform import system
 from MCSL2Lib.ProgramControllers.logController import _MCSL2Logger
 
 MCSL2Logger = _MCSL2Logger()
@@ -235,15 +239,12 @@ def checkSHA1(
     检查文件的SHA1值是否正确
     """
     rv = []
-    if _filter is None:
-        def _filter(a, b):
-            return True
 
     for file, sha1 in fileAndSha1:
         if not osp.exists(file):
             rv.append({"file": file, "result": False})
             continue
-        if _filter(file, sha1):
+        if _filter is None or _filter(file, sha1):
             # check sha1
             fileSha1 = hashlib.sha1(readBytesFile(file)).hexdigest()
             rv.append({"file": file, "result": fileSha1 == sha1})
@@ -325,3 +326,87 @@ def getAvailableAuthorServer() -> Optional[str]:
         except ConnectionError:
             continue
     return None
+
+
+def getCurrentMainFile() -> str:
+    """
+    返回可执行文件 / 脚本的路径
+    """
+    return sys.argv[0]
+
+
+def setStartOnStartup():
+    """
+    Decide which method to run according to the operating system
+    """
+    if system() == "Windows":
+        setStartOnStartupWindows()
+    elif system() == "Linux":
+        setStartOnStartupLinux()
+
+
+def setStartOnStartupLinux():
+    """
+    在相应位置创建一个快捷方式, 使得本应用能够开机自启动
+    仅限于 Linux 操作系统
+    """
+    raise NotImplementedError("You cannot currently do this.")
+
+
+def setStartOnStartupWindows():
+    """
+    在相应位置创建一个快捷方式, 使得本应用能够开机自启动
+    仅限于 Windows 操作系统
+    """
+    # Refs:
+    # - https://github.com/pearu/iocbio/blob/master/installer/utils.py
+    # - https://blog.csdn.net/thundor/article/details/5968581
+
+    # Operating system import check
+    from win32comext.shell import shell
+    import pythoncom
+
+    targetDirectory = os.getenv('USERPROFILE') + r'\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup'
+    shortcut = pythoncom.CoCreateInstance(shell.CLSID_ShellLink, None,
+                                          pythoncom.CLSCTX_INPROC_SERVER,
+                                          shell.IID_IShellLink)
+    pythonPath = sys.executable.replace("python.exe", "pythonw.exe")  # 可执行文件全路径
+    if not os.path.exists(pythonPath):
+        pythonPath = sys.executable
+    if getCurrentMainFile().endswith(".exe"):
+        pythonPath = ""
+    shortcut.SetPath(pythonPath)
+    shortcut.SetArguments(getCurrentMainFile())
+    shortcut.SetDescription(pythonPath)
+    shortcut.SetIconLocation(sys.executable, 0)
+    shortcut.QueryInterface(pythoncom.IID_IPersistFile).Save(targetDirectory + r"\MCSL2.lnk", 0)  # 保存快捷方式文件
+
+
+def removeStartOnStartup():
+    """
+    移除先前创建的开机自启动快捷方式
+    """
+    if system() == "Windows":
+        removeStartOnStartupWindows()
+    elif system() == "Linux":
+        removeStartOnStartupLinux()
+
+
+def removeStartOnStartupLinux():
+    """
+    移除先前创建的开机自启动快捷方式
+    仅限于 Linux 操作系统
+    """
+    raise NotImplementedError("You cannot currently do this.")
+
+
+def removeStartOnStartupWindows():
+    """
+    移除先前创建的开机自启动快捷方式
+    仅限于 Windows 操作系统
+    """
+    shortcut = (os.getenv('USERPROFILE') +
+                r"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MCSL2.lnk")
+    if not os.path.exists(shortcut):
+        raise FileNotFoundError(f"{shortcut} not found! Check again or ask others for help")
+    os.remove(shortcut)
