@@ -1,20 +1,14 @@
-<p align="left">
-  <img align="left" height="200" src="https://img.fastmirror.net/s/2023/10/29/653deb00353b8.png" alt="MCSL2" style="float: left; border-radius: 10px;"/>
-</p>
+<!-- markdownlint-disable MD033 -->
+
+![Header Image](https://socialify.git.ci/MCSLTeam/MCSL2/image?description=1&descriptionEditable=A%20sleek%20and%20versatile%20Minecraft%20server%20launcher&font=Jost&forks=1&language=1&logo=https%3A%2F%2Fimages.mcsl.com.cn%2Fnew%2FMCSL2.png&name=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)  
 
 # MCServerLauncher 2  
 
 A sleek and versatile Minecraft server launcher
 
 <div>
-    <a href="https://github.com/MCSLTeam/MCSL2/stargazers">
-        <img src="https://img.shields.io/github/stars/MCSLTeam/MCSL2?style=for-the-badge" alt="Star">
-    </a>
     <a href="https://github.com/MCSLTeam/MCSL2/forks">
         <img src="https://img.shields.io/github/forks/MCSLTeam/MCSL2?style=for-the-badge" alt="Fork">
-    </a>
-    <a href="https://github.com/MCSLTeam/MCSL2/issues">
-        <img src="https://img.shields.io/github/issues/MCSLTeam/MCSL2?style=for-the-badge" alt="Issues">
     </a>
     <br>
     <a href="https://github.com/MCSLTeam/MCSL2/releases">
