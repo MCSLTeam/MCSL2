@@ -361,6 +361,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         del self
 
     def genRunScript(self, save=False):
+        if not hasattr(self.serverLauncher, 'jvmArg'):
+            self.serverLauncher._setJVMArg()
         script = (
             f"$host.ui.RawUI.WindowTitle=\"{self.serverConfig.serverName}\""
             f"\ncd \"{osp.abspath('Servers' + osp.sep + self.serverConfig.serverName)}\""
