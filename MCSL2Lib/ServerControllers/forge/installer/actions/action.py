@@ -35,6 +35,3 @@ class Action:
 
     def __del__(self):
         self.installerDataBuf.close()
-
-
-

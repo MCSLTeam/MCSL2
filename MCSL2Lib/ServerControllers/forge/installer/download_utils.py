@@ -19,6 +19,8 @@ from .json.version import Download, Library, LibraryDownload
 T = TypeVar("T")
 
 DOWNLOAD_CHUNK_SIZE = 64  # KB
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
+HEADERS = {"User-Agent": USER_AGENT}
 
 
 class SpeedCounter:
@@ -40,7 +42,7 @@ class SpeedCounter:
         if not self.full and self.ptr == 0:
             return round(sum(self.buffer) / self.buffer_size, 2)
         elif not self.full:
-            return round(sum(self.buffer[:self.ptr]) / self.ptr, 2)
+            return round(sum(self.buffer[: self.ptr]) / self.ptr, 2)
         else:
             return round(sum(self.buffer) / self.buffer_size, 2)
 
@@ -94,7 +96,7 @@ class DownloadUtils:
 
     @staticmethod
     def extractFile(
-            art: Artifact, buf: BytesIO, target: Path, checksum: Optional[str] = None
+        art: Artifact, buf: BytesIO, target: Path, checksum: Optional[str] = None
     ) -> bool:
         location = Path("maven") / art.getPath()
         try:
@@ -137,37 +139,37 @@ class DownloadUtils:
 
     @staticmethod
     def download(
-            monitor: ProgressCallback,
-            mirror: Mirror,
-            download: Download,
-            target: Path,
-            session: Optional[requests.Session] = None,
-            detailed: bool = False,
+        monitor: ProgressCallback,
+        mirror: Mirror,
+        download: Download,
+        target: Path,
+        session: Optional[requests.Session] = None,
+        detailed: bool = False,
     ) -> bool:
-        return DownloadUtils._download(monitor, mirror, download, target, download.url, session or requests.Session(),
-                                       detailed)
+        return DownloadUtils._download(
+            monitor, mirror, download, target, download.url, session or requests.Session(), detailed
+        )
 
     @staticmethod
     def _download(
-            monitor: ProgressCallback,
-            mirror: Mirror,
-            download: Download,
-            target: Path,
-            url: str,
-            session: requests.Session,
-            detailed: bool,
+        monitor: ProgressCallback,
+        mirror: Mirror,
+        download: Download,
+        target: Path,
+        url: str,
+        session: requests.Session,
+        detailed: bool,
     ) -> bool:
         # TODO
         monitor.message(f"  Downloading library from {url}")
         try:
-            with session.get(url, stream=True) as response:
+            with session.get(url, stream=True, headers=HEADERS) as response:
                 total = int(response.headers.get("content-length", 0))
                 downloaded = 0
                 speedCounter = SpeedCounter(10)
                 timer = time.time_ns()
                 with target.open("wb") as f:
                     for data in response.iter_content(chunk_size=DOWNLOAD_CHUNK_SIZE * 1024):
-
                         if monitor.isCancelled():
                             return False
 
@@ -177,14 +179,13 @@ class DownloadUtils:
 
                         try:
                             speedCounter.append(
-                                round(data_len / ((new_timer := time.time_ns()) - timer) * 1_000_000, 2)
+                                round(
+                                    data_len / ((new_timer := time.time_ns()) - timer) * 1_000_000,
+                                    2,
+                                )
                             )
                             monitor.downloadProgress(
-                                target.name,
-                                downloaded,
-                                total,
-                                speedCounter.average(),
-                                False
+                                target.name, downloaded, total, speedCounter.average(), False
                             )
                         except ZeroDivisionError:
                             pass
@@ -209,19 +210,20 @@ class DownloadUtils:
         except Exception:
             target.unlink(missing_ok=True)
             traceback.print_exc()
+            raise
         return False
 
     @staticmethod
     def downloadLibrary(
-            monitor: ProgressCallback,
-            mirror: Mirror,
-            library: Library,
-            root: Path,
-            installerBuf: BytesIO,
-            grabbed: Deque[Artifact],
-            additionalLibraryDirs: List[Path],
-            session: Optional[requests.Session] = None,
-            detailed: bool = False
+        monitor: ProgressCallback,
+        mirror: Mirror,
+        library: Library,
+        root: Path,
+        installerBuf: BytesIO,
+        grabbed: Deque[Artifact],
+        additionalLibraryDirs: List[Path],
+        session: Optional[requests.Session] = None,
+        detailed: bool = False,
     ) -> bool:
         artifact = library.getName()
         target = artifact.getLocalPath(root)

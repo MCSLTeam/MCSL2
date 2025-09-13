@@ -39,9 +39,7 @@ class _RunningServerCommandBar(CommandBar):
         self.openPrompt = Action(
             icon=FIF.COMMAND_PROMPT.icon(), text=self.tr("终端窗口"), parent=self
         )
-        self.closeServer = Action(
-            icon=FIF.CLOSE.icon(), text=self.tr("一键关服"), parent=self
-        )
+        self.closeServer = Action(icon=FIF.CLOSE.icon(), text=self.tr("一键关服"), parent=self)
         self.completeActions()
 
     def parent(self) -> RunningServerHeaderCardWidget:
@@ -52,7 +50,5 @@ class _RunningServerCommandBar(CommandBar):
         self.openPrompt.triggered.connect(self.parent().console.activateWindow)
         self.closeServer.triggered.connect(self.parent().console.show)
         self.closeServer.triggered.connect(self.parent().console.activateWindow)
-        self.closeServer.triggered.connect(
-            self.parent().console.runQuickMenu_StopServer
-        )
+        self.closeServer.triggered.connect(self.parent().console.runQuickMenu_StopServer)
         self.addActions([self.openPrompt, self.closeServer])

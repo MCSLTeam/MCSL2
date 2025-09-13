@@ -48,7 +48,7 @@ class ServerInstall(Action):
             if contained is not None:
                 self.monitor.stage("Extracting main jar:")
                 if not DownloadUtils.extractFile(
-                        contained, self.installerDataBuf, target / contained.getFilename()
+                    contained, self.installerDataBuf, target / contained.getFilename()
                 ):
                     self.monitor.error(f"  Failed to extract main jar: {contained.getFilename()}")
                     return False
@@ -83,7 +83,9 @@ class ServerInstall(Action):
             if mcLibDir.exists():
                 libDirs.append(mcLibDir)
 
-            rv = await self.downloadLibraries(librariesDir, self.installerDataBuf, libDirs, detailed)
+            rv = await self.downloadLibraries(
+                librariesDir, self.installerDataBuf, libDirs, detailed
+            )
             self.monitor.allDownloadsDone()  # info queue ended
 
             self.monitor.checkCancelled()
@@ -108,9 +110,7 @@ class ServerInstall(Action):
         jvmArgs = f"{javaPath} -jar {installer.absolute()} --offline --installServer"
         print(jvmArgs, self.installer.parent)
         return subprocess.run(
-            jvmArgs,
-            cwd=str(self.installer.parent),
-            stdout=subprocess.DEVNULL
+            jvmArgs, cwd=str(self.installer.parent), stdout=subprocess.DEVNULL
         ).returncode
 
     def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str, detailed: bool):
@@ -132,22 +132,25 @@ class ServerInstall(Action):
                     )
                     return False
 
-            vanilla = Util.getVanillaVersion(self.profile.getMinecraft())
-            if vanilla is None:
-                self.error(
-                    "Failed to download version manifest, can not find " + side + " jar URL."
-                )
-                return False
+            # vanilla = Util.getVanillaVersion(self.profile.getMinecraft())
+            # vanilla = bmclapi.getVanillaVersionFromBmclapi(self.profile.getMinecraft())
+            # if vanilla is None:
+            #     self.error(
+            #         "Failed to download version manifest, can not find " + side + " jar URL."
+            #     )
+            #     return False
 
             # dl = vanilla.getDownload(side)
-            dl = bmclapi.getMinecraftDownload(vanilla, side)
+            dl = bmclapi.getMinecraftDownload(self.profile.getMinecraft(), side)
             if dl is None:
                 self.error(
                     "Failed to download minecraft " + side + " jar, info missing from manifest"
                 )
                 return False
 
-            if not DownloadUtils.download(self.monitor, self.profile.getMirror(), dl, target, detailed=detailed):
+            if not DownloadUtils.download(
+                self.monitor, self.profile.getMirror(), dl, target, detailed=detailed
+            ):
                 target.unlink(missing_ok=True)
                 self.error(
                     "Downloading minecraft "
@@ -161,10 +164,15 @@ class ServerInstall(Action):
         return True
 
     async def downloadLibraries(
-            self, librariesDir: Path, installerDataBuf: BytesIO, additionalLibDirs: List[Path], detailed: bool = False,
-            retry: int = 3
+        self,
+        librariesDir: Path,
+        installerDataBuf: BytesIO,
+        additionalLibDirs: List[Path],
+        detailed: bool = False,
+        retry: int = 3,
     ):
         from ..simple_installer import SimpleInstaller
+
         self.monitor.start("Downloading libraries")
         bad = await self._downloadLibraries(
             librariesDir,
@@ -172,7 +180,7 @@ class ServerInstall(Action):
             additionalLibDirs,
             self.getLibraries(),
             SimpleInstaller.LIBRARIES_MAX_CONCURRENT,
-            detailed
+            detailed,
         )
 
         if self.monitor.isCancelled():
@@ -194,39 +202,39 @@ class ServerInstall(Action):
                 additionalLibDirs,
                 bad,
                 SimpleInstaller.LIBRARIES_MAX_CONCURRENT,
-                detailed
+                detailed,
             )
             if not bad:
                 return True
 
         if bad:
-            _bad = '\n'.join(bad)
+            _bad = "\n".join(lib.name.name for lib in bad)
             self.error(f"Failed to download libraries:\n{_bad}")
         return False
 
     async def _downloadLibraries(
-            self,
-            librariesDir: Path,
-            installerDataBuf: BytesIO,
-            additionalLibDirs: List[Path],
-            libraries: Sequence[Library],
-            max_concurrent: int,
-            detailed: bool = False
+        self,
+        librariesDir: Path,
+        installerDataBuf: BytesIO,
+        additionalLibDirs: List[Path],
+        libraries: Sequence[Library],
+        max_concurrent: int,
+        detailed: bool = False,
     ):
         self.monitor.message(f"Found {len(additionalLibDirs)} additional library directories")
 
-        bad = deque()
+        bad = deque()  # type: deque[Library]
 
         def task(
-                monitor: ProgressCallback,
-                mirror: Mirror,
-                library: Library,
-                root: Path,
-                installerBuf: BytesIO,
-                grabbed: Deque[Artifact],
-                additionalLibraryDirs: List[Path],
-                session_: Optional[requests.Session] = None,
-                detailed: bool = False
+            monitor: ProgressCallback,
+            mirror: Mirror,
+            library: Library,
+            root: Path,
+            installerBuf: BytesIO,
+            grabbed: Deque[Artifact],
+            additionalLibraryDirs: List[Path],
+            session_: Optional[requests.Session] = None,
+            detailed: bool = False,
         ):
             nonlocal bad
             success = DownloadUtils.downloadLibrary(
@@ -238,10 +246,12 @@ class ServerInstall(Action):
                 grabbed,
                 additionalLibraryDirs,
                 session_,
-                detailed
+                detailed,
             )
             if not success:
-                _download = None if library.getDownloads() is None else library.getDownloads().getArtifact()
+                _download = (
+                    None if library.getDownloads() is None else library.getDownloads().getArtifact()
+                )
                 if _download is not None and _download.url != "":
                     bad.append(lib)
 
@@ -256,20 +266,24 @@ class ServerInstall(Action):
                         functools.partial(
                             task,
                             self.monitor,
-                            self.profile.getMirror(),
+                            self.profile.getMirror(),  # type: ignore
                             lib,
                             librariesDir,
                             installerDataBuf,
                             self.grabbed,
                             additionalLibDirs,
                             session,
-                            detailed
-                        )))
+                            detailed,
+                        ),
+                    )
+                )
             await asyncio.gather(*futures)
         session.close()
 
         if bad:
-            self.monitor.message(f"\nFound {len(bad)} bad libraries.\n >>> {[lib.name for lib in bad]}")
+            self.monitor.message(
+                f"\nFound {len(bad)} bad libraries.\n >>> {[lib.name for lib in bad]}"
+            )
         return bad
 
     def getLibraries(self) -> List[Library]:

@@ -29,7 +29,8 @@ from PyQt5.QtCore import (
     pyqtSignal,
     QTimer,
     QFile,
-    QIODevice, QThread,
+    QIODevice,
+    QThread,
 )
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkAccessManager
 
@@ -47,7 +48,9 @@ class InstallerError(Exception):
 
 
 class InstallerDownloadsMonitor(QThread):
-    progressed = pyqtSignal(str, float, int, bool, bool)  # filename, dl_percent, speed, done, all_done
+    progressed = pyqtSignal(
+        str, float, int, bool, bool
+    )  # filename, dl_percent, speed, done, all_done
 
     def __init__(self, infoQueue: Queue, parent: QObject = None):
         super().__init__(parent)
@@ -61,7 +64,7 @@ class InstallerDownloadsMonitor(QThread):
             filename, speed, progress, done, allDone = rv
             self.progressed.emit(filename, progress, speed, done, allDone)
             if allDone:
-                return # all downloads finished
+                return  # all downloads finished
 
 
 class McVersion:
@@ -124,7 +127,7 @@ class Installer(QObject):
     支持with语句
     """
 
-    installFinished = pyqtSignal(bool)
+    installFinished = pyqtSignal(bool, str)
     installerLogOutput = pyqtSignal(str)
 
     def __init__(self, cwd: str, file: str, logDecode="utf-8"):
@@ -240,20 +243,22 @@ class BMCLAPIDownloader(QObject):
 
 
 class ForgeInstaller(Installer):
-    downloadInfo = pyqtSignal(str, float, int, bool, bool)  # filename, dl_percent, speed, done, allDone
+    downloadInfo = pyqtSignal(
+        str, float, int, bool, bool
+    )  # filename, dl_percent, speed, done, allDone
 
     class InstallPlan(Enum):
         PlanA = 0
         PlanB = 1
 
     def __init__(
-            self,
-            serverPath,
-            file,
-            isEditing: Optional[str] = "",
-            java=None,
-            installerPath=None,
-            logDecode="utf-8",
+        self,
+        serverPath,
+        file,
+        isEditing: Optional[str] = "",
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -289,8 +294,8 @@ class ForgeInstaller(Installer):
         # 读取version.json
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 _ = zipfile.read("install_profile.json")
@@ -302,10 +307,10 @@ class ForgeInstaller(Installer):
 
     def checkInstaller(self) -> bool:
         if (
-                (versionInfo := self._profile.get("versionInfo", {}))
-                        .get("id", "")
-                        .lower()
-                        .startswith("forge")
+            (versionInfo := self._profile.get("versionInfo", {}))
+            .get("id", "")
+            .lower()
+            .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
             self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
@@ -333,14 +338,14 @@ class ForgeInstaller(Installer):
         MCSL2Logger.debug(f"Forge 安装: {self.__class__.__name__}, {self._forgeVersion}")
         MCSL2Logger.debug(f"Forge 安装: {self.thread().currentThreadId()=}")
         if self.cancelled:
-            self.installFinished.emit(False)
+            self.installFinished.emit(False, "用户取消")
             return
         self.__asyncInstallRoutine()
 
     def __asyncInstallRoutine(self):
-        self.__asyncPreInstall()
+        self.__BeginInstallAsync()
 
-    def __asyncPreInstall(self):
+    def __BeginInstallAsync(self):
         # set forge runtime java path
         if self.java is None:
             try:
@@ -353,11 +358,13 @@ class ForgeInstaller(Installer):
                 raise InstallerError("No Java path found")
 
         if self.cancelled:  # 如果取消了安装,则不创建QProcess安装进程
-            self.installFinished.emit(False)
+            self.installFinished.emit(False, "用户取消")
             return
 
         self._dlInfoQueue = queue.Queue()
-        self.worker = ForgeInstallThread(self.file, self.cwd, self.java, detailed=True, dlInfoQueue=self._dlInfoQueue)
+        self.worker = ForgeInstallThread(
+            self.file, self.cwd, self.java, detailed=True, dlInfoQueue=self._dlInfoQueue
+        )
         self._dlInfoMonitor = InstallerDownloadsMonitor(self._dlInfoQueue)
         self._dlInfoMonitor.progressed.connect(self.downloadInfo.emit)
 
@@ -373,12 +380,12 @@ class ForgeInstaller(Installer):
             )
         )
 
-        self.worker.finished.connect(self.__asyncPostInstall)
+        self.worker.finished.connect(self.__EndInstallAsync)
 
         self._dlInfoMonitor.start()
         self.worker.start()
 
-    def __asyncPostInstall(self, success: bool):
+    def __EndInstallAsync(self, success: bool, message: str):
         self._cancelTimer: QTimer
         self._cancelTimer.stop()
 
@@ -462,7 +469,7 @@ class ForgeInstaller(Installer):
             except Exception as e:
                 raise e
 
-        self.installFinished.emit(success)
+        self.installFinished.emit(success, message)
         self.worker.join()
         self.worker = None
 
@@ -527,12 +534,12 @@ class FabricInstaller(Installer):
         PlanB = 1
 
     def __init__(
-            self,
-            serverPath,
-            file,
-            java=None,
-            installerPath=None,
-            logDecode="utf-8",
+        self,
+        serverPath,
+        file,
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
     ):
         super().__init__(serverPath, file, logDecode)
         self.java = java
@@ -553,8 +560,8 @@ class FabricInstaller(Installer):
         # 打开Installer压缩包
 
         with ZipFile(
-                jarFile,
-                mode="r",
+            jarFile,
+            mode="r",
         ) as zipfile:
             try:
                 props = str(zipfile.read("install.properties")).split("\n")
@@ -588,7 +595,7 @@ class FabricInstaller(Installer):
         self.downloadServerFinished.emit(success)
         self._bmclapiDownloader.deleteLater()
         self._bmclapiDownloader = None
-        self.installFinished.emit(success)
+        self.installFinished.emit(success, "" if success else "下载核心失败")
 
     @classmethod
     def isPossibleFabricInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:

@@ -2,7 +2,7 @@
 from PyQt5.QtCore import QCoreApplication, pyqtSignal
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QWidget
 
-from qfluentwidgets import (CardWidget, ProgressBar, StrongBodyLabel)
+from qfluentwidgets import CardWidget, ProgressBar, StrongBodyLabel
 
 
 class DownloadEntryWidget(CardWidget):
@@ -15,13 +15,13 @@ class DownloadEntryWidget(CardWidget):
 
         self.CardWidget = self
 
-        self.CardWidget.setObjectName(u"CardWidget")
+        self.CardWidget.setObjectName("CardWidget")
         self.verticalLayout = QVBoxLayout(self.CardWidget)
-        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.name = StrongBodyLabel(self.CardWidget)
-        self.name.setObjectName(u"name")
+        self.name.setObjectName("name")
 
         self.horizontalLayout_2.addWidget(self.name)
 
@@ -30,21 +30,21 @@ class DownloadEntryWidget(CardWidget):
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
         self.speed = StrongBodyLabel(self.CardWidget)
-        self.speed.setObjectName(u"progressText")
+        self.speed.setObjectName("progressText")
 
         self.horizontalLayout_2.addWidget(self.speed)
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.bar = ProgressBar(self.CardWidget)
-        self.bar.setObjectName(u"bar")
+        self.bar.setObjectName("bar")
 
         self.horizontalLayout_3.addWidget(self.bar)
 
         self.percent = StrongBodyLabel(self.CardWidget)
-        self.percent.setObjectName(u"StrongBodyLabel")
+        self.percent.setObjectName("StrongBodyLabel")
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -58,10 +58,10 @@ class DownloadEntryWidget(CardWidget):
         self.translateUi(self)
 
     def translateUi(self, Frame):
-        Frame.setWindowTitle(QCoreApplication.translate("Frame", u"Frame", None))
-        self.name.setText(QCoreApplication.translate("Frame", u"\u6587\u4ef6\u540d", None))
-        self.speed.setText(QCoreApplication.translate("Frame", u"100KB/s", None))
-        self.percent.setText(QCoreApplication.translate("Frame", u"100%", None))
+        Frame.setWindowTitle(QCoreApplication.translate("Frame", "Frame", None))
+        self.name.setText(QCoreApplication.translate("Frame", "\u6587\u4ef6\u540d", None))
+        self.speed.setText(QCoreApplication.translate("Frame", "100KB/s", None))
+        self.percent.setText(QCoreApplication.translate("Frame", "100%", None))
 
     def setSpeed(self, speed: int) -> None:
         """
@@ -79,7 +79,7 @@ class DownloadEntryWidget(CardWidget):
         self.percent.setText(f"{progress}%")
 
     @staticmethod
-    def getWidget(name: str, parent=None) -> 'DownloadEntryWidget':
+    def getWidget(name: str, parent=None) -> "DownloadEntryWidget":
         widget = DownloadEntryWidget(parent)
         widget.name.setText(name)
         widget.setSpeed(0)

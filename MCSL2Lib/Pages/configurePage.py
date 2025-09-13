@@ -57,6 +57,7 @@ from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ServerControllers.processCreator import _MinecraftEULA
 from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller
+
 # from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
 # from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
 # from MCSL2Lib.ImportServerTypes.importMCSM8 import MCSM8
@@ -1348,10 +1349,10 @@ class ConfigurePage(QWidget):
                     InfoBar.success(
                         title=self.tr("已添加"),
                         content=self.tr("Java路径: ")
-                                + selectedJavaPath
-                                + self.tr("\n版本: ")
-                                + v
-                                + self.tr("\n但你还需要继续到 Java 列表中选取。"),
+                        + selectedJavaPath
+                        + self.tr("\n版本: ")
+                        + v
+                        + self.tr("\n但你还需要继续到 Java 列表中选取。"),
                         orient=Qt.Horizontal,
                         isClosable=True,
                         position=InfoBarPosition.TOP,
@@ -1417,10 +1418,10 @@ class ConfigurePage(QWidget):
             InfoBar.error(
                 title=self.tr("Java ") + str(java.version) + self.tr(" 已失效"),
                 content=self.tr("位于 ")
-                        + str(java.path)
-                        + self.tr(" 的 ")
-                        + str(java.version)
-                        + self.tr(" 已失效"),
+                + str(java.path)
+                + self.tr(" 的 ")
+                + str(java.version)
+                + self.tr(" 已失效"),
                 parent=self.window(),
                 duration=3000,
             )
@@ -1432,8 +1433,8 @@ class ConfigurePage(QWidget):
             InfoBar.success(
                 title=self.tr("查找完毕"),
                 content=self.tr("一共搜索到了")
-                        + str(len(configureServerVariables.javaPath))
-                        + self.tr("个 Java。\n请单击「Java 列表」按钮查看、选择。"),
+                + str(len(configureServerVariables.javaPath))
+                + self.tr("个 Java。\n请单击「Java 列表」按钮查看、选择。"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1471,7 +1472,7 @@ class ConfigurePage(QWidget):
             InfoBar.warning(
                 title=self.tr("未添加"),
                 content=self.tr("你并没有选择服务器核心。\n当前核心: ")
-                        + (self.tr("未添加") if not (a := configureServerVariables.coreFileName) else a),
+                + (self.tr("未添加") if not (a := configureServerVariables.coreFileName) else a),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1504,13 +1505,13 @@ class ConfigurePage(QWidget):
             InfoBar.success(
                 title=self.tr("已添加"),
                 content=self.tr("核心文件名: ")
-                        + str(configureServerVariables.coreFileName)
-                        + self.tr("\n类型: ")
-                        + str(coreType)
-                        + self.tr("\nMC 版本: ")
-                        + str(mcVersion)
-                        + self.tr("\n构建版本: ")
-                        + str(buildVersion),
+                + str(configureServerVariables.coreFileName)
+                + self.tr("\n类型: ")
+                + str(coreType)
+                + self.tr("\nMC 版本: ")
+                + str(mcVersion)
+                + self.tr("\n构建版本: ")
+                + str(buildVersion),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1521,11 +1522,11 @@ class ConfigurePage(QWidget):
             InfoBar.warning(
                 title=self.tr("未添加"),
                 content=self.tr("你并没有选择服务器核心。\n当前核心: ")
-                        + (
-                            self.tr("未添加")
-                            if not (a := configureServerVariables.coreFileName)
-                            else str(a)
-                        ),
+                + (
+                    self.tr("未添加")
+                    if not (a := configureServerVariables.coreFileName)
+                    else str(a)
+                ),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1594,45 +1595,45 @@ class ConfigurePage(QWidget):
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
             title = self.tr("请再次检查你设置的参数是否有误: ")
             content = (
-                    self.tr("Java: ")
-                    + configureServerVariables.selectedJavaPath
-                    + "\n"
-                    + self.tr("Java版本: ")
-                    + configureServerVariables.selectedJavaVersion
-                    + "\n"
-                    + self.tr("内存: ")
-                    + str(configureServerVariables.minMem)
-                    + configureServerVariables.memUnit
-                    + "~"
-                    + str(configureServerVariables.maxMem)
-                    + configureServerVariables.memUnit
-                    + "\n"
-                    + self.tr("服务器核心: ")
-                    + configureServerVariables.corePath
-                    + "\n"
-                    + self.tr("服务器核心文件名: ")
-                    + configureServerVariables.coreFileName
-                    + "\n"
-                    + self.tr("输出编码设置: ")
-                    + self.extendedOutputDeEncodingComboBox.itemText(
-                configureServerVariables.consoleDeEncodingList.index(
-                    configureServerVariables.consoleOutputDeEncoding
+                self.tr("Java: ")
+                + configureServerVariables.selectedJavaPath
+                + "\n"
+                + self.tr("Java版本: ")
+                + configureServerVariables.selectedJavaVersion
+                + "\n"
+                + self.tr("内存: ")
+                + str(configureServerVariables.minMem)
+                + configureServerVariables.memUnit
+                + "~"
+                + str(configureServerVariables.maxMem)
+                + configureServerVariables.memUnit
+                + "\n"
+                + self.tr("服务器核心: ")
+                + configureServerVariables.corePath
+                + "\n"
+                + self.tr("服务器核心文件名: ")
+                + configureServerVariables.coreFileName
+                + "\n"
+                + self.tr("输出编码设置: ")
+                + self.extendedOutputDeEncodingComboBox.itemText(
+                    configureServerVariables.consoleDeEncodingList.index(
+                        configureServerVariables.consoleOutputDeEncoding
+                    )
                 )
-            )
-                    + "\n"
-                    + self.tr("输入编码设置: ")
-                    + self.extendedInputDeEncodingComboBox.itemText(
-                configureServerVariables.consoleDeEncodingList.index(
-                    configureServerVariables.consoleInputDeEncoding
+                + "\n"
+                + self.tr("输入编码设置: ")
+                + self.extendedInputDeEncodingComboBox.itemText(
+                    configureServerVariables.consoleDeEncodingList.index(
+                        configureServerVariables.consoleInputDeEncoding
+                    )
                 )
-            )
-                    + "\n"
-                    + self.tr("JVM参数: \n")
-                    + "    "
-                    + totalJVMArg
-                    + "\n"
-                    + self.tr("服务器名称: ")
-                    + configureServerVariables.serverName
+                + "\n"
+                + self.tr("JVM参数: \n")
+                + "    "
+                + totalJVMArg
+                + "\n"
+                + self.tr("服务器名称: ")
+                + configureServerVariables.serverName
             )
             w = MessageBox(title, content, self)
             w.yesButton.setText(self.tr("无误，添加"))
@@ -1665,7 +1666,7 @@ class ConfigurePage(QWidget):
 
         else:
             if (
-                    t := ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)
+                t := ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)
             ) is not None:
                 mcVersion, forgeVersion = t
                 w = MessageBox(
@@ -1731,7 +1732,7 @@ class ConfigurePage(QWidget):
 
                 self.forgeInstaller.asyncInstall()
             except Exception as e:
-                self.afterInstallingForge(False, e.args)
+                self.afterInstallingForge(False, str(e))
                 self.addNewServerRollback()
         else:
             InfoBar.success(
@@ -1747,10 +1748,10 @@ class ConfigurePage(QWidget):
     def saveNewServer(self):
         """真正的保存服务器函数"""
         exit0Msg = (
-                self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
+            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
         )
         exit1Msg = (
-                self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
+            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
         )
         exitCode = 0
 
@@ -1909,7 +1910,7 @@ class ConfigurePage(QWidget):
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
         if osp.exists(
-                serverDir := f"Servers//{configureServerVariables.serverName}"
+            serverDir := f"Servers//{configureServerVariables.serverName}"
         ):  # 防止出现重复回滚的操作
             # 删除文件夹
             rmtree(serverDir)
@@ -1926,8 +1927,8 @@ class ConfigurePage(QWidget):
 
         self.installerLogViewer.show()
 
-    @pyqtSlot(bool)
-    def afterInstallingForge(self, installFinished, args=...):
+    @pyqtSlot(bool, str)
+    def afterInstallingForge(self, installFinished, message=""):
         self.installerLogViewer.hide()
         self.installerLogViewer.close()
         self.installerLogViewer.deleteLater()
@@ -1942,19 +1943,13 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
         else:
-            self.installingForgeStateToolTip.setContent(
-                self.tr(
-                    "怪，安装失败！" + ((
-                        str(args) if not isinstance(args, Iterable) or isinstance(args, str) else " ".join(
-                            map(str, args))))
-                )
-            )
+            self.installingForgeStateToolTip.setContent(self.tr("怪，安装失败！" + message))
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
             self.addNewServerRollback()
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(
-                self, "forgeInstaller"
+            self, "forgeInstaller"
         ):  # 有可能创建forgeInstaller就抛出了异常(如invalid forge installer等),故需要判断是否初始化
             del self.forgeInstaller
         configureServerVariables.resetToDefault()  # 重置

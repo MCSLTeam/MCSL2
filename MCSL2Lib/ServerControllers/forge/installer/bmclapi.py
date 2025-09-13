@@ -9,25 +9,23 @@ BMCLAPI_ROOT = "https://bmclapi2.bangbang93.com"
 SESSION = requests.Session()
 
 
-def getDownloadInfo(url) -> Optional[Dict[str, str]]:
-    with SESSION.head(url, allow_redirects=True) as resp:
-        if resp.ok:
-            headers = resp.headers
-            return {
-                "sha1": headers.get("x-bmclapi-hash"),
-                "size": int(headers.get("Content-Length")),
-            }
+def getDownloadInfo(version) -> Download:
+    from .download_utils import DownloadUtils
+    from .json.util import Util
+
+    url = BMCLAPI_ROOT + f"/version/{version}/json"
+    versions = DownloadUtils.downloadString(url, Util.loadVersion)
+    dl = versions.getDownload("server")  # type: ignore
+    return dl  # type: ignore
 
 
-def getMinecraftDownload(version: Version, side: str) -> Optional[Download]:
-    url = BMCLAPI_ROOT + f"/version/{version.id}/{side}"
-    info = getDownloadInfo(url)
-    if info is None:
-        return None
-    return Download.of(
-        {"sha1": info.get("sha1"), "size": info.get("size"), "url": url, "provided": False}
-    )
+def getMinecraftDownload(version: str, side: str) -> Optional[Download]:
+    url = BMCLAPI_ROOT + f"/version/{version}/{side}"
+    dl = getDownloadInfo(version)
+    if dl is not None:
+        dl.url = url
+    return dl
 
 
 def getLibraryUrl(url: str):
-    return "https://bmclapi2.bangbang93.com/maven" + url[url.find("/", 8):]
+    return "https://bmclapi2.bangbang93.com/maven" + url[url.find("/", 8) :]

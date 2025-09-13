@@ -58,9 +58,7 @@ class _ServerProcessBridge(QObject):
         self.config: ServerVariables = v
         self.javaPath: str = self.config.javaPath
         self.processArgs = arg
-        self.workingDirectory: str = str(
-            osp.realpath(f"Servers//{self.config.serverName}")
-        )
+        self.workingDirectory: str = str(osp.realpath(f"Servers//{self.config.serverName}"))
         self.partialData: str = b""
         self.handledServer = None
         self.serverProcess = self.createServerProcess()
@@ -74,9 +72,7 @@ class _ServerProcessBridge(QObject):
         self.handledServer.process.setProgram(self.javaPath)
         self.handledServer.process.setArguments(self.processArgs)
         self.handledServer.process.setWorkingDirectory(self.workingDirectory)
-        self.handledServer.process.readyReadStandardOutput.connect(
-            self.serverLogOutputHandler
-        )
+        self.handledServer.process.readyReadStandardOutput.connect(self.serverLogOutputHandler)
         self.handledServer.process.finished.connect(
             lambda: self.serverClosed.emit(self.handledServer.process.exitCode())
         )
@@ -136,9 +132,7 @@ class _ServerProcessBridge(QObject):
         """
         用户向服务器发送命令
         """
-        self.serverProcess.process.write(
-            f"{command}\n".encode(self.config.inputEncoding)
-        )
+        self.serverProcess.process.write(f"{command}\n".encode(self.config.inputEncoding))
 
     def isServerRunning(self):
         if self.serverProcess.process is None:

@@ -82,9 +82,7 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fileSizeTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.fileSizeTitle.sizePolicy().hasHeightForWidth())
         self.fileSizeTitle.setSizePolicy(sizePolicy)
         self.fileSizeTitle.setObjectName("fileSizeTitle")
 
@@ -97,9 +95,7 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ProgressWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.ProgressWidget.sizePolicy().hasHeightForWidth())
         self.ProgressWidget.setSizePolicy(sizePolicy)
         self.ProgressWidget.setMinimumSize(QSize(315, 40))
         self.ProgressWidget.setMaximumSize(QSize(16777215, 40))
@@ -143,9 +139,7 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fileNameTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.fileNameTitle.sizePolicy().hasHeightForWidth())
         self.fileNameTitle.setSizePolicy(sizePolicy)
         self.fileNameTitle.setObjectName("fileNameTitle")
 
@@ -200,9 +194,7 @@ class DownloadProgressWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.closeBoxBtnFinished.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.closeBoxBtnFinished.sizePolicy().hasHeightForWidth())
         self.closeBoxBtnFinished.setSizePolicy(sizePolicy)
         self.closeBoxBtnFinished.setMinimumSize(QSize(60, 0))
         self.closeBoxBtnFinished.setMaximumSize(QSize(60, 16777215))
@@ -264,9 +256,7 @@ class DownloadMessageBox(MessageBox):
         self.contentLabel.deleteLater()
         self.buttonGroup.deleteLater()
         self.downloadProgressWidget.fileName.setText(self.fileName)
-        self.textLayout.addWidget(
-            self.downloadProgressWidget.downloadProgressMainWidget
-        )
+        self.textLayout.addWidget(self.downloadProgressWidget.downloadProgressMainWidget)
 
         widget = self.downloadProgressWidget
         widget.cancelBtn.clicked.connect(self.canceled.emit)
@@ -310,27 +300,17 @@ class DownloadMessageBox(MessageBox):
 
         if dl is not None:
             if dl.status == "complete":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
-                    1
-                )
-                if path.exists(
-                    path.join("MCSL2", "Downloads", filename)
-                ):  # 防止有时候aria2抽风...
-                    DL_EntryController().work.emit(
-                        (
-                            "addCoreEntry",
-                            {"coreName": filename, "extraData": data},
-                        )
-                    )
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
+                if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
+                    DL_EntryController().work.emit((
+                        "addCoreEntry",
+                        {"coreName": filename, "extraData": data},
+                    ))
             elif dl.status == "error":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
-                    2
-                )
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
                 MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
             elif dl.status == "removed":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
-                    2
-                )
+                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         else:
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadProgressWidget.downloading = False
@@ -383,9 +363,7 @@ class DownloadCard(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fileNameLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.fileNameLabel.sizePolicy().hasHeightForWidth())
         self.fileNameLabel.setSizePolicy(sizePolicy)
         self.fileNameLabel.setFixedSize(QSize(196, 18))
         self.gridLayout.addWidget(self.fileNameLabel, 0, 0, 1, 2)
@@ -397,9 +375,7 @@ class DownloadCard(SimpleCardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.downloadExtraInfoLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.downloadExtraInfoLabel.sizePolicy().hasHeightForWidth())
         self.downloadExtraInfoLabel.setSizePolicy(sizePolicy)
         self.downloadExtraInfoLabel.setFixedSize(QSize(196, 18))
         self.gridLayout.addWidget(self.downloadExtraInfoLabel, 1, 0, 1, 2)
@@ -493,15 +469,11 @@ class DownloadCard(SimpleCardWidget):
                     position=InfoBarPosition.BOTTOM_RIGHT,
                     parent=self.parent().parent().parent().parent(),
                 )
-                if path.exists(
-                    path.join("MCSL2", "Downloads", filename)
-                ):  # 防止有时候aria2抽风...
-                    DL_EntryController().work.emit(
-                        (
-                            "addCoreEntry",
-                            {"coreName": filename, "extraData": data},
-                        )
-                    )
+                if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
+                    DL_EntryController().work.emit((
+                        "addCoreEntry",
+                        {"coreName": filename, "extraData": data},
+                    ))
                 self.setParent(None)
                 self.deleteLater()
             elif dl.status == "error":

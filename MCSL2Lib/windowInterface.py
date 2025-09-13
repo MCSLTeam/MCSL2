@@ -158,14 +158,10 @@ class Window(VerifyFluentWindowBase):
             self.passSignal.connect(lambda: self.homeInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.configureInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.downloadInterface.setEnabled(True))
-            self.passSignal.connect(
-                lambda: self.consoleCenterInterface.setEnabled(True)
-            )
+            self.passSignal.connect(lambda: self.consoleCenterInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.pluginsInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.settingsInterface.setEnabled(True))
-            self.passSignal.connect(
-                lambda: self.serverManagerInterface.setEnabled(True)
-            )
+            self.passSignal.connect(lambda: self.serverManagerInterface.setEnabled(True))
             self.passSignal.connect(lambda: self.selectJavaPage.setEnabled(True))
             self.passSignal.connect(lambda: self.selectNewJavaPage.setEnabled(True))
             self.testVerifyBox.show()
@@ -271,9 +267,7 @@ class Window(VerifyFluentWindowBase):
             box.cancelButton.setText(self.tr("知道了"))
             del box.contentLabel
             box.textLayout.addWidget(exceptionWidget.exceptionScrollArea)
-            box.yesSignal.connect(
-                lambda: QApplication.clipboard().setText(tracebackString)
-            )
+            box.yesSignal.connect(lambda: QApplication.clipboard().setText(tracebackString))
             box.yesSignal.connect(box.deleteLater)
             box.cancelSignal.connect(box.deleteLater)
             box.yesSignal.connect(exceptionWidget.deleteLater)
@@ -284,9 +278,7 @@ class Window(VerifyFluentWindowBase):
     def initPluginSystem(self, firstLoad=True):
         """初始化插件系统"""
         self.pluginManager.readAllPlugins(firstLoad)
-        self.pluginManager.initSinglePluginsWidget(
-            self.pluginsInterface.pluginsVerticalLayout
-        )
+        self.pluginManager.initSinglePluginsWidget(self.pluginsInterface.pluginsVerticalLayout)
 
     def initNavigation(self):
         """初始化导航栏"""
@@ -380,9 +372,7 @@ class Window(VerifyFluentWindowBase):
                 settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
             )
         )
-        self.selectJavaPage.backBtn.clicked.connect(
-            lambda: self.switchTo(self.configureInterface)
-        )
+        self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
         self.configureInterface.noobJavaListPushBtn.clicked.connect(
             lambda: self.switchTo(self.selectJavaPage)
         )
@@ -447,9 +437,7 @@ class Window(VerifyFluentWindowBase):
         self.selectNewJavaPage.backBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)
         )
-        self.selectNewJavaPage.setJavaPath.connect(
-            self.serverManagerInterface.setJavaPath
-        )
+        self.selectNewJavaPage.setJavaPath.connect(self.serverManagerInterface.setJavaPath)
 
         # fmt: off
         self.pluginsInterface.refreshPluginListBtn.clicked.connect(self.initPluginSystem)

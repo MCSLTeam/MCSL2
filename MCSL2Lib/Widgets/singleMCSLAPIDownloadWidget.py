@@ -42,9 +42,7 @@ class MCSLAPIDownloadWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLAPIPixmapLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLAPIPixmapLabel.sizePolicy().hasHeightForWidth())
         self.MCSLAPIPixmapLabel.setSizePolicy(sizePolicy)
         self.MCSLAPIPixmapLabel.setFixedSize(QSize(40, 40))
         self.MCSLAPIPixmapLabel.setObjectName("MCSLAPIPixmapLabel")
@@ -61,9 +59,7 @@ class MCSLAPIDownloadWidget(CardWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fileSizeTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.fileSizeTitle.sizePolicy().hasHeightForWidth())
         self.fileSizeTitle.setSizePolicy(sizePolicy)
         self.fileSizeTitle.setObjectName("fileSizeTitle")
         self.horizontalLayout.addWidget(self.fileSizeTitle)
@@ -78,9 +74,7 @@ class MCSLAPIDownloadWidget(CardWidget):
         self.fileSize.setObjectName("fileSize")
         self.horizontalLayout.addWidget(self.fileSize)
         self.fileSizeTitle.setText("大小:")
-        self.fileSize.setText(
-            size if type(size) is str else str(f"{size / 1024 / 1024:.2f}MB")
-        )
+        self.fileSize.setText(size if type(size) is str else str(f"{size / 1024 / 1024:.2f}MB"))
         self.fileName.setText(name.replace("/", ""))
         self.setProperty(
             "link", f"https://jn.sv.ztsin.cn:5244/d/alistfile/MCSL2/MCSLAPI{link}{name}"

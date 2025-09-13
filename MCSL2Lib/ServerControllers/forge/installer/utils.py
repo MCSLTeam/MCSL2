@@ -1,11 +1,5 @@
 class DownloadProgressInfo:
-    __slots__ = (
-        "fileName",
-        "speed",
-        "percent",
-        "done",
-        "all_done"
-    )
+    __slots__ = ("fileName", "speed", "percent", "done", "all_done")
 
     def __init__(self, fileName, speed, percent, done):
         self.fileName = fileName

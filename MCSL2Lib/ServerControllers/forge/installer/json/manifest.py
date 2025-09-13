@@ -27,4 +27,3 @@ class Manifest(BaseModel):
             )
         except StopIteration:
             return None
-

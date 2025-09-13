@@ -81,10 +81,14 @@ class AkiraCloudDownloadURLParser:
 
     @classmethod
     def _getAPI(cls, APIPath: str) -> str:
-        k = (s := MCSLNetworkSession()).get(
+        k = (
+            (s := MCSLNetworkSession())
+            .get(
                 url=f"https://mirror.akiracloud.net{APIPath}",
                 headers=s.MCSLNetworkHeaders,
-            ).text
+            )
+            .text
+        )
         del s
         return k
 

@@ -12,13 +12,12 @@ install = Util.loadInstallProfile(text)
 print(json.dumps(install.to_dict(), indent=4, sort_keys=True))
 
 
-print('====================================================================')
+print("====================================================================")
 
 
 text = Path("./version.json").read_text()
 version = Util.loadVersionFromText(text)
 print(json.dumps(version.to_dict(), indent=4, sort_keys=True))
-
 
 
 class D(BaseModel):

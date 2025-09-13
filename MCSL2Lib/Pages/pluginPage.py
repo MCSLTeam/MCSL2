@@ -60,9 +60,7 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.installPluginBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.installPluginBtn.sizePolicy().hasHeightForWidth())
         self.installPluginBtn.setSizePolicy(sizePolicy)
         self.installPluginBtn.setMinimumSize(QSize(82, 32))
         self.installPluginBtn.setMaximumSize(QSize(82, 32))
@@ -75,9 +73,7 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.refreshPluginListBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.refreshPluginListBtn.sizePolicy().hasHeightForWidth())
         self.refreshPluginListBtn.setSizePolicy(sizePolicy)
         self.refreshPluginListBtn.setMinimumSize(QSize(82, 32))
         self.refreshPluginListBtn.setMaximumSize(QSize(82, 32))
@@ -94,9 +90,7 @@ class PluginPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.MarkdownText)
         self.subTitleLabel.setObjectName("subTitleLabel")
@@ -119,9 +113,7 @@ class PluginPage(QWidget):
 
         self.pluginsScrollAreaWidgetContents = QWidget()
         self.pluginsScrollAreaWidgetContents.setGeometry(QRect(0, 0, 544, 470))
-        self.pluginsScrollAreaWidgetContents.setObjectName(
-            "pluginsScrollAreaWidgetContents"
-        )
+        self.pluginsScrollAreaWidgetContents.setObjectName("pluginsScrollAreaWidgetContents")
 
         self.gridLayout_3 = QGridLayout(self.pluginsScrollAreaWidgetContents)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -208,9 +200,7 @@ class InstallPluginThread(QThread):
 
     def run(self):
         try:
-            pluginArchive = ZipFile(
-                GlobalMCSL2Variables.installingPluginArchiveDirectory, "r"
-            )
+            pluginArchive = ZipFile(GlobalMCSL2Variables.installingPluginArchiveDirectory, "r")
             pluginArchive.extractall("./Plugins")
             pluginArchive.close()
             self.success.emit()

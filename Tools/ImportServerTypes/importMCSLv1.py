@@ -82,9 +82,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ScrollArea.setObjectName("MCSLv1ScrollArea")
         self.MCSLv1ScrollAreaWidgetContents = QWidget()
         self.MCSLv1ScrollAreaWidgetContents.setGeometry(QRect(0, 0, 450, 935))
-        self.MCSLv1ScrollAreaWidgetContents.setObjectName(
-            "MCSLv1ScrollAreaWidgetContents"
-        )
+        self.MCSLv1ScrollAreaWidgetContents.setObjectName("MCSLv1ScrollAreaWidgetContents")
         self.verticalLayout_7 = QVBoxLayout(self.MCSLv1ScrollAreaWidgetContents)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
@@ -103,9 +101,7 @@ class MCSLv1(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ImportStatusText.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ImportStatusText.sizePolicy().hasHeightForWidth())
         self.MCSLv1ImportStatusText.setSizePolicy(sizePolicy)
         self.MCSLv1ImportStatusText.setObjectName("MCSLv1ImportStatusText")
         self.gridLayout_33.addWidget(self.MCSLv1ImportStatusText, 1, 1, 1, 2)
@@ -113,9 +109,7 @@ class MCSLv1(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ImportTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ImportTitle.sizePolicy().hasHeightForWidth())
         self.MCSLv1ImportTitle.setSizePolicy(sizePolicy)
         self.MCSLv1ImportTitle.setObjectName("MCSLv1ImportTitle")
         self.gridLayout_33.addWidget(self.MCSLv1ImportTitle, 0, 2, 1, 1)
@@ -125,9 +119,7 @@ class MCSLv1(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ImportStatus.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ImportStatus.sizePolicy().hasHeightForWidth())
         self.MCSLv1ImportStatus.setSizePolicy(sizePolicy)
         self.MCSLv1ImportStatus.setMinimumSize(QSize(30, 30))
         self.MCSLv1ImportStatus.setMaximumSize(QSize(30, 30))
@@ -139,9 +131,7 @@ class MCSLv1(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ImportArchives.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ImportArchives.sizePolicy().hasHeightForWidth())
         self.MCSLv1ImportArchives.setSizePolicy(sizePolicy)
         self.MCSLv1ImportArchives.setMinimumSize(QSize(110, 32))
         self.MCSLv1ImportArchives.setMaximumSize(QSize(150, 32))
@@ -152,9 +142,7 @@ class MCSLv1(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ValidateArgs.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgs.sizePolicy().hasHeightForWidth())
         self.MCSLv1ValidateArgs.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgs.setMinimumSize(QSize(0, 630))
         self.MCSLv1ValidateArgs.setMaximumSize(QSize(16777215, 630))
@@ -191,9 +179,7 @@ class MCSLv1(QWidget):
         self.gridLayout_44.addWidget(
             self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn, 2, 2, 1, 1
         )
-        self.MCSLv1ValidateArgsJavaSubtitleLabel = SubtitleLabel(
-            self.MCSLv1ValidateArgsJavaWidget
-        )
+        self.MCSLv1ValidateArgsJavaSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -204,12 +190,8 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsJavaSubtitleLabel.setObjectName(
             "MCSLv1ValidateArgsJavaSubtitleLabel"
         )
-        self.gridLayout_44.addWidget(
-            self.MCSLv1ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1
-        )
-        self.MCSLv1ValidateArgsJavaListPushBtn = PushButton(
-            self.MCSLv1ValidateArgsJavaWidget
-        )
+        self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsJavaSubtitleLabel, 0, 0, 1, 1)
+        self.MCSLv1ValidateArgsJavaListPushBtn = PushButton(self.MCSLv1ValidateArgsJavaWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -218,9 +200,7 @@ class MCSLv1(QWidget):
         )
         self.MCSLv1ValidateArgsJavaListPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsJavaListPushBtn.setMinimumSize(QSize(108, 31))
-        self.MCSLv1ValidateArgsJavaListPushBtn.setObjectName(
-            "MCSLv1ValidateArgsJavaListPushBtn"
-        )
+        self.MCSLv1ValidateArgsJavaListPushBtn.setObjectName("MCSLv1ValidateArgsJavaListPushBtn")
         self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsJavaListPushBtn, 3, 2, 1, 1)
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn = PrimaryPushButton(
             self.MCSLv1ValidateArgsJavaWidget
@@ -232,9 +212,7 @@ class MCSLv1(QWidget):
             self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.sizePolicy().hasHeightForWidth()
         )
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(
-            QSize(90, 0)
-        )
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setObjectName(
             "MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn"
         )
@@ -255,15 +233,9 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setObjectName(
             "MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn"
         )
-        self.gridLayout_44.addWidget(
-            self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1
-        )
-        self.MCSLv1ValidateArgsJavaTextEdit = TextEdit(
-            self.MCSLv1ValidateArgsJavaWidget
-        )
-        self.MCSLv1ValidateArgsJavaTextEdit.setObjectName(
-            "MCSLv1ValidateArgsJavaTextEdit"
-        )
+        self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn, 3, 1, 1, 1)
+        self.MCSLv1ValidateArgsJavaTextEdit = TextEdit(self.MCSLv1ValidateArgsJavaWidget)
+        self.MCSLv1ValidateArgsJavaTextEdit.setObjectName("MCSLv1ValidateArgsJavaTextEdit")
         self.gridLayout_44.addWidget(self.MCSLv1ValidateArgsJavaTextEdit, 2, 0, 2, 1)
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsJavaWidget, 5, 2, 1, 3)
         self.MCSLv1ValidateArgsDeEncodingWidget = QWidget(self.MCSLv1ValidateArgs)
@@ -276,9 +248,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsDeEncodingWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsDeEncodingWidget.setMinimumSize(QSize(0, 122))
         self.MCSLv1ValidateArgsDeEncodingWidget.setMaximumSize(QSize(16777215, 122))
-        self.MCSLv1ValidateArgsDeEncodingWidget.setObjectName(
-            "MCSLv1ValidateArgsDeEncodingWidget"
-        )
+        self.MCSLv1ValidateArgsDeEncodingWidget.setObjectName("MCSLv1ValidateArgsDeEncodingWidget")
         self.gridLayout_45 = QGridLayout(self.MCSLv1ValidateArgsDeEncodingWidget)
         self.gridLayout_45.setObjectName("gridLayout_45")
         self.MCSLv1ValidateArgsOutputDeEncodingComboBox = ComboBox(
@@ -294,9 +264,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsOutputDeEncodingComboBox.setObjectName(
             "MCSLv1ValidateArgsOutputDeEncodingComboBox"
         )
-        self.gridLayout_45.addWidget(
-            self.MCSLv1ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1
-        )
+        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsOutputDeEncodingComboBox, 2, 1, 1, 1)
         self.MCSLv1ValidateArgsInputDeEncodingComboBox = ComboBox(
             self.MCSLv1ValidateArgsDeEncodingWidget
         )
@@ -304,9 +272,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsInputDeEncodingComboBox.setObjectName(
             "MCSLv1ValidateArgsInputDeEncodingComboBox"
         )
-        self.gridLayout_45.addWidget(
-            self.MCSLv1ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1
-        )
+        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsInputDeEncodingComboBox, 3, 1, 1, 1)
         self.MCSLv1ValidateArgsOutputDeEncodingLabel = StrongBodyLabel(
             self.MCSLv1ValidateArgsDeEncodingWidget
         )
@@ -320,9 +286,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsOutputDeEncodingLabel.setObjectName(
             "MCSLv1ValidateArgsOutputDeEncodingLabel"
         )
-        self.gridLayout_45.addWidget(
-            self.MCSLv1ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1
-        )
+        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsOutputDeEncodingLabel, 2, 0, 1, 1)
         self.MCSLv1ValidateArgsDeEncodingSubtitleLabel = SubtitleLabel(
             self.MCSLv1ValidateArgsDeEncodingWidget
         )
@@ -336,9 +300,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsDeEncodingSubtitleLabel.setObjectName(
             "MCSLv1ValidateArgsDeEncodingSubtitleLabel"
         )
-        self.gridLayout_45.addWidget(
-            self.MCSLv1ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1
-        )
+        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsDeEncodingSubtitleLabel, 0, 0, 1, 1)
         self.MCSLv1ValidateArgsInputDeEncodingLabel = StrongBodyLabel(
             self.MCSLv1ValidateArgsDeEncodingWidget
         )
@@ -352,12 +314,8 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsInputDeEncodingLabel.setObjectName(
             "MCSLv1ValidateArgsInputDeEncodingLabel"
         )
-        self.gridLayout_45.addWidget(
-            self.MCSLv1ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1
-        )
-        self.gridLayout_43.addWidget(
-            self.MCSLv1ValidateArgsDeEncodingWidget, 8, 2, 1, 3
-        )
+        self.gridLayout_45.addWidget(self.MCSLv1ValidateArgsInputDeEncodingLabel, 3, 0, 1, 1)
+        self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsDeEncodingWidget, 8, 2, 1, 3)
         self.MCSLv1ValidateArgsJVMArgWidget = QWidget(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -368,9 +326,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsJVMArgWidget.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsJVMArgWidget.setMinimumSize(QSize(0, 140))
         self.MCSLv1ValidateArgsJVMArgWidget.setMaximumSize(QSize(16777215, 140))
-        self.MCSLv1ValidateArgsJVMArgWidget.setObjectName(
-            "MCSLv1ValidateArgsJVMArgWidget"
-        )
+        self.MCSLv1ValidateArgsJVMArgWidget.setObjectName("MCSLv1ValidateArgsJVMArgWidget")
         self.gridLayout_46 = QGridLayout(self.MCSLv1ValidateArgsJVMArgWidget)
         self.gridLayout_46.setObjectName("gridLayout_46")
         self.MCSLv1ValidateArgsJVMArgPlainTextEdit = PlainTextEdit(
@@ -379,9 +335,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsJVMArgPlainTextEdit.setObjectName(
             "MCSLv1ValidateArgsJVMArgPlainTextEdit"
         )
-        self.gridLayout_46.addWidget(
-            self.MCSLv1ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1
-        )
+        self.gridLayout_46.addWidget(self.MCSLv1ValidateArgsJVMArgPlainTextEdit, 1, 0, 1, 1)
         self.MCSLv1ValidateArgsJVMArgSubtitleLabel = SubtitleLabel(
             self.MCSLv1ValidateArgsJVMArgWidget
         )
@@ -395,17 +349,13 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsJVMArgSubtitleLabel.setObjectName(
             "MCSLv1ValidateArgsJVMArgSubtitleLabel"
         )
-        self.gridLayout_46.addWidget(
-            self.MCSLv1ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1
-        )
+        self.gridLayout_46.addWidget(self.MCSLv1ValidateArgsJVMArgSubtitleLabel, 0, 0, 1, 1)
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsJVMArgWidget, 9, 2, 1, 3)
         self.MCSLv1ValidateArgsStatus = PixmapLabel(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ValidateArgsStatus.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsStatus.sizePolicy().hasHeightForWidth())
         self.MCSLv1ValidateArgsStatus.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsStatus.setMinimumSize(QSize(30, 30))
         self.MCSLv1ValidateArgsStatus.setMaximumSize(QSize(30, 30))
@@ -424,9 +374,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsMemWidget.setObjectName("MCSLv1ValidateArgsMemWidget")
         self.gridLayout_47 = QGridLayout(self.MCSLv1ValidateArgsMemWidget)
         self.gridLayout_47.setObjectName("gridLayout_47")
-        self.MCSLv1ValidateArgsMinMemLineEdit = LineEdit(
-            self.MCSLv1ValidateArgsMemWidget
-        )
+        self.MCSLv1ValidateArgsMinMemLineEdit = LineEdit(self.MCSLv1ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -435,13 +383,9 @@ class MCSLv1(QWidget):
         )
         self.MCSLv1ValidateArgsMinMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsMinMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSLv1ValidateArgsMinMemLineEdit.setObjectName(
-            "MCSLv1ValidateArgsMinMemLineEdit"
-        )
+        self.MCSLv1ValidateArgsMinMemLineEdit.setObjectName("MCSLv1ValidateArgsMinMemLineEdit")
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMinMemLineEdit, 1, 1, 1, 1)
-        self.MCSLv1ValidateArgsMemSubtitleLabel = SubtitleLabel(
-            self.MCSLv1ValidateArgsMemWidget
-        )
+        self.MCSLv1ValidateArgsMemSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -449,15 +393,9 @@ class MCSLv1(QWidget):
             self.MCSLv1ValidateArgsMemSubtitleLabel.sizePolicy().hasHeightForWidth()
         )
         self.MCSLv1ValidateArgsMemSubtitleLabel.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsMemSubtitleLabel.setObjectName(
-            "MCSLv1ValidateArgsMemSubtitleLabel"
-        )
-        self.gridLayout_47.addWidget(
-            self.MCSLv1ValidateArgsMemSubtitleLabel, 0, 1, 1, 1
-        )
-        self.MCSLv1ValidateArgsMaxMemLineEdit = LineEdit(
-            self.MCSLv1ValidateArgsMemWidget
-        )
+        self.MCSLv1ValidateArgsMemSubtitleLabel.setObjectName("MCSLv1ValidateArgsMemSubtitleLabel")
+        self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMemSubtitleLabel, 0, 1, 1, 1)
+        self.MCSLv1ValidateArgsMaxMemLineEdit = LineEdit(self.MCSLv1ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -466,13 +404,9 @@ class MCSLv1(QWidget):
         )
         self.MCSLv1ValidateArgsMaxMemLineEdit.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsMaxMemLineEdit.setMinimumSize(QSize(0, 30))
-        self.MCSLv1ValidateArgsMaxMemLineEdit.setObjectName(
-            "MCSLv1ValidateArgsMaxMemLineEdit"
-        )
+        self.MCSLv1ValidateArgsMaxMemLineEdit.setObjectName("MCSLv1ValidateArgsMaxMemLineEdit")
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMaxMemLineEdit, 1, 3, 1, 1)
-        self.MCSLv1ValidateArgsToSymbol = SubtitleLabel(
-            self.MCSLv1ValidateArgsMemWidget
-        )
+        self.MCSLv1ValidateArgsToSymbol = SubtitleLabel(self.MCSLv1ValidateArgsMemWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -484,21 +418,15 @@ class MCSLv1(QWidget):
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsToSymbol, 1, 2, 1, 1)
         spacerItem59 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_47.addItem(spacerItem59, 1, 5, 1, 1)
-        self.MCSLv1ValidateArgsMemUnitComboBox = ComboBox(
-            self.MCSLv1ValidateArgsMemWidget
-        )
-        self.MCSLv1ValidateArgsMemUnitComboBox.setObjectName(
-            "MCSLv1ValidateArgsMemUnitComboBox"
-        )
+        self.MCSLv1ValidateArgsMemUnitComboBox = ComboBox(self.MCSLv1ValidateArgsMemWidget)
+        self.MCSLv1ValidateArgsMemUnitComboBox.setObjectName("MCSLv1ValidateArgsMemUnitComboBox")
         self.gridLayout_47.addWidget(self.MCSLv1ValidateArgsMemUnitComboBox, 1, 4, 1, 1)
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsMemWidget, 6, 2, 1, 3)
         self.MCSLv1ValidateArgsTitle = SubtitleLabel(self.MCSLv1ValidateArgs)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1ValidateArgsTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1ValidateArgsTitle.sizePolicy().hasHeightForWidth())
         self.MCSLv1ValidateArgsTitle.setSizePolicy(sizePolicy)
         self.MCSLv1ValidateArgsTitle.setObjectName("MCSLv1ValidateArgsTitle")
         self.gridLayout_43.addWidget(self.MCSLv1ValidateArgsTitle, 0, 3, 1, 1)
@@ -527,12 +455,8 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setObjectName(
             "MCSLv1ValidateArgsDownloadCorePrimaryPushBtn"
         )
-        self.gridLayout_48.addWidget(
-            self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1
-        )
-        self.MCSLv1ValidateArgsCoreSubtitleLabel = SubtitleLabel(
-            self.MCSLv1ValidateArgsCoreWidget
-        )
+        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn, 1, 3, 1, 1)
+        self.MCSLv1ValidateArgsCoreSubtitleLabel = SubtitleLabel(self.MCSLv1ValidateArgsCoreWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -543,15 +467,9 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsCoreSubtitleLabel.setObjectName(
             "MCSLv1ValidateArgsCoreSubtitleLabel"
         )
-        self.gridLayout_48.addWidget(
-            self.MCSLv1ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1
-        )
-        self.MCSLv1ValidateArgsCoreLineEdit = LineEdit(
-            self.MCSLv1ValidateArgsCoreWidget
-        )
-        self.MCSLv1ValidateArgsCoreLineEdit.setObjectName(
-            "MCSLv1ValidateArgsCoreLineEdit"
-        )
+        self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsCoreSubtitleLabel, 0, 1, 1, 1)
+        self.MCSLv1ValidateArgsCoreLineEdit = LineEdit(self.MCSLv1ValidateArgsCoreWidget)
+        self.MCSLv1ValidateArgsCoreLineEdit.setObjectName("MCSLv1ValidateArgsCoreLineEdit")
         self.gridLayout_48.addWidget(self.MCSLv1ValidateArgsCoreLineEdit, 1, 1, 1, 1)
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn = PrimaryPushButton(
             self.MCSLv1ValidateArgsCoreWidget
@@ -563,9 +481,7 @@ class MCSLv1(QWidget):
             self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
         )
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
-        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(
-            QSize(90, 0)
-        )
+        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(90, 0))
         self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setObjectName(
             "MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn"
         )
@@ -589,9 +505,7 @@ class MCSLv1(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.MCSLv1SaveTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.MCSLv1SaveTitle.sizePolicy().hasHeightForWidth())
         self.MCSLv1SaveTitle.setSizePolicy(sizePolicy)
         self.MCSLv1SaveTitle.setObjectName("MCSLv1SaveTitle")
         self.gridLayout_50.addWidget(self.MCSLv1SaveTitle, 0, 1, 1, 1)
@@ -618,9 +532,7 @@ class MCSLv1(QWidget):
         self.MCSLv1SaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
         self.MCSLv1SaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 30))
         self.MCSLv1SaveServerPrimaryPushBtn.setMaximumSize(QSize(16777215, 30))
-        self.MCSLv1SaveServerPrimaryPushBtn.setObjectName(
-            "MCSLv1SaveServerPrimaryPushBtn"
-        )
+        self.MCSLv1SaveServerPrimaryPushBtn.setObjectName("MCSLv1SaveServerPrimaryPushBtn")
         self.gridLayout_50.addWidget(self.MCSLv1SaveServerPrimaryPushBtn, 2, 1, 1, 1)
         self.verticalLayout_7.addWidget(self.MCSLv1Save)
         self.MCSLv1ScrollArea.setWidget(self.MCSLv1ScrollAreaWidgetContents)
@@ -629,14 +541,10 @@ class MCSLv1(QWidget):
         self.MCSLv1ImportStatusText.setText(self.tr("[状态文本]"))
         self.MCSLv1ImportTitle.setText(self.tr("1. 选择 MCSL 1 主程序"))
         self.MCSLv1ImportArchives.setText(self.tr("选择主程序"))
-        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setText(
-            self.tr("自动查找 Java")
-        )
+        self.MCSLv1ValidateArgsAutoDetectJavaPrimaryPushBtn.setText(self.tr("自动查找 Java"))
         self.MCSLv1ValidateArgsJavaSubtitleLabel.setText("Java: ")
         self.MCSLv1ValidateArgsJavaListPushBtn.setText(self.tr("Java 列表"))
-        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setText(
-            self.tr("手动导入")
-        )
+        self.MCSLv1ValidateArgsManuallyAddJavaPrimaryPushBtn.setText(self.tr("手动导入"))
         self.MCSLv1ValidateArgsDownloadJavaPrimaryPushBtn.setText(self.tr("下载 Java"))
         self.MCSLv1ValidateArgsOutputDeEncodingLabel.setText(
             self.tr("控制台输出编码 (优先级高于全局设置)")
@@ -654,9 +562,7 @@ class MCSLv1(QWidget):
         self.MCSLv1ValidateArgsTitle.setText(self.tr("2. 确认参数"))
         self.MCSLv1ValidateArgsDownloadCorePrimaryPushBtn.setText(self.tr("下载核心"))
         self.MCSLv1ValidateArgsCoreSubtitleLabel.setText(self.tr("核心: "))
-        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setText(
-            self.tr("重新导入")
-        )
+        self.MCSLv1ValidateArgsManuallyAddCorePrimaryPushBtn.setText(self.tr("重新导入"))
         self.MCSLv1SaveTitle.setText(self.tr("3. 完成导入"))
         self.MCSLv1SaveServerNameLineEdit.setPlaceholderText(
             self.tr("设置服务器昵称，不能包含非法字符")
@@ -673,22 +579,18 @@ class MCSLv1(QWidget):
         self.MCSLv1Save.setEnabled(False)
         self.MCSLv1ImportStatusText.setText(self.tr("未选择"))
         self.MCSLv1ValidateArgsMemUnitComboBox.addItems(["M", "G"])
-        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems(
-            [
-                self.tr("跟随全局"),
-                self.tr("UTF-8"),
-                self.tr("GB18030"),
-                self.tr("ANSI (推荐)"),
-            ]
-        )
-        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems(
-            [
-                self.tr("跟随全局"),
-                self.tr("UTF-8"),
-                self.tr("GB18030"),
-                self.tr("ANSI (推荐)"),
-            ]
-        )
+        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI (推荐)"),
+        ])
+        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems([
+            self.tr("跟随全局"),
+            self.tr("UTF-8"),
+            self.tr("GB18030"),
+            self.tr("ANSI (推荐)"),
+        ])
         self.MCSLv1SaveServerNameLineEdit.textChanged.connect(
             lambda: self.MCSLv1SaveServerPrimaryPushBtn.setEnabled(
                 self.MCSLv1SaveServerNameLineEdit.text() != ""
@@ -735,9 +637,7 @@ class MCSLv1(QWidget):
         )
         self.getMCSLv1ConfigurationStateToolTip.show()
         self.getMCSLv1ConfigurationThread = GetMCSLv1ConfigurationThread(self)
-        self.getMCSLv1ConfigurationThread.successSignal.connect(
-            self._afterInitValidateArgs
-        )
+        self.getMCSLv1ConfigurationThread.successSignal.connect(self._afterInitValidateArgs)
         self.getMCSLv1ConfigurationThread.start()
 
     @pyqtSlot(bool)
@@ -787,16 +687,8 @@ class MCSLv1(QWidget):
 
     def _save(self):
         importVariables.serverName = self.MCSLv1SaveServerNameLineEdit.text()
-        exit0Msg = (
-            self.tr("导入 MCSL 1 服务器 ")
-            + importVariables.serverName
-            + self.tr(" 成功！")
-        )
-        exit1Msg = (
-            self.tr("导入 MCSL 1 服务器 ")
-            + importVariables.serverName
-            + self.tr(" 失败！")
-        )
+        exit0Msg = self.tr("导入 MCSL 1 服务器 ") + importVariables.serverName + self.tr(" 成功！")
+        exit1Msg = self.tr("导入 MCSL 1 服务器 ") + importVariables.serverName + self.tr(" 失败！")
         exitCode = 0
 
         # 检查JVM参数防止意外无法启动服务器
@@ -979,15 +871,10 @@ class GetMCSLv1ConfigurationThread(QThread):
             ) as MCSLv1CmdFile:
                 importVariables.commandStr = MCSLv1CmdFile.read()
             importVariables.java = (
-                importVariables.commandStr.split("javaw.exe")[0].replace('"', "")
-                + "java.exe"
+                importVariables.commandStr.split("javaw.exe")[0].replace('"', "") + "java.exe"
             )
-            importVariables.minMem = search(
-                r"-Xms(\d+M)", importVariables.commandStr[0]
-            ).group(1)
-            importVariables.maxMem = search(
-                r"-Xmx(\d+M)", importVariables.commandStr[0]
-            ).group(1)
+            importVariables.minMem = search(r"-Xms(\d+M)", importVariables.commandStr[0]).group(1)
+            importVariables.maxMem = search(r"-Xmx(\d+M)", importVariables.commandStr[0]).group(1)
             return True
         except Exception:
             return False

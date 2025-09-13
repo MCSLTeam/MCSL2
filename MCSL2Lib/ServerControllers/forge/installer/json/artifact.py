@@ -30,7 +30,7 @@ class Artifact(BaseModel):
         idx = pts[last].find("@")
 
         if idx != -1:
-            ext = pts[last][idx + 1:]
+            ext = pts[last][idx + 1 :]
             pts[last] = pts[last][:idx]
         else:
             ext = "jar"

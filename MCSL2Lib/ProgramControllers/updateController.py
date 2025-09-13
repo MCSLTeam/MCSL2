@@ -56,9 +56,7 @@ class MCSL2FileUpdater(QObject):
         super().__init__(parent)
         self.updateOSName = "Windows" if osname == "nt" else "Linux"
         self.updateProcessExt = "." + cfg.get(cfg.oldExecuteable).split(".")[1]
-        self.updateVerificationFileName = "verification." + (
-            "pyd" if osname == "nt" else "so"
-        )
+        self.updateVerificationFileName = "verification." + ("pyd" if osname == "nt" else "so")
         self.updateArchitecture: str = ""
         self.isUpdateAvailable = True
         if "64" in architecture()[0]:

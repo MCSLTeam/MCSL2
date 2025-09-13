@@ -113,9 +113,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setObjectName("subTitleLabel")
 
@@ -141,9 +139,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.home_btnWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.home_btnWidget.sizePolicy().hasHeightForWidth())
         self.home_btnWidget.setSizePolicy(sizePolicy)
         self.home_btnWidget.setMinimumSize(QSize(200, 135))
         self.home_btnWidget.setMaximumSize(QSize(200, 135))
@@ -174,9 +170,7 @@ class HomePage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.selectServerBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.selectServerBtn.sizePolicy().hasHeightForWidth())
         self.selectServerBtn.setSizePolicy(sizePolicy)
         self.selectServerBtn.setFixedSize(QSize(180, 65))
         self.selectServerBtn.setObjectName("selectServerBtn")

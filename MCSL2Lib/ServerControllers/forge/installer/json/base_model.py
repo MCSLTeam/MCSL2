@@ -16,14 +16,17 @@ class GenericFactory:
 
     @staticmethod
     def list(type_hint: typing.Any, data: typing.List[typing.Any]):
-        i_type, = typing.get_args(type_hint)
+        (i_type,) = typing.get_args(type_hint)
 
         i_type_supplier = Utils.get_type_eval_supplier(i_type)
         return [i_type_supplier(i) for i in data]
 
     @staticmethod
     def dict(type_hint: typing.Any, data: typing.Dict[typing.Any, typing.Any]):
-        k_type, v_type, = typing.get_args(type_hint)
+        (
+            k_type,
+            v_type,
+        ) = typing.get_args(type_hint)
 
         k_type_supplier = Utils.get_type_eval_supplier(k_type)
         v_type_supplier = Utils.get_type_eval_supplier(v_type)
@@ -36,10 +39,9 @@ class GenericFactory:
             {
                 list: GenericFactory.list,
                 dict: GenericFactory.dict,
-                **GenericFactory.custom_factories
+                **GenericFactory.custom_factories,
             }.get(Utils.get_type(type_hint), lambda t, d: d),
-
-            type_hint
+            type_hint,
         )
 
 
@@ -115,7 +117,8 @@ class Utils:
                 #     )
             elif param.annotation is inspect.Parameter.empty and strict:
                 raise InjectError(
-                    f"in class {type_hint.__name__}: <\"{param}\"> in  <\"__init__{signature}\"> do not have a annotation.")
+                    f'in class {type_hint.__name__}: <"{param}"> in  <"__init__{signature}"> do not have a annotation.'
+                )
             else:
                 value = data[sig]
             params_to_bind[sig] = value
@@ -125,11 +128,11 @@ class Utils:
 
     @staticmethod
     def get_type_eval_supplier(
-            type_hint: typing.Any,
-            base_model_supplier: typing.Callable = None,
-            base_var_type_supplier: typing.Callable = None,
-            generic_type_supplier: typing.Callable = None,
-            default_supplier: typing.Callable = None,
+        type_hint: typing.Any,
+        base_model_supplier: typing.Callable = None,
+        base_var_type_supplier: typing.Callable = None,
+        generic_type_supplier: typing.Callable = None,
+        default_supplier: typing.Callable = None,
     ) -> typing.Callable[[typing.Any], typing.Any]:
         """
         get 'type_hint' init method (the way to init a 'type_hint' instance use data provided)
@@ -151,10 +154,13 @@ class Utils:
                 if not args:
                     return lambda _: None
 
-                some_type, none, = typing.get_args(type_hint)
+                (
+                    some_type,
+                    none,
+                ) = typing.get_args(type_hint)
                 return lambda data: Utils.get_type_eval_supplier(some_type)(data) if data else None
 
-            elif name == 'Literal':
+            elif name == "Literal":
                 literals = typing.get_args(type_hint)
                 if not literals:
                     raise ValueError(f"not support raw typing.Literal.")
@@ -167,13 +173,18 @@ class Utils:
 
                 return ret
 
-            elif name == 'Union':
+            elif name == "Union":
                 union_types = typing.get_args(type_hint)
 
                 # is optional
                 if len(union_types) == 2 and union_types[1] == type(None):
-                    some_type, none, = typing.get_args(type_hint)
-                    return lambda data: Utils.get_type_eval_supplier(some_type)(data) if data else None
+                    (
+                        some_type,
+                        none,
+                    ) = typing.get_args(type_hint)
+                    return (
+                        lambda data: Utils.get_type_eval_supplier(some_type)(data) if data else None
+                    )
 
             else:
                 ValueError(f"{type_hint} is not supported.")
@@ -187,7 +198,9 @@ class Utils:
         else:
             # raise ValueError(f"{type_hint} is not supported.")
             # common class, use '__init__' method
-            return default_supplier or functools.partial(Utils.constructor_inject, type_hint=type_hint)
+            return default_supplier or functools.partial(
+                Utils.constructor_inject, type_hint=type_hint
+            )
 
     @staticmethod
     def scan_generic_type(type_hint: typing.Any, data: typing.Any) -> typing.Any:
@@ -212,30 +225,31 @@ class Utils:
     def gen_fn(f_name, args, body, *, globals_=None, locals_=None, t_return=None):
         if locals_ is None:
             locals_ = {}
-        if 'BUILTINS' not in locals_:
-            locals_['BUILTINS'] = builtins
+        if "BUILTINS" not in locals_:
+            locals_["BUILTINS"] = builtins
 
-        locals_['_t_return'] = Utils.get_type_string(t_return)
-        t_return = '_t_return'
+        locals_["_t_return"] = Utils.get_type_string(t_return)
+        t_return = "_t_return"
 
-        f_args = ', '.join(args)
-        f_body = ''.join(f'\n  {b}' for b in body)
+        f_args = ", ".join(args)
+        f_body = "".join(f"\n  {b}" for b in body)
 
-        f_code = f' def {f_name}({f_args}) -> {t_return}:{f_body}'
+        f_code = f" def {f_name}({f_args}) -> {t_return}:{f_body}"
 
-        local_vars = ', '.join(locals_.keys())
-        txt = f'def _gen_fn({local_vars}):\n{f_code}\n return {f_name}'
+        local_vars = ", ".join(locals_.keys())
+        txt = f"def _gen_fn({local_vars}):\n{f_code}\n return {f_name}"
 
         rv = {}
         exec(txt, globals_, rv)
-        return rv['_gen_fn'](**locals_)
+        return rv["_gen_fn"](**locals_)
 
     @staticmethod
     def is_init_overridden(cls):
         base_init = cls.__base__.__init__
         current_init = cls.__init__
-        return not (current_init is base_init or
-                    inspect.unwrap(current_init) is inspect.unwrap(base_init))
+        return not (
+            current_init is base_init or inspect.unwrap(current_init) is inspect.unwrap(base_init)
+        )
 
     @staticmethod
     def get_builtins_type_factory(t_type: typing.Any) -> typing.Optional[typing.Callable]:
@@ -243,7 +257,18 @@ class Utils:
         get default type factory for cls
         """
         r_type = Utils.get_type(t_type)
-        if r_type in (int, float, str, bool, list, dict, set, tuple, bytes, bytearray,):
+        if r_type in (
+            int,
+            float,
+            str,
+            bool,
+            list,
+            dict,
+            set,
+            tuple,
+            bytes,
+            bytearray,
+        ):
             return r_type
         return None
 
@@ -275,21 +300,15 @@ class BaseModelMeta(type):
         for arg_name, anno in cls_annotations.items():
             new_anno = f"_t_arg{arg_counter}"
             locals_[new_anno] = anno
-            init_args.append(f'{arg_name}: {new_anno}')
+            init_args.append(f"{arg_name}: {new_anno}")
             arg_counter += 1
 
-        locals_.update({
-            'BUILTINS': builtins
-        })
+        locals_.update({"BUILTINS": builtins})
         dataclasses.dataclass()
         init_body = "".join(f"\n    self.{p} = {p}" for p in cls_annotations.keys()) or "\n    pass"
 
         __init__ = Utils.gen_fn(
-            f"__init__",
-            ['self'] + init_args,
-            [init_body],
-            globals_=globals_,
-            locals_=locals_
+            f"__init__", ["self"] + init_args, [init_body], globals_=globals_, locals_=locals_
         )
         # check init if is user defined
         if not Utils.is_init_overridden(cls):
@@ -321,14 +340,16 @@ class BaseModel(metaclass=BaseModelMeta):
             return None
 
         if hasattr(cls, "__from_raw__"):  # get raw supplier
-            return cls.__from_raw__(provided)
+            return getattr(cls, "__from_raw__")(provided)
 
         annotations = typing.get_type_hints(cls)
 
         data = {}
         for k, v in annotations.items():
             if k in provided:
-                supplier = Utils.get_type_eval_supplier(v)  # use provided value, and recursively parse it
+                supplier = Utils.get_type_eval_supplier(
+                    v
+                )  # use provided value, and recursively parse it
                 data[k] = supplier(provided[k])
             elif hasattr(cls, k):
                 data[k] = getattr(cls, k)  # use default value

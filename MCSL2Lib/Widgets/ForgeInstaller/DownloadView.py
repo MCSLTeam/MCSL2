@@ -13,6 +13,7 @@
 """
 Forge Install Progress Widget
 """
+
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFrame, QSpacerItem, QSizePolicy
 from qfluentwidgets import MessageBoxBase, SubtitleLabel, SmoothScrollArea

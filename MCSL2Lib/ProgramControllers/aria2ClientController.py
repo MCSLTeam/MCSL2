@@ -301,9 +301,7 @@ class Aria2Controller:
         rv = {
             "connections": download.connections,
             "speed": (
-                download.download_speed_string()
-                if download.status == "active"
-                else download.status
+                download.download_speed_string() if download.status == "active" else download.status
             ),
             "progress": download.progress_string(),
             "status": download.status,
@@ -495,9 +493,7 @@ class Aria2ProcessThread(QThread):
     def run(self):
         MCSL2_Aria2Client = API(Client(host="http://localhost", port=6800))
         MCSL2_Aria2Client.add_uris(self.DownloadURL)
-        process = Popen(
-            [self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT
-        )
+        process = Popen([self.Aria2Program, self.ConfigCommand], stdout=PIPE, stderr=STDOUT)
         process.wait()
 
 
@@ -1035,9 +1031,7 @@ class DL_EntryController(QObject):
 
         self.resultReady.connect(lambda _: self.worker.deleteLater())
         self.work.connect(self.worker.asyncDispatcher)
-        self.worker.onGetEntries.connect(
-            lambda entries_: self.resultReady.emit(entries_)
-        )
+        self.worker.onGetEntries.connect(lambda entries_: self.resultReady.emit(entries_))
         self.worker.onReadEntries.connect(lambda d: self.resultReady.emit(d))
 
 

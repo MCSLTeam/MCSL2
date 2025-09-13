@@ -15,6 +15,7 @@ from installer.simple_installer import SimpleInstaller
 #     profile = Util.loadInstallProfile(text)
 #     print(profile)
 
+
 class InfoConsumer(threading.Thread):
     def __init__(self, infoQueue: Queue):
         super().__init__()
@@ -53,7 +54,11 @@ if __name__ == "__main__":
     timer = Timer(3, lambda: [print("CANCEL!!!"), monitor.setCancelled(True)])
     timer.start()
     # Forge-1.20.1-47.2.19.jar Forge-1.21-51.0.18.jar
-    asyncio.run(installer.installServer(Path("./Server/Forge-1.20.1-47.2.19.jar"), Path("./Server/"), TO_STD_OUT))
+    asyncio.run(
+        installer.installServer(
+            Path("./Server/Forge-1.20.1-47.2.19.jar"), Path("./Server/"), TO_STD_OUT
+        )
+    )
 
     infoQueue.put(None)
     watcher.join()

@@ -72,9 +72,7 @@ class playersController(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.targetSelectorTipTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.targetSelectorTipTitle.sizePolicy().hasHeightForWidth())
         self.targetSelectorTipTitle.setSizePolicy(sizePolicy)
         self.targetSelectorTipTitle.setObjectName("targetSelectorTipTitle")
 
@@ -83,9 +81,7 @@ class playersController(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.targetSelectorTip.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.targetSelectorTip.sizePolicy().hasHeightForWidth())
         self.targetSelectorTip.setSizePolicy(sizePolicy)
         self.targetSelectorTip.setObjectName("targetSelectorTip")
 
@@ -94,9 +90,7 @@ class playersController(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.playersTipTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.playersTipTitle.sizePolicy().hasHeightForWidth())
         self.playersTipTitle.setSizePolicy(sizePolicy)
         self.playersTipTitle.setObjectName("playersTipTitle")
 

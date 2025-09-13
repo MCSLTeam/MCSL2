@@ -103,9 +103,7 @@ class LoadFailedTip(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.loadFailedText.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.loadFailedText.sizePolicy().hasHeightForWidth())
         self.loadFailedText.setSizePolicy(sizePolicy)
         self.loadFailedText.setAlignment(Qt.AlignCenter)
         self.loadFailedText.setObjectName("loadFailedText")
@@ -185,9 +183,7 @@ class MCSLAPILoadingErrorWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.errPixmapWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.errPixmapWidget.sizePolicy().hasHeightForWidth())
         self.errPixmapWidget.setSizePolicy(sizePolicy)
         self.errPixmapWidget.setObjectName("errPixmapWidget")
 
@@ -212,9 +208,7 @@ class MCSLAPILoadingErrorWidget(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.errTextWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.errTextWidget.sizePolicy().hasHeightForWidth())
         self.errTextWidget.setSizePolicy(sizePolicy)
         self.errTextWidget.setObjectName("errTextWidget")
 
@@ -236,8 +230,6 @@ class MCSLAPILoadingErrorWidget(QWidget):
         spacerItem3 = QSpacerItem(40, 15, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
         self.verticalLayout.addWidget(self.errTextWidget)
-        self.errText.setText(
-            self.tr("加载失败。请尝试刷新，如果仍然失败，请汇报此 Bug。")
-        )
+        self.errText.setText(self.tr("加载失败。请尝试刷新，如果仍然失败，请汇报此 Bug。"))
         self.errPixmap.setPixmap(QPixmap(":/built-InIcons/Error.svg"))
         self.errPixmap.setFixedSize(QSize(80, 80))

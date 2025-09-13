@@ -1368,16 +1368,14 @@ class ServerManagerPage(QWidget):
             )
         self.refreshServers()
 
-    @pyqtSlot(bool)
-    def afterInstallingForge(self, installFinished, args=...):
+    @pyqtSlot(bool, str)
+    def afterInstallingForge(self, installFinished, message):
         if installFinished:
             self.installingForgeStateToolTip.setContent(self.tr("安装成功！"))
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
         else:
-            self.installingForgeStateToolTip.setContent(
-                self.tr("安装失败！") + args if args is not ... else ""
-            )
+            self.installingForgeStateToolTip.setContent(self.tr("安装失败！") + message)
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")

@@ -78,9 +78,7 @@ class SelectJavaPage(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.subTitleLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
         self.subTitleLabel.setSizePolicy(sizePolicy)
         self.subTitleLabel.setTextFormat(Qt.PlainText)
 
@@ -96,15 +94,11 @@ class SelectJavaPage(QWidget):
         self.selectJavaTip = BodyLabel(self.titleLimitWidget)
 
         self.gridLayout_2.addWidget(self.selectJavaTip, 0, 3, 3, 1)
-        titleLimitLayout = QSpacerItem(
-            5, 20, QSizePolicy.Expanding, QSizePolicy.Minimum
-        )
+        titleLimitLayout = QSpacerItem(5, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_2.addItem(titleLimitLayout, 0, 2, 3, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 2, 2)
         self.subTitleLabel.setText(
-            self.tr(
-                "以下是所有已知的 Java，包括你自己添加的，和程序扫描到的。请选择。\n"
-            )
+            self.tr("以下是所有已知的 Java，包括你自己添加的，和程序扫描到的。请选择。\n")
         )
         self.selectJavaTip.setText(
             self.tr(

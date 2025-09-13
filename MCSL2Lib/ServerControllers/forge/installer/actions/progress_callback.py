@@ -21,11 +21,14 @@ class ProgressCallback(metaclass=abc.ABCMeta):
         self.message(message)
 
     @abc.abstractmethod
-    def message(self, message: str):
-        ...
+    def message(self, message: str): ...
 
     def progress(self, progress: float, total: float):
-        percent = int(progress / total * 100 + 0.5)
+        try:
+            percent = int(progress / total * 100 + 0.5)
+        except ZeroDivisionError:
+            percent = 0
+
         if percent > self.lastProgress:
             print("·" * (percent - self.lastProgress), end="")
             self.lastProgress = percent
@@ -35,7 +38,9 @@ class ProgressCallback(metaclass=abc.ABCMeta):
                 print("·" * (self.lastProgress - percent), end="")
                 self.lastProgress = percent
 
-    def downloadProgress(self, filename: str, progress: float, total: float, speed: float, done: bool):
+    def downloadProgress(
+        self, filename: str, progress: float, total: float, speed: float, done: bool
+    ):
         self.progress(progress, total)
         if self.infoQueue is None:
             return

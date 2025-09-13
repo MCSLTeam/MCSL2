@@ -65,9 +65,7 @@ def initializeMCSL2():
     del folders
 
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
-        writeFile(
-            r"./MCSL2/MCSL2_ServerList.json", '{\n  "MCSLServerList": [\n\n  ]\n}'
-        )
+        writeFile(r"./MCSL2/MCSL2_ServerList.json", '{\n  "MCSLServerList": [\n\n  ]\n}')
 
     # set global thread pool
     QThreadPool.globalInstance().setMaxThreadCount(
@@ -82,15 +80,13 @@ def initializeMCSL2():
     ]
     for icon in updateSpigotIconList:
         if icon == "Spigot.svg":
-            tmpConfig = globalServerList["MCSLServerList"][
-                updateSpigotIconList.index(icon)
-            ]
+            tmpConfig = globalServerList["MCSLServerList"][updateSpigotIconList.index(icon)]
             globalServerList["MCSLServerList"].pop(updateSpigotIconList.index(icon))
             tmpConfig["icon"] = "Spigot.png"
             globalServerList["MCSLServerList"].append(tmpConfig)
             MCSL2Logger.warning(
                 "检测到过时配置文件，已自动更新: {"
-                + f"\"name\": \"{tmpConfig['name']}\", \"icon\": \"{tmpConfig['icon']}\""
+                + f'"name": "{tmpConfig["name"]}", "icon": "{tmpConfig["icon"]}"'
                 + "}"
             )
             k += 1
@@ -141,9 +137,7 @@ def private(func):
             return func(*args, **kwargs)
         else:
             # 抛出异常
-            raise PermissionError(
-                f"{func.__name__} is a private method of {class_name}"
-            )
+            raise PermissionError(f"{func.__name__} is a private method of {class_name}")
 
     # 返回包装函数
     return wrapper
@@ -197,16 +191,16 @@ class ExceptionFilterMode(enum.Enum):
 
 
 def exceptionFilter(
-        ty: Type[BaseException], value: BaseException, _traceback: TracebackType
+    ty: Type[BaseException], value: BaseException, _traceback: TracebackType
 ) -> ExceptionFilterMode:
     """
     过滤异常
     """
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.SILENT
-    if isinstance(
-            value, aria2p.ClientException
-    ) and "Active Download not found for GID" in str(value):
+    if isinstance(value, aria2p.ClientException) and "Active Download not found for GID" in str(
+        value
+    ):
         return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
         return ExceptionFilterMode.PASS
@@ -217,7 +211,7 @@ def exceptionFilter(
     if isinstance(value, Exception) and "print test" in str(value):
         return ExceptionFilterMode.RAISE_AND_PRINT
     if isinstance(
-            value, Exception
+        value, Exception
     ) and "RunningServerHeaderCardWidget cannot be converted to PyQt5.QtWidgets.QLayoutItem" in str(
         value
     ):
@@ -228,14 +222,13 @@ def exceptionFilter(
     return ExceptionFilterMode.RAISE_AND_PRINT
 
 
-def checkSHA1(
-        fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None
-) -> List[Dict]:
+def checkSHA1(fileAndSha1: Iterable, _filter: Callable[[str, str], bool] = None) -> List[Dict]:
     """
     检查文件的SHA1值是否正确
     """
     rv = []
     if _filter is None:
+
         def _filter(a, b):
             return True
 
