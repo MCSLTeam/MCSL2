@@ -18,6 +18,7 @@ Communicate with Minecraft servers.
 from PyQt5.QtCore import QObject, pyqtSignal, QTimer, pyqtSlot, Qt, QThread
 from PyQt5.QtWidgets import QFileDialog
 from psutil import NoSuchProcess, Process, AccessDenied
+from MCSL2Lib.utils import MCSL2Logger
 from MCSL2Lib.ServerControllers.processCreator import _ServerProcessBridge
 from MCSL2Lib.variables import ServerVariables
 
@@ -49,21 +50,34 @@ class MinecraftServerResMonitorUtil(QObject):
 
     def getServerMem(self):
         divisionNum = self.divisionNumList[self.serverConfig.memUnit]
+        if not self.bridge.isServerRunning():
+            self.memPercent.emit(0.0000)
+            return
+
         try:
-            if self.bridge.isServerRunning():
-                serverMem = (
-                    Process(self.bridge.handledServer.process.processId()).memory_full_info().uss
-                    / divisionNum
-                )
-                self.memPercent.emit(float("{:.4f}".format(serverMem)))
-            else:
-                self.memPercent.emit(0.0000)
+            process = Process(self.bridge.handledServer.process.processId())
+            try:
+                mem_bytes = process.memory_full_info().uss
+            except (AccessDenied, PermissionError):
+                try:
+                    mem_bytes = process.memory_info().rss
+                except (AccessDenied, PermissionError):
+                    MCSL2Logger.warning(
+                        f"无法获取进程内存信息: pid={process.pid} 权限不足"
+                    )
+                    self.memPercent.emit(0.0000)
+                    return
+
+            serverMem = mem_bytes / divisionNum
+            self.memPercent.emit(float("{:.4f}".format(serverMem)))
         except NoSuchProcess:
-            pass
-        except PermissionError:
-            pass
+            self.memPercent.emit(0.0000)
         except AccessDenied:
-            pass
+            MCSL2Logger.warning("进程内存查询被拒绝访问")
+            self.memPercent.emit(0.0000)
+        except PermissionError:
+            MCSL2Logger.warning("无权限访问进程内存信息")
+            self.memPercent.emit(0.0000)
 
     def getServerCPU(self):
         try:
