@@ -125,9 +125,8 @@ class ServerValidator(QObject):
 
     def checkJVMArgSet(self, j, v: BaseServerVariables):
         """检查JVM参数设置，同时设置"""
-        if j != "":
+        try:
             v.jvmArg = j.split(" ")
             return self.tr("JVM 参数检查: 正常"), 0
-        else:
-            v.jvmArg = ["-Dlog4j2.formatMsgNoLookups=true"]
-            return self.tr("JVM 参数检查: 正常 (无参数，自动启用 log4j2 防护)"), 0
+        except Exception:
+            return self.tr("JVM 参数检查: 出错"), 1

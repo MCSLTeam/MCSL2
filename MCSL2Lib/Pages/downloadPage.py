@@ -625,7 +625,7 @@ class DownloadPage(QWidget):
         self.refreshMCSLSyncBtn.setEnabled(False)
         self.scrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.createCustomDownloadBtn.clicked.connect(self.downloadCustomURLFile)
-        self.openDownloadFolderBtn.clicked.connect(lambda: openLocalFile(".\\MCSL2\\Downloads\\"))
+        self.openDownloadFolderBtn.clicked.connect(lambda: openLocalFile("./MCSL2/Downloads/"))
         self.openDownloadEntriesBtn.clicked.connect(
             lambda: {
                 (box := DownloadEntryBox(self)),

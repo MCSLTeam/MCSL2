@@ -15,6 +15,7 @@ Import Server Widgets
 """
 
 from os import getcwd
+import platform
 from typing import List
 from zipfile import ZipFile
 from PyQt5.QtCore import Qt, QRect, QSize, pyqtSignal
@@ -391,8 +392,16 @@ class ConfirmArgumentsWidget(SimpleCardWidget):
         self.setDeEncodingTitle.setText(self.tr("编码设置："))
         self.inputTitle.setText(self.tr("指令输入编码 (优先级高于全局设置)"))
         self.memUnitComboBox.addItems(["M", "G"])
-        self.outputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI (推荐)")])
-        self.inputComboBox.addItems([self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI (推荐)")])
+        self.outputComboBox.addItems(
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("UTF-8"), self.tr("GB18030")]
+        )
+        self.inputComboBox.addItems(
+            [self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("UTF-8"), self.tr("GB18030")]
+        )
 
     def _initView(
         self,

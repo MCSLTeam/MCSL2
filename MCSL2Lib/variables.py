@@ -14,6 +14,7 @@
 These are the built-in variables of MCSL2.
 """
 
+import platform
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.utils import readGlobalServerConfig
 from MCSL2Lib.singleton import Singleton
@@ -33,7 +34,11 @@ class BaseServerVariables:
         self.selectedJavaVersion: str = ""
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.consoleDeEncodingList = (
+            ["follow", "utf-8", "GB18030", "ansi"]
+            if platform.system().lower() == "windows"
+            else ["follow", "utf-8", "GB18030"]
+        )
         self.memUnitList = ["M", "G"]
         self.jvmArg: list[str] = [""]
         self.serverName: str = ""
@@ -364,14 +369,12 @@ class SettingsVariables:
             cfg.set(cfg.downloadSource, default_source)
             source = default_source
         return self.downloadSourceList.index(source)
-        self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
-        self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
-        self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
-        self.themeList = ["auto", "dark", "light"]
 
 
 class ImportVariables:
-    codingList = ["utf-8", "GB18030", "ansi"]
+    codingList = (
+        ["utf-8", "GB18030", "ansi"] if platform.system() == "Windows" else ["utf-8", "GB18030"]
+    )
 
 
 @Singleton
@@ -394,7 +397,11 @@ class MCSLv1ImportVariables:
             "-XX:+AlwaysPreTouch",
             "-XX:+ParallelRefProcEnabled",
         ]
-        self.consoleDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]
+        self.consoleDeEncodingList = (
+            ["follow", "utf-8", "GB18030", "ansi"]
+            if platform.system().lower() == "windows"
+            else ["follow", "utf-8", "GB18030"]
+        )
         self.memUnitList = ["M", "G"]
         self.consoleOutputDeEncoding: str = "follow"
         self.consoleInputDeEncoding: str = "follow"

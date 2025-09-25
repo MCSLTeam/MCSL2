@@ -16,12 +16,13 @@ Configure new server page.
 
 from json import loads, dumps
 from os import getcwd, mkdir, remove, path as osp
+import platform
 from shutil import copy, rmtree
-from typing import Iterable
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import (
+    QApplication,
     QGridLayout,
     QWidget,
     QVBoxLayout,
@@ -42,6 +43,7 @@ from qfluentwidgets import (
     TitleLabel,
     TransparentToolButton,
     FluentIcon as FIF,
+    Dialog,
     InfoBar,
     InfoBarPosition,
     MessageBox,
@@ -70,6 +72,7 @@ from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.ForgeInstaller.DownloadView import ForgeInstallerDownloadView
 from MCSL2Lib.Widgets.ForgeInstaller.ForgeInstallProgressWidget import ForgeInstallerProgressBox
+from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 from MCSL2Lib.variables import (
@@ -1191,19 +1194,17 @@ class ConfigurePage(QWidget):
         self.extendedMinMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.extendedMaxMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.extendedServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
-        self.extendedOutputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI (推荐)"),
-        ])
+        self.extendedOutputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
         self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
-        self.extendedInputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI (推荐)"),
-        ])
+        self.extendedInputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
         self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
         self.extendedMemUnitComboBox.addItems(["M", "G"])
         self.extendedMemUnitComboBox.setCurrentIndex(0)
@@ -1577,20 +1578,24 @@ class ConfigurePage(QWidget):
                 if currentNewServerType == 1
                 else self.extendedServerNameLineEdit.text()
             ),
-            jvmArg=(self.JVMArgPlainTextEdit.toPlainText() if currentNewServerType == 1 else ""),
+            jvmArg=(self.JVMArgPlainTextEdit.toPlainText() if currentNewServerType == 2 else ""),
         )
         # 如果出错
         if check[1] != 0:
             title = self.tr("创建服务器失败！存在 ") + str(check[1]) + self.tr(" 个问题。")
-            content = self.tr(check[0]) + self.tr(
+            detail_text = self.tr(check[0]) + self.tr(
                 "\n----------------------------\n请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
             )
-            w = MessageBox(title, content, self)
-            w.yesButton.setText(self.tr("好的"))
-            w.cancelButton.setParent(None)
-            w.cancelButton.deleteLater()
-            del w.cancelButton
-            w.exec()
+            dialog = Dialog(title, self.tr("详细信息如下："), self)
+            dialog.titleBar.show()
+            dialog.setTitleBarVisible(False)
+            dialog.yesButton.setText(self.tr("确认"))
+            dialog.cancelButton.setParent(None)
+            dialog.cancelButton.deleteLater()
+            del dialog.cancelButton
+            detail_widget = ExceptionWidget(detail_text)
+            dialog.textLayout.addWidget(detail_widget.exceptionScrollArea)
+            dialog.exec()
         else:
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
             title = self.tr("请再次检查你设置的参数是否有误: ")
@@ -1635,10 +1640,14 @@ class ConfigurePage(QWidget):
                 + self.tr("服务器名称: ")
                 + configureServerVariables.serverName
             )
-            w = MessageBox(title, content, self)
+            w = MessageBox(title, "", self)
             w.yesButton.setText(self.tr("无误，添加"))
             w.yesSignal.connect(self.preNewServerDispatcher)
             w.cancelButton.setText(self.tr("我再看看"))
+            detail_widget = ExceptionWidget(content)
+            w.textLayout.addWidget(detail_widget.exceptionScrollArea)
+            w.contentLabel.setParent(None)
+            w.contentLabel.deleteLater()
             w.exec()
 
     def preNewServerDispatcher(self):

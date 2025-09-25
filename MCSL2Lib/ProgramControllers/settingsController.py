@@ -14,6 +14,7 @@
 Settings controller, for editing MCSL2's configurations.
 """
 
+import platform
 from qfluentwidgets import (
     QConfig,
     ConfigItem,
@@ -55,7 +56,7 @@ class Config(QConfig):
         "Download",
         "downloadSource",
         "FastMirror",
-    OptionsValidator(["FastMirror", "MCSLSync", "PolarsAPI"]),
+        OptionsValidator(["FastMirror", "MCSLSync", "PolarsAPI"]),
     )
     alwaysAskSaveDirectory = ConfigItem(
         "Download", "alwaysAskSaveDirectory", False, BoolValidator()
@@ -71,14 +72,22 @@ class Config(QConfig):
     outputDeEncoding = OptionsConfigItem(
         "Console",
         "outputDeEncoding",
-        "ansi",
-        OptionsValidator(["utf-8", "GB18030", "ansi"]),
+        "ansi" if platform.system() == "Windows" else "utf-8",
+        OptionsValidator(
+            ["utf-8", "GB18030", "ansi"]
+            if platform.system().lower() == "windows"
+            else ["utf-8", "GB18030"]
+        ),
     )
     inputDeEncoding = OptionsConfigItem(
         "Console",
         "inputDeEncoding",
         "follow",
-        OptionsValidator(["follow", "utf-8", "GB18030", "ansi"]),
+        OptionsValidator(
+            ["utf-8", "GB18030", "ansi"]
+            if platform.system().lower() == "windows"
+            else ["utf-8", "GB18030"]
+        ),
     )
     quickMenu = ConfigItem("Console", "quickMenu", True, BoolValidator())
     clearConsoleWhenStopServer = ConfigItem(
@@ -104,9 +113,7 @@ class Config(QConfig):
     )
 
     # Force Parallel Download
-    forceParallelDownload = ConfigItem(
-        "Download", "forceParallelDownload", False, BoolValidator()
-    )
+    forceParallelDownload = ConfigItem("Download", "forceParallelDownload", False, BoolValidator())
 
     # Other
     enableExperimentalFeatures = ConfigItem(

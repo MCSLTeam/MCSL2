@@ -181,7 +181,7 @@ class PluginManager(BasePluginManager):
 
     def readAllPlugins(self, firstLoad):
         """读取所有插件但不启用"""
-        path = getcwd() + "\\Plugins"
+        path = getcwd() + "/Plugins"
         try:
             self.pathList = next(walk(path))[1]
             if not firstLoad:
@@ -246,7 +246,7 @@ class PluginManager(BasePluginManager):
                 url = osp.dirname(osp.abspath(__file__))  # 文件夹
                 url = osp.abspath(osp.join(url, ".."))
                 self.pluginWidget.pluginIcon.setPixmap(
-                    QPixmap(f"{url}\\Plugins\\{pluginName}\\{plugin.icon}")
+                    QPixmap(f"{url}/Plugins/{pluginName}/{plugin.icon}")
                 )
             self.pluginWidget.pluginIcon.setFixedSize(60, 60)
             self.pluginWidget.SwitchButton.setObjectName(f"switchBtn_{pluginName}")
@@ -267,7 +267,7 @@ class PluginManager(BasePluginManager):
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: openLocalFile(f".\\Plugins\\{instance}\\")
+                lambda instance: openLocalFile(f".//Plugins/{instance}/")
             )
             self.pluginWidget.deleteBtn.selfClicked.connect(
                 lambda instance: self.deletePlugin(instance, self.pluginWidget.deleteBtn.window())

@@ -15,6 +15,7 @@ Settings page.
 """
 
 from datetime import datetime
+import platform
 
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import (
@@ -271,7 +272,9 @@ class SettingsPage(QWidget):
             icon=FIF.CODE,
             title=self.tr("控制台输出编码"),
             content=self.tr("优先级低于服务器配置设置。"),
-            texts=[self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI (推荐)")],
+            texts=[self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("UTF-8"), self.tr("GB18030")],
             parent=self.consoleSettingsGroup,
         )
         self.inputDeEncoding = ComboBoxSettingCard(
@@ -279,12 +282,9 @@ class SettingsPage(QWidget):
             icon=FIF.CODE,
             title=self.tr("指令输入编码"),
             content=self.tr("优先级低于服务器配置设置。"),
-            texts=[
-                self.tr("跟随控制台输出"),
-                self.tr("UTF-8"),
-                self.tr("GB18030"),
-                self.tr("ANSI (推荐)"),
-            ],
+            texts=[self.tr("跟随控制台输出"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("UTF-8"), self.tr("GB18030")],
             parent=self.consoleSettingsGroup,
         )
         self.quickMenu = SwitchSettingCard(

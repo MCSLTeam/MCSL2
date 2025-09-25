@@ -12,6 +12,7 @@
 ################################################################################
 from json import dumps, loads
 from os import getcwd
+import platform
 from re import search
 from PyQt5.QtCore import pyqtSlot, QSize, Qt, QRect, QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
@@ -579,18 +580,16 @@ class MCSLv1(QWidget):
         self.MCSLv1Save.setEnabled(False)
         self.MCSLv1ImportStatusText.setText(self.tr("未选择"))
         self.MCSLv1ValidateArgsMemUnitComboBox.addItems(["M", "G"])
-        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI (推荐)"),
-        ])
-        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI (推荐)"),
-        ])
+        self.MCSLv1ValidateArgsOutputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
+        self.MCSLv1ValidateArgsInputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
         self.MCSLv1SaveServerNameLineEdit.textChanged.connect(
             lambda: self.MCSLv1SaveServerPrimaryPushBtn.setEnabled(
                 self.MCSLv1SaveServerNameLineEdit.text() != ""

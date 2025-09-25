@@ -16,12 +16,14 @@ Manage exists Minecraft servers.
 
 from json import dump, loads, dumps
 from os import getcwd, rename, path as osp, remove
+import platform
 from shutil import copy, rmtree
 from pyqt5_concurrent.TaskExecutor import TaskExecutor  # type: ignore
 
 from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import (
+    QApplication,
     QSizePolicy,
     QFrame,
     QWidget,
@@ -45,6 +47,7 @@ from qfluentwidgets import (
     TitleLabel,
     TransparentToolButton,
     FluentIcon as FIF,
+    Dialog,
     MessageBox,
     InfoBar,
     InfoBarPosition,
@@ -67,6 +70,7 @@ from MCSL2Lib.ServerControllers.serverUtils import backupServer, backupSaves
 from MCSL2Lib.Widgets.noServerTip import NoServerWidget
 from MCSL2Lib.Widgets.serverManagerWidget import SingleServerManager
 from MCSL2Lib.Widgets.singleRunningServerWidget import RunningServerHeaderCardWidget
+from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.singleton import Singleton
 
 # from MCSL2Lib.Controllers.interfaceController import ChildStackedWidget
@@ -589,18 +593,16 @@ class ServerManagerPage(QWidget):
         self.editMaxMemLineEdit.setPlaceholderText(self.tr("整数"))
         self.editServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
         self.JVMArgPlainTextEdit.setPlaceholderText(self.tr("可选，用一个空格分组"))
-        self.editOutputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI (推荐)"),
-        ])
-        self.editInputDeEncodingComboBox.addItems([
-            self.tr("跟随全局"),
-            self.tr("UTF-8"),
-            self.tr("GB18030"),
-            self.tr("ANSI (推荐)"),
-        ])
+        self.editOutputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
+        self.editInputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
         self.editMemUnitComboBox.addItems([self.tr("M"), self.tr("G")])
 
         self.editManuallyAddJavaPrimaryPushBtn.clicked.connect(self.replaceJavaManually)
@@ -1122,16 +1124,20 @@ class ServerManagerPage(QWidget):
             # 如果出错
             if check[1] != 0:
                 title = self.tr("编辑服务器失败！存在") + str(check[1]) + self.tr("个问题。")
-                content = (
+                detail_text = (
                     check[0]
                     + "\n----------------------------\n"
                     + self.tr(
                         "请根据上方提示，修改后再尝试保存。\n如果确认自己填写的没有问题，请联系开发者。"
                     )
                 )
-                w = MessageBox(title, content, self)
+                w = MessageBox(title, "", self)
                 w.yesButton.setText(self.tr("好的"))
                 w.yesSignal.connect(w.deleteLater)
+                detail_widget = ExceptionWidget(detail_text)
+                w.textLayout.addWidget(detail_widget.exceptionScrollArea)
+                w.contentLabel.setParent(None)
+                w.contentLabel.deleteLater()
                 w.cancelButton.setParent(None)
                 w.cancelButton.deleteLater()
                 del w.cancelButton
@@ -1180,11 +1186,15 @@ class ServerManagerPage(QWidget):
                     + self.tr("服务器名称: ")
                     + editServerVariables.serverName
                 )
-                w = MessageBox(title, content, self)
-                w.yesButton.setText(self.tr("无误，覆盖"))
-                w.yesSignal.connect(self.confirmForgeServer)
-                w.cancelButton.setText(self.tr("我再看看"))
-                w.exec()
+            w = MessageBox(title, "", self)
+            w.yesButton.setText(self.tr("无误，覆盖"))
+            w.yesSignal.connect(self.confirmForgeServer)
+            w.cancelButton.setText(self.tr("我再看看"))
+            detail_widget = ExceptionWidget(content)
+            w.textLayout.addWidget(detail_widget.exceptionScrollArea)
+            w.contentLabel.setParent(None)
+            w.contentLabel.deleteLater()
+            w.exec()
 
     def confirmForgeServer(self):
         if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
