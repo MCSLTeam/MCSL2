@@ -76,16 +76,8 @@ if __name__ == "__main__":
         deleteOldMCSL2()
         del deleteOldMCSL2
 
-    # Analyze user
-    try:
-        from MCSL2Lib.verification import countUserAPI
-    except ImportError:
-        from MCSL2Lib.noVerification import countUserAPI
-
-    try:
-        countUserAPI()
-    except Exception:
-        pass
+    from MCSL2Lib.verification import countUserAPI
+    countUserAPI()
     del countUserAPI
 
     # High DPI scaling
