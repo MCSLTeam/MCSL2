@@ -16,19 +16,16 @@ Update Controller
 
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2Controller
+from MCSL2Lib.ProgramControllers.multiThreadDownloadController import MultiThreadDownloadController
 import sys
 from os import remove, name as osname, rename, execl, path as osp
 from platform import architecture
 from shutil import move
-from qfluentwidgets import MessageBox, InfoBar, InfoBarPosition
+from qfluentwidgets import InfoBar, InfoBarPosition
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.variables import GlobalMCSL2Variables
 
-try:
-    from MCSL2Lib.verification import checkUpdate
-except Exception:
-    from MCSL2Lib.noVerification import checkUpdate
+from MCSL2Lib.verification import checkUpdate
 
 
 class CheckUpdateThread(QThread):
@@ -78,29 +75,17 @@ class MCSL2FileUpdater(QObject):
         if GlobalMCSL2Variables.devMode:
             return
         else:
-            if not Aria2Controller.testAria2Service():
-                if not Aria2Controller.startAria2():
-                    box = MessageBox(
-                        title=self.tr("无法更新"),
-                        content=self.tr(
-                            "MCSL2 的 Aria2 可能未安装或启动失败。\n已尝试重新启动 Aria2。"
-                        ),
-                        parent=self.parent(),
-                    )
-                    box.exec()
-                    return
-            else:
-                if not self.isUpdateAvailable:
-                    return
-                if showInfoBar:
-                    InfoBar.info(
-                        title=self.tr("正在下载更新"),
-                        content=self.tr("MCSL2 稍后将自动重启"),
-                        position=InfoBarPosition.BOTTOM_RIGHT,
-                        duration=-1,
-                        parent=self.parent().window(),
-                    )
-            Aria2Controller.download(
+            if not self.isUpdateAvailable:
+                return
+            if showInfoBar:
+                InfoBar.info(
+                    title=self.tr("正在下载更新"),
+                    content=self.tr("MCSL2 稍后将自动重启"),
+                    position=InfoBarPosition.BOTTOM_RIGHT,
+                    duration=-1,
+                    parent=self.parent().window(),
+                )
+            MultiThreadDownloadController.download(
                 uri=self.processUpdateLink,
                 watch=False,
                 interval=0.2,
@@ -115,7 +100,7 @@ class MCSL2FileUpdater(QObject):
             self.downloadUpdate(showInfoBar=False)
             return
         else:
-            Aria2Controller.download(
+            MultiThreadDownloadController.download(
                 uri=self.verificationUpdateLink,
                 watch=False,
                 interval=0.2,

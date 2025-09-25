@@ -50,10 +50,6 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.ProgramControllers.aria2ClientController import (
-    Aria2BootThread,
-    Aria2Controller,
-)
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.updateController import (
     CheckUpdateThread,
@@ -65,10 +61,7 @@ from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
 
-try:
-    from MCSL2Lib.verification import generateUniqueCode
-except Exception:
-    from MCSL2Lib.noVerification import generateUniqueCode
+from MCSL2Lib.verification import generateUniqueCode
 
 settingsVariables = SettingsVariables()
 
@@ -229,9 +222,8 @@ class SettingsPage(QWidget):
             content=self.tr("随你所好。"),
             texts=[
                 self.tr("FastMirror 镜像站"),
-                self.tr("MCSLAPI"),
+                self.tr("MCSL-Sync"),
                 self.tr("极星·镜像站"),
-                self.tr("Akira Cloud 镜像站"),
             ],
             parent=self.downloadSettingsGroup,
         )
@@ -242,11 +234,18 @@ class SettingsPage(QWidget):
             configItem=cfg.alwaysAskSaveDirectory,
             parent=self.downloadSettingsGroup,
         )
-        self.aria2Thread = RangeSettingCard(
-            configItem=cfg.aria2Thread,
+        self.downloadThreads = RangeSettingCard(
+            configItem=cfg.downloadThreads,
             icon=FIF.SPEED_HIGH,
-            title=self.tr("Aria2 下载引擎线程数"),
+            title=self.tr("下载线程数"),
             content=self.tr("太高可不好哦。"),
+            parent=self.downloadSettingsGroup,
+        )
+        self.forceParallelDownload = SwitchSettingCard(
+            icon=FIF.TILES,
+            title=self.tr("强制使用多线程下载"),
+            content=self.tr("即使服务器不支持分块下载也使用多线程下载（可能会失败）。"),
+            configItem=cfg.forceParallelDownload,
             parent=self.downloadSettingsGroup,
         )
         self.saveSameFileException = OptionsSettingCard(
@@ -258,10 +257,10 @@ class SettingsPage(QWidget):
             parent=self.downloadSettingsGroup,
         )
         self.alwaysAskSaveDirectory.setEnabled(False)
-        self.aria2Thread.valueChanged.connect(self.restartAria2)
         self.downloadSettingsGroup.addSettingCard(self.downloadSource)
         self.downloadSettingsGroup.addSettingCard(self.alwaysAskSaveDirectory)
-        self.downloadSettingsGroup.addSettingCard(self.aria2Thread)
+        self.downloadSettingsGroup.addSettingCard(self.downloadThreads)
+        self.downloadSettingsGroup.addSettingCard(self.forceParallelDownload)
         self.downloadSettingsGroup.addSettingCard(self.saveSameFileException)
         self.settingsLayout.addWidget(self.downloadSettingsGroup)
 
@@ -484,7 +483,7 @@ class SettingsPage(QWidget):
         self.sponsorsBtn.setObjectName("sponsorsBtn")
 
         self.donateBtn = HyperlinkButton(
-            "https://afdian.net/a/MCSLTeam",
+            "https://afdian.com/a/lxhtt",
             self.tr("赞助此项目"),
             self.aboutContentWidget,
             FIF.CAFE,
@@ -550,36 +549,6 @@ class SettingsPage(QWidget):
             parent=self,
         )
 
-    def restartAria2(self):
-        Aria2Controller.shutDown()
-        bootThread = Aria2BootThread(self)
-        bootThread.loaded.connect(self.onAria2Reloaded)
-        bootThread.finished.connect(bootThread.deleteLater)
-        bootThread.start()
-
-    @pyqtSlot(bool)
-    def onAria2Reloaded(self, flag: bool):
-        if flag:
-            InfoBar.success(
-                title=self.tr("Aria2 下载引擎重启成功。"),
-                content="",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-        else:
-            InfoBar.error(
-                title=self.tr("Aria2 下载引擎重启失败"),
-                content=self.tr("请检查是否安装了 Aria2。"),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-
     def checkUpdate(self, parent):
         """
         检查更新触发器\n
@@ -632,7 +601,7 @@ class SettingsPage(QWidget):
             w.yesButton.setText(self.tr("更新"))
             w.cancelButton.setText(self.tr("关闭"))
             if not GlobalMCSL2Variables.devMode:
-                w.yesSignal.connect(lambda: self.window().switchTo(self))
+                w.yesSignal.connect(lambda: self.window().switchTo(self))  # type: ignore
                 w.yesSignal.connect(MCSL2FileUpdater(self).downloadUpdate)
             else:
                 w.yesSignal.connect(

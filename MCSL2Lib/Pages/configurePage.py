@@ -1233,8 +1233,8 @@ class ConfigurePage(QWidget):
         )
         self.noobDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: InfoBar.info(
-                title=self.tr("切换到 MCSLAPI"),
-                content=self.tr("因为 FastMirror 没有 Java 啊"),
+                title=self.tr("Java下载"),
+                content=self.tr("请使用其他下载源下载Java"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1244,8 +1244,8 @@ class ConfigurePage(QWidget):
         )
         self.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: InfoBar.info(
-                title=self.tr("切换到 MCSLAPI"),
-                content=self.tr("因为 FastMirror 没有 Java 啊"),
+                title=self.tr("Java下载"),
+                content=self.tr("请使用其他下载源下载Java"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,

@@ -25,13 +25,6 @@ from qfluentwidgets import (
 )
 
 
-class Aria2Range(RangeConfigItem):
-    @property
-    def range(self):
-        """get the available range of config"""
-        return [1, 128]
-
-
 class Config(QConfig):
     """MCSL2 Configuration"""
 
@@ -62,16 +55,10 @@ class Config(QConfig):
         "Download",
         "downloadSource",
         "FastMirror",
-        OptionsValidator(["FastMirror", "MCSLAPI", "PolarsAPI", "AkiraCloud"]),
+    OptionsValidator(["FastMirror", "MCSLSync", "PolarsAPI"]),
     )
     alwaysAskSaveDirectory = ConfigItem(
         "Download", "alwaysAskSaveDirectory", False, BoolValidator()
-    )
-    aria2Thread = Aria2Range(
-        "Download",
-        "aria2Thread",
-        8,
-        validator=RangeValidator(min=1, max=128),
     )
     saveSameFileException = OptionsConfigItem(
         "Download",
@@ -107,6 +94,20 @@ class Config(QConfig):
     startOnStartup = ConfigItem("Software", "startOnStartup", False, BoolValidator())
     # Update
     checkUpdateOnStart = ConfigItem("Update", "checkUpdateOnStart", False, BoolValidator())
+
+    # Download Advanced
+    downloadThreads = RangeConfigItem(
+        "Download",
+        "downloadThreads",
+        16,
+        validator=RangeValidator(min=1, max=256),
+    )
+
+    # Force Parallel Download
+    forceParallelDownload = ConfigItem(
+        "Download", "forceParallelDownload", False, BoolValidator()
+    )
+
     # Other
     enableExperimentalFeatures = ConfigItem(
         "Other", "enableExperimentalFeatures", False, BoolValidator()

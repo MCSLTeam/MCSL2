@@ -23,7 +23,6 @@ from os import makedirs, path as osp
 from types import TracebackType
 from typing import Type, Optional, Iterable, Callable, Dict, List
 
-import aria2p
 import psutil
 import requests
 from PyQt5.QtCore import QUrl, QThread, QThreadPool, QFile
@@ -55,7 +54,6 @@ def initializeMCSL2():
         "Servers",
         "Plugins",
         "MCSL2",
-        "MCSL2/Aria2",
         "MCSL2/Downloads",
         "MCSL2/Logs",
     ]
@@ -198,10 +196,6 @@ def exceptionFilter(
     """
     if isinstance(value, AttributeError) and "MessageBox" in str(value):
         return ExceptionFilterMode.SILENT
-    if isinstance(value, aria2p.ClientException) and "Active Download not found for GID" in str(
-        value
-    ):
-        return ExceptionFilterMode.RAISE
     if isinstance(value, RuntimeError) and "wrapped C/C++ object of type" in str(value):
         return ExceptionFilterMode.PASS
     if isinstance(value, Exception) and "raise test" in str(value):

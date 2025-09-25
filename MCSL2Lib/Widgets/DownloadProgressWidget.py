@@ -15,7 +15,6 @@ Download Progress Widget.
 """
 
 from os import path
-from typing import Optional
 
 from PyQt5.QtCore import QSize, QRect, pyqtSlot, pyqtSignal
 from PyQt5.QtWidgets import (
@@ -26,7 +25,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QHBoxLayout,
 )
-from aria2p import Download
+
 from qfluentwidgets import (
     BodyLabel,
     PrimaryPushButton,
@@ -41,8 +40,8 @@ from qfluentwidgets import (
     InfoBar,
 )
 
-from MCSL2Lib.ProgramControllers.aria2ClientController import (
-    Aria2Controller,
+from MCSL2Lib.ProgramControllers.multiThreadDownloadController import (
+    MultiThreadDownloadController,
     DL_EntryController,
 )
 from MCSL2Lib.utils import MCSL2Logger
@@ -277,18 +276,31 @@ class DownloadMessageBox(MessageBox):
         self.paused.emit(self.pauseSwitch)
 
     @pyqtSlot(dict)
+    @pyqtSlot(dict)
     def onInfoGet(self, info):
-        self.downloadProgressWidget.fileSize.setText(info["totalLength"])
-        self.downloadProgressWidget.ETA.setText(info["eta"])
-        self.downloadProgressWidget.speed.setText(info["speed"])
-        self.downloadProgressWidget.ProgressNum.setText(info["progress"])
-        self.downloadProgressWidget.ProgressBar.setValue(info["bar"])
-        self.downloadProgressWidget.downloading = True
+        try:
+            # 检查对象是否仍然有效
+            if hasattr(self, "downloadProgressWidget") and self.downloadProgressWidget:
+                widget = self.downloadProgressWidget
+                if hasattr(widget, "fileSize") and widget.fileSize:
+                    widget.fileSize.setText(info["totalLength"])
+                if hasattr(widget, "ETA") and widget.ETA:
+                    widget.ETA.setText(info["eta"])
+                if hasattr(widget, "speed") and widget.speed:
+                    widget.speed.setText(info["speed"])
+                if hasattr(widget, "ProgressNum") and widget.ProgressNum:
+                    widget.ProgressNum.setText(info["progress"])
+                if hasattr(widget, "ProgressBar") and widget.ProgressBar:
+                    widget.ProgressBar.setValue(info["bar"])
+                widget.downloading = True
+        except RuntimeError:
+            # 对象已被删除，静默忽略
+            pass
 
     @pyqtSlot(list)
     def onDownloadFinished(self, _: list):
         [dl, extraData] = _
-        dl: Optional[Download]
+        # dl: None for success, str for error
         self.hide()
         self.show()
         filename = extraData[0]
@@ -312,7 +324,9 @@ class DownloadMessageBox(MessageBox):
             elif dl.status == "removed":
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         else:
+            # Download failed
             self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
+            MCSL2Logger.error(msg=f"Download failed: {dl}")
         self.downloadProgressWidget.downloading = False
         try:
             self.parent().downloadFinishedHelper()
@@ -326,14 +340,30 @@ class DownloadMessageBox(MessageBox):
         return self.downloadProgressWidget.downloading
 
     def flush(self):
-        self.downloadProgressWidget.fileSize.setText(self.tr("[文件大小] "))
-        self.downloadProgressWidget.speed.setText(self.tr("[速度] "))
-        self.downloadProgressWidget.ETA.setText("[ETA] ")
-        self.downloadProgressWidget.ProgressNum.setText("NaN%")
-        self.downloadProgressWidget.ProgressBar.setValue(0)
-        self.downloadProgressWidget.fileName.setText(self.tr("[文件名] "))
-        self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(0)
-        self.downloadProgressWidget.downloading = False
+        try:
+            if hasattr(self, "downloadProgressWidget") and self.downloadProgressWidget:
+                widget = self.downloadProgressWidget
+                if hasattr(widget, "fileSize") and widget.fileSize:
+                    widget.fileSize.setText(self.tr("[文件大小] "))
+                if hasattr(widget, "speed") and widget.speed:
+                    widget.speed.setText(self.tr("[速度] "))
+                if hasattr(widget, "ETA") and widget.ETA:
+                    widget.ETA.setText("[ETA] ")
+                if hasattr(widget, "ProgressNum") and widget.ProgressNum:
+                    widget.ProgressNum.setText("NaN%")
+                if hasattr(widget, "ProgressBar") and widget.ProgressBar:
+                    widget.ProgressBar.setValue(0)
+                if hasattr(widget, "fileName") and widget.fileName:
+                    widget.fileName.setText(self.tr("[文件名] "))
+                if (
+                    hasattr(widget, "downloadProgressMainWidget")
+                    and widget.downloadProgressMainWidget
+                ):
+                    widget.downloadProgressMainWidget.setCurrentIndex(0)
+                widget.downloading = False
+        except RuntimeError:
+            # 对象已被删除，静默忽略
+            pass
 
 
 class DownloadCard(SimpleCardWidget):
@@ -410,7 +440,7 @@ class DownloadCard(SimpleCardWidget):
         self.pauseBtn.clicked.connect(self.onPauseBtnClicked)
 
     def retryDownloadFile(self, extraData: tuple):
-        gid = Aria2Controller.download(
+        gid = MultiThreadDownloadController.download(
             uri=self.uri,
             watch=True,
             info_get=self.onInfoGet,
@@ -420,44 +450,61 @@ class DownloadCard(SimpleCardWidget):
         )
         self.canceled.disconnect()
         self.paused.disconnect()
-        self.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+        self.canceled.connect(lambda: MultiThreadDownloadController.cancelDownloadTask(gid))
         self.paused.connect(
             lambda x: (
-                Aria2Controller.pauseDownloadTask(gid)
+                MultiThreadDownloadController.pauseDownloadTask(gid)
                 if x
-                else Aria2Controller.resumeDownloadTask(gid)
+                else MultiThreadDownloadController.resumeDownloadTask(gid)
             )
         )
 
     def onPauseBtnClicked(self):
-        self.pauseSwitch = not self.pauseSwitch
-        if self.pauseSwitch:
-            self.pauseBtn.setText(self.tr("继续"))
-            self.ProgressBar.pause()
-        else:
-            self.pauseBtn.setText(self.tr("暂停"))
-            self.ProgressBar.resume()
-        self.paused.emit(self.pauseSwitch)
+        try:
+            self.pauseSwitch = not self.pauseSwitch
+            if self.pauseSwitch:
+                if hasattr(self, "pauseBtn") and self.pauseBtn:
+                    self.pauseBtn.setText(self.tr("继续"))
+                if hasattr(self, "ProgressBar") and self.ProgressBar:
+                    self.ProgressBar.pause()
+            else:
+                if hasattr(self, "pauseBtn") and self.pauseBtn:
+                    self.pauseBtn.setText(self.tr("暂停"))
+                if hasattr(self, "ProgressBar") and self.ProgressBar:
+                    self.ProgressBar.resume()
+            self.paused.emit(self.pauseSwitch)
+        except RuntimeError:
+            # 对象已被删除，静默忽略
+            pass
 
     @pyqtSlot(dict)
     def onInfoGet(self, info):
-        self.downloadExtraInfoLabel.setText(
-            f"{info['totalLength']} | {info['speed']} | {info['eta']}"
-        )
-        self.progressNum.setText(info["progress"])
-        self.ProgressBar.setValue(info["bar"])
-        self.downloading = True
+        try:
+            # 检查对象是否仍然有效
+            if hasattr(self, "downloadExtraInfoLabel") and self.downloadExtraInfoLabel:
+                self.downloadExtraInfoLabel.setText(
+                    f"{info['totalLength']} | {info['speed']} | {info['eta']}"
+                )
+            if hasattr(self, "progressNum") and self.progressNum:
+                self.progressNum.setText(info["progress"])
+            if hasattr(self, "ProgressBar") and self.ProgressBar:
+                self.ProgressBar.setValue(info["bar"])
+            self.downloading = True
+        except RuntimeError:
+            # 对象已被删除，静默忽略
+            pass
 
     @pyqtSlot(list)
     def onDownloadFinished(self, _: list):
-        [dl, extraData] = _
-        dl: Optional[Download]
-        filename = extraData[0]
-        data = {
-            "type": extraData[1],
-            "mc_version": extraData[2],
-            "build_version": extraData[3],
-        }
+        try:
+            [dl, extraData] = _
+            # dl: None for success, str for error
+            filename = extraData[0]
+            data = {
+                "type": extraData[1],
+                "mc_version": extraData[2],
+                "build_version": extraData[3],
+            }
 
         if dl is not None:
             if dl.status == "complete":
@@ -497,35 +544,73 @@ class DownloadCard(SimpleCardWidget):
                     self.flush()
                     self.setParent(None)
                     self.deleteLater()
-                except Exception:
+                except RuntimeError:
                     pass
-        else:
-            errInfoBar = InfoBar.error(
-                title=self.tr("{filename} 下载失败").format(filename=filename),
-                content="",
-                duration=-1,
-                isClosable=True,
-                position=InfoBarPosition.BOTTOM_RIGHT,
-                parent=self.parent().parent().parent().parent(),
-            )
-            retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
-            retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
-            retryBtn.clicked.connect(errInfoBar.close)
-            errInfoBar.addWidget(retryBtn)
-            self.ProgressBar.setValue(100)
-            self.ProgressBar.error()
-        self.downloading = False
-        try:
-            self.parent().downloadFinishedHelper()
-        except Exception:
+            else:
+                # Download failed
+                try:
+                    parent_widget = self.parent()
+                    if parent_widget:
+                        # 尝试获取顶级父窗口
+                        top_parent = parent_widget
+                        for _ in range(3):
+                            if top_parent.parent():
+                                top_parent = top_parent.parent()
+                            else:
+                                break
+                    else:
+                        top_parent = None
+
+                    errInfoBar = InfoBar.error(
+                        title=self.tr("{filename} 下载失败").format(filename=filename),
+                        content="",
+                        duration=-1,
+                        isClosable=True,
+                        position=InfoBarPosition.BOTTOM_RIGHT,
+                        parent=top_parent,
+                    )
+                    retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
+                    retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
+                    retryBtn.clicked.connect(errInfoBar.close)
+                    errInfoBar.addWidget(retryBtn)
+                except RuntimeError:
+                    # 无法显示错误通知，静默忽略
+                    pass
+
+                try:
+                    if hasattr(self, "ProgressBar") and self.ProgressBar:
+                        self.ProgressBar.setValue(100)
+                        self.ProgressBar.error()
+                except RuntimeError:
+                    pass
+
+                MCSL2Logger.error(msg=f"Download failed: {dl}")
+
+            self.downloading = False
+            try:
+                parent_widget = self.parent()
+                if parent_widget and hasattr(parent_widget, "downloadFinishedHelper"):
+                    parent_widget.downloadFinishedHelper()
+            except Exception:
+                pass
+        except RuntimeError:
+            # 对象已被删除，静默忽略
             pass
 
     def isDownloading(self):
         return self.downloading
 
     def flush(self):
-        self.fileNameLabel.setText(self.tr("[文件名] "))
-        self.downloadExtraInfoLabel.setText(self.tr("[大小]  [速度]  [ETA]"))
-        self.progressNum.setText("NaN%")
-        self.ProgressBar.setValue(0)
-        self.downloading = False
+        try:
+            if hasattr(self, "fileNameLabel") and self.fileNameLabel:
+                self.fileNameLabel.setText(self.tr("[文件名] "))
+            if hasattr(self, "downloadExtraInfoLabel") and self.downloadExtraInfoLabel:
+                self.downloadExtraInfoLabel.setText(self.tr("[大小]  [速度]  [ETA]"))
+            if hasattr(self, "progressNum") and self.progressNum:
+                self.progressNum.setText("NaN%")
+            if hasattr(self, "ProgressBar") and self.ProgressBar:
+                self.ProgressBar.setValue(0)
+            self.downloading = False
+        except RuntimeError:
+            # 对象已被删除，静默忽略
+            pass

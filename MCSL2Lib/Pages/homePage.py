@@ -15,7 +15,7 @@ Home page.
 """
 
 from PyQt5.QtGui import QCursor
-from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QThread, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QThread, pyqtSignal
 from PyQt5.QtWidgets import (
     QGridLayout,
     QWidget,
@@ -37,11 +37,7 @@ from qfluentwidgets import (
 )
 
 from MCSL2Lib.singleton import Singleton
-
-try:
-    from MCSL2Lib.verification import getAnnouncement
-except Exception:
-    from MCSL2Lib.noVerification import getAnnouncement
+from MCSL2Lib.verification import getAnnouncement
 
 
 class NoticeStrongBodyLabel(StrongBodyLabel):

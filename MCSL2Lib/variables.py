@@ -273,7 +273,12 @@ class DownloadVariables:
     """下载页需要的变量"""
 
     def __init__(self):
-        self.MCSLAPIDownloadUrlDict = {}
+        self.MCSLSyncCoreList = []
+        self.MCSLSyncCoreVersions = {}
+        self.MCSLSyncCoreBuilds = {}
+        self.MCSLSyncSelectedCore: str = ""
+        self.MCSLSyncSelectedVersion: str = ""
+        self.MCSLSyncBuildDetailsCache = {}
         self.FastMirrorAPIDict = {}
         self.FastMirrorAPICoreVersionDict = {}
         self.selectedName: str = ""
@@ -287,8 +292,6 @@ class DownloadVariables:
         }
         self.PolarTypeDict = {}
         self.PolarCoreDict = {}
-        self.AkiraTypeList = []
-        self.AkiraCoreDict = {}
 
 
 class ServerVariables:
@@ -346,13 +349,21 @@ class SettingsVariables:
 
     def __init__(self):
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
-        self.downloadSourceList = ["FastMirror", "MCSLAPI", "PolarsAPI", "AkiraCloud"]
+        self.downloadSourceList = ["FastMirror", "MCSLSync", "PolarsAPI"]
         self.downloadSourceTextList = [
             "FastMirror 镜像站",
-            "MCSLAPI",
+            "MCSL-Sync",
             "极星·镜像站",
-            "Akira Cloud 镜像站",
         ]
+
+    def get_download_source_index(self) -> int:
+        """获取当前配置的下载源索引，若配置无效则回退到默认值。"""
+        source = cfg.get(cfg.downloadSource)
+        if source not in self.downloadSourceList:
+            default_source = self.downloadSourceList[0]
+            cfg.set(cfg.downloadSource, default_source)
+            source = default_source
+        return self.downloadSourceList.index(source)
         self.saveSameFileExceptionList = ["ask", "overwrite", "stop"]
         self.outputDeEncodingList = ["utf-8", "GB18030", "ansi"]
         self.inputDeEncodingList = ["follow", "utf-8", "GB18030", "ansi"]

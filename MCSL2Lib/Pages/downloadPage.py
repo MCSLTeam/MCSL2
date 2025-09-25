@@ -11,13 +11,12 @@
 #
 ################################################################################
 """
-Download page with FastMirror, MCSLAPI, PolarsAPI and AkiraCloud.
+Download page with FastMirror, MCSL-Sync, and PolarsAPI.
 """
 
 from os import path as osp, remove
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QWidget,
@@ -28,6 +27,8 @@ from PyQt5.QtWidgets import (
     QStackedWidget,
     QButtonGroup,
 )
+from PyQt5 import sip
+
 from qfluentwidgets import (
     StrongBodyLabel,
     SubtitleLabel,
@@ -42,10 +43,8 @@ from qfluentwidgets import (
     TransparentTogglePushButton,
     VerticalSeparator,
     BodyLabel,
-    BreadcrumbBar,
     HyperlinkButton,
     LineEdit,
-    PrimaryPushButton,
 )
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
@@ -60,27 +59,25 @@ from MCSL2Lib.Widgets.FastMirrorWidgets import (
     FastMirrorCorePushButton,
     FastMirrorVersionButton,
 )
-from MCSL2Lib.ProgramControllers.DownloadAPI.MCSLAPI import (
-    FetchMCSLAPIDownloadURLThreadFactory,
+from MCSL2Lib.Widgets.MCSLSyncWidgets import (
+    MCSLSyncCorePushButton,
+    MCSLSyncVersionButton,
+)
+from MCSL2Lib.ProgramControllers.DownloadAPI.MCSLSyncAPI import (
+    FetchMCSLSyncCoreListThreadFactory,
+    FetchMCSLSyncCoreVersionsThreadFactory,
+    FetchMCSLSyncCoreBuildsThreadFactory,
+    FetchMCSLSyncBuildDetailsThreadFactory,
 )
 from MCSL2Lib.ProgramControllers.DownloadAPI.PolarsAPI import (
     FetchPolarsAPICoreThreadFactory,
     FetchPolarsAPITypeThreadFactory,
 )
-from MCSL2Lib.ProgramControllers.DownloadAPI.AkiraCloud import (
-    FetchAkiraTypeThreadFactory,
-    FetchAkiraCoreThreadFactory,
-)
-from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2Controller
+from MCSL2Lib.ProgramControllers.multiThreadDownloadController import MultiThreadDownloadController
 from MCSL2Lib.ProgramControllers.interfaceController import (
     MySmoothScrollArea,
 )
-from MCSL2Lib.Widgets.loadingTipWidget import (
-    MCSLAPILoadingErrorWidget,
-    MCSLAPILoadingWidget,
-)
 from MCSL2Lib.ProgramControllers.settingsController import cfg
-from MCSL2Lib.Widgets.singleMCSLAPIDownloadWidget import MCSLAPIDownloadWidget
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.utils import openLocalFile
@@ -103,19 +100,29 @@ class DownloadPage(QWidget):
         self.fetchFMAPIThreadFactory = FetchFastMirrorAPIThreadFactory()
         self.fetchFMAPICoreVersionThreadFactory = FetchFastMirrorAPICoreVersionThreadFactory()
 
-        self.fetchMCSLAPIDownloadURLThreadFactory = FetchMCSLAPIDownloadURLThreadFactory()
+        self.fetchMCSLSyncCoreListThreadFactory = FetchMCSLSyncCoreListThreadFactory()
+        self.fetchMCSLSyncCoreVersionsThreadFactory = FetchMCSLSyncCoreVersionsThreadFactory()
+        self.fetchMCSLSyncCoreBuildsThreadFactory = FetchMCSLSyncCoreBuildsThreadFactory()
+        self.fetchMCSLSyncBuildDetailsThreadFactory = FetchMCSLSyncBuildDetailsThreadFactory()
 
         self.fetchPolarsAPITypeThreadFactory = FetchPolarsAPITypeThreadFactory()
         self.fetchPolarsAPICoreThreadFactory = FetchPolarsAPICoreThreadFactory()
-
-        self.fetchAkiraTypeThreadFactory = FetchAkiraTypeThreadFactory()
-        self.fetchAkiraCoreThreadFactory = FetchAkiraCoreThreadFactory()
         # fmt: on
+
+        # 线程管理
+        self.active_threads = []
+        self.mcsl_sync_build_threads = []
+
+        # 初始化临时变量
+        self._pending_builds = []
+        self._completed_builds = 0
+        self._total_builds = 0
 
         self.fmBtnGroup = QButtonGroup(self)
         self.fmVersionBtnGroup = QButtonGroup(self)
+        self.mcsLSyncCoreBtnGroup = QButtonGroup(self)
+        self.mcsLSyncVersionBtnGroup = QButtonGroup(self)
         self.polarsBtnGroup = QButtonGroup(self)
-        self.akiraBtnGroup = QButtonGroup(self)
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -312,46 +319,139 @@ class DownloadPage(QWidget):
         self.gridLayout_2.addWidget(self.buildScrollArea, 1, 2, 1, 2)
         self.downloadStackedWidget.addWidget(self.downloadWithFastMirror)
 
-        self.downloadWithMCSLAPI = QWidget()
-        self.downloadWithMCSLAPI.setObjectName("downloadWithMCSLAPI")
-        self.gridLayout_3 = QGridLayout(self.downloadWithMCSLAPI)
+        self.downloadWithMCSLSync = QWidget()
+        self.downloadWithMCSLSync.setObjectName("downloadWithMCSLSync")
+
+        self.gridLayout_3 = QGridLayout(self.downloadWithMCSLSync)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.refreshMCSLAPIBtn = PushButton(
-            icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithMCSLAPI
-        )
-        self.gridLayout_3.addWidget(self.refreshMCSLAPIBtn, 0, 1, 1, 1)
-        self.MCSLAPIScrollArea = MySmoothScrollArea(self.downloadWithMCSLAPI)
-        self.MCSLAPIScrollArea.setFrameShape(QFrame.NoFrame)
-        self.MCSLAPIScrollArea.setWidgetResizable(True)
-        self.MCSLAPIScrollArea.setObjectName("MCSLAPIScrollArea")
-        self.MCSLAPIScrollAreaWidgetContents = QWidget()
-        self.MCSLAPIScrollAreaWidgetContents.setGeometry(QRect(0, 0, 676, 351))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        self.mcsLSyncVersionSubtitleLabel = SubtitleLabel(self.downloadWithMCSLSync)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.MCSLAPIScrollAreaWidgetContents.sizePolicy().hasHeightForWidth()
+            self.mcsLSyncVersionSubtitleLabel.sizePolicy().hasHeightForWidth()
         )
-        self.MCSLAPIScrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.MCSLAPIScrollAreaWidgetContents.setObjectName("MCSLAPIScrollAreaWidgetContents")
-        self.verticalLayout_9 = QVBoxLayout(self.MCSLAPIScrollAreaWidgetContents)
-        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_9.setObjectName("verticalLayout_9")
-        self.MCSLAPIScrollAreaLayout = QVBoxLayout()
-        self.MCSLAPIScrollAreaLayout.setObjectName("MCSLAPIScrollAreaLayout")
-        self.verticalLayout_9.addLayout(self.MCSLAPIScrollAreaLayout)
-        self.MCSLAPIScrollArea.setWidget(self.MCSLAPIScrollAreaWidgetContents)
-        self.gridLayout_3.addWidget(self.MCSLAPIScrollArea, 1, 0, 1, 2)
-        self.MCSLAPIBreadcrumbBar = BreadcrumbBar(self.downloadWithMCSLAPI)
+        self.mcsLSyncVersionSubtitleLabel.setSizePolicy(sizePolicy)
+        self.mcsLSyncVersionSubtitleLabel.setObjectName("mcsLSyncVersionSubtitleLabel")
+
+        self.gridLayout_3.addWidget(self.mcsLSyncVersionSubtitleLabel, 0, 1, 1, 1)
+        self.mcsLSyncCoreListSmoothScrollArea = MySmoothScrollArea(self.downloadWithMCSLSync)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mcsLSyncCoreListSmoothScrollArea.sizePolicy().hasHeightForWidth()
+        )
+        self.mcsLSyncCoreListSmoothScrollArea.setSizePolicy(sizePolicy)
+        self.mcsLSyncCoreListSmoothScrollArea.setMinimumSize(QSize(160, 0))
+        self.mcsLSyncCoreListSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
+        self.mcsLSyncCoreListSmoothScrollArea.setFrameShape(QFrame.NoFrame)
+        self.mcsLSyncCoreListSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.mcsLSyncCoreListSmoothScrollArea.setWidgetResizable(True)
+        self.mcsLSyncCoreListSmoothScrollArea.setObjectName("mcsLSyncCoreListSmoothScrollArea")
+
+        self.mcsLSyncCoreListScrollAreaWidgetContents = QWidget()
+        self.mcsLSyncCoreListScrollAreaWidgetContents.setGeometry(QRect(0, 0, 200, 349))
+        self.mcsLSyncCoreListScrollAreaWidgetContents.setObjectName(
+            "mcsLSyncCoreListScrollAreaWidgetContents"
+        )
+
+        self.verticalLayout_15 = QVBoxLayout(self.mcsLSyncCoreListScrollAreaWidgetContents)
+        self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+
+        self.mcsLSyncCoreListLayout = QVBoxLayout()
+        self.mcsLSyncCoreListLayout.setObjectName("mcsLSyncCoreListLayout")
+
+        self.verticalLayout_15.addLayout(self.mcsLSyncCoreListLayout)
+        self.mcsLSyncCoreListSmoothScrollArea.setWidget(
+            self.mcsLSyncCoreListScrollAreaWidgetContents
+        )
+        self.gridLayout_3.addWidget(self.mcsLSyncCoreListSmoothScrollArea, 1, 0, 1, 1)
+        self.mcsLSyncBuildSubtitleLabel = SubtitleLabel(self.downloadWithMCSLSync)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MCSLAPIBreadcrumbBar.sizePolicy().hasHeightForWidth())
-        self.MCSLAPIBreadcrumbBar.setSizePolicy(sizePolicy)
-        self.MCSLAPIBreadcrumbBar.setObjectName("MCSLAPIBreadcrumbBar")
-        self.gridLayout_3.addWidget(self.MCSLAPIBreadcrumbBar, 0, 0, 1, 1)
-        self.downloadStackedWidget.addWidget(self.downloadWithMCSLAPI)
+        sizePolicy.setHeightForWidth(
+            self.mcsLSyncBuildSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.mcsLSyncBuildSubtitleLabel.setSizePolicy(sizePolicy)
+        self.mcsLSyncBuildSubtitleLabel.setObjectName("mcsLSyncBuildSubtitleLabel")
+        self.gridLayout_3.addWidget(self.mcsLSyncBuildSubtitleLabel, 0, 2, 1, 1)
+        self.mcsLSyncCoreListSubtitleLabel = SubtitleLabel(self.downloadWithMCSLSync)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mcsLSyncCoreListSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.mcsLSyncCoreListSubtitleLabel.setSizePolicy(sizePolicy)
+        self.mcsLSyncCoreListSubtitleLabel.setObjectName("mcsLSyncCoreListSubtitleLabel")
+        self.gridLayout_3.addWidget(self.mcsLSyncCoreListSubtitleLabel, 0, 0, 1, 1)
+        self.mcsLSyncVersionSmoothScrollArea = MySmoothScrollArea(self.downloadWithMCSLSync)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mcsLSyncVersionSmoothScrollArea.sizePolicy().hasHeightForWidth()
+        )
+        self.mcsLSyncVersionSmoothScrollArea.setSizePolicy(sizePolicy)
+        self.mcsLSyncVersionSmoothScrollArea.setMinimumSize(QSize(160, 0))
+        self.mcsLSyncVersionSmoothScrollArea.setMaximumSize(QSize(160, 16777215))
+        self.mcsLSyncVersionSmoothScrollArea.setFrameShape(QFrame.NoFrame)
+        self.mcsLSyncVersionSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.mcsLSyncVersionSmoothScrollArea.setWidgetResizable(True)
+        self.mcsLSyncVersionSmoothScrollArea.setObjectName("mcsLSyncVersionSmoothScrollArea")
+
+        self.mcsLSyncVersionScrollAreaWidgetContents = QWidget()
+        self.mcsLSyncVersionScrollAreaWidgetContents.setGeometry(QRect(0, 0, 170, 349))
+        self.mcsLSyncVersionScrollAreaWidgetContents.setObjectName(
+            "mcsLSyncVersionScrollAreaWidgetContents"
+        )
+
+        self.verticalLayout_16 = QVBoxLayout(self.mcsLSyncVersionScrollAreaWidgetContents)
+        self.verticalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+
+        self.mcsLSyncVersionLayout = QVBoxLayout()
+        self.mcsLSyncVersionLayout.setObjectName("mcsLSyncVersionLayout")
+
+        self.verticalLayout_16.addLayout(self.mcsLSyncVersionLayout)
+        self.mcsLSyncVersionSmoothScrollArea.setWidget(self.mcsLSyncVersionScrollAreaWidgetContents)
+        self.gridLayout_3.addWidget(self.mcsLSyncVersionSmoothScrollArea, 1, 1, 1, 1)
+        self.refreshMCSLSyncBtn = PushButton(
+            icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithMCSLSync
+        )
+        self.refreshMCSLSyncBtn.setObjectName("refreshMCSLSyncBtn")
+
+        self.gridLayout_3.addWidget(self.refreshMCSLSyncBtn, 0, 3, 1, 1)
+        self.mcsLSyncBuildScrollArea = MySmoothScrollArea(self.downloadWithMCSLSync)
+        self.mcsLSyncBuildScrollArea.setMinimumSize(QSize(304, 0))
+        self.mcsLSyncBuildScrollArea.setFrameShape(QFrame.NoFrame)
+        self.mcsLSyncBuildScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.mcsLSyncBuildScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.mcsLSyncBuildScrollArea.setWidgetResizable(True)
+        self.mcsLSyncBuildScrollArea.setObjectName("mcsLSyncBuildScrollArea")
+
+        self.mcsLSyncBuildScrollAreaWidgetContents = QWidget()
+        self.mcsLSyncBuildScrollAreaWidgetContents.setGeometry(QRect(0, 0, 346, 349))
+        self.mcsLSyncBuildScrollAreaWidgetContents.setObjectName(
+            "mcsLSyncBuildScrollAreaWidgetContents"
+        )
+
+        self.verticalLayout_17 = QVBoxLayout(self.mcsLSyncBuildScrollAreaWidgetContents)
+        self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+
+        self.mcsLSyncBuildLayout = QVBoxLayout()
+        self.mcsLSyncBuildLayout.setObjectName("mcsLSyncBuildLayout")
+
+        self.verticalLayout_17.addLayout(self.mcsLSyncBuildLayout)
+        self.mcsLSyncBuildScrollArea.setWidget(self.mcsLSyncBuildScrollAreaWidgetContents)
+        self.gridLayout_3.addWidget(self.mcsLSyncBuildScrollArea, 1, 2, 1, 2)
+        self.downloadStackedWidget.addWidget(self.downloadWithMCSLSync)
 
         self.downloadWithPolarsAPI = QWidget()
         self.downloadWithPolarsAPI.setObjectName("downloadWithPolarsAPI")
@@ -461,105 +561,6 @@ class DownloadPage(QWidget):
 
         self.gridLayout_5.addWidget(self.polarsTitle, 0, 0, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithPolarsAPI)
-        self.downloadWithAkiraCloud = QWidget()
-        self.downloadWithAkiraCloud.setObjectName("downloadWithAkiraCloud")
-
-        self.gridLayout_10 = QGridLayout(self.downloadWithAkiraCloud)
-        self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_10.setObjectName("gridLayout_10")
-
-        self.akiraTitle = SubtitleLabel(self.downloadWithAkiraCloud)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.akiraTitle.sizePolicy().hasHeightForWidth())
-        self.akiraTitle.setSizePolicy(sizePolicy)
-        self.akiraTitle.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
-        self.akiraTitle.setObjectName("akiraTitle")
-
-        self.gridLayout_10.addWidget(self.akiraTitle, 0, 0, 1, 1)
-        self.VerticalSeparator_3 = VerticalSeparator(self.downloadWithAkiraCloud)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.VerticalSeparator_3.sizePolicy().hasHeightForWidth())
-        self.VerticalSeparator_3.setSizePolicy(sizePolicy)
-        self.VerticalSeparator_3.setMinimumSize(QSize(3, 0))
-        self.VerticalSeparator_3.setMaximumSize(QSize(3, 16777215))
-        self.VerticalSeparator_3.setObjectName("VerticalSeparator_3")
-
-        self.gridLayout_10.addWidget(self.VerticalSeparator_3, 0, 1, 3, 1)
-        self.akiraTypeLabel = SubtitleLabel(self.downloadWithAkiraCloud)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.akiraTypeLabel.sizePolicy().hasHeightForWidth())
-        self.akiraTypeLabel.setSizePolicy(sizePolicy)
-        self.akiraTypeLabel.setObjectName("akiraTypeLabel")
-
-        self.gridLayout_10.addWidget(self.akiraTypeLabel, 0, 2, 1, 1)
-        self.refreshAkiraCloudBtn = PushButton(
-            icon=FIF.UPDATE, text=self.tr("刷新"), parent=self.downloadWithAkiraCloud
-        )
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.refreshAkiraCloudBtn.sizePolicy().hasHeightForWidth())
-        self.refreshAkiraCloudBtn.setSizePolicy(sizePolicy)
-        self.refreshAkiraCloudBtn.setObjectName("refreshAkiraCloudBtn")
-
-        self.gridLayout_10.addWidget(self.refreshAkiraCloudBtn, 0, 3, 1, 1)
-        self.akiraTypeScrollArea = MySmoothScrollArea(self.downloadWithAkiraCloud)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.akiraTypeScrollArea.sizePolicy().hasHeightForWidth())
-        self.akiraTypeScrollArea.setSizePolicy(sizePolicy)
-        self.akiraTypeScrollArea.setMinimumSize(QSize(170, 0))
-        self.akiraTypeScrollArea.setMaximumSize(QSize(170, 16777215))
-        self.akiraTypeScrollArea.setFrameShape(QFrame.NoFrame)
-        self.akiraTypeScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.akiraTypeScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.akiraTypeScrollArea.setWidgetResizable(True)
-        self.akiraTypeScrollArea.setObjectName("akiraTypeScrollArea")
-
-        self.akiraTypeScrollAreaContents = QWidget()
-        self.akiraTypeScrollAreaContents.setGeometry(QRect(0, 0, 170, 351))
-        self.akiraTypeScrollAreaContents.setObjectName("akiraTypeScrollAreaContents")
-
-        self.gridLayout_9 = QGridLayout(self.akiraTypeScrollAreaContents)
-        self.gridLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_9.setObjectName("gridLayout_9")
-
-        self.akiraTypeLayout = QVBoxLayout()
-        self.akiraTypeLayout.setObjectName("akiraTypeLayout")
-
-        self.gridLayout_9.addLayout(self.akiraTypeLayout, 0, 0, 1, 1)
-        self.akiraTypeScrollArea.setWidget(self.akiraTypeScrollAreaContents)
-        self.gridLayout_10.addWidget(self.akiraTypeScrollArea, 1, 0, 2, 1)
-        self.akiraCoreScrollArea = MySmoothScrollArea(self.downloadWithAkiraCloud)
-        self.akiraCoreScrollArea.setFrameShape(QFrame.NoFrame)
-        self.akiraCoreScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.akiraCoreScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.akiraCoreScrollArea.setWidgetResizable(True)
-        self.akiraCoreScrollArea.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        self.akiraCoreScrollArea.setObjectName("akiraCoreScrollArea")
-
-        self.akiraCoreScrollAreaContents = QWidget()
-        self.akiraCoreScrollAreaContents.setGeometry(QRect(0, 0, 491, 345))
-        self.akiraCoreScrollAreaContents.setObjectName("akiraCoreScrollAreaContents")
-
-        self.gridLayout_8 = QGridLayout(self.akiraCoreScrollAreaContents)
-        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_8.setObjectName("gridLayout_8")
-
-        self.akiraCoreLayout = QVBoxLayout()
-        self.akiraCoreLayout.setObjectName("akiraCoreLayout")
-
-        self.gridLayout_8.addLayout(self.akiraCoreLayout, 0, 0, 1, 1)
-        self.akiraCoreScrollArea.setWidget(self.akiraCoreScrollAreaContents)
-        self.gridLayout_10.addWidget(self.akiraCoreScrollArea, 2, 2, 1, 2)
-        self.downloadStackedWidget.addWidget(self.downloadWithAkiraCloud)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
 
         self.VerticalSeparator = VerticalSeparator(self)
@@ -597,36 +598,34 @@ class DownloadPage(QWidget):
         self.gridLayout.addWidget(self.downloadingItemWidget, 3, 4, 1, 1)
         self.dsList = [
             self.downloadWithFastMirror,
-            self.downloadWithMCSLAPI,
+            self.downloadWithMCSLSync,
             self.downloadWithPolarsAPI,
-            self.downloadWithAkiraCloud,
         ]
         self.downloadStackedWidget.setCurrentWidget(
-            self.dsList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]
+            self.dsList[settingsVariables.get_download_source_index()]
         )
 
         self.setObjectName("DownloadInterface")
 
         self.titleLabel.setText(self.tr("下载"))
-        self.subTitleLabel.setText(self.tr("Aria2 引擎高速驱动！"))
+        self.subTitleLabel.setText(self.tr("多线程高速下载引擎！"))
         self.coreListSubtitleLabel.setText(self.tr("核心列表"))
         self.versionSubtitleLabel.setText(self.tr("游戏版本"))
         self.buildSubtitleLabel.setText(self.tr("构建列表"))
         self.refreshFastMirrorAPIBtn.setText(self.tr("刷新"))
+        self.mcsLSyncCoreListSubtitleLabel.setText(self.tr("核心列表"))
+        self.mcsLSyncVersionSubtitleLabel.setText(self.tr("游戏版本"))
+        self.mcsLSyncBuildSubtitleLabel.setText(self.tr("构建列表"))
+        self.refreshMCSLSyncBtn.setText(self.tr("刷新"))
         self.polarsTitle.setText("核心类型")
-        self.akiraTitle.setText("核心类型")
 
-        self.MCSLAPIBreadcrumbBar.addItem("MCSLAPI", "MCSLAPI")
-        self.refreshMCSLAPIBtn.clicked.connect(
-            lambda: self.getMCSLAPI(f"/{self.MCSLAPIBreadcrumbBar.currentItem().routeKey}")
-        )
+        self.refreshMCSLSyncBtn.clicked.connect(self.refreshMCSLSyncData)
         self.refreshPolarsAPIBtn.clicked.connect(self.getPolarsAPI)
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
-        self.refreshMCSLAPIBtn.setEnabled(False)
+        self.refreshMCSLSyncBtn.setEnabled(False)
         self.scrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.createCustomDownloadBtn.clicked.connect(self.downloadCustomURLFile)
         self.openDownloadFolderBtn.clicked.connect(lambda: openLocalFile(".\\MCSL2\\Downloads\\"))
-        self.MCSLAPIBreadcrumbBar.currentIndexChanged.connect(self.getMCSLAPI)
         self.openDownloadEntriesBtn.clicked.connect(
             lambda: {
                 (box := DownloadEntryBox(self)),
@@ -642,16 +641,13 @@ class DownloadPage(QWidget):
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
         if currentChanged == 3:
+            index = settingsVariables.get_download_source_index()
             self.subTitleLabel.setText(
-                self.tr("Aria2 引擎高速驱动！\n当前下载源: {downloadSource}").format(
-                    downloadSource=settingsVariables.downloadSourceTextList[
-                        settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
-                    ]
+                self.tr("一键高速下载！\n当前下载源: {downloadSource}").format(
+                    downloadSource=settingsVariables.downloadSourceTextList[index]
                 )
             )
-            self.downloadStackedWidget.setCurrentWidget(
-                self.dsList[settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))]
-            )
+            self.downloadStackedWidget.setCurrentWidget(self.dsList[index])
             self.refreshDownloads()
 
     def refreshDownloads(self):
@@ -674,144 +670,639 @@ class DownloadPage(QWidget):
                     self.showPolarsAPIFailedTip()
             else:
                 self.getPolarsAPI()
-        # Akira Cloud
-        elif self.downloadStackedWidget.currentIndex() == 3:
-            if downloadVariables.AkiraTypeList:
-                if len(downloadVariables.AkiraTypeList):
-                    self.initAkiraTypeListWidget()
-                else:
-                    self.showAkiraFailedTip()
-            else:
-                self.getAkiraInfo()
-        # MCSLAPI
+        # MCSL-Sync
         elif self.downloadStackedWidget.currentIndex() == 1:
             # 如果存在列表且不为空,则不再重新获取
-            if downloadVariables.MCSLAPIDownloadUrlDict:
-                if (
-                    str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-2"
-                    or str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-1"
-                ):
-                    self.initMCSLAPIDownloadWidget()
-                else:
-                    self.showMCSLAPIFailedWidget()
+            if downloadVariables.MCSLSyncCoreList:
+                self.initMCSLSyncCoreListWidget()
             else:
-                self.getMCSLAPI()
-                self.refreshMCSLAPIBtn.setEnabled(False)
+                self.getMCSLSync()
+                self.refreshMCSLSyncBtn.setEnabled(False)
 
-    ###########
-    # MCSLAPI #
-    ###########
+    ##############
+    # MCSL-Sync  #
+    ##############
 
-    def releaseMCSLAPIMemory(self):
-        self.MCSLAPIScrollAreaLayout.removeItem(self.scrollAreaSpacer)
-        for i in reversed(range(self.MCSLAPIScrollAreaLayout.count())):
+    def releaseMCSLSyncMemory(self, id=0):
+        """释放MCSL-Sync相关内存"""
+        if not id:  # 核心列表
             try:
-                self.MCSLAPIScrollAreaLayout.itemAt(i).widget().setParent(None)
+                self.mcsLSyncCoreListLayout.removeItem(self.scrollAreaSpacer)
             except AttributeError:
                 pass
+            for i in reversed(range(self.mcsLSyncCoreListLayout.count())):
+                try:
+                    self.mcsLSyncCoreListLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.mcsLSyncCoreListLayout.itemAt(i).widget().deleteLater()
+                    del self.mcsLSyncCoreListLayout.itemAt(i).widget
+                except AttributeError:
+                    pass
+        elif id == 1:  # 版本列表
             try:
-                self.MCSLAPIScrollAreaLayout.itemAt(i).widget().deleteLater()
-                del self.MCSLAPIScrollAreaLayout.itemAt(i).widget
+                self.mcsLSyncVersionLayout.removeItem(self.scrollAreaSpacer)
             except AttributeError:
                 pass
+            for i in reversed(range(self.mcsLSyncVersionLayout.count())):
+                try:
+                    self.mcsLSyncVersionLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.mcsLSyncVersionLayout.itemAt(i).widget().deleteLater()
+                    del self.mcsLSyncVersionLayout.itemAt(i).widget
+                except AttributeError:
+                    pass
+        elif id == 2:  # 构建列表
+            try:
+                self.mcsLSyncBuildLayout.removeItem(self.scrollAreaSpacer)
+            except AttributeError:
+                pass
+            for i in reversed(range(self.mcsLSyncBuildLayout.count())):
+                try:
+                    self.mcsLSyncBuildLayout.itemAt(i).widget().setParent(None)
+                except AttributeError:
+                    pass
+                try:
+                    self.mcsLSyncBuildLayout.itemAt(i).widget().deleteLater()
+                    del self.mcsLSyncBuildLayout.itemAt(i).widget
+                except AttributeError:
+                    pass
 
-    def getMCSLAPI(self, path: str = ""):
-        """请求MCSLAPI"""
-        if type(path) is int:
-            if path == 0:
-                self.refreshMCSLAPIBtn.click()
-            return
-        if path == "MCSLAPI" or path == "/MCSLAPI":
-            path = ""
-        workThread = self.fetchMCSLAPIDownloadURLThreadFactory.create(
-            _singleton=True, finishSlot=self.updateMCSLAPIDownloadUrlDict, path=path
+    def getMCSLSync(self):
+        """请求MCSL-Sync核心列表"""
+        workThread = self.fetchMCSLSyncCoreListThreadFactory.create(
+            _singleton=True, finishSlot=self.updateMCSLSyncCoreList
         )
-        if path != "" and type(self.sender()) is not PrimaryPushButton:
-            path = path.replace("/", "")
-            self.MCSLAPIBreadcrumbBar.addItem(path, path)
         if workThread.isRunning():
-            self.refreshMCSLAPIBtn.setEnabled(False)
+            self.refreshMCSLSyncBtn.setEnabled(False)
             return
         else:
-            self.releaseMCSLAPIMemory()
-            self.MCSLAPIScrollAreaLayout.addWidget(MCSLAPILoadingWidget())
+            self.getMCSLSyncStateToolTip = StateToolTip(
+                self.tr("正在请求 MCSL-Sync API"), self.tr("加载中，请稍后..."), self
+            )
+            self.getMCSLSyncStateToolTip.move(self.getMCSLSyncStateToolTip.getSuitablePos())
+            self.getMCSLSyncStateToolTip.show()
             workThread.start()
-            self.refreshMCSLAPIBtn.setEnabled(False)
+            self.refreshMCSLSyncBtn.setEnabled(False)
 
     @pyqtSlot(dict)
-    def updateMCSLAPIDownloadUrlDict(self, _downloadUrlDict: dict):
-        """更新获取MCSLAPI结果"""
-        downloadVariables.MCSLAPIDownloadUrlDict.update(_downloadUrlDict)
-        if (
-            str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-2"
-            or str(downloadVariables.MCSLAPIDownloadUrlDict["name"]) != "-1"
-        ):
-            self.initMCSLAPIDownloadWidget()
+    def updateMCSLSyncCoreList(self, _coreListDict: dict):
+        """更新MCSL-Sync核心列表"""
+        downloadVariables.MCSLSyncCoreList = _coreListDict.get("cores", [])
+        if downloadVariables.MCSLSyncCoreList:
+            self.getMCSLSyncStateToolTip.setContent(self.tr("请求 MCSL-Sync API 完毕！"))
+            self.getMCSLSyncStateToolTip.setState(True)
+            self.getMCSLSyncStateToolTip = None
+            self.initMCSLSyncCoreListWidget()
         else:
-            self.showMCSLAPIFailedWidget()
+            self.getMCSLSyncStateToolTip.setContent(self.tr("请求 MCSL-Sync API 失败！"))
+            self.getMCSLSyncStateToolTip.setState(True)
+            self.getMCSLSyncStateToolTip = None
+            self.showMCSLSyncFailedTip()
+        self.refreshMCSLSyncBtn.setEnabled(True)
 
-    def showMCSLAPIFailedWidget(self):
-        self.releaseMCSLAPIMemory()
-        self.MCSLAPIScrollAreaLayout.addWidget(MCSLAPILoadingErrorWidget())
-        self.refreshMCSLAPIBtn.setEnabled(True)
-
-    @staticmethod
-    def getMCSLAPIDownloadIcon(isDir):
-        """设置MCSLAPI源图标"""
-        return (
-            QPixmap(":/built-InIcons/file.svg")
-            if not isDir
-            else QPixmap(":/built-InIcons/folder.svg")
+    def showMCSLSyncFailedTip(self):
+        """显示MCSL-Sync API失败提示"""
+        InfoBar.error(
+            title=self.tr("错误"),
+            content=self.tr("获取 MCSL-Sync API 失败！\n尝试检查网络后，请再尝试刷新。"),
+            orient=Qt.Horizontal,
+            isClosable=False,
+            position=InfoBarPosition.TOP,
+            duration=5000,
+            parent=self,
         )
 
-    def initMCSLAPIDownloadWidget(self):
-        """初始化MCSLAPI模式下的UI"""
-        self.releaseMCSLAPIMemory()
-        self.refreshMCSLAPIBtn.setEnabled(True)
-        downloadDict = downloadVariables.MCSLAPIDownloadUrlDict
-        # try:
-        for i in range(downloadDict["total"]):
-            self.MCSLAPIScrollAreaLayout.addWidget(
-                MCSLAPIDownloadWidget(
-                    link=(
-                        f"/{downloadDict['name'][i]}"
-                        if downloadDict["is_dir"][i]
-                        else f"/{self.MCSLAPIBreadcrumbBar.currentItem().routeKey}"
-                    ),
-                    name=(
-                        f"/{downloadDict['name'][i]}"
-                        if not downloadDict["is_dir"][i]
-                        else downloadDict["name"][i]
-                    ),
-                    size=(downloadDict["size"][i] if not downloadDict["is_dir"][i] else "-"),
-                    pixmap=self.getMCSLAPIDownloadIcon(downloadDict["is_dir"][i]),
-                    downloadSlot=(
-                        self.downloadMCSLAPIFile
-                        if not downloadDict["is_dir"][i]
-                        else self.getMCSLAPI
-                    ),
-                )
+    def initMCSLSyncCoreListWidget(self):
+        """初始化MCSL-Sync核心列表"""
+        self.releaseMCSLSyncMemory()
+        self.releaseMCSLSyncMemory(1)
+        self.releaseMCSLSyncMemory(2)
+        self.mcsLSyncCoreBtnGroup.deleteLater()
+        self.mcsLSyncCoreBtnGroup = QButtonGroup(self)
+
+        for core_name in downloadVariables.MCSLSyncCoreList:
+            widget = MCSLSyncCorePushButton(
+                core_name=core_name,
+                slot=self.mcsLSyncCoreProcessor,
+                parent=self,
             )
-        self.MCSLAPIScrollAreaLayout.addSpacerItem(self.scrollAreaSpacer)
-        # except TypeError:
-        #     self.showMCSLAPIFailedWidget()
+            self.mcsLSyncCoreListLayout.addWidget(widget)
+            self.mcsLSyncCoreBtnGroup.addButton(widget)
+        self.mcsLSyncCoreListLayout.addSpacerItem(self.scrollAreaSpacer)
 
-    def downloadMCSLAPIFile(self):
-        """下载MCSLAPI文件"""
-        if not self.checkAria2Service():
-            return
-        sender = self.sender()
-        uri = sender.property("link")
-        fileFormat = sender.property("name").split(".")[-1]
-        fileName = sender.property("name").replace(f".{fileFormat}", "").replace("/", "")
-        # 判断文件是否存在
-        # TODO 完善MCSLAPI的extraData : "coreName", "MCVer", "buildVer"
-        self.checkDownloadFileExists(
-            fileName,
-            fileFormat,
-            uri,
-            (fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"),
+    def mcsLSyncCoreProcessor(self):
+        """处理MCSL-Sync核心选择"""
+        downloadVariables.MCSLSyncSelectedCore = self.sender().property("core_name")
+        self.getMCSLSyncCoreVersions(downloadVariables.MCSLSyncSelectedCore)
+        # 清空构建列表
+        self.releaseMCSLSyncMemory(2)
+
+    def getMCSLSyncCoreVersions(self, core_type):
+        """获取MCSL-Sync核心版本列表"""
+        workThread = self.fetchMCSLSyncCoreVersionsThreadFactory.create(
+            core_type=core_type,
+            _singleton=True,
+            finishSlot=self.updateMCSLSyncCoreVersions,
         )
+        if workThread.isRunning():
+            return
+        else:
+            self.getMCSLSyncVersionsStateToolTip = StateToolTip(
+                self.tr("正在进一步请求 MCSL-Sync API"),
+                self.tr("加载中，请稍后..."),
+                self,
+            )
+            self.getMCSLSyncVersionsStateToolTip.move(
+                self.getMCSLSyncVersionsStateToolTip.getSuitablePos()
+            )
+            self.getMCSLSyncVersionsStateToolTip.show()
+            workThread.start()
+
+    @pyqtSlot(dict)
+    def updateMCSLSyncCoreVersions(self, _versionsDict: dict):
+        """更新MCSL-Sync核心版本列表"""
+        downloadVariables.MCSLSyncCoreVersions = _versionsDict
+        if downloadVariables.MCSLSyncCoreVersions.get("versions"):
+            self.getMCSLSyncVersionsStateToolTip.setContent(self.tr("请求 MCSL-Sync API 完毕！"))
+            self.getMCSLSyncVersionsStateToolTip.setState(True)
+            self.getMCSLSyncVersionsStateToolTip = None
+            self.initMCSLSyncVersionListWidget()
+        else:
+            self.getMCSLSyncVersionsStateToolTip.setContent(self.tr("请求 MCSL-Sync API 失败！"))
+            self.getMCSLSyncVersionsStateToolTip.setState(True)
+            self.getMCSLSyncVersionsStateToolTip = None
+
+    def initMCSLSyncVersionListWidget(self):
+        """初始化MCSL-Sync版本列表"""
+        self.releaseMCSLSyncMemory(1)
+        self.releaseMCSLSyncMemory(2)
+        self.mcsLSyncVersionBtnGroup.deleteLater()
+        self.mcsLSyncVersionBtnGroup = QButtonGroup(self)
+
+        versions = downloadVariables.MCSLSyncCoreVersions.get("versions", [])
+        for version in versions:
+            widget = MCSLSyncVersionButton(
+                version=version,
+                slot=self.mcsLSyncVersionProcessor,
+                parent=self,
+            )
+            self.mcsLSyncVersionLayout.addWidget(widget)
+            self.mcsLSyncVersionBtnGroup.addButton(widget)
+        self.mcsLSyncVersionLayout.addSpacerItem(self.scrollAreaSpacer)
+
+    def mcsLSyncVersionProcessor(self):
+        """处理MCSL-Sync版本选择"""
+        downloadVariables.MCSLSyncSelectedVersion = self.sender().property("version")
+        self.getMCSLSyncCoreBuilds(
+            downloadVariables.MCSLSyncSelectedCore, downloadVariables.MCSLSyncSelectedVersion
+        )
+
+    def getMCSLSyncCoreBuilds(self, core_type, mc_version):
+        """获取MCSL-Sync核心构建列表"""
+        # 检查参数有效性
+        if not core_type or not mc_version:
+            InfoBar.warning(
+                title=self.tr("参数错误"),
+                content=self.tr("核心类型或版本信息无效"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 请求前先清空当前构建列表，保持 UI 与 FastMirror 行为一致
+        self.releaseMCSLSyncMemory(2)
+
+        workThread = self.fetchMCSLSyncCoreBuildsThreadFactory.create(
+            core_type=core_type,
+            mc_version=mc_version,
+            _singleton=True,
+            finishSlot=self.updateMCSLSyncCoreBuilds,
+        )
+
+        if workThread.isRunning():
+            InfoBar.info(
+                title=self.tr("请稍等"),
+                content=self.tr("正在获取构建列表，请稍后..."),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=2000,
+                parent=self,
+            )
+            return
+
+        # 显示加载状态
+        self.getMCSLSyncBuildsStateToolTip = StateToolTip(
+            self.tr("正在获取构建列表"),
+            self.tr("正在从 MCSL-Sync API 获取数据..."),
+            self,
+        )
+        self.getMCSLSyncBuildsStateToolTip.move(self.getMCSLSyncBuildsStateToolTip.getSuitablePos())
+        self.getMCSLSyncBuildsStateToolTip.show()
+
+        # 跟踪线程
+        self.active_threads.append(workThread)
+        workThread.finished.connect(self._handleMCSLSyncBuildThreadFinished)
+
+        # 禁用刷新按钮，待请求完成后再恢复
+        self.refreshMCSLSyncBtn.setEnabled(False)
+
+        workThread.start()
+
+    @pyqtSlot(dict)
+    def updateMCSLSyncCoreBuilds(self, _buildsDict: dict):
+        """更新MCSL-Sync核心构建列表"""
+        downloadVariables.MCSLSyncCoreBuilds = _buildsDict
+        if downloadVariables.MCSLSyncCoreBuilds.get("builds"):
+            self.getMCSLSyncBuildsStateToolTip.setContent(self.tr("请求 MCSL-Sync API 完毕！"))
+            self.getMCSLSyncBuildsStateToolTip.setState(True)
+            self.getMCSLSyncBuildsStateToolTip = None
+            self.initMCSLSyncBuildListWidget()
+        else:
+            self.getMCSLSyncBuildsStateToolTip.setContent(self.tr("请求 MCSL-Sync API 失败！"))
+            self.getMCSLSyncBuildsStateToolTip.setState(True)
+            self.getMCSLSyncBuildsStateToolTip = None
+
+        # 请求完成后恢复刷新按钮
+        self.refreshMCSLSyncBtn.setEnabled(True)
+
+    def initMCSLSyncBuildListWidget(self):
+        """初始化MCSL-Sync构建列表"""
+        self.releaseMCSLSyncMemory(2)
+
+        builds = downloadVariables.MCSLSyncCoreBuilds.get("builds", [])
+
+        if not builds:
+            self._showMCSLSyncNoBuildMessage()
+            return
+
+        # 使用 FastMirrorBuildListWidget 构建列表项
+        for idx, build_response in enumerate(builds):
+            build_info = {}
+
+            if isinstance(build_response, dict):
+                build_info = build_response.get("build", {}) if isinstance(
+                    build_response.get("build", {}), dict
+                ) else build_response
+                core_version = (
+                    build_info.get("version")
+                    or build_info.get("core_version")
+                    or build_response.get("build")
+                    or build_response.get("core_version")
+                    or "未知版本"
+                )
+            else:
+                core_version = str(build_response)
+
+            selected_core = downloadVariables.MCSLSyncSelectedCore
+            selected_version = downloadVariables.MCSLSyncSelectedVersion
+            cache_key = None
+            if selected_core and selected_version and core_version:
+                cache_key = (selected_core, selected_version, core_version)
+            cached_detail = (
+                downloadVariables.MCSLSyncBuildDetailsCache.get(cache_key, {})
+                if cache_key
+                else {}
+            )
+            cached_download_url = (
+                cached_detail.get("download_url") if isinstance(cached_detail, dict) else ""
+            )
+            if not isinstance(cached_download_url, str):
+                cached_download_url = ""
+            else:
+                cached_download_url = cached_download_url.strip()
+
+            widget = FastMirrorBuildListWidget(
+                buildVer=core_version,
+                syncTime="",
+                coreVersion=core_version,
+                btnSlot=self.downloadMCSLSyncFile,
+                parent=self,
+            )
+
+            # 为下载按钮附加必要的属性
+            widget.downloadBtn.setProperty("download_url", cached_download_url)
+            widget.downloadBtn.setProperty("build_name", core_version)
+            widget.downloadBtn.setProperty("build_info", build_info)
+            widget.downloadBtn.setProperty("build_index", idx)
+            widget.syncTimeLabel.setParent(None)
+
+            self.mcsLSyncBuildLayout.addWidget(widget)
+
+        # 添加底部间隔器
+        self.mcsLSyncBuildLayout.addSpacerItem(self.scrollAreaSpacer)
+
+    def _handleMCSLSyncBuildThreadFinished(self):
+        """在构建线程完成时进行清理，避免访问已删除的对象"""
+        thread = self.sender()
+        if thread is None or sip.isdeleted(thread):
+            return
+        self._cleanupFinishedThread(thread)
+
+    def _cleanupFinishedThread(self, thread):
+        """清理已完成的线程"""
+        try:
+            if sip.isdeleted(thread):
+                return
+            if thread in self.active_threads:
+                self.active_threads.remove(thread)
+            thread.deleteLater()
+        except (ValueError, RuntimeError):
+            # 线程可能已经被移除或删除
+            pass
+
+    def _showMCSLSyncNoBuildMessage(self):
+        """显示无构建信息的提示"""
+        from qfluentwidgets import InfoBar, InfoBarPosition
+
+        InfoBar.warning(
+            title=self.tr("无构建信息"),
+            content=self.tr("该版本暂无可用构建"),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def downloadMCSLSyncFile(self):
+        """下载MCSL-Sync文件"""
+        button = self.sender()
+        if button is None or sip.isdeleted(button):
+            return
+
+        build_name = button.property("build_name") or button.property("core_version")
+        if not self._validateMCSLSyncDownloadParams(build_name):
+            return
+
+        core_name = downloadVariables.MCSLSyncSelectedCore
+        mc_version = downloadVariables.MCSLSyncSelectedVersion
+        cache_key = (
+            (core_name, mc_version, build_name)
+            if core_name and mc_version and build_name
+            else None
+        )
+        cached_detail = (
+            downloadVariables.MCSLSyncBuildDetailsCache.get(cache_key, {})
+            if cache_key
+            else {}
+        )
+        cached_url = cached_detail.get("download_url") if isinstance(cached_detail, dict) else ""
+
+        if isinstance(cached_url, str) and cached_url:
+            sanitized_cached_url = cached_url
+            button.setProperty("download_url", sanitized_cached_url)
+            self._startMCSLSyncFileDownload(sanitized_cached_url, button)
+            return
+
+        raw_download_url = button.property("download_url")
+        download_url = (
+            raw_download_url.strip()
+            if isinstance(raw_download_url, str) and raw_download_url.strip()
+            else None
+        )
+
+        if download_url:
+            self._startMCSLSyncFileDownload(download_url, button)
+            return
+
+        self._setMCSLSyncBuildFetchingState(button)
+
+        detail_thread = self.fetchMCSLSyncBuildDetailsThreadFactory.create(
+            core_type=downloadVariables.MCSLSyncSelectedCore,
+            mc_version=downloadVariables.MCSLSyncSelectedVersion,
+            core_version=build_name,
+            finishSlot=lambda data, btn=button: self._onMCSLSyncBuildDetailsFetched(data, btn),
+        )
+
+        self.active_threads.append(detail_thread)
+        detail_thread.finished.connect(self._handleMCSLSyncBuildThreadFinished)
+        detail_thread.start()
+
+        InfoBar.info(
+            title=self.tr("请稍候"),
+            content=self.tr("正在获取下载链接..."),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=2000,
+            parent=self,
+        )
+
+    def _setMCSLSyncBuildFetchingState(self, button):
+        """在获取下载链接时更新界面状态"""
+        if button is None or sip.isdeleted(button):
+            return
+
+        button.setEnabled(False)
+
+    def _validateMCSLSyncDownloadParams(self, build_name, download_url=None):
+        """验证下载参数"""
+        if not build_name or not str(build_name).strip():
+            InfoBar.error(
+                title=self.tr("下载错误"),
+                content=self.tr("构建名称无效！"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return False
+
+        if download_url is not None:
+            if not isinstance(download_url, str) or not download_url.strip():
+                InfoBar.error(
+                    title=self.tr("下载错误"),
+                    content=self.tr("下载链接无效！"),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+                return False
+
+        if (
+            not downloadVariables.MCSLSyncSelectedCore
+            or not downloadVariables.MCSLSyncSelectedVersion
+        ):
+            InfoBar.error(
+                title=self.tr("下载错误"),
+                content=self.tr("请先选择核心类型和版本！"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return False
+
+        return True
+
+    def _onMCSLSyncBuildDetailsFetched(self, details: dict, button):
+        """处理构建详情请求结果"""
+        if button is None or sip.isdeleted(button):
+            return
+
+        button.setEnabled(True)
+
+        build_name = button.property("build_name") or button.property("core_version")
+
+        if isinstance(details, dict) and isinstance(details.get("build"), dict):
+            build_data = details.get("build", {})
+        elif isinstance(details, dict):
+            build_data = details
+        else:
+            build_data = {}
+
+        download_url = build_data.get("download_url", "")
+
+        core_name = build_data.get("core_type") or downloadVariables.MCSLSyncSelectedCore
+        mc_version = build_data.get("mc_version") or downloadVariables.MCSLSyncSelectedVersion
+        build_version = build_data.get("core_version") or build_name
+
+        sanitized_url = download_url.strip() if isinstance(download_url, str) else ""
+
+        if core_name and mc_version and build_version:
+            cache_key = (core_name, mc_version, build_version)
+            if isinstance(build_data, dict):
+                cache_payload = dict(build_data)
+            else:
+                cache_payload = {"core_version": build_version}
+            if sanitized_url:
+                cache_payload["download_url"] = sanitized_url
+            elif "download_url" in cache_payload:
+                cache_payload.pop("download_url")
+            downloadVariables.MCSLSyncBuildDetailsCache[cache_key] = cache_payload
+
+        if sanitized_url:
+            button.setProperty("download_url", sanitized_url)
+            self._startMCSLSyncFileDownload(sanitized_url, button)
+        else:
+            button.setProperty("download_url", "")
+            self._handleMCSLSyncDownloadError(
+                button, self.tr("未能从 MCSL-Sync API 获取到下载链接，请稍后重试。")
+            )
+
+    def _handleMCSLSyncDownloadError(self, button, message):
+        """处理下载错误并恢复界面"""
+        InfoBar.error(
+            title=self.tr("下载错误"),
+            content=message,
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+        if button and not sip.isdeleted(button):
+            button.setEnabled(True)
+            self._updateMCSLSyncDownloadButtonState(button, "available")
+
+    def _startMCSLSyncFileDownload(self, download_url: str, button):
+        """使用获取的下载链接启动下载"""
+        if button is None or sip.isdeleted(button):
+            return
+
+        build_name = button.property("build_name") or button.property("core_version")
+        if not self._validateMCSLSyncDownloadParams(build_name, download_url):
+            button.setEnabled(True)
+            return
+
+        core_name = downloadVariables.MCSLSyncSelectedCore
+        mc_version = downloadVariables.MCSLSyncSelectedVersion
+        file_name = f"{core_name}-{mc_version}-{build_name}"
+        file_format = "jar"
+
+        button.setProperty("download_url", download_url)
+
+        self.checkDownloadFileExists(
+            file_name,
+            file_format,
+            download_url,
+            (
+                f"{file_name}.jar",
+                core_name,
+                mc_version,
+                build_name,
+                "",
+                "",
+            ),
+        )
+
+        self._updateMCSLSyncDownloadButtonState(button, "downloading")
+        button.setEnabled(False)
+
+        file_info = self._prepareMCSLSyncDownloadInfo(build_name)
+
+        self._startMCSLSyncDownload(download_url, file_info, button)
+
+    def _updateMCSLSyncDownloadButtonState(self, button, state):
+        """更新下载按钮状态"""
+        try:
+            # 找到对应的Widget并更新状态
+            widget = button.parent()
+            if hasattr(widget, "setDownloadStatus"):
+                widget.setDownloadStatus(state)
+        except Exception as e:
+            print(f"Failed to update button state: {e}")
+
+    def _prepareMCSLSyncDownloadInfo(self, build_name):
+        """准备下载信息"""
+        core_name = downloadVariables.MCSLSyncSelectedCore
+        mc_version = downloadVariables.MCSLSyncSelectedVersion
+
+        # 生成更友好的文件名
+        fileName = f"{core_name}-{mc_version}-{build_name}"
+        fileFormat = "jar"
+
+        return {
+            "fileName": fileName,
+            "fileFormat": fileFormat,
+            "fullFileName": f"{fileName}.{fileFormat}",
+            "metadata": (
+                f"{fileName}.{fileFormat}",
+                core_name,
+                mc_version,
+                build_name,
+            ),
+        }
+
+    def _startMCSLSyncDownload(self, download_url, file_info, sender_button):
+        """开始MCSL-Sync文件下载"""
+        try:
+            # 显示下载开始提示
+            InfoBar.success(
+                title=self.tr("开始下载"),
+                content=self.tr(f"正在下载 {file_info['fullFileName']}"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=2000,
+                parent=self,
+            )
+        except Exception as e:
+            print(f"Error starting download: {e}")
+
+    def refreshMCSLSyncData(self):
+        """刷新MCSL-Sync数据"""
+        # 如果已经选择了核心和版本，刷新构建列表
+        if downloadVariables.MCSLSyncSelectedCore and downloadVariables.MCSLSyncSelectedVersion:
+            self.getMCSLSyncCoreBuilds(
+                downloadVariables.MCSLSyncSelectedCore, downloadVariables.MCSLSyncSelectedVersion
+            )
+        else:
+            # 否则刷新核心列表
+            self.getMCSLSync()
 
     ##############
     # Polars API #
@@ -950,158 +1441,8 @@ class DownloadPage(QWidget):
 
     def downloadPolarsAPIFile(self):
         """下载极星镜像API文件"""
-        if not self.checkAria2Service():
-            return
+        # 多线程下载引擎总是可用，直接开始下载
         uri = self.sender().property("core_version")
-        fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
-        fileName = self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
-        # 判断文件是否存在
-        self.checkDownloadFileExists(
-            fileName,
-            fileFormat,
-            uri,
-            (fileName + "." + fileFormat, "coreName", "MCVer", "buildVer"),
-        )
-
-    ###############
-    # Akira Cloud #
-    ###############
-
-    def releaseAkiraMemory(self, id=0):
-        layout = self.akiraTypeLayout if not id else self.akiraCoreLayout
-        if layout == self.akiraCoreLayout:
-            try:
-                layout.removeItem(self.scrollAreaSpacer)
-            except AttributeError:
-                pass
-        for i in reversed(range(layout.count())):
-            try:
-                layout.itemAt(i).widget().setParent(None)
-            except AttributeError:
-                pass
-            try:
-                layout.itemAt(i).widget().deleteLater()
-                del layout.itemAt(i).widget
-            except AttributeError:
-                pass
-
-    def getAkiraInfo(self):
-        """请求Polars API"""
-        workThread = self.fetchAkiraTypeThreadFactory.create(
-            _singleton=True, finishSlot=self.updateAkiraTypeList
-        )
-        if workThread.isRunning():
-            self.refreshAkiraCloudBtn.setEnabled(False)
-            return
-        else:
-            self.getAkiraStateToolTip = StateToolTip(
-                self.tr("正在请求 Akira Cloud 镜像站"),
-                self.tr("加载中，请稍后..."),
-                self,
-            )
-            self.getAkiraStateToolTip.move(self.getAkiraStateToolTip.getSuitablePos())
-            self.getAkiraStateToolTip.show()
-            workThread.start()
-            self.refreshAkiraCloudBtn.setEnabled(False)
-
-    @pyqtSlot(list)
-    def updateAkiraTypeList(self, _APIList):
-        downloadVariables.AkiraTypeList = _APIList
-        if len(downloadVariables.AkiraTypeList):
-            self.getAkiraStateToolTip.setContent(self.tr("请求 Akira Cloud 镜像站完毕！"))
-            self.getAkiraStateToolTip.setState(True)
-            self.getAkiraStateToolTip = None
-            self.initAkiraTypeListWidget()
-        else:
-            self.getAkiraStateToolTip.setContent(self.tr("请求 Akira Cloud 镜像站失败！"))
-            self.getAkiraStateToolTip.setState(True)
-            self.getAkiraStateToolTip = None
-            self.showAkiraFailedTip()
-        self.refreshAkiraCloudBtn.setEnabled(True)
-
-    def showAkiraFailedTip(self):
-        InfoBar.error(
-            title=self.tr("错误"),
-            content=self.tr("获取 Akira Cloud 镜像站信息失败！\n尝试检查网络后，请再尝试刷新。"),
-            orient=Qt.Horizontal,
-            isClosable=False,
-            position=InfoBarPosition.TOP,
-            duration=5000,
-            parent=self,
-        )
-
-    def initAkiraTypeListWidget(self):
-        self.releaseAkiraMemory()
-        self.akiraBtnGroup.deleteLater()
-        self.akiraBtnGroup = QButtonGroup(self)
-        for i in range(len(downloadVariables.AkiraTypeList)):
-            k = PolarsTypeWidget(
-                name=downloadVariables.AkiraTypeList[i],
-                idx=1,
-                description="",
-                slot=self.akiraTypeProcessor,
-                parent=self,
-            )
-            self.akiraTypeLayout.addWidget(k)
-            self.akiraBtnGroup.addButton(k)
-
-    def akiraTypeProcessor(self):
-        self.akiraTypeLabel.setText(self.sender().property("name"))
-        self.getAkiraCore(coreType=self.sender().property("name"))
-
-    def getAkiraCore(self, coreType):
-        workThread = self.fetchAkiraCoreThreadFactory.create(
-            _singleton=True, coreType=coreType, finishSlot=self.updateAkiraAPICoreDict
-        )
-        if workThread.isRunning():
-            self.refreshAkiraCloudBtn.setEnabled(False)
-            return
-        else:
-            self.getAkiraCoreStateToolTip = StateToolTip(
-                self.tr("正在进一步请求 Akira Cloud 镜像站"),
-                self.tr("加载中，请稍后..."),
-                self,
-            )
-            self.getAkiraCoreStateToolTip.move(self.getAkiraCoreStateToolTip.getSuitablePos())
-            self.getAkiraCoreStateToolTip.show()
-            workThread.start()
-            self.refreshAkiraCloudBtn.setEnabled(False)
-
-    @pyqtSlot(dict)
-    def updateAkiraAPICoreDict(self, _APIDict: dict):
-        downloadVariables.AkiraCoreDict.clear()
-        downloadVariables.AkiraCoreDict.update(_APIDict)
-        if downloadVariables.AkiraCoreDict["name"] != "-1":
-            self.getAkiraCoreStateToolTip.setContent(self.tr("请求 Akira Cloud 镜像站完毕！"))
-            self.getAkiraCoreStateToolTip.setState(True)
-            self.getAkiraCoreStateToolTip = None
-            self.initAkiraCoreListWidget()
-        else:
-            self.getAkiraCoreStateToolTip.setContent(self.tr("请求 Akira Cloud 镜像站失败！"))
-            self.getAkiraCoreStateToolTip.setState(True)
-            self.getAkiraCoreStateToolTip = None
-            self.showAkiraFailedTip()
-        self.refreshAkiraCloudBtn.setEnabled(True)
-
-    def initAkiraCoreListWidget(self):
-        self.releaseAkiraMemory(1)
-        for i in range(len(downloadVariables.AkiraCoreDict["list"])):
-            w = FastMirrorBuildListWidget(
-                buildVer=downloadVariables.AkiraCoreDict["list"][i],
-                syncTime="",
-                coreVersion=downloadVariables.AkiraCoreDict["name"],
-                btnSlot=self.downloadAkiraFile,
-                parent=self,
-            )
-            w.syncTimeLabel.setParent(None)
-            self.akiraCoreLayout.addWidget(w)
-        self.akiraCoreLayout.addItem(self.scrollAreaSpacer)
-
-    def downloadAkiraFile(self):
-        """下载Akira Cloud镜像站文件"""
-        if not self.checkAria2Service():
-            return
-        uri = f"https://mirror.akiracloud.net/{self.sender().property('core_version')}/{self.sender().parent().buildVerLabel.text()}"
         fileFormat = self.sender().parent().buildVerLabel.text().split(".")[-1]
         fileName = self.sender().parent().buildVerLabel.text().replace("." + fileFormat, "")
         # 判断文件是否存在
@@ -1323,8 +1664,7 @@ class DownloadPage(QWidget):
 
     def downloadFastMirrorAPIFile(self):
         """下载FastMirror API文件"""
-        if not self.checkAria2Service():
-            return
+        # 多线程下载引擎总是可用，直接开始下载
         buildVer = self.sender().property("core_version")
         fileName = (
             f"{downloadVariables.selectedName}-{downloadVariables.selectedMCVersion}-{buildVer}"
@@ -1345,14 +1685,14 @@ class DownloadPage(QWidget):
         )
 
     def downloadCustomURLFile(self):
-        if not self.checkAria2Service():
-            return
+        """下载自定义URL文件"""
+        # 多线程下载引擎总是可用，直接开始下载
         urlLineEdit = LineEdit()
         urlLineEdit.setPlaceholderText(self.tr("URL"))
         w = MessageBox(
             self.tr("创建下载任务"),
             self.tr(
-                "使用 MCSL2 自带的高速 Aria2 下载引擎下载文件。\n请注意，部分网站可能会禁止 (403)，无法正常下载。"  # noqa: E501
+                "使用 MCSL2 自带的多线程高速下载引擎下载文件。\n请注意，部分网站可能会禁止 (403)，无法正常下载。"  # noqa: E501
             ),
             self,
         )
@@ -1372,29 +1712,8 @@ class DownloadPage(QWidget):
         )
         w.show()
 
-    def checkAria2Service(self):
-        if not Aria2Controller.testAria2Service():
-            if not Aria2Controller.startAria2():
-                box = MessageBox(
-                    title=self.tr("无法下载"),
-                    content=self.tr("Aria2 可能未安装或启动失败。\n已尝试重新启动 Aria2。"),
-                    parent=self,
-                )
-                box.yesSignal.connect(box.deleteLater)
-                box.cancelButton.setParent(None)
-                box.cancelButton.deleteLater()
-                del box.cancelButton
-                box.exec()
-                return False
-            else:
-                return True
-        else:
-            return True
-
     def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
-        if osp.exists(
-            osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")
-        ) and not osp.exists(osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}.aria2")):
+        if osp.exists(osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")):
             if cfg.get(cfg.saveSameFileException) == "ask":
                 w = MessageBox(self.tr("提示"), self.tr("您要下载的文件已存在。请选择操作。"), self)
                 w.yesButton.setText(self.tr("停止下载"))
@@ -1446,20 +1765,26 @@ class DownloadPage(QWidget):
         downloadingInfoWidget = DownloadCard(
             fileName=f"{fileName}.{fileFormat}", url=uri, parent=self
         )
-        gid = Aria2Controller.download(
+
+        # 使用多线程下载引擎
+        gid = MultiThreadDownloadController.download(
             uri=uri,
             watch=True,
             info_get=downloadingInfoWidget.onInfoGet,
             stopped=downloadingInfoWidget.onDownloadFinished,
+            filename=f"{fileName}.{fileFormat}",
             interval=0.2,
             extraData=extraData,
         )
-        downloadingInfoWidget.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
+
+        downloadingInfoWidget.canceled.connect(
+            lambda: MultiThreadDownloadController.cancelDownloadTask(gid)
+        )
         downloadingInfoWidget.paused.connect(
             lambda x: (
-                Aria2Controller.pauseDownloadTask(gid)
+                MultiThreadDownloadController.pauseDownloadTask(gid)
                 if x
-                else Aria2Controller.resumeDownloadTask(gid)
+                else MultiThreadDownloadController.resumeDownloadTask(gid)
             )
         )
         self.downloadingItemLayout.addWidget(downloadingInfoWidget)

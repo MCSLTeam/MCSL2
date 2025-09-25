@@ -123,9 +123,6 @@ class LoadFailedTip(QWidget):
         self.refreshBtn.setText(self.tr("刷新"))
 
 
-class MCSLAPILoadingWidget(QWidget):
-    def __init__(self):
-        super().__init__()
 
         self.setObjectName("MCSLAPILoading")
 

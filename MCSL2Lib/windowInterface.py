@@ -22,10 +22,9 @@ from types import TracebackType
 from typing import Type
 from PyQt5.QtCore import (
     Qt,
-    pyqtSlot,
-    QSize,
     pyqtSignal,
     QThreadPool,
+    QSize,
 )
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
@@ -42,11 +41,6 @@ from qfluentwidgets import (
 )
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import DEV_VERSION, MCSL2VERSION
-from MCSL2Lib.ProgramControllers.aria2ClientController import (
-    Aria2Controller,
-    initializeAria2Configuration,
-    Aria2BootThread,
-)
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consoleCenterPage import ConsoleCenterPage
@@ -86,7 +80,7 @@ settingsVariables = SettingsVariables()
 
 
 @Singleton
-class Window(VerifyFluentWindowBase):
+class Window(VerifyFluentWindowBase):  # type: ignore
     """程序主窗口"""
 
     deleteBtnEnabled = pyqtSignal(bool)
@@ -97,7 +91,7 @@ class Window(VerifyFluentWindowBase):
         self.mySetTheme()
         self.initWindow()
         self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{self.tr(' 测试版 ') if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''}"  # noqa: E501
+            f"MCServerLauncher {MCSL2VERSION}{self.tr(' 测试版 ') if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''} Final Version"  # noqa: E501
         )
 
         self.oldHook = sys.excepthook
@@ -142,7 +136,7 @@ class Window(VerifyFluentWindowBase):
         # for loader in loaders:
         #     loader.start()
         self.homeInterface.noticeThread.start()
-        initializeAria2Configuration()
+        # 多线程下载引擎无需初始化配置
         # loaded.mainWindowInited = True
         # GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
@@ -151,7 +145,7 @@ class Window(VerifyFluentWindowBase):
         self.initPluginSystem()
         if cfg.get(cfg.checkUpdateOnStart):
             self.settingsInterface.checkUpdate(parent=self)
-        self.startAria2Client()
+        # 多线程下载引擎无需启动过程
         self.splashScreen.finish()
         self.update()
         if self.previewFlag:
@@ -180,29 +174,6 @@ class Window(VerifyFluentWindowBase):
             self.testNotPassFlag = False
             pass
 
-    @pyqtSlot(bool)
-    def onAria2Loaded(self, flag: bool):
-        if flag:
-            InfoBar.success(
-                title=self.tr("Aria2 下载引擎启动成功。"),
-                content="",
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-        else:
-            InfoBar.error(
-                title=self.tr("Aria2 下载引擎启动失败"),
-                content=self.tr("请检查是否安装了 Aria2。"),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-
     def closeEvent(self, a0) -> None:
         if self.consoleCenterInterface.isAnyServerRunning():
             box = MessageBox(
@@ -211,7 +182,7 @@ class Window(VerifyFluentWindowBase):
                 parent=self,
             )
             box.yesButton.setText(self.tr("了解"))
-            box.cancelButton.setParent(None)
+            box.cancelButton.setParent(None)  # type: ignore
             box.cancelButton.deleteLater()
             box.exec_()
             a0.ignore()
@@ -224,8 +195,7 @@ class Window(VerifyFluentWindowBase):
 
         try:
             WorkingThreads.closeAllThreads()
-            if Aria2Controller.shutDown():
-                super().closeEvent(a0)
+            super().closeEvent(a0)
         finally:
             super().closeEvent(a0)
 
@@ -333,7 +303,7 @@ class Window(VerifyFluentWindowBase):
 
         # 新建服务器
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLAPI
+            self.downloadInterface.getMCSLSync
         )
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
@@ -345,7 +315,7 @@ class Window(VerifyFluentWindowBase):
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLAPI
+            self.downloadInterface.getMCSLSync
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
@@ -361,7 +331,7 @@ class Window(VerifyFluentWindowBase):
         )
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
+                settingsVariables.get_download_source_index()
             )
         )
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(
@@ -369,7 +339,7 @@ class Window(VerifyFluentWindowBase):
         )
         self.configureInterface.extendedDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
+                settingsVariables.get_download_source_index()
             )
         )
         self.selectJavaPage.backBtn.clicked.connect(lambda: self.switchTo(self.configureInterface))
@@ -404,11 +374,11 @@ class Window(VerifyFluentWindowBase):
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLAPI
+            self.downloadInterface.getMCSLSync
         )
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: InfoBar.info(
-                title=self.tr("切换到 MCSLAPI"),
+                title=self.tr("切换到 MCSL-Sync"),
                 content=self.tr("因为 FastMirror 没有 Java 啊 ("),
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -431,7 +401,7 @@ class Window(VerifyFluentWindowBase):
         )
         self.serverManagerInterface.editDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
-                settingsVariables.downloadSourceList.index(cfg.get(cfg.downloadSource))
+                settingsVariables.get_download_source_index()
             )
         )
         self.selectNewJavaPage.backBtn.clicked.connect(
@@ -448,10 +418,3 @@ class Window(VerifyFluentWindowBase):
         self.serverManagerInterface.runningServerCardGenerated.connect(
             self.consoleCenterInterface.addRunningCard
         )
-
-    def startAria2Client(self):
-        bootThread = Aria2BootThread(self)
-        bootThread.loaded.connect(self.onAria2Loaded)
-        bootThread.finished.connect(bootThread.deleteLater)
-        bootThread.finished.connect(self.splashScreen.finish)
-        bootThread.start()
