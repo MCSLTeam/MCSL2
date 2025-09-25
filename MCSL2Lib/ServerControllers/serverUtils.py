@@ -45,11 +45,9 @@ class MinecraftServerResMonitorUtil(QObject):
         self.timer.timeout.connect(self.getServerMem)
         self.timer.timeout.connect(self.getServerCPU)
         self.timer.start(1000)
-        self.divisionNumList = {"G": 1073741824, "M": 1048576}
         self.serverConfig: ServerVariables = serverConfig
 
     def getServerMem(self):
-        divisionNum = self.divisionNumList[self.serverConfig.memUnit]
         if not self.bridge.isServerRunning():
             self.memPercent.emit(0.0000)
             return
@@ -68,7 +66,7 @@ class MinecraftServerResMonitorUtil(QObject):
                     self.memPercent.emit(0.0000)
                     return
 
-            serverMem = mem_bytes / divisionNum
+            serverMem = mem_bytes / 1048576
             self.memPercent.emit(float("{:.4f}".format(serverMem)))
         except NoSuchProcess:
             self.memPercent.emit(0.0000)

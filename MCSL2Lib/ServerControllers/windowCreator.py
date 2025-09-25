@@ -1092,7 +1092,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     @pyqtSlot(float)
     def setMemView(self, mem):
         self.serverRAMMonitorTitle.setText(
-            f"RAM：{str(round(mem, 2))}{self.serverConfig.memUnit}/{self.serverConfig.maxMem}{self.serverConfig.memUnit}"  # noqa: E501
+            f"RAM：{str(round(mem, 2))}MiB/{self.serverConfig.maxMem if self.serverConfig.memUnit == 'M' else self.serverConfig.maxMem * 1024}MiB"  # noqa: E501
         )
         self.serverRAMMonitorRing.setValue(int(int(mem) / self.serverConfig.maxMem * 100))
 
