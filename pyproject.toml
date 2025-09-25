@@ -15,20 +15,13 @@ authors = [
     { name = "kitUIN", email = "kit_uin@outlook.com" },
 ]
 dependencies = [
-    "setuptools>=60", # 随便指定个版本就好 (
-    # qt
-    "PyQt5",
-    "PyQt-Fluent-Widgets[full]",
-    "pyqt5-qt5==5.15.2",
-    # 系统信息
+    "setuptools>=60",
+    "PyQt-Fluent-Widgets",
     "psutil==6.0.0",
     "loguru==0.7.2",
     "requests==2.31.0",
-    "aria2p==0.11.3",
-    # 构建需要
     "lib-not-dr[nuitka]>=0.4",
     "nuitka==2.4.5",
-    "QScintilla>=2.14.1",
     "pyqt5-concurrent>=0.1.6",
 ]
 requires-python = ">=3.8,<3.9"
@@ -40,16 +33,25 @@ version = { attr = "MCSL2Lib.MCSL2VERSION" }
 
 [tool.setuptools]
 packages = []
-# 实际上并不发布包 (用于解决无法 pdm install)
 
 [project.optional-dependencies]
 all = ["tomli>=2.0.1", "ruff>=0.1.6", "pyqt5-stubs>=5.15.6.0"]
 
-[tool.pdm.scripts]
-main = "python MCSL2.py"
-build = "python -m lndl_nuitka . -y"
-build_github = "python -m lndl_nuitka . -y -- --disable-console"
-i18n = "python generate_i18n.py"
+# 原 [tool.pdm.scripts] 段落删除，使用 uv 运行脚本：
+#   uv run MCSL2.py
+#   uv run -m lndl_nuitka . -y
+#   uv run generate_i18n.py
+
+[tool.uv]
+dev-dependencies = [
+    "tomli>=2.0.1",
+    "ruff>=0.1.6",
+    "pyqt5-stubs>=5.15.6.0",
+]
+required-environments = [
+"sys_platform == 'darwin' and platform_machine == 'x86_64'"
+]
+# 若需要锁定：执行 `uv lock` 生成 uv.lock；CI 中可用 `uv sync --frozen`。
 
 [tool.ruff]
 target-version = "py38"
@@ -103,7 +105,6 @@ copyright = "Copyright ©MCSLTeam. All rights reserved."
 
 # 依赖
 include-package = ["MCSL2Lib", "sqlite3"]
-include-data-dir = [["MCSL2/Aria2", "MCSL2/Aria2"]]
 follow-import-to = ["Adapters", "loguru", "requests"]
 nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief", "sqlite3.test"]
 
