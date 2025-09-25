@@ -299,38 +299,46 @@ class DownloadMessageBox(MessageBox):
 
     @pyqtSlot(list)
     def onDownloadFinished(self, _: list):
-        [dl, extraData] = _
-        # dl: None for success, str for error
-        self.hide()
-        self.show()
-        filename = extraData[0]
-        data = {
-            "type": extraData[1],
-            "mc_version": extraData[2],
-            "build_version": extraData[3],
-        }
+        try:
+            dl, extraData = _ if isinstance(_, (list, tuple)) else (None, None)
+            extraData = extraData or ()
 
-        if dl is not None:
-            if dl.status == "complete":
+            filename = extraData[0] if len(extraData) > 0 else self.fileName
+            entry_data = None
+            if len(extraData) >= 4:
+                entry_data = {
+                    "type": extraData[1],
+                    "mc_version": extraData[2],
+                    "build_version": extraData[3],
+                }
+
+            # dl: None for success, string for error/cancel
+            self.hide()
+            self.show()
+
+            if dl is None:
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(1)
-                if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
+                if (
+                    entry_data
+                    and filename
+                    and path.exists(path.join("MCSL2", "Downloads", filename))
+                ):
                     DL_EntryController().work.emit((
                         "addCoreEntry",
-                        {"coreName": filename, "extraData": data},
+                        {"coreName": filename, "extraData": entry_data},
                     ))
-            elif dl.status == "error":
+            else:
                 self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-                MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
-            elif dl.status == "removed":
-                self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-        else:
-            # Download failed
-            self.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
-            MCSL2Logger.error(msg=f"Download failed: {dl}")
-        self.downloadProgressWidget.downloading = False
-        try:
-            self.parent().downloadFinishedHelper()
-        except Exception:
+                MCSL2Logger.error(msg=f"Download failed: {dl}")
+
+            self.downloadProgressWidget.downloading = False
+            try:
+                if self.parent() and hasattr(self.parent(), "downloadFinishedHelper"):
+                    self.parent().downloadFinishedHelper()
+            except Exception:
+                pass
+        except RuntimeError:
+            # 对象已被删除，静默忽略
             pass
 
     def setFileName(self, name):
@@ -495,104 +503,87 @@ class DownloadCard(SimpleCardWidget):
             pass
 
     @pyqtSlot(list)
-    def onDownloadFinished(self, _: list):
+    def onDownloadFinished(self, payload: list):
         try:
-            [dl, extraData] = _
-            # dl: None for success, str for error
-            filename = extraData[0]
-            data = {
-                "type": extraData[1],
-                "mc_version": extraData[2],
-                "build_version": extraData[3],
-            }
+            dl, extraData = payload if isinstance(payload, (list, tuple)) else (None, None)
+            extraData = tuple(extraData) if extraData else ()
 
-        if dl is not None:
-            if dl.status == "complete":
+            filename = extraData[0] if len(extraData) > 0 else self.fileNameLabel.text()
+            entry_data = None
+            if len(extraData) >= 4:
+                entry_data = {
+                    "type": extraData[1],
+                    "mc_version": extraData[2],
+                    "build_version": extraData[3],
+                }
+
+            info_parent = self.window() if hasattr(self, "window") else None
+
+            if dl is None:
                 InfoBar.success(
                     title=self.tr("{filename} 下载完成").format(filename=filename),
                     content="",
                     duration=1500,
                     isClosable=True,
                     position=InfoBarPosition.BOTTOM_RIGHT,
-                    parent=self.parent().parent().parent().parent(),
+                    parent=info_parent,
                 )
-                if path.exists(path.join("MCSL2", "Downloads", filename)):  # 防止有时候aria2抽风...
+                if (
+                    entry_data
+                    and filename
+                    and path.exists(path.join("MCSL2", "Downloads", filename))
+                ):
                     DL_EntryController().work.emit((
                         "addCoreEntry",
-                        {"coreName": filename, "extraData": data},
+                        {"coreName": filename, "extraData": entry_data},
                     ))
+                self.downloading = False
+                parent_widget = self.parent()
+                if parent_widget and hasattr(parent_widget, "downloadFinishedHelper"):
+                    parent_widget.downloadFinishedHelper()
                 self.setParent(None)
                 self.deleteLater()
-            elif dl.status == "error":
-                errInfoBar = InfoBar.error(
-                    title=self.tr("{filename} 下载失败").format(filename=filename),
-                    content="",
-                    duration=-1,
-                    isClosable=True,
-                    position=InfoBarPosition.BOTTOM_RIGHT,
-                    parent=self.parent().parent().parent().parent(),
-                )
-                retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
-                retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
-                retryBtn.clicked.connect(errInfoBar.close)
-                errInfoBar.addWidget(retryBtn)
-                self.ProgressBar.setValue(100)
-                self.ProgressBar.error()
-                MCSL2Logger.error(msg=f"{dl.error_code}{dl.error_message}{dl.files}")
-            elif dl.status == "removed":
+                return
+
+            error_text = str(dl) if dl else self.tr("未知错误")
+            if error_text.lower() in {"removed", "cancelled", "canceled"}:
                 try:
                     self.flush()
                     self.setParent(None)
                     self.deleteLater()
                 except RuntimeError:
                     pass
-            else:
-                # Download failed
-                try:
+                finally:
+                    self.downloading = False
                     parent_widget = self.parent()
-                    if parent_widget:
-                        # 尝试获取顶级父窗口
-                        top_parent = parent_widget
-                        for _ in range(3):
-                            if top_parent.parent():
-                                top_parent = top_parent.parent()
-                            else:
-                                break
-                    else:
-                        top_parent = None
+                    if parent_widget and hasattr(parent_widget, "downloadFinishedHelper"):
+                        parent_widget.downloadFinishedHelper()
+                return
 
-                    errInfoBar = InfoBar.error(
-                        title=self.tr("{filename} 下载失败").format(filename=filename),
-                        content="",
-                        duration=-1,
-                        isClosable=True,
-                        position=InfoBarPosition.BOTTOM_RIGHT,
-                        parent=top_parent,
-                    )
-                    retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
-                    retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
-                    retryBtn.clicked.connect(errInfoBar.close)
-                    errInfoBar.addWidget(retryBtn)
-                except RuntimeError:
-                    # 无法显示错误通知，静默忽略
-                    pass
+            errInfoBar = InfoBar.error(
+                title=self.tr("{filename} 下载失败").format(filename=filename),
+                content=error_text,
+                duration=-1,
+                isClosable=True,
+                position=InfoBarPosition.BOTTOM_RIGHT,
+                parent=info_parent,
+            )
+            if extraData:
+                retryBtn = PushButton(self.tr("重试"), parent=errInfoBar)
+                retryBtn.clicked.connect(lambda: self.retryDownloadFile(extraData))
+                retryBtn.clicked.connect(errInfoBar.close)
+                errInfoBar.addWidget(retryBtn)
 
-                try:
-                    if hasattr(self, "ProgressBar") and self.ProgressBar:
-                        self.ProgressBar.setValue(100)
-                        self.ProgressBar.error()
-                except RuntimeError:
-                    pass
+            if hasattr(self, "ProgressBar") and self.ProgressBar:
+                self.ProgressBar.setValue(100)
+                self.ProgressBar.error()
 
-                MCSL2Logger.error(msg=f"Download failed: {dl}")
+            MCSL2Logger.error(msg=f"Download failed: {error_text}")
 
             self.downloading = False
-            try:
-                parent_widget = self.parent()
-                if parent_widget and hasattr(parent_widget, "downloadFinishedHelper"):
-                    parent_widget.downloadFinishedHelper()
-            except Exception:
-                pass
+            parent_widget = self.parent()
+            if parent_widget and hasattr(parent_widget, "downloadFinishedHelper"):
+                parent_widget.downloadFinishedHelper()
         except RuntimeError:
             # 对象已被删除，静默忽略
             pass

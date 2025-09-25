@@ -184,56 +184,123 @@ def detectJava(fSearch=True):
 
     # macOS & linux
     javaList = []
-    # 检测环境变量中的Java（不是Java的PATH会在最后筛选时过滤）
-    javaPathList.extend(env.get("PATH").split(pathsep))
-    # 针对不同系统的寻找
-    if "darwin" in system().lower():  # macOS
-        # 检测第三方App内置Java路径
-        javaInstallationPaths = [
-            r"/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java",  # noqa: E501
-            r"/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home",
-            r"/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands",
+    candidate_paths = set()
+    visited_dirs = set()
+
+    def push_candidate(*parts):
+        if not parts:
+            return
+        path = osp.expanduser(osp.join(*parts))
+        if not path:
+            return
+        if osp.isdir(path):
+            java_binary = osp.join(path, "java")
+            if osp.isfile(java_binary):
+                candidate_paths.add(osp.realpath(java_binary))
+        elif osp.isfile(path):
+            candidate_paths.add(osp.realpath(path))
+
+    def scan_runtime_dir(root, max_depth=4):
+        root = osp.expanduser(root)
+        if not osp.isdir(root):
+            return
+        stack = [(root, 0)]
+        while stack:
+            current, depth = stack.pop()
+            real_current = osp.realpath(current)
+            if real_current in visited_dirs:
+                continue
+            visited_dirs.add(real_current)
+            if depth > max_depth:
+                continue
+            java_path = osp.join(real_current, "java")
+            if osp.isfile(java_path):
+                candidate_paths.add(java_path)
+            bin_java = osp.join(real_current, "bin", "java")
+            if osp.isfile(bin_java):
+                candidate_paths.add(bin_java)
+            try:
+                entries = listdir(real_current)
+            except (PermissionError, FileNotFoundError, NotADirectoryError):
+                continue
+            for entry in entries:
+                child = osp.join(real_current, entry)
+                if osp.isdir(child):
+                    stack.append((child, depth + 1))
+
+    # 环境变量中的路径
+    for raw_path in env.get("PATH", "").split(pathsep):
+        cleaned = raw_path.strip()
+        if not cleaned:
+            continue
+        if cleaned.endswith("java") and osp.isfile(cleaned):
+            push_candidate(cleaned)
+        else:
+            push_candidate(cleaned)
+
+    system_name = system().lower()
+    if "darwin" in system_name:  # macOS
+        # 常见预装或内置位置
+        mac_specific_paths = [
+            (
+                "/Applications/Xcode.app/Contents/Applications/Application"
+                " Loader.app/Contents/MacOS/itms/java"
+            ),
+            "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java",
+            "/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java",
         ]
-        javaPathList.extend(javaInstallationPaths)
-        # 检测默认安装路径
-        basePath = "/Library/Java/JavaVirtualMachines/"
-        if osp.isdir(basePath):
-            for entry in listdir(basePath):
-                if osp.isdir(entry):
-                    javaPathList.append(osp.join(entry, "Contents/Home/bin"))
-    else:  # linux
-        # 检测默认安装路径
-        javaInstallationPaths = [
-            r"/usr",
-            r"/usr/java",
-            r"/usr/lib/jvm",
-            r"/usr/lib64/jvm",
-            r"/opt/jdk",
-            r"/opt/jdks",
+        for path in mac_specific_paths:
+            push_candidate(path)
+
+        base_path = "/Library/Java/JavaVirtualMachines"
+        if osp.isdir(base_path):
+            for entry in listdir(base_path):
+                entry_path = osp.join(base_path, entry)
+                if not osp.isdir(entry_path):
+                    continue
+                push_candidate(entry_path, "Contents", "Home", "bin")
+
+        # 常见第三方启动器内置运行时
+        mac_runtime_roots = [
+            "~/Library/Application Support/Badlion Client/Data",
+            "~/Library/Application Support/Lunar Client",
+            "~/Library/Application Support/piston-meta",
+        ]
+        for root in mac_runtime_roots:
+            scan_runtime_dir(root)
+    else:  # linux、BSD 等类 Unix 系统
+        java_installation_paths = [
+            "/usr",
+            "/usr/java",
+            "/usr/lib/jvm",
+            "/usr/lib64/jvm",
+            "/opt/jdk",
+            "/opt/jdks",
         ]
 
-        for path in javaInstallationPaths:
-            # 尝试插入jre/bin和bin目录
-            javaPathList.append(osp.join(path, "/jre/bin"))
-            javaPathList.append(osp.join(path, "/bin"))
+        for base in java_installation_paths:
+            if not base:
+                continue
+            push_candidate(base, "bin")
+            push_candidate(base, "jre", "bin")
 
-            # 如果目录存在，则遍历其内容
-            if osp.exists(path) and osp.isdir(path):
-                for entry in listdir(path):
-                    if osp.isdir(path):
-                        # 尝试插入每个子目录的jre/bin和bin目录
-                        javaPathList.append(osp.join(entry, "/jre/bin"))
-                        javaPathList.append(osp.join(entry, "/bin"))
+            if osp.isdir(base):
+                for entry in listdir(base):
+                    entry_path = osp.join(base, entry)
+                    if not osp.isdir(entry_path):
+                        continue
+                    push_candidate(entry_path, "bin")
+                    push_candidate(entry_path, "jre", "bin")
 
-    # 筛选Java路径
-    for path in javaPathList:
-        path = osp.join(path, "java")
-        if osp.exists(path):
-            version = getJavaVersion(path)
-            if version != "":
-                java = Java(path, version)
-                if java not in javaList:
-                    javaList.append(Java(path, version))
+    # 整理候选 Java 二进制
+    for candidate in sorted(candidate_paths):
+        if not osp.isfile(candidate) or not osp.exists(candidate):
+            continue
+        version = getJavaVersion(candidate)
+        if version:
+            java = Java(candidate, version)
+            if java not in javaList:
+                javaList.append(java)
 
     return javaList
 
