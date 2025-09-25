@@ -17,6 +17,7 @@ Communicate with Minecraft servers.
 
 from datetime import datetime
 from os import path as osp
+import platform
 from typing import Optional
 
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
@@ -94,7 +95,9 @@ class _ServerProcessBridge(QObject):
 
         for line in lines:
             newOutput = line.decode(self.config.outputDecoding, errors="replace")
-            self.serverLogOutput.emit(newOutput[:-1])
+            self.serverLogOutput.emit(
+                newOutput[:-1] if platform.system().lower() == "windows" else newOutput
+            )
 
     def startServer(self):
         """
