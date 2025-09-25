@@ -32,7 +32,7 @@ ___
 
 - **👨🏻‍💻For Users of All Levels**: Provides simple mode, advanced mode, import mode to meet the needs of users at different levels.
 - **💻Sleek and Beautiful Interface**: Based on Fluent Design language, offering a clean and attractive interface.
-- **⏬One-Click Resource Download**: Integrated with FastMirror, MCSLAPI, Polestar Mirror, Akira Mirror, for swift resource downloads.
+- **⏬One-Click Resource Download**: Integrated with FastMirror, MCSL-Sync, and Polestar Mirror for swift resource downloads.
 - **✅Automatic Java Detection**: Pioneering Java detection algorithm in the server opening interface, completing the search in 1-2 seconds.
 - **🎞️Multi-Server Management**: All-in-one server management for efficient operation.
 - **🔧Self-Developed Plugin System**: Implemented using Python features, providing limitless possibilities.
