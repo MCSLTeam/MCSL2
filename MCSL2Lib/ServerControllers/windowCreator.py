@@ -302,7 +302,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.startServer()
             self.initSafelyQuitController()
         else:
+            self.registerStartServerComponents()
+            self.serverSegmentedWidget.setCurrentItem("editorPage")
             self.stackedWidget.setCurrentWidget(self.configEditorPage)
+            self.isCalledByConfigEditor = False
 
     def closeEvent(self, a0) -> None:
         if self.isCalledByConfigEditor:
@@ -741,7 +744,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.genRunScriptBtn.setText(self.tr("生成启动脚本"))
         self.toggleServerBtn.setText(self.tr("启动服务器"))
         self.serverResMonitorTitle.setText(self.tr("服务器资源占用"))
-        self.serverRAMMonitorTitle.setText("RAM: [curr/max]")
+        self.serverRAMMonitorTitle.setText("RAM: ")
         self.serverCPUMonitorTitle.setText("CPU: ")
         self.existPlayersTitle.setText(self.tr("在线玩家列表"))
         self.quickMenuTitleLabel.setText(self.tr("快捷菜单: "))
@@ -910,17 +913,19 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         w.yesSignal.connect(validator.acceptEula)
         w.yesSignal.connect(self.startServer)
         w.cancelButton.setText(self.tr("拒绝"))
-        w.cancelSignal.connect(self.closeEvent)
         eulaBtn = HyperlinkButton(url="https://aka.ms/MinecraftEULA", text="Eula", icon=FIF.LINK)
         w.buttonLayout.addWidget(eulaBtn, 1, Qt.AlignVCenter)
-        w.exec_()
+        return w.exec()
 
     def startServer(self):
         if self.serverBridge is not None:
             if not self.serverBridge.isServerRunning():
                 t = self.serverBridge.startServer()
                 if isinstance(t, _MinecraftEULA):
-                    self._showNoAcceptEULAMsg(t)
+                    self.isCalledByConfigEditor = True
+                    self.registerStartServerComponents()
+                    if not self._showNoAcceptEULAMsg(t):
+                        return
                 else:
                     self.registerServerExitStatusHandler()
                     self.registerResMonitor()
@@ -932,7 +937,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         else:
             t = self.serverLauncher.start()
             if isinstance(t, _MinecraftEULA):
-                self._showNoAcceptEULAMsg(t)
+                self.isCalledByConfigEditor = True
+                self.registerStartServerComponents()
+                if not self._showNoAcceptEULAMsg(t):
+                    return
             else:
                 self.serverBridge = t
                 self.registerServerExitStatusHandler()
@@ -984,31 +992,36 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             pass
 
     def registerStartServerComponents(self):
-        self.toggleServerBtn.setText(self.tr("关闭服务器"))
-        self.exitServer.setText(self.tr("关闭服务器"))
-        try:
-            self.toggleServerBtn.clicked.disconnect()
-        except (AttributeError, TypeError):
-            pass
-        try:
-            self.exitServer.clicked.disconnect()
-        except (AttributeError, TypeError):
-            pass
-        self.toggleServerBtn.clicked.connect(self.runQuickMenu_StopServer)
-        self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
-        self.backupSavesBtn.setEnabled(False)
-        self.backupServerBtn.setEnabled(False)
-        for btn in self.manageBackupBtnList:
-            btn.setEnabled(False)
-        InfoBar.info(
-            title=self.tr("提示"),
-            content=self.tr("服务器正在启动，请稍后..."),
-            orient=Qt.Horizontal,
-            isClosable=False,
-            position=InfoBarPosition.BOTTOM_RIGHT,
-            duration=2222,
-            parent=self,
-        )
+        if not self.isCalledByConfigEditor:
+            self.toggleServerBtn.setText(self.tr("关闭服务器"))
+            self.exitServer.setText(self.tr("关闭服务器"))
+            InfoBar.info(
+                title=self.tr("提示"),
+                content=self.tr("服务器正在启动，请稍后..."),
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.BOTTOM_RIGHT,
+                duration=2222,
+                parent=self,
+            )
+            self.backupSavesBtn.setEnabled(False)
+            self.backupServerBtn.setEnabled(False)
+            try:
+                self.exitServer.clicked.disconnect()
+            except (AttributeError, TypeError):
+                pass
+            self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
+            for btn in self.manageBackupBtnList:
+                btn.setEnabled(False)
+        else:
+            try:
+                self.toggleServerBtn.clicked.disconnect()
+            except (AttributeError, TypeError):
+                pass
+            self.toggleServerBtn.clicked.connect(self.startServer)
+            self.exitServer.clicked.connect(self.startServer)
+            self.toggleServerBtn.setText(self.tr("开启服务器"))
+            self.exitServer.setText(self.tr("开启服务器"))
 
     def unRegisterStartServerComponents(self):
         self.toggleServerBtn.setText(self.tr("开启服务器"))
