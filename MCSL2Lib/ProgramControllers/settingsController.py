@@ -23,6 +23,9 @@ from qfluentwidgets import (
     RangeConfigItem,
     RangeValidator,
     BoolValidator,
+    ColorConfigItem,
+    Theme,
+    EnumSerializer,
 )
 
 
@@ -93,10 +96,11 @@ class Config(QConfig):
     clearConsoleWhenStopServer = ConfigItem(
         "Console", "clearConsoleWhenStopServer", False, BoolValidator()
     )
+
     # Software
-    # themeMode = OptionsConfigItem(
-    # "QFluentWidgets", "ThemeMode", Theme.LIGHT, OptionsValidator(Theme), EnumSerializer(Theme))
-    # themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#009faa')
+    themeMode = OptionsConfigItem(
+    "QFluentWidgets", "ThemeMode", Theme.AUTO, OptionsValidator(Theme), EnumSerializer(Theme))
+    themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#19e8a2')
     alwaysRunAsAdministrator = ConfigItem(
         "Software", "alwaysRunAsAdministrator", False, BoolValidator()
     )
