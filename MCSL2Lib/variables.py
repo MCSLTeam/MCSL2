@@ -354,11 +354,12 @@ class SettingsVariables:
 
     def __init__(self):
         self.newServerTypeList = ["Default", "Noob", "Extended", "Import"]
-        self.downloadSourceList = ["FastMirror", "MCSLSync", "PolarsAPI"]
+        self.downloadSourceList = ["FastMirror", "MCSLSync", "PolarsAPI", "RainYun"]
         self.downloadSourceTextList = [
             "FastMirror 镜像站",
             "MCSL-Sync",
             "极星·镜像站",
+            "雨云镜像站"
         ]
 
     def get_download_source_index(self) -> int:

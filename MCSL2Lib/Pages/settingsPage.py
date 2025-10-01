@@ -225,6 +225,7 @@ class SettingsPage(QWidget):
                 self.tr("FastMirror 镜像站"),
                 self.tr("MCSL-Sync"),
                 self.tr("极星·镜像站"),
+                self.tr("雨云镜像站"),
             ],
             parent=self.downloadSettingsGroup,
         )
