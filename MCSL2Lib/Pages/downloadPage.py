@@ -15,6 +15,7 @@ Download page with FastMirror, MCSL-Sync, and PolarsAPI.
 """
 
 from os import path as osp, remove
+import re
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtWidgets import (
@@ -88,6 +89,66 @@ from MCSL2Lib.variables import (
 
 downloadVariables = DownloadVariables()
 settingsVariables = SettingsVariables()
+
+
+def _version_key(version: str):
+    """将版本字符串转换为可比较的 (a,b,c,d) 元组，用于排序。
+    参考 C# DownloadManager.VersionToTuple 的规则：
+    - 特殊情况：horn/greathorn/executions/trials/net/whisper -> 对应具体版本
+    - 快照：形如 24w31a -> (24,31,1,0)
+    - 其他：归一化 -/_ 为 .，去掉 rc, 处理 pre/beta/snapshot 为数字占位
+    若解析失败，返回 (0,0,0,0)。
+    """
+    if not isinstance(version, str):
+        return (0, 0, 0, 0)
+
+    v = version.strip()
+
+    # 特殊版本代号（大小写不敏感）
+    if ("." not in v) and ("-" not in v):
+        mapping = {
+            "horn": (1, 19, 2, 0),
+            "greathorn": (1, 19, 3, 0),
+            "executions": (1, 19, 4, 0),
+            "trials": (1, 20, 1, 0),
+            "net": (1, 20, 2, 0),
+            "whisper": (1, 20, 4, 0),
+            "general": (0, 0, 0, 0),
+            "snapshot": (0, 0, 0, 0),
+            "release": (0, 0, 0, 0),
+        }
+        return mapping.get(v.lower(), (0, 0, 0, 0))
+
+    # 快照版本：如 24w31a
+    m = re.match(r"^(\d+)w(\d+)([a-z])$", v, flags=re.IGNORECASE)
+    if m:
+        try:
+            year = int(m.group(1))
+            week = int(m.group(2))
+            revision = ord(m.group(3).lower()) - ord("a") + 1
+            return (year, week, revision, 0)
+        except Exception:
+            return (0, 0, 0, 0)
+
+    # 其他版本：尽量贴近 C# 逻辑
+    v2 = re.sub(r"[-_]", ".", v.lower())
+    v2 = v2.replace("rc", "")
+    # 规范化 pre-release，C# 里大小写不匹配，这里用正则覆盖更多写法
+    v2 = re.sub(r"\s*pre[- ]?release\s*", ".pre", v2, flags=re.IGNORECASE)
+    v2 = v2.replace("pre", "")
+    v2 = v2.replace("snapshot", "0")
+    v2 = v2.replace(".beta", "beta").replace("beta", "0")
+
+    parts = [p for p in v2.split(".") if p != ""]
+    nums = []
+    for p in parts[:4]:
+        try:
+            nums.append(int(p))
+        except Exception:
+            nums.append(0)
+    while len(nums) < 4:
+        nums.append(0)
+    return tuple(nums[:4])
 
 
 @Singleton
@@ -844,6 +905,11 @@ class DownloadPage(QWidget):
         self.mcsLSyncVersionBtnGroup = QButtonGroup(self)
 
         versions = downloadVariables.MCSLSyncCoreVersions.get("versions", [])
+        # 使用统一版本键排序，支持 snapshot/rc/pre/beta 等
+        try:
+            versions = sorted(versions, key=_version_key, reverse=True)
+        except Exception:
+            pass
         for version in versions:
             widget = MCSLSyncVersionButton(
                 version=version,
@@ -1626,6 +1692,11 @@ class DownloadPage(QWidget):
         MCVersionList = downloadVariables.FastMirrorAPIDict["mc_versions"][
             list(downloadVariables.FastMirrorAPIDict["name"]).index(downloadVariables.selectedName)
         ]
+        # 使用统一版本键排序，支持 snapshot/rc/pre/beta 等
+        try:
+            MCVersionList = sorted(MCVersionList, key=_version_key, reverse=True)
+        except Exception:
+            pass
         self.fmVersionBtnGroup.deleteLater()
         self.fmVersionBtnGroup = QButtonGroup(self)
         for i in range(len(MCVersionList)):
