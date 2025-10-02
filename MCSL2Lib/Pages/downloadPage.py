@@ -16,6 +16,7 @@ Download page with FastMirror, MCSL-Sync, and PolarsAPI.
 
 from os import path as osp, remove
 import re
+from unittest import skip
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtWidgets import (
@@ -76,7 +77,10 @@ from MCSL2Lib.ProgramControllers.DownloadAPI.PolarsAPI import (
     FetchPolarsAPITypeThreadFactory,
 )
 from MCSL2Lib.ProgramControllers.DownloadAPI.RainYunAPI import FetchRainYunThreadFactory
-from MCSL2Lib.ProgramControllers.multiThreadDownloadController import MultiThreadDownloadController
+from MCSL2Lib.ProgramControllers.downloadController import (
+    DownloadController,
+    getReadableSize,
+)
 from MCSL2Lib.ProgramControllers.interfaceController import (
     MySmoothScrollArea,
 )
@@ -864,7 +868,10 @@ class DownloadPage(QWidget):
         self.rainyunTypeBtnGroup = QButtonGroup(self)
         self.rainyunTypeBtnGroup.setExclusive(True)
         btns = []
+        skipList = ["DstAdmin", "PalWorld", "Left4Dead2", "TShock", "TVanilla", "TModLoader"]
         for idx, type_name in enumerate(self.rainyunTypeList):
+            if type_name in skipList:
+                continue
             btn = PolarsTypeWidget(type_name, idx, "", self.rainyunTypeProcessor, parent=self)
             self.rainyunTypeLayout.addWidget(btn)
             self.rainyunTypeBtnGroup.addButton(btn)
@@ -890,7 +897,25 @@ class DownloadPage(QWidget):
 
     @pyqtSlot(dict)
     def updateRainYunFileList(self, data: dict):
-        self.rainyunFileList = data.get("name", []) if data else []
+        files = []
+        if data and isinstance(data.get("name"), list):
+            names = data.get("name", [])
+            sizes = data.get("size", [])
+            is_dirs = data.get("is_dir", [])
+            for idx, name in enumerate(names):
+                if idx < len(is_dirs) and is_dirs[idx]:
+                    continue
+                size_value = None
+                if idx < len(sizes):
+                    try:
+                        size_value = int(sizes[idx])
+                    except Exception:
+                        size_value = None
+                files.append({
+                    "name": name,
+                    "size": size_value,
+                })
+        self.rainyunFileList = files
         self.initRainYunFileListWidget()
 
     def initRainYunFileListWidget(self):
@@ -905,14 +930,23 @@ class DownloadPage(QWidget):
                 del item
         self.rainyunFileBtnGroup.deleteLater()
         self.rainyunFileBtnGroup = QButtonGroup(self)
-        for file_name in self.rainyunFileList:
+        for meta in self.rainyunFileList:
+            file_name = meta.get("name")
+            if not file_name:
+                continue
+            file_size = meta.get("size")
+            size_text = ""
+            if isinstance(file_size, int) and file_size > 0:
+                size_text = getReadableSize(file_size)
             btn = FastMirrorBuildListWidget(
                 buildVer=file_name,
-                syncTime="",
+                syncTime=size_text,
                 coreVersion=file_name,
                 btnSlot=self.downloadRainYunFile,
                 parent=self,
             )
+            btn.downloadBtn.setProperty("file_size", file_size)
+            self.rainyunFileBtnGroup.addButton(btn.downloadBtn)
             self.rainyunCoreLayout.addWidget(btn)
         # 只添加一个拉伸项，确保底部无多余空白
         self.rainyunCoreLayout.addStretch()
@@ -925,6 +959,7 @@ class DownloadPage(QWidget):
         if button is None or sip.isdeleted(button):
             return
         file_name = button.property("core_version")
+        file_size = button.property("file_size")
         if not file_name or not self.rainyunSelectedType:
             InfoBar.error(
                 title=self.tr("下载错误"),
@@ -937,8 +972,20 @@ class DownloadPage(QWidget):
             )
             return
         url = f"https://mirrors.rainyun.com/d/服务端合集/{self.rainyunSelectedType}/{file_name}"
+        name_without_ext, ext = osp.splitext(file_name)
+        file_format = ext[1:] if ext else ""
+        target_name = name_without_ext if ext else file_name
+
+        normalized_size = None
+        if isinstance(file_size, int) and file_size > 0:
+            normalized_size = file_size
+
         self.checkDownloadFileExists(
-            file_name, "jar", url, (f"{file_name}", self.rainyunSelectedType, "RainYun")
+            target_name,
+            file_format,
+            url,
+            (f"{file_name}", self.rainyunSelectedType, "RainYun"),
+            fileSize=normalized_size,
         )
 
     def releaseRainYunMemory(self, file_only=False):
@@ -1994,15 +2041,31 @@ class DownloadPage(QWidget):
         )
         w.show()
 
-    def checkDownloadFileExists(self, fileName, fileFormat, uri, extraData: tuple) -> bool:
-        if osp.exists(osp.join("MCSL2", "Downloads", f"{fileName}.{fileFormat}")):
+    def checkDownloadFileExists(
+        self,
+        fileName,
+        fileFormat,
+        uri,
+        extraData: tuple,
+        fileSize=None,
+    ) -> bool:
+        target_filename = f"{fileName}.{fileFormat}" if fileFormat else fileName
+        download_path = osp.join("MCSL2", "Downloads", target_filename)
+
+        if osp.exists(download_path):
             if cfg.get(cfg.saveSameFileException) == "ask":
                 w = MessageBox(self.tr("提示"), self.tr("您要下载的文件已存在。请选择操作。"), self)
                 w.yesButton.setText(self.tr("停止下载"))
                 w.cancelButton.setText(self.tr("覆盖文件"))
-                w.cancelSignal.connect(lambda: remove(f"MCSL2/Downloads/{fileName}.{fileFormat}"))
                 w.cancelSignal.connect(
-                    lambda: self.downloadFile(fileName, fileFormat, uri, extraData)
+                    lambda: remove(download_path)
+                    if osp.exists(download_path)
+                    else None
+                )
+                w.cancelSignal.connect(
+                    lambda: self.downloadFile(
+                        fileName, fileFormat, uri, extraData, fileSize=fileSize
+                    )
                 )
                 w.exec()
             elif cfg.get(cfg.saveSameFileException) == "overwrite":
@@ -2017,8 +2080,8 @@ class DownloadPage(QWidget):
                     duration=2222,
                     parent=self,
                 )
-                remove(f"MCSL2/Downloads/{fileName}.{fileFormat}")
-                self.downloadFile(fileName, fileFormat, uri, extraData)
+                remove(download_path)
+                self.downloadFile(fileName, fileFormat, uri, extraData, fileSize=fileSize)
             elif cfg.get(cfg.saveSameFileException) == "stop":
                 InfoBar.warning(
                     title=self.tr("警告"),
@@ -2030,14 +2093,13 @@ class DownloadPage(QWidget):
                     parent=self,
                 )
         else:
-            self.downloadFile(fileName, fileFormat, uri, extraData)
+            self.downloadFile(fileName, fileFormat, uri, extraData, fileSize=fileSize)
 
-    def downloadFile(self, fileName, fileFormat, uri, extraData: tuple):
+    def downloadFile(self, fileName, fileFormat, uri, extraData: tuple, fileSize=None):
+        target_filename = f"{fileName}.{fileFormat}" if fileFormat else fileName
         InfoBar.info(
             title=self.tr("开始下载"),
-            content=self.tr("{fileName}.{fileFormat}").format(
-                fileName=fileName, fileFormat=fileFormat
-            ),
+            content=target_filename,
             orient=Qt.Horizontal,
             isClosable=True,
             position=InfoBarPosition.BOTTOM_RIGHT,
@@ -2045,28 +2107,31 @@ class DownloadPage(QWidget):
             parent=self,
         )
         downloadingInfoWidget = DownloadCard(
-            fileName=f"{fileName}.{fileFormat}", url=uri, parent=self
+            fileName=target_filename,
+            url=uri,
+            parent=self,
         )
 
         # 使用多线程下载引擎
-        gid = MultiThreadDownloadController.download(
+        gid = DownloadController.download(
             uri=uri,
             watch=True,
             info_get=downloadingInfoWidget.onInfoGet,
             stopped=downloadingInfoWidget.onDownloadFinished,
-            filename=f"{fileName}.{fileFormat}",
+            filename=target_filename,
             interval=0.2,
             extraData=extraData,
+            file_size=fileSize,
         )
 
         downloadingInfoWidget.canceled.connect(
-            lambda: MultiThreadDownloadController.cancelDownloadTask(gid)
+            lambda: DownloadController.cancelDownloadTask(gid)
         )
         downloadingInfoWidget.paused.connect(
             lambda x: (
-                MultiThreadDownloadController.pauseDownloadTask(gid)
+                DownloadController.pauseDownloadTask(gid)
                 if x
-                else MultiThreadDownloadController.resumeDownloadTask(gid)
+                else DownloadController.resumeDownloadTask(gid)
             )
         )
         self.downloadingItemLayout.addWidget(downloadingInfoWidget)
