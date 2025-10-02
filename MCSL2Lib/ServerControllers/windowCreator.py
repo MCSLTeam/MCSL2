@@ -924,6 +924,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 if isinstance(t, _MinecraftEULA):
                     self.isCalledByConfigEditor = True
                     self.registerStartServerComponents()
+                    self.toggleServerBtn.setText(self.tr("关闭服务器"))
+                    self.exitServer.setText(self.tr("关闭服务器"))
                     if not self._showNoAcceptEULAMsg(t):
                         return
                 else:
@@ -939,6 +941,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             if isinstance(t, _MinecraftEULA):
                 self.isCalledByConfigEditor = True
                 self.registerStartServerComponents()
+                self.toggleServerBtn.setText(self.tr("关闭服务器"))
+                self.exitServer.setText(self.tr("关闭服务器"))
                 if not self._showNoAcceptEULAMsg(t):
                     return
             else:
@@ -1197,7 +1201,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         else:
             pass
         if self.errorHandler.isChecked():
-            self.errMsg += ServerErrorHandler.detect(serverOutput)
+            self.errMsg += t if (t := ServerErrorHandler.detect(serverOutput)) not in self.errMsg else ""  # noqa: E501
         if (
             "logged in with entity id" in serverOutput
             or " left the game" in serverOutput
