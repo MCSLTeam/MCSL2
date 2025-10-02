@@ -16,7 +16,6 @@ Download page with FastMirror, MCSL-Sync, and PolarsAPI.
 
 from os import path as osp, remove
 import re
-from unittest import skip
 
 from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
 from PyQt5.QtWidgets import (
