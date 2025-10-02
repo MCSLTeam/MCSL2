@@ -16,7 +16,7 @@ Update Controller
 
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from MCSL2Lib import MCSL2VERSION
-from MCSL2Lib.ProgramControllers.multiThreadDownloadController import MultiThreadDownloadController
+from MCSL2Lib.ProgramControllers.downloadController import DownloadController
 import sys
 from os import remove, name as osname, rename, execl, path as osp
 from platform import architecture
@@ -85,7 +85,7 @@ class MCSL2FileUpdater(QObject):
                     duration=-1,
                     parent=self.parent().window(),
                 )
-            MultiThreadDownloadController.download(
+            DownloadController.download(
                 uri=self.processUpdateLink,
                 watch=False,
                 interval=0.2,
@@ -100,7 +100,7 @@ class MCSL2FileUpdater(QObject):
             self.downloadUpdate(showInfoBar=False)
             return
         else:
-            MultiThreadDownloadController.download(
+            DownloadController.download(
                 uri=self.verificationUpdateLink,
                 watch=False,
                 interval=0.2,

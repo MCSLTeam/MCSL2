@@ -20,7 +20,7 @@ from PyQt5.QtCore import QAbstractListModel, QModelIndex, Qt, QSize, pyqtSignal
 from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy
 from qfluentwidgets import MessageBoxBase, SubtitleLabel, TableWidget
 
-from MCSL2Lib.ProgramControllers.multiThreadDownloadController import DL_EntryController
+from MCSL2Lib.ProgramControllers.downloadController import DL_EntryController
 
 
 class DownloadEntryModel(QAbstractListModel):

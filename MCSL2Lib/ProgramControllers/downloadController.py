@@ -23,9 +23,16 @@ from typing import Optional, Callable, Dict
 import sys
 import struct
 from pathlib import Path
-import requests
-import urllib3
-from PyQt5.QtCore import QObject, pyqtSignal, QTimer, QMutex
+from urllib.parse import unquote, urlsplit
+from PyQt5.QtCore import (
+    QObject,
+    pyqtSignal,
+    QTimer,
+    QMutex,
+    QUrl,
+    QEventLoop,
+)
+from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
 from pyqt5_concurrent.TaskExecutor import TaskExecutor
 
 from MCSL2Lib.ProgramControllers.settingsController import cfg
@@ -37,9 +44,6 @@ from MCSL2Lib.utils import (
     writeFile,
     readBytesFile,
 )
-
-# 禁用 urllib3 的 SSL 警告
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 entries = {}
@@ -62,9 +66,9 @@ def getReadableSize(size_bytes):
 
 def formatETA(seconds):
     """将秒数转换为可读的时间格式"""
-    if seconds <= 0 or seconds == float('inf'):
+    if seconds <= 0 or seconds == float("inf"):
         return "-"
-    
+
     if seconds < 60:
         return f"{int(seconds)}s"
     elif seconds < 3600:
@@ -89,38 +93,35 @@ def formatETA(seconds):
 def getLinkInfo(url, headers, fileName=None):
     """获取链接信息"""
     try:
-        # 发送HEAD请求获取文件信息，SSL验证始终禁用
-        response = requests.head(
-            url,
-            headers=headers,
-            allow_redirects=True,
-            verify=False,  # SSL验证始终禁用
-            timeout=30,
-        )
-        response.raise_for_status()
-
+        # 用QNetworkAccessManager同步HEAD请求
+        manager = QNetworkAccessManager()
+        req = QNetworkRequest(QUrl(url))
+        for k, v in headers.items():
+            req.setRawHeader(k.encode(), str(v).encode())
+        req.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        loop = QEventLoop()
+        reply = manager.head(req)
+        reply.finished.connect(loop.quit)
+        loop.exec_()
+        if reply.error() != QNetworkReply.NoError:
+            raise Exception(reply.errorString())
         # 获取文件大小
-        file_size = int(response.headers.get("content-length", 0))
-
+        file_size = int(reply.rawHeader(b"Content-Length") or 0)
         # 获取文件名
         if not fileName:
-            if "content-disposition" in response.headers:
-                disposition = response.headers["content-disposition"]
-                if "filename=" in disposition:
-                    fileName = disposition.split("filename=")[1].strip('"')
-
+            cd = bytes(reply.rawHeader(b"Content-Disposition")).decode(errors="ignore")
+            if "filename=" in cd:
+                fileName = cd.split("filename=")[1].strip('"')
             if not fileName:
                 fileName = url.split("/")[-1]
                 if "?" in fileName:
                     fileName = fileName.split("?")[0]
-
         # 检查最终URL（处理重定向）
-        final_url = response.url
-
+        final_url = str(reply.url().toString())
+        reply.deleteLater()
         return final_url, fileName, file_size
-
     except Exception as e:
-        MCSL2Logger.error(f"获取链接信息失败: {e}")
+        MCSL2Logger.error(msg=f"获取链接信息失败: {e}")
         return url, fileName or "unknown_file", 0
 
 
@@ -150,45 +151,6 @@ def createSparseFile(file_path, size=None):
                     f.write(b"\0")
     except Exception as e:
         MCSL2Logger.warning(f"创建稀疏文件失败: {e}")
-
-
-def downloadChunk(url, headers, start, end, file_path, progress_callback=None):
-    """下载文件块"""
-    try:
-        range_headers = headers.copy()
-        range_headers["Range"] = f"bytes={start}-{end}"
-
-        # SSL验证始终禁用
-        response = requests.get(
-            url,
-            headers=range_headers,
-            stream=True,
-            verify=False,  # SSL验证始终禁用
-            timeout=30,
-        )
-        response.raise_for_status()
-
-        if response.status_code not in [206, 200]:
-            raise Exception(f"服务器响应错误: {response.status_code}")
-
-        downloaded = 0
-        chunk_size = 8192
-
-        with open(file_path, "r+b") as f:
-            f.seek(start)
-            for chunk in response.iter_content(chunk_size=chunk_size):
-                if chunk:
-                    f.write(chunk)
-                    delta = len(chunk)
-                    downloaded += delta
-                    if progress_callback:
-                        progress_callback(delta)
-
-        return True
-
-    except Exception as e:
-        MCSL2Logger.error(f"下载块失败 {start}-{end}: {e}")
-        raise e
 
 
 class DownloadWorker:
@@ -234,7 +196,12 @@ class DownloadTask(QObject):
         self.url = url
         self.headers = headers or MCSLNetworkSession.MCSLNetworkHeaders
         self.file_name = file_name
-        self.file_path = Path(file_path) if file_path else Path("MCSL2/Downloads")
+        self.file_path = (
+            Path(file_path).expanduser()
+            if file_path
+            else Path("MCSL2/Downloads").expanduser()
+        )
+        self.full_path = None
         self.thread_count = cfg.get(cfg.downloadThreads)
         self.file_size = file_size
         self.workers = []
@@ -245,6 +212,7 @@ class DownloadTask(QObject):
         self.speed_history = [0] * 10
         self.is_paused = False
         self.is_cancelled = False
+        self.is_finished = False
         self.should_start_after_init = False  # 是否在初始化后开始下载
 
         # ETA 计算相关
@@ -259,31 +227,54 @@ class DownloadTask(QObject):
         self.progress_timer = QTimer()
         self.progress_timer.timeout.connect(self._update_progress)
 
+        # 文件写入互斥锁
+        self.file_write_mutex = QMutex()
+
         # 初始化任务
         self._init_future = TaskExecutor.run(self._init_task)
         self._init_future.finished.connect(self._on_init_finished)
 
+    def _ensure_download_path(self):
+        """确保文件名和保存路径已就绪"""
+        if not self.file_name:
+            parsed = urlsplit(self.url or "")
+            candidate = unquote(Path(parsed.path).name)
+            if not candidate:
+                candidate = "download.bin"
+            self.file_name = candidate
+        else:
+            self.file_name = unquote(self.file_name)
+
+        if sys.platform == "win32":
+            self.file_name = "".join([i for i in self.file_name if i not in r'\\/:*?"<>|'])
+        if len(self.file_name) > 255:
+            self.file_name = self.file_name[:255]
+
+        base_path = Path(self.file_path or Path("MCSL2/Downloads")).expanduser()
+        if not base_path.exists():
+            base_path.mkdir(parents=True, exist_ok=True)
+        self.file_path = base_path.resolve()
+        self.full_path = (self.file_path / self.file_name).resolve()
+        return self.full_path
+
     def _init_task(self):
         """初始化下载任务"""
         try:
-            # 获取文件信息
-            if self.file_size == -1 or not self.file_name:
-                self.url, self.file_name, self.file_size = getLinkInfo(
-                    self.url, self.headers, self.file_name
-                )
+            # 获取文件信息（保持调用方指定的文件名，补全其他信息）
+            final_url, inferred_name, inferred_size = getLinkInfo(
+                self.url, self.headers, self.file_name
+            )
+            self.url = final_url
+            if not self.file_name and inferred_name:
+                self.file_name = inferred_name
+            if inferred_size and (self.file_size is None or self.file_size <= 0):
+                self.file_size = inferred_size
 
-            # 确保文件名安全
-            if sys.platform == "win32":
-                self.file_name = "".join([i for i in self.file_name if i not in r'\/:*?"<>|'])
-            if len(self.file_name) > 255:
-                self.file_name = self.file_name[:255]
-
-            # 创建下载目录
-            if not self.file_path.exists():
-                self.file_path.mkdir(parents=True, exist_ok=True)
-
-            # 完整文件路径
-            self.full_path = self.file_path / self.file_name
+            # 确保路径信息
+            self._ensure_download_path()
+            MCSL2Logger.info(
+                f"初始化下载文件: 路径={self.full_path}, 预期大小={self.file_size}"
+            )
 
             progress_file = self.file_path / f"{self.file_name}.progress"
 
@@ -335,49 +326,46 @@ class DownloadTask(QObject):
             raise e
 
     def _check_range_support(self):
-        """检查服务器是否支持分块下载"""
+        """检查服务器是否支持分块下载（QNetwork实现）"""
         if "fastmirror.net" in self.url:
             return True
         try:
-            # 首先发送HEAD请求检查Accept-Ranges头
-            head_response = requests.head(
-                self.url,
-                headers=self.headers,
-                verify=False,  # SSL验证始终禁用
-                timeout=10,
-                allow_redirects=True,
-            )
-
-            # 检查Accept-Ranges头
-            accept_ranges = head_response.headers.get("Accept-Ranges", "").lower()
+            manager = QNetworkAccessManager()
+            req = QNetworkRequest(QUrl(self.url))
+            for k, v in self.headers.items():
+                req.setRawHeader(k.encode(), str(v).encode())
+            req.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+            loop = QEventLoop()
+            reply = manager.head(req)
+            reply.finished.connect(loop.quit)
+            loop.exec_()
+            if reply.error() != QNetworkReply.NoError:
+                return False
+            accept_ranges = bytes(reply.rawHeader(b"Accept-Ranges")).decode(errors="ignore").lower()
             if accept_ranges == "none":
                 MCSL2Logger.info("服务器明确表示不支持Range请求")
+                reply.deleteLater()
                 return False
-
-            # 关键改进：使用GET请求测试Range支持，因为有些服务器在HEAD请求中不处理Range头
-            range_headers = self.headers.copy()
-            range_headers["Range"] = "bytes=0-1023"  # 请求前1KB
-
-            range_response = requests.get(
-                self.url,
-                headers=range_headers,
-                verify=False,  # SSL验证始终禁用
-                timeout=10,
-                allow_redirects=True,
-                stream=True,
-            )
-
-            if range_response.status_code == 206:
+            # 进一步用GET+Range头测试
+            req2 = QNetworkRequest(QUrl(self.url))
+            for k, v in self.headers.items():
+                req2.setRawHeader(k.encode(), str(v).encode())
+            req2.setRawHeader(b"Range", b"bytes=0-1023")
+            req2.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+            reply2 = manager.get(req2)
+            loop2 = QEventLoop()
+            reply2.finished.connect(loop2.quit)
+            loop2.exec_()
+            code = reply2.attribute(QNetworkRequest.HttpStatusCodeAttribute)
+            reply.deleteLater()
+            reply2.deleteLater()
+            if code == 206:
                 return True
-            elif range_response.status_code == 200:
+            elif code == 200:
                 return False
             else:
-                MCSL2Logger.info(f"Range请求返回状态码: {range_response.status_code}")
+                MCSL2Logger.info(f"Range请求返回状态码: {code}")
                 return False
-
-        except requests.exceptions.RequestException as e:
-            MCSL2Logger.warning(f"检查Range支持时网络错误: {e}")
-            return False
         except Exception as e:
             MCSL2Logger.error(f"检查Range支持时发生错误: {e}")
             return False
@@ -471,9 +459,11 @@ class DownloadTask(QObject):
         if self.is_cancelled:
             return
 
-        worker_count = len(self.workers) if hasattr(self, 'workers') else 0
+        self._ensure_download_path()
+        worker_count = len(self.workers) if hasattr(self, "workers") else 0
         MCSL2Logger.info(
-            f"开始内部下载，线程数: {self.thread_count}，工作单元数: {worker_count}"
+            "开始内部下载，线程数: %s，工作单元数: %s，目标文件=%s"
+            % (self.thread_count, worker_count, self.full_path)
         )
 
         # 记录开始时间用于ETA计算
@@ -515,56 +505,135 @@ class DownloadTask(QObject):
                 self.taskFinished.emit()
 
     def _download_single(self):
-        """单线程下载"""
-        try:
-            # SSL验证始终禁用
-            response = requests.get(
-                self.url,
-                headers=self.headers,
-                stream=True,
-                verify=False,  # SSL验证始终禁用
-                timeout=30,
-            )
-            response.raise_for_status()
+        """QNetwork单线程下载实现"""
+        manager = QNetworkAccessManager()
+        request = QNetworkRequest(QUrl(self.url))
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        for k, v in self.headers.items():
+            request.setRawHeader(k.encode(), str(v).encode())
 
+        reply = manager.get(request)
+        loop = QEventLoop()
+        error_message = None
+
+        try:
+            self._ensure_download_path()
+            MCSL2Logger.info(f"单线程下载打开文件: {self.full_path}")
             with open(self.full_path, "wb") as f:
-                for chunk in response.iter_content(chunk_size=8192):
+                def on_ready_read():
                     if self.is_cancelled:
-                        break
-                    if chunk:
+                        reply.abort()
+                        return
+                    data = reply.readAll()
+                    if not data.isEmpty():
+                        chunk = bytes(data)
                         f.write(chunk)
                         self.total_downloaded += len(chunk)
+                        MCSL2Logger.info(
+                            f"写入 {len(chunk)} 字节 -> 总计 {self.total_downloaded}"
+                        )
 
-            return True
-        except Exception as e:
-            MCSL2Logger.error(f"单线程下载失败: {e}")
-            raise e
+                def on_finished():
+                    loop.quit()
+
+                def on_error(_):
+                    nonlocal error_message
+                    error_message = reply.errorString()
+
+                reply.readyRead.connect(on_ready_read)
+                reply.finished.connect(on_finished)
+                reply.error.connect(on_error)
+
+                loop.exec_()
+        finally:
+            reply.deleteLater()
+            manager.deleteLater()
+
+        if self.is_cancelled:
+            return False
+        if error_message:
+            raise Exception(error_message)
+        return True
 
     def _download_worker(self, worker, worker_index):
-        """下载工作单元"""
+        """QNetwork多线程分块下载实现"""
+        if self.is_cancelled or worker.remaining <= 0:
+            return False
 
-        def progress_callback(delta):
-            if not self.is_cancelled:
-                worker.downloaded = min(
-                    worker.downloaded + delta,
-                    worker.end - worker.start + 1,
-                )
-                worker.progress = worker.start + worker.downloaded
+        manager = QNetworkAccessManager()
+        request = QNetworkRequest(QUrl(self.url))
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        request.setRawHeader(b"Range", f"bytes={worker.progress}-{worker.end}".encode())
+        for k, v in self.headers.items():
+            request.setRawHeader(k.encode(), str(v).encode())
+
+        reply = manager.get(request)
+        loop = QEventLoop()
+        error_message = None
+        bytes_written = worker.progress
 
         try:
-            if worker.remaining > 0:
-                downloadChunk(
-                    self.url,
-                    self.headers,
-                    worker.progress,
-                    worker.end,
-                    self.full_path,
-                    progress_callback,
-                )
-            return True
-        except Exception as e:
-            MCSL2Logger.error(f"工作单元 {worker_index} 下载失败: {e}")
-            raise e
+            with open(self.full_path, "r+b") as f:
+                def on_ready_read():
+                    nonlocal bytes_written
+                    if self.is_cancelled:
+                        reply.abort()
+                        return
+                    data = reply.readAll()
+                    if data.isEmpty():
+                        return
+                    chunk = bytes(data)
+                    self.file_write_mutex.lock()
+                    try:
+                        f.seek(bytes_written)
+                        f.write(chunk)
+                    finally:
+                        self.file_write_mutex.unlock()
+                    bytes_written += len(chunk)
+                    delta = len(chunk)
+                    worker.downloaded = min(
+                        worker.downloaded + delta,
+                        worker.end - worker.start + 1,
+                    )
+                    worker.progress = worker.start + worker.downloaded
+
+                def on_finished():
+                    loop.quit()
+
+                def on_error(_):
+                    nonlocal error_message
+                    error_message = reply.errorString()
+
+                reply.readyRead.connect(on_ready_read)
+                reply.finished.connect(on_finished)
+                reply.error.connect(on_error)
+
+                loop.exec_()
+        finally:
+            reply.deleteLater()
+            manager.deleteLater()
+
+        if self.is_cancelled:
+            return False
+        if error_message:
+            raise Exception(error_message)
+        return True
+
+    def pause(self):
+        """暂停下载"""
+        self.is_paused = True
+
+    def resume(self):
+        """恢复下载"""
+        self.is_paused = False
+
+    def cancel(self):
+        """取消下载"""
+        if self.is_cancelled:
+            return
+        self.is_cancelled = True
+        self.progress_timer.stop()
+        self._cleanup_files()
 
     def _update_progress(self):
         """更新下载进度"""
@@ -613,7 +682,7 @@ class DownloadTask(QObject):
 
         # 计算剩余字节数
         remaining_bytes = self.file_size - current_downloaded
-        
+
         if remaining_bytes <= 0:
             self.eta_seconds = 0
             return
@@ -632,67 +701,71 @@ class DownloadTask(QObject):
         else:
             self.eta_seconds = 0
 
-    def _on_worker_finished(self):
-        """单个工作单元完成"""
-        self.completed_tasks += 1
-        
-        # 检查是否所有任务都完成了
-        if self.completed_tasks >= self.pending_tasks:
-            self._on_download_finished()
-
     def _on_download_finished(self):
-        """下载完成"""
-        self.progress_timer.stop()
+        """下载完成后的清理和信号触发"""
+        if self.is_cancelled or self.is_finished:
+            return
 
-        if not self.is_cancelled:
-            # 清理进度文件
+        self.is_finished = True
+        self.progress_timer.stop()
+        self.pending_tasks = 0
+        self.completed_tasks = 0
+        self.should_start_after_init = False
+        self.eta_seconds = 0
+        self.total_downloaded = (
+            self.file_size if self.file_size and self.file_size > 0 else self.total_downloaded
+        )
+
+        target_path = getattr(self, "full_path", None)
+        MCSL2Logger.info(f"下载完成回调，target_path={target_path}")
+
+        if self.supports_parallel:
             try:
-                progress_file = self.file_path / f"{self.file_name}.progress"
-                if progress_file.exists():
-                    progress_file.unlink()
+                if getattr(self, "file_path", None) and getattr(self, "file_name", None):
+                    progress_file = Path(self.file_path) / f"{self.file_name}.progress"
+                    if progress_file.exists():
+                        progress_file.unlink()
             except Exception as e:
                 MCSL2Logger.error(f"清理进度文件失败: {e}")
 
-            MCSL2Logger.info(f"下载完成: {self.file_name}")
-            self.taskFinished.emit()
+        self.speedChanged.emit(0)
+        path_str = str(target_path) if target_path else "<unknown>"
+        MCSL2Logger.success(f"下载完成: {path_str}")
+        self.taskFinished.emit()
 
-    def pause(self):
-        """暂停下载"""
-        self.is_paused = True
+    def _on_worker_finished(self):
+        """单个工作单元完成"""
+        self.completed_tasks += 1
 
-    def resume(self):
-        """恢复下载"""
-        self.is_paused = False
-
-    def cancel(self):
-        """取消下载"""
-        self.is_cancelled = True
-        self.progress_timer.stop()
-        
-        # 清理相关文件
-        self._cleanup_files()
+        # 检查是否所有任务都完成了
+        if self.completed_tasks >= self.pending_tasks:
+            self._on_download_finished()
 
     def _cleanup_files(self):
         """清理下载和进度文件"""
         try:
             # 删除下载文件（如果存在且未完成）
-            if hasattr(self, 'full_path') and self.full_path and self.full_path.exists():
+            if hasattr(self, "full_path") and self.full_path and self.full_path.exists():
                 self.full_path.unlink()
                 MCSL2Logger.info(f"已删除下载文件: {self.full_path}")
-            
+
             # 删除进度文件（如果存在）
-            if (hasattr(self, 'file_path') and hasattr(self, 'file_name') and
-                self.file_path and self.file_name):
+            if (
+                hasattr(self, "file_path")
+                and hasattr(self, "file_name")
+                and self.file_path
+                and self.file_name
+            ):
                 progress_file = self.file_path / f"{self.file_name}.progress"
                 if progress_file.exists():
                     progress_file.unlink()
                     MCSL2Logger.info(f"已删除进度文件: {progress_file}")
-                    
+
         except Exception as e:
             MCSL2Logger.error(f"清理文件时发生错误: {e}")
 
 
-class MultiThreadDownloadController:
+class DownloadController:
     """
     多线程下载控制器
     """
@@ -710,6 +783,7 @@ class MultiThreadDownloadController:
         watch=True,
         filename: Optional[str] = None,
         interval=0.1,
+        file_size: Optional[int] = None,
     ) -> str:
         """
         下载文件
@@ -720,13 +794,25 @@ class MultiThreadDownloadController:
         :param extraData: 额外数据
         :param watch: 是否监视进度
         :param interval: 监视间隔
+    :param file_size: 已知文件大小（字节），可选
         :return: 任务ID
         """
         # 生成任务ID
         gid = hashlib.md5(f"{uri}{time.time()}".encode()).hexdigest()
 
         # 创建下载任务
-        download_task = DownloadTask(url=uri, file_name=filename)
+        normalized_size = -1
+        if file_size is not None:
+            try:
+                normalized_size = int(file_size)
+            except Exception:
+                normalized_size = -1
+
+        download_task = DownloadTask(
+            url=uri,
+            file_name=filename,
+            file_size=normalized_size,
+        )
 
         # 设置回调
         if watch and info_get:

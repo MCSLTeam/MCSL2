@@ -40,8 +40,8 @@ from qfluentwidgets import (
     InfoBar,
 )
 
-from MCSL2Lib.ProgramControllers.multiThreadDownloadController import (
-    MultiThreadDownloadController,
+from MCSL2Lib.ProgramControllers.downloadController import (
+    DownloadController,
     DL_EntryController,
 )
 from MCSL2Lib.utils import MCSL2Logger
@@ -448,7 +448,7 @@ class DownloadCard(SimpleCardWidget):
         self.pauseBtn.clicked.connect(self.onPauseBtnClicked)
 
     def retryDownloadFile(self, extraData: tuple):
-        gid = MultiThreadDownloadController.download(
+        gid = DownloadController.download(
             uri=self.uri,
             watch=True,
             info_get=self.onInfoGet,
@@ -458,12 +458,12 @@ class DownloadCard(SimpleCardWidget):
         )
         self.canceled.disconnect()
         self.paused.disconnect()
-        self.canceled.connect(lambda: MultiThreadDownloadController.cancelDownloadTask(gid))
+        self.canceled.connect(lambda: DownloadController.cancelDownloadTask(gid))
         self.paused.connect(
             lambda x: (
-                MultiThreadDownloadController.pauseDownloadTask(gid)
+                DownloadController.pauseDownloadTask(gid)
                 if x
-                else MultiThreadDownloadController.resumeDownloadTask(gid)
+                else DownloadController.resumeDownloadTask(gid)
             )
         )
 
