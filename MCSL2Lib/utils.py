@@ -20,8 +20,9 @@ import hashlib
 import inspect
 from json import dumps, loads
 from os import makedirs, path as osp
+import os
 from types import TracebackType
-from typing import Type, Optional, Iterable, Callable, Dict, List
+from typing import Type, Optional, Iterable, Callable, Dict, List, Any, Set, Tuple
 
 import psutil
 import requests
@@ -45,6 +46,27 @@ def readGlobalServerConfig() -> list:
     return loads(readFile(r"MCSL2/MCSL2_ServerList.json"))["MCSLServerList"]
 
 
+def _normalize_server_config(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {k: _normalize_server_config(value[k]) for k in sorted(value.keys())}
+    if isinstance(value, list):
+        return [_normalize_server_config(item) for item in value]
+    return value
+
+
+def deep_compare_server_config(left: Dict, right: Dict) -> bool:
+    return _normalize_server_config(left) == _normalize_server_config(right)
+
+
+def find_server_config_index(server_list: List[Dict], candidate: Dict) -> Optional[int]:
+    name = candidate.get("name")
+    core_file_name = candidate.get("core_file_name")
+    for idx, existing in enumerate(server_list):
+        if existing.get("name") == name and existing.get("core_file_name") == core_file_name:
+            return idx
+    return None
+
+
 def initializeMCSL2():
     """
     初始化程序
@@ -63,35 +85,95 @@ def initializeMCSL2():
     del folders
 
     if not osp.exists(r"./MCSL2/MCSL2_ServerList.json"):
+        globalServerList = {"MCSLServerList": []}
         writeFile(r"./MCSL2/MCSL2_ServerList.json", '{\n  "MCSLServerList": [\n\n  ]\n}')
+    else:
+        globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
 
+    needs_save = False
+
+    # scan Server folder to add missing server configs or update changed ones
+    serverFolder = r"./Servers"
+    existing_keys: Set[Tuple[Optional[str], Optional[str]]] = set()
+    for root, _, files in os.walk(serverFolder):
+        for file in files:
+            if file == "MCSL2ServerConfig.json":
+                with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                    try:
+                        singleConfig = loads(f.read())
+                    except Exception:
+                        MCSL2Logger.error(
+                            f"读取服务器配置文件失败: {os.path.join(root, file)}，请检查文件格式是否正确。"  # noqa: E501
+                        )
+                        continue
+
+                key = (singleConfig.get("name"), singleConfig.get("core_file_name"))
+                existing_keys.add(key)
+                index = find_server_config_index(globalServerList["MCSLServerList"], singleConfig)
+                if index is None:
+                    globalServerList["MCSLServerList"].append(singleConfig)
+                    needs_save = True
+                    MCSL2Logger.warning(
+                        "扫描到不在全局配置中的服务器，已自动添加： {"
+                        + (
+                            f'"name": "{singleConfig["name"]}", '
+                            f'"core_file_name": "{singleConfig["core_file_name"]}"'
+                        )
+                        + "}"
+                    )
+                else:
+                    existing = globalServerList["MCSLServerList"][index]
+                    if not deep_compare_server_config(existing, singleConfig):
+                        globalServerList["MCSLServerList"][index] = singleConfig
+                        needs_save = True
+                        MCSL2Logger.info(
+                            "检测到服务器配置变更，已使用最新配置覆盖： {"
+                            + (
+                                f'"name": "{singleConfig["name"]}", '
+                                f'"core_file_name": "{singleConfig["core_file_name"]}"'
+                            )
+                            + "}"
+                        )
+    # remove missing configs from global list
+    filtered_configs: List[Dict] = []
+    for singleConfig in globalServerList.get("MCSLServerList", []):
+        key = (singleConfig.get("name"), singleConfig.get("core_file_name"))
+        if key in existing_keys:
+            filtered_configs.append(singleConfig)
+            continue
+        needs_save = True
+        MCSL2Logger.warning(
+            "检测到全局配置中存在未找到的服务器，已自动移除： {"
+            + (
+                f'"name": "{singleConfig.get("name")}", '
+                f'"core_file_name": "{singleConfig.get("core_file_name")}"'
+            )
+            + "}"
+        )
+
+    if len(filtered_configs) != len(globalServerList.get("MCSLServerList", [])):
+        globalServerList["MCSLServerList"] = filtered_configs
     # set global thread pool
     QThreadPool.globalInstance().setMaxThreadCount(
         psutil.cpu_count(logical=True)
     )  # IO-Bound = 2*N, CPU-Bound = N + 1
 
     # fix changed icon
-    globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
-    k = 0
-    updateSpigotIconList = [
-        singleConfig["icon"] for singleConfig in globalServerList["MCSLServerList"]
-    ]
-    for icon in updateSpigotIconList:
-        if icon == "Spigot.svg":
-            tmpConfig = globalServerList["MCSLServerList"][updateSpigotIconList.index(icon)]
-            globalServerList["MCSLServerList"].pop(updateSpigotIconList.index(icon))
-            tmpConfig["icon"] = "Spigot.png"
-            globalServerList["MCSLServerList"].append(tmpConfig)
+    for singleConfig in globalServerList.get("MCSLServerList", []):
+        if singleConfig.get("icon") == "Spigot.svg":
+            singleConfig["icon"] = "Spigot.png"
+            needs_save = True
             MCSL2Logger.warning(
                 "检测到过时配置文件，已自动更新: {"
-                + f'"name": "{tmpConfig["name"]}", "icon": "{tmpConfig["icon"]}"'
+                + (f'"name": "{singleConfig["name"]}", "icon": "{singleConfig["icon"]}"')
                 + "}"
             )
-            k += 1
-        else:
-            continue
-    if k >= 1:
-        writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+
+    if needs_save:
+        writeFile(
+            r"MCSL2/MCSL2_ServerList.json",
+            dumps(globalServerList, indent=4, ensure_ascii=False),
+        )
 
 
 # 带有text的warning装饰器
@@ -151,19 +233,21 @@ def openLocalFile(FilePath):
     QDesktopServices.openUrl(QUrl.fromLocalFile(FilePath))
 
 
-def readFile(file: str):
-    f = QFile(file)
-    f.open(QFile.ReadOnly)
-    content = str(f.readAll(), encoding="utf-8")
-    f.close()
-    return content
-
-
 def writeFile(file: str, content: str):
     f = QFile(file)
     f.open(QFile.WriteOnly)
     f.write(content.encode("utf-8"))
     f.close()
+
+
+def readFile(file: str) -> str:
+    f = QFile(file)
+    if not f.exists():
+        return ""
+    f.open(QFile.ReadOnly)
+    content = f.readAll()
+    f.close()
+    return bytes(content).decode("utf-8")
 
 
 def readBytesFile(file: str):

@@ -56,13 +56,8 @@ if __name__ == "__main__":
     # Verify dev mode
     cfg.set(cfg.oldExecuteable, sys.executable.split("\\")[-1])
     from MCSL2Lib.variables import GlobalMCSL2Variables
-
-    if (
-        cfg.get(cfg.oldExecuteable) == "python"
-        or cfg.get(cfg.oldExecuteable) == "python.exe"
-        or cfg.get(cfg.oldExecuteable) == "py"
-        or cfg.get(cfg.oldExecuteable) == "py.exe"
-    ):
+    pyProcessNameList = ["python", "python.exe", "py", "py.exe", "python3", "python3.exe"]
+    if cfg.get(cfg.oldExecuteable) in pyProcessNameList:
         GlobalMCSL2Variables.devMode = True
     else:
         GlobalMCSL2Variables.devMode = False
