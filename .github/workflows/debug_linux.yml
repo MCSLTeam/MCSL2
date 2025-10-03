@@ -51,7 +51,7 @@ jobs:
         run: |
           cd build
           cd MCSL2.dist
-          rm -r zstandard
+          ls
           sudo rm libQt5Quick.so.5
           sudo rm libQt5Qml.so.5
           sudo rm libQt5QmlModels.so.5
