@@ -15,7 +15,7 @@ authors = [
     { name = "kitUIN", email = "kit_uin@outlook.com" },
 ]
 dependencies = [
-    "setuptools>=60",
+    # "setuptools>=60",
     "PyQt-Fluent-Widgets",
     "psutil==6.0.0",
     "loguru==0.7.2",
@@ -40,9 +40,6 @@ version = { attr = "MCSL2Lib.MCSL2VERSION" }
 
 [tool.setuptools]
 packages = []
-
-[project.optional-dependencies]
-all = ["tomli>=2.0.1", "ruff>=0.1.6", "pyqt5-stubs>=5.15.6.0"]
 
 # 原 [tool.pdm.scripts] 段落删除，使用 uv 运行脚本：
 #   uv run MCSL2.py
