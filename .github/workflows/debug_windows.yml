@@ -26,7 +26,6 @@ jobs:
         shell: pwsh
         run: | 
           Remove-Item -Force -Recurse .\uv.lock
-          Remove-Item -Force -Recurse .\uv.lock
           Copy-Item -Path .\pyproject-windows.toml -Destination .\pyproject.toml
 
       - name: Setup uv
