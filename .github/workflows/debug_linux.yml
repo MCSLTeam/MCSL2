@@ -45,7 +45,7 @@ jobs:
 
       - name: Build
         run: |
-          uv run lndl_nuitka . -y -- --disable-console
+          uv run python -m lndl_nuitka . -y -- --disable-console
 
       - name: Optimize
         run: |
