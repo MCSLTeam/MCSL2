@@ -172,7 +172,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: ./repo/ChangeLog.md
-          prerelease: false
+          prerelease: true
           draft: false
           tag_name: v${{ env.MCSL2_VERSION }}
           files: |
