@@ -54,9 +54,7 @@ jobs:
           sudo rm libQt5Quick.so.5
           sudo rm libQt5Qml.so.5
           sudo rm libQt5QmlModels.so.5
-          sudo rm _asyncio.so
-          sudo rm _queue.so
-          upx -9 MCSL2.bin
+          ../../upx -9 MCSL2.bin
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
