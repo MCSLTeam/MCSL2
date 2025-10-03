@@ -43,16 +43,15 @@ Please check [here](https://github.com/MCSLTeam/MCSL2/blob/master/pyproject.toml
 
 ## Building MCSL2 from Source Code
 
-- `git clone https://github.com/MCSLTeam/MCSL2.git`
-- `pip install tomli`
-- `python Tools/gen-requirements.py`
-- `python -m pip install -U -r requirements.txt`
-- `python Tools/update-pyproject.py`
-- `python -m lndl_nuitka .`
-  - Or
-  - `python -m lndl_nuitka . -y`
-  - Alternatively, add/modify parameters with `-- --xxx`
-  - `python -m lndl_nuitka . -- --disable-console`
+```bash
+git clone https://github.com/MCSLTeam/MCSL2.git
+uv sync
+
+uv run python -m lndl_nuitka .
+Or
+uv run python -m lndl_nuitka . -y
+Alternatively, add/modify parameters with `-- --xxx`
+uv run python -m lndl_nuitka . -- --disable-console
 
 ## Relevant Links
 

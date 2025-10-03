@@ -43,16 +43,15 @@ ___
 
 ## 从源码构建打包版
 
-- `git clone https://github.com/MCSLTeam/MCSL2.git`
-- `pip install tomli`
-- `python Tools/gen-requirements.py`
-- `python -m pip install -U -r requirements.txt`
-- `python Tools/update-pyproject.py`
-- `python -m lndl_nuitka .`
-  - 或者
-  - `python -m lndl_nuitka . -y`
-  - 又或者通过 `-- --xxx` 添加 / 修改参数
-  - `python -m lndl_nuitka . -- --disable-console`
+```bash
+git clone https://github.com/MCSLTeam/MCSL2.git
+uv sync
+
+uv run python -m lndl_nuitka .
+或者
+uv run python -m lndl_nuitka . -y
+又或者通过 `-- --xxx` 添加 / 修改参数
+uv run python -m lndl_nuitka . -- --disable-console
 
 ## 相关链接
 

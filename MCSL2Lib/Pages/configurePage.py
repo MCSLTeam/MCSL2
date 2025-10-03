@@ -49,6 +49,7 @@ from qfluentwidgets import (
     MessageBox,
     HyperlinkButton,
     StateToolTip,
+    HeaderCardWidget,
 )
 
 from MCSL2Lib.ProgramControllers import javaDetector
@@ -84,6 +85,68 @@ from MCSL2Lib.variables import (
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
 serverVariables = ServerVariables()
+
+
+class ServerTypeHeaderCardWidget(HeaderCardWidget):
+    """服务器类型选择卡片基类"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.headerView.setFixedHeight(44)
+
+        # 创建内容标签
+        self.contentLabel = StrongBodyLabel(self)
+        self.contentLabel.setWordWrap(True)
+        self.viewLayout.addWidget(self.contentLabel)
+
+        # 添加选择按钮
+        self.selectButton = PrimaryPushButton(self.tr("选择"), self)
+        self.selectButton.setFixedSize(QSize(100, 32))
+        self.viewLayout.addWidget(self.selectButton)
+
+    def connectSlot(self, slot):
+        """连接按钮点击事件"""
+        self.selectButton.clicked.connect(slot)
+
+
+class NoobServerCardWidget(ServerTypeHeaderCardWidget):
+    """简易模式卡片"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTitle(self.tr("简易模式"))
+        self.contentLabel.setText(self.tr("适合新手的简化配置流程"))
+        self.selectButton.setIcon(FIF.GAME)
+
+
+class ExtendedServerCardWidget(ServerTypeHeaderCardWidget):
+    """进阶模式卡片"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTitle(self.tr("进阶模式"))
+        self.contentLabel.setText(self.tr("更多自定义选项和高级功能"))
+        self.selectButton.setIcon(FIF.GAME)
+
+
+class BedrockServerCardWidget(ServerTypeHeaderCardWidget):
+    """基岩版卡片"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTitle(self.tr("基岩版"))
+        self.contentLabel.setText(self.tr("创建 Minecraft 基岩版服务器"))
+        self.selectButton.setIcon(FIF.GAME)
+
+
+class ImportServerCardWidget(ServerTypeHeaderCardWidget):
+    """导入服务器卡片"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTitle(self.tr("导入服务器"))
+        self.contentLabel.setText(self.tr("从其他启动器导入已有服务器"))
+        self.selectButton.setIcon(FIF.FOLDER_ADD)
 
 
 @Singleton
@@ -131,125 +194,34 @@ class ConfigurePage(QWidget):
 
         self.verticalLayout.addWidget(self.subTitleLabel)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 1, 1)
-        spacerItem = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.gridLayout.addItem(spacerItem, 0, 2, 1, 1)
+        # spacerItem = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        # self.gridLayout.addItem(spacerItem, 0, 2, 1, 1)
         self.newServerStackedWidget = ChildStackedWidget(self)
         self.newServerStackedWidget.setObjectName("newServerStackedWidget")
 
         self.guideNewServerPage = QWidget()
         self.guideNewServerPage.setObjectName("guideNewServerPage")
 
-        self.guideNewServerVerticalLayout = QVBoxLayout(self.guideNewServerPage)
-        self.guideNewServerVerticalLayout.setObjectName("guideNewServerVerticalLayout")
+        self.guideNewServerGridLayout = QGridLayout(self.guideNewServerPage)
+        self.guideNewServerGridLayout.setObjectName("guideNewServerGridLayout")
+        self.guideNewServerGridLayout.setSpacing(15)
 
-        self.noobNewServerWidget = QWidget(self.guideNewServerPage)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noobNewServerWidget.sizePolicy().hasHeightForWidth())
-        self.noobNewServerWidget.setSizePolicy(sizePolicy)
-        self.noobNewServerWidget.setMinimumSize(QSize(0, 132))
+        self.noobNewServerWidget = NoobServerCardWidget(self.guideNewServerPage)
         self.noobNewServerWidget.setObjectName("noobNewServerWidget")
+        self.guideNewServerGridLayout.addWidget(self.noobNewServerWidget, 0, 0, 1, 1)
 
-        self.guideNoobHorizontalLayout = QHBoxLayout(self.noobNewServerWidget)
-        self.guideNoobHorizontalLayout.setObjectName("guideNoobHorizontalLayout")
-
-        self.noobNewServerBtn = PrimaryPushButton(self.noobNewServerWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noobNewServerBtn.sizePolicy().hasHeightForWidth())
-        self.noobNewServerBtn.setSizePolicy(sizePolicy)
-        self.noobNewServerBtn.setMinimumSize(QSize(215, 33))
-        self.noobNewServerBtn.setMaximumSize(QSize(215, 33))
-        self.noobNewServerBtn.setObjectName("noobNewServerBtn")
-
-        self.guideNoobHorizontalLayout.addWidget(self.noobNewServerBtn)
-        spacerItem1 = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.guideNoobHorizontalLayout.addItem(spacerItem1)
-        self.noobNewServerIntro = StrongBodyLabel(self.noobNewServerWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noobNewServerIntro.sizePolicy().hasHeightForWidth())
-        self.noobNewServerIntro.setSizePolicy(sizePolicy)
-        self.noobNewServerIntro.setTextFormat(Qt.MarkdownText)
-        self.noobNewServerIntro.setObjectName("noobNewServerIntro")
-
-        self.guideNoobHorizontalLayout.addWidget(self.noobNewServerIntro)
-        self.guideNewServerVerticalLayout.addWidget(self.noobNewServerWidget)
-        self.extendedNewServerWidget = QWidget(self.guideNewServerPage)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.extendedNewServerWidget.sizePolicy().hasHeightForWidth())
-        self.extendedNewServerWidget.setSizePolicy(sizePolicy)
-        self.extendedNewServerWidget.setMinimumSize(QSize(0, 132))
+        self.extendedNewServerWidget = ExtendedServerCardWidget(self.guideNewServerPage)
         self.extendedNewServerWidget.setObjectName("extendedNewServerWidget")
+        self.guideNewServerGridLayout.addWidget(self.extendedNewServerWidget, 0, 1, 1, 1)
 
-        self.guideExtendedHorizontalLayout = QHBoxLayout(self.extendedNewServerWidget)
-        self.guideExtendedHorizontalLayout.setObjectName("guideExtendedHorizontalLayout")
+        self.bedrockNewServerWidget = BedrockServerCardWidget(self.guideNewServerPage)
+        self.bedrockNewServerWidget.setObjectName("bedrockNewServerWidget")
+        self.guideNewServerGridLayout.addWidget(self.bedrockNewServerWidget, 1, 0, 1, 1)
 
-        self.extendedNewServerBtn = PrimaryPushButton(self.extendedNewServerWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.extendedNewServerBtn.sizePolicy().hasHeightForWidth())
-        self.extendedNewServerBtn.setSizePolicy(sizePolicy)
-        self.extendedNewServerBtn.setMinimumSize(QSize(215, 33))
-        self.extendedNewServerBtn.setMaximumSize(QSize(215, 33))
-        self.extendedNewServerBtn.setObjectName("extendedNewServerBtn")
-
-        self.guideExtendedHorizontalLayout.addWidget(self.extendedNewServerBtn)
-        spacerItem2 = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.guideExtendedHorizontalLayout.addItem(spacerItem2)
-        self.extendedNewServerIntro = StrongBodyLabel(self.extendedNewServerWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.extendedNewServerIntro.sizePolicy().hasHeightForWidth())
-        self.extendedNewServerIntro.setSizePolicy(sizePolicy)
-        self.extendedNewServerIntro.setTextFormat(Qt.MarkdownText)
-        self.extendedNewServerIntro.setObjectName("extendedNewServerIntro")
-
-        self.guideExtendedHorizontalLayout.addWidget(self.extendedNewServerIntro)
-        self.guideNewServerVerticalLayout.addWidget(self.extendedNewServerWidget)
-        self.importNewServerWidget = QWidget(self.guideNewServerPage)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerWidget.sizePolicy().hasHeightForWidth())
-        self.importNewServerWidget.setSizePolicy(sizePolicy)
-        self.importNewServerWidget.setMinimumSize(QSize(0, 132))
+        self.importNewServerWidget = ImportServerCardWidget(self.guideNewServerPage)
         self.importNewServerWidget.setObjectName("importNewServerWidget")
+        self.guideNewServerGridLayout.addWidget(self.importNewServerWidget, 1, 1, 1, 1)
 
-        self.guideImportHorizontalLayout = QHBoxLayout(self.importNewServerWidget)
-        self.guideImportHorizontalLayout.setObjectName("guideImportHorizontalLayout")
-
-        self.importNewServerBtn = PrimaryPushButton(self.importNewServerWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerBtn.sizePolicy().hasHeightForWidth())
-        self.importNewServerBtn.setSizePolicy(sizePolicy)
-        self.importNewServerBtn.setMinimumSize(QSize(215, 33))
-        self.importNewServerBtn.setMaximumSize(QSize(215, 33))
-        self.importNewServerBtn.setObjectName("importNewServerBtn")
-
-        self.guideImportHorizontalLayout.addWidget(self.importNewServerBtn)
-        spacerItem3 = QSpacerItem(20, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.guideImportHorizontalLayout.addItem(spacerItem3)
-        self.importNewServerIntro = StrongBodyLabel(self.importNewServerWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importNewServerIntro.sizePolicy().hasHeightForWidth())
-        self.importNewServerIntro.setSizePolicy(sizePolicy)
-        self.importNewServerIntro.setTextFormat(Qt.MarkdownText)
-        self.importNewServerIntro.setObjectName("importNewServerIntro")
-
-        self.guideImportHorizontalLayout.addWidget(self.importNewServerIntro)
-        self.guideNewServerVerticalLayout.addWidget(self.importNewServerWidget)
         self.newServerStackedWidget.addWidget(self.guideNewServerPage)
         self.noobNewServerPage = QWidget()
         self.noobNewServerPage.setObjectName("noobNewServerPage")
@@ -975,6 +947,206 @@ class ConfigurePage(QWidget):
         spacerItem15 = QSpacerItem(20, 40, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem15, 0, 0, 2, 1)
         self.newServerStackedWidget.addWidget(self.extendedNewServerPage)
+
+        # ========== 基岩版服务器页面 ==========
+        self.bedrockNewServerPage = QWidget()
+        self.bedrockNewServerPage.setObjectName("bedrockNewServerPage")
+
+        self.bedrockGridLayout = QGridLayout(self.bedrockNewServerPage)
+        self.bedrockGridLayout.setObjectName("bedrockGridLayout")
+
+        self.bedrockTitleWidget = QWidget(self.bedrockNewServerPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.bedrockTitleWidget.sizePolicy().hasHeightForWidth())
+        self.bedrockTitleWidget.setSizePolicy(sizePolicy)
+        self.bedrockTitleWidget.setObjectName("bedrockTitleWidget")
+
+        self.bedrockTitleHorizontalLayout = QHBoxLayout(self.bedrockTitleWidget)
+        self.bedrockTitleHorizontalLayout.setObjectName("bedrockTitleHorizontalLayout")
+
+        self.bedrockBackToGuidePushButton = TransparentToolButton(
+            FIF.PAGE_LEFT, self.bedrockTitleWidget
+        )
+        self.bedrockBackToGuidePushButton.setObjectName("bedrockBackToGuidePushButton")
+        self.bedrockTitleHorizontalLayout.addWidget(self.bedrockBackToGuidePushButton)
+
+        self.bedrockSubtitleLabel = SubtitleLabel(self.bedrockTitleWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.bedrockSubtitleLabel.sizePolicy().hasHeightForWidth())
+        self.bedrockSubtitleLabel.setSizePolicy(sizePolicy)
+        self.bedrockSubtitleLabel.setObjectName("bedrockSubtitleLabel")
+        self.bedrockTitleHorizontalLayout.addWidget(self.bedrockSubtitleLabel)
+
+        spacerItem_bedrock1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.bedrockTitleHorizontalLayout.addItem(spacerItem_bedrock1)
+        self.bedrockGridLayout.addWidget(self.bedrockTitleWidget, 0, 1, 1, 1)
+
+        self.bedrockScrollArea = MySmoothScrollArea(self.bedrockNewServerPage)
+        self.bedrockScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.bedrockScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.bedrockScrollArea.setWidgetResizable(True)
+        self.bedrockScrollArea.setObjectName("bedrockScrollArea")
+        self.bedrockScrollArea.setFrameShape(QFrame.NoFrame)
+
+        self.bedrockScrollAreaContents = QWidget()
+        self.bedrockScrollAreaContents.setGeometry(QRect(0, 0, 600, 600))
+        self.bedrockScrollAreaContents.setObjectName("bedrockScrollAreaContents")
+
+        self.bedrockScrollAreaVerticalLayout = QVBoxLayout(self.bedrockScrollAreaContents)
+        self.bedrockScrollAreaVerticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.bedrockScrollAreaVerticalLayout.setObjectName("bedrockScrollAreaVerticalLayout")
+
+        # 核心选择部分
+        self.bedrockSetCoreWidget = QWidget(self.bedrockScrollAreaContents)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.bedrockSetCoreWidget.sizePolicy().hasHeightForWidth())
+        self.bedrockSetCoreWidget.setSizePolicy(sizePolicy)
+        self.bedrockSetCoreWidget.setObjectName("bedrockSetCoreWidget")
+
+        self.bedrockCoreGridLayout = QGridLayout(self.bedrockSetCoreWidget)
+        self.bedrockCoreGridLayout.setObjectName("bedrockCoreGridLayout")
+
+        self.bedrockCoreSubtitleLabel = SubtitleLabel(self.bedrockSetCoreWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.bedrockCoreSubtitleLabel.sizePolicy().hasHeightForWidth())
+        self.bedrockCoreSubtitleLabel.setSizePolicy(sizePolicy)
+        self.bedrockCoreSubtitleLabel.setObjectName("bedrockCoreSubtitleLabel")
+        self.bedrockCoreGridLayout.addWidget(self.bedrockCoreSubtitleLabel, 0, 0, 1, 1)
+
+        self.bedrockManuallyAddCorePrimaryPushBtn = PrimaryPushButton(self.bedrockSetCoreWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockManuallyAddCorePrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.bedrockManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(130, 0))
+        self.bedrockManuallyAddCorePrimaryPushBtn.setObjectName("bedrockManuallyAddCorePrimaryPushBtn")
+        self.bedrockCoreGridLayout.addWidget(self.bedrockManuallyAddCorePrimaryPushBtn, 1, 0, 1, 1)
+
+        spacerItem_bedrock_core = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.bedrockCoreGridLayout.addItem(spacerItem_bedrock_core, 1, 1, 1, 1)
+        self.bedrockScrollAreaVerticalLayout.addWidget(self.bedrockSetCoreWidget)
+
+        # 编码设置部分
+        self.bedrockSetDeEncodingWidget = QWidget(self.bedrockScrollAreaContents)
+        self.bedrockSetDeEncodingWidget.setObjectName("bedrockSetDeEncodingWidget")
+
+        self.bedrockDeEncodingGridLayout = QGridLayout(self.bedrockSetDeEncodingWidget)
+        self.bedrockDeEncodingGridLayout.setObjectName("bedrockDeEncodingGridLayout")
+
+        self.bedrockDeEncodingSubtitleLabel = SubtitleLabel(self.bedrockSetDeEncodingWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockDeEncodingSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockDeEncodingSubtitleLabel.setSizePolicy(sizePolicy)
+        self.bedrockDeEncodingSubtitleLabel.setObjectName("bedrockDeEncodingSubtitleLabel")
+        self.bedrockDeEncodingGridLayout.addWidget(self.bedrockDeEncodingSubtitleLabel, 0, 0, 1, 1)
+
+        self.bedrockOutputDeEncodingLabel = StrongBodyLabel(self.bedrockSetDeEncodingWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockOutputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockOutputDeEncodingLabel.setSizePolicy(sizePolicy)
+        self.bedrockOutputDeEncodingLabel.setObjectName("bedrockOutputDeEncodingLabel")
+        self.bedrockDeEncodingGridLayout.addWidget(self.bedrockOutputDeEncodingLabel, 1, 0, 1, 1)
+
+        self.bedrockOutputDeEncodingComboBox = ComboBox(self.bedrockSetDeEncodingWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockOutputDeEncodingComboBox.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockOutputDeEncodingComboBox.setSizePolicy(sizePolicy)
+        self.bedrockOutputDeEncodingComboBox.setObjectName("bedrockOutputDeEncodingComboBox")
+        self.bedrockDeEncodingGridLayout.addWidget(self.bedrockOutputDeEncodingComboBox, 1, 1, 1, 1)
+
+        self.bedrockInputDeEncodingLabel = StrongBodyLabel(self.bedrockSetDeEncodingWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockInputDeEncodingLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockInputDeEncodingLabel.setSizePolicy(sizePolicy)
+        self.bedrockInputDeEncodingLabel.setObjectName("bedrockInputDeEncodingLabel")
+        self.bedrockDeEncodingGridLayout.addWidget(self.bedrockInputDeEncodingLabel, 2, 0, 1, 1)
+
+        self.bedrockInputDeEncodingComboBox = ComboBox(self.bedrockSetDeEncodingWidget)
+        self.bedrockInputDeEncodingComboBox.setText("")
+        self.bedrockInputDeEncodingComboBox.setObjectName("bedrockInputDeEncodingComboBox")
+        self.bedrockDeEncodingGridLayout.addWidget(self.bedrockInputDeEncodingComboBox, 2, 1, 1, 1)
+        self.bedrockScrollAreaVerticalLayout.addWidget(self.bedrockSetDeEncodingWidget)
+
+        # 服务器名称部分
+        self.bedrockSetServerNameWidget = QWidget(self.bedrockScrollAreaContents)
+        self.bedrockSetServerNameWidget.setObjectName("bedrockSetServerNameWidget")
+
+        self.bedrockServerNameVerticalLayout = QVBoxLayout(self.bedrockSetServerNameWidget)
+        self.bedrockServerNameVerticalLayout.setObjectName("bedrockServerNameVerticalLayout")
+
+        self.bedrockServerNameSubtitleLabel = SubtitleLabel(self.bedrockSetServerNameWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockServerNameSubtitleLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockServerNameSubtitleLabel.setSizePolicy(sizePolicy)
+        self.bedrockServerNameSubtitleLabel.setObjectName("bedrockServerNameSubtitleLabel")
+        self.bedrockServerNameVerticalLayout.addWidget(self.bedrockServerNameSubtitleLabel)
+
+        self.bedrockServerNameLineEdit = LineEdit(self.bedrockSetServerNameWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockServerNameLineEdit.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockServerNameLineEdit.setSizePolicy(sizePolicy)
+        self.bedrockServerNameLineEdit.setMinimumSize(QSize(0, 30))
+        self.bedrockServerNameLineEdit.setObjectName("bedrockServerNameLineEdit")
+        self.bedrockServerNameVerticalLayout.addWidget(self.bedrockServerNameLineEdit)
+
+        self.bedrockSaveServerPrimaryPushBtn = PrimaryPushButton(self.bedrockSetServerNameWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bedrockSaveServerPrimaryPushBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.bedrockSaveServerPrimaryPushBtn.setSizePolicy(sizePolicy)
+        self.bedrockSaveServerPrimaryPushBtn.setMinimumSize(QSize(130, 0))
+        self.bedrockSaveServerPrimaryPushBtn.setObjectName("bedrockSaveServerPrimaryPushBtn")
+        self.bedrockServerNameVerticalLayout.addWidget(self.bedrockSaveServerPrimaryPushBtn)
+        self.bedrockScrollAreaVerticalLayout.addWidget(self.bedrockSetServerNameWidget)
+
+        spacerItem_bedrock2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.bedrockScrollAreaVerticalLayout.addItem(spacerItem_bedrock2)
+        self.bedrockScrollArea.setWidget(self.bedrockScrollAreaContents)
+        self.bedrockGridLayout.addWidget(self.bedrockScrollArea, 1, 1, 1, 1)
+
+        spacerItem_bedrock3 = QSpacerItem(20, 40, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.bedrockGridLayout.addItem(spacerItem_bedrock3, 0, 0, 2, 1)
+        self.newServerStackedWidget.addWidget(self.bedrockNewServerPage)
+        # ========== 基岩版服务器页面结束 ==========
+
         self.importNewServerPage = QWidget()
         self.importNewServerPage.setObjectName("importNewServerPage")
 
@@ -1123,31 +1295,12 @@ class ConfigurePage(QWidget):
 
         self.noobNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.extendedNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
+        self.bedrockScrollArea.setAttribute(Qt.WA_StyledBackground)
 
         # 引导页
         self.titleLabel.setText(self.tr("新建服务器"))
-        self.subTitleLabel.setText(self.tr("有 3 种方式供你选择。"))
-        self.noobNewServerBtn.setText(self.tr("简易模式"))
-        self.noobNewServerIntro.setText(
-            self.tr("保留基础配置。\n")
-            + self.tr(" - Java\n")
-            + self.tr(" - 服务器核心\n")
-            + self.tr(" - 最小最大内存\n")
-            + self.tr(" - 服务器名称")
-        )
-        self.extendedNewServerBtn.setText(self.tr("进阶模式"))
-        self.extendedNewServerIntro.setText(
-            self.tr("在简易模式基础上，还能设置:\n")
-            + self.tr(" - 内存单位\n")
-            + self.tr(" - 控制台流编码\n")
-            + self.tr(" - JVM 参数")
-        )
-        self.importNewServerBtn.setText(self.tr("导入"))
-        self.importNewServerIntro.setText(
-            self.tr(
-                "很抱歉，由于思路及精力有限，我们无法马上完成此部分。\n此部分将在全部完成后开放。"
-            )
-        )
+        self.subTitleLabel.setText(self.tr("有 4 种方式供你选择。"))
+        # HeaderCardWidget 的文本已在类定义中设置，无需再设置
 
         # 简易模式
         self.noobJavaSubtitleLabel.setText(self.tr("Java "))
@@ -1208,6 +1361,30 @@ class ConfigurePage(QWidget):
         self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
         self.extendedMemUnitComboBox.addItems(["M", "G"])
         self.extendedMemUnitComboBox.setCurrentIndex(0)
+
+        # 基岩版模式
+        self.bedrockSubtitleLabel.setText(self.tr("基岩版服务器"))
+        self.bedrockCoreSubtitleLabel.setText(self.tr("服务器核心"))
+        self.bedrockManuallyAddCorePrimaryPushBtn.setText(self.tr("选择服务器可执行文件"))
+        self.bedrockDeEncodingSubtitleLabel.setText(self.tr("编码设置"))
+        self.bedrockOutputDeEncodingLabel.setText(self.tr("控制台输出编码"))
+        self.bedrockInputDeEncodingLabel.setText(self.tr("指令输入编码"))
+        self.bedrockServerNameSubtitleLabel.setText(self.tr("服务器名称"))
+        self.bedrockSaveServerPrimaryPushBtn.setText(self.tr("创建服务器！"))
+        self.bedrockServerNameLineEdit.setPlaceholderText(self.tr("不能包含非法字符"))
+        self.bedrockOutputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
+        self.bedrockOutputDeEncodingComboBox.setCurrentIndex(0)
+        self.bedrockInputDeEncodingComboBox.addItems(
+            [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030"), self.tr("ANSI")]
+            if platform.system().lower() == "windows"
+            else [self.tr("跟随全局"), self.tr("UTF-8"), self.tr("GB18030")]
+        )
+        self.bedrockInputDeEncodingComboBox.setCurrentIndex(0)
+
         # 导入
         self.importSubtitleLabel.setText(self.tr("导入"))
         self.importNewServerFirstGuideTitle.setText(self.tr("请选择导入服务器的方式："))
@@ -1223,10 +1400,25 @@ class ConfigurePage(QWidget):
             self.tr("导入 MCSManager 8 的服务器"),
             self.tr("导入 MCSManager 9 的服务器"),
         ])
-        # 引导页绑定
-        self.noobNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
-        self.extendedNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
-        self.importNewServerBtn.clicked.connect(self.newServerStackedWidgetNavigation)
+        # 引导页绑定 - 使用 HeaderCardWidget 的 connectSlot 方法
+        self.noobNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
+        self.extendedNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
+        # macOS下禁用基岩版服务器创建
+        if platform.system().lower() == "darwin":
+            def show_bedrock_macos_not_supported():
+                InfoBar.error(
+                    title=self.tr("不支持"),
+                    content=self.tr("macOS 暂不支持创建基岩版服务器"),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=4000,
+                    parent=self.parent() or self
+                )
+            self.bedrockNewServerWidget.connectSlot(show_bedrock_macos_not_supported)
+        else:
+            self.bedrockNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
+        self.importNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
 
         # 简易模式绑定
         self.noobBackToGuidePushButton.clicked.connect(
@@ -1270,6 +1462,13 @@ class ConfigurePage(QWidget):
         self.extendedAddCoreFromDownloadedPrimaryPushBtn.clicked.connect(self.showDownloadEntries)
         self.extendedSaveServerPrimaryPushBtn.clicked.connect(self.finishNewServer)
 
+        # 基岩版模式绑定
+        self.bedrockBackToGuidePushButton.clicked.connect(
+            lambda: self.newServerStackedWidget.setCurrentIndex(0)
+        )
+        self.bedrockManuallyAddCorePrimaryPushBtn.clicked.connect(self.addBedrockCoreManually)
+        self.bedrockSaveServerPrimaryPushBtn.clicked.connect(self.finishBedrockServer)
+
         # 导入法绑定
         self.importBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
@@ -1309,12 +1508,11 @@ class ConfigurePage(QWidget):
         # )
 
         self.settingsRunner_newServerType()
-        self.importNewServerBtn.setEnabled(False)
-        # self.enableServerImporter()
+        self.enableServerImporter()
 
     def enableServerImporter(self):
         NoShellArchivesImporter(self.importNewServerStackWidget)
-        self.importNewServerBtn.setEnabled(True)
+        # HeaderCardWidget 始终启用，无需手动设置
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
@@ -1323,13 +1521,18 @@ class ConfigurePage(QWidget):
 
     def newServerStackedWidgetNavigation(self):
         """决定新建服务器的方式"""
-        naviList = [
-            "PlaceHolder",
-            self.noobNewServerBtn,
-            self.extendedNewServerBtn,
-            self.importNewServerBtn,
-        ]
-        self.newServerStackedWidget.setCurrentIndex(naviList.index(self.sender()))
+        # 通过发送者的父级（HeaderCardWidget）来确定索引
+        sender = self.sender()
+        if hasattr(sender, 'parent') and callable(sender.parent):
+            card_widget = sender.parent().parent()
+            if isinstance(card_widget, NoobServerCardWidget):
+                self.newServerStackedWidget.setCurrentIndex(1)
+            elif isinstance(card_widget, ExtendedServerCardWidget):
+                self.newServerStackedWidget.setCurrentIndex(2)
+            elif isinstance(card_widget, BedrockServerCardWidget):
+                self.newServerStackedWidget.setCurrentIndex(3)
+            elif isinstance(card_widget, ImportServerCardWidget):
+                self.newServerStackedWidget.setCurrentIndex(4)
 
     def addJavaManually(self):
         """手动添加Java"""
@@ -1443,37 +1646,222 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
-        self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
-        self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
+        # 保护性检查：确保UI组件已经创建
+        if hasattr(self, 'noobAutoDetectJavaPrimaryPushBtn'):
+            self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
+        if hasattr(self, 'extendedAutoDetectJavaPrimaryPushBtn'):
+            self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
 
     def addCoreManually(self):
         """手动添加服务器核心"""
+        # 根据操作系统决定文件过滤器
+        system = platform.system().lower()
+        if system == "windows":
+            file_filter = self.tr(
+                "服务器核心 (*.jar *.exe);;Java 可执行文件 (*.jar);;"
+                "基岩版服务器 (*.exe);;所有文件 (*)"
+            )
+        elif system == "darwin":  # macOS
+            file_filter = self.tr(
+                "服务器核心 (*.jar *);;Java 可执行文件 (*.jar);;"
+                "基岩版服务器;;所有文件 (*)"
+            )
+        else:  # Linux
+            file_filter = self.tr(
+                "服务器核心 (*.jar *);;Java 可执行文件 (*.jar);;"
+                "基岩版服务器;;所有文件 (*)"
+            )
+
         tmpCorePath = str(
             QFileDialog.getOpenFileName(
                 self,
-                self.tr("选择 *.jar 文件"),
+                self.tr("选择服务器核心文件"),
                 getcwd(),
-                self.tr("Java 可执行文件 (*.jar)"),
+                file_filter,
             )[0]
         )
 
         if tmpCorePath != "":
             configureServerVariables.corePath = tmpCorePath
             configureServerVariables.coreFileName = tmpCorePath.split("/")[-1]
-            InfoBar.success(
-                title=self.tr("已添加"),
-                content=self.tr("核心文件名: ") + configureServerVariables.coreFileName,
+
+            # 检测是否为基岩版服务器
+            fileName = configureServerVariables.coreFileName.lower()
+            if (fileName.startswith("bedrock") or fileName == "bedrock_server" or
+                fileName == "bedrock_server.exe" or "bedrock" in fileName):
+                configureServerVariables.serverType = "bedrock"
+                configureServerVariables.extraData = {"edition": "bedrock"}
+                InfoBar.success(
+                    title=self.tr("已添加基岩版服务器"),
+                    content=(
+                        self.tr("核心文件名: ")
+                        + configureServerVariables.coreFileName
+                        + self.tr("\n类型: 基岩版")
+                    ),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+            else:
+                # Java版服务器
+                InfoBar.success(
+                    title=self.tr("已添加"),
+                    content=self.tr("核心文件名: ") + configureServerVariables.coreFileName,
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+        else:
+            InfoBar.warning(
+                title=self.tr("未添加"),
+                content=self.tr("你并没有选择服务器核心。\n当前核心: ")
+                + (self.tr("未添加") if not (a := configureServerVariables.coreFileName) else a),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
                 duration=3000,
                 parent=self,
             )
-        else:
+
+    def addBedrockCoreManually(self):
+        """手动添加基岩版服务器核心"""
+        from zipfile import ZipFile
+        from tempfile import mkdtemp
+        from shutil import rmtree
+        import stat
+        import os
+
+        # 根据操作系统决定文件过滤器
+        system = platform.system().lower()
+        if system == "windows":
+            file_filter = self.tr(
+                "基岩版服务器 (*.zip *.exe);;压缩包 (*.zip);;可执行文件 (*.exe);;所有文件 (*)"
+            )
+        else:  # macOS/Linux
+            file_filter = self.tr(
+                "基岩版服务器 (*.zip *);;压缩包 (*.zip);;所有文件 (*)"
+            )
+
+        tmpPath = str(
+            QFileDialog.getOpenFileName(
+                self,
+                self.tr("选择基岩版服务器压缩包或可执行文件"),
+                getcwd(),
+                file_filter,
+            )[0]
+        )
+
+        if not tmpPath:
             InfoBar.warning(
                 title=self.tr("未添加"),
-                content=self.tr("你并没有选择服务器核心。\n当前核心: ")
-                + (self.tr("未添加") if not (a := configureServerVariables.coreFileName) else a),
+                content=self.tr("你并没有选择服务器核心。"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 判断是否为压缩包
+        if tmpPath.lower().endswith('.zip'):
+            try:
+                # 创建临时目录解压
+                temp_dir = mkdtemp(prefix="mcsl2_bedrock_")
+
+                # 解压文件
+                with ZipFile(tmpPath, 'r') as zip_ref:
+                    zip_ref.extractall(temp_dir)
+
+                # 查找bedrock_server可执行文件
+                bedrock_exe = None
+                if system == "windows":
+                    bedrock_exe = osp.join(temp_dir, "bedrock_server.exe")
+                else:
+                    bedrock_exe = osp.join(temp_dir, "bedrock_server")
+
+                if not osp.exists(bedrock_exe):
+                    # 尝试在子目录中查找
+                    for root, dirs, files in os.walk(temp_dir):
+                        for file in files:
+                            if file == "bedrock_server.exe" or file == "bedrock_server":
+                                bedrock_exe = osp.join(root, file)
+                                break
+                        if bedrock_exe and osp.exists(bedrock_exe):
+                            break
+
+                if not osp.exists(bedrock_exe):
+                    rmtree(temp_dir)
+                    InfoBar.error(
+                        title=self.tr("解压失败"),
+                        content=self.tr("压缩包中未找到bedrock_server可执行文件！"),
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self,
+                    )
+                    return
+
+                # Unix系统需要添加执行权限
+                if system != "windows":
+                    os.chmod(bedrock_exe, os.stat(bedrock_exe).st_mode | stat.S_IEXEC)
+
+                # 设置路径(保留解压的完整目录)
+                configureServerVariables.corePath = temp_dir
+                configureServerVariables.coreFileName = osp.basename(bedrock_exe)
+                configureServerVariables.serverType = "bedrock"
+                configureServerVariables.extraData = {
+                    "edition": "bedrock",
+                    "extracted_from_zip": True,
+                    "temp_dir": temp_dir
+                }
+
+                InfoBar.success(
+                    title=self.tr("已添加基岩版服务器核心"),
+                    content=(
+                        self.tr("已从压缩包解压\n")
+                        + self.tr("核心文件: ")
+                        + configureServerVariables.coreFileName
+                        + self.tr("\n类型: 基岩版")
+                    ),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+
+            except Exception as e:
+                if 'temp_dir' in locals():
+                    rmtree(temp_dir, ignore_errors=True)
+                InfoBar.error(
+                    title=self.tr("解压失败"),
+                    content=self.tr("无法解压压缩包: ") + str(e),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+        else:
+            # 直接选择的可执行文件
+            configureServerVariables.corePath = tmpPath
+            configureServerVariables.coreFileName = tmpPath.split("/")[-1]
+            configureServerVariables.serverType = "bedrock"
+            configureServerVariables.extraData = {"edition": "bedrock"}
+
+            InfoBar.success(
+                title=self.tr("已添加基岩版服务器核心"),
+                content=(
+                    self.tr("核心文件: ")
+                    + configureServerVariables.coreFileName
+                    + self.tr("\n类型: 基岩版")
+                ),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -1599,47 +1987,80 @@ class ConfigurePage(QWidget):
         else:
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
             title = self.tr("请再次检查你设置的参数是否有误: ")
-            content = (
-                self.tr("Java: ")
-                + configureServerVariables.selectedJavaPath
-                + "\n"
-                + self.tr("Java版本: ")
-                + configureServerVariables.selectedJavaVersion
-                + "\n"
-                + self.tr("内存: ")
-                + str(configureServerVariables.minMem)
-                + configureServerVariables.memUnit
-                + "~"
-                + str(configureServerVariables.maxMem)
-                + configureServerVariables.memUnit
-                + "\n"
-                + self.tr("服务器核心: ")
-                + configureServerVariables.corePath
-                + "\n"
-                + self.tr("服务器核心文件名: ")
-                + configureServerVariables.coreFileName
-                + "\n"
-                + self.tr("输出编码设置: ")
-                + self.extendedOutputDeEncodingComboBox.itemText(
-                    configureServerVariables.consoleDeEncodingList.index(
-                        configureServerVariables.consoleOutputDeEncoding
-                    )
+            
+            # 基岩版服务器显示不同的内容
+            if configureServerVariables.serverType == "bedrock":
+                content = (
+                    self.tr("服务器核心: ")
+                    + configureServerVariables.corePath
+                    + "\n"
+                    + self.tr("服务器核心文件名: ")
+                    + configureServerVariables.coreFileName
+                    + "\n"
+                    + self.tr("服务器类型: 基岩版")
+                    + "\n"
                 )
-                + "\n"
-                + self.tr("输入编码设置: ")
-                + self.extendedInputDeEncodingComboBox.itemText(
-                    configureServerVariables.consoleDeEncodingList.index(
-                        configureServerVariables.consoleInputDeEncoding
+                # 只有在进阶模式下才显示编码设置
+                if currentNewServerType == 2:
+                    content += (
+                        self.tr("输出编码设置: ")
+                        + self.extendedOutputDeEncodingComboBox.itemText(
+                            configureServerVariables.consoleDeEncodingList.index(
+                                configureServerVariables.consoleOutputDeEncoding
+                            )
+                        )
+                        + "\n"
+                        + self.tr("输入编码设置: ")
+                        + self.extendedInputDeEncodingComboBox.itemText(
+                            configureServerVariables.consoleDeEncodingList.index(
+                                configureServerVariables.consoleInputDeEncoding
+                            )
+                        )
+                        + "\n"
                     )
+                content += self.tr("服务器名称: ") + configureServerVariables.serverName
+            else:
+                content = (
+                    self.tr("Java: ")
+                    + configureServerVariables.selectedJavaPath
+                    + "\n"
+                    + self.tr("Java版本: ")
+                    + configureServerVariables.selectedJavaVersion
+                    + "\n"
+                    + self.tr("内存: ")
+                    + str(configureServerVariables.minMem)
+                    + configureServerVariables.memUnit
+                    + "~"
+                    + str(configureServerVariables.maxMem)
+                    + configureServerVariables.memUnit
+                    + "\n"
+                    + self.tr("服务器核心: ")
+                    + configureServerVariables.corePath
+                    + "\n"
+                    + self.tr("服务器核心文件名: ")
+                    + configureServerVariables.coreFileName
+                    + "\n"
+                    + self.tr("输出编码设置: ")
+                    + self.extendedOutputDeEncodingComboBox.itemText(
+                        configureServerVariables.consoleDeEncodingList.index(
+                            configureServerVariables.consoleOutputDeEncoding
+                        )
+                    )
+                    + "\n"
+                    + self.tr("输入编码设置: ")
+                    + self.extendedInputDeEncodingComboBox.itemText(
+                        configureServerVariables.consoleDeEncodingList.index(
+                            configureServerVariables.consoleInputDeEncoding
+                        )
+                    )
+                    + "\n"
+                    + self.tr("JVM参数: \n")
+                    + "    "
+                    + totalJVMArg
+                    + "\n"
+                    + self.tr("服务器名称: ")
+                    + configureServerVariables.serverName
                 )
-                + "\n"
-                + self.tr("JVM参数: \n")
-                + "    "
-                + totalJVMArg
-                + "\n"
-                + self.tr("服务器名称: ")
-                + configureServerVariables.serverName
-            )
             w = MessageBox(title, "", self)
             w.yesButton.setText(self.tr("无误，添加"))
             w.yesSignal.connect(self.preNewServerDispatcher)
@@ -1649,6 +2070,92 @@ class ConfigurePage(QWidget):
             w.contentLabel.setParent(None)
             w.contentLabel.deleteLater()
             w.exec()
+
+    def finishBedrockServer(self):
+        """完成基岩版服务器的创建"""
+        # 检查核心文件
+        if not configureServerVariables.coreFileName:
+            InfoBar.error(
+                title=self.tr("创建失败"),
+                content=self.tr("请先选择基岩版服务器可执行文件！"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 检查服务器名称
+        serverName = self.bedrockServerNameLineEdit.text().strip()
+        nameCheck = ServerValidator().checkServerNameSet(serverName, configureServerVariables)
+        if nameCheck[1] != 0:  # 如果检查出错
+            InfoBar.error(
+                title=self.tr("创建失败"),
+                content=nameCheck[0],  # 显示具体的错误信息
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 设置编码
+        configureServerVariables.consoleOutputDeEncoding = (
+            configureServerVariables.consoleDeEncodingList[
+                self.bedrockOutputDeEncodingComboBox.currentIndex()
+            ]
+        )
+        configureServerVariables.consoleInputDeEncoding = (
+            configureServerVariables.consoleDeEncodingList[
+                self.bedrockInputDeEncodingComboBox.currentIndex()
+            ]
+        )
+
+        # 设置服务器类型
+        configureServerVariables.serverType = "bedrock"
+        if not configureServerVariables.extraData:
+            configureServerVariables.extraData = {}
+        configureServerVariables.extraData["edition"] = "bedrock"
+
+        # 基岩版不需要Java和内存设置
+        configureServerVariables.selectedJavaPath = ""
+        configureServerVariables.selectedJavaVersion = ""
+        configureServerVariables.minMem = 0
+        configureServerVariables.maxMem = 0
+        configureServerVariables.memUnit = "M"
+        configureServerVariables.jvmArg = []
+
+        # 显示确认对话框
+        content = (
+            self.tr("服务器核心: ")
+            + configureServerVariables.corePath
+            + "\n"
+            + self.tr("服务器核心文件名: ")
+            + configureServerVariables.coreFileName
+            + "\n"
+            + self.tr("服务器类型: 基岩版")
+            + "\n"
+            + self.tr("输出编码设置: ")
+            + self.bedrockOutputDeEncodingComboBox.currentText()
+            + "\n"
+            + self.tr("输入编码设置: ")
+            + self.bedrockInputDeEncodingComboBox.currentText()
+            + "\n"
+            + self.tr("服务器名称: ")
+            + configureServerVariables.serverName
+        )
+
+        w = MessageBox(self.tr("请再次检查你设置的参数是否有误: "), "", self)
+        w.yesButton.setText(self.tr("无误，创建"))
+        w.yesSignal.connect(self.saveNewServer)
+        w.cancelButton.setText(self.tr("我再看看"))
+        detail_widget = ExceptionWidget(content)
+        w.textLayout.addWidget(detail_widget.exceptionScrollArea)
+        w.contentLabel.setParent(None)
+        w.contentLabel.deleteLater()
+        w.exec()
 
     def preNewServerDispatcher(self):
         """
@@ -1669,6 +2176,10 @@ class ConfigurePage(QWidget):
             if w.exec() == 0:
                 configureServerVariables.serverType = ""
                 configureServerVariables.extraData = {}
+
+        elif serverType == "bedrock":  # case: bedrock edition
+            # 基岩版服务器不需要额外处理
+            pass
 
         elif serverType == "vanilla":  # case 2
             pass
@@ -1835,16 +2346,39 @@ class ConfigurePage(QWidget):
 
         # 复制核心
         try:
-            copy(
-                configureServerVariables.corePath,
-                f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
-            )
+            # 检查是否从压缩包解压
+            if (configureServerVariables.extraData.get("extracted_from_zip") and
+                configureServerVariables.extraData.get("temp_dir")):
+                # 复制解压目录中的所有文件到服务器目录
+                from shutil import copytree
+                import os
+                temp_dir = configureServerVariables.extraData["temp_dir"]
+                target_dir = f"./Servers/{configureServerVariables.serverName}"
+                
+                # 复制临时目录中的所有内容到目标目录
+                for item in os.listdir(temp_dir):
+                    src_path = os.path.join(temp_dir, item)
+                    dst_path = os.path.join(target_dir, item)
+                    if os.path.isdir(src_path):
+                        copytree(src_path, dst_path, dirs_exist_ok=True)
+                    else:
+                        copy(src_path, dst_path)
+                
+                # 删除临时目录
+                from shutil import rmtree
+                rmtree(temp_dir, ignore_errors=True)
+            else:
+                # 普通单文件复制
+                copy(
+                    configureServerVariables.corePath,
+                    f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
+                )
         except Exception as e:
             exitCode = 1
             exit1Msg += f"\n{e}"
 
-        # 自动同意Mojang Eula
-        if cfg.get(cfg.acceptAllMojangEula):
+        # 自动同意Mojang Eula (仅Java版服务器)
+        if cfg.get(cfg.acceptAllMojangEula) and configureServerVariables.serverType != "bedrock":
             tmpServerName = serverVariables.serverName
             serverVariables.serverName = configureServerVariables.serverName
             MinecraftEulaInfoBar = InfoBar(

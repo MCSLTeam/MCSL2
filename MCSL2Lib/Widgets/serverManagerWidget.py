@@ -39,10 +39,22 @@ from qfluentwidgets import (
 class SingleServerManager(SimpleCardWidget):
     """单独的服务器管理Widget模板"""
 
-    def __init__(self, mem, coreFileName, javaPath, serverName, icon, btnSlot, i, parent=None):
+    def __init__(
+        self,
+        mem,
+        coreFileName,
+        javaPath,
+        serverName,
+        icon,
+        btnSlot,
+        i,
+        serverType="java",
+        parent=None,
+    ):
         super().__init__(parent)
 
         self.btnSlot = btnSlot
+        self.serverType = serverType  # 服务器类型: "java" 或 "bedrock"
         self.setObjectName("singleServerManagerWidget")
 
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -159,15 +171,31 @@ class SingleServerManager(SimpleCardWidget):
         self.javaPathTitle.setText(self.tr("Java: "))
 
         self.serverName.setWordWrap(True)
-        self.mem.setText(mem)
-        self.coreFileName.setText(coreFileName)
-        self.javaPath.setText(javaPath)
-        self.serverName.setText(" " + serverName)
-        self.Icon.setPixmap(icon)
-        self.Icon.setFixedSize(QSize(70, 70))
-        self.runBtn.clicked.connect(btnSlot)
-        self.runBtn.setObjectName(f"startServer!{i}")
-        self.runBtn.setIcon(FIF.PLAY_SOLID)
+
+        # 根据服务器类型显示不同信息
+        if self.serverType == "bedrock":
+            # 基岩版卡片只隐藏Java和内存信息，其余正常显示
+            self.memTitle.setVisible(False)
+            self.mem.setVisible(False)
+            self.javaPathTitle.setVisible(False)
+            self.javaPath.setVisible(False)
+            self.coreFileName.setText(coreFileName)
+            self.serverName.setText(" " + serverName)
+            self.Icon.setPixmap(icon)
+            self.Icon.setFixedSize(QSize(70, 70))
+            self.runBtn.clicked.connect(btnSlot)
+            self.runBtn.setObjectName(f"startServer!{i}")
+            self.runBtn.setIcon(FIF.PLAY_SOLID)
+        else:
+            self.mem.setText(mem)
+            self.javaPath.setText(javaPath)
+            self.coreFileName.setText(coreFileName)
+            self.serverName.setText(" " + serverName)
+            self.Icon.setPixmap(icon)
+            self.Icon.setFixedSize(QSize(70, 70))
+            self.runBtn.clicked.connect(btnSlot)
+            self.runBtn.setObjectName(f"startServer!{i}")
+            self.runBtn.setIcon(FIF.PLAY_SOLID)
 
 
 class SingleServerManageCommandBar(CommandBar):

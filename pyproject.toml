@@ -23,6 +23,13 @@ dependencies = [
     "lib-not-dr[nuitka]>=0.4",
     "nuitka==2.4.5",
     "pyqt5-concurrent>=0.1.6",
+    # "py2app>=0.28.8",
+    # "pyobjc-framework-scriptingbridge>=10.3.2",
+    # "pyobjc-framework-instantmessage>=10.3.2",
+    # "pyobjc-framework-inputmethodkit>=10.3.2",
+    # "pyobjc-framework-dictionaryservices>=10.3.2",
+    # "pyobjc-framework-collaboration>=10.3.2",
+    # "pyobjc-framework-calendarstore>=10.3.2",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"

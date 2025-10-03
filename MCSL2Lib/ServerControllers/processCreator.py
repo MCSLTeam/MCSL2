@@ -143,6 +143,84 @@ class _ServerProcessBridge(QObject):
         return self.serverProcess.process.state() == QProcess.Running
 
 
+class _BedrockServerProcessBridge(_ServerProcessBridge):
+    """基岩版服务器进程操控器"""
+
+    def __init__(self, v):
+        """
+        初始化基岩版服务器处理器
+        """
+        # 基岩版服务器不使用 Java，直接运行可执行文件
+        self.config: ServerVariables = v
+        self.workingDirectory: str = str(osp.realpath(f"Servers//{self.config.serverName}"))
+        self.partialData: str = b""
+        self.handledServer = None
+
+        # 确定基岩版服务器可执行文件路径
+        self.executablePath = self._getBedrockExecutable()
+        QObject.__init__(self)
+        self.serverProcess = self.createServerProcess()
+
+    def _getBedrockExecutable(self) -> str:
+        """
+        根据操作系统获取基岩版服务器可执行文件路径
+        """
+        system = platform.system().lower()
+        server_dir = self.workingDirectory
+
+        if system == "windows":
+            executable = osp.join(server_dir, "bedrock_server.exe")
+        elif system == "darwin":  # macOS
+            executable = osp.join(server_dir, "bedrock_server")
+        elif system == "linux":
+            executable = osp.join(server_dir, "bedrock_server")
+        else:
+            MCSL2Logger.error(f"不支持的操作系统: {system}")
+            executable = osp.join(server_dir, self.config.coreFileName)
+
+        # 如果默认路径不存在，尝试使用配置中的文件名
+        if not osp.exists(executable):
+            alt_executable = osp.join(server_dir, self.config.coreFileName)
+            if osp.exists(alt_executable):
+                executable = alt_executable
+            else:
+                MCSL2Logger.warning(f"基岩版服务器可执行文件不存在: {executable}")
+                MCSL2Logger.warning(f"备选路径也不存在: {alt_executable}")
+
+        MCSL2Logger.info(f"基岩版服务器可执行文件: {executable}")
+        return executable
+
+    def createServerProcess(self) -> _Server:
+        """
+        创建基岩版服务器进程对象
+        """
+        self.handledServer = _Server()
+        self.handledServer.process = QProcess()
+
+        # 基岩版服务器直接运行可执行文件，不需要 Java
+        self.handledServer.process.setProgram(self.executablePath)
+        self.handledServer.process.setArguments([])  # 基岩版通常不需要额外参数
+        self.handledServer.process.setWorkingDirectory(self.workingDirectory)
+        self.handledServer.process.readyReadStandardOutput.connect(self.serverLogOutputHandler)
+        self.handledServer.process.finished.connect(
+            lambda: self.serverClosed.emit(self.handledServer.process.exitCode())
+        )
+
+        # 在 Linux/macOS 上确保可执行文件有执行权限
+        if platform.system().lower() in ["linux", "darwin"]:
+            import os
+            import stat
+            try:
+                current_mode = os.stat(self.executablePath).st_mode
+                exec_mode = current_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
+                os.chmod(self.executablePath, exec_mode)
+                MCSL2Logger.info(f"已设置基岩版服务器可执行权限: {self.executablePath}")
+            except Exception as e:
+                MCSL2Logger.warning(f"设置可执行权限失败: {e}")
+
+        return self.handledServer
+
+
 class _MinecraftEULA:
     """有关Mojang Eula的部分。"""
 
@@ -204,6 +282,12 @@ class ServerLauncher:
 
     def _setJVMArg(self):
         """生成开服命令参数"""
+        # Bedrock Edition servers don't use JVM
+        if self.config.serverType == "bedrock":
+            self.jvmArg = []
+            MCSL2Logger.info("基岩版服务器，跳过 JVM 参数设置")
+            return
+
         self.jvmArg = [
             f"-Xms{self.config.minMem}{self.config.memUnit}",
             f"-Xmx{self.config.maxMem}{self.config.memUnit}",
@@ -228,5 +312,9 @@ class ServerLauncher:
 
     def _launch(self) -> _ServerProcessBridge:
         """启动进程"""
-        (bridge := _ServerProcessBridge(self.config, self.jvmArg)).startServer()
+        if self.config.serverType == "bedrock":
+            # Bedrock Edition uses direct executable
+            (bridge := _BedrockServerProcessBridge(self.config)).startServer()
+        else:
+            (bridge := _ServerProcessBridge(self.config, self.jvmArg)).startServer()
         return bridge

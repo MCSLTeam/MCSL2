@@ -38,6 +38,9 @@ class ServerValidator(QObject):
 
     def checkJavaSet(self, v: BaseServerVariables):
         """检查Java设置"""
+        # 基岩版服务器不需要Java
+        if hasattr(v, 'serverType') and v.serverType == "bedrock":
+            return self.tr("Java 检查: 跳过（基岩版服务器）"), 0
         if v.selectedJavaPath != "":
             return self.tr("Java 检查: 正常"), 0
         else:
@@ -45,6 +48,11 @@ class ServerValidator(QObject):
 
     def checkMemSet(self, minMem, maxMem, v: BaseServerVariables):
         """检查内存设置"""
+        # 基岩版服务器不需要内存设置（不使用JVM）
+        if hasattr(v, 'serverType') and v.serverType == "bedrock":
+            v.minMem = 0
+            v.maxMem = 0
+            return self.tr("内存检查: 跳过（基岩版服务器）"), 0
 
         # 是否为空
         if minMem != "" and maxMem != "":
@@ -125,6 +133,10 @@ class ServerValidator(QObject):
 
     def checkJVMArgSet(self, j, v: BaseServerVariables):
         """检查JVM参数设置，同时设置"""
+        # 基岩版服务器不需要JVM参数
+        if hasattr(v, 'serverType') and v.serverType == "bedrock":
+            v.jvmArg = []
+            return self.tr("JVM 参数检查: 跳过（基岩版服务器）"), 0
         try:
             v.jvmArg = j.split(" ")
             return self.tr("JVM 参数检查: 正常"), 0

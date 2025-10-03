@@ -672,6 +672,9 @@ class ServerManagerPage(QWidget):
             self.releaseMemory()
             # 添加新的
             for i in range(len(globalConfig)):
+                # 获取服务器类型,默认为 java
+                serverType = globalConfig[i].get("server_type", "java")
+                
                 self.flowLayout.addWidget(
                     SingleServerManager(
                         mem=f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}",
@@ -681,6 +684,7 @@ class ServerManagerPage(QWidget):
                         icon=QPixmap(f":/built-InIcons/{globalConfig[i]['icon']}"),
                         btnSlot=self.scrollAreaProcessor,
                         i=i,
+                        serverType=serverType,  # 传递服务器类型
                         parent=self.serversSmoothScrollArea,
                     )
                 )
@@ -803,28 +807,56 @@ class ServerManagerPage(QWidget):
         globalConfig: list = readGlobalServerConfig()
         self.stackedWidget.setCurrentIndex(1)
         self.serverIndex = index
+        
+        # 获取服务器类型
+        serverType = globalConfig[index].get("server_type", "java")
+        isBedrockServer = (serverType == "bedrock")
+        
         # 自动填充旧配置。在下方初始化变量之前不应调用任何的editServerVariables的属性
         self.editServerSubtitleLabel.setText(
             self.tr("编辑服务器") + f"-{globalConfig[index]['name']}"
+            + (self.tr(" [基岩版]") if isBedrockServer else "")
         )
-        self.editJavaTextEdit.setText(globalConfig[index]["java_path"])
-        self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
-        self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
+        
+        # 根据服务器类型显示/隐藏控件
+        if isBedrockServer:
+            # 隐藏Java相关控件
+            self.editSetJavaWidget.setVisible(False)
+            # 隐藏内存相关控件
+            self.editSetMemWidget.setVisible(False)
+            # 隐藏JVM参数控件
+            self.editSetJVMArgWidget.setVisible(False)
+            self.editDownloadCorePrimaryPushBtn.setVisible(False)
+            self.editManuallyAddCorePrimaryPushBtn.setVisible(False)
+        else:
+            # 显示所有Java版控件
+            self.editSetJavaWidget.setVisible(True)
+            self.editSetMemWidget.setVisible(True)
+            self.editSetJVMArgWidget.setVisible(True)
+            self.editDownloadCorePrimaryPushBtn.setVisible(True)
+            self.editManuallyAddCorePrimaryPushBtn.setVisible(True)
+            
+            # 填充Java版配置
+            self.editJavaTextEdit.setText(globalConfig[index]["java_path"])
+            self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
+            self.editMaxMemLineEdit.setText(str(globalConfig[index]["max_memory"]))
+            self.editMemUnitComboBox.setCurrentIndex(
+                editServerVariables.memUnitList.index(globalConfig[index]["memory_unit"])
+            )
+            totalJVMArg = ""
+            for arg in globalConfig[index]["jvm_arg"]:
+                totalJVMArg += f"{arg} "
+            totalJVMArg = totalJVMArg.strip()
+            self.JVMArgPlainTextEdit.setPlainText(totalJVMArg)
+        
+        # 通用配置(Java版和基岩版都有)
         self.editOutputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(globalConfig[index]["output_decoding"])
         )
         self.editInputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(globalConfig[index]["input_encoding"])
         )
-        self.editMemUnitComboBox.setCurrentIndex(
-            editServerVariables.memUnitList.index(globalConfig[index]["memory_unit"])
-        )
         self.coreLineEdit.setText(globalConfig[index]["core_file_name"])
-        totalJVMArg = ""
-        for arg in globalConfig[index]["jvm_arg"]:
-            totalJVMArg += f"{arg} "
-        totalJVMArg = totalJVMArg.strip()
-        self.JVMArgPlainTextEdit.setPlainText(totalJVMArg)
         self.editServerNameLineEdit.setText(globalConfig[index]["name"])
 
         self.editServerPixmapLabel.setPixmap(
@@ -853,7 +885,7 @@ class ServerManagerPage(QWidget):
             pass
         self.syncVariables()
         # 初始化QtSlot
-        self.connectEditServerSlot()
+        self.connectEditServerSlot(isBedrockServer)
 
     def syncVariables(self):
         editServerVariables.oldMinMem = editServerVariables.minMem
@@ -869,19 +901,26 @@ class ServerManagerPage(QWidget):
         editServerVariables.oldServerType = editServerVariables.serverType
         editServerVariables.oldExtraData = editServerVariables.extraData
 
-    def connectEditServerSlot(self):
-        self.editJavaTextEdit.textChanged.connect(self.changeJavaPath)
-        self.editMinMemLineEdit.textChanged.connect(self.changeMinMem)
-        self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
-        self.editMemUnitComboBox.currentIndexChanged.connect(self.changeMemUnit)
-        self.editManuallyAddCorePrimaryPushBtn.clicked.connect(self.changeCore)
+    def connectEditServerSlot(self, isBedrockServer=False):
+        """连接编辑服务器的信号槽"""
+        # 基岩版服务器不连接Java和内存相关的槽
+        if not isBedrockServer:
+            self.editJavaTextEdit.textChanged.connect(self.changeJavaPath)
+            self.editMinMemLineEdit.textChanged.connect(self.changeMinMem)
+            self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
+            self.editMemUnitComboBox.currentIndexChanged.connect(self.changeMemUnit)
+            self.JVMArgPlainTextEdit.textChanged.connect(self.changeJVMArg)
+        
+        # 通用槽连接(Java版和基岩版都需要)
+        self.editManuallyAddCorePrimaryPushBtn.clicked.connect(
+            self.changeBedrockCore if isBedrockServer else self.changeCore
+        )
         self.editOutputDeEncodingComboBox.currentIndexChanged.connect(self.changeOutputDeEncoding)
         self.editInputDeEncodingComboBox.currentIndexChanged.connect(self.changeInputDeEncoding)
         self.editServerIcon.currentIndexChanged.connect(
             lambda: self.changeIcon(iconIndex=self.editServerIcon.currentIndex())
         )
         self.editServerNameLineEdit.textChanged.connect(self.changeServerName)
-        self.JVMArgPlainTextEdit.textChanged.connect(self.changeJVMArg)
 
     def disconnectEditServerSlot(self):
         self.editJavaTextEdit.textChanged.disconnect()
@@ -925,6 +964,51 @@ class ServerManagerPage(QWidget):
                 self.tr("Java 可执行文件 (*.jar)"),
             )[0]
         )
+        if tmpCorePath != "":
+            editServerVariables.corePath = tmpCorePath
+            editServerVariables.coreFileName = tmpCorePath.split("/")[-1]
+            InfoBar.success(
+                title=self.tr("已修改，但未保存"),
+                content=self.tr("核心文件名: ") + editServerVariables.coreFileName,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            self.coreLineEdit.setText(editServerVariables.coreFileName)
+        else:
+            InfoBar.warning(
+                title=self.tr("未修改"),
+                content=self.tr("你并没有选择服务器核心。"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+    def changeBedrockCore(self):
+        """手动更换基岩版服务器核心"""
+        import platform
+        system = platform.system().lower()
+        
+        if system == "windows":
+            file_filter = self.tr(
+                "基岩版服务器 (*.zip *.exe);;压缩包 (*.zip);;可执行文件 (*.exe);;所有文件 (*)"
+            )
+        else:
+            file_filter = self.tr("基岩版服务器 (*.zip *);;压缩包 (*.zip);;所有文件 (*)")
+        
+        tmpCorePath = str(
+            QFileDialog.getOpenFileName(
+                self,
+                self.tr("选择基岩版服务器文件"),
+                getcwd(),
+                file_filter,
+            )[0]
+        )
+        
         if tmpCorePath != "":
             editServerVariables.corePath = tmpCorePath
             editServerVariables.coreFileName = tmpCorePath.split("/")[-1]

@@ -35,6 +35,11 @@ Plugins/**
 .ruff_cache
 result.json
 
+#build
+dist
+build
+
+#resource
 Icons/icons_rc.py
 
 # Just __pycache__

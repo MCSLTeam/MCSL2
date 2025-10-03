@@ -1108,10 +1108,21 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
     @pyqtSlot(float)
     def setMemView(self, mem):
-        self.serverRAMMonitorTitle.setText(
-            f"RAM：{str(round(mem, 2))}MiB/{self.serverConfig.maxMem if self.serverConfig.memUnit == 'M' else self.serverConfig.maxMem * 1024}MiB"  # noqa: E501
-        )
-        self.serverRAMMonitorRing.setValue(int(int(mem) / self.serverConfig.maxMem * 100))
+        # 基岩版服务器没有内存限制(maxMem=0),跳过内存监控显示
+        if hasattr(self, 'serverConfig') and self.serverConfig.maxMem == 0:
+            self.serverRAMMonitorTitle.setText(f"RAM：{str(round(mem, 2))}MiB")
+            self.serverRAMMonitorRing.setValue(0)
+            return
+        
+        if hasattr(self, 'serverConfig'):
+            self.serverRAMMonitorTitle.setText(
+                f"RAM：{str(round(mem, 2))}MiB/{self.serverConfig.maxMem if self.serverConfig.memUnit == 'M' else self.serverConfig.maxMem * 1024}MiB"  # noqa: E501
+            )
+            self.serverRAMMonitorRing.setValue(int(int(mem) / self.serverConfig.maxMem * 100))
+        else:
+            # 如果 serverConfig 还未初始化,显示当前值
+            self.serverRAMMonitorTitle.setText(f"RAM：{str(round(mem, 2))}MiB")
+            self.serverRAMMonitorRing.setValue(0)
 
     @pyqtSlot(float)
     def setCPUView(self, cpuPercent):
