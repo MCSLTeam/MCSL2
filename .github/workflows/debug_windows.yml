@@ -35,6 +35,7 @@ jobs:
       - name: Sync Dependencies
         shell: pwsh
         run: |
+          Remove-Item -Force -Recurse .\uv.lock
           uv sync --no-dev
 
       - name: Build

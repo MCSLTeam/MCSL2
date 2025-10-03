@@ -40,6 +40,7 @@ jobs:
       - name: Sync Dependencies
         shell: pwsh
         run: |
+          rm uv.lock
           uv sync --no-dev
 
       - name: Build
