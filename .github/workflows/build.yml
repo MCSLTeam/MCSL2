@@ -37,7 +37,7 @@ jobs:
       - name: Sync Dependencies
         shell: pwsh
         run: |
-          uv sync
+          uv sync --no-dev
 
       - name: Build
         run: |
@@ -85,7 +85,7 @@ jobs:
       - name: Sync Dependencies
         shell: pwsh
         run: |
-          uv sync
+          uv sync --no-dev
 
       - name: Build
         run: |
