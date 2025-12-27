@@ -19,18 +19,13 @@ dependencies = [
     "PyQt-Fluent-Widgets",
     "psutil==6.0.0",
     "loguru==0.7.2",
+    "openai>=1.0.0",
     "requests==2.31.0",
     "lib-not-dr[nuitka]>=0.4",
     "nuitka==2.4.5",
     "pyqt5-concurrent>=0.1.6",
-    "pyqt5-qt5==5.15.17",
-    # "py2app>=0.28.8",
-    # "pyobjc-framework-scriptingbridge>=10.3.2",
-    # "pyobjc-framework-instantmessage>=10.3.2",
-    # "pyobjc-framework-inputmethodkit>=10.3.2",
-    # "pyobjc-framework-dictionaryservices>=10.3.2",
-    # "pyobjc-framework-collaboration>=10.3.2",
-    # "pyobjc-framework-calendarstore>=10.3.2",
+    "pyqt5-qt5==5.15.2; sys_platform == 'win32'",
+    "pyqt5-qt5==5.15.17; sys_platform != 'win32'",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
@@ -47,16 +42,12 @@ packages = []
 #   uv run -m lndl_nuitka . -y
 #   uv run generate_i18n.py
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "tomli>=2.0.1",
     "ruff>=0.1.6",
     "pyqt5-stubs>=5.15.6.0",
 ]
-# required-environments = [
-# "sys_platform == 'darwin' and platform_machine == 'x86_64'"
-# ]
-# 若需要锁定：执行 `uv lock` 生成 uv.lock；CI 中可用 `uv sync --frozen`。
 
 [tool.ruff]
 target-version = "py38"
