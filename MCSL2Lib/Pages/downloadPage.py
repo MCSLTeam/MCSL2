@@ -46,7 +46,6 @@ from qfluentwidgets import (
     BodyLabel,
     HyperlinkButton,
     LineEdit,
-    PrimaryPushButton
 )
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
@@ -983,7 +982,7 @@ class DownloadPage(QWidget):
             target_name,
             file_format,
             url,
-            (f"{file_name}", self.rainyunSelectedType, "RainYun"),
+            (f"{file_name}", self.rainyunSelectedType, "", "RainYun"),
             fileSize=normalized_size,
         )
 
