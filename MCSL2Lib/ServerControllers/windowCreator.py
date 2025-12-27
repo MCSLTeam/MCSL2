@@ -67,6 +67,7 @@ from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from PyQt5.QtGui import QIcon, QColor, QPainter, QTextCharFormat, QBrush
 from qframelesswindow import TitleBar
 from MCSL2Lib.Pages.configEditorPage import ConfigEditorPage
+from MCSL2Lib.Pages.schedulerPage import SchedulerPage
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
 from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
@@ -450,6 +451,7 @@ class ServerWindowTitleBar(TitleBar):
 class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
     playersControllerBtnEnabled = pyqtSignal(bool)
     configEditorPage: ConfigEditorPage
+    schedulerPage: SchedulerPage
 
     def __init__(
         self,
@@ -482,7 +484,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.setupOverviewPage()
         self.setupCommandPage()
         self.setupEditorPage()
-        self.setupScheduleTasksPage()
+        self.setupSchedulerPage()
         self.setupAnalyzePage()
         self.initTexts()
         self.initNavigation()
@@ -819,34 +821,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.configEditorPage = ConfigEditorPage(self.serverConfig)
         self.stackedWidget.addWidget(self.configEditorPage)
 
-    def setupScheduleTasksPage(self):
-        self.scheduleTasksPage = QWidget()
-        self.scheduleTasksPage.setObjectName("scheduleTasksPage")
-        self.scheduleTasksPageLayout = QGridLayout(self.scheduleTasksPage)
-        self.scheduleTasksScrollArea = MySmoothScrollArea(self.scheduleTasksPage)
-        self.scheduleTasksScrollArea.setFrameShape(QFrame.NoFrame)
-        self.scheduleTasksScrollArea.setFrameShadow(QFrame.Plain)
-        self.scheduleTasksScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.scheduleTasksScrollArea.setWidgetResizable(True)
-        self.scheduleTasksScrollArea.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
-        self.scheduleTasksWidgetContents = QWidget()
-        self.scheduleTasksWidgetContents.setGeometry(QRect(0, 0, 668, 537))
-        self.scheduleTasksScrollArea.setWidget(self.scheduleTasksWidgetContents)
-        self.scheduleTasksPageLayout.addWidget(self.scheduleTasksScrollArea, 2, 0, 1, 4)
-        self.exportScheduleConfigBtn = PushButton(self.scheduleTasksPage)
-        self.scheduleTasksPageLayout.addWidget(self.exportScheduleConfigBtn, 1, 2, 1, 1)
-        spacerItem3 = QSpacerItem(10, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.scheduleTasksPageLayout.addItem(spacerItem3, 1, 3, 1, 1)
-        self.addScheduleTaskBtn = PushButton(self.scheduleTasksPage)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.addScheduleTaskBtn.sizePolicy().hasHeightForWidth())
-        self.addScheduleTaskBtn.setSizePolicy(sizePolicy)
-        self.scheduleTasksPageLayout.addWidget(self.addScheduleTaskBtn, 1, 0, 1, 1)
-        self.importScheduleConfigBtn = PushButton(self.scheduleTasksPage)
-        self.scheduleTasksPageLayout.addWidget(self.importScheduleConfigBtn, 1, 1, 1, 1)
-        self.stackedWidget.addWidget(self.scheduleTasksPage)
+    def setupSchedulerPage(self):
+        self.schedulerPage = SchedulerPage(self.serverConfig, self)
+        self.stackedWidget.addWidget(self.schedulerPage)
 
     def setupAnalyzePage(self):
         self.analyzePage = QWidget()
@@ -961,9 +938,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.exitServer.setText(self.tr("关闭服务器"))
         self.killServer.setText(self.tr("强制关闭"))
         self.errorAnalyze.setText(self.tr("错误分析"))
-        self.exportScheduleConfigBtn.setText(self.tr("导出"))
-        self.addScheduleTaskBtn.setText(self.tr("添加计划任务"))
-        self.importScheduleConfigBtn.setText(self.tr("导入"))
         self.errTitle.setText(self.tr("含报错的日志："))
         self.startAnalyze.setText(self.tr("开始分析"))
         self.resultTitle.setText(self.tr("分析结果："))
@@ -1024,9 +998,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             icon=FIF.LABEL,
         )
         self.serverSegmentedWidget.addItem(
-            routeKey="scheduleTasksPage",
+            routeKey="schedulerPage",
             text=self.tr("计划任务"),
-            onClick=lambda: self.stackedWidget.setCurrentWidget(self.scheduleTasksPage),
+            onClick=lambda: self.stackedWidget.setCurrentWidget(self.schedulerPage),
             icon=FIF.HISTORY,
         )
         self.serverSegmentedWidget.addItem(
@@ -1036,7 +1010,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             icon=FIF.SEARCH_MIRROR,
         )
         self.serverSegmentedWidget.setCurrentItem("overviewPage")
-        self.serverSegmentedWidget.items["scheduleTasksPage"].setEnabled(False)
 
     def initWindow(self):
         """初始化窗口"""
@@ -1250,12 +1223,23 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         except (AttributeError, TypeError):
             pass
         self.serverBridge.serverLogOutput.connect(self.colorConsoleText)
+        # 连接scheduler处理服务器输出
+        self.serverBridge.serverLogOutput.connect(self.schedulerPage.handleServerOutput)
+        # 设置服务器输出处理器，用于scheduler发送指令
+        self.schedulerPage.setServerOutputHandler(self.sendCommand)
+        # 设置服务器启动处理器，用于scheduler启动服务器
+        self.schedulerPage.setServerStartHandler(self.startServer)
         self.colorConsoleText(self.tr("[MCSL2 | 提示]: 服务器正在启动，请稍后..."))
 
     def unRegisterCommandOutput(self):
         try:
             self.serverBridge.serverLogOutput.disconnect()
         except (AttributeError, TypeError):
+            pass
+        # 停止scheduler的Cron调度器
+        try:
+            self.schedulerPage.stopCronScheduler()
+        except Exception:
             pass
 
     def registerResMonitor(self):

@@ -649,10 +649,10 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="scheduleTasksPage">
+     <widget class="QWidget" name="schedulerPage">
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="2" column="0" colspan="4">
-        <widget class="SmoothScrollArea" name="scheduleTasksScrollArea">
+        <widget class="SmoothScrollArea" name="schedulerScrollArea">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -668,7 +668,7 @@
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
-         <widget class="QWidget" name="scheduleTasksWidgetContents">
+         <widget class="QWidget" name="schedulerWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -704,7 +704,7 @@
         </spacer>
        </item>
        <item row="1" column="0">
-        <widget class="PushButton" name="addScheduleTaskBtn">
+        <widget class="PushButton" name="addSchedulerBtn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
