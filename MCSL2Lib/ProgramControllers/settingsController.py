@@ -39,6 +39,29 @@ class Config(QConfig):
     restartServerWhenCrashed = ConfigItem(
         "Server", "restartServerWhenCrashed", False, BoolValidator()
     )
+
+    # AI Analyzer
+    aiAnalyzeProvider = OptionsConfigItem(
+        "AIAnalyzer",
+        "provider",
+        "OpenAI",
+        OptionsValidator([
+            "OpenAI",
+            "Claude",
+            "Gemini",
+            "Qwen",
+            "GLM",
+            "DeepSeek",
+            "硅基流动",
+            "Kimi",
+            "自定义API",
+        ]),
+    )
+    aiAnalyzeBaseUrl = ConfigItem("AIAnalyzer", "baseUrl", "https://api.openai.com/v1", "")
+    aiAnalyzeApiKey = ConfigItem("AIAnalyzer", "apiKey", "", "")
+    aiAnalyzeApiKeys = ConfigItem("AIAnalyzer", "apiKeys", "{}", "")
+    aiAnalyzeModel = ConfigItem("AIAnalyzer", "model", "", "")
+    aiAnalyzePrompt = ConfigItem("AIAnalyzer", "prompt", "", "")
     # Configure server
 
     newServerType = OptionsConfigItem(
