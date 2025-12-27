@@ -301,16 +301,14 @@ class DownloadMessageBox(MessageBox):
     def onDownloadFinished(self, _: list):
         try:
             dl, extraData = _ if isinstance(_, (list, tuple)) else (None, None)
-            extraData = extraData or ()
+            extraData = tuple(extraData) if extraData else ()
 
             filename = extraData[0] if len(extraData) > 0 else self.fileName
-            entry_data = None
-            if len(extraData) >= 4:
-                entry_data = {
-                    "type": extraData[1],
-                    "mc_version": extraData[2],
-                    "build_version": extraData[3],
-                }
+            entry_data = {
+                "type": extraData[1] if len(extraData) > 1 else "",
+                "mc_version": extraData[2] if len(extraData) > 2 else "",
+                "build_version": extraData[3] if len(extraData) > 3 else "",
+            }
 
             # dl: None for success, string for error/cancel
             self.hide()
@@ -509,13 +507,11 @@ class DownloadCard(SimpleCardWidget):
             extraData = tuple(extraData) if extraData else ()
 
             filename = extraData[0] if len(extraData) > 0 else self.fileNameLabel.text()
-            entry_data = None
-            if len(extraData) >= 4:
-                entry_data = {
-                    "type": extraData[1],
-                    "mc_version": extraData[2],
-                    "build_version": extraData[3],
-                }
+            entry_data = {
+                "type": extraData[1] if len(extraData) > 1 else "",
+                "mc_version": extraData[2] if len(extraData) > 2 else "",
+                "build_version": extraData[3] if len(extraData) > 3 else "",
+            }
 
             info_parent = self.window() if hasattr(self, "window") else None
 

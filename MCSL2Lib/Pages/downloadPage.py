@@ -982,7 +982,7 @@ class DownloadPage(QWidget):
             target_name,
             file_format,
             url,
-            (f"{file_name}", self.rainyunSelectedType, "RainYun"),
+            (f"{file_name}", self.rainyunSelectedType, "", "RainYun"),
             fileSize=normalized_size,
         )
 

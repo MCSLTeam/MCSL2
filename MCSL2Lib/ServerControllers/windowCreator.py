@@ -10,7 +10,9 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-from typing import List
+from typing import List, Optional
+import json
+import traceback
 from PyQt5.QtCore import (
     Qt,
     QSize,
@@ -20,6 +22,7 @@ from PyQt5.QtCore import (
     pyqtSignal,
     pyqtSlot,
     QTimer,
+    QThread,
 )
 from PyQt5.QtWidgets import (
     QSizePolicy,
@@ -51,11 +54,9 @@ from qfluentwidgets import (
     StrongBodyLabel,
     SubtitleLabel,
     SwitchButton,
-    ToggleButton,
     TransparentPushButton,
     VerticalSeparator,
     FluentIcon as FIF,
-    ToolTip,
     isDarkTheme,
     InfoBarPosition,
     InfoBar,
@@ -63,12 +64,14 @@ from qfluentwidgets import (
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
-from PyQt5.QtGui import QIcon, QCursor, QColor, QPainter, QTextCharFormat, QBrush
+from PyQt5.QtGui import QIcon, QColor, QPainter, QTextCharFormat, QBrush
 from qframelesswindow import TitleBar
 from MCSL2Lib.Pages.configEditorPage import ConfigEditorPage
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
+from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
 from MCSL2Lib.ProgramControllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.promptController import get_ai_analyze_prompt
 from MCSL2Lib.ServerControllers.processCreator import _MinecraftEULA, ServerLauncher
 from MCSL2Lib.ServerControllers.serverErrorHandler import ServerErrorHandler
 from MCSL2Lib.ServerControllers.serverUtils import (
@@ -83,30 +86,6 @@ from re import search
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger, openLocalFile, writeFile
 from MCSL2Lib.variables import GlobalMCSL2Variables, ServerVariables
-
-
-class ErrorHandlerToggleButton(ToggleButton):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.installEventFilter(self)
-        self.tip = ToolTip("已开启")
-        self.toggled.connect(self.toggleToolTip)
-
-    def toggleToolTip(self):
-        if self.isChecked():
-            self.tip = ToolTip(self.tr("已开启"))
-        else:
-            self.tip = ToolTip(self.tr("已关闭"))
-
-    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-        if a1.type() == QEvent.ToolTip:
-            self.tip.move(QCursor.pos())
-            self.tip.show()
-            return True
-        if a1.type() == QEvent.Leave:
-            self.tip.hide()
-            return True
-        return super().eventFilter(a0, a1)
 
 
 class CommandLineEdit(LineEdit):
@@ -134,6 +113,221 @@ class CommandLineEdit(LineEdit):
                     self.setText("")
                 return True
         return super().eventFilter(a0, a1)
+
+
+def _normalize_base_url(url: str) -> str:
+    u = (url or "").strip()
+    while u.endswith("/"):
+        u = u[:-1]
+    return u
+
+
+def _get_log_tail(log: str, max_lines: int = 220, max_chars: int = 9000) -> str:
+    lines = log.splitlines()
+    tail = "\n".join(lines[-max_lines:])
+    if len(tail) <= max_chars:
+        return tail
+    return tail[-max_chars:]
+
+
+def _try_parse_json_object(text: str) -> Optional[dict]:
+    try:
+        obj = json.loads(text)
+        return obj if isinstance(obj, dict) else None
+    except Exception:
+        pass
+
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        return None
+    try:
+        obj = json.loads(text[start : end + 1])
+        return obj if isinstance(obj, dict) else None
+    except Exception:
+        return None
+
+
+def _as_text(v) -> str:
+    if v is None:
+        return ""
+    if isinstance(v, str):
+        return v.strip()
+    if isinstance(v, (list, tuple)):
+        parts = []
+        for item in v:
+            s = _as_text(item)
+            if s:
+                parts.append(s)
+        return "\n".join(parts).strip()
+    if isinstance(v, dict):
+        try:
+            return json.dumps(v, ensure_ascii=False, separators=(",", ":")).strip()
+        except Exception:
+            return str(v).strip()
+    return str(v).strip()
+
+
+def _load_ai_analyze_api_keys() -> dict:
+    raw = (cfg.get(cfg.aiAnalyzeApiKeys) or "").strip()
+    if not raw:
+        return {}
+    try:
+        obj = json.loads(raw)
+        return obj if isinstance(obj, dict) else {}
+    except Exception:
+        return {}
+
+
+def _get_ai_analyze_api_key_for_model(model: str) -> str:
+    m = (model or "").strip()
+    if not m:
+        return ""
+    api_keys = _load_ai_analyze_api_keys()
+    api_key = (api_keys.get(m) or "").strip()
+    if api_key:
+        return api_key
+    legacy = (cfg.get(cfg.aiAnalyzeApiKey) or "").strip()
+    return legacy if legacy and not api_keys else ""
+
+
+class AILogAnalyzeThread(QThread):
+    resultSignal = pyqtSignal(bool, str)
+
+    def __init__(self, base_url: str, api_key: str, model: str, raw_log: str, parent=None):
+        super().__init__(parent)
+        self.base_url = _normalize_base_url(base_url)
+        self.api_key = api_key.strip()
+        self.model = model.strip()
+        self.raw_log = raw_log
+
+    def _load_prompt(self) -> str:
+        return get_ai_analyze_prompt()
+
+    def _upload_to_mclogs(self) -> dict:
+        s = MCSLNetworkSession()
+        headers = dict(s.MCSLNetworkHeaders)
+        r = s.post("https://api.mclo.gs/1/log", data={"content": self.raw_log}, headers=headers)
+        data = r.json()
+        if not data.get("success"):
+            raise RuntimeError(data.get("error") or "mclo.gs 请求失败")
+        return data
+
+    def _fetch_mclogs_insights(self, log_id: str) -> dict:
+        s = MCSLNetworkSession()
+        headers = dict(s.MCSLNetworkHeaders)
+        r = s.get(f"https://api.mclo.gs/1/insights/{log_id}", headers=headers)
+        if getattr(r, "status_code", 0) != 200:
+            raise RuntimeError(f"mclo.gs insights 请求失败：HTTP {getattr(r, 'status_code', 0)}")
+        data = r.json()
+        if not isinstance(data, dict):
+            raise RuntimeError("mclo.gs insights 返回格式异常")
+        if data.get("success") is False:
+            raise RuntimeError(data.get("error") or "mclo.gs insights 请求失败")
+        return data
+
+    def _format_mclogs_summary(self, mclogs_data: dict) -> str:
+        analysis = mclogs_data.get("analysis") or {}
+        problems = analysis.get("problems") or []
+        if not problems:
+            return "(无)"
+        lines = []
+        for p in problems[:15]:
+            msg = _as_text(p.get("message"))
+            counter = p.get("counter")
+            if not msg:
+                continue
+            if isinstance(counter, int) and counter > 1:
+                lines.append(f"- {msg} (x{counter})")
+            else:
+                lines.append(f"- {msg}")
+            solutions = p.get("solutions") or []
+            for s in solutions[:3]:
+                sm = _as_text(s.get("message"))
+                if sm:
+                    lines.append(f"  • {sm}")
+        return "\n".join(lines) if lines else "(无)"
+
+    def _call_ai(self, prompt: str, user_content: str) -> str:
+        from openai import OpenAI
+
+        client = OpenAI(api_key=self.api_key, base_url=self.base_url, timeout=60)
+        resp = client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": user_content},
+            ],
+            max_tokens=1200,
+            temperature=0.2,
+        )
+        if not getattr(resp, "choices", None):
+            raise RuntimeError("AI 返回空响应")
+        msg = resp.choices[0].message
+        content = getattr(msg, "content", None)
+        if not isinstance(content, str) or not content.strip():
+            raise RuntimeError("AI 返回内容为空")
+        return content.strip()
+
+    def run(self):
+        try:
+            prompt = self._load_prompt()
+            mclogs_data = self._upload_to_mclogs()
+            insights = {}
+            log_id = (mclogs_data.get("id") or "").strip()
+            if log_id:
+                try:
+                    insights = self._fetch_mclogs_insights(log_id)
+                except Exception:
+                    insights = {}
+
+            summary = self._format_mclogs_summary(insights)
+            tail = _get_log_tail(self.raw_log)
+            title = (insights.get("title") or "").strip() if isinstance(insights, dict) else ""
+            user_content = (
+                f"mclo.gs URL: {mclogs_data.get('url', '')}\n\n"
+                + (f"mclo.gs Title: {title}\n\n" if title else "")
+                + f"mclo.gs Insights:\n{summary}\n\n"
+                f"Log Tail:\n{tail}\n\n"
+                "Search Results:\n(无)\n"
+            )
+
+            ai_raw = self._call_ai(prompt, user_content)
+            obj = _try_parse_json_object(ai_raw)
+            if obj is None:
+                self.resultSignal.emit(True, ai_raw)
+                return
+
+            cause = _as_text(obj.get("cause"))
+            mod_name = _as_text(obj.get("mod_name"))
+            fix_solution = _as_text(obj.get("fix_solution"))
+            advice = _as_text(obj.get("advice"))
+
+            res_lines = []
+            if mclogs_data.get("url"):
+                res_lines.append(f"mclo.gs: {mclogs_data.get('url', '')}")
+                res_lines.append("")
+            if title or (summary and summary != "(无)"):
+                res_lines.append("mclo.gs 提炼：")
+                if title:
+                    res_lines.append(title)
+                if summary and summary != "(无)":
+                    res_lines.append(summary)
+                res_lines.append("")
+            res_lines.append("核心原因：")
+            res_lines.append(cause or "（空）")
+            res_lines.append("")
+            res_lines.append("致崩模组：")
+            res_lines.append(mod_name or "（未能确定）")
+            res_lines.append("")
+            res_lines.append("解决方案：")
+            res_lines.append(fix_solution or "（空）")
+            res_lines.append("")
+            res_lines.append("专家建议：")
+            res_lines.append(advice or "（空）")
+            self.resultSignal.emit(True, "\n".join(res_lines).strip())
+        except Exception:
+            self.resultSignal.emit(False, traceback.format_exc())
 
 
 class ServerWindowTitleBar(TitleBar):
@@ -268,7 +462,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self._isMicaEnabled = False
         super().__init__()
         self.isCalledByConfigEditor = isEditingConfig
-        self.errMsg = ""
         self.userCommandHistory = []
         self.upT = 0
         self.playersList = []
@@ -320,7 +513,14 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             del self.serverConfig
             del self.serverLauncher
             return super().closeEvent(a0)
-        if self.serverBridge.isServerRunning():
+        is_running = False
+        try:
+            if self.serverBridge is not None:
+                is_running = bool(self.serverBridge.isServerRunning())
+        except Exception:
+            is_running = False
+
+        if is_running:
             box = MessageBox(
                 self.tr("是否关闭此窗口？"),
                 self.tr("服务器正在运行，请在退出前先关闭服务器。"),
@@ -337,8 +537,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 a0.ignore()
                 return
 
-            self.serverBridge.serverProcess.process.finished.connect(self.close)
-            self.stopServer(forceNoErrorHandler=True)
+            if self.serverBridge is not None:
+                self.serverBridge.serverProcess.process.finished.connect(self.close)
+            self.stopServer()
             self.exitingMsgBox.show()
             self.quitTimer.start()
             try:
@@ -715,8 +916,9 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.killServer = TransparentPushButton(self.quickMenu)
         self.killServer.setMinimumSize(QSize(0, 30))
         self.quickMenuLayout.addWidget(self.killServer)
-        self.errorHandler = ToggleButton(self.quickMenu)
-        self.quickMenuLayout.addWidget(self.errorHandler)
+        self.errorAnalyze = TransparentPushButton(self.quickMenu)
+        self.errorAnalyze.setMinimumSize(QSize(0, 30))
+        self.quickMenuLayout.addWidget(self.errorAnalyze)
         self.commandPageLayout.addWidget(self.quickMenu, 0, 5, 1, 1)
         spacerItem2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.commandPageLayout.addItem(spacerItem2, 1, 5, 5, 1)
@@ -729,7 +931,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.saveServer.clicked.connect(lambda: self.sendCommand("save-all"))
         self.exitServer.clicked.connect(self.runQuickMenu_StopServer)
         self.killServer.clicked.connect(self.runQuickMenu_KillServer)
-        self.errorHandler.setChecked(False)
+        self.errorAnalyze.clicked.connect(self.runQuickMenu_OpenErrorAnalyze)
+        self.errorAnalyze.setEnabled(True)
 
     def initTexts(self):
         self.difficulty.addItems([
@@ -757,7 +960,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.saveServer.setText(self.tr("保存存档"))
         self.exitServer.setText(self.tr("关闭服务器"))
         self.killServer.setText(self.tr("强制关闭"))
-        self.errorHandler.setText(self.tr("报错分析"))
+        self.errorAnalyze.setText(self.tr("错误分析"))
         self.exportScheduleConfigBtn.setText(self.tr("导出"))
         self.addScheduleTaskBtn.setText(self.tr("添加计划任务"))
         self.importScheduleConfigBtn.setText(self.tr("导入"))
@@ -766,7 +969,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         self.resultTitle.setText(self.tr("分析结果："))
         self.copyResultBtn.setText(self.tr("复制"))
         self.switchAnalyzeProviderBtn.setText(self.tr("当前: 使用本地模块分析"))
-        self.switchAnalyzeProviderBtn.setOnText(self.tr("当前: 使用 CrashMC 分析"))
+        self.switchAnalyzeProviderBtn.setOnText(self.tr("当前: 使用 AI 分析"))
         self.switchAnalyzeProviderBtn.setOffText(self.tr("当前: 使用本地模块分析"))
         self.commandLineEdit.setPlaceholderText(
             self.tr("在此输入指令，回车或点击右边按钮发送，不需要加 /")
@@ -955,7 +1158,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.initSafelyQuitController()
             self.isCalledByConfigEditor = False
 
-    def stopServer(self, forceNoErrorHandler=False):
+    def stopServer(self):
         if self.serverBridge is not None:
             self.serverBridge.stopServer()
             self.killServer.setEnabled(True)
@@ -963,10 +1166,8 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.exitServer.setEnabled(True)
             self.unRegisterStartServerComponents()
             self.isServerLoaded = False
-            if self.errorHandler.isChecked() and not forceNoErrorHandler:
-                self.showErrorHandlerReport()
 
-    def haltServer(self, forceNoErrorHandler=True):
+    def haltServer(self):
         if self.serverBridge is not None:
             InfoBar.warning(
                 title=self.tr("警告"),
@@ -983,8 +1184,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.exitServer.setEnabled(True)
             self.unRegisterStartServerComponents()
             self.isServerLoaded = False
-            if self.errorHandler.isChecked() and not forceNoErrorHandler:
-                self.showErrorHandlerReport()
 
     def registerServerExitStatusHandler(self):
         self.serverBridge.serverClosed.connect(self.serverExitStatusHandler)
@@ -1113,7 +1312,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             self.serverRAMMonitorTitle.setText(f"RAM：{str(round(mem, 2))}MiB")
             self.serverRAMMonitorRing.setValue(0)
             return
-        
+
         if hasattr(self, 'serverConfig'):
             self.serverRAMMonitorTitle.setText(
                 f"RAM：{str(round(mem, 2))}MiB/{self.serverConfig.maxMem if self.serverConfig.memUnit == 'M' else self.serverConfig.maxMem * 1024}MiB"  # noqa: E501
@@ -1212,8 +1411,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             )
         else:
             pass
-        if self.errorHandler.isChecked():
-            self.errMsg += t if (t := ServerErrorHandler.detect(serverOutput)) not in self.errMsg else ""  # noqa: E501
         if (
             "logged in with entity id" in serverOutput
             or " left the game" in serverOutput
@@ -1254,17 +1451,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             else:
                 pass
             self.initQuickMenu_Difficulty()
-
-    def showErrorHandlerReport(self):
-        w = MessageBox(
-            self.tr("错误分析器日志"),
-            self.errMsg
-            if self.errMsg
-            else self.tr("本次没有检测到任何 MCSL2 内置错误分析可用解决方案。"),
-            self,
-        )
-        w.cancelButton.setParent(None)
-        w.exec_()
 
     def recordPlayers(self, serverOutput: str):
         if "logged in with entity id" in serverOutput:
@@ -1583,6 +1769,72 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         else:
             self.showServerNotOpenMsg()
 
+    def runQuickMenu_OpenErrorAnalyze(self):
+        self.errTextEdit.setPlainText(self.serverOutput.toPlainText())
+        self.serverSegmentedWidget.setCurrentItem("analyzePage")
+        self.stackedWidget.setCurrentWidget(self.analyzePage)
+
+    def _ensureAIAnalyzeConfig(self) -> bool:
+        try:
+            __import__("openai")
+        except Exception:
+            InfoBar.error(
+                title=self.tr("缺少依赖"),
+                content=self.tr("未安装 openai 库，无法使用 AI 分析。"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=4000,
+                parent=self,
+            )
+            return False
+
+        base_url = (cfg.get(cfg.aiAnalyzeBaseUrl) or "").strip()
+        model = (cfg.get(cfg.aiAnalyzeModel) or "").strip()
+        api_key = _get_ai_analyze_api_key_for_model(model)
+        if base_url and api_key and model:
+            return True
+        InfoBar.warning(
+            title=self.tr("未配置"),
+            content=self.tr("请前往「设置 -> AI 分析器」配置 API 后再使用 AI 分析。"),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=4000,
+            parent=self,
+        )
+        self.resultTextEdit.setPlainText(
+            self.tr("未配置 AI 分析 API，请前往设置页进行配置。")
+        )
+        return False
+
+    def _startAIAnalyze(self, log_text: str):
+        base_url = (cfg.get(cfg.aiAnalyzeBaseUrl) or "").strip()
+        model = (cfg.get(cfg.aiAnalyzeModel) or "").strip()
+        api_key = _get_ai_analyze_api_key_for_model(model)
+
+        self.startAnalyze.setEnabled(False)
+        self.resultTextEdit.setPlainText(
+            self.tr("正在提交日志到 mclo.gs 并请求 AI 分析，请稍候...")
+        )
+
+        self.aiAnalyzeThread = AILogAnalyzeThread(
+            base_url=base_url,
+            api_key=api_key,
+            model=model,
+            raw_log=log_text,
+            parent=self,
+        )
+        self.aiAnalyzeThread.resultSignal.connect(self._onAIAnalyzeFinished)
+        self.aiAnalyzeThread.start()
+
+    def _onAIAnalyzeFinished(self, ok: bool, text: str):
+        self.startAnalyze.setEnabled(True)
+        if ok:
+            self.resultTextEdit.setPlainText(text)
+            return
+        self.resultTextEdit.setPlainText(self.tr("AI 分析失败：\n") + text)
+
     def manualAnalyzeError(self):
         if self.errTextEdit.toPlainText() == "":
             return
@@ -1592,6 +1844,6 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
                 localHandleResult if localHandleResult else "未检测到本地分析模块可用解决方案。"
             )
         else:
-            self.resultTextEdit.setPlainText(
-                "我们仍在积极与 CrashMC 对接，目前方案不可用，请使用本地分析。"
-            )
+            if not self._ensureAIAnalyzeConfig():
+                return
+            self._startAIAnalyze(self.errTextEdit.toPlainText())
