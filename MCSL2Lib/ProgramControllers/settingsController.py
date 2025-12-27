@@ -34,6 +34,7 @@ class Config(QConfig):
 
     # Server
     autoRunLastServer = ConfigItem("Server", "autoRunLastServer", False, BoolValidator())
+    autoStartServers = ConfigItem("Server", "autoStartServers", "[]", "")
     acceptAllMojangEula = ConfigItem("Server", "acceptAllMojangEula", False, BoolValidator())
     sendStopInsteadOfKill = ConfigItem("Server", "sendStopInsteadOfKill", True, BoolValidator())
     restartServerWhenCrashed = ConfigItem(
@@ -124,9 +125,6 @@ class Config(QConfig):
     themeMode = OptionsConfigItem(
     "QFluentWidgets", "ThemeMode", Theme.AUTO, OptionsValidator(Theme), EnumSerializer(Theme))
     themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#19e8a2')
-    alwaysRunAsAdministrator = ConfigItem(
-        "Software", "alwaysRunAsAdministrator", False, BoolValidator()
-    )
     startOnStartup = ConfigItem("Software", "startOnStartup", False, BoolValidator())
     # Update
     checkUpdateOnStart = ConfigItem("Update", "checkUpdateOnStart", False, BoolValidator())

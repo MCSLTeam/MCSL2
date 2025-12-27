@@ -70,10 +70,7 @@ from MCSL2Lib.variables import (
     SettingsVariables,
 )
 
-try:
-    from MCSL2Lib.verification import VerifyFluentWindowBase
-except Exception:
-    from qfluentwidgets import FluentWindow as VerifyFluentWindowBase
+from qfluentwidgets import FluentWindow
 
 
 serverVariables = ServerVariables()
@@ -83,14 +80,13 @@ settingsVariables = SettingsVariables()
 
 
 @Singleton
-class Window(VerifyFluentWindowBase):  # type: ignore
+class Window(FluentWindow):  # type: ignore
     """程序主窗口"""
 
     deleteBtnEnabled = pyqtSignal(bool)
 
     def __init__(self):
         super().__init__()
-        self.previewFlag = False
         self.mySetTheme()
         self.initWindow()
         if system().lower() == "windows":
@@ -103,7 +99,7 @@ class Window(VerifyFluentWindowBase):  # type: ignore
                     cfg.set(cfg.startOnStartup, False)
                     qconfig.save()
         self.setWindowTitle(
-            f"MCServerLauncher {MCSL2VERSION}{self.tr(' 测试版 ') if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''} Final Version"  # noqa: E501
+            f"MCServerLauncher {MCSL2VERSION} Final Version"  # noqa: E501
         )
 
         self.oldHook = sys.excepthook
@@ -148,8 +144,6 @@ class Window(VerifyFluentWindowBase):  # type: ignore
         # for loader in loaders:
         #     loader.start()
         self.homeInterface.noticeThread.start()
-        # 多线程下载引擎无需初始化配置
-        # loaded.mainWindowInited = True
         # GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
         self.initNavigation()
@@ -157,34 +151,50 @@ class Window(VerifyFluentWindowBase):  # type: ignore
         self.initPluginSystem()
         if cfg.get(cfg.checkUpdateOnStart):
             self.settingsInterface.checkUpdate(parent=self)
-        # 多线程下载引擎无需启动过程
         self.splashScreen.finish()
+        # 自动启动服务器
+        if cfg.get(cfg.autoRunLastServer):
+            self.autoStartServers()
         self.update()
-        if self.previewFlag:
-            self.passSignal.connect(lambda: self.homeInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.configureInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.downloadInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.consoleCenterInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.pluginsInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.settingsInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.serverManagerInterface.setEnabled(True))
-            self.passSignal.connect(lambda: self.selectJavaPage.setEnabled(True))
-            self.passSignal.connect(lambda: self.selectNewJavaPage.setEnabled(True))
-            self.testVerifyBox.show()
-            self.navigationInterface.setEnabled(False)
-            self.stackedWidget.setEnabled(False)
-            self.homeInterface.setEnabled(False)
-            self.configureInterface.setEnabled(False)
-            self.downloadInterface.setEnabled(False)
-            self.consoleCenterInterface.setEnabled(False)
-            self.pluginsInterface.setEnabled(False)
-            self.settingsInterface.setEnabled(False)
-            self.serverManagerInterface.setEnabled(False)
-            self.selectJavaPage.setEnabled(False)
-            self.selectNewJavaPage.setEnabled(False)
-        else:
-            self.testNotPassFlag = False
-            pass
+
+    def autoStartServers(self):
+        """自动启动配置的服务器列表"""
+        self.serverManagerInterface.refreshServers()
+        try:
+            import json
+            from MCSL2Lib.utils import readGlobalServerConfig
+
+            # 读取需要自动启动的服务器列表
+            auto_start_list = json.loads(cfg.get(cfg.autoStartServers) or "[]")
+            if not auto_start_list:
+                return
+
+            # 读取全局服务器配置
+            global_config = readGlobalServerConfig()
+
+            # 为每个需要启动的服务器查找索引并触发开服按钮
+            for server_name in auto_start_list:
+                # 在全局配置中查找服务器索引
+                for index, server_cfg in enumerate(global_config):
+                    if server_cfg.get("name") == server_name:
+                        try:
+                            # 查找对应的开服按钮并点击
+                            btn_name = f"startServer!{index}"
+                            # 遍历 flowLayout 中的所有控件
+                            for i in range(self.serverManagerInterface.flowLayout.count()):
+                                widget = self.serverManagerInterface.flowLayout.itemAt(i).widget()
+                                if widget:
+                                    # 查找按钮
+                                    run_btn = widget.findChild(object, btn_name)
+                                    if run_btn:
+                                        run_btn.click()
+                                        MCSL2Logger.info(f"自动启动服务器: {server_name}")
+                                        break
+                        except Exception as e:
+                            MCSL2Logger.error(f"自动启动服务器 {server_name} 失败: {e}")
+                        break
+        except Exception as e:
+            MCSL2Logger.error(f"自动启动服务器 {server_name} 失败: {e}")
 
     def closeEvent(self, a0) -> None:
         if self.consoleCenterInterface.isAnyServerRunning():
