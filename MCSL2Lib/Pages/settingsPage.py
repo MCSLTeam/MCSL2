@@ -15,9 +15,11 @@ Settings page.
 """
 
 from datetime import datetime
+import json
 import platform
+from typing import Optional
 
-from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot, QThread
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -27,12 +29,14 @@ from PyQt5.QtWidgets import (
     QAbstractScrollArea,
     QVBoxLayout,
     QApplication,
+    QLineEdit,
 )
 from qfluentwidgets import (
     BodyLabel,
     SimpleCardWidget,
     HyperlinkButton,
     PrimaryPushButton,
+    PushButton,
     StrongBodyLabel,
     TitleLabel,
     setTheme,
@@ -44,14 +48,28 @@ from qfluentwidgets import (
     PrimaryPushSettingCard,
     RangeSettingCard,
     MessageBox,
+    MessageBoxBase,
+    SubtitleLabel,
     InfoBarPosition,
     InfoBar,
+    ComboBox,
+    EditableComboBox,
+    LineEdit,
+    PlainTextEdit,
     FluentIcon as FIF,
     setThemeColor,
+    qconfig,
 )
 
 from MCSL2Lib import MCSL2VERSION
+from MCSL2Lib.ProgramControllers.promptController import (
+    get_default_ai_analyze_prompt,
+    get_ai_analyze_prompt,
+    set_ai_analyze_prompt,
+)
 from MCSL2Lib.ProgramControllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.startupController import is_start_on_startup_enabled
+from MCSL2Lib.ProgramControllers.startupController import set_start_on_startup
 from MCSL2Lib.ProgramControllers.updateController import (
     CheckUpdateThread,
     MCSL2FileUpdater,
@@ -66,6 +84,434 @@ from MCSL2Lib.verification import generateUniqueCode
 
 settingsVariables = SettingsVariables()
 
+AI_ANALYZE_PROVIDERS = {
+    "OpenAI": "https://api.openai.com/v1",
+    "Claude": "https://api.anthropic.com/v1",
+    "Gemini": "https://generativelanguage.googleapis.com/v1beta/openai/",
+    "Qwen": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+    "GLM": "https://open.bigmodel.cn/api/paas/v4",
+    "DeepSeek": "https://api.deepseek.com/v1",
+    "硅基流动": "https://api.siliconflow.cn/v1",
+    "Kimi": "https://api.moonshot.cn/v1",
+    "自定义API": "",
+}
+
+AI_ANALYZE_PROVIDER_DOCS = {
+    "OpenAI": "https://platform.openai.com/api-keys",
+    "Claude": "https://platform.claude.com/docs/en/api/openai-sdk",
+    "Gemini": "https://aistudio.google.com/app/api-keys",
+    "Qwen": "https://bailian.console.aliyun.com/?spm=a2c4g.11186623.0.0.fd545e97tIJXk0&tab=model#/api-key",
+    "GLM": "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
+    "DeepSeek": "https://platform.deepseek.com/api_keys",
+    "硅基流动": "http://cloud.siliconflow.cn/me/account/ak",
+    "Kimi": "https://platform.moonshot.cn/console/account",
+    "自定义API": "",
+}
+
+AI_ANALYZE_PROVIDER_MODELS = {
+    "OpenAI": [
+        "gpt-5.2",
+        "gpt-5.1",
+        "gpt-5",
+        "gpt-4.1",
+        "gpt-4o",
+        "gpt-5-mini",
+        "gpt-4o-mini",
+    ],
+    "Claude": [
+        "claude-4.5-opus",
+        "claude-4.5-sonnet",
+        "claude-4.5-haiku",
+    ],
+    "Gemini": [
+        "gemini-3-pro-preview",
+        "gemini-3-flash-preview",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+    ],
+    "Qwen": [
+        "qwen3-max",
+        "qwen-plus",
+        "qwen-flash",
+        "qwen-turbo",
+    ],
+    "GLM": [
+        "glm-4.7",
+        "glm-4.6",
+        "glm-4.5-flash",
+    ],
+    "DeepSeek": [
+        "deepseek-chat",
+        "deepseek-reasoner",
+    ],
+    "硅基流动": [],
+    "Kimi": [
+        "kimi-k2-0905-preview",
+        "kimi-k2-turbo-preview",
+        "moonshot-v1-128k",
+    ],
+    "自定义API": [],
+}
+
+
+def _normalize_base_url(url: str) -> str:
+    u = (url or "").strip()
+    while u.endswith("/"):
+        u = u[:-1]
+    return u
+
+
+class AIConfigTestThread(QThread):
+    resultSignal = pyqtSignal(bool, str)
+
+    def __init__(self, base_url: str, api_key: str, model: str, parent=None):
+        super().__init__(parent)
+        self.base_url = _normalize_base_url(base_url)
+        self.api_key = api_key.strip()
+        self.model = model.strip()
+
+    def run(self):
+        try:
+            from openai import OpenAI
+
+            client = OpenAI(api_key=self.api_key, base_url=self.base_url, timeout=15)
+            resp = client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": "ping"}],
+                max_tokens=8,
+                temperature=0,
+            )
+            if not getattr(resp, "choices", None):
+                raise RuntimeError("服务端返回空响应")
+            self.resultSignal.emit(True, "")
+        except Exception as e:
+            self.resultSignal.emit(False, str(e))
+
+
+class AIAnalyzeSettingsBox(MessageBoxBase):
+    savedSignal = pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.titleLabel = SubtitleLabel(self.tr("AI 报错分析设置"), self)
+        self.viewLayout.addWidget(self.titleLabel)
+
+        self.formWidget = QWidget(self)
+        self.formLayout = QGridLayout(self.formWidget)
+        self.formLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.providerLabel = StrongBodyLabel(self.tr("服务商"), self.formWidget)
+        self.providerCombo = ComboBox(self.formWidget)
+        self.providerCombo.addItems(list(AI_ANALYZE_PROVIDERS.keys()))
+
+        self.baseUrlLabel = StrongBodyLabel(self.tr("API Base URL"), self.formWidget)
+        self.baseUrlEdit = LineEdit(self.formWidget)
+
+        self.modelLabel = StrongBodyLabel(self.tr("模型"), self.formWidget)
+        self.modelCombo = EditableComboBox(self.formWidget)
+
+        self.apiKeyLabel = StrongBodyLabel(self.tr("API Key"), self.formWidget)
+        self.apiKeyEdit = LineEdit(self.formWidget)
+        self.apiKeyEdit.setEchoMode(QLineEdit.Password)
+
+        self.docsLabel = StrongBodyLabel(self.tr("API 文档"), self.formWidget)
+        self.docsButton = HyperlinkButton(
+            "",
+            self.tr("打开"),
+            self.formWidget,
+            FIF.LINK,
+        )
+
+        self.statusLabel = StrongBodyLabel("", self.formWidget)
+
+        self.formLayout.addWidget(self.providerLabel, 0, 0, 1, 1)
+        self.formLayout.addWidget(self.providerCombo, 0, 1, 1, 1)
+        self.formLayout.addWidget(self.docsLabel, 1, 0, 1, 1)
+        self.formLayout.addWidget(self.docsButton, 1, 1, 1, 1)
+        self.formLayout.addWidget(self.baseUrlLabel, 2, 0, 1, 1)
+        self.formLayout.addWidget(self.baseUrlEdit, 2, 1, 1, 1)
+        self.formLayout.addWidget(self.modelLabel, 3, 0, 1, 1)
+        self.formLayout.addWidget(self.modelCombo, 3, 1, 1, 1)
+        self.formLayout.addWidget(self.apiKeyLabel, 4, 0, 1, 1)
+        self.formLayout.addWidget(self.apiKeyEdit, 4, 1, 1, 1)
+        self.formLayout.addWidget(self.statusLabel, 5, 0, 1, 2)
+
+        self.viewLayout.addWidget(self.formWidget)
+
+        self.yesButton.setText(self.tr("检测并保存"))
+        self.cancelButton.setText(self.tr("取消"))
+
+        self._api_keys_by_model = self._load_api_keys()
+        self._legacy_api_key = (cfg.get(cfg.aiAnalyzeApiKey) or "").strip()
+        self._last_model = ""
+
+        self.providerCombo.currentTextChanged.connect(self._on_provider_changed)
+        self.modelCombo.currentTextChanged.connect(self._on_model_changed)
+        try:
+            self.yesButton.clicked.disconnect()
+        except Exception:
+            pass
+        self.yesButton.clicked.connect(self._test_and_save)
+
+        self._load_from_config()
+        self._sync_provider()
+        self._sync_api_key_for_current_model(allow_legacy=True)
+
+        self.widget.setMinimumWidth(560)
+
+        self.testThread: Optional[AIConfigTestThread] = None
+
+    def _load_api_keys(self) -> dict:
+        raw = (cfg.get(cfg.aiAnalyzeApiKeys) or "").strip()
+        if not raw:
+            return {}
+        try:
+            obj = json.loads(raw)
+            return obj if isinstance(obj, dict) else {}
+        except Exception:
+            return {}
+
+    def _dump_api_keys(self, api_keys: dict) -> str:
+        try:
+            return json.dumps(api_keys, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+        except Exception:
+            return "{}"
+
+    def _stash_api_key_for_last_model(self):
+        model = (self._last_model or "").strip()
+        if not model:
+            return
+        api_key = self.apiKeyEdit.text().strip()
+        if api_key:
+            self._api_keys_by_model[model] = api_key
+            return
+        if model in self._api_keys_by_model:
+            self._api_keys_by_model.pop(model, None)
+
+    def _sync_api_key_for_current_model(self, allow_legacy: bool):
+        model = self.modelCombo.currentText().strip()
+        api_key = (self._api_keys_by_model.get(model) or "").strip()
+        if not api_key and allow_legacy:
+            saved_model = (cfg.get(cfg.aiAnalyzeModel) or "").strip()
+            if (
+                model
+                and model == saved_model
+                and self._legacy_api_key
+                and not self._api_keys_by_model
+            ):
+                api_key = self._legacy_api_key
+        self.apiKeyEdit.setText(api_key)
+        self._last_model = model
+
+    def _on_provider_changed(self, _text: str):
+        self._stash_api_key_for_last_model()
+        self._sync_provider()
+        self._sync_api_key_for_current_model(allow_legacy=False)
+
+    def _on_model_changed(self, _text: str):
+        self._stash_api_key_for_last_model()
+        self._sync_api_key_for_current_model(allow_legacy=False)
+
+    def _load_from_config(self):
+        provider = cfg.get(cfg.aiAnalyzeProvider)
+        base_url = cfg.get(cfg.aiAnalyzeBaseUrl)
+        model = cfg.get(cfg.aiAnalyzeModel)
+
+        idx = self.providerCombo.findText(provider)
+        if idx != -1:
+            self.providerCombo.setCurrentIndex(idx)
+        self.baseUrlEdit.setText(base_url or "")
+        self.modelCombo.setCurrentText(model or "")
+
+        self.baseUrlEdit.setPlaceholderText(self.tr("例如：https://api.openai.com/v1"))
+        self.modelCombo.setPlaceholderText(self.tr("选择或填写模型名"))
+        self.apiKeyEdit.setPlaceholderText(self.tr("填写您的 API 秘钥"))
+
+    def _sync_provider(self):
+        current_model = self.modelCombo.currentText().strip()
+        provider = self.providerCombo.currentText()
+        default_url = AI_ANALYZE_PROVIDERS.get(provider, "")
+        docs_url = AI_ANALYZE_PROVIDER_DOCS.get(provider, "")
+        models = AI_ANALYZE_PROVIDER_MODELS.get(provider, [])
+        if provider == "自定义API":
+            self.baseUrlEdit.setReadOnly(False)
+            if not self.baseUrlEdit.text().strip():
+                self.baseUrlEdit.setText(default_url)
+        else:
+            self.baseUrlEdit.setReadOnly(True)
+            self.baseUrlEdit.setText(default_url)
+        if docs_url:
+            self.docsButton.setEnabled(True)
+            self.docsButton.setText(self.tr("打开"))
+            self.docsButton.setUrl(docs_url)
+        else:
+            self.docsButton.setEnabled(False)
+            self.docsButton.setText(self.tr("无默认链接"))
+            self.docsButton.setUrl("")
+
+        try:
+            self.modelCombo.blockSignals(True)
+            self.modelCombo.clear()
+            if models:
+                self.modelCombo.addItems(models)
+            if current_model:
+                self.modelCombo.setCurrentText(current_model)
+            elif provider == "硅基流动":
+                self.modelCombo.setCurrentText("deepseek-ai/DeepSeek-V3")
+            elif provider == "Kimi" and models:
+                self.modelCombo.setCurrentText(models[0])
+        finally:
+            try:
+                self.modelCombo.blockSignals(False)
+            except Exception:
+                pass
+
+    def _test_and_save(self):
+        self._stash_api_key_for_last_model()
+        provider = self.providerCombo.currentText().strip()
+        base_url = _normalize_base_url(self.baseUrlEdit.text())
+        api_key = self.apiKeyEdit.text().strip()
+        model = self.modelCombo.currentText().strip()
+
+        if not base_url:
+            self.statusLabel.setText(self.tr("请填写 API Base URL"))
+            return
+        if not (base_url.startswith("http://") or base_url.startswith("https://")):
+            self.statusLabel.setText(self.tr("API Base URL 格式不正确"))
+            return
+        if not api_key:
+            self.statusLabel.setText(self.tr("请填写 API Key"))
+            return
+        if not model:
+            self.statusLabel.setText(self.tr("请填写模型名/ID"))
+            return
+
+        self.statusLabel.setText(self.tr("正在检测，请稍候..."))
+        self.yesButton.setEnabled(False)
+
+        self.testThread = AIConfigTestThread(
+            base_url=base_url,
+            api_key=api_key,
+            model=model,
+            parent=self,
+        )
+        api_keys = dict(self._api_keys_by_model)
+        if api_key:
+            api_keys[model] = api_key
+        else:
+            api_keys.pop(model, None)
+        api_keys_json = self._dump_api_keys(api_keys)
+
+        def _handle_result(ok: bool, err: str):
+            self._on_test_finished(ok, err, provider, base_url, model, api_keys_json)
+
+        self.testThread.resultSignal.connect(_handle_result)
+        self.testThread.start()
+
+    def _on_test_finished(
+        self, ok: bool, err: str, provider: str, base_url: str, model: str, api_keys_json: str
+    ):
+        self.yesButton.setEnabled(True)
+        if not ok:
+            self.statusLabel.setText(self.tr("检测失败：") + (err or ""))
+            return
+
+        cfg.set(cfg.aiAnalyzeProvider, provider)
+        cfg.set(cfg.aiAnalyzeBaseUrl, base_url)
+        cfg.set(cfg.aiAnalyzeModel, model)
+        cfg.set(cfg.aiAnalyzeApiKeys, api_keys_json)
+        cfg.set(cfg.aiAnalyzeApiKey, "")
+        qconfig.save()
+        self._api_keys_by_model = self._load_api_keys()
+        self._legacy_api_key = ""
+        self.statusLabel.setText(self.tr("检测成功，已保存"))
+        self.savedSignal.emit()
+        self.close()
+
+
+class AIPromptSettingsBox(MessageBoxBase):
+    savedSignal = pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.titleLabel = SubtitleLabel(self.tr("AI 提示词设置"), self)
+        self.viewLayout.addWidget(self.titleLabel)
+
+        self.tipTitleLabel = StrongBodyLabel(self.tr("规范提示"), self)
+        self.tipBodyLabel = BodyLabel(
+            self.tr(
+                "建议在提示词中明确：角色/目标、输入边界、输出格式、失败兜底。\n"
+                "如果你要求输出 JSON，请在提示词里强调：只输出 JSON 本体，不要 Markdown。"
+            ),
+            self,
+        )
+        self.tipBodyLabel.setWordWrap(True)
+        self.tipLink = HyperlinkButton(
+            "https://help.aliyun.com/zh/model-studio/prompt-engineering-guide",
+            self.tr("查看提示词工程指南"),
+            self,
+            FIF.LINK,
+        )
+
+        self.templateLabel = StrongBodyLabel(self.tr("模板"), self)
+        self.templateCombo = ComboBox(self)
+        self.templateCombo.addItems([self.tr("已保存提示词"), self.tr("默认提示词")])
+
+        self.viewLayout.addWidget(self.tipTitleLabel)
+        self.viewLayout.addWidget(self.tipBodyLabel)
+        self.viewLayout.addWidget(self.tipLink)
+        self.viewLayout.addSpacing(8)
+
+        self.viewLayout.addWidget(self.templateLabel)
+        self.viewLayout.addWidget(self.templateCombo)
+
+        self.promptEdit = PlainTextEdit(self)
+        self.promptEdit.setPlainText(get_ai_analyze_prompt())
+        self.promptEdit.setMinimumHeight(260)
+        self.viewLayout.addWidget(self.promptEdit)
+
+        self.restoreDefaultButton = PushButton(self.tr("恢复默认"), self)
+        self.buttonLayout.insertWidget(0, self.restoreDefaultButton)
+
+        self.yesButton.setText(self.tr("保存"))
+        self.cancelButton.setText(self.tr("取消"))
+        try:
+            self.yesButton.clicked.disconnect()
+        except Exception:
+            pass
+        self.yesButton.clicked.connect(self._save)
+        self.restoreDefaultButton.clicked.connect(self._restore_default)
+        self.templateCombo.currentIndexChanged.connect(self._on_template_changed)
+
+        self.widget.setMinimumWidth(680)
+        self._load_template_state()
+
+    def _load_template_state(self):
+        saved = (cfg.get(cfg.aiAnalyzePrompt) or "").strip()
+        if saved:
+            self.templateCombo.setCurrentIndex(0)
+            self.promptEdit.setPlainText(saved)
+        else:
+            self.templateCombo.setCurrentIndex(1)
+            self.promptEdit.setPlainText(get_default_ai_analyze_prompt())
+
+    def _on_template_changed(self, _index: int):
+        if self.templateCombo.currentIndex() == 0:
+            saved = (cfg.get(cfg.aiAnalyzePrompt) or "").strip()
+            self.promptEdit.setPlainText(saved or get_default_ai_analyze_prompt())
+        else:
+            self.promptEdit.setPlainText(get_default_ai_analyze_prompt())
+
+    def _restore_default(self):
+        self.templateCombo.setCurrentIndex(1)
+        self.promptEdit.setPlainText(get_default_ai_analyze_prompt())
+
+    def _save(self):
+        set_ai_analyze_prompt(self.promptEdit.toPlainText())
+        qconfig.save()
+        self.savedSignal.emit()
+        self.close()
+
 
 @Singleton
 class SettingsPage(QWidget):
@@ -76,6 +522,7 @@ class SettingsPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.tmpParent = self
+        self._handling_start_on_startup = False
         self.gridLayout_3 = QGridLayout(self)
         self.gridLayout_3.setObjectName("gridLayout_3")
 
@@ -308,6 +755,28 @@ class SettingsPage(QWidget):
         self.consoleSettingsGroup.addSettingCard(self.clearConsoleWhenStopServer)
         self.settingsLayout.addWidget(self.consoleSettingsGroup)
 
+        # AI Analyzer
+        self.aiAnalyzerSettingsGroup = SettingCardGroup(self.tr("AI 分析器"), self.settingsWidget)
+        self.aiAnalyzerApiSetting = PrimaryPushSettingCard(
+            icon=FIF.ROBOT,
+            text=self.tr("配置"),
+            title=self.tr("AI 报错分析 API"),
+            content=self.tr("配置服务商、Base URL、模型与 API Key。"),
+            parent=self.aiAnalyzerSettingsGroup,
+        )
+        self.aiAnalyzerPromptSetting = PrimaryPushSettingCard(
+            icon=FIF.CODE,
+            text=self.tr("编辑"),
+            title=self.tr("提示词"),
+            content=self.tr("自定义 AI 分析提示词。"),
+            parent=self.aiAnalyzerSettingsGroup,
+        )
+        self.aiAnalyzerApiSetting.clicked.connect(self.openAIAnalyzerSettings)
+        self.aiAnalyzerPromptSetting.clicked.connect(self.openAIAnalyzerPromptSettings)
+        self.aiAnalyzerSettingsGroup.addSettingCard(self.aiAnalyzerApiSetting)
+        self.aiAnalyzerSettingsGroup.addSettingCard(self.aiAnalyzerPromptSetting)
+        self.settingsLayout.addWidget(self.aiAnalyzerSettingsGroup)
+
         # Software
         self.programSettingsGroup = SettingCardGroup(self.tr("程序设置"), self.settingsWidget)
         self.themeMode = OptionsSettingCard(
@@ -330,17 +799,22 @@ class SettingsPage(QWidget):
             title=self.tr("总是以管理员身份运行"),
             content=self.tr("好像还做不到啊，我也不推荐。"),
             configItem=cfg.alwaysRunAsAdministrator,
-            parent=self.consoleSettingsGroup,
+            parent=self.programSettingsGroup,
         )
         self.startOnStartup = SwitchSettingCard(
             icon=FIF.POWER_BUTTON,
             title=self.tr("开机自启动"),
-            content=self.tr("好像还做不到啊。"),
+            content=self.tr("随系统启动自动打开 MCSL2。")
+            if platform.system().lower() == "windows"
+            else self.tr("当前系统暂不支持。"),
             configItem=cfg.startOnStartup,
-            parent=self.consoleSettingsGroup,
+            parent=self.programSettingsGroup,
         )
         self.alwaysRunAsAdministrator.setEnabled(False)
-        self.startOnStartup.setEnabled(False)
+        if platform.system().lower() == "windows":
+            self._bind_start_on_startup()
+        else:
+            self.startOnStartup.setEnabled(False)
         self.themeColor.colorChanged.connect(lambda cl: setThemeColor(color=cl, lazy=True))
         self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci), lazy=True))
         # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
@@ -538,6 +1012,110 @@ class SettingsPage(QWidget):
             duration=3000,
             parent=self,
         )
+
+    def _bind_start_on_startup(self):
+        actual = is_start_on_startup_enabled()
+        desired = bool(cfg.get(cfg.startOnStartup))
+        if actual != desired:
+            try:
+                set_start_on_startup(desired)
+            except Exception:
+                self._handling_start_on_startup = True
+                try:
+                    cfg.set(cfg.startOnStartup, actual)
+                    qconfig.save()
+                finally:
+                    self._handling_start_on_startup = False
+
+        signal = getattr(self.startOnStartup, "checkedChanged", None)
+        if signal is None:
+            inner = getattr(self.startOnStartup, "switchButton", None)
+            if inner is None:
+                inner = getattr(self.startOnStartup, "switch", None)
+            signal = getattr(inner, "checkedChanged", None) if inner is not None else None
+
+        if signal is not None:
+            try:
+                signal.connect(self._on_start_on_startup_changed)
+            except Exception:
+                pass
+
+    def _on_start_on_startup_changed(self, checked: bool):
+        if self._handling_start_on_startup:
+            return
+
+        self._handling_start_on_startup = True
+        try:
+            set_start_on_startup(bool(checked))
+            cfg.set(cfg.startOnStartup, bool(checked))
+            qconfig.save()
+            InfoBar.success(
+                title=self.tr("已保存"),
+                content=self.tr("开机自启动已开启") if checked else self.tr("开机自启动已关闭"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2000,
+                parent=self,
+            )
+        except Exception as e:
+            cfg.set(cfg.startOnStartup, not bool(checked))
+            qconfig.save()
+            InfoBar.error(
+                title=self.tr("设置失败"),
+                content=str(e),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=4000,
+                parent=self,
+            )
+        finally:
+            self._handling_start_on_startup = False
+
+    def openAIAnalyzerSettings(self):
+        try:
+            __import__("openai")
+        except Exception:
+            InfoBar.error(
+                title=self.tr("缺少依赖"),
+                content=self.tr("未安装 openai 库，无法使用 AI 分析。"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=4000,
+                parent=self,
+            )
+            return
+
+        box = AIAnalyzeSettingsBox(self)
+        box.savedSignal.connect(
+            lambda: InfoBar.success(
+                title=self.tr("成功"),
+                content=self.tr("AI 配置已保存"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2000,
+                parent=self,
+            )
+        )
+        box.exec()
+
+    def openAIAnalyzerPromptSettings(self):
+        box = AIPromptSettingsBox(self)
+        box.savedSignal.connect(
+            lambda: InfoBar.success(
+                title=self.tr("成功"),
+                content=self.tr("提示词已保存"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2000,
+                parent=self,
+            )
+        )
+        box.exec()
 
     def showNeedRestartMsg(self):
         InfoBar.success(
