@@ -1043,6 +1043,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
 
         self.setTitleBar(ServerWindowTitleBar(self))
         cfg.themeChanged.connect(self.titleBar.setQss)
+        cfg.themeChanged.connect(self._onThemeChangedFinished)
         self.setWindowTitle(
             self.tr("MCSL2 服务器 - {serverName}").format(serverName=self.serverConfig.serverName)
         )
