@@ -38,10 +38,13 @@ from qfluentwidgets import (
     Dialog,
     SplashScreen,
     isDarkTheme,
+    qconfig,
 )
 from Adapters.Plugin import PluginManager
 from MCSL2Lib import DEV_VERSION, MCSL2VERSION
 from MCSL2Lib.ProgramControllers.settingsController import cfg
+from MCSL2Lib.ProgramControllers.startupController import is_start_on_startup_enabled
+from MCSL2Lib.ProgramControllers.startupController import set_start_on_startup
 from MCSL2Lib.Pages.configurePage import ConfigurePage
 from MCSL2Lib.Pages.consoleCenterPage import ConsoleCenterPage
 from MCSL2Lib.Pages.downloadPage import DownloadPage
@@ -90,6 +93,15 @@ class Window(VerifyFluentWindowBase):  # type: ignore
         self.previewFlag = False
         self.mySetTheme()
         self.initWindow()
+        if system().lower() == "windows":
+            desired = bool(cfg.get(cfg.startOnStartup))
+            actual = is_start_on_startup_enabled()
+            if desired != actual:
+                try:
+                    set_start_on_startup(desired)
+                except Exception:
+                    cfg.set(cfg.startOnStartup, False)
+                    qconfig.save()
         self.setWindowTitle(
             f"MCServerLauncher {MCSL2VERSION}{self.tr(' 测试版 ') if self.previewFlag else ''}{DEV_VERSION if self.previewFlag else ''} Final Version"  # noqa: E501
         )
