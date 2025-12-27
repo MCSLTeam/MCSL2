@@ -1184,6 +1184,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
             .replace("Saved the game", self.tr("已保存游戏存档"))
             .replace("[33m[", "[")
             .replace("[", "[")
+            .replace("搂2", "")
         )
         if "Disabling terminal, you're running in an unsupported environment." in serverOutput:
             return

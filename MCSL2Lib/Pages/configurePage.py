@@ -19,10 +19,9 @@ from os import getcwd, mkdir, remove, path as osp
 import platform
 from shutil import copy, rmtree
 
-from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
+from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, QThread, pyqtSignal
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import (
-    QApplication,
     QGridLayout,
     QWidget,
     QVBoxLayout,
@@ -85,6 +84,157 @@ from MCSL2Lib.variables import (
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
 serverVariables = ServerVariables()
+
+
+class BedrockServerSaveThread(QThread):
+    """执行基岩版服务器保存的后台线程"""
+
+    success = pyqtSignal(str)
+    failed = pyqtSignal(str)
+
+    def __init__(
+        self,
+        server_config: dict,
+        core_path: str,
+        core_file_name: str,
+        extra_data: dict,
+        only_save_global: bool,
+        exit0_msg: str,
+        exit1_msg: str,
+        exists_error_msg: str,
+        parent=None,
+    ):
+        super().__init__(parent)
+        self.server_config = server_config
+        self.core_path = core_path
+        self.core_file_name = core_file_name
+        self.extra_data = extra_data or {}
+        self.only_save_global = only_save_global
+        self.exit0_msg = exit0_msg
+        self.exit1_msg = exit1_msg
+        self.exists_error_msg = exists_error_msg
+
+    def run(self):
+        server_name = self.server_config["name"]
+
+        try:
+            mkdir(f"Servers//{server_name}")
+        except FileExistsError:
+            self.failed.emit(self.exists_error_msg)
+            return
+        except Exception as e:
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        try:
+            global_server_list = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+            global_server_list["MCSLServerList"].append(self.server_config)
+            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(global_server_list, indent=4))
+        except Exception as e:
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        try:
+            if not self.only_save_global:
+                writeFile(
+                    f"Servers//{server_name}//MCSL2ServerConfig.json",
+                    dumps(self.server_config, indent=4),
+                )
+        except Exception as e:
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        try:
+            if self.extra_data.get("extracted_from_zip") and self.extra_data.get("temp_dir"):
+                from shutil import copytree, rmtree
+                import os
+
+                temp_dir = self.extra_data["temp_dir"]
+                target_dir = f"./Servers/{server_name}"
+
+                for item in os.listdir(temp_dir):
+                    src_path = os.path.join(temp_dir, item)
+                    dst_path = os.path.join(target_dir, item)
+                    if os.path.isdir(src_path):
+                        copytree(src_path, dst_path, dirs_exist_ok=True)
+                    else:
+                        copy(src_path, dst_path)
+
+                rmtree(temp_dir, ignore_errors=True)
+            else:
+                copy(self.core_path, f"./Servers/{server_name}/{self.core_file_name}")
+        except Exception as e:
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        self.success.emit(self.exit0_msg)
+
+
+class BedrockCoreImportThread(QThread):
+    """解析/解压基岩版核心的后台线程"""
+
+    success = pyqtSignal(dict)
+    failed = pyqtSignal(str)
+
+    def __init__(self, file_path: str, system: str, parent=None):
+        super().__init__(parent)
+        self.file_path = file_path
+        self.system = system
+
+    def run(self):
+        try:
+            path = self.file_path
+            if path.lower().endswith('.zip'):
+                from zipfile import ZipFile
+                from tempfile import mkdtemp
+                from shutil import rmtree
+                import os
+                import stat
+
+                temp_dir = mkdtemp(prefix="mcsl2_bedrock_")
+                with ZipFile(path, 'r') as zip_ref:
+                    zip_ref.extractall(temp_dir)
+
+                bedrock_exe = None
+                if self.system == "windows":
+                    bedrock_exe = osp.join(temp_dir, "bedrock_server.exe")
+                else:
+                    bedrock_exe = osp.join(temp_dir, "bedrock_server")
+
+                if not osp.exists(bedrock_exe):
+                    for root, _, files in os.walk(temp_dir):
+                        for file in files:
+                            if file == "bedrock_server.exe" or file == "bedrock_server":
+                                bedrock_exe = osp.join(root, file)
+                                break
+                        if bedrock_exe and osp.exists(bedrock_exe):
+                            break
+
+                if not osp.exists(bedrock_exe):
+                    rmtree(temp_dir, ignore_errors=True)
+                    self.failed.emit("压缩包中未找到bedrock_server可执行文件！")
+                    return
+
+                if self.system != "windows":
+                    os.chmod(bedrock_exe, os.stat(bedrock_exe).st_mode | stat.S_IEXEC)
+
+                self.success.emit({
+                    "core_path": temp_dir,
+                    "core_file_name": osp.basename(bedrock_exe),
+                    "extra_data": {
+                        "edition": "bedrock",
+                        "extracted_from_zip": True,
+                        "temp_dir": temp_dir
+                    }
+                })
+            else:
+                self.success.emit({
+                    "core_path": path,
+                    "core_file_name": osp.basename(path),
+                    "extra_data": {"edition": "bedrock"}
+                })
+        except Exception as e:
+            self.failed.emit(str(e))
 
 
 class ServerTypeHeaderCardWidget(HeaderCardWidget):
@@ -1728,20 +1878,13 @@ class ConfigurePage(QWidget):
             )
 
     def addBedrockCoreManually(self):
-        """手动添加基岩版服务器核心"""
-        from zipfile import ZipFile
-        from tempfile import mkdtemp
-        from shutil import rmtree
-        import stat
-        import os
-
-        # 根据操作系统决定文件过滤器
+        """手动添加基岩版服务器核心 (子线程执行重操作)"""
         system = platform.system().lower()
         if system == "windows":
             file_filter = self.tr(
                 "基岩版服务器 (*.zip *.exe);;压缩包 (*.zip);;可执行文件 (*.exe);;所有文件 (*)"
             )
-        else:  # macOS/Linux
+        else:
             file_filter = self.tr(
                 "基岩版服务器 (*.zip *);;压缩包 (*.zip);;所有文件 (*)"
             )
@@ -1767,94 +1910,48 @@ class ConfigurePage(QWidget):
             )
             return
 
-        # 判断是否为压缩包
-        if tmpPath.lower().endswith('.zip'):
-            try:
-                # 创建临时目录解压
-                temp_dir = mkdtemp(prefix="mcsl2_bedrock_")
+        self.addingBedrockCoreStateToolTip = StateToolTip(
+            self.tr("解析基岩版核心"), self.tr("请稍后，正在处理..."), self
+        )
+        self.addingBedrockCoreStateToolTip.move(self.addingBedrockCoreStateToolTip.getSuitablePos())
+        self.addingBedrockCoreStateToolTip.show()
 
-                # 解压文件
-                with ZipFile(tmpPath, 'r') as zip_ref:
-                    zip_ref.extractall(temp_dir)
+        self.bedrockManuallyAddCorePrimaryPushBtn.setEnabled(False)
 
-                # 查找bedrock_server可执行文件
-                bedrock_exe = None
-                if system == "windows":
-                    bedrock_exe = osp.join(temp_dir, "bedrock_server.exe")
-                else:
-                    bedrock_exe = osp.join(temp_dir, "bedrock_server")
+        self.bedrockCoreImportThread = BedrockCoreImportThread(tmpPath, system, self)
+        self.bedrockCoreImportThread.success.connect(self._onBedrockCoreImportSuccess)
+        self.bedrockCoreImportThread.failed.connect(self._onBedrockCoreImportFailed)
+        self.bedrockCoreImportThread.finished.connect(self._cleanupBedrockCoreImportThread)
+        self.bedrockCoreImportThread.start()
 
-                if not osp.exists(bedrock_exe):
-                    # 尝试在子目录中查找
-                    for root, dirs, files in os.walk(temp_dir):
-                        for file in files:
-                            if file == "bedrock_server.exe" or file == "bedrock_server":
-                                bedrock_exe = osp.join(root, file)
-                                break
-                        if bedrock_exe and osp.exists(bedrock_exe):
-                            break
+    @pyqtSlot(dict)
+    def _onBedrockCoreImportSuccess(self, result: dict):
+        configureServerVariables.corePath = result.get("core_path", "")
+        configureServerVariables.coreFileName = result.get("core_file_name", "")
+        configureServerVariables.serverType = "bedrock"
+        configureServerVariables.extraData = result.get("extra_data", {"edition": "bedrock"})
 
-                if not osp.exists(bedrock_exe):
-                    rmtree(temp_dir)
-                    InfoBar.error(
-                        title=self.tr("解压失败"),
-                        content=self.tr("压缩包中未找到bedrock_server可执行文件！"),
-                        orient=Qt.Horizontal,
-                        isClosable=True,
-                        position=InfoBarPosition.TOP,
-                        duration=3000,
-                        parent=self,
-                    )
-                    return
+        if getattr(self, "addingBedrockCoreStateToolTip", None):
+            self.addingBedrockCoreStateToolTip.setContent(self.tr("已添加基岩版服务器核心"))
+            self.addingBedrockCoreStateToolTip.setState(True)
+            self.addingBedrockCoreStateToolTip = None
 
-                # Unix系统需要添加执行权限
-                if system != "windows":
-                    os.chmod(bedrock_exe, os.stat(bedrock_exe).st_mode | stat.S_IEXEC)
-
-                # 设置路径(保留解压的完整目录)
-                configureServerVariables.corePath = temp_dir
-                configureServerVariables.coreFileName = osp.basename(bedrock_exe)
-                configureServerVariables.serverType = "bedrock"
-                configureServerVariables.extraData = {
-                    "edition": "bedrock",
-                    "extracted_from_zip": True,
-                    "temp_dir": temp_dir
-                }
-
-                InfoBar.success(
-                    title=self.tr("已添加基岩版服务器核心"),
-                    content=(
-                        self.tr("已从压缩包解压\n")
-                        + self.tr("核心文件: ")
-                        + configureServerVariables.coreFileName
-                        + self.tr("\n类型: 基岩版")
-                    ),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self,
-                )
-
-            except Exception as e:
-                if 'temp_dir' in locals():
-                    rmtree(temp_dir, ignore_errors=True)
-                InfoBar.error(
-                    title=self.tr("解压失败"),
-                    content=self.tr("无法解压压缩包: ") + str(e),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self,
-                )
+        if configureServerVariables.extraData.get("extracted_from_zip"):
+            InfoBar.success(
+                title=self.tr("已添加基岩版服务器核心"),
+                content=(
+                    self.tr("已从压缩包解压\n")
+                    + self.tr("核心文件: ")
+                    + configureServerVariables.coreFileName
+                    + self.tr("\n类型: 基岩版")
+                ),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
         else:
-            # 直接选择的可执行文件
-            configureServerVariables.corePath = tmpPath
-            configureServerVariables.coreFileName = tmpPath.split("/")[-1]
-            configureServerVariables.serverType = "bedrock"
-            configureServerVariables.extraData = {"edition": "bedrock"}
-
             InfoBar.success(
                 title=self.tr("已添加基岩版服务器核心"),
                 content=(
@@ -1868,6 +1965,27 @@ class ConfigurePage(QWidget):
                 duration=3000,
                 parent=self,
             )
+
+    @pyqtSlot(str)
+    def _onBedrockCoreImportFailed(self, err: str):
+        if getattr(self, "addingBedrockCoreStateToolTip", None):
+            self.addingBedrockCoreStateToolTip.setContent(self.tr("处理失败！"))
+            self.addingBedrockCoreStateToolTip.setState(False)
+            self.addingBedrockCoreStateToolTip = None
+
+        InfoBar.error(
+            title=self.tr("解压失败"),
+            content=self.tr("无法处理核心文件: ") + str(err),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _cleanupBedrockCoreImportThread(self):
+        self.bedrockManuallyAddCorePrimaryPushBtn.setEnabled(True)
+        self.bedrockCoreImportThread = None
 
     def showDownloadEntries(self):
         """显示下载条目"""
@@ -2101,6 +2219,8 @@ class ConfigurePage(QWidget):
             )
             return
 
+        configureServerVariables.serverName = serverName
+
         # 设置编码
         configureServerVariables.consoleOutputDeEncoding = (
             configureServerVariables.consoleDeEncodingList[
@@ -2265,8 +2385,148 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
+    def _clearNewServerInputs(self):
+        if not cfg.get(cfg.clearAllNewServerConfigInProgram):
+            return
+
+        configureServerVariables.resetToDefault()
+        if self.newServerStackedWidget.currentIndex() == 1:
+            self.noobJavaInfoLabel.setText(self.tr("[选择的 Java 信息]"))
+            self.noobMinMemLineEdit.setText("")
+            self.noobMaxMemLineEdit.setText("")
+            self.noobServerNameLineEdit.setText("")
+        elif self.newServerStackedWidget.currentIndex() == 2:
+            self.extendedJavaInfoLabel.setText(self.tr("[选择的 Java 信息]"))
+            self.extendedMinMemLineEdit.setText("")
+            self.extendedMaxMemLineEdit.setText("")
+            self.extendedServerNameLineEdit.setText("")
+            self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
+            self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
+            self.JVMArgPlainTextEdit.setPlainText("")
+
+        InfoBar.info(
+            title=self.tr("功能提醒"),
+            content=self.tr(
+                "「新建服务器后立刻清空相关设置项」已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。"
+            ),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _onSaveSuccess(self, exit0Msg: str):
+        self.postNewServerDispatcher(exit0Msg=exit0Msg)
+        self._clearNewServerInputs()
+
+    def _saveBedrockServerAsync(self):
+        exit0Msg = self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
+        exit1Msg = self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
+        exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
+
+        if osp.exists(f"Servers//{configureServerVariables.serverName}"):
+            InfoBar.error(
+                title=self.tr("失败"),
+                content=exists_error_msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        extra_data = dict(configureServerVariables.extraData) if configureServerVariables.extraData else {}
+
+        serverConfig = {
+            "name": configureServerVariables.serverName,
+            "core_file_name": configureServerVariables.coreFileName,
+            "java_path": configureServerVariables.selectedJavaPath,
+            "min_memory": configureServerVariables.minMem,
+            "max_memory": configureServerVariables.maxMem,
+            "memory_unit": configureServerVariables.memUnit,
+            "jvm_arg": list(configureServerVariables.jvmArg),
+            "output_decoding": configureServerVariables.consoleOutputDeEncoding,
+            "input_encoding": configureServerVariables.consoleInputDeEncoding,
+            "icon": "Grass.png",
+            "server_type": configureServerVariables.serverType,
+            "extra_data": extra_data,
+        }
+
+        self.creatingBedrockStateToolTip = StateToolTip(
+            self.tr("创建基岩版服务器"), self.tr("请稍后，正在创建..."), self
+        )
+        self.creatingBedrockStateToolTip.move(self.creatingBedrockStateToolTip.getSuitablePos())
+        self.creatingBedrockStateToolTip.show()
+
+        self.bedrockSaveServerPrimaryPushBtn.setEnabled(False)
+
+        self.bedrockSaveThread = BedrockServerSaveThread(
+            server_config=serverConfig,
+            core_path=configureServerVariables.corePath,
+            core_file_name=configureServerVariables.coreFileName,
+            extra_data=extra_data,
+            only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
+            exit0_msg=exit0Msg,
+            exit1_msg=exit1Msg,
+            exists_error_msg=exists_error_msg,
+            parent=self,
+        )
+        self.bedrockSaveThread.success.connect(self._onBedrockSaveSuccess)
+        self.bedrockSaveThread.failed.connect(self._onBedrockSaveFailed)
+        self.bedrockSaveThread.finished.connect(self._cleanupBedrockSaveThread)
+        self.bedrockSaveThread.start()
+
+    @pyqtSlot(str)
+    def _onBedrockSaveSuccess(self, exit0Msg: str):
+        if getattr(self, "creatingBedrockStateToolTip", None):
+            self.creatingBedrockStateToolTip.setContent(self.tr("创建成功！"))
+            self.creatingBedrockStateToolTip.setState(True)
+            self.creatingBedrockStateToolTip = None
+
+        if cfg.get(cfg.onlySaveGlobalServerConfig):
+            InfoBar.info(
+                title=self.tr("功能提醒"),
+                content=self.tr(
+                    "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                ),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+        self._onSaveSuccess(exit0Msg)
+
+    @pyqtSlot(str)
+    def _onBedrockSaveFailed(self, exit1Msg: str):
+        if getattr(self, "creatingBedrockStateToolTip", None):
+            self.creatingBedrockStateToolTip.setContent(self.tr("创建失败！"))
+            self.creatingBedrockStateToolTip.setState(False)
+            self.creatingBedrockStateToolTip = None
+
+        InfoBar.error(
+            title=self.tr("失败"),
+            content=exit1Msg,
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _cleanupBedrockSaveThread(self):
+        self.bedrockSaveServerPrimaryPushBtn.setEnabled(True)
+        self.bedrockSaveThread = None
+
     def saveNewServer(self):
         """真正的保存服务器函数"""
+        if configureServerVariables.serverType == "bedrock":
+            self._saveBedrockServerAsync()
+            return
+
         exit0Msg = (
             self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
         )
@@ -2408,37 +2668,7 @@ class ConfigurePage(QWidget):
             serverVariables.serverName = tmpServerName
 
         if exitCode == 0:
-            self.postNewServerDispatcher(
-                exit0Msg=exit0Msg
-            )  # 后处理各种应serverType不同而引起的差异性，如serverType==forge时，需要执行自动安装等
-
-            if cfg.get(cfg.clearAllNewServerConfigInProgram):
-                configureServerVariables.resetToDefault()
-                if self.newServerStackedWidget.currentIndex() == 1:
-                    self.noobJavaInfoLabel.setText(self.tr("[选择的 Java 信息]"))
-                    self.noobMinMemLineEdit.setText("")
-                    self.noobMaxMemLineEdit.setText("")
-                    self.noobServerNameLineEdit.setText("")
-                elif self.newServerStackedWidget.currentIndex() == 2:
-                    self.extendedJavaInfoLabel.setText(self.tr("[选择的 Java 信息]"))
-                    self.extendedMinMemLineEdit.setText("")
-                    self.extendedMaxMemLineEdit.setText("")
-                    self.extendedServerNameLineEdit.setText("")
-                    self.extendedOutputDeEncodingComboBox.setCurrentIndex(0)
-                    self.extendedInputDeEncodingComboBox.setCurrentIndex(0)
-                    self.JVMArgPlainTextEdit.setPlainText("")
-                InfoBar.info(
-                    title=self.tr("功能提醒"),
-                    content=self.tr(
-                        "「新建服务器后立刻清空相关设置项」已被开启。\n这是一个强迫症功能。如果需要关闭，请转到设置页。"
-                    ),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self,
-                )
-
+            self._onSaveSuccess(exit0Msg)
         else:
             InfoBar.error(
                 title=self.tr("失败"),

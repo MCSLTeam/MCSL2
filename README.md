@@ -52,7 +52,7 @@ uv run python -m lndl_nuitka .
 uv run python -m lndl_nuitka . -y
 又或者通过 `-- --xxx` 添加 / 修改参数
 uv run python -m lndl_nuitka . -- --disable-console
-
+```
 ## 相关链接
 
 MCSL 2 官网: <https://mcsl.com.cn>  

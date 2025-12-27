@@ -52,7 +52,7 @@ Or
 uv run python -m lndl_nuitka . -y
 Alternatively, add/modify parameters with `-- --xxx`
 uv run python -m lndl_nuitka . -- --disable-console
-
+```
 ## Relevant Links
 
 MCSL 2 Official Website：<https://mcsl.com.cn>  

@@ -46,7 +46,6 @@ from qfluentwidgets import (
     BodyLabel,
     HyperlinkButton,
     LineEdit,
-    PrimaryPushButton
 )
 
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
