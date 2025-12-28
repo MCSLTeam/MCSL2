@@ -37,6 +37,7 @@ from qfluentwidgets import (
     HyperlinkButton,
     PrimaryPushButton,
     PushButton,
+    TransparentToolButton,
     StrongBodyLabel,
     TitleLabel,
     setTheme,
@@ -64,7 +65,7 @@ from qfluentwidgets import (
 from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.ProgramControllers.promptController import (
     get_default_ai_analyze_prompt,
-    get_ai_analyze_prompt,
+    get_ai_analyze_user_prompt,
     set_ai_analyze_prompt,
 )
 from MCSL2Lib.ProgramControllers.settingsController import cfg
@@ -441,7 +442,8 @@ class AIPromptSettingsBox(MessageBoxBase):
         self.tipBodyLabel = BodyLabel(
             self.tr(
                 "建议在提示词中明确：角色/目标、输入边界、输出格式、失败兜底。\n"
-                "如果你要求输出 JSON，请在提示词里强调：只输出 JSON 本体，不要 Markdown。"
+                "AI 分析器输出会被强制为纯文本（不允许 Markdown/JSON）。\n"
+                "请不要在提示词中要求输出 Markdown/JSON。"
             ),
             self,
         )
@@ -466,7 +468,7 @@ class AIPromptSettingsBox(MessageBoxBase):
         self.viewLayout.addWidget(self.templateCombo)
 
         self.promptEdit = PlainTextEdit(self)
-        self.promptEdit.setPlainText(get_ai_analyze_prompt())
+        self.promptEdit.setPlainText(get_ai_analyze_user_prompt())
         self.promptEdit.setMinimumHeight(260)
         self.viewLayout.addWidget(self.promptEdit)
 
@@ -487,8 +489,8 @@ class AIPromptSettingsBox(MessageBoxBase):
         self._load_template_state()
 
     def _load_template_state(self):
-        saved = (cfg.get(cfg.aiAnalyzePrompt) or "").strip()
-        if saved:
+        saved = get_ai_analyze_user_prompt().strip()
+        if saved and saved != get_default_ai_analyze_prompt().strip():
             self.templateCombo.setCurrentIndex(0)
             self.promptEdit.setPlainText(saved)
         else:
@@ -497,8 +499,10 @@ class AIPromptSettingsBox(MessageBoxBase):
 
     def _on_template_changed(self, _index: int):
         if self.templateCombo.currentIndex() == 0:
-            saved = (cfg.get(cfg.aiAnalyzePrompt) or "").strip()
-            self.promptEdit.setPlainText(saved or get_default_ai_analyze_prompt())
+            saved = get_ai_analyze_user_prompt().strip()
+            self.promptEdit.setPlainText(
+                saved if saved and saved != get_default_ai_analyze_prompt().strip() else ""
+            )
         else:
             self.promptEdit.setPlainText(get_default_ai_analyze_prompt())
 
@@ -853,6 +857,21 @@ class SettingsPage(QWidget):
             content=self.tr("配置服务商、Base URL、模型与 API Key。"),
             parent=self.aiAnalyzerSettingsGroup,
         )
+        self.aiAnalyzerApiInfoButton = TransparentToolButton(
+            getattr(FIF, "WARNING", FIF.INFO), self.aiAnalyzerApiSetting
+        )
+        self.aiAnalyzerApiInfoButton.setFixedSize(QSize(32, 32))
+        self.aiAnalyzerApiInfoButton.setToolTip(self.tr("说明"))
+        self.aiAnalyzerApiInfoButton.clicked.connect(self.showAiApiInfo)
+        if hasattr(self.aiAnalyzerApiSetting, "hBoxLayout"):
+            layout = self.aiAnalyzerApiSetting.hBoxLayout
+            idx = -1
+            if hasattr(self.aiAnalyzerApiSetting, "button"):
+                idx = layout.indexOf(self.aiAnalyzerApiSetting.button)
+            insert_idx = idx if idx >= 0 else max(layout.count() - 1, 0)
+            layout.insertWidget(insert_idx, self.aiAnalyzerApiInfoButton)
+        else:
+            self.aiAnalyzerApiSetting.layout().addWidget(self.aiAnalyzerApiInfoButton)
         self.aiAnalyzerPromptSetting = PrimaryPushSettingCard(
             icon=FIF.CODE,
             text=self.tr("编辑"),
@@ -1195,6 +1214,14 @@ class SettingsPage(QWidget):
             )
         )
         box.exec()
+
+    def showAiApiInfo(self):
+        info_text = (
+            "目前AI需要有用户自行提供API秘钥，建议使用DeepSeek-Chat（DeepSeek V3.2）模型价格便宜，生成质量特别好。"
+            "目前能够完美适配的Kimi，DeepSeek，其他模型返回均有一定的结构问题"
+        )
+        w = MessageBox(self.tr("AI 分析器提示"), info_text, parent=self)
+        w.exec()
 
     def showAutoStartServersDialog(self):
         """显示自动启动服务器配置对话框"""

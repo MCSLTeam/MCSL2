@@ -171,6 +171,202 @@ def _as_text(v) -> str:
     return str(v).strip()
 
 
+def _obj_get(obj, key: str, default=None):
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def _extract_ai_text_part(content) -> str:
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, dict):
+        for k in ("text", "content", "output_text", "value"):
+            v = content.get(k)
+            if isinstance(v, str) and v.strip():
+                return v.strip()
+        return _as_text(content)
+    if isinstance(content, (list, tuple)):
+        parts = []
+        for item in content:
+            if item is None:
+                continue
+            if isinstance(item, str):
+                s = item.strip()
+                if s:
+                    parts.append(s)
+                continue
+            if isinstance(item, dict):
+                t = item.get("text")
+                if isinstance(t, str) and t.strip():
+                    parts.append(t.strip())
+                    continue
+                if item.get("type") in ("text", "output_text") and isinstance(item.get("text"), str):
+                    s = item.get("text").strip()
+                    if s:
+                        parts.append(s)
+                        continue
+            s = _as_text(item)
+            if s:
+                parts.append(s)
+        return "\n".join(parts).strip()
+    return _as_text(content)
+
+
+def _extract_chat_message_text(msg) -> str:
+    if msg is None:
+        return ""
+    content = _obj_get(msg, "content", None)
+    text = _extract_ai_text_part(content)
+    if text:
+        return text
+    for k in ("text", "output_text", "reasoning_content", "thinking"):
+        v = _obj_get(msg, k, None)
+        text = _extract_ai_text_part(v)
+        if text:
+            return text
+    return ""
+
+
+def _safe_json_dumps(obj, max_chars: int = 8000) -> str:
+    try:
+        s = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+    except Exception:
+        try:
+            s = json.dumps(str(obj), ensure_ascii=False, separators=(",", ":"))
+        except Exception:
+            s = str(obj)
+    s = s if isinstance(s, str) else str(s)
+    if len(s) <= max_chars:
+        return s
+    return s[: max_chars - 20] + "...(truncated)"
+
+
+def _safe_model_dump(obj):
+    if obj is None:
+        return None
+    if isinstance(obj, (str, int, float, bool, list, tuple, dict)):
+        return obj
+    try:
+        md = getattr(obj, "model_dump", None)
+        if callable(md):
+            return md()
+    except Exception:
+        pass
+    try:
+        d = getattr(obj, "dict", None)
+        if callable(d):
+            return d()
+    except Exception:
+        pass
+    return str(obj)
+
+
+def _extract_tool_calls(msg):
+    tool_calls = _obj_get(msg, "tool_calls", None) or []
+    out = []
+    if not isinstance(tool_calls, (list, tuple)):
+        tool_calls = [tool_calls]
+    for tc in tool_calls:
+        fn = _obj_get(tc, "function", None)
+        out.append(
+            {
+                "id": _as_text(_obj_get(tc, "id", "")),
+                "type": _as_text(_obj_get(tc, "type", "")),
+                "name": _as_text(_obj_get(fn, "name", "")),
+                "arguments": _as_text(_obj_get(fn, "arguments", "")),
+            }
+        )
+    return [x for x in out if _as_text(x.get("name") or x.get("type") or x.get("id"))]
+
+
+def _strip_code_fences(text: str) -> str:
+    t = (text or "").replace("\r\n", "\n").replace("\r", "\n")
+    lines = t.split("\n")
+    if not lines:
+        return t.strip()
+    if lines[0].strip().startswith("```") and lines[-1].strip() == "```":
+        return "\n".join(lines[1:-1]).strip()
+    return t.strip()
+
+
+def _normalize_ai_plain_text(text: str) -> str:
+    t = _strip_code_fences(text)
+    if not t:
+        return ""
+    t = t.replace("\u00a0", " ")
+    t = t.replace("**", "")
+    t = t.replace("__", "")
+    t = t.replace("`", "")
+    t = t.replace("###", "")
+    t = t.replace("##", "")
+    t = t.replace("#", "")
+    while "\n\n\n" in t:
+        t = t.replace("\n\n\n", "\n\n")
+    return t.strip()
+
+
+def _coerce_ai_output_to_text(ai_raw: str) -> str:
+    raw = (ai_raw or "").strip()
+    if not raw:
+        return ""
+    obj = _try_parse_json_object(raw)
+    if obj is not None:
+        cause = _as_text(obj.get("cause"))
+        mod_name = _as_text(obj.get("mod_name"))
+        fix_solution = _as_text(obj.get("fix_solution"))
+        advice = _as_text(obj.get("advice"))
+        lines = []
+        if cause:
+            lines.append("核心原因：")
+            lines.append(cause)
+            lines.append("")
+        if mod_name:
+            lines.append("可能相关的模组/插件：")
+            lines.append(mod_name)
+            lines.append("")
+        if fix_solution:
+            lines.append("解决方案：")
+            lines.append(fix_solution)
+            lines.append("")
+        if advice:
+            lines.append("进一步建议：")
+            lines.append(advice)
+        return _normalize_ai_plain_text("\n".join(lines).strip())
+    return _normalize_ai_plain_text(raw)
+
+
+def _build_ai_diag_text(
+    model: str,
+    base_url: str,
+    title: str,
+    finish_reason: str,
+    tool_calls,
+    raw_resp,
+    hint: str,
+) -> str:
+    lines = []
+    lines.append((hint or "AI 未返回可显示内容").strip())
+    lines.append("")
+    lines.append("诊断信息：")
+    lines.append(f"model: {(model or '').strip()}")
+    lines.append(f"base_url: {(base_url or '').strip()}")
+    if finish_reason:
+        lines.append(f"finish_reason: {(finish_reason or '').strip()}")
+    if title:
+        lines.append(f"title: {(title or '').strip()}")
+    if tool_calls:
+        lines.append(f"tool_calls: {_safe_json_dumps(tool_calls, max_chars=3000)}")
+    raw_dump = _safe_model_dump(raw_resp)
+    if raw_dump is not None and raw_dump != "":
+        lines.append(f"raw_response: {_safe_json_dumps(raw_dump, max_chars=6000)}")
+    return _normalize_ai_plain_text("\n".join(lines).strip())
+
+
 def _load_ai_analyze_api_keys() -> dict:
     raw = (cfg.get(cfg.aiAnalyzeApiKeys) or "").strip()
     if not raw:
@@ -255,27 +451,103 @@ class AILogAnalyzeThread(QThread):
         from openai import OpenAI
 
         client = OpenAI(api_key=self.api_key, base_url=self.base_url, timeout=60)
-        resp = client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": user_content},
-            ],
-            max_tokens=1200,
-            temperature=0.2,
+
+        def _request(messages):
+            return client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                max_tokens=1200,
+                temperature=0.2,
+            )
+
+        resp = None
+        resp2 = None
+        try:
+            resp = _request(
+                [
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": user_content},
+                ]
+            )
+        except Exception as e:
+            return _build_ai_diag_text(
+                self.model,
+                self.base_url,
+                "",
+                "",
+                [],
+                {"error": str(e), "traceback": traceback.format_exc()},
+                "AI 请求异常",
+            )
+
+        choices = _obj_get(resp, "choices", None) or []
+        if not choices:
+            return _build_ai_diag_text(
+                self.model,
+                self.base_url,
+                "",
+                "",
+                [],
+                resp,
+                "AI 返回空响应（choices 为空）",
+            )
+        msg = _obj_get(choices[0], "message", None)
+        text = _extract_chat_message_text(msg)
+        if text:
+            return text
+        tool_calls = _extract_tool_calls(msg)
+
+        try:
+            resp2 = _request(
+                [
+                    {
+                        "role": "user",
+                        "content": (prompt or "").strip() + "\n\n" + (user_content or "").strip(),
+                    }
+                ]
+            )
+        except Exception as e:
+            finish_reason = _obj_get(choices[0], "finish_reason", "") if choices else ""
+            return _build_ai_diag_text(
+                self.model,
+                self.base_url,
+                "",
+                finish_reason,
+                tool_calls,
+                {"error": str(e), "traceback": traceback.format_exc(), "resp": _safe_model_dump(resp)},
+                "AI 二次请求异常",
+            )
+
+        choices2 = _obj_get(resp2, "choices", None) or []
+        msg2 = _obj_get(choices2[0], "message", None) if choices2 else None
+        text2 = _extract_chat_message_text(msg2)
+        if text2:
+            return text2
+        tool_calls2 = _extract_tool_calls(msg2)
+
+        finish_reason = _obj_get(choices[0], "finish_reason", "") if choices else ""
+        finish_reason2 = _obj_get(choices2[0], "finish_reason", "") if choices2 else ""
+        reason = (finish_reason2 or finish_reason or "unknown").strip()
+        return _build_ai_diag_text(
+            self.model,
+            self.base_url,
+            "",
+            reason,
+            tool_calls2 or tool_calls,
+            {"resp1": _safe_model_dump(resp), "resp2": _safe_model_dump(resp2)},
+            "AI 返回空内容",
         )
-        if not getattr(resp, "choices", None):
-            raise RuntimeError("AI 返回空响应")
-        msg = resp.choices[0].message
-        content = getattr(msg, "content", None)
-        if not isinstance(content, str) or not content.strip():
-            raise RuntimeError("AI 返回内容为空")
-        return content.strip()
 
     def run(self):
         try:
             prompt = self._load_prompt()
-            mclogs_data = self._upload_to_mclogs()
+            mclogs_data = {}
+            mclogs_err = ""
+            try:
+                mclogs_data = self._upload_to_mclogs()
+            except Exception:
+                mclogs_err = traceback.format_exc()
+                mclogs_data = {"url": "", "id": "", "success": False}
             insights = {}
             log_id = (mclogs_data.get("id") or "").strip()
             if log_id:
@@ -288,23 +560,17 @@ class AILogAnalyzeThread(QThread):
             tail = _get_log_tail(self.raw_log)
             title = (insights.get("title") or "").strip() if isinstance(insights, dict) else ""
             user_content = (
+                "注意：你无法访问互联网，mclo.gs URL 仅作引用；请只基于下面提供的 Insights 与 Log Tail 进行分析。\n\n"
                 f"mclo.gs URL: {mclogs_data.get('url', '')}\n\n"
                 + (f"mclo.gs Title: {title}\n\n" if title else "")
                 + f"mclo.gs Insights:\n{summary}\n\n"
-                f"Log Tail:\n{tail}\n\n"
-                "Search Results:\n(无)\n"
+                + (f"mclo.gs Upload Error:\n{mclogs_err}\n\n" if mclogs_err else "")
+                + f"Log Tail:\n{tail}\n\n"
+                + "Search Results:\n(无)\n"
             )
 
             ai_raw = self._call_ai(prompt, user_content)
-            obj = _try_parse_json_object(ai_raw)
-            if obj is None:
-                self.resultSignal.emit(True, ai_raw)
-                return
-
-            cause = _as_text(obj.get("cause"))
-            mod_name = _as_text(obj.get("mod_name"))
-            fix_solution = _as_text(obj.get("fix_solution"))
-            advice = _as_text(obj.get("advice"))
+            ai_text = _coerce_ai_output_to_text(ai_raw)
 
             res_lines = []
             if mclogs_data.get("url"):
@@ -317,17 +583,8 @@ class AILogAnalyzeThread(QThread):
                 if summary and summary != "(无)":
                     res_lines.append(summary)
                 res_lines.append("")
-            res_lines.append("核心原因：")
-            res_lines.append(cause or "（空）")
-            res_lines.append("")
-            res_lines.append("致崩模组：")
-            res_lines.append(mod_name or "（未能确定）")
-            res_lines.append("")
-            res_lines.append("解决方案：")
-            res_lines.append(fix_solution or "（空）")
-            res_lines.append("")
-            res_lines.append("专家建议：")
-            res_lines.append(advice or "（空）")
+            res_lines.append("AI 分析：")
+            res_lines.append(ai_text or "（空）")
             self.resultSignal.emit(True, "\n".join(res_lines).strip())
         except Exception:
             self.resultSignal.emit(False, traceback.format_exc())
