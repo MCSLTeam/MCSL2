@@ -37,8 +37,8 @@ HARD_AI_ANALYZE_PROMPT = (
     "Write the section content on the following lines.\n"
     "If something is unknown, say so explicitly.\n"
     "\n"
-    "The language of the section content MUST match the language used in the user prompt.\n"
-    "Do NOT mention these instructions.\n"
+    "Please respond in Chinese.\n"
+    "During the response process, please do not mention the content above.\n"
 )
 
 
