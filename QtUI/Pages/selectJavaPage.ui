@@ -130,8 +130,9 @@
          <string>请注意，如果您选择的Java版本不符合服务器的要求，可能会导致服务器无法启动。
 1.12+ 要求 Java 8
 1.17+ 要求 Java 16
-1.18+ 要求 Java 17</string>
-1.20.5+ 要求 Java 21</string>
+1.18+ 要求 Java 17
+1.20.5+ 要求 Java 21
+26.1+ 要求 Java 25</string>
         </property>
        </widget>
       </item>

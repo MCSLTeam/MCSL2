@@ -32,8 +32,6 @@ from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
     setTheme,
-    InfoBar,
-    InfoBarPosition,
     MessageBox,
     Dialog,
     SplashScreen,
@@ -41,7 +39,7 @@ from qfluentwidgets import (
     qconfig,
 )
 from Adapters.Plugin import PluginManager
-from MCSL2Lib import DEV_VERSION, MCSL2VERSION
+from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.startupController import is_start_on_startup_enabled
 from MCSL2Lib.ProgramControllers.startupController import set_start_on_startup
@@ -325,28 +323,16 @@ class Window(FluentWindow):  # type: ignore
 
         # 新建服务器
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLSync
-        )
-        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
-        )
-        self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
         )
         self.configureInterface.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
-        )
-        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLSync
-        )
-        self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
+            self.downloadInterface.enterJavaDownloadMode
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
         )
         self.configureInterface.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
+            self.downloadInterface.enterJavaDownloadMode
         )
         self.configureInterface.noobDownloadCorePrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
@@ -393,24 +379,10 @@ class Window(FluentWindow):  # type: ignore
 
         # 管理服务器
         self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(1)
-        )
-        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            self.downloadInterface.getMCSLSync
-        )
-        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: InfoBar.info(
-                title=self.tr("切换到 MCSL-Sync"),
-                content=self.tr("因为 FastMirror 没有 Java 啊 ("),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-        )
-        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
             lambda: self.switchTo(self.downloadInterface)
+        )
+        self.serverManagerInterface.editDownloadJavaPrimaryPushBtn.clicked.connect(
+            self.downloadInterface.enterJavaDownloadMode
         )
         self.serverManagerInterface.editJavaListPushBtn.clicked.connect(
             lambda: self.switchTo(self.selectNewJavaPage)
@@ -425,6 +397,11 @@ class Window(FluentWindow):  # type: ignore
             lambda: self.downloadInterface.downloadStackedWidget.setCurrentIndex(
                 settingsVariables.get_download_source_index()
             )
+        )
+        
+        # 下载页面的返回信号
+        self.downloadInterface.returnToConfigure.connect(
+            lambda: self.switchTo(self.configureInterface)
         )
         self.selectNewJavaPage.backBtn.clicked.connect(
             lambda: self.switchTo(self.serverManagerInterface)

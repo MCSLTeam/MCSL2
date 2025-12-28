@@ -1574,28 +1574,6 @@ class ConfigurePage(QWidget):
         self.noobBackToGuidePushButton.clicked.connect(
             lambda: self.newServerStackedWidget.setCurrentIndex(0)
         )
-        self.noobDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: InfoBar.info(
-                title=self.tr("Java下载"),
-                content=self.tr("请使用其他下载源下载Java"),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self.parent(),
-            )
-        )
-        self.extendedDownloadJavaPrimaryPushBtn.clicked.connect(
-            lambda: InfoBar.info(
-                title=self.tr("Java下载"),
-                content=self.tr("请使用其他下载源下载Java"),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-        )
         self.noobManuallyAddJavaPrimaryPushBtn.clicked.connect(self.addJavaManually)
         self.noobAutoDetectJavaPrimaryPushBtn.clicked.connect(self.autoDetectJava)
         self.noobManuallyAddCorePrimaryPushBtn.clicked.connect(self.addCoreManually)
