@@ -253,7 +253,7 @@ class ServerInstall(Action):
                     None if library.getDownloads() is None else library.getDownloads().getArtifact()
                 )
                 if _download is not None and _download.url != "":
-                    bad.append(lib)
+                    bad.append(library)
 
         session = requests.Session()
         loop = asyncio.get_event_loop()

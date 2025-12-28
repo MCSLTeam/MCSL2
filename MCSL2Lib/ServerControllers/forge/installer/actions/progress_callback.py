@@ -21,7 +21,8 @@ class ProgressCallback(metaclass=abc.ABCMeta):
         self.message(message)
 
     @abc.abstractmethod
-    def message(self, message: str): ...
+    def message(self, message: str):
+        ...
 
     def progress(self, progress: float, total: float):
         try:
@@ -39,12 +40,13 @@ class ProgressCallback(metaclass=abc.ABCMeta):
                 self.lastProgress = percent
 
     def downloadProgress(
-        self, filename: str, progress: float, total: float, speed: float, done: bool
+            self, filename: str, progress: float, total: float, speed: float, done: bool
     ):
         self.progress(progress, total)
         if self.infoQueue is None:
             return
-        self.onDownloadProgress(filename, speed, int(round(progress / total * 100)), done, False)
+        if total:
+            self.onDownloadProgress(filename, speed, int(round(progress / total * 100)), done, False)
 
     def setInfoQueue(self, queue_: queue):
         self.hasInfoQueue = True

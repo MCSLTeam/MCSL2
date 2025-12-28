@@ -2671,10 +2671,11 @@ class ConfigurePage(QWidget):
             writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
 
     def afterInstallerDownloadDone(self):
-        self.installerDownloadView.hide()
-        self.installerDownloadView.close()
-        self.installerDownloadView.deleteLater()
-        self.installerDownloadView = None
+        if self.installerDownloadView is not None:
+            self.installerDownloadView.hide()
+            self.installerDownloadView.close()
+            self.installerDownloadView.deleteLater()
+            self.installerDownloadView = None
 
         self.installerLogViewer.show()
 
