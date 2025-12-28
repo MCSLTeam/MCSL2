@@ -3,34 +3,38 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/stat.h>
 
 int main(int argc, char *argv[]) {
     char exePath[PATH_MAX];
-    if (realpath(argv[0], exePath) == NULL) {
-        return 1;
-    }
+    realpath(argv[0], exePath);
     char *exeDir = dirname(exePath);
+
     chdir(exeDir);
+
     setenv("PATH", "/usr/bin:/bin:/usr/sbin:/sbin", 1);
     setenv(
+        "PYTHONHOME",
+        "../Resources/Python/Versions/3.8",
+        1
+    );
+    setenv(
         "PYTHONPATH",
-        "Python3.framework/Versions/3.8/lib/python3.8/site-packages",
+        "../Resources/Python/Versions/3.8/lib/python3.8/site-packages",
+        1
+    );
+    setenv(
+        "QT_PLUGIN_PATH",
+        "../Resources/Python/Versions/3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins",
         1
     );
 
-    setenv(
-        "QT_PLUGIN_PATH",
-        "Python3.framework/Versions/3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins",
-        1
-    );
-    chmod("Python3.framework/Versions/3.8/bin/python3", 0755);
     execl(
-        "Python3.framework/Versions/3.8/bin/python3",
+        "../Resources/Python/Versions/3.8/bin/python3",
         "python3",
-        "MCSL2Contents/MCSL2.py",
+        "../MacOS/MCSL2Contents/MCSL2.py",
         NULL
     );
+
     perror("execl failed");
     return 1;
 }
