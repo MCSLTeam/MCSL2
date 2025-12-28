@@ -61,11 +61,12 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
     Action,
+    FluentTitleBar
 )
 from qfluentwidgets.components.widgets.frameless_window import FramelessWindow
 from qfluentwidgets.common.animation import BackgroundAnimationWidget
 from PyQt5.QtGui import QIcon, QColor, QPainter, QTextCharFormat, QBrush
-from qframelesswindow import TitleBar
+# from qframelesswindow import TitleBar
 from MCSL2Lib.Pages.configEditorPage import ConfigEditorPage
 from MCSL2Lib.Pages.schedulerPage import SchedulerPage
 from MCSL2Lib.ProgramControllers.interfaceController import EraseStackedWidget, MySmoothScrollArea
@@ -83,6 +84,7 @@ from MCSL2Lib.ServerControllers.serverUtils import (
 )
 from os import path as osp
 import sys
+from platform import system
 from re import search
 from MCSL2Lib.Widgets.playersControllerMainWidget import playersController
 from MCSL2Lib.utils import MCSL2Logger, openLocalFile, writeFile
@@ -331,10 +333,11 @@ class AILogAnalyzeThread(QThread):
             self.resultSignal.emit(False, traceback.format_exc())
 
 
-class ServerWindowTitleBar(TitleBar):
+class ServerWindowTitleBar(FluentTitleBar):
     def __init__(self, parent):
         super().__init__(parent)
         self.setFixedHeight(40)
+        self.macOSLeftColumn = None  # 保存macOS左侧列控件
         self.hBoxLayout.removeWidget(self.minBtn)
         self.hBoxLayout.removeWidget(self.maxBtn)
         self.hBoxLayout.removeWidget(self.closeBtn)
@@ -366,7 +369,37 @@ class ServerWindowTitleBar(TitleBar):
         self.vBoxLayout.addLayout(self.buttonLayout)
         self.vBoxLayout.addStretch(1)
         self.hBoxLayout.addLayout(self.vBoxLayout, 0)
+        self.fixMacOSTitleBar()
         self.setQss()
+        
+        # 在window上安装事件过滤器以捕获全屏状态变化
+        self.window().installEventFilter(self)
+
+    def fixMacOSTitleBar(self):
+        """在macOS上为titleBar添加占位符"""
+        if system().lower() != "darwin":
+            return
+
+        leftColumn = QWidget(self)
+        leftColumn.setFixedWidth(58)
+        leftColumn.setStyleSheet("background-color: transparent;")
+        self.hBoxLayout.insertWidget(0, leftColumn, 0)
+        self.macOSLeftColumn = leftColumn
+
+    def eventFilter(self, obj: QObject, event: QEvent) -> bool:
+        """监听窗口的事件"""
+        if obj is self.window() and event.type() == QEvent.WindowStateChange:
+            # 检查是否在 macOS 上
+            if system().lower() == "darwin":
+                if self.window().isFullScreen():
+                    # 全屏时隐藏占位符
+                    if self.macOSLeftColumn:
+                        self.macOSLeftColumn.hide()
+                else:
+                    # 退出全屏时显示占位符
+                    if self.macOSLeftColumn:
+                        self.macOSLeftColumn.show()
+        return super().eventFilter(obj, event)
 
     def setQss(self):
         if isDarkTheme():
@@ -978,6 +1011,10 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         )
         self.startAnalyze.clicked.connect(self.manualAnalyzeError)
 
+    def systemTitleBarRect(self, size: QSize) -> QRect:
+        """重写 macOS 三大件到左上角"""
+        return QRect(0, 0 if self.isFullScreen() else 9, 75, size.height())
+
     def initNavigation(self):
         self.serverSegmentedWidget.addItem(
             routeKey="overviewPage",
@@ -1015,6 +1052,12 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         """初始化窗口"""
 
         self.setTitleBar(ServerWindowTitleBar(self))
+        if sys.platform == "darwin":
+            self.setSystemTitleBarButtonVisible(True)
+            self.titleBar.maxBtn.setVisible(False)
+            self.titleBar.minBtn.setVisible(False)
+            self.titleBar.closeBtn.setVisible(False)
+            self.titleBar.setFixedHeight(48)
         cfg.themeChanged.connect(self.titleBar.setQss)
         cfg.themeChanged.connect(self._onThemeChangedFinished)
         self.setWindowTitle(

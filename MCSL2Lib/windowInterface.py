@@ -21,13 +21,14 @@ from traceback import format_exception
 from types import TracebackType
 from typing import Type
 from PyQt5.QtCore import (
-    Qt,
+    QRect,
     pyqtSignal,
     QThreadPool,
     QSize,
+    QEvent,
 )
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
 from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
@@ -86,6 +87,8 @@ class Window(FluentWindow):  # type: ignore
     def __init__(self):
         super().__init__()
         self.mySetTheme()
+        self.macOSLeftColumn = None  # 保存macOS左侧列控件
+        self.macOSTopRow = None  # 保存macOS顶部行控件
         self.initWindow()
         if system().lower() == "windows":
             desired = bool(cfg.get(cfg.startOnStartup))
@@ -154,6 +157,10 @@ class Window(FluentWindow):  # type: ignore
         if cfg.get(cfg.autoRunLastServer):
             self.autoStartServers()
         self.update()
+
+    def systemTitleBarRect(self, size: QSize) -> QRect:
+        """重写 macOS 三大件到左上角"""
+        return QRect(0, 0 if self.isFullScreen() else 9, 75, size.height())
 
     def autoStartServers(self):
         """自动启动配置的服务器列表"""
@@ -308,6 +315,40 @@ class Window(FluentWindow):  # type: ignore
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
+        self.fixMacOSTitleBar()
+
+    def fixMacOSTitleBar(self):
+        """修复 macOS 标题栏布局"""
+        leftColumn = QWidget()
+        leftColumn.setFixedWidth(35)
+        leftColumn.setStyleSheet("background-color: transparent;")
+        self.titleBar.hBoxLayout.insertWidget(0, leftColumn, 0)
+        self.macOSLeftColumn = leftColumn  # 保存引用
+
+        topRow = QWidget()
+        topRow.setFixedHeight(38)
+        topRow.setStyleSheet("background-color: transparent;")
+        self.navigationInterface.panel.vBoxLayout.insertWidget(0, topRow, 0)
+        self.macOSTopRow = topRow  # 保存引用
+
+    def changeEvent(self, event: QEvent):
+        """监听窗口状态变化"""
+        super().changeEvent(event)
+        if event.type() == QEvent.WindowStateChange:
+            # 检查是否在 macOS 上
+            if system().lower() == "darwin":
+                if self.isFullScreen():
+                    # 全屏时隐藏控件
+                    if self.macOSLeftColumn:
+                        self.macOSLeftColumn.hide()
+                    if self.macOSTopRow:
+                        self.macOSTopRow.hide()
+                else:
+                    # 退出全屏时显示控件
+                    if self.macOSLeftColumn:
+                        self.macOSLeftColumn.show()
+                    if self.macOSTopRow:
+                        self.macOSTopRow.show()
 
     def mySetTheme(self):
         if "windows" in system().lower():
