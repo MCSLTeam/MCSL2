@@ -3,6 +3,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/stat.h>
 
 int main(int argc, char *argv[]) {
     char exePath[PATH_MAX];
@@ -23,6 +24,7 @@ int main(int argc, char *argv[]) {
         "Python3.framework/Versions/3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins",
         1
     );
+    chmod("Python3.framework/Versions/3.8/bin/python3", 0755);
     execl(
         "Python3.framework/Versions/3.8/bin/python3",
         "python3",
