@@ -51,7 +51,7 @@ class ForgeInstallThread(threading.Thread):
             if self.monitor.cancelled:
                 self.finished.emit(False, "用户取消")
             else:
-                self.finished.emit(True, "")
+                self.finished.emit(True, "安装成功")
         except Exception as e:
             traceback.print_exc()
             self.finished.emit(False, str(e))
