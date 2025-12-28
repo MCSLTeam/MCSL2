@@ -15,7 +15,7 @@ The main window of MCSL2.
 """
 
 import sys
-from platform import system
+from platform import platform, system
 from platform import version as systemVersion
 from traceback import format_exception
 from types import TracebackType
@@ -319,6 +319,9 @@ class Window(FluentWindow):  # type: ignore
 
     def fixMacOSTitleBar(self):
         """修复 macOS 标题栏布局"""
+        if system().lower() != "darwin":
+            return
+
         leftColumn = QWidget()
         leftColumn.setFixedWidth(35)
         leftColumn.setStyleSheet("background-color: transparent;")
