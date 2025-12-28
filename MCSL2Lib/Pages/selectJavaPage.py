@@ -102,7 +102,7 @@ class SelectJavaPage(QWidget):
         )
         self.selectJavaTip.setText(
             self.tr(
-                "请注意，如果您选择的 Java 版本不符合服务器的要求，可能会导致服务器无法启动。\n1.12+ 要求 Java 8\n1.17+ 要求 Java 16\n1.18+ 要求 Java 17\n1.20.5+ 要求 Java 21"  # noqa: E501
+                "请注意，如果您选择的 Java 版本不符合服务器的要求，可能会导致服务器无法启动。\n1.12+ 要求 Java 8\n1.17+ 要求 Java 16\n1.18+ 要求 Java 17\n1.20.5+ 要求 Java 21\n26.1+ 要求 Java 25"  # noqa: E501
             )
         )
         self.titleLabel.setText("Java")

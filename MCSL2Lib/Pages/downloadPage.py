@@ -17,7 +17,7 @@ Download page with FastMirror, MCSL-Sync, and PolarsAPI.
 from os import path as osp, remove
 import re
 
-from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot
+from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, pyqtSignal
 from PyQt5.QtWidgets import (
     QSizePolicy,
     QWidget,
@@ -27,6 +27,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QStackedWidget,
     QButtonGroup,
+    QHBoxLayout
 )
 from PyQt5 import sip
 
@@ -75,6 +76,7 @@ from MCSL2Lib.ProgramControllers.DownloadAPI.PolarsAPI import (
     FetchPolarsAPITypeThreadFactory,
 )
 from MCSL2Lib.ProgramControllers.DownloadAPI.RainYunAPI import FetchRainYunThreadFactory
+from MCSL2Lib.ProgramControllers.DownloadAPI.JavaDownloadAPI import FetchJavaDownloadThreadFactory
 from MCSL2Lib.ProgramControllers.downloadController import (
     DownloadController,
     getReadableSize,
@@ -159,6 +161,8 @@ def _version_key(version: str):
 class DownloadPage(QWidget):
     """下载页"""
 
+    returnToConfigure = pyqtSignal()  # 返回到新建服务器页面的信号
+
     def __init__(self, parent=None):
         super().__init__(parent)
         # fmt: off
@@ -178,6 +182,14 @@ class DownloadPage(QWidget):
         self.rainyunSelectedType = None
         self.rainyunTypeBtnGroup = QButtonGroup(self)
         self.rainyunFileBtnGroup = QButtonGroup(self)
+
+        self.fetchJavaDownloadThreadFactory = FetchJavaDownloadThreadFactory
+        self.javaDownloadTypeList = []
+        self.javaDownloadFileList = []
+        self.javaDownloadSelectedType = None
+        self.javaDownloadTypeBtnGroup = QButtonGroup(self)
+        self.javaDownloadFileBtnGroup = QButtonGroup(self)
+        self.isJavaDownloadMode = False  # 标记是否通过"下载Java"按钮进入
         # fmt: on
 
         # 线程管理
@@ -617,6 +629,124 @@ class DownloadPage(QWidget):
         self.gridLayout_ry.addWidget(self.rainyunTitle, 0, 0, 1, 1)
         self.rainyunTitle.setText("核心类型")
 
+        # Java 下载页面
+        self.downloadWithJavaDownload = QWidget()
+        self.downloadWithJavaDownload.setObjectName("downloadWithJavaDownload")
+
+        self.gridLayout_jd = QGridLayout(self.downloadWithJavaDownload)
+        self.gridLayout_jd.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_jd.setObjectName("gridLayout_jd")
+
+        self.javaDownloadCoreScrollArea = MySmoothScrollArea(self.downloadWithJavaDownload)
+        self.javaDownloadCoreScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.javaDownloadCoreScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.javaDownloadCoreScrollArea.setWidgetResizable(True)
+        self.javaDownloadCoreScrollArea.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        self.javaDownloadCoreScrollArea.setObjectName("javaDownloadCoreScrollArea")
+        self.javaDownloadCoreScrollAreaContents = QWidget()
+        self.javaDownloadCoreScrollAreaContents.setGeometry(QRect(0, 0, 461, 331))
+        self.javaDownloadCoreScrollAreaContents.setObjectName("javaDownloadCoreScrollAreaContents")
+        self.gridLayout_jd_core = QGridLayout(self.javaDownloadCoreScrollAreaContents)
+        self.gridLayout_jd_core.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_jd_core.setObjectName("gridLayout_jd_core")
+        self.javaDownloadCoreLayout = QVBoxLayout()
+        self.javaDownloadCoreLayout.setObjectName("javaDownloadCoreLayout")
+        self.gridLayout_jd_core.addLayout(self.javaDownloadCoreLayout, 0, 0, 1, 1)
+        self.javaDownloadCoreScrollArea.setWidget(self.javaDownloadCoreScrollAreaContents)
+        self.gridLayout_jd.addWidget(self.javaDownloadCoreScrollArea, 1, 2, 3, 2)
+        self.javaDownloadTypeLabel = SubtitleLabel(self.downloadWithJavaDownload)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.javaDownloadTypeLabel.sizePolicy().hasHeightForWidth())
+        self.javaDownloadTypeLabel.setSizePolicy(sizePolicy)
+        self.javaDownloadTypeLabel.setObjectName("javaDownloadTypeLabel")
+        self.gridLayout_jd.addWidget(self.javaDownloadTypeLabel, 0, 2, 1, 1)
+        self.VerticalSeparator_jd = VerticalSeparator(self.downloadWithJavaDownload)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.VerticalSeparator_jd.sizePolicy().hasHeightForWidth())
+        self.VerticalSeparator_jd.setSizePolicy(sizePolicy)
+        self.VerticalSeparator_jd.setMinimumSize(QSize(3, 0))
+        self.VerticalSeparator_jd.setMaximumSize(QSize(3, 16777215))
+        self.VerticalSeparator_jd.setObjectName("VerticalSeparator_jd")
+        self.gridLayout_jd.addWidget(self.VerticalSeparator_jd, 0, 1, 4, 1)
+
+        # 创建按钮水平布局
+        self.javaDownloadBtnLayout = QHBoxLayout()
+        self.javaDownloadBtnLayout.setSpacing(8)
+        self.javaDownloadBtnLayout.setObjectName("javaDownloadBtnLayout")
+
+        self.refreshJavaDownloadBtn = PushButton(
+            icon=FIF.UPDATE, text="刷新", parent=self.downloadWithJavaDownload
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.refreshJavaDownloadBtn.sizePolicy().hasHeightForWidth())
+        self.refreshJavaDownloadBtn.setSizePolicy(sizePolicy)
+        self.refreshJavaDownloadBtn.setObjectName("refreshJavaDownloadBtn")
+        self.javaDownloadBtnLayout.addWidget(self.refreshJavaDownloadBtn)
+
+        self.backToDownloadSourceBtn = PushButton(
+            icon=FIF.RETURN, text="返回", parent=self.downloadWithJavaDownload
+        )
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.backToDownloadSourceBtn.sizePolicy().hasHeightForWidth())
+        self.backToDownloadSourceBtn.setSizePolicy(sizePolicy)
+        self.backToDownloadSourceBtn.setObjectName("backToDownloadSourceBtn")
+        self.javaDownloadBtnLayout.addWidget(self.backToDownloadSourceBtn)
+
+        self.gridLayout_jd.addLayout(self.javaDownloadBtnLayout, 0, 3, 1, 1)
+
+        self.javaDownloadDescriptionLabel = BodyLabel(self.downloadWithJavaDownload)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.javaDownloadDescriptionLabel.sizePolicy().hasHeightForWidth()
+        )
+        self.javaDownloadDescriptionLabel.setSizePolicy(sizePolicy)
+        self.javaDownloadDescriptionLabel.setObjectName("javaDownloadDescriptionLabel")
+        self.gridLayout_jd.addWidget(self.javaDownloadDescriptionLabel, 1, 2, 1, 2)
+        self.javaDownloadTypeScrollArea = MySmoothScrollArea(self.downloadWithJavaDownload)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.javaDownloadTypeScrollArea.sizePolicy().hasHeightForWidth()
+        )
+        self.javaDownloadTypeScrollArea.setSizePolicy(sizePolicy)
+        self.javaDownloadTypeScrollArea.setMinimumSize(QSize(170, 0))
+        self.javaDownloadTypeScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.javaDownloadTypeScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.javaDownloadTypeScrollArea.setWidgetResizable(True)
+        self.javaDownloadTypeScrollArea.setObjectName("javaDownloadTypeScrollArea")
+        self.javaDownloadTypeScrollAreaContents = QWidget()
+        self.javaDownloadTypeScrollAreaContents.setGeometry(QRect(0, 0, 200, 356))
+        self.javaDownloadTypeScrollAreaContents.setObjectName("javaDownloadTypeScrollAreaContents")
+        self.gridLayout_jd_type = QGridLayout(self.javaDownloadTypeScrollAreaContents)
+        self.gridLayout_jd_type.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_jd_type.setObjectName("gridLayout_jd_type")
+        self.javaDownloadTypeLayout = QVBoxLayout()
+        self.javaDownloadTypeLayout.setObjectName("javaDownloadTypeLayout")
+        self.gridLayout_jd_type.addLayout(self.javaDownloadTypeLayout, 0, 0, 1, 1)
+        self.javaDownloadTypeScrollArea.setWidget(self.javaDownloadTypeScrollAreaContents)
+        self.gridLayout_jd.addWidget(self.javaDownloadTypeScrollArea, 1, 0, 3, 1)
+        self.javaDownloadTitle = SubtitleLabel(self.downloadWithJavaDownload)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.javaDownloadTitle.sizePolicy().hasHeightForWidth())
+        self.javaDownloadTitle.setSizePolicy(sizePolicy)
+        self.javaDownloadTitle.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.javaDownloadTitle.setObjectName("javaDownloadTitle")
+        self.gridLayout_jd.addWidget(self.javaDownloadTitle, 0, 0, 1, 1)
+        self.javaDownloadTitle.setText("Java 类型")
+
         self.downloadWithPolarsAPI = QWidget()
         self.downloadWithPolarsAPI.setObjectName("downloadWithPolarsAPI")
         self.gridLayout_5 = QGridLayout(self.downloadWithPolarsAPI)
@@ -713,6 +843,7 @@ class DownloadPage(QWidget):
         self.gridLayout_5.addWidget(self.polarsTitle, 0, 0, 1, 1)
         self.downloadStackedWidget.addWidget(self.downloadWithPolarsAPI)
         self.downloadStackedWidget.addWidget(self.downloadWithRainYun)
+        self.downloadStackedWidget.addWidget(self.downloadWithJavaDownload)
         self.gridLayout.addWidget(self.downloadStackedWidget, 3, 2, 1, 1)
 
         self.VerticalSeparator = VerticalSeparator(self)
@@ -776,6 +907,8 @@ class DownloadPage(QWidget):
         self.refreshPolarsAPIBtn.clicked.connect(self.getPolarsAPI)
         self.refreshFastMirrorAPIBtn.clicked.connect(self.getFastMirrorAPI)
         self.refreshRainYunBtn.clicked.connect(self.getRainYunAPI)
+        self.refreshJavaDownloadBtn.clicked.connect(self.getJavaDownloadAPI)
+        self.backToDownloadSourceBtn.clicked.connect(self.exitJavaDownloadMode)
         self.refreshMCSLSyncBtn.setEnabled(False)
         self.scrollAreaSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.createCustomDownloadBtn.clicked.connect(self.downloadCustomURLFile)
@@ -795,17 +928,26 @@ class DownloadPage(QWidget):
     @pyqtSlot(int)
     def onPageChangedRefresh(self, currentChanged):
         if currentChanged == 3:
+            # 如果是通过"下载Java"按钮进入的，保持在Java下载页面
+            if self.isJavaDownloadMode and self.downloadStackedWidget.currentIndex() == 4:
+                return
+            # 否则切换到默认下载源
+            self.isJavaDownloadMode = False  # 重置标志
             index = settingsVariables.get_download_source_index()
             self.subTitleLabel.setText(
                 self.tr("一键高速下载！\n当前下载源: {downloadSource}").format(
                     downloadSource=settingsVariables.downloadSourceTextList[index]
                 )
             )
-            self.downloadStackedWidget.setCurrentWidget(self.dsList[index])
+            # 使用 setCurrentIndex 强制切换，确保从 Java 页面也能切回去
+            self.downloadStackedWidget.setCurrentIndex(index)
             self.refreshDownloads()
 
     def refreshDownloads(self):
         """刷新下载页面主逻辑"""
+        # 切换到非Java下载页面时，重置标志
+        if self.downloadStackedWidget.currentIndex() != 4:
+            self.isJavaDownloadMode = False
         # FastMirror
         if self.downloadStackedWidget.currentIndex() == 0:
             if downloadVariables.FastMirrorAPIDict:
@@ -838,6 +980,12 @@ class DownloadPage(QWidget):
                 self.initRainYunTypeListWidget()
             else:
                 self.getRainYunAPI()
+        # Java Download
+        elif self.downloadStackedWidget.currentIndex() == 4:
+            if self.javaDownloadTypeList:
+                self.initJavaDownloadTypeListWidget()
+            else:
+                self.getJavaDownloadAPI()
 
     ##############
     #   RainYun  #
@@ -999,6 +1147,180 @@ class DownloadPage(QWidget):
                 self.rainyunCoreLayout.itemAt(i).widget().setParent(None)
             except Exception:
                 pass
+
+    ##############
+    # Java下载   #
+    ##############
+
+    def enterJavaDownloadMode(self):
+        """进入Java下载模式（通过按钮调用）"""
+        self.isJavaDownloadMode = True
+        self.downloadStackedWidget.setCurrentIndex(4)
+        self.getJavaDownloadAPI()
+
+    def exitJavaDownloadMode(self):
+        """退出Java下载模式，返回默认下载源和新建服务器页面"""
+        self.isJavaDownloadMode = False
+        index = settingsVariables.get_download_source_index()
+        self.downloadStackedWidget.setCurrentIndex(index)
+        self.subTitleLabel.setText(
+            self.tr("一键高速下载！\n当前下载源: {downloadSource}").format(
+                downloadSource=settingsVariables.downloadSourceTextList[index]
+            )
+        )
+        self.refreshDownloads()
+        self.returnToConfigure.emit()  # 发射信号，通知切换到新建服务器页面
+
+    def getJavaDownloadAPI(self):
+        """请求Java下载类型列表"""
+        self.subTitleLabel.setText("请下载需要的 Java 版本。点击右侧返回按钮以返回新建服务器页面。")
+        self.javaDownloadTypeLabel.setText("")
+        thread = self.fetchJavaDownloadThreadFactory.create(
+            _singleton=True, finishSlot=self.updateJavaDownloadTypeList, path=""
+        )
+        thread.start()
+
+    @pyqtSlot(dict)
+    def updateJavaDownloadTypeList(self, data: dict):
+        """更新Java下载类型列表"""
+        names = []
+        if data and isinstance(data.get("name"), list) and isinstance(data.get("is_dir"), list):
+            names = [n for n, isdir in zip(data["name"], data["is_dir"]) if isdir]
+        self.javaDownloadTypeList = names
+        self.initJavaDownloadTypeListWidget()
+
+    def initJavaDownloadTypeListWidget(self):
+        """初始化Java下载类型列表UI（左侧）"""
+        self.releaseJavaDownloadMemory()
+        self.javaDownloadTypeBtnGroup.deleteLater()
+        self.javaDownloadTypeBtnGroup = QButtonGroup(self)
+        self.javaDownloadTypeBtnGroup.setExclusive(True)
+        btns = []
+        for idx, type_name in enumerate(self.javaDownloadTypeList):
+            btn = PolarsTypeWidget(type_name, idx, "", self.javaDownloadTypeProcessor, parent=self)
+            self.javaDownloadTypeLayout.addWidget(btn)
+            self.javaDownloadTypeBtnGroup.addButton(btn)
+            btns.append(btn)
+        self.javaDownloadTypeLayout.addSpacerItem(self.scrollAreaSpacer)
+        # 强制刷新界面
+        self.javaDownloadTypeScrollAreaContents.update()
+        self.javaDownloadTypeScrollArea.update()
+
+    def javaDownloadTypeProcessor(self):
+        """处理Java类型选择，获取文件列表"""
+        btn = self.sender()
+        self.javaDownloadSelectedType = btn.property("name")
+        self.javaDownloadTypeLabel.setText(btn.text())
+        self.getJavaDownloadFileAPI(self.javaDownloadSelectedType)
+
+    def getJavaDownloadFileAPI(self, type_name):
+        """请求Java下载文件列表"""
+        thread = self.fetchJavaDownloadThreadFactory.create(
+            _singleton=True, finishSlot=self.updateJavaDownloadFileList, path=f"/{type_name}"
+        )
+        thread.start()
+
+    @pyqtSlot(dict)
+    def updateJavaDownloadFileList(self, data: dict):
+        files = []
+        if data and isinstance(data.get("name"), list):
+            names = data.get("name", [])
+            sizes = data.get("size", [])
+            is_dirs = data.get("is_dir", [])
+            for idx, name in enumerate(names):
+                if idx < len(is_dirs) and is_dirs[idx]:
+                    continue
+                size_value = None
+                if idx < len(sizes):
+                    try:
+                        size_value = int(sizes[idx])
+                    except Exception:
+                        size_value = None
+                files.append({
+                    "name": name,
+                    "size": size_value,
+                })
+        self.javaDownloadFileList = files
+        self.initJavaDownloadFileListWidget()
+
+    def initJavaDownloadFileListWidget(self):
+        """初始化Java下载文件列表UI（右侧）"""
+        # 清空所有widget和spacer
+        while self.javaDownloadCoreLayout.count():
+            item = self.javaDownloadCoreLayout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.setParent(None)
+            else:
+                del item
+        self.javaDownloadFileBtnGroup.deleteLater()
+        self.javaDownloadFileBtnGroup = QButtonGroup(self)
+        for meta in self.javaDownloadFileList:
+            file_name = meta.get("name")
+            if not file_name:
+                continue
+            file_size = meta.get("size")
+            size_text = ""
+            if isinstance(file_size, int) and file_size > 0:
+                size_text = getReadableSize(file_size)
+            btn = FastMirrorBuildListWidget(
+                buildVer=file_name,
+                syncTime=size_text,
+                coreVersion=file_name,
+                btnSlot=self.javaDownloadFileProcessor,
+                parent=self,
+            )
+            btn.downloadBtn.setProperty("file_size", file_size)
+            self.javaDownloadCoreLayout.addWidget(btn)
+            self.javaDownloadFileBtnGroup.addButton(btn.downloadBtn)
+        self.javaDownloadCoreLayout.addSpacerItem(self.scrollAreaSpacer)
+
+    def javaDownloadFileProcessor(self):
+        """处理Java文件下载"""
+        btn = self.sender()
+        file_name = btn.property("name")
+        file_format = file_name.split(".")[-1] if "." in file_name else ""
+        target_name = file_name
+
+        # 构建下载URL
+        url = f"https://drive.mcsl.com.cn/d/Java-Mirror/{self.javaDownloadSelectedType}/{file_name}"
+
+        # 获取文件大小
+        normalized_size = None
+        for f in self.javaDownloadFileList:
+            if f.get("name") == file_name:
+                normalized_size = f.get("size")
+                break
+
+        self.createDownloadEntry(
+            target_name,
+            file_format,
+            url,
+            (f"{file_name}", self.javaDownloadSelectedType, "", "JavaDownload"),
+            fileSize=normalized_size,
+        )
+
+    def releaseJavaDownloadMemory(self, file_only=False):
+        """释放Java下载相关UI"""
+        if not file_only:
+            for i in reversed(range(self.javaDownloadTypeLayout.count())):
+                item = self.javaDownloadTypeLayout.takeAt(i)
+                if item:
+                    widget = item.widget()
+                    if widget:
+                        widget.deleteLater()
+                    else:
+                        # 处理 spacer
+                        del item
+        for i in reversed(range(self.javaDownloadCoreLayout.count())):
+            item = self.javaDownloadCoreLayout.takeAt(i)
+            if item:
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
+                else:
+                    # 处理 spacer
+                    del item
 
     ##############
     # MCSL-Sync  #
@@ -2056,9 +2378,7 @@ class DownloadPage(QWidget):
                 w.yesButton.setText(self.tr("停止下载"))
                 w.cancelButton.setText(self.tr("覆盖文件"))
                 w.cancelSignal.connect(
-                    lambda: remove(download_path)
-                    if osp.exists(download_path)
-                    else None
+                    lambda: remove(download_path) if osp.exists(download_path) else None
                 )
                 w.cancelSignal.connect(
                     lambda: self.downloadFile(
@@ -2122,9 +2442,7 @@ class DownloadPage(QWidget):
             file_size=fileSize,
         )
 
-        downloadingInfoWidget.canceled.connect(
-            lambda: DownloadController.cancelDownloadTask(gid)
-        )
+        downloadingInfoWidget.canceled.connect(lambda: DownloadController.cancelDownloadTask(gid))
         downloadingInfoWidget.paused.connect(
             lambda x: (
                 DownloadController.pauseDownloadTask(gid)

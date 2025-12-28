@@ -513,6 +513,87 @@ class AIPromptSettingsBox(MessageBoxBase):
         self.close()
 
 
+class AutoStartServersDialog(MessageBoxBase):
+    """自动启动服务器列表配置对话框"""
+
+    savedSignal = pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        from MCSL2Lib.utils import readGlobalServerConfig
+        from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
+        from qfluentwidgets import CheckBox
+
+        self.titleLabel = SubtitleLabel(self.tr("自动启动服务器"), self)
+        self.viewLayout.addWidget(self.titleLabel)
+
+        self.tipLabel = BodyLabel(self.tr("勾选需要在 MCSL2 启动时自动运行的服务器。"), self)
+        self.tipLabel.setWordWrap(True)
+        self.viewLayout.addWidget(self.tipLabel)
+
+        # 创建滚动区域
+        self.scrollArea = MySmoothScrollArea(self)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setMinimumHeight(300)
+
+        self.scrollWidget = QWidget()
+        self.scrollLayout = QVBoxLayout(self.scrollWidget)
+        self.scrollLayout.setSpacing(12)
+        self.scrollArea.setWidget(self.scrollWidget)
+
+        # 读取全局服务器配置
+        self.globalConfig = readGlobalServerConfig()
+        self.checkboxes = {}
+
+        # 读取当前自动启动列表
+        import json
+
+        auto_start_list = json.loads(cfg.get(cfg.autoStartServers) or "[]")
+
+        # 为每个服务器创建复选框
+        for server_cfg in self.globalConfig:
+            server_name = server_cfg.get("name", "")
+            if server_name:
+                checkbox = CheckBox(server_name, self.scrollWidget)
+                checkbox.setChecked(server_name in auto_start_list)
+                self.checkboxes[server_name] = checkbox
+                self.scrollLayout.addWidget(checkbox)
+
+        if not self.checkboxes:
+            noServerLabel = BodyLabel(self.tr("没有可用的服务器"), self.scrollWidget)
+            self.scrollLayout.addWidget(noServerLabel)
+
+        self.scrollLayout.addStretch()
+        self.viewLayout.addWidget(self.scrollArea)
+
+        self.yesButton.setText(self.tr("保存"))
+        self.cancelButton.setText(self.tr("取消"))
+
+        try:
+            self.yesButton.clicked.disconnect()
+        except Exception:
+            pass
+        self.yesButton.clicked.connect(self._save)
+
+        self.widget.setMinimumWidth(500)
+
+    def _save(self):
+        """保存自动启动服务器列表"""
+        import json
+
+        # 收集选中的服务器
+        selected_servers = [
+            name for name, checkbox in self.checkboxes.items() if checkbox.isChecked()
+        ]
+
+        # 保存到配置
+        cfg.set(cfg.autoStartServers, json.dumps(selected_servers, ensure_ascii=False))
+        qconfig.save()
+
+        self.savedSignal.emit()
+        self.close()
+
+
 @Singleton
 class SettingsPage(QWidget):
     """设置页"""
@@ -592,8 +673,15 @@ class SettingsPage(QWidget):
         self.autoRunLastServer = SwitchSettingCard(
             icon=FIF.ROBOT,
             title=self.tr("自动启动 MCSL2 时自动运行上次运行的服务器"),
-            content=self.tr("此项由于大量资源占用已被暂时禁用。"),
+            content=self.tr("启用后，请点击下一项的按钮完成配置。"),
             configItem=cfg.autoRunLastServer,
+            parent=self.serverSettingsGroup,
+        )
+        self.autoStartServersBtn = PrimaryPushSettingCard(
+            text=self.tr("配置"),
+            icon=FIF.PLAY,
+            title=self.tr("自动启动服务器列表"),
+            content=self.tr("设置 MCSL2 启动时自动运行的服务器。"),
             parent=self.serverSettingsGroup,
         )
         self.acceptAllMojangEula = SwitchSettingCard(
@@ -617,9 +705,10 @@ class SettingsPage(QWidget):
             configItem=cfg.restartServerWhenCrashed,
             parent=self.serverSettingsGroup,
         )
-        self.autoRunLastServer.setEnabled(False)
         self.sendStopInsteadOfKill.setEnabled(False)
+        self.autoStartServersBtn.clicked.connect(self.showAutoStartServersDialog)
         self.serverSettingsGroup.addSettingCard(self.autoRunLastServer)
+        self.serverSettingsGroup.addSettingCard(self.autoStartServersBtn)
         self.serverSettingsGroup.addSettingCard(self.acceptAllMojangEula)
         self.serverSettingsGroup.addSettingCard(self.sendStopInsteadOfKill)
         self.serverSettingsGroup.addSettingCard(self.restartServerWhenCrashed)
@@ -794,13 +883,6 @@ class SettingsPage(QWidget):
             content=self.tr("本程序也要花里胡哨捏~"),
             parent=self.programSettingsGroup,
         )
-        self.alwaysRunAsAdministrator = SwitchSettingCard(
-            icon=FIF.PEOPLE,
-            title=self.tr("总是以管理员身份运行"),
-            content=self.tr("好像还做不到啊，我也不推荐。"),
-            configItem=cfg.alwaysRunAsAdministrator,
-            parent=self.programSettingsGroup,
-        )
         self.startOnStartup = SwitchSettingCard(
             icon=FIF.POWER_BUTTON,
             title=self.tr("开机自启动"),
@@ -810,17 +892,14 @@ class SettingsPage(QWidget):
             configItem=cfg.startOnStartup,
             parent=self.programSettingsGroup,
         )
-        self.alwaysRunAsAdministrator.setEnabled(False)
         if platform.system().lower() == "windows":
             self._bind_start_on_startup()
         else:
             self.startOnStartup.setEnabled(False)
         self.themeColor.colorChanged.connect(lambda cl: setThemeColor(color=cl, lazy=True))
         self.themeMode.optionChanged.connect(lambda ci: setTheme(cfg.get(ci), lazy=True))
-        # self.themeMode.optionChanged.connect(self.showNeedRestartMsg)
         self.programSettingsGroup.addSettingCard(self.themeMode)
         self.programSettingsGroup.addSettingCard(self.themeColor)
-        self.programSettingsGroup.addSettingCard(self.alwaysRunAsAdministrator)
         self.programSettingsGroup.addSettingCard(self.startOnStartup)
         self.settingsLayout.addWidget(self.programSettingsGroup)
 
@@ -1108,6 +1187,22 @@ class SettingsPage(QWidget):
             lambda: InfoBar.success(
                 title=self.tr("成功"),
                 content=self.tr("提示词已保存"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2000,
+                parent=self,
+            )
+        )
+        box.exec()
+
+    def showAutoStartServersDialog(self):
+        """显示自动启动服务器配置对话框"""
+        box = AutoStartServersDialog(self)
+        box.savedSignal.connect(
+            lambda: InfoBar.success(
+                title=self.tr("成功"),
+                content=self.tr("自动启动服务器列表已保存"),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP_RIGHT,
