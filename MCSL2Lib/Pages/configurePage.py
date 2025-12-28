@@ -2681,9 +2681,11 @@ class ConfigurePage(QWidget):
 
     @pyqtSlot(bool, str)
     def afterInstallingForge(self, installFinished, message=""):
-        self.installerLogViewer.hide()
-        self.installerLogViewer.close()
-        self.installerLogViewer.deleteLater()
+        if self.installerLogViewer:
+            self.installerLogViewer.hide()
+            self.installerLogViewer.close()
+            self.installerLogViewer.deleteLater()
+
         if self.installerDownloadView is not None:
             self.installerDownloadView.hide()
             self.installerDownloadView.close()
