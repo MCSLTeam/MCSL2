@@ -275,9 +275,16 @@ class ForgeInstaller(Installer):
         self._dlInfoMonitor = None
         self._dlInfoQueue = None
 
-        self.getInstallerData(
-            osp.join(serverPath, file) if installerPath is None else installerPath
-        )
+        try:
+            self.getInstallerData(
+                osp.join(serverPath, file) if installerPath is None else installerPath
+            )
+        except:
+            raise InstallerError(
+                self.tr(
+                    "无法打开forge安装器核心文件:{path}, 可能文件已损坏."  # noqa: E501
+                ).format(path=file)  # noqa: E501
+            )
         if self._mcVersion >= McVersion("1.17"):
             self.installPlan = ForgeInstaller.InstallPlan.PlanB
         elif self._mcVersion >= McVersion("1.8"):
@@ -303,7 +310,7 @@ class ForgeInstaller(Installer):
                 _ = zipfile.read("version.json")
             self._profile = loads(_)  # type: dict
             if not self.checkInstaller():
-                raise InstallerError("Invalid Forge installer")
+                raise InstallerError("无法识别的forge安装器")
 
     def checkInstaller(self) -> bool:
         if (
