@@ -18,6 +18,7 @@ from shutil import rmtree
 from threading import Thread
 from typing import List
 
+from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QSpacerItem
 from qfluentwidgets import (
@@ -119,6 +120,9 @@ class PluginManager(BasePluginManager):
             20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
         )
         self.isOpenedFolder: int = 0
+
+    def tr(self, text: str) -> str:
+        return QCoreApplication.translate("PluginManager", text)
 
     def disablePlugin(self, pluginName: str) -> (bool, str):
         """禁用插件"""
