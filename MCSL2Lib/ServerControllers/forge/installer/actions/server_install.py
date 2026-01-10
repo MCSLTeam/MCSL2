@@ -106,11 +106,11 @@ class ServerInstall(Action):
         return True
 
     def offlineInstall(self, installer: Path, java: Path = None) -> int:
-        javaPath = java or "java"
-        jvmArgs = f"{javaPath} -jar {installer.absolute()} --offline --installServer"
-        print(jvmArgs, self.installer.parent)
+        javaPath = str(java) if java else "java"
+        cmd = [javaPath, "-jar", str(installer.absolute()), "--offline", "--installServer"]
+        print("Running:", cmd, "in", self.installer.parent)
         return subprocess.run(
-            jvmArgs, cwd=str(self.installer.parent), stdout=subprocess.DEVNULL
+            cmd, cwd=str(self.installer.parent), stdout=subprocess.DEVNULL
         ).returncode
 
     def downloadVanilla(self, target: Path, installerDataBuf: BytesIO, side: str, detailed: bool):
