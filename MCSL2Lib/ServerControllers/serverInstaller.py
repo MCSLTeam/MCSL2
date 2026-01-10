@@ -211,8 +211,11 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
-            # noqa: E501
+            (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0"
+            ),
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
@@ -279,7 +282,7 @@ class ForgeInstaller(Installer):
             self.getInstallerData(
                 osp.join(serverPath, file) if installerPath is None else installerPath
             )
-        except:
+        except Exception:
             raise InstallerError(
                 self.tr(
                     "无法打开forge安装器核心文件:{path}, 可能文件已损坏."  # noqa: E501
@@ -298,17 +301,24 @@ class ForgeInstaller(Installer):
 
     def getInstallerData(self, jarFile):
         # 打开Installer压缩包
-        # 读取version.json
+        # 读取install_profile.json或version.json
+        with ZipFile(jarFile, mode="r") as zipfile:
+            data = None
+            
+            # 优先尝试读取 install_profile.json；若缺失，则回退到 version.json
+            for candidate in ("install_profile.json", "version.json"):
+                try:
+                    with zipfile.open(candidate) as f:
+                        data = f.read().decode("utf-8")
+                        break
+                except KeyError:
+                    # 该文件不存在，尝试下一个候选
+                    continue
 
-        with ZipFile(
-            jarFile,
-            mode="r",
-        ) as zipfile:
-            try:
-                _ = zipfile.read("install_profile.json")
-            except KeyError:
-                _ = zipfile.read("version.json")
-            self._profile = loads(_)  # type: dict
+            if data is None:
+                raise InstallerError("无法读取forge安装器配置文件")
+
+            self._profile = loads(data)  # type: dict
             if not self.checkInstaller():
                 raise InstallerError("无法识别的forge安装器")
 
@@ -320,7 +330,9 @@ class ForgeInstaller(Installer):
             .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
+            self._forgeVersion = (
+                versionInfo["id"].replace(str(self._mcVersion), "").replace("-", "")
+            )
             return True
         elif "forge" in (version := self._profile.get("version", "")).lower():
             self._mcVersion = McVersion(version.split("-")[0])

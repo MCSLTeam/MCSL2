@@ -86,6 +86,157 @@ settingsVariables = SettingsVariables()
 serverVariables = ServerVariables()
 
 
+class JavaServerSaveThread(QThread):
+    """执行Java版服务器保存的后台线程"""
+
+    success = pyqtSignal(str)
+    failed = pyqtSignal(str)
+
+    def __init__(
+        self,
+        server_config: dict,
+        core_path: str,
+        core_file_name: str,
+        extra_data: dict,
+        only_save_global: bool,
+        auto_accept_eula: bool,
+        exit0_msg: str,
+        exit1_msg: str,
+        exists_error_msg: str,
+        parent=None,
+    ):
+        super().__init__(parent)
+        self.server_config = server_config
+        self.core_path = core_path
+        self.core_file_name = core_file_name
+        self.extra_data = extra_data or {}
+        self.only_save_global = only_save_global
+        self.auto_accept_eula = auto_accept_eula
+        self.exit0_msg = exit0_msg
+        self.exit1_msg = exit1_msg
+        self.exists_error_msg = exists_error_msg
+
+    def run(self):
+        server_name = self.server_config["name"]
+        folder_created = False
+        global_config_written = False
+
+        # 新建文件夹
+        try:
+            mkdir(f"./Servers/{server_name}")
+            folder_created = True
+        except FileExistsError:
+            self.failed.emit(self.exists_error_msg)
+            return
+        except Exception as e:
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        # 写入全局配置
+        try:
+            global_server_list = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+            global_server_list["MCSLServerList"].append(self.server_config)
+            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(global_server_list, indent=4))
+            global_config_written = True
+        except Exception as e:
+            # 回滚：删除已创建的文件夹
+            if folder_created:
+                try:
+                    rmtree(f"./Servers/{server_name}")
+                except:
+                    pass
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        # 写入单独配置
+        try:
+            if not self.only_save_global:
+                writeFile(
+                    f"./Servers/{server_name}/MCSL2ServerConfig.json",
+                    dumps(self.server_config, indent=4),
+                )
+        except Exception as e:
+            # 回滚：删除全局配置和文件夹
+            if global_config_written:
+                try:
+                    global_server_list = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+                    # 找到刚添加的配置并删除
+                    for i, srv in enumerate(global_server_list["MCSLServerList"]):
+                        if srv["name"] == server_name:
+                            global_server_list["MCSLServerList"].pop(i)
+                            break
+                    writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(global_server_list, indent=4))
+                except:
+                    pass
+            if folder_created:
+                try:
+                    rmtree(f"./Servers/{server_name}")
+                except:
+                    pass
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        # 复制核心
+        try:
+            if self.extra_data.get("extracted_from_zip") and self.extra_data.get("temp_dir"):
+                from shutil import copytree, rmtree
+                import os
+
+                temp_dir = self.extra_data["temp_dir"]
+                target_dir = f"./Servers/{server_name}"
+
+                for item in os.listdir(temp_dir):
+                    src_path = os.path.join(temp_dir, item)
+                    dst_path = os.path.join(target_dir, item)
+                    if os.path.isdir(src_path):
+                        copytree(src_path, dst_path, dirs_exist_ok=True)
+                    else:
+                        copy(src_path, dst_path)
+
+                # 强制同步到磁盘
+                try:
+                    import subprocess
+
+                    if os.name == "posix":  # Linux/Mac
+                        subprocess.run(["sync"], check=False, timeout=5)
+                except:
+                    pass
+
+                rmtree(temp_dir, ignore_errors=True)
+            else:
+                # 单文件复制
+                copy(self.core_path, f"./Servers/{server_name}/{self.core_file_name}")
+        except Exception as e:
+            # 回滚：删除全局配置、单独配置和文件夹
+            if global_config_written:
+                try:
+                    global_server_list = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+                    for i, srv in enumerate(global_server_list["MCSLServerList"]):
+                        if srv["name"] == server_name:
+                            global_server_list["MCSLServerList"].pop(i)
+                            break
+                    writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(global_server_list, indent=4))
+                except:
+                    pass
+            if folder_created:
+                try:
+                    rmtree(f"./Servers/{server_name}")
+                except:
+                    pass
+            self.failed.emit(self.exit1_msg + f"\n{e}")
+            return
+
+        # 自动同意Mojang Eula
+        if self.auto_accept_eula:
+            try:
+                _MinecraftEULA(server_name).acceptEula()
+            except Exception as e:
+                # Eula失败不影响服务器创建
+                pass
+
+        self.success.emit(self.exit0_msg)
+
+
 class BedrockServerSaveThread(QThread):
     """执行基岩版服务器保存的后台线程"""
 
@@ -184,7 +335,7 @@ class BedrockCoreImportThread(QThread):
     def run(self):
         try:
             path = self.file_path
-            if path.lower().endswith('.zip'):
+            if path.lower().endswith(".zip"):
                 from zipfile import ZipFile
                 from tempfile import mkdtemp
                 from shutil import rmtree
@@ -192,7 +343,7 @@ class BedrockCoreImportThread(QThread):
                 import stat
 
                 temp_dir = mkdtemp(prefix="mcsl2_bedrock_")
-                with ZipFile(path, 'r') as zip_ref:
+                with ZipFile(path, "r") as zip_ref:
                     zip_ref.extractall(temp_dir)
 
                 bedrock_exe = None
@@ -224,14 +375,14 @@ class BedrockCoreImportThread(QThread):
                     "extra_data": {
                         "edition": "bedrock",
                         "extracted_from_zip": True,
-                        "temp_dir": temp_dir
-                    }
+                        "temp_dir": temp_dir,
+                    },
                 })
             else:
                 self.success.emit({
                     "core_path": path,
                     "core_file_name": osp.basename(path),
-                    "extra_data": {"edition": "bedrock"}
+                    "extra_data": {"edition": "bedrock"},
                 })
         except Exception as e:
             self.failed.emit(str(e))
@@ -1180,7 +1331,9 @@ class ConfigurePage(QWidget):
         )
         self.bedrockManuallyAddCorePrimaryPushBtn.setSizePolicy(sizePolicy)
         self.bedrockManuallyAddCorePrimaryPushBtn.setMinimumSize(QSize(130, 0))
-        self.bedrockManuallyAddCorePrimaryPushBtn.setObjectName("bedrockManuallyAddCorePrimaryPushBtn")
+        self.bedrockManuallyAddCorePrimaryPushBtn.setObjectName(
+            "bedrockManuallyAddCorePrimaryPushBtn"
+        )
         self.bedrockCoreGridLayout.addWidget(self.bedrockManuallyAddCorePrimaryPushBtn, 1, 0, 1, 1)
 
         spacerItem_bedrock_core = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -1555,6 +1708,7 @@ class ConfigurePage(QWidget):
         self.extendedNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
         # macOS下禁用基岩版服务器创建
         if platform.system().lower() == "darwin":
+
             def show_bedrock_macos_not_supported():
                 InfoBar.error(
                     title=self.tr("不支持"),
@@ -1563,8 +1717,9 @@ class ConfigurePage(QWidget):
                     isClosable=True,
                     position=InfoBarPosition.TOP,
                     duration=4000,
-                    parent=self.parent() or self
+                    parent=self.parent() or self,
                 )
+
             self.bedrockNewServerWidget.connectSlot(show_bedrock_macos_not_supported)
         else:
             self.bedrockNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
@@ -1651,7 +1806,7 @@ class ConfigurePage(QWidget):
         """决定新建服务器的方式"""
         # 通过发送者的父级（HeaderCardWidget）来确定索引
         sender = self.sender()
-        if hasattr(sender, 'parent') and callable(sender.parent):
+        if hasattr(sender, "parent") and callable(sender.parent):
             card_widget = sender.parent().parent()
             if isinstance(card_widget, NoobServerCardWidget):
                 self.newServerStackedWidget.setCurrentIndex(1)
@@ -1774,10 +1929,7 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
-        # 保护性检查：确保UI组件已经创建
-        if hasattr(self, 'noobAutoDetectJavaPrimaryPushBtn'):
             self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
-        if hasattr(self, 'extendedAutoDetectJavaPrimaryPushBtn'):
             self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
 
     def addCoreManually(self):
@@ -1791,13 +1943,11 @@ class ConfigurePage(QWidget):
             )
         elif system == "darwin":  # macOS
             file_filter = self.tr(
-                "服务器核心 (*.jar *);;Java 可执行文件 (*.jar);;"
-                "基岩版服务器;;所有文件 (*)"
+                "服务器核心 (*.jar *);;Java 可执行文件 (*.jar);;基岩版服务器;;所有文件 (*)"
             )
         else:  # Linux
             file_filter = self.tr(
-                "服务器核心 (*.jar *);;Java 可执行文件 (*.jar);;"
-                "基岩版服务器;;所有文件 (*)"
+                "服务器核心 (*.jar *);;Java 可执行文件 (*.jar);;基岩版服务器;;所有文件 (*)"
             )
 
         tmpCorePath = str(
@@ -1815,8 +1965,12 @@ class ConfigurePage(QWidget):
 
             # 检测是否为基岩版服务器
             fileName = configureServerVariables.coreFileName.lower()
-            if (fileName.startswith("bedrock") or fileName == "bedrock_server" or
-                fileName == "bedrock_server.exe" or "bedrock" in fileName):
+            if (
+                fileName.startswith("bedrock")
+                or fileName == "bedrock_server"
+                or fileName == "bedrock_server.exe"
+                or "bedrock" in fileName
+            ):
                 configureServerVariables.serverType = "bedrock"
                 configureServerVariables.extraData = {"edition": "bedrock"}
                 InfoBar.success(
@@ -1863,9 +2017,7 @@ class ConfigurePage(QWidget):
                 "基岩版服务器 (*.zip *.exe);;压缩包 (*.zip);;可执行文件 (*.exe);;所有文件 (*)"
             )
         else:
-            file_filter = self.tr(
-                "基岩版服务器 (*.zip *);;压缩包 (*.zip);;所有文件 (*)"
-            )
+            file_filter = self.tr("基岩版服务器 (*.zip *);;压缩包 (*.zip);;所有文件 (*)")
 
         tmpPath = str(
             QFileDialog.getOpenFileName(
@@ -2083,7 +2235,7 @@ class ConfigurePage(QWidget):
         else:
             totalJVMArg: str = "\n".join(configureServerVariables.jvmArg)
             title = self.tr("请再次检查你设置的参数是否有误: ")
-            
+
             # 基岩版服务器显示不同的内容
             if configureServerVariables.serverType == "bedrock":
                 content = (
@@ -2315,9 +2467,12 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.move(self.installingForgeStateToolTip.getSuitablePos())
             self.installingForgeStateToolTip.show()
             try:
+                forge_server_path = f"./Servers/{configureServerVariables.serverName}"
+                forge_core_file = configureServerVariables.coreFileName
+
                 self.forgeInstaller = ForgeInstaller(
-                    serverPath=f"./Servers/{configureServerVariables.serverName}",
-                    file=configureServerVariables.coreFileName,
+                    serverPath=forge_server_path,
+                    file=forge_core_file,
                     java=configureServerVariables.selectedJavaPath,
                     logDecode=cfg.get(cfg.outputDeEncoding),
                 )
@@ -2397,8 +2552,12 @@ class ConfigurePage(QWidget):
         self.postNewServerDispatcher(exit0Msg=exit0Msg)
 
     def _saveBedrockServerAsync(self):
-        exit0Msg = self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
-        exit1Msg = self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
+        exit0Msg = (
+            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
+        )
+        exit1Msg = (
+            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
+        )
         exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
 
         if osp.exists(f"./Servers/{configureServerVariables.serverName}"):
@@ -2413,7 +2572,9 @@ class ConfigurePage(QWidget):
             )
             return
 
-        extra_data = dict(configureServerVariables.extraData) if configureServerVariables.extraData else {}
+        extra_data = (
+            dict(configureServerVariables.extraData) if configureServerVariables.extraData else {}
+        )
 
         serverConfig = {
             "name": configureServerVariables.serverName,
@@ -2498,46 +2659,27 @@ class ConfigurePage(QWidget):
         self.bedrockSaveThread = None
 
     def saveNewServer(self):
-        """真正的保存服务器函数"""
+        """保存服务器的分发器"""
         if configureServerVariables.serverType == "bedrock":
             self._saveBedrockServerAsync()
-            return
+        else:
+            self._saveJavaServerAsync()
 
+    def _saveJavaServerAsync(self):
+        """异步保存Java版服务器"""
         exit0Msg = (
             self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
         )
         exit1Msg = (
             self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
         )
-        exitCode = 0
+        exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
 
-        # 检查JVM参数防止意外无法启动服务器
-        for arg in configureServerVariables.jvmArg:
-            if arg == "" or arg == " ":
-                configureServerVariables.jvmArg.pop(configureServerVariables.jvmArg.index(arg))
-
-        serverConfig = {
-            "name": configureServerVariables.serverName,
-            "core_file_name": configureServerVariables.coreFileName,
-            "java_path": configureServerVariables.selectedJavaPath,
-            "min_memory": configureServerVariables.minMem,
-            "max_memory": configureServerVariables.maxMem,
-            "memory_unit": configureServerVariables.memUnit,
-            "jvm_arg": configureServerVariables.jvmArg,
-            "output_decoding": configureServerVariables.consoleOutputDeEncoding,
-            "input_encoding": configureServerVariables.consoleInputDeEncoding,
-            "icon": "Grass.png",
-            "server_type": configureServerVariables.serverType,
-            "extra_data": configureServerVariables.extraData,
-        }
-
-        # 新建文件夹
-        try:
-            mkdir(f"./Servers/{configureServerVariables.serverName}")
-        except FileExistsError:
+        # 提前检查是否存在同名服务器
+        if osp.exists(f"./Servers/{configureServerVariables.serverName}"):
             InfoBar.error(
                 title=self.tr("失败"),
-                content=self.tr("已存在同名服务器！请更改服务器名。"),
+                content=exists_error_msg,
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -2546,83 +2688,38 @@ class ConfigurePage(QWidget):
             )
             return
 
-        # 写入全局配置
-        try:
-            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
-            globalServerList["MCSLServerList"].append(serverConfig)
-            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
-            exitCode = 0
-        except Exception as e:
-            exitCode = 1
-            exit1Msg += f"\n{e}"
+        # 检查JVM参数防止意外无法启动服务器
+        for arg in list(configureServerVariables.jvmArg):
+            if arg == "" or arg == " ":
+                configureServerVariables.jvmArg.remove(arg)
 
-        # 写入单独配置
-        try:
-            if not cfg.get(cfg.onlySaveGlobalServerConfig):
-                writeFile(
-                    f"./Servers/{configureServerVariables.serverName}/MCSL2ServerConfig.json",
-                    dumps(serverConfig, indent=4),
-                )
-            else:
-                InfoBar.info(
-                    title=self.tr("功能提醒"),
-                    content=self.tr(
-                        "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
-                    ),
-                    orient=Qt.Horizontal,
-                    isClosable=True,
-                    position=InfoBarPosition.TOP,
-                    duration=3000,
-                    parent=self,
-                )
-            exitCode = 0
-        except Exception as e:
-            exitCode = 1
-            exit1Msg += f"\n{e}"
+        extra_data = (
+            dict(configureServerVariables.extraData) if configureServerVariables.extraData else {}
+        )
 
-        # 复制核心
-        try:
-            # 检查是否从压缩包解压
-            if (configureServerVariables.extraData.get("extracted_from_zip") and
-                configureServerVariables.extraData.get("temp_dir")):
-                # 复制解压目录中的所有文件到服务器目录
-                from shutil import copytree
-                import os
-                temp_dir = configureServerVariables.extraData["temp_dir"]
-                target_dir = f"./Servers/{configureServerVariables.serverName}"
-                
-                # 复制临时目录中的所有内容到目标目录
-                for item in os.listdir(temp_dir):
-                    src_path = os.path.join(temp_dir, item)
-                    dst_path = os.path.join(target_dir, item)
-                    if os.path.isdir(src_path):
-                        copytree(src_path, dst_path, dirs_exist_ok=True)
-                    else:
-                        copy(src_path, dst_path)
-                
-                # 删除临时目录
-                from shutil import rmtree
-                rmtree(temp_dir, ignore_errors=True)
-            else:
-                # 普通单文件复制
-                copy(
-                    configureServerVariables.corePath,
-                    f"./Servers/{configureServerVariables.serverName}/{configureServerVariables.coreFileName}",
-                )
-        except Exception as e:
-            exitCode = 1
-            exit1Msg += f"\n{e}"
+        serverConfig = {
+            "name": configureServerVariables.serverName,
+            "core_file_name": configureServerVariables.coreFileName,
+            "java_path": configureServerVariables.selectedJavaPath,
+            "min_memory": configureServerVariables.minMem,
+            "max_memory": configureServerVariables.maxMem,
+            "memory_unit": configureServerVariables.memUnit,
+            "jvm_arg": list(configureServerVariables.jvmArg),
+            "output_decoding": configureServerVariables.consoleOutputDeEncoding,
+            "input_encoding": configureServerVariables.consoleInputDeEncoding,
+            "icon": "Grass.png",
+            "server_type": configureServerVariables.serverType,
+            "extra_data": extra_data,
+        }
 
-        # 自动同意Mojang Eula (仅Java版服务器)
-        if cfg.get(cfg.acceptAllMojangEula) and configureServerVariables.serverType != "bedrock":
-            tmpServerName = serverVariables.serverName
-            serverVariables.serverName = configureServerVariables.serverName
+        # 是否显示Eula提示
+        auto_accept_eula = cfg.get(cfg.acceptAllMojangEula)
+        if auto_accept_eula:
             MinecraftEulaInfoBar = InfoBar(
                 icon=FIF.INFO,
                 title=self.tr("功能提醒"),
                 content=self.tr(
-                    "您开启了「创建时自动同意服务器的Eula」功能。\n \
-                        如需要查看 Minecraft Eula，请点击右边的按钮。"
+                    "您开启了「创建时自动同意服务器的Eula」功能。\n如需要查看 Minecraft Eula，请点击右边的按钮。"
                 ),
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -2640,15 +2737,35 @@ class ConfigurePage(QWidget):
                 )
             )
             MinecraftEulaInfoBar.show()
-            _MinecraftEULA(serverVariables.serverName).acceptEula()
-            serverVariables.serverName = tmpServerName
 
-        if exitCode == 0:
-            self._onSaveSuccess(exit0Msg)
-        else:
-            InfoBar.error(
-                title=self.tr("失败"),
-                content=exit1Msg,
+        # 创建并启动保存线程
+        self.javaSaveThread = JavaServerSaveThread(
+            server_config=serverConfig,
+            core_path=configureServerVariables.corePath,
+            core_file_name=configureServerVariables.coreFileName,
+            extra_data=extra_data,
+            only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
+            auto_accept_eula=auto_accept_eula,
+            exit0_msg=exit0Msg,
+            exit1_msg=exit1Msg,
+            exists_error_msg=exists_error_msg,
+            parent=self,
+        )
+        self.javaSaveThread.success.connect(self._onJavaSaveSuccess)
+        self.javaSaveThread.failed.connect(self._onJavaSaveFailed)
+        self.javaSaveThread.finished.connect(self._cleanupJavaSaveThread)
+        self.javaSaveThread.start()
+
+    @pyqtSlot(str)
+    def _onJavaSaveSuccess(self, exit0Msg: str):
+        """Java版服务器保存成功回调"""
+
+        if cfg.get(cfg.onlySaveGlobalServerConfig):
+            InfoBar.info(
+                title=self.tr("功能提醒"),
+                content=self.tr(
+                    "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                ),
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
@@ -2656,17 +2773,48 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
+        self._onSaveSuccess(exit0Msg)
+
+    @pyqtSlot(str)
+    def _onJavaSaveFailed(self, exit1Msg: str):
+        """Java版服务器保存失败回调"""
+
+        InfoBar.error(
+            title=self.tr("失败"),
+            content=exit1Msg,
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _cleanupJavaSaveThread(self):
+        """清理Java版保存线程"""
+        self.javaSaveThread = None
+
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
-        if osp.exists(
-            serverDir := f"./Servers/{configureServerVariables.serverName}/"
-        ):  # 防止出现重复回滚的操作
+
+        server_name = configureServerVariables.serverName
+        if osp.exists(serverDir := f"./Servers/{server_name}/"):
             # 删除文件夹
-            rmtree(serverDir)
-            # 删除全局配置
-            globalServerList = loads(readFile(r"./MCSL2/MCSL2_ServerList.json"))
-            globalServerList["MCSLServerList"].pop()
-            writeFile(r"./MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+            try:
+                rmtree(serverDir)
+            except Exception as e:
+                MCSL2Logger.error(f"删除服务器文件夹失败: {e}")
+
+            # 删除全局配置（通过服务器名精确查找）
+            try:
+                globalServerList = loads(readFile(r"./MCSL2/MCSL2_ServerList.json"))
+                for i, srv in enumerate(globalServerList["MCSLServerList"]):
+                    if srv["name"] == server_name:
+                        globalServerList["MCSLServerList"].pop(i)
+                        MCSL2Logger.info(f"已从全局配置中删除服务器: {server_name}")
+                        break
+                writeFile(r"./MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+            except Exception as e:
+                MCSL2Logger.error(f"删除全局配置失败: {e}")
 
     def afterInstallerDownloadDone(self):
         if self.installerDownloadView is not None:
@@ -2704,7 +2852,6 @@ class ConfigurePage(QWidget):
             self, "forgeInstaller"
         ):  # 有可能创建forgeInstaller就抛出了异常(如invalid forge installer等),故需要判断是否初始化
             del self.forgeInstaller
-        configureServerVariables.resetToDefault()  # 重置
         self._clearNewServerInputs()
 
     def hideForgeInstallerHelper(self):
