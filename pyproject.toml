@@ -27,6 +27,7 @@ dependencies = [
     "pyqt5-qt5==5.15.2; sys_platform == 'win32'",
     "pyqt5-qt5==5.15.17; sys_platform != 'win32'",
     "croniter>=6.0.0",
+    "pypdl>=1.5.7",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
