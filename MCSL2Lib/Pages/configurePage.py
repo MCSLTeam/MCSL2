@@ -118,7 +118,7 @@ class BedrockServerSaveThread(QThread):
         server_name = self.server_config["name"]
 
         try:
-            mkdir(f"Servers//{server_name}")
+            mkdir(f"./Servers/{server_name}")
         except FileExistsError:
             self.failed.emit(self.exists_error_msg)
             return
@@ -137,7 +137,7 @@ class BedrockServerSaveThread(QThread):
         try:
             if not self.only_save_global:
                 writeFile(
-                    f"Servers//{server_name}//MCSL2ServerConfig.json",
+                    f"./Servers/{server_name}/MCSL2ServerConfig.json",
                     dumps(self.server_config, indent=4),
                 )
         except Exception as e:
@@ -2316,7 +2316,7 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.show()
             try:
                 self.forgeInstaller = ForgeInstaller(
-                    serverPath=f"Servers//{configureServerVariables.serverName}",
+                    serverPath=f"./Servers/{configureServerVariables.serverName}",
                     file=configureServerVariables.coreFileName,
                     java=configureServerVariables.selectedJavaPath,
                     logDecode=cfg.get(cfg.outputDeEncoding),
@@ -2403,7 +2403,7 @@ class ConfigurePage(QWidget):
         exit1Msg = self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
         exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
 
-        if osp.exists(f"Servers//{configureServerVariables.serverName}"):
+        if osp.exists(f"./Servers/{configureServerVariables.serverName}"):
             InfoBar.error(
                 title=self.tr("失败"),
                 content=exists_error_msg,
@@ -2535,7 +2535,7 @@ class ConfigurePage(QWidget):
 
         # 新建文件夹
         try:
-            mkdir(f"Servers//{configureServerVariables.serverName}")
+            mkdir(f"./Servers/{configureServerVariables.serverName}")
         except FileExistsError:
             InfoBar.error(
                 title=self.tr("失败"),
@@ -2562,7 +2562,7 @@ class ConfigurePage(QWidget):
         try:
             if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 writeFile(
-                    f"Servers//{configureServerVariables.serverName}//MCSL2ServerConfig.json",
+                    f"./Servers/{configureServerVariables.serverName}/MCSL2ServerConfig.json",
                     dumps(serverConfig, indent=4),
                 )
             else:
@@ -2661,14 +2661,14 @@ class ConfigurePage(QWidget):
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
         if osp.exists(
-            serverDir := f"Servers//{configureServerVariables.serverName}"
+            serverDir := f"./Servers/{configureServerVariables.serverName}"
         ):  # 防止出现重复回滚的操作
             # 删除文件夹
             rmtree(serverDir)
             # 删除全局配置
-            globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+            globalServerList = loads(readFile(r"./MCSL2/MCSL2_ServerList.json"))
             globalServerList["MCSLServerList"].pop()
-            writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+            writeFile(r"./MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
 
     def afterInstallerDownloadDone(self):
         if self.installerDownloadView is not None:

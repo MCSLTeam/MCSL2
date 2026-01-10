@@ -1328,7 +1328,7 @@ class ServerManagerPage(QWidget):
             if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
                 copy(
                     editServerVariables.corePath,
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}",
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.coreFileName}",
                 )
                 w2 = MessageBox(
                     title=self.tr("提示"),
@@ -1339,25 +1339,25 @@ class ServerManagerPage(QWidget):
                 w2.cancelButton.setText(self.tr("不需要"))
                 w2.yesSignal.connect(
                     remove(
-                        f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
+                        f"./Servers/{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
                     )
                 )
                 w2.exec()
             elif (
                 osp.getsize(
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
                 )
                 != osp.getsize(
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.coreFileName}"
                 )
                 and editServerVariables.coreFileName == editServerVariables.oldCoreFileName
             ):
                 remove(
-                    f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
+                    f"./Servers/{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
                 )
                 copy(
                     editServerVariables.corePath,
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}",
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.coreFileName}",
                 )
         except Exception as e:
             exitCode = 1
@@ -1367,8 +1367,8 @@ class ServerManagerPage(QWidget):
         try:
             if editServerVariables.serverName != editServerVariables.oldServerName:
                 rename(
-                    f"Servers//{editServerVariables.oldServerName}//",
-                    f"Servers//{editServerVariables.serverName}//",
+                    f"./Servers/{editServerVariables.oldServerName}//",
+                    f"./Servers/{editServerVariables.serverName}//",
                 )
         except Exception as e:
             exitCode = 1
@@ -1389,7 +1389,7 @@ class ServerManagerPage(QWidget):
         try:
             if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 writeFile(
-                    f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
+                    f"./Servers/{editServerVariables.serverName}/MCSL2ServerConfig.json",
                     dumps(serverConfig, indent=4),
                 )
             else:
@@ -1426,7 +1426,7 @@ class ServerManagerPage(QWidget):
 
                 try:
                     self.forgeInstaller = ForgeInstaller(
-                        serverPath=f"Servers//{editServerVariables.serverName}",
+                        serverPath=f"./Servers/{editServerVariables.serverName}",
                         file=editServerVariables.coreFileName,
                         java=editServerVariables.selectedJavaPath,
                         logDecode=cfg.get(cfg.outputDeEncoding),

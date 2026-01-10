@@ -59,7 +59,7 @@ class _ServerProcessBridge(QObject):
         self.config: ServerVariables = v
         self.javaPath: str = self.config.javaPath
         self.processArgs = arg
-        self.workingDirectory: str = str(osp.realpath(f"Servers//{self.config.serverName}"))
+        self.workingDirectory: str = str(osp.realpath(f"./Servers/{self.config.serverName}"))
         self.partialData: str = b""
         self.handledServer = None
         self.serverProcess = self.createServerProcess()
@@ -152,7 +152,7 @@ class _BedrockServerProcessBridge(_ServerProcessBridge):
         """
         # 基岩版服务器不使用 Java，直接运行可执行文件
         self.config: ServerVariables = v
-        self.workingDirectory: str = str(osp.realpath(f"Servers//{self.config.serverName}"))
+        self.workingDirectory: str = str(osp.realpath(f"./Servers/{self.config.serverName}"))
         self.partialData: str = b""
         self.handledServer = None
 

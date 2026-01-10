@@ -714,7 +714,7 @@ class MCSLv1(QWidget):
         try:
             copytree(
                 importVariables.executableFileDir,
-                f"Servers//{importVariables.serverName}",
+                f"./Servers/{importVariables.serverName}",
             )
         except Exception:
             InfoBar.error(
@@ -752,7 +752,7 @@ class MCSLv1(QWidget):
         try:
             if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 with open(
-                    f"Servers//{importVariables.serverName}//MCSL2ServerConfig.json",
+                    f"./Servers/{importVariables.serverName}/MCSL2ServerConfig.json",
                     "w+",
                     encoding="utf-8",
                 ) as serverListFile:

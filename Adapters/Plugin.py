@@ -77,7 +77,7 @@ class PluginLoader(BasePluginLoader):
         importedPlugin = importedPlugin.__getattribute__(pluginName)
         try:
             importedPlugin.pluginName = pluginName
-            importedPluginConfig: dict = loads(readFile(f"Plugins//{pluginName}//config.json"))
+            importedPluginConfig: dict = loads(readFile(f"./Plugins/{pluginName}/config.json"))
             importedPlugin.version = importedPluginConfig.get("version")
             importedPlugin.description = importedPluginConfig.get("description")
             importedPlugin.author = importedPluginConfig.get("author")
@@ -96,7 +96,7 @@ class PluginLoader(BasePluginLoader):
     def getInfo(cls, pluginName: str) -> PluginType:
         pluginType = PluginType()
         pluginType.pluginName = pluginName
-        importedPluginConfig: dict = loads(readFile(f"Plugins//{pluginName}//config.json"))
+        importedPluginConfig: dict = loads(readFile(f"./Plugins/{pluginName}/config.json"))
         pluginType.version = importedPluginConfig.get("version")
         pluginType.description = importedPluginConfig.get("description")
         pluginType.author = importedPluginConfig.get("author")
@@ -267,7 +267,7 @@ class PluginManager(BasePluginManager):
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: openLocalFile(f".//Plugins/{instance}/")
+                lambda instance: openLocalFile(f"./Plugins/{instance}/")
             )
             self.pluginWidget.deleteBtn.selfClicked.connect(
                 lambda instance: self.deletePlugin(instance, self.pluginWidget.deleteBtn.window())
@@ -322,7 +322,7 @@ class PluginManager(BasePluginManager):
 
     def deletePluginFile(self, pluginName, parent):
         if self.disablePlugin(pluginName)[0]:
-            rmtree(f"Plugins//{pluginName}")
+            rmtree(f"./Plugins/{pluginName}")
         else:
             InfoBar.error(
                 title="提示",

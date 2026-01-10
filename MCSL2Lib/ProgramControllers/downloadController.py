@@ -955,8 +955,8 @@ class DL_EntryManager(QObject):
 
     onGetEntries = pyqtSignal(list)
     onReadEntries = pyqtSignal(dict)
-    file = "MCSL2//Downloads//download_entries.json"
-    path = "MCSL2//Downloads"
+    file = "./MCSL2/Downloads/download_entries.json"
+    path = "./MCSL2/Downloads"
 
     def __init__(self, _entries, mutex: QMutex):
         super().__init__()
