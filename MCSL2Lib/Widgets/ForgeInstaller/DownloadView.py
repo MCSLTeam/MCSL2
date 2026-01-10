@@ -63,9 +63,12 @@ class EntryScrollArea(SmoothScrollArea):
 class ForgeInstallerDownloadView(MessageBoxBase):
     allDone = pyqtSignal()
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, title: str = None):
         super().__init__(parent)
-        self.titleLabel = SubtitleLabel(self.tr("Forge Installer"), self)
+        # 使用传入的 title，如果没有则默认为 "Forge Installer"
+        if title is None:
+            title = self.tr("Forge Installer")
+        self.titleLabel = SubtitleLabel(title, self)
         self.scrollArea = EntryScrollArea(self)
 
         self.viewLayout.addWidget(self.titleLabel)

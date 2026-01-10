@@ -58,7 +58,7 @@ from MCSL2Lib.ProgramControllers.serverImporter import NoShellArchivesImporter
 from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ServerControllers.processCreator import _MinecraftEULA
-from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller
+from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller, NeoForgeInstaller
 
 # from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
 # from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
@@ -2413,13 +2413,96 @@ class ConfigurePage(QWidget):
         """
         serverType = configureServerVariables.serverType
 
+        # 如果 serverType 是空的，尝试自动检测 Forge/NeoForge installer
+        if not serverType or serverType == "":
+            # Check for NeoForge first
+            detectedServerType = None
+            versionInfo = None
+            
+            if (
+                t := NeoForgeInstaller.isPossibleNeoForgeInstaller(configureServerVariables.corePath)
+            ) is not None:
+                detectedServerType = "neoforge"
+                mcVersion, version = t
+                versionInfo = (mcVersion, version, "NeoForge")
+            # Then check for Forge
+            elif (
+                t := ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)
+            ) is not None:
+                detectedServerType = "forge"
+                mcVersion, version = t
+                versionInfo = (mcVersion, version, "Forge")
+            
+            # Show confirmation dialog if installer detected
+            if versionInfo is not None:
+                mcVersion, version, typeName = versionInfo
+                w = MessageBox(
+                    self.tr(f"这是否为一个 {typeName} 服务器？"),
+                    self.tr("检测到可能为 ")
+                    + str(mcVersion)
+                    + self.tr(f" 版本的 {typeName}: ")
+                    + version,
+                    self,
+                )
+                w.yesButton.setText(self.tr("是"))
+                w.cancelButton.setText(self.tr("不是"))
+                # 如果选yes，设置 serverType；如果选no，保持为空
+                if w.exec() == 1:
+                    configureServerVariables.serverType = detectedServerType
+                    serverType = detectedServerType
+                else:
+                    # 用户选择"不是"，确保 serverType 为空
+                    configureServerVariables.serverType = ""
+                    serverType = ""
+
         # serverType dispatcher: 总的处理关于serverType不同而引起的新建服务器前的差异性!
         if serverType == "forge":  # case 1
-            w = MessageBox(
-                self.tr("这是 Forge 安装器"),
-                self.tr("是否需要自动安装 Forge 服务端？"),
-                self,
-            )
+            # 尝试获取版本信息
+            versionInfo = ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)
+            if versionInfo:
+                mcVersion, forgeVersion = versionInfo
+                w = MessageBox(
+                    self.tr("这是 Forge 安装器"),
+                    self.tr("检测到 Forge 版本：\nMinecraft: ") 
+                    + str(mcVersion) 
+                    + self.tr("\nForge: ") 
+                    + forgeVersion
+                    + self.tr("\n\n是否需要自动安装 Forge 服务端？"),
+                    self,
+                )
+            else:
+                w = MessageBox(
+                    self.tr("这是 Forge 安装器"),
+                    self.tr("是否需要自动安装 Forge 服务端？"),
+                    self,
+                )
+            w.yesButton.setText(self.tr("需要"))
+            w.cancelButton.setText(self.tr("不需要"))
+            # 如果选no
+            if w.exec() == 0:
+                configureServerVariables.serverType = ""
+                configureServerVariables.extraData = {}
+
+        elif serverType == "neoforge":
+            # 尝试获取版本信息
+            versionInfo = NeoForgeInstaller.isPossibleNeoForgeInstaller(configureServerVariables.corePath)
+            if versionInfo:
+                mcVersion, neoforgeVersion = versionInfo
+                w = MessageBox(
+                    self.tr("这是 NeoForge 安装器"),
+                    self.tr("检测到 NeoForge 版本：\nMinecraft: ") 
+                    + str(mcVersion) 
+                    + self.tr("\nNeoForge: ") 
+                    + neoforgeVersion
+                    + self.tr("\n\n是否需要自动安装 NeoForge 服务端？"),
+                    self,
+                )
+            else:
+                w = MessageBox(
+                    self.tr("这是 NeoForge 安装器"),
+                    self.tr("是否需要自动安装 NeoForge 服务端？"),
+                    self,
+                )
             w.yesButton.setText(self.tr("需要"))
             w.cancelButton.setText(self.tr("不需要"))
             # 如果选no
@@ -2434,25 +2517,6 @@ class ConfigurePage(QWidget):
         elif serverType == "vanilla":  # case 2
             pass
 
-        else:
-            if (
-                t := ForgeInstaller.isPossibleForgeInstaller(configureServerVariables.corePath)
-            ) is not None:
-                mcVersion, forgeVersion = t
-                w = MessageBox(
-                    self.tr("这是否为一个 Forge 服务器？"),
-                    self.tr("检测到可能为 ")
-                    + str(mcVersion)
-                    + self.tr(" 版本的 Forge: ")
-                    + forgeVersion,
-                    self,
-                )
-                w.yesButton.setText(self.tr("是"))
-                w.cancelButton.setText(self.tr("不是"))
-                # 如果选yes
-                if w.exec() == 1:
-                    configureServerVariables.serverType = "forge"
-
         self.saveNewServer()  # 真正执行保存服务器
 
     def postNewServerDispatcher(self, exit0Msg=""):
@@ -2460,7 +2524,56 @@ class ConfigurePage(QWidget):
         在self.saveNewServer() >>后<< (post)，处理不同serverType而引起的差异性!
         其实通常是在self.saveNewServer()复制完核心后执行的，用于处理类似forge安装等
         """
-        if configureServerVariables.serverType == "forge":
+        if configureServerVariables.serverType == "neoforge":
+            self.installingForgeStateToolTip = StateToolTip(
+                self.tr("安装 NeoForge"), self.tr("请稍后，正在安装..."), self
+            )
+            self.installingForgeStateToolTip.move(self.installingForgeStateToolTip.getSuitablePos())
+            self.installingForgeStateToolTip.show()
+            try:
+                neoforge_server_path = f"./Servers/{configureServerVariables.serverName}"
+                neoforge_core_file = configureServerVariables.coreFileName
+
+                self.neoforgeInstaller = NeoForgeInstaller(
+                    serverPath=neoforge_server_path,
+                    file=neoforge_core_file,
+                    java=configureServerVariables.selectedJavaPath,
+                    logDecode=cfg.get(cfg.outputDeEncoding),
+                )
+
+                configureServerVariables.extraData["neoforge_version"] = (
+                    self.neoforgeInstaller.neoforgeVersion
+                )
+                self.neoforgeInstaller.installFinished.connect(self.afterInstallingNeoForge)
+
+                # init installerLogViewer
+                self.installerLogViewer = ForgeInstallerProgressBox(
+                    self.neoforgeInstaller.installerLogOutput, self, 
+                    title=self.tr("NeoForge 安装器 (正在安装...)")
+                )
+                self.installerLogViewer.cancelButton.clicked.connect(
+                    self.neoforgeInstaller.cancelInstall
+                )
+                self.installerLogViewer.yesButton.clicked.connect(self.hideForgeInstallerHelper)
+                self.installerLogViewer.setModal(True)
+                self.installerLogViewer.hide()
+
+                self.installerDownloadView = ForgeInstallerDownloadView(
+                    self, title=self.tr("NeoForge Installer")
+                )
+                self.installerDownloadView.cancelButton.clicked.connect(
+                    self.neoforgeInstaller.cancelInstall
+                )
+                self.installerDownloadView.yesButton.setEnabled(False)
+                self.installerDownloadView.setModal(True)
+                self.neoforgeInstaller.downloadInfo.connect(self.installerDownloadView.onProgress)
+                self.installerDownloadView.allDone.connect(self.afterInstallerDownloadDone)
+                self.installerDownloadView.show()
+
+                self.neoforgeInstaller.asyncInstall()
+            except Exception as e:
+                self.afterInstallingNeoForge(False, str(e))
+        elif configureServerVariables.serverType == "forge":
             self.installingForgeStateToolTip = StateToolTip(
                 self.tr("安装 Forge"), self.tr("请稍后，正在安装..."), self
             )
@@ -2518,6 +2631,11 @@ class ConfigurePage(QWidget):
             )
 
     def _clearNewServerInputs(self):
+        # 无论用户设置如何，都要清除 serverType 和 extraData
+        # 这些是临时的安装状态，不应该保留到下一次创建服务器
+        configureServerVariables.serverType = ""
+        configureServerVariables.extraData = {}
+        
         if not cfg.get(cfg.clearAllNewServerConfigInProgram):
             return
 
@@ -2548,135 +2666,42 @@ class ConfigurePage(QWidget):
             parent=self,
         )
 
-    def _onSaveSuccess(self, exit0Msg: str):
+    def _onSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
+        """在保存成功后调用 postNewServerDispatcher"""
         self.postNewServerDispatcher(exit0Msg=exit0Msg)
-
-    def _saveBedrockServerAsync(self):
-        exit0Msg = (
-            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
-        )
-        exit1Msg = (
-            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
-        )
-        exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
-
-        if osp.exists(f"./Servers/{configureServerVariables.serverName}"):
-            InfoBar.error(
-                title=self.tr("失败"),
-                content=exists_error_msg,
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-            return
-
-        extra_data = (
-            dict(configureServerVariables.extraData) if configureServerVariables.extraData else {}
-        )
-
-        serverConfig = {
-            "name": configureServerVariables.serverName,
-            "core_file_name": configureServerVariables.coreFileName,
-            "java_path": configureServerVariables.selectedJavaPath,
-            "min_memory": configureServerVariables.minMem,
-            "max_memory": configureServerVariables.maxMem,
-            "memory_unit": configureServerVariables.memUnit,
-            "jvm_arg": list(configureServerVariables.jvmArg),
-            "output_decoding": configureServerVariables.consoleOutputDeEncoding,
-            "input_encoding": configureServerVariables.consoleInputDeEncoding,
-            "icon": "Grass.png",
-            "server_type": configureServerVariables.serverType,
-            "extra_data": extra_data,
-        }
-
-        self.creatingBedrockStateToolTip = StateToolTip(
-            self.tr("创建基岩版服务器"), self.tr("请稍后，正在创建..."), self
-        )
-        self.creatingBedrockStateToolTip.move(self.creatingBedrockStateToolTip.getSuitablePos())
-        self.creatingBedrockStateToolTip.show()
-
-        self.bedrockSaveServerPrimaryPushBtn.setEnabled(False)
-
-        self.bedrockSaveThread = BedrockServerSaveThread(
-            server_config=serverConfig,
-            core_path=configureServerVariables.corePath,
-            core_file_name=configureServerVariables.coreFileName,
-            extra_data=extra_data,
-            only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
-            exit0_msg=exit0Msg,
-            exit1_msg=exit1Msg,
-            exists_error_msg=exists_error_msg,
-            parent=self,
-        )
-        self.bedrockSaveThread.success.connect(self._onBedrockSaveSuccess)
-        self.bedrockSaveThread.failed.connect(self._onBedrockSaveFailed)
-        self.bedrockSaveThread.finished.connect(self._cleanupBedrockSaveThread)
-        self.bedrockSaveThread.start()
-
-    @pyqtSlot(str)
-    def _onBedrockSaveSuccess(self, exit0Msg: str):
-        if getattr(self, "creatingBedrockStateToolTip", None):
-            self.creatingBedrockStateToolTip.setContent(self.tr("创建成功！"))
-            self.creatingBedrockStateToolTip.setState(True)
-            self.creatingBedrockStateToolTip = None
-
-        if cfg.get(cfg.onlySaveGlobalServerConfig):
-            InfoBar.info(
-                title=self.tr("功能提醒"),
-                content=self.tr(
-                    "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
-                ),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self,
-            )
-
-        self._onSaveSuccess(exit0Msg)
-
-    @pyqtSlot(str)
-    def _onBedrockSaveFailed(self, exit1Msg: str):
-        if getattr(self, "creatingBedrockStateToolTip", None):
-            self.creatingBedrockStateToolTip.setContent(self.tr("创建失败！"))
-            self.creatingBedrockStateToolTip.setState(False)
-            self.creatingBedrockStateToolTip = None
-
-        InfoBar.error(
-            title=self.tr("失败"),
-            content=exit1Msg,
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP,
-            duration=3000,
-            parent=self,
-        )
-
-    def _cleanupBedrockSaveThread(self):
-        self.bedrockSaveServerPrimaryPushBtn.setEnabled(True)
-        self.bedrockSaveThread = None
 
     def saveNewServer(self):
         """保存服务器的分发器"""
-        if configureServerVariables.serverType == "bedrock":
-            self._saveBedrockServerAsync()
-        else:
-            self._saveJavaServerAsync()
+        self.saveServer(configureServerVariables, isEditing=False)
 
-    def _saveJavaServerAsync(self):
+    def saveServer(self, serverVariables, isEditing=False):
+        """
+        通用保存服务器方法
+        Args:
+            serverVariables: 服务器配置变量对象 (configureServerVariables 或 editServerVariables)
+            isEditing: 是否为编辑模式
+        """
+        if serverVariables.serverType == "bedrock":
+            self._saveBedrockServerAsync(serverVariables, isEditing)
+        else:
+            self._saveJavaServerAsync(serverVariables, isEditing)
+
+    def _saveJavaServerAsync(self, serverVariables, isEditing=False):
         """异步保存Java版服务器"""
         exit0Msg = (
-            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」成功！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」成功！")
         )
         exit1Msg = (
-            self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」失败！")
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」失败！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」失败！")
         )
         exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
 
-        # 提前检查是否存在同名服务器
-        if osp.exists(f"./Servers/{configureServerVariables.serverName}"):
+        # 提前检查是否存在同名服务器 (仅新建时检查)
+        if not isEditing and osp.exists(f"./Servers/{serverVariables.serverName}"):
             InfoBar.error(
                 title=self.tr("失败"),
                 content=exists_error_msg,
@@ -2689,31 +2714,31 @@ class ConfigurePage(QWidget):
             return
 
         # 检查JVM参数防止意外无法启动服务器
-        for arg in list(configureServerVariables.jvmArg):
+        for arg in list(serverVariables.jvmArg):
             if arg == "" or arg == " ":
-                configureServerVariables.jvmArg.remove(arg)
+                serverVariables.jvmArg.remove(arg)
 
         extra_data = (
-            dict(configureServerVariables.extraData) if configureServerVariables.extraData else {}
+            dict(serverVariables.extraData) if serverVariables.extraData else {}
         )
 
         serverConfig = {
-            "name": configureServerVariables.serverName,
-            "core_file_name": configureServerVariables.coreFileName,
-            "java_path": configureServerVariables.selectedJavaPath,
-            "min_memory": configureServerVariables.minMem,
-            "max_memory": configureServerVariables.maxMem,
-            "memory_unit": configureServerVariables.memUnit,
-            "jvm_arg": list(configureServerVariables.jvmArg),
-            "output_decoding": configureServerVariables.consoleOutputDeEncoding,
-            "input_encoding": configureServerVariables.consoleInputDeEncoding,
+            "name": serverVariables.serverName,
+            "core_file_name": serverVariables.coreFileName,
+            "java_path": serverVariables.selectedJavaPath,
+            "min_memory": serverVariables.minMem,
+            "max_memory": serverVariables.maxMem,
+            "memory_unit": serverVariables.memUnit,
+            "jvm_arg": list(serverVariables.jvmArg),
+            "output_decoding": serverVariables.consoleOutputDeEncoding,
+            "input_encoding": serverVariables.consoleInputDeEncoding,
             "icon": "Grass.png",
-            "server_type": configureServerVariables.serverType,
+            "server_type": serverVariables.serverType,
             "extra_data": extra_data,
         }
 
-        # 是否显示Eula提示
-        auto_accept_eula = cfg.get(cfg.acceptAllMojangEula)
+        # 是否显示Eula提示 (仅新建时显示)
+        auto_accept_eula = cfg.get(cfg.acceptAllMojangEula) if not isEditing else False
         if auto_accept_eula:
             MinecraftEulaInfoBar = InfoBar(
                 icon=FIF.INFO,
@@ -2741,8 +2766,8 @@ class ConfigurePage(QWidget):
         # 创建并启动保存线程
         self.javaSaveThread = JavaServerSaveThread(
             server_config=serverConfig,
-            core_path=configureServerVariables.corePath,
-            core_file_name=configureServerVariables.coreFileName,
+            core_path=serverVariables.corePath,
+            core_file_name=serverVariables.coreFileName,
             extra_data=extra_data,
             only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
             auto_accept_eula=auto_accept_eula,
@@ -2751,15 +2776,14 @@ class ConfigurePage(QWidget):
             exists_error_msg=exists_error_msg,
             parent=self,
         )
-        self.javaSaveThread.success.connect(self._onJavaSaveSuccess)
+        self.javaSaveThread.success.connect(lambda msg: self._onJavaSaveSuccess(msg, serverVariables, isEditing))
         self.javaSaveThread.failed.connect(self._onJavaSaveFailed)
         self.javaSaveThread.finished.connect(self._cleanupJavaSaveThread)
         self.javaSaveThread.start()
 
     @pyqtSlot(str)
-    def _onJavaSaveSuccess(self, exit0Msg: str):
+    def _onJavaSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
         """Java版服务器保存成功回调"""
-
         if cfg.get(cfg.onlySaveGlobalServerConfig):
             InfoBar.info(
                 title=self.tr("功能提醒"),
@@ -2773,12 +2797,11 @@ class ConfigurePage(QWidget):
                 parent=self,
             )
 
-        self._onSaveSuccess(exit0Msg)
+        self._onSaveSuccess(exit0Msg, serverVariables, isEditing)
 
     @pyqtSlot(str)
     def _onJavaSaveFailed(self, exit1Msg: str):
         """Java版服务器保存失败回调"""
-
         InfoBar.error(
             title=self.tr("失败"),
             content=exit1Msg,
@@ -2793,11 +2816,127 @@ class ConfigurePage(QWidget):
         """清理Java版保存线程"""
         self.javaSaveThread = None
 
-    def addNewServerRollback(self):
-        """新建服务器失败后的回滚"""
+    def _saveBedrockServerAsync(self, serverVariables, isEditing=False):
+        """异步保存基岩版服务器"""
+        exit0Msg = (
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」成功！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」成功！")
+        )
+        exit1Msg = (
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」失败！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」失败！")
+        )
+        exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
 
-        server_name = configureServerVariables.serverName
-        if osp.exists(serverDir := f"./Servers/{server_name}/"):
+        if not isEditing and osp.exists(f"./Servers/{serverVariables.serverName}"):
+            InfoBar.error(
+                title=self.tr("失败"),
+                content=exists_error_msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        extra_data = (
+            dict(serverVariables.extraData) if serverVariables.extraData else {}
+        )
+
+        serverConfig = {
+            "name": serverVariables.serverName,
+            "core_file_name": serverVariables.coreFileName,
+            "java_path": serverVariables.selectedJavaPath,
+            "min_memory": serverVariables.minMem,
+            "max_memory": serverVariables.maxMem,
+            "memory_unit": serverVariables.memUnit,
+            "jvm_arg": list(serverVariables.jvmArg),
+            "output_decoding": serverVariables.consoleOutputDeEncoding,
+            "input_encoding": serverVariables.consoleInputDeEncoding,
+            "icon": "Grass.png",
+            "server_type": serverVariables.serverType,
+            "extra_data": extra_data,
+        }
+
+        if not isEditing:
+            self.creatingBedrockStateToolTip = StateToolTip(
+                self.tr("创建基岩版服务器"), self.tr("请稍后，正在创建..."), self
+            )
+            self.creatingBedrockStateToolTip.move(self.creatingBedrockStateToolTip.getSuitablePos())
+            self.creatingBedrockStateToolTip.show()
+
+            if hasattr(self, 'bedrockSaveServerPrimaryPushBtn'):
+                self.bedrockSaveServerPrimaryPushBtn.setEnabled(False)
+
+        self.bedrockSaveThread = BedrockServerSaveThread(
+            server_config=serverConfig,
+            core_path=serverVariables.corePath,
+            core_file_name=serverVariables.coreFileName,
+            extra_data=extra_data,
+            only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
+            exit0_msg=exit0Msg,
+            exit1_msg=exit1Msg,
+            exists_error_msg=exists_error_msg,
+            parent=self,
+        )
+        self.bedrockSaveThread.success.connect(lambda msg: self._onBedrockSaveSuccess(msg, serverVariables, isEditing))
+        self.bedrockSaveThread.failed.connect(lambda msg: self._onBedrockSaveFailed(msg, isEditing))
+        self.bedrockSaveThread.finished.connect(lambda: self._cleanupBedrockSaveThread(isEditing))
+        self.bedrockSaveThread.start()
+
+    @pyqtSlot(str)
+    def _onBedrockSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
+        """基岩版服务器保存成功回调"""
+        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+            self.creatingBedrockStateToolTip.setContent(self.tr("创建成功！"))
+            self.creatingBedrockStateToolTip.setState(True)
+            self.creatingBedrockStateToolTip = None
+
+        if cfg.get(cfg.onlySaveGlobalServerConfig):
+            InfoBar.info(
+                title=self.tr("功能提醒"),
+                content=self.tr(
+                    "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                ),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+        self._onSaveSuccess(exit0Msg, serverVariables, isEditing)
+
+    @pyqtSlot(str)
+    def _onBedrockSaveFailed(self, exit1Msg: str, isEditing=False):
+        """基岩版服务器保存失败回调"""
+        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+            self.creatingBedrockStateToolTip.setContent(self.tr("创建失败！"))
+            self.creatingBedrockStateToolTip.setState(False)
+            self.creatingBedrockStateToolTip = None
+
+        InfoBar.error(
+            title=self.tr("失败"),
+            content=exit1Msg,
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _cleanupBedrockSaveThread(self, isEditing=False):
+        """清理基岩版保存线程"""
+        if not isEditing and hasattr(self, 'bedrockSaveServerPrimaryPushBtn'):
+            self.bedrockSaveServerPrimaryPushBtn.setEnabled(True)
+        self.bedrockSaveThread = None
+
+    def addNewServerRollback(self, serverName):
+        """新建服务器失败后的回滚"""
+        if osp.exists(serverDir := f"./Servers/{serverName}/"):
             # 删除文件夹
             try:
                 rmtree(serverDir)
@@ -2808,9 +2947,9 @@ class ConfigurePage(QWidget):
             try:
                 globalServerList = loads(readFile(r"./MCSL2/MCSL2_ServerList.json"))
                 for i, srv in enumerate(globalServerList["MCSLServerList"]):
-                    if srv["name"] == server_name:
+                    if srv["name"] == serverName:
                         globalServerList["MCSLServerList"].pop(i)
-                        MCSL2Logger.info(f"已从全局配置中删除服务器: {server_name}")
+                        MCSL2Logger.info(f"已从全局配置中删除服务器: {serverName}")
                         break
                 writeFile(r"./MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
             except Exception as e:
@@ -2847,7 +2986,7 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.setContent(self.tr("怪，安装失败！" + message))
             self.installingForgeStateToolTip.setState(True)
             # self.installingForgeStateToolTip = None
-            self.addNewServerRollback()
+            self.addNewServerRollback(configureServerVariables.serverName)
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(
             self, "forgeInstaller"
@@ -2873,3 +3012,30 @@ class ConfigurePage(QWidget):
         showForgeInstallMsgBoxBtn.clicked.connect(self.installingForgeInfoBar.close)
         self.installingForgeInfoBar.addWidget(showForgeInstallMsgBoxBtn)
         self.installingForgeInfoBar.show()
+
+    def afterInstallingNeoForge(self, installFinished, message=""):
+        """Handle NeoForge installation completion"""
+        if self.installerLogViewer:
+            self.installerLogViewer.hide()
+            self.installerLogViewer.close()
+            self.installerLogViewer.deleteLater()
+
+        if self.installerDownloadView is not None:
+            self.installerDownloadView.hide()
+            self.installerDownloadView.close()
+            self.installerDownloadView.deleteLater()
+            self.installerDownloadView = None
+
+        if installFinished:
+            self.installingForgeStateToolTip.setContent(self.tr("安装成功！"))
+            self.installingForgeStateToolTip.setState(True)
+            self.installingForgeStateToolTip = None
+        else:
+            print("NeoForge 安装失败: " + message)
+            self.installingForgeStateToolTip.setContent(self.tr("怪，安装失败！" + message))
+            self.installingForgeStateToolTip.setState(True)
+            self.addNewServerRollback(configureServerVariables.serverName)
+            MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
+        if hasattr(self, "neoforgeInstaller"):
+            del self.neoforgeInstaller
+        self._clearNewServerInputs()
