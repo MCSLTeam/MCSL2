@@ -1735,10 +1735,10 @@ class ConfigurePage(QWidget):
     @pyqtSlot(list)
     def autoDetectJavaFinished(self, _JavaPaths: list):
         """自动查找Java结果处理"""
-        if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
-            remove("MCSL2/AutoDetectJavaHistory.txt")
-        if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
-            remove("MCSL2/AutoDetectJavaHistory.json")
+        if osp.exists("./MCSL2/AutoDetectJavaHistory.txt"):
+            remove("./MCSL2/AutoDetectJavaHistory.txt")
+        if osp.exists("./MCSL2/AutoDetectJavaHistory.json"):
+            remove("./MCSL2/AutoDetectJavaHistory.json")
 
         savedJavaList = javaDetector.loadJavaList()
         invaildJavaList = []
@@ -2351,7 +2351,6 @@ class ConfigurePage(QWidget):
                 self.forgeInstaller.asyncInstall()
             except Exception as e:
                 self.afterInstallingForge(False, str(e))
-                self.addNewServerRollback()
         else:
             InfoBar.success(
                 title=self.tr("成功"),
@@ -2396,7 +2395,6 @@ class ConfigurePage(QWidget):
 
     def _onSaveSuccess(self, exit0Msg: str):
         self.postNewServerDispatcher(exit0Msg=exit0Msg)
-        self._clearNewServerInputs()
 
     def _saveBedrockServerAsync(self):
         exit0Msg = self.tr("添加服务器「") + configureServerVariables.serverName + self.tr("」成功！")
@@ -2661,7 +2659,7 @@ class ConfigurePage(QWidget):
     def addNewServerRollback(self):
         """新建服务器失败后的回滚"""
         if osp.exists(
-            serverDir := f"./Servers/{configureServerVariables.serverName}"
+            serverDir := f"./Servers/{configureServerVariables.serverName}/"
         ):  # 防止出现重复回滚的操作
             # 删除文件夹
             rmtree(serverDir)
@@ -2707,6 +2705,7 @@ class ConfigurePage(QWidget):
         ):  # 有可能创建forgeInstaller就抛出了异常(如invalid forge installer等),故需要判断是否初始化
             del self.forgeInstaller
         configureServerVariables.resetToDefault()  # 重置
+        self._clearNewServerInputs()
 
     def hideForgeInstallerHelper(self):
         self.installingForgeInfoBar = InfoBar(

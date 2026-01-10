@@ -229,8 +229,8 @@ def backupSaves(serverConfig: ServerVariables, parent):
         serverName = serverConfig.serverName
         levelNameList = generateLevelNameList(serverName, levelName)
         if levelNameList is not None:
-            if osp.exists(f"MCSL2/BackupTemp_{serverConfig.serverName}/"):
-                rmtree(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
+            if osp.exists(f"./MCSL2/BackupTemp_{serverConfig.serverName}/"):
+                rmtree(f"./MCSL2/BackupTemp_{serverConfig.serverName}/")
             s = QFileDialog.getSaveFileName(
                 parent,
                 parent.tr("MCSL2 - 备份服务器存档"),
@@ -239,12 +239,12 @@ def backupSaves(serverConfig: ServerVariables, parent):
             )[0]
             if s == "":
                 return
-            mkdir(f"MCSL2/BackupTemp_{serverConfig.serverName}/")
+            mkdir(f"./MCSL2/BackupTemp_{serverConfig.serverName}/")
             for dir in levelNameList:
                 try:
                     copytree(
-                        osp.abspath(f"Servers/{serverConfig.serverName}/{dir}/"),
-                        osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
+                        osp.abspath(f"./Servers/{serverConfig.serverName}/{dir}/"),
+                        osp.abspath(f"./MCSL2/BackupTemp_{serverConfig.serverName}/{dir}/"),
                     )
                 except FileNotFoundError:
                     levelNameList.remove(dir)
@@ -253,7 +253,7 @@ def backupSaves(serverConfig: ServerVariables, parent):
             tmpArchiveThread = MakeArchiveThread(
                 s.replace(".zip", ""),
                 "zip",
-                osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"),
+                osp.abspath(f"./MCSL2/BackupTemp_{serverConfig.serverName}/"),
                 parent,
             )
             tmpArchiveThread.successSignal.connect(
@@ -270,10 +270,10 @@ def backupSaves(serverConfig: ServerVariables, parent):
                 )
             )
             tmpArchiveThread.successSignal.connect(
-                lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
+                lambda: rmtree(osp.abspath(f"./MCSL2/BackupTemp_{serverConfig.serverName}/"))
             )
             tmpArchiveThread.errorSignal.connect(
-                lambda: rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}/"))
+                lambda: rmtree(osp.abspath(f"./MCSL2/BackupTemp_{serverConfig.serverName}/"))
             )
             tmpArchiveThread.start()
         else:
@@ -288,7 +288,7 @@ def backupSaves(serverConfig: ServerVariables, parent):
             )
     except Exception as e:
         try:
-            rmtree(osp.abspath(f"MCSL2/BackupTemp_{serverConfig.serverName}\\"))
+            rmtree(osp.abspath(f"./MCSL2/BackupTemp_{serverConfig.serverName}\\"))
         except Exception:
             pass
         raise e

@@ -786,7 +786,7 @@ class ServerManagerPage(QWidget):
             self.deletingServerStateToolTip = None
             self.refreshServers()
 
-        TaskExecutor.run(rmtree, f"Servers/{delServerName}").then(
+        TaskExecutor.run(rmtree, f"./Servers/{delServerName}").then(
             onSuccess=lambda: self.deletingServerStateToolTip.setContent(self.tr("删除完毕。")),
             onFailed=lambda e: self.deletingServerStateToolTip.setContent(
                 self.tr("删除失败！\n") + str(e)
@@ -1123,12 +1123,12 @@ class ServerManagerPage(QWidget):
     @pyqtSlot(list)
     def autoDetectJavaFinished(self, _JavaPaths: list):
         """自动查找Java结果处理"""
-        if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
-            remove("MCSL2/AutoDetectJavaHistory.txt")
-        if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
-            remove("MCSL2/AutoDetectJavaHistory.json")
+        if osp.exists("./MCSL2/AutoDetectJavaHistory.txt"):
+            remove("./MCSL2/AutoDetectJavaHistory.txt")
+        if osp.exists("./MCSL2/AutoDetectJavaHistory.json"):
+            remove("./MCSL2/AutoDetectJavaHistory.json")
 
-        with open("MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8") as SaveFoundedJava:
+        with open("./MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8") as SaveFoundedJava:
             tmpNewJavaPath = editServerVariables.javaPath
             editServerVariables.javaPath = list(
                 {p[:-1] for p in SaveFoundedJava.readlines()}.union(

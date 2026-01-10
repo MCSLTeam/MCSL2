@@ -225,7 +225,7 @@ class _MinecraftEULA:
     """有关Mojang Eula的部分。"""
 
     def __init__(self, name):
-        self.serverDir = f"Servers/{name}"
+        self.serverDir = f"./Servers/{name}"
         self.name = name
 
     def checkEula(self) -> bool:
