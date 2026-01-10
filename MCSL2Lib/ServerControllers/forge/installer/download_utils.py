@@ -10,7 +10,6 @@ from typing import Callable, List, Optional, TypeVar, Deque
 import requests
 
 from .actions.progress_callback import ProgressCallback
-from .bmclapi import getLibraryUrl as getBmclapiLibUrl
 from .json.artifact import Artifact
 from .json.manifest import Manifest
 from .json.mirror import Mirror
@@ -19,8 +18,14 @@ from .json.version import Download, Library, LibraryDownload
 T = TypeVar("T")
 
 DOWNLOAD_CHUNK_SIZE = 64  # KB
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
+)
 HEADERS = {"User-Agent": USER_AGENT}
+DOWNLOAD_TIMEOUT = (10, 30)  # (connect timeout, read timeout) in seconds
+MAX_RETRIES = 3  # Maximum number of retry attempts per URL
+RETRY_DELAY = 2  # Delay between retries in seconds
 
 
 class SpeedCounter:
@@ -50,6 +55,8 @@ class SpeedCounter:
 class DownloadUtils:
     MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
     LIBRARIES_URL = "https://libraries.minecraft.net/"
+    MANIFEST_URL_MIRROR = "https://bmclapi2.bangbang93.com/mc/game/version_manifest.json"
+    LIBRARIES_URL_MIRROR = "https://bmclapi2.bangbang93.com/maven"
     OFFLINE_MODE = True
 
     @staticmethod
@@ -60,11 +67,36 @@ class DownloadUtils:
 
     @staticmethod
     def downloadString(url: str, reader: Callable[[str], T]) -> Optional[T]:
-        try:
-            with requests.get(url) as response:
-                return reader(response.text)
-        except Exception as e:
-            print(e)
+        for attempt in range(MAX_RETRIES):
+            try:
+                with requests.get(
+                    url,
+                    allow_redirects=True,
+                    timeout=DOWNLOAD_TIMEOUT,
+                    headers=HEADERS
+                ) as response:
+                    response.raise_for_status()
+                    return reader(response.text)
+            except (requests.exceptions.ConnectionError,
+                    requests.exceptions.Timeout,
+                    requests.exceptions.HTTPError) as e:
+                if attempt < MAX_RETRIES - 1:
+                    print(
+                        f"Failed to download from {url} "
+                        f"(attempt {attempt + 1}/{MAX_RETRIES}): {type(e).__name__}"
+                    )
+                    print(f"Retrying in {RETRY_DELAY} seconds...")
+                    time.sleep(RETRY_DELAY)
+                else:
+                    print(
+                        f"Failed to download from {url} "
+                        f"after {MAX_RETRIES} attempts: {e}"
+                    )
+                    traceback.print_exc()
+            except Exception:
+                print(f"Failed to download from {url}")
+                traceback.print_exc()
+                break
         return None
 
     @staticmethod
@@ -146,9 +178,54 @@ class DownloadUtils:
         session: Optional[requests.Session] = None,
         detailed: bool = False,
     ) -> bool:
-        return DownloadUtils._download(
-            monitor, mirror, download, target, download.url, session or requests.Session(), detailed
-        )
+        session = session or requests.Session()
+        original_url = download.url
+
+        if not original_url:
+            return False
+
+        # Try with mirror first if available
+        from .bmclapi import getLibraryUrl, _isUseBMCLAPI
+
+        # Collect unique URLs to try
+        urls_to_try = []
+
+        if _isUseBMCLAPI():
+            mirror_url = getLibraryUrl(original_url)
+            # If mirror URL is different, try it first
+            if mirror_url != original_url:
+                urls_to_try.append(("mirror", mirror_url))
+                urls_to_try.append(("original", original_url))
+            else:
+                # Mirror URL is same as original, only try once
+                urls_to_try.append(("original", original_url))
+        else:
+            # BMCLAPI disabled, only try original
+            urls_to_try.append(("original", original_url))
+
+        last_exception = None
+        for idx, (source_type, url) in enumerate(urls_to_try):
+            try:
+                monitor.message(f"  Trying {source_type} source...")
+                download.url = url
+                result = DownloadUtils._download(
+                    monitor, mirror, download, target, url, session, detailed
+                )
+                if result:
+                    return True
+            except Exception as e:
+                last_exception = e
+                monitor.message(f"    {source_type.capitalize()} source failed: {type(e).__name__}")
+                # Show fallback message if there are more sources to try
+                if idx < len(urls_to_try) - 1:
+                    next_source = urls_to_try[idx + 1][0]
+                    monitor.message(f"    Falling back to {next_source} source...")
+                continue
+
+        # All attempts failed
+        if last_exception:
+            raise last_exception
+        return False
 
     @staticmethod
     def _download(
@@ -160,57 +237,87 @@ class DownloadUtils:
         session: requests.Session,
         detailed: bool,
     ) -> bool:
-        # TODO
         monitor.message(f"  Downloading library from {url}")
-        try:
-            with session.get(url, stream=True, headers=HEADERS) as response:
-                total = int(response.headers.get("content-length", 0))
-                downloaded = 0
-                speedCounter = SpeedCounter(10)
-                timer = time.time_ns()
-                with target.open("wb") as f:
-                    for data in response.iter_content(chunk_size=DOWNLOAD_CHUNK_SIZE * 1024):
-                        if monitor.isCancelled():
-                            return False
 
-                        data_len = len(data)
-                        downloaded += data_len
-                        f.write(data)
+        for attempt in range(MAX_RETRIES):
+            try:
+                with session.get(
+                    url,
+                    stream=True,
+                    headers=HEADERS,
+                    allow_redirects=True,
+                    timeout=DOWNLOAD_TIMEOUT
+                ) as response:
+                    response.raise_for_status()
+                    total = int(response.headers.get("content-length", 0))
+                    downloaded = 0
+                    speedCounter = SpeedCounter(10)
+                    timer = time.time_ns()
+                    with target.open("wb") as f:
+                        for data in response.iter_content(chunk_size=DOWNLOAD_CHUNK_SIZE * 1024):
+                            if monitor.isCancelled():
+                                return False
 
-                        try:
-                            speedCounter.append(
-                                round(
-                                    data_len / ((new_timer := time.time_ns()) - timer) * 1_000_000,
-                                    2,
+                            data_len = len(data)
+                            downloaded += data_len
+                            f.write(data)
+
+                            try:
+                                speed = (
+                                    data_len
+                                    / ((new_timer := time.time_ns()) - timer)
+                                    * 1_000_000
                                 )
-                            )
-                            monitor.downloadProgress(
-                                target.name, downloaded, total, speedCounter.average(), False
-                            )
-                        except ZeroDivisionError:
-                            pass
-                        timer = new_timer
-                    monitor.downloadProgress(target.name, total, total, 0, True)
-                    monitor.message("")
+                                speedCounter.append(round(speed, 2))
+                                monitor.downloadProgress(
+                                    target.name, downloaded, total, speedCounter.average(), False
+                                )
+                            except ZeroDivisionError:
+                                pass
+                            timer = new_timer
+                        monitor.downloadProgress(target.name, total, total, 0, True)
+                        monitor.message("")
 
-                if download.url is not None:
-                    sha1 = DownloadUtils.getSha1(target)
-                    if sha1 == download.sha1:
-                        monitor.message("    Download completed: Checksum validated.")
+                    if download.url is not None:
+                        sha1 = DownloadUtils.getSha1(target)
+                        if sha1 == download.sha1:
+                            monitor.message("    Download completed: Checksum validated.")
+                            return True
+                        monitor.message("    Download failed: Checksum invalid, deleting file:")
+                        monitor.message("      Expected: " + download.sha1)
+                        monitor.message("      Actual:   " + sha1)
+                        try:
+                            target.unlink(missing_ok=False)
+                        except IOError:
+                            monitor.stage("      Failed to delete file, aborting.")
+                            return False
+                    else:
+                        monitor.message("    Download completed: No checksum, Assuming valid.")
                         return True
-                    monitor.message("    Download failed: Checksum invalid, deleting file:")
-                    monitor.message("      Expected: " + download.sha1)
-                    monitor.message("      Actual:   " + sha1)
-                    try:
-                        target.unlink(missing_ok=False)
-                    except IOError:
-                        monitor.stage("      Failed to delete file, aborting.")
-                        return False
-                monitor.message("    Download completed: No checksum, Assuming valid.")
-        except Exception:
-            target.unlink(missing_ok=True)
-            traceback.print_exc()
-            raise
+
+            except (requests.exceptions.ConnectionError,
+                    requests.exceptions.Timeout,
+                    requests.exceptions.ChunkedEncodingError) as e:
+                target.unlink(missing_ok=True)
+                if attempt < MAX_RETRIES - 1:
+                    monitor.message(
+                        f"    Download failed (attempt {attempt + 1}/{MAX_RETRIES}): "
+                        f"{type(e).__name__}"
+                    )
+                    monitor.message(f"    Retrying in {RETRY_DELAY} seconds...")
+                    time.sleep(RETRY_DELAY)
+                else:
+                    monitor.message(f"    Download failed after {MAX_RETRIES} attempts: {e}")
+                    raise
+            except requests.exceptions.HTTPError as e:
+                target.unlink(missing_ok=True)
+                monitor.message(f"    HTTP error: {e}")
+                raise
+            except Exception:
+                target.unlink(missing_ok=True)
+                traceback.print_exc()
+                raise
+
         return False
 
     @staticmethod
@@ -308,9 +415,8 @@ class DownloadUtils:
         if url is None or url == "":
             monitor.message("  Invalid library, missing url")
             return False
-        # replace url with bmclapi
-        download.url = getBmclapiLibUrl(url)
-        print(f"{url} -> {download.url}")
+
+        # The download method will handle mirror fallback automatically
         if DownloadUtils.download(monitor, mirror, download, target, session, detailed):
             grabbed.append(artifact)
             return True

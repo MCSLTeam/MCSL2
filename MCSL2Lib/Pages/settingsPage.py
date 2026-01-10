@@ -769,6 +769,13 @@ class SettingsPage(QWidget):
             ],
             parent=self.downloadSettingsGroup,
         )
+        self.useBMCLAPI = SwitchSettingCard(
+            icon=FIF.CLOUD,
+            title=self.tr("使用 BMCLAPI 镜像"),
+            content=self.tr("使用国内镜像加速下载游戏核心和库文件（推荐）。"),
+            configItem=cfg.useBMCLAPI,
+            parent=self.downloadSettingsGroup,
+        )
         self.alwaysAskSaveDirectory = SwitchSettingCard(
             icon=FIF.CHAT,
             title=self.tr("总是询问保存路径"),
@@ -800,6 +807,7 @@ class SettingsPage(QWidget):
         )
         self.alwaysAskSaveDirectory.setEnabled(False)
         self.downloadSettingsGroup.addSettingCard(self.downloadSource)
+        self.downloadSettingsGroup.addSettingCard(self.useBMCLAPI)
         self.downloadSettingsGroup.addSettingCard(self.alwaysAskSaveDirectory)
         self.downloadSettingsGroup.addSettingCard(self.downloadThreads)
         self.downloadSettingsGroup.addSettingCard(self.forceParallelDownload)

@@ -141,12 +141,29 @@ class ServerInstall(Action):
             #     return False
 
             # dl = vanilla.getDownload(side)
+            # Try BMCLAPI first
             dl = bmclapi.getMinecraftDownload(self.profile.getMinecraft(), side)
+            
+            # Fallback to official Mojang source if BMCLAPI is disabled or failed
             if dl is None:
-                self.error(
-                    "Failed to download minecraft " + side + " jar, info missing from manifest"
-                )
-                return False
+                from .json.util import Util
+                self.monitor.message("  BMCLAPI not available, trying official Mojang source...")
+                vanilla = Util.getVanillaVersion(self.profile.getMinecraft())
+                if vanilla is None:
+                    self.error(
+                        f"Failed to download minecraft {side} jar.\n"
+                        f"Version: {self.profile.getMinecraft()}\n"
+                        "Could not get version info from both BMCLAPI and Mojang.\n"
+                        "This may be caused by network issues or invalid version.\n"
+                        "Please check your network connection and try again."
+                    )
+                    return False
+                dl = vanilla.getDownload(side)
+                if dl is None:
+                    self.error(
+                        f"Failed to download minecraft {side} jar, info missing from manifest"
+                    )
+                    return False
 
             if not DownloadUtils.download(
                 self.monitor, self.profile.getMirror(), dl, target, detailed=detailed

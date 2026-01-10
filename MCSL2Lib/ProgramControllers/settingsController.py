@@ -85,6 +85,9 @@ class Config(QConfig):
         "FastMirror",
         OptionsValidator(["FastMirror", "MCSLSync", "PolarsAPI", "RainYun"]),
     )
+    useBMCLAPI = ConfigItem(
+        "Download", "useBMCLAPI", True, BoolValidator()
+    )
     alwaysAskSaveDirectory = ConfigItem(
         "Download", "alwaysAskSaveDirectory", False, BoolValidator()
     )

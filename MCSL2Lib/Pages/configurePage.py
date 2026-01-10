@@ -2843,9 +2843,10 @@ class ConfigurePage(QWidget):
             self.installingForgeStateToolTip.setState(True)
             self.installingForgeStateToolTip = None
         else:
+            print("Forge 安装失败: " + message)
             self.installingForgeStateToolTip.setContent(self.tr("怪，安装失败！" + message))
             self.installingForgeStateToolTip.setState(True)
-            self.installingForgeStateToolTip = None
+            # self.installingForgeStateToolTip = None
             self.addNewServerRollback()
             MCSL2Logger.warning(f"{self.__class__.__name__} 回滚")
         if hasattr(
