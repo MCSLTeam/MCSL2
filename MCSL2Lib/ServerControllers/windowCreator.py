@@ -1251,7 +1251,7 @@ class ServerWindow(BackgroundAnimationWidget, FramelessWindow):
         )
         self.commandLineEdit.returnPressed.connect(self.commandLineEditTypeChecker)
         self.openServerFolder.clicked.connect(
-            lambda: openLocalFile(f"Servers/{self.serverConfig.serverName}")
+            lambda: openLocalFile(f"./Servers/{self.serverConfig.serverName}")
         )
         self.genRunScriptBtn.clicked.connect(self.genRunScript)
         self.backupServerBtn.clicked.connect(

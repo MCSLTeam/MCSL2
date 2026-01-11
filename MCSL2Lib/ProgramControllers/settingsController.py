@@ -85,6 +85,15 @@ class Config(QConfig):
         "FastMirror",
         OptionsValidator(["FastMirror", "MCSLSync", "PolarsAPI", "RainYun"]),
     )
+    useBMCLAPI = ConfigItem(
+        "Download", "useBMCLAPI", True, BoolValidator()
+    )
+    useBMCLAPIForForge = ConfigItem(
+        "Download", "useBMCLAPIForForge", True, BoolValidator()
+    )
+    useBMCLAPIForNeoForge = ConfigItem(
+        "Download", "useBMCLAPIForNeoForge", True, BoolValidator()
+    )
     alwaysAskSaveDirectory = ConfigItem(
         "Download", "alwaysAskSaveDirectory", False, BoolValidator()
     )

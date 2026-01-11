@@ -324,20 +324,20 @@ def loadJavaList():
     """
 
     # 兼容
-    if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
-        remove("MCSL2/AutoDetectJavaHistory.txt")
-    if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
-        remove("MCSL2/AutoDetectJavaHistory.json")
+    if osp.exists("./MCSL2/AutoDetectJavaHistory.txt"):
+        remove("./MCSL2/AutoDetectJavaHistory.txt")
+    if osp.exists("./MCSL2/AutoDetectJavaHistory.json"):
+        remove("./MCSL2/AutoDetectJavaHistory.json")
 
-    if not osp.exists("MCSL2/MCSL2_DetectedJava.json"):
+    if not osp.exists("./MCSL2/MCSL2_DetectedJava.json"):
         return []
-    foundedJava = json.loads(readFile("MCSL2/MCSL2_DetectedJava.json"))
+    foundedJava = json.loads(readFile("./MCSL2/MCSL2_DetectedJava.json"))
     return [Java(e["Path"], e["Version"]) for e in foundedJava["java"]]
 
 
 def saveJavaList(list_: list):
     writeFile(
-        "MCSL2/MCSL2_DetectedJava.json",
+        "./MCSL2/MCSL2_DetectedJava.json",
         json.dumps(
             {"java": [j.json for j in list_]},
             ensure_ascii=False,

@@ -211,8 +211,11 @@ class BMCLAPIDownloader(QObject):
         request = QNetworkRequest(self._url)
         request.setHeader(
             QNetworkRequest.UserAgentHeader,
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0",
-            # noqa: E501
+            (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/118.0.0.0 Safari/537.36 Edg/118.0.0.0"
+            ),
         )
         # 设置自动跟随重定向
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
@@ -279,7 +282,7 @@ class ForgeInstaller(Installer):
             self.getInstallerData(
                 osp.join(serverPath, file) if installerPath is None else installerPath
             )
-        except:
+        except Exception:
             raise InstallerError(
                 self.tr(
                     "无法打开forge安装器核心文件:{path}, 可能文件已损坏."  # noqa: E501
@@ -298,17 +301,24 @@ class ForgeInstaller(Installer):
 
     def getInstallerData(self, jarFile):
         # 打开Installer压缩包
-        # 读取version.json
+        # 读取install_profile.json或version.json
+        with ZipFile(jarFile, mode="r") as zipfile:
+            data = None
+            
+            # 优先尝试读取 install_profile.json；若缺失，则回退到 version.json
+            for candidate in ("install_profile.json", "version.json"):
+                try:
+                    with zipfile.open(candidate) as f:
+                        data = f.read().decode("utf-8")
+                        break
+                except KeyError:
+                    # 该文件不存在，尝试下一个候选
+                    continue
 
-        with ZipFile(
-            jarFile,
-            mode="r",
-        ) as zipfile:
-            try:
-                _ = zipfile.read("install_profile.json")
-            except KeyError:
-                _ = zipfile.read("version.json")
-            self._profile = loads(_)  # type: dict
+            if data is None:
+                raise InstallerError("无法读取forge安装器配置文件")
+
+            self._profile = loads(data)  # type: dict
             if not self.checkInstaller():
                 raise InstallerError("无法识别的forge安装器")
 
@@ -320,13 +330,15 @@ class ForgeInstaller(Installer):
             .startswith("forge")
         ):
             self._mcVersion = McVersion(versionInfo["id"].split("-")[0])
-            self._forgeVersion = versionInfo["id"].replace((self._mcVersion), "").replace("-", "")
+            self._forgeVersion = (
+                versionInfo["id"].replace(str(self._mcVersion), "").replace("-", "")
+            )
             return True
-        elif "forge" in (version := self._profile.get("version", "")).lower():
+        elif "forge" in (version := self._profile.get("version", "")).lower() and "neoforge" not in version.lower():
             self._mcVersion = McVersion(version.split("-")[0])
             self._forgeVersion = version.replace(str(self._mcVersion), "").replace("-", "")
             return True
-        elif "forge" in (version := self._profile.get("id", "")).lower():
+        elif "forge" in (version := self._profile.get("id", "")).lower() and "neoforge" not in version.lower():
             self._mcVersion = McVersion(version.split("-")[0])
             self._forgeVersion = version.replace(str(self._mcVersion), "").replace("-", "")
             return True
@@ -483,7 +495,7 @@ class ForgeInstaller(Installer):
     @classmethod
     def isPossibleForgeInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
         """
-        判断是否可能为Forge安装器
+        判断是否可能为Forge/NeoForge安装器
         若是,则返回一个元组,包含mcVersion和forgeVersion : # type:McVersion, str
         若不是,则返回None
         """
@@ -504,12 +516,14 @@ class ForgeInstaller(Installer):
             _forgeVersion = versionInfo["id"].replace(str(_mcVersion), "").replace("-", "")
             return _mcVersion, _forgeVersion
 
-        elif "forge" in (version := _profile.get("version", "")).lower():
+        # Handle Forge format: version="1.21-forge-51.0.18"
+        # Explicitly exclude NeoForge
+        elif "forge" in (version := _profile.get("version", "")).lower() and "neoforge" not in version.lower():
             _mcVersion = McVersion(version.split("-")[0])
             _forgeVersion = version.replace(str(_mcVersion), "").replace("-", "")
             return _mcVersion, _forgeVersion
 
-        elif "forge" in (version := _profile.get("id", "")).lower():
+        elif "forge" in (version := _profile.get("id", "")).lower() and "neoforge" not in version.lower():
             _mcVersion = McVersion(version.split("-")[0])
             _forgeVersion = version.replace(str(_mcVersion), "").replace("-", "")
             return _mcVersion, _forgeVersion
@@ -526,6 +540,247 @@ class ForgeInstaller(Installer):
     @property
     def forgeVersion(self):
         return self._forgeVersion
+
+    @property
+    def mcVersion(self):
+        return self._mcVersion
+
+
+class NeoForgeInstaller(Installer):
+    """NeoForge Installer"""
+    downloadInfo = pyqtSignal(
+        str, float, int, bool, bool
+    )  # filename, dl_percent, speed, done, allDone
+
+    def __init__(
+        self,
+        serverPath,
+        file,
+        isEditing: Optional[str] = "",
+        java=None,
+        installerPath=None,
+        logDecode="utf-8",
+    ):
+        super().__init__(serverPath, file, logDecode)
+        self.java = java
+        self.serverPath = serverPath
+        self.isEditing = int(isEditing) if isEditing != "" else None
+
+        self._mcVersion = None
+        self._profile = None
+        self._neoforgeVersion = None
+        self._dlInfoMonitor = None
+        self._dlInfoQueue = None
+
+        try:
+            self.getInstallerData(
+                osp.join(serverPath, file) if installerPath is None else installerPath
+            )
+        except Exception:
+            raise InstallerError(
+                self.tr(
+                    "无法打开 NeoForge 安装器核心文件:{path}, 可能文件已损坏."
+                ).format(path=file)
+            )
+        
+        # NeoForge 使用类似 1.17+ Forge 的安装方式
+        if self._mcVersion < McVersion("1.20"):
+            raise InstallerError(
+                self.tr(
+                    "不支持的自动安装版本: {mcVersion}\nMCSL2 的 NeoForge 自动安装仅支持 Minecraft 1.20+"
+                ).format(mcVersion=self._mcVersion)
+            )
+
+    def getInstallerData(self, jarFile):
+        """Read NeoForge installer data from JAR file"""
+        with ZipFile(jarFile, mode="r") as zipfile:
+            data = None
+            
+            # NeoForge uses install_profile.json
+            try:
+                with zipfile.open("install_profile.json") as f:
+                    data = f.read().decode("utf-8")
+            except KeyError:
+                raise InstallerError("无法读取 NeoForge 安装器配置文件")
+
+            if data is None:
+                raise InstallerError("无法读取 NeoForge 安装器配置文件")
+
+            self._profile = loads(data)  # type: dict
+            if not self.checkInstaller():
+                raise InstallerError("无法识别的 NeoForge 安装器")
+
+    def checkInstaller(self) -> bool:
+        """Check if this is a valid NeoForge installer"""
+        # NeoForge format: version="neoforge-21.0.167", minecraft="1.21"
+        if "neoforge" in (version := self._profile.get("version", "")).lower():
+            # Get MC version from minecraft field
+            if minecraft := self._profile.get("minecraft", ""):
+                self._mcVersion = McVersion(minecraft)
+                self._neoforgeVersion = version.replace("neoforge-", "")
+                return True
+        return False
+
+    def asyncInstall(self):
+        """Install NeoForge using the new installer system"""
+        MCSL2Logger.debug(f"NeoForge 安装: {self.__class__.__name__}, MC版本: {self._mcVersion}")
+        MCSL2Logger.debug(f"NeoForge 安装: NeoForge版本: {self._neoforgeVersion}")
+        
+        if self.cancelled:
+            self.installFinished.emit(False, "用户取消")
+            return
+        self.__asyncInstallRoutine()
+
+    def __asyncInstallRoutine(self):
+        self.__BeginInstallAsync()
+
+    def __BeginInstallAsync(self):
+        # Set NeoForge runtime java path
+        if self.java is None:
+            try:
+                self.java = (
+                    configureServerVariables.selectedJavaPath
+                    if self.isEditing is None
+                    else editServerVariables.selectedJavaPath
+                )
+            except IndexError:
+                raise InstallerError("No Java path found")
+
+        if self.cancelled:
+            self.installFinished.emit(False, "用户取消")
+            return
+
+        self._dlInfoQueue = queue.Queue()
+        
+        # Import NeoForge installer thread
+        from .neoforge.install_thread import NeoForgeInstallThread
+        
+        self.worker = NeoForgeInstallThread(
+            self.file, self.cwd, self.java, detailed=True, dlInfoQueue=self._dlInfoQueue
+        )
+        self._dlInfoMonitor = InstallerDownloadsMonitor(self._dlInfoQueue)
+        self._dlInfoMonitor.progressed.connect(self.downloadInfo.emit)
+
+        self.worker.output.connect(
+            lambda msg: self.installerLogOutput.emit("NeoForgeInstaller: " + msg)
+        )
+
+        self.worker.finished.connect(self.__EndInstallAsync)
+
+        self._dlInfoMonitor.start()
+        self.worker.start()
+
+    def __EndInstallAsync(self, success: bool, message: str):
+        self._cancelTimer: QTimer
+        self._cancelTimer.stop()
+
+        # Safely quit dlInfoMonitor
+        self._dlInfoQueue.put(None)
+        self._dlInfoMonitor.quit()
+        self._dlInfoMonitor.wait()
+        self._dlInfoMonitor = None
+        self._dlInfoQueue = None
+
+        if success:
+            # NeoForge uses run.bat/run.sh like modern Forge
+            if osname == "nt":
+                with open(osp.join(self.cwd, "run.bat"), mode="r") as f:
+                    run = f.readlines()
+            else:
+                with open(osp.join(self.cwd, "run.sh"), mode="r") as f:
+                    run = f.readlines()
+            
+            # Find java command
+            try:
+                command = list(filter(lambda x: x.startswith("java"), run)).pop()
+            except IndexError:
+                raise InstallerError("No java command found")
+
+            # Extract NeoForge launch arguments
+            try:
+                forgeArgs = list(
+                    filter(lambda x: x.startswith("@libraries"), command.split(" "))
+                ).pop()
+            except IndexError:
+                raise InstallerError("bad NeoForge run script")
+
+            forgeArgs = [forgeArgs]
+
+            # Write to global config
+            try:
+                globalServerList = loads(readFile(r"MCSL2/MCSL2_ServerList.json"))
+                d = globalServerList["MCSLServerList"][
+                    (
+                        len(globalServerList["MCSLServerList"]) - 1
+                        if self.isEditing is None
+                        else self.isEditing
+                    )
+                ]
+                d["jvm_arg"].extend(forgeArgs)
+                d.update({
+                    "icon": "Anvil.png",
+                    "server_type": "neoforge",
+                })
+                globalServerList["MCSLServerList"].pop(
+                    -1 if self.isEditing is None else self.isEditing
+                )
+                globalServerList["MCSLServerList"].append(d)
+                writeFile(
+                    r"MCSL2/MCSL2_ServerList.json",
+                    dumps(globalServerList, indent=4),
+                )
+            except Exception as e:
+                raise e
+
+            # Write individual config
+            try:
+                if not cfg.get(cfg.onlySaveGlobalServerConfig):
+                    writeFile(
+                        osp.join(self.cwd, "MCSL2ServerConfig.json"),
+                        dumps(d, indent=4),
+                    )
+            except Exception as e:
+                raise e
+
+        self.installFinished.emit(success, message)
+        self.worker.join()
+        self.worker = None
+
+    @classmethod
+    def isPossibleNeoForgeInstaller(cls, fileName: str) -> Optional[Tuple[McVersion, Any]]:
+        """
+        判断是否可能为 NeoForge 安装器
+        若是,则返回一个元组,包含 mcVersion 和 neoforgeVersion
+        若不是,则返回 None
+        """
+        if osp.getsize(fileName) > 10_000 * 1024:
+            return None
+        try:
+            fileFile = ZipFile(fileName, mode="r")
+        except BadZipFile:
+            return None
+        try:
+            _profile = json.loads(fileFile.read("install_profile.json"))
+        except Exception:
+            return None
+
+        # NeoForge format: version="neoforge-21.0.167", minecraft="1.21"
+        if "neoforge" in (version := _profile.get("version", "")).lower():
+            if minecraft := _profile.get("minecraft", ""):
+                _mcVersion = McVersion(minecraft)
+                _neoforgeVersion = version.replace("neoforge-", "")
+                return _mcVersion, _neoforgeVersion
+        
+        return None
+
+    def cancelInstall(self, cancelled=False):
+        super().cancelInstall(cancelled)
+        if self.worker is not None:
+            self.worker.cancel()
+
+    @property
+    def neoforgeVersion(self):
+        return self._neoforgeVersion
 
     @property
     def mcVersion(self):

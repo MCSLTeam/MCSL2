@@ -102,7 +102,12 @@ class _MCSL2Logger:
         }
         excStr = ""
         if exc is not None:
-            excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
+            # 确保 exc 是异常对象，而不是字符串
+            if isinstance(exc, BaseException):
+                excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
+            else:
+                # 如果 exc 不是异常对象，只记录其字符串表示
+                excStr = str(exc)
         self.logger.error(self._template(caller_info, f"{msg}\n{excStr}"))
 
     def trace(self, msg: str):

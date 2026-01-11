@@ -78,7 +78,7 @@ class PluginLoader(BasePluginLoader):
         importedPlugin = importedPlugin.__getattribute__(pluginName)
         try:
             importedPlugin.pluginName = pluginName
-            importedPluginConfig: dict = loads(readFile(f"Plugins//{pluginName}//config.json"))
+            importedPluginConfig: dict = loads(readFile(f"./Plugins/{pluginName}/config.json"))
             importedPlugin.version = importedPluginConfig.get("version")
             importedPlugin.description = importedPluginConfig.get("description")
             importedPlugin.author = importedPluginConfig.get("author")
@@ -97,7 +97,7 @@ class PluginLoader(BasePluginLoader):
     def getInfo(cls, pluginName: str) -> PluginType:
         pluginType = PluginType()
         pluginType.pluginName = pluginName
-        importedPluginConfig: dict = loads(readFile(f"Plugins//{pluginName}//config.json"))
+        importedPluginConfig: dict = loads(readFile(f"./Plugins/{pluginName}/config.json"))
         pluginType.version = importedPluginConfig.get("version")
         pluginType.description = importedPluginConfig.get("description")
         pluginType.author = importedPluginConfig.get("author")
@@ -271,7 +271,7 @@ class PluginManager(BasePluginManager):
                 }
             )
             self.pluginWidget.openFolderButton.selfClicked.connect(
-                lambda instance: openLocalFile(f".//Plugins/{instance}/")
+                lambda instance: openLocalFile(f"./Plugins/{instance}/")
             )
             self.pluginWidget.deleteBtn.selfClicked.connect(
                 lambda instance: self.deletePlugin(instance, self.pluginWidget.deleteBtn.window())
@@ -284,8 +284,8 @@ class PluginManager(BasePluginManager):
     def deletePlugin(self, pluginName, parent):
         if not self.isDelMsgShowed:
             w = MessageBox(
-                self.tr(f'你真的要删除插件"{pluginName}"?吗？'),
-                self.tr("删除后，这个插件将会消失不见！\n此操作是不可逆的！你确定这么做吗？"),
+                f'你真的要删除插件"{pluginName}"?吗？',
+                "删除后，这个插件将会消失不见！\n此操作是不可逆的！你确定这么做吗？",
                 parent,
             )
             w.yesButton.setText("取消")
@@ -301,8 +301,8 @@ class PluginManager(BasePluginManager):
         title = f'你真的要删除插件"{pluginName}"?'
         content = f'此操作是不可逆的！它会失去很久，很久！\n如果真的要删除，请在下方输入框内输入"{pluginName}"，然后点击“删除”按钮：'  # noqa: E501
         w2 = MessageBox(title, content, parent)
-        w2.yesButton.setText(self.tr("取消"))
-        w2.cancelButton.setText(self.tr("删除"))
+        w2.yesButton.setText("取消")
+        w2.cancelButton.setText("删除")
         w2.cancelButton.setStyleSheet(
             GlobalMCSL2Variables.darkWarnBtnStyleSheet
             if isDarkTheme()
@@ -315,7 +315,7 @@ class PluginManager(BasePluginManager):
                 name=pluginName, LineEditText=confirmLineEdit.text(), parent=parent
             )
         )
-        confirmLineEdit.setPlaceholderText(self.tr(f'在此输入"{pluginName}"'))
+        confirmLineEdit.setPlaceholderText(f'在此输入"{pluginName}"')
         parent.deleteBtnEnabled.connect(w2.cancelButton.setEnabled)
         w2.cancelSignal.connect(lambda: self.deletePluginFile(pluginName, parent))
         w2.textLayout.addWidget(confirmLineEdit)
@@ -326,7 +326,7 @@ class PluginManager(BasePluginManager):
 
     def deletePluginFile(self, pluginName, parent):
         if self.disablePlugin(pluginName)[0]:
-            rmtree(f"Plugins//{pluginName}")
+            rmtree(f"./Plugins/{pluginName}")
         else:
             InfoBar.error(
                 title="提示",

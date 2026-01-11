@@ -10,12 +10,11 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
-
 """
-MCSL2 Program Library
+NeoForge Server Installer
+Based on Forge installer logic, adapted for NeoForge
 """
 
-VERSION = "2.3.0.0"
-MCSL2VERSION = VERSION
-BUILD_VERSION = "0.3.3.0"
-DEV_VERSION = "Stable Channel 26111"
+from .install_thread import NeoForgeInstallThread
+
+__all__ = ["NeoForgeInstallThread"]

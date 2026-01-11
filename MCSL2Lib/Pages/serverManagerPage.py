@@ -786,7 +786,7 @@ class ServerManagerPage(QWidget):
             self.deletingServerStateToolTip = None
             self.refreshServers()
 
-        TaskExecutor.run(rmtree, f"Servers/{delServerName}").then(
+        TaskExecutor.run(rmtree, f"./Servers/{delServerName}").then(
             onSuccess=lambda: self.deletingServerStateToolTip.setContent(self.tr("删除完毕。")),
             onFailed=lambda e: self.deletingServerStateToolTip.setContent(
                 self.tr("删除失败！\n") + str(e)
@@ -1123,12 +1123,12 @@ class ServerManagerPage(QWidget):
     @pyqtSlot(list)
     def autoDetectJavaFinished(self, _JavaPaths: list):
         """自动查找Java结果处理"""
-        if osp.exists("MCSL2/AutoDetectJavaHistory.txt"):
-            remove("MCSL2/AutoDetectJavaHistory.txt")
-        if osp.exists("MCSL2/AutoDetectJavaHistory.json"):
-            remove("MCSL2/AutoDetectJavaHistory.json")
+        if osp.exists("./MCSL2/AutoDetectJavaHistory.txt"):
+            remove("./MCSL2/AutoDetectJavaHistory.txt")
+        if osp.exists("./MCSL2/AutoDetectJavaHistory.json"):
+            remove("./MCSL2/AutoDetectJavaHistory.json")
 
-        with open("MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8") as SaveFoundedJava:
+        with open("./MCSL2/MCSL2_DetectedJava.json", "w+", encoding="utf-8") as SaveFoundedJava:
             tmpNewJavaPath = editServerVariables.javaPath
             editServerVariables.javaPath = list(
                 {p[:-1] for p in SaveFoundedJava.readlines()}.union(
@@ -1328,7 +1328,7 @@ class ServerManagerPage(QWidget):
             if editServerVariables.coreFileName != editServerVariables.oldCoreFileName:
                 copy(
                     editServerVariables.corePath,
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}",
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.coreFileName}",
                 )
                 w2 = MessageBox(
                     title=self.tr("提示"),
@@ -1339,25 +1339,25 @@ class ServerManagerPage(QWidget):
                 w2.cancelButton.setText(self.tr("不需要"))
                 w2.yesSignal.connect(
                     remove(
-                        f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
+                        f"./Servers/{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
                     )
                 )
                 w2.exec()
             elif (
                 osp.getsize(
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.oldCoreFileName}"
                 )
                 != osp.getsize(
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}"
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.coreFileName}"
                 )
                 and editServerVariables.coreFileName == editServerVariables.oldCoreFileName
             ):
                 remove(
-                    f"Servers//{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
+                    f"./Servers/{editServerVariables.oldServerName}//{editServerVariables.oldCoreFileName}"
                 )
                 copy(
                     editServerVariables.corePath,
-                    f"Servers//{editServerVariables.serverName}//{editServerVariables.coreFileName}",
+                    f"./Servers/{editServerVariables.serverName}//{editServerVariables.coreFileName}",
                 )
         except Exception as e:
             exitCode = 1
@@ -1367,8 +1367,8 @@ class ServerManagerPage(QWidget):
         try:
             if editServerVariables.serverName != editServerVariables.oldServerName:
                 rename(
-                    f"Servers//{editServerVariables.oldServerName}//",
-                    f"Servers//{editServerVariables.serverName}//",
+                    f"./Servers/{editServerVariables.oldServerName}//",
+                    f"./Servers/{editServerVariables.serverName}//",
                 )
         except Exception as e:
             exitCode = 1
@@ -1389,7 +1389,7 @@ class ServerManagerPage(QWidget):
         try:
             if not cfg.get(cfg.onlySaveGlobalServerConfig):
                 writeFile(
-                    f"Servers//{editServerVariables.serverName}//MCSL2ServerConfig.json",
+                    f"./Servers/{editServerVariables.serverName}/MCSL2ServerConfig.json",
                     dumps(serverConfig, indent=4),
                 )
             else:
@@ -1426,7 +1426,7 @@ class ServerManagerPage(QWidget):
 
                 try:
                     self.forgeInstaller = ForgeInstaller(
-                        serverPath=f"Servers//{editServerVariables.serverName}",
+                        serverPath=f"./Servers/{editServerVariables.serverName}",
                         file=editServerVariables.coreFileName,
                         java=editServerVariables.selectedJavaPath,
                         logDecode=cfg.get(cfg.outputDeEncoding),
@@ -1527,3 +1527,301 @@ class ServerManagerPage(QWidget):
             serverName=v.serverName, serverConsole=w
         ).itSelf
         self.runningServerCardGenerated.emit(w.monitorWidget)
+
+    # ==================== Server Save Methods ====================
+    # These methods are shared between configurePage and serverManagerPage
+    
+    def saveServer(self, serverVariables, isEditing=False):
+        """
+        通用保存服务器方法
+        Args:
+            serverVariables: 服务器配置变量对象 (configureServerVariables 或 editServerVariables)
+            isEditing: 是否为编辑模式
+        """
+        if serverVariables.serverType == "bedrock":
+            self._saveBedrockServerAsync(serverVariables, isEditing)
+        else:
+            self._saveJavaServerAsync(serverVariables, isEditing)
+
+    def _saveJavaServerAsync(self, serverVariables, isEditing=False):
+        """异步保存Java版服务器"""
+        exit0Msg = (
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」成功！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」成功！")
+        )
+        exit1Msg = (
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」失败！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」失败！")
+        )
+        exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
+
+        # 提前检查是否存在同名服务器 (仅新建时检查)
+        if not isEditing and osp.exists(f"./Servers/{serverVariables.serverName}"):
+            InfoBar.error(
+                title=self.tr("失败"),
+                content=exists_error_msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 检查JVM参数防止意外无法启动服务器
+        for arg in list(serverVariables.jvmArg):
+            if arg == "" or arg == " ":
+                serverVariables.jvmArg.remove(arg)
+
+        extra_data = (
+            dict(serverVariables.extraData) if serverVariables.extraData else {}
+        )
+
+        serverConfig = {
+            "name": serverVariables.serverName,
+            "core_file_name": serverVariables.coreFileName,
+            "java_path": serverVariables.selectedJavaPath,
+            "min_memory": serverVariables.minMem,
+            "max_memory": serverVariables.maxMem,
+            "memory_unit": serverVariables.memUnit,
+            "jvm_arg": list(serverVariables.jvmArg),
+            "output_decoding": serverVariables.consoleOutputDeEncoding,
+            "input_encoding": serverVariables.consoleInputDeEncoding,
+            "icon": "Grass.png",
+            "server_type": serverVariables.serverType,
+            "extra_data": extra_data,
+        }
+
+        # 是否显示Eula提示 (仅新建时显示)
+        auto_accept_eula = cfg.get(cfg.acceptAllMojangEula) if not isEditing else False
+        if auto_accept_eula:
+            MinecraftEulaInfoBar = InfoBar(
+                icon=FIF.INFO,
+                title=self.tr("功能提醒"),
+                content=self.tr(
+                    "您开启了「创建时自动同意服务器的Eula」功能。\n如需要查看 Minecraft Eula，请点击右边的按钮。"
+                ),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                duration=10000,
+                position=InfoBarPosition.TOP,
+                parent=self,
+            )
+            MinecraftEulaInfoBar.setCustomBackgroundColor("white", "#202020")
+            MinecraftEulaInfoBar.addWidget(
+                HyperlinkButton(
+                    url="https://aka.ms/MinecraftEULA",
+                    text="Eula",
+                    parent=MinecraftEulaInfoBar,
+                    icon=FIF.LINK,
+                )
+            )
+            MinecraftEulaInfoBar.show()
+
+        # 创建并启动保存线程
+        from MCSL2Lib.Widgets.serverManagerWidget import JavaServerSaveThread
+        
+        self.javaSaveThread = JavaServerSaveThread(
+            server_config=serverConfig,
+            core_path=serverVariables.corePath,
+            core_file_name=serverVariables.coreFileName,
+            extra_data=extra_data,
+            only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
+            auto_accept_eula=auto_accept_eula,
+            exit0_msg=exit0Msg,
+            exit1_msg=exit1Msg,
+            exists_error_msg=exists_error_msg,
+            parent=self,
+        )
+        self.javaSaveThread.success.connect(lambda msg: self._onJavaSaveSuccess(msg, serverVariables, isEditing))
+        self.javaSaveThread.failed.connect(self._onJavaSaveFailed)
+        self.javaSaveThread.finished.connect(self._cleanupJavaSaveThread)
+        self.javaSaveThread.start()
+
+    @pyqtSlot(str)
+    def _onJavaSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
+        """Java版服务器保存成功回调"""
+        if cfg.get(cfg.onlySaveGlobalServerConfig):
+            InfoBar.info(
+                title=self.tr("功能提醒"),
+                content=self.tr(
+                    "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                ),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+        self._onSaveSuccess(exit0Msg, serverVariables, isEditing)
+
+    @pyqtSlot(str)
+    def _onJavaSaveFailed(self, exit1Msg: str):
+        """Java版服务器保存失败回调"""
+        InfoBar.error(
+            title=self.tr("失败"),
+            content=exit1Msg,
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _cleanupJavaSaveThread(self):
+        """清理Java版保存线程"""
+        self.javaSaveThread = None
+
+    def _onSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
+        """保存成功后的通用处理"""
+        # 子类可以override这个方法来处理保存后的逻辑
+        # 例如 configurePage 会调用 postNewServerDispatcher
+        pass
+
+    def _saveBedrockServerAsync(self, serverVariables, isEditing=False):
+        """异步保存基岩版服务器"""
+        exit0Msg = (
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」成功！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」成功！")
+        )
+        exit1Msg = (
+            self.tr("添加服务器「") + serverVariables.serverName + self.tr("」失败！")
+            if not isEditing
+            else self.tr("编辑服务器「") + serverVariables.serverName + self.tr("」失败！")
+        )
+        exists_error_msg = self.tr("已存在同名服务器！请更改服务器名。")
+
+        if not isEditing and osp.exists(f"./Servers/{serverVariables.serverName}"):
+            InfoBar.error(
+                title=self.tr("失败"),
+                content=exists_error_msg,
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        extra_data = (
+            dict(serverVariables.extraData) if serverVariables.extraData else {}
+        )
+
+        serverConfig = {
+            "name": serverVariables.serverName,
+            "core_file_name": serverVariables.coreFileName,
+            "java_path": serverVariables.selectedJavaPath,
+            "min_memory": serverVariables.minMem,
+            "max_memory": serverVariables.maxMem,
+            "memory_unit": serverVariables.memUnit,
+            "jvm_arg": list(serverVariables.jvmArg),
+            "output_decoding": serverVariables.consoleOutputDeEncoding,
+            "input_encoding": serverVariables.consoleInputDeEncoding,
+            "icon": "Grass.png",
+            "server_type": serverVariables.serverType,
+            "extra_data": extra_data,
+        }
+
+        if not isEditing:
+            self.creatingBedrockStateToolTip = StateToolTip(
+                self.tr("创建基岩版服务器"), self.tr("请稍后，正在创建..."), self
+            )
+            self.creatingBedrockStateToolTip.move(self.creatingBedrockStateToolTip.getSuitablePos())
+            self.creatingBedrockStateToolTip.show()
+
+            if hasattr(self, 'bedrockSaveServerPrimaryPushBtn'):
+                self.bedrockSaveServerPrimaryPushBtn.setEnabled(False)
+
+        from MCSL2Lib.Widgets.serverManagerWidget import BedrockServerSaveThread
+        
+        self.bedrockSaveThread = BedrockServerSaveThread(
+            server_config=serverConfig,
+            core_path=serverVariables.corePath,
+            core_file_name=serverVariables.coreFileName,
+            extra_data=extra_data,
+            only_save_global=cfg.get(cfg.onlySaveGlobalServerConfig),
+            exit0_msg=exit0Msg,
+            exit1_msg=exit1Msg,
+            exists_error_msg=exists_error_msg,
+            parent=self,
+        )
+        self.bedrockSaveThread.success.connect(lambda msg: self._onBedrockSaveSuccess(msg, serverVariables, isEditing))
+        self.bedrockSaveThread.failed.connect(lambda msg: self._onBedrockSaveFailed(msg, isEditing))
+        self.bedrockSaveThread.finished.connect(lambda: self._cleanupBedrockSaveThread(isEditing))
+        self.bedrockSaveThread.start()
+
+    @pyqtSlot(str)
+    def _onBedrockSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
+        """基岩版服务器保存成功回调"""
+        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+            self.creatingBedrockStateToolTip.setContent(self.tr("创建成功！"))
+            self.creatingBedrockStateToolTip.setState(True)
+            self.creatingBedrockStateToolTip = None
+
+        if cfg.get(cfg.onlySaveGlobalServerConfig):
+            InfoBar.info(
+                title=self.tr("功能提醒"),
+                content=self.tr(
+                    "您在设置中开启了「只保存全局服务器设置」。\n将不会保存单独服务器设置。\n这有可能导致服务器迁移较为繁琐。"
+                ),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+        self._onSaveSuccess(exit0Msg, serverVariables, isEditing)
+
+    @pyqtSlot(str)
+    def _onBedrockSaveFailed(self, exit1Msg: str, isEditing=False):
+        """基岩版服务器保存失败回调"""
+        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+            self.creatingBedrockStateToolTip.setContent(self.tr("创建失败！"))
+            self.creatingBedrockStateToolTip.setState(False)
+            self.creatingBedrockStateToolTip = None
+
+        InfoBar.error(
+            title=self.tr("失败"),
+            content=exit1Msg,
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self,
+        )
+
+    def _cleanupBedrockSaveThread(self, isEditing=False):
+        """清理基岩版保存线程"""
+        if not isEditing and hasattr(self, 'bedrockSaveServerPrimaryPushBtn'):
+            self.bedrockSaveServerPrimaryPushBtn.setEnabled(True)
+        self.bedrockSaveThread = None
+
+    def addNewServerRollback(self, serverName):
+        """新建服务器失败后的回滚"""
+        if osp.exists(serverDir := f"./Servers/{serverName}/"):
+            # 删除文件夹
+            try:
+                from shutil import rmtree
+                rmtree(serverDir)
+            except Exception as e:
+                MCSL2Logger.error(f"删除服务器文件夹失败: {e}")
+
+            # 删除全局配置（通过服务器名精确查找）
+            try:
+                from json import loads, dumps
+                from MCSL2Lib.utils import readFile, writeFile
+                globalServerList = loads(readFile(r"./MCSL2/MCSL2_ServerList.json"))
+                for i, srv in enumerate(globalServerList["MCSLServerList"]):
+                    if srv["name"] == serverName:
+                        globalServerList["MCSLServerList"].pop(i)
+                        MCSL2Logger.info(f"已从全局配置中删除服务器: {serverName}")
+                        break
+                writeFile(r"./MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
+            except Exception as e:
+                MCSL2Logger.error(f"删除全局配置失败: {e}")
+

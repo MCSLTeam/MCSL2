@@ -17,16 +17,17 @@ authors = [
 dependencies = [
     # "setuptools>=60",
     "PyQt-Fluent-Widgets",
-    "psutil==6.0.0",
-    "loguru==0.7.2",
-    "openai>=1.0.0",
-    "requests==2.31.0",
+    "psutil==7.2.1",
+    "loguru==0.7.3",
+    "openai==2.2.0",
+    "requests==2.32.4",
     "lib-not-dr[nuitka]>=0.4",
-    "nuitka==2.4.5",
-    "pyqt5-concurrent>=0.1.6",
+    "nuitka==2.8.9",
+    "pyqt5-concurrent==0.1.7",
     "pyqt5-qt5==5.15.2; sys_platform == 'win32'",
     "pyqt5-qt5==5.15.17; sys_platform != 'win32'",
-    "croniter>=6.0.0",
+    "croniter==6.0.0",
+    "pypdl>=1.5.7",
 ]
 requires-python = ">=3.8,<3.9"
 readme = "README.md"
@@ -102,7 +103,7 @@ copyright = "Copyright ©MCSLTeam. All rights reserved."
 
 # 依赖
 include-package = ["MCSL2Lib", "sqlite3"]
-follow-import-to = ["Adapters", "loguru", "requests"]
+follow-import-to = ["Adapters", "loguru", "requests", "croniter", "openai", "pytz"]
 nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief", "sqlite3.test"]
 
 enable-plugin = ["pyqt5", "multiprocessing"]
