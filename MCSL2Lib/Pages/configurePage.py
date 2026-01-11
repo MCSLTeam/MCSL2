@@ -3475,6 +3475,12 @@ class ConfigurePage(QWidget):
             configureServerVariables.consoleDeEncodingList[inputIndex + 1]
         )
 
+        # 设置extraData，标记这是从整合包导入的
+        configureServerVariables.extraData = {
+            "extracted_from_zip": True,
+            "temp_dir": self.importer_serverPath,
+        }
+
         # 调用共用的finishNewServer逻辑
         # 模拟noob模式（currentNewServerType = 1）
         self.finishNewServer()
