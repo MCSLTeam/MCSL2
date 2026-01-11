@@ -47,8 +47,6 @@ jobs:
       - name: Optimize
         shell: pwsh
         run: |
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\zstandard
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\_asyncio.pyd
           Remove-Item -Force -Recurse .\build\MCSL2.dist\pyexpat.pyd
           Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qml.dll
           Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qmlmodels.dll
@@ -97,12 +95,9 @@ jobs:
         run: |
           cd build
           cd MCSL2.dist
-          rm -r zstandard
           sudo rm libQt5Quick.so.5
           sudo rm libQt5Qml.so.5
           sudo rm libQt5QmlModels.so.5
-          sudo rm _asyncio.so
-          sudo rm _queue.so
           upx -9 MCSL2.bin
 
       - name: Upload Artifacts
