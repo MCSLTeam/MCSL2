@@ -72,21 +72,6 @@ class ImportPageWidget(QWidget):
         self.setObjectName("importPageWidget")
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
-        self.backToMain = TransparentToolButton(FIF.PAGE_LEFT, self)
-        self.backToMain.setObjectName("backToMain")
-        self.gridLayout.addWidget(self.backToMain, 0, 1, 1, 1)
-        self.importPageTitle = SubtitleLabel(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.importPageTitle.sizePolicy().hasHeightForWidth())
-        self.importPageTitle.setSizePolicy(sizePolicy)
-        self.importPageTitle.setObjectName("importPageTitle")
-        self.gridLayout.addWidget(self.importPageTitle, 0, 2, 1, 1)
-        spacerItem = QSpacerItem(619, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem, 0, 3, 1, 1)
-        spacerItem1 = QSpacerItem(20, 449, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem1, 1, 1, 1, 1)
         self.importScrollArea = MySmoothScrollArea(self)
         self.importScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.importScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -100,17 +85,7 @@ class ImportPageWidget(QWidget):
         self.typeWidgetLayout.setContentsMargins(0, 0, 0, 0)
         self.typeWidgetLayout.setObjectName("typeWidgetLayout")
         self.importScrollArea.setWidget(self.importScrollAreaWidgetContents)
-        self.gridLayout.addWidget(self.importScrollArea, 1, 2, 1, 2)
-        spacerItem2 = QSpacerItem(20, 478, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem2, 0, 0, 2, 1)
-
-        # self.importPageTitle.setText("[Import Type Title]")
-
-    def _setTypeName(self, name: str):
-        self.importPageTitle.setText(name)
-
-    def connectBackSlot(self, f):
-        self.backToMain.clicked.connect(f)
+        self.gridLayout.addWidget(self.importScrollArea, 0, 0, 1, 1)
 
 
 class ConfirmArgumentsWidget(SimpleCardWidget):
@@ -708,7 +683,15 @@ class MyTreeWidget(SimpleCardWidget):
         self.setNotFinished()
 
     def setFinished(self):
-        if not self.mainTreeWidget.selectedItems()[0].file.endswith(".jar"):
+        try:
+            selected_items = self.mainTreeWidget.selectedItems()
+            if not selected_items or not selected_items[0].file:
+                self.setNotFinished()
+                return
+            if not selected_items[0].file.endswith(".jar"):
+                self.setNotFinished()
+                return
+        except (IndexError, AttributeError):
             self.setNotFinished()
             return
         self.statusIcon.setFinished()

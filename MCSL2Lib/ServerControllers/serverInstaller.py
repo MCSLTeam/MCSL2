@@ -499,7 +499,7 @@ class ForgeInstaller(Installer):
         若是,则返回一个元组,包含mcVersion和forgeVersion : # type:McVersion, str
         若不是,则返回None
         """
-        if osp.getsize(fileName) > 10_000 * 1024:  # 若文件大于10MB,则几乎不可能是Forge安装器
+        if osp.getsize(fileName) > 30_000 * 1024:  # 若文件大于30MB,则几乎不可能是Forge安装器
             return None
         try:
             fileFile = ZipFile(fileName, mode="r")
@@ -753,7 +753,7 @@ class NeoForgeInstaller(Installer):
         若是,则返回一个元组,包含 mcVersion 和 neoforgeVersion
         若不是,则返回 None
         """
-        if osp.getsize(fileName) > 10_000 * 1024:
+        if osp.getsize(fileName) > 30_000 * 1024:
             return None
         try:
             fileFile = ZipFile(fileName, mode="r")

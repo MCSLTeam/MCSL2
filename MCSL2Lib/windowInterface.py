@@ -442,7 +442,7 @@ class Window(FluentWindow):  # type: ignore
                 settingsVariables.get_download_source_index()
             )
         )
-        
+
         # 下载页面的返回信号
         self.downloadInterface.returnToConfigure.connect(
             lambda: self.switchTo(self.configureInterface)

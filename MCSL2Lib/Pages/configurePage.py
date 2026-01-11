@@ -14,12 +14,16 @@
 Configure new server page.
 """
 
+import os
+import shutil
 from json import loads, dumps
 from os import getcwd, mkdir, remove, path as osp
 import platform
 from shutil import copy, rmtree
+from typing import List, Optional
+from zipfile import ZipFile
 
-from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, QThread, pyqtSignal, QObject
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import (
     QGridLayout,
@@ -30,6 +34,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QFrame,
     QFileDialog,
+    QStackedWidget,
 )
 from qfluentwidgets import (
     ComboBox,
@@ -49,30 +54,29 @@ from qfluentwidgets import (
     HyperlinkButton,
     StateToolTip,
     HeaderCardWidget,
+    CardWidget,
 )
 
 from MCSL2Lib.ProgramControllers import javaDetector
 from MCSL2Lib.ProgramControllers.interfaceController import ChildStackedWidget
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
-from MCSL2Lib.ProgramControllers.serverImporter import NoShellArchivesImporter
 from MCSL2Lib.ProgramControllers.serverValidator import ServerValidator
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ServerControllers.processCreator import _MinecraftEULA
 from MCSL2Lib.ServerControllers.serverInstaller import ForgeInstaller, NeoForgeInstaller
-
-# from MCSL2Lib.ImportServerTypes.importMCSLv1 import MCSLv1
-# from MCSL2Lib.ImportServerTypes.importMCSLv2 import MCSLv2
-# from MCSL2Lib.ImportServerTypes.importMCSM8 import MCSM8
-# from MCSL2Lib.ImportServerTypes.importMCSM9 import MCSM9
-# from MCSL2Lib.ImportServerTypes.importMSL3 import MSL3
-# from MCSL2Lib.ImportServerTypes.importNoShellArchives import NoShellArchives
-# from MCSL2Lib.ImportServerTypes.importNullCraft import NullCraft
-# from MCSL2Lib.ImportServerTypes.importServerArchiveSite import ServerArchiveSite
-# from MCSL2Lib.ImportServerTypes.importShellArchives import ShellArchives
 from MCSL2Lib.Widgets.DownloadEntryViewerWidget import DownloadEntryBox
 from MCSL2Lib.Widgets.ForgeInstaller.DownloadView import ForgeInstallerDownloadView
 from MCSL2Lib.Widgets.ForgeInstaller.ForgeInstallProgressWidget import ForgeInstallerProgressBox
 from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
+from MCSL2Lib.Widgets.importServerWidgets import (
+    ImportPageWidget,
+    ConfirmArgumentsWidget,
+    ImportFileFolderWidget,
+    ImportSingleWidget,
+    MyListWidget,
+    MyTreeWidget,
+    SaveWidget,
+)
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 from MCSL2Lib.variables import (
@@ -84,6 +88,56 @@ from MCSL2Lib.variables import (
 configureServerVariables = ConfigureServerVariables()
 settingsVariables = SettingsVariables()
 serverVariables = ServerVariables()
+
+
+class ExtractModpackThread(QThread):
+    """解压整合包并检测jar文件的后台线程"""
+
+    success = pyqtSignal(str, list)  # serverPath, jarFiles
+    failed = pyqtSignal(str)
+
+    def __init__(self, zip_file: str, server_path: str, parent=None):
+        super().__init__(parent)
+        self.zip_file = zip_file
+        self.server_path = server_path
+
+    def run(self):
+        try:
+            # 解压整合包
+            with ZipFile(self.zip_file, "r") as zip_ref:
+                zip_ref.extractall(self.server_path)
+
+            # 检查是否只有一个子目录(常见的整合包结构)
+            dirs = [
+                d
+                for d in os.listdir(self.server_path)
+                if os.path.isdir(os.path.join(self.server_path, d))
+            ]
+            if (
+                len(dirs) == 1
+                and len([
+                    f
+                    for f in os.listdir(self.server_path)
+                    if os.path.isfile(os.path.join(self.server_path, f))
+                ])
+                == 0
+            ):
+                # 如果只有一个子目录且没有其他文件，将其内容移到上层
+                sub_dir = os.path.join(self.server_path, dirs[0])
+                for item in os.listdir(sub_dir):
+                    shutil.move(os.path.join(sub_dir, item), os.path.join(self.server_path, item))
+                os.rmdir(sub_dir)
+
+            # 检测jar文件
+            jar_files = [
+                f
+                for f in os.listdir(self.server_path)
+                if f.endswith(".jar") and os.path.isfile(os.path.join(self.server_path, f))
+            ]
+
+            self.success.emit(self.server_path, jar_files)
+        except Exception as e:
+            self.failed.emit(str(e))
 
 
 class JavaServerSaveThread(QThread):
@@ -446,7 +500,7 @@ class ImportServerCardWidget(ServerTypeHeaderCardWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setTitle(self.tr("导入服务器"))
-        self.contentLabel.setText(self.tr("从其他启动器导入已有服务器"))
+        self.contentLabel.setText(self.tr("导入整合包(Modpack)"))
         self.selectButton.setIcon(FIF.FOLDER_ADD)
 
 
@@ -1497,104 +1551,11 @@ class ConfigurePage(QWidget):
         )
         self.importNewServerStackWidget.setSizePolicy(sizePolicy)
         self.importNewServerStackWidget.setObjectName("importNewServerStackWidget")
-        self.importNewServerFirstGuide = QWidget()
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importNewServerFirstGuide.sizePolicy().hasHeightForWidth()
-        )
-        self.importNewServerFirstGuide.setSizePolicy(sizePolicy)
-        self.importNewServerFirstGuide.setObjectName("importNewServerFirstGuide")
-        self.gridLayout_11 = QGridLayout(self.importNewServerFirstGuide)
-        self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_11.setObjectName("gridLayout_11")
-        self.importNewServerTypeComboBox = ComboBox(self.importNewServerFirstGuide)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importNewServerTypeComboBox.sizePolicy().hasHeightForWidth()
-        )
-        self.importNewServerTypeComboBox.setSizePolicy(sizePolicy)
-        self.importNewServerTypeComboBox.setMinimumSize(QSize(240, 35))
-        self.importNewServerTypeComboBox.setMaximumSize(QSize(240, 35))
-        self.importNewServerTypeComboBox.setObjectName("importNewServerTypeComboBox")
-        self.gridLayout_11.addWidget(self.importNewServerTypeComboBox, 3, 3, 1, 1)
-        spacerItem20 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_11.addItem(spacerItem20, 3, 0, 4, 1)
-        spacerItem21 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_11.addItem(spacerItem21, 3, 5, 4, 1)
-        spacerItem22 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.gridLayout_11.addItem(spacerItem22, 6, 3, 1, 1)
-        self.importNewServerFirstGuideTitle = SubtitleLabel(self.importNewServerFirstGuide)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.importNewServerFirstGuideTitle.sizePolicy().hasHeightForWidth()
-        )
-        self.importNewServerFirstGuideTitle.setSizePolicy(sizePolicy)
-        self.importNewServerFirstGuideTitle.setObjectName("importNewServerFirstGuideTitle")
-        self.gridLayout_11.addWidget(self.importNewServerFirstGuideTitle, 1, 3, 1, 1)
-        self.goBtnWidget = QWidget(self.importNewServerFirstGuide)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.goBtnWidget.sizePolicy().hasHeightForWidth())
-        self.goBtnWidget.setSizePolicy(sizePolicy)
-        self.goBtnWidget.setObjectName("goBtnWidget")
-        self.horizontalLayout = QHBoxLayout(self.goBtnWidget)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.goBtn = TransparentToolButton(FIF.PAGE_RIGHT, self.goBtnWidget)
-        self.goBtn.setMinimumSize(QSize(80, 80))
-        self.goBtn.setMaximumSize(QSize(80, 80))
-        self.goBtn.setIconSize(QSize(80, 80))
-        self.goBtn.setObjectName("goBtn")
-        self.horizontalLayout.addWidget(self.goBtn)
-        self.gridLayout_11.addWidget(self.goBtnWidget, 5, 3, 1, 1)
-        spacerItem23 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.gridLayout_11.addItem(spacerItem23, 4, 3, 1, 1)
-        spacerItem24 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.gridLayout_11.addItem(spacerItem24, 2, 3, 1, 1)
-        spacerItem25 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.gridLayout_11.addItem(spacerItem25, 0, 0, 1, 6)
-        self.importNewServerStackWidget.addWidget(self.importNewServerFirstGuide)
-
-        # self.noShellArchives = NoShellArchives()
-        # self.importNewServerStackWidget.addWidget(self.noShellArchives)
-
-        # self.shellArchives = ShellArchives()
-        # self.importNewServerStackWidget.addWidget(self.shellArchives)
-
-        # self.serverArchiveSite = ServerArchiveSite()
-        # self.importNewServerStackWidget.addWidget(self.serverArchiveSite)
-
-        # self.MCSLv1 = MCSLv1()
-        # self.importNewServerStackWidget.addWidget(self.MCSLv1)
-
-        # self.MCSLv2 = MCSLv2()
-        # self.importNewServerStackWidget.addWidget(self.MCSLv2)
-
-        # self.MSL3 = MSL3()
-        # self.importNewServerStackWidget.addWidget(self.MSL3)
-
-        # self.NullCraft = NullCraft()
-        # self.importNewServerStackWidget.addWidget(self.NullCraft)
-
-        # self.MCSM8 = MCSM8()
-        # self.importNewServerStackWidget.addWidget(self.MCSM8)
-
-        # self.MCSM9 = MCSM9()
-        # self.importNewServerStackWidget.addWidget(self.MCSM9)
-
         self.gridLayout_21.addWidget(self.importNewServerStackWidget, 1, 1, 1, 1)
         self.newServerStackedWidget.addWidget(self.importNewServerPage)
         self.gridLayout.addWidget(self.newServerStackedWidget, 2, 2, 1, 1)
 
         self.setObjectName("ConfigureInterface")
-
-        self.importNewServerStackWidget.setCurrentIndex(0)
 
         self.noobNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
         self.extendedNewServerScrollArea.setAttribute(Qt.WA_StyledBackground)
@@ -1603,7 +1564,6 @@ class ConfigurePage(QWidget):
         # 引导页
         self.titleLabel.setText(self.tr("新建服务器"))
         self.subTitleLabel.setText(self.tr("有 4 种方式供你选择。"))
-        # HeaderCardWidget 的文本已在类定义中设置，无需再设置
 
         # 简易模式
         self.noobJavaSubtitleLabel.setText(self.tr("Java "))
@@ -1689,20 +1649,7 @@ class ConfigurePage(QWidget):
         self.bedrockInputDeEncodingComboBox.setCurrentIndex(0)
 
         # 导入
-        self.importSubtitleLabel.setText(self.tr("导入"))
-        self.importNewServerFirstGuideTitle.setText(self.tr("请选择导入服务器的方式："))
-        self.importNewServerTypeComboBox.addItems([
-            self.tr("选择一项"),
-            self.tr("导入 不含开服脚本的 完整的 服务器"),
-            self.tr("导入 含开服脚本的 完整的 服务器"),
-            self.tr("导入 服务器 存档(没有开服脚本、没有服务器核心)"),
-            self.tr("导入 MCSL 1 的服务器"),
-            self.tr("导入 MCSL 2 的服务器"),
-            self.tr("导入 MSL 的服务器"),
-            self.tr("导入 灵工艺我的世界「轻」开服器 的服务器"),
-            self.tr("导入 MCSManager 8 的服务器"),
-            self.tr("导入 MCSManager 9 的服务器"),
-        ])
+        self.importSubtitleLabel.setText(self.tr("导入整合包(Modpack)"))
         # 引导页绑定 - 使用 HeaderCardWidget 的 connectSlot 方法
         self.noobNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
         self.extendedNewServerWidget.connectSlot(self.newServerStackedWidgetNavigation)
@@ -1753,49 +1700,17 @@ class ConfigurePage(QWidget):
         self.bedrockSaveServerPrimaryPushBtn.clicked.connect(self.finishBedrockServer)
 
         # 导入法绑定
-        self.importBackToGuidePushButton.clicked.connect(
-            lambda: self.newServerStackedWidget.setCurrentIndex(0)
-        )
-        self.goBtn.clicked.connect(
-            lambda: self.importNewServerStackWidget.setCurrentIndex(
-                self.importNewServerTypeComboBox.currentIndex()
-            )
-        )
+        self.importBackToGuidePushButton.clicked.connect(self._importerBackToGuide)
 
-        # self.noShellArchives.noShellArchivesBackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.shellArchives.shellArchivesBackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.serverArchiveSite.serverArchiveSiteBackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.MCSLv1.MCSLv1BackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.MCSLv2.MCSLv2BackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.MSL3.MSL3BackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.NullCraft.NullCraftBackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.MCSM8.MCSM8BackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
-        # self.MCSM9.MCSM9BackToMain.clicked.connect(
-        #     lambda: self.importNewServerStackWidget.setCurrentIndex(0)
-        # )
+        self.javaVersionLabelItems = [
+            None,
+            self.noobJavaInfoLabel,
+            self.extendedJavaInfoLabel,
+            None,
+        ]
 
         self.settingsRunner_newServerType()
-        self.enableServerImporter()
-
-    def enableServerImporter(self):
-        NoShellArchivesImporter(self.importNewServerStackWidget)
-        # HeaderCardWidget 始终启用，无需手动设置
+        self._initModPackImporter()
 
     def settingsRunner_newServerType(self):
         self.newServerStackedWidget.setCurrentIndex(
@@ -1816,6 +1731,11 @@ class ConfigurePage(QWidget):
                 self.newServerStackedWidget.setCurrentIndex(3)
             elif isinstance(card_widget, ImportServerCardWidget):
                 self.newServerStackedWidget.setCurrentIndex(4)
+
+    def _importerBackToGuide(self):
+        """返回引导页，同时清理解压的文件"""
+        self._importerCleanupServerPath()
+        self.newServerStackedWidget.setCurrentIndex(0)
 
     def addJavaManually(self):
         """手动添加Java"""
@@ -1885,6 +1805,9 @@ class ConfigurePage(QWidget):
         # 防止同时多次运行worker线程
         self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(False)
         self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(False)
+        # 同时禁用importer的按钮（如果存在）
+        if hasattr(self, "importer_confirmWidget") and self.importer_confirmWidget:
+            self.importer_confirmWidget.autoDetectJavaBtn.setEnabled(False)
         self.javaFindWorkThreadFactory.create().start()
 
     @pyqtSlot(list)
@@ -1931,6 +1854,9 @@ class ConfigurePage(QWidget):
 
             self.noobAutoDetectJavaPrimaryPushBtn.setEnabled(True)
             self.extendedAutoDetectJavaPrimaryPushBtn.setEnabled(True)
+            # 同时启用importer的按钮
+            if hasattr(self, "importer_confirmWidget") and self.importer_confirmWidget:
+                self.importer_confirmWidget.autoDetectJavaBtn.setEnabled(True)
 
     def addCoreManually(self):
         """手动添加服务器核心"""
@@ -2174,48 +2100,75 @@ class ConfigurePage(QWidget):
     def setJavaPath(self, selectedJavaPath):
         """选择Java后处理Java路径"""
         configureServerVariables.selectedJavaPath = selectedJavaPath
+        if self.newServerStackedWidget.currentIndex() <= 3:
+            pass
+        else:
+            self.javaVersionLabelItems[self.newServerStackedWidget.currentIndex()].setPlainText(
+                selectedJavaPath
+            )
 
     def setJavaVer(self, selectedJavaVer):
         """选择Java后处理Java版本"""
         configureServerVariables.selectedJavaVersion = selectedJavaVer
-        javaVersionLabelItems = [
-            None,
-            self.noobJavaInfoLabel,
-            self.extendedJavaInfoLabel,
-        ]
-        javaVersionLabelItems[self.newServerStackedWidget.currentIndex()].setText(
-            self.tr("已选择，版本: ") + str(selectedJavaVer)
-        )
+        if self.newServerStackedWidget.currentIndex() <= 3:
+            self.javaVersionLabelItems[self.newServerStackedWidget.currentIndex()].setText(
+                self.tr("已选择，版本: ") + str(selectedJavaVer)
+            )
 
     def finishNewServer(self):
         """完成新建服务器的检查触发器"""
         # 定义
         currentNewServerType = self.newServerStackedWidget.currentIndex()
-        configureServerVariables.memUnit = (
-            configureServerVariables.memUnitList[0]
-            if currentNewServerType == 1
-            else configureServerVariables.memUnitList[self.extendedMemUnitComboBox.currentIndex()]
+
+        # 判断是否从importer调用（检查是否已经设置了数据）
+        isFromImporter = (
+            hasattr(self, "importer_serverPath")
+            and self.importer_serverPath
+            and configureServerVariables.minMem
+            and configureServerVariables.serverName
         )
-        # 检查
-        check = ServerValidator().check(
-            v=configureServerVariables,
-            minMem=(
-                self.noobMinMemLineEdit.text()
+
+        # 如果不是从importer调用，设置memUnit
+        if not isFromImporter:
+            configureServerVariables.memUnit = (
+                configureServerVariables.memUnitList[0]
                 if currentNewServerType == 1
-                else self.extendedMinMemLineEdit.text()
-            ),
-            maxMem=(
-                self.noobMaxMemLineEdit.text()
-                if currentNewServerType == 1
-                else self.extendedMaxMemLineEdit.text()
-            ),
-            name=(
-                self.noobServerNameLineEdit.text()
-                if currentNewServerType == 1
-                else self.extendedServerNameLineEdit.text()
-            ),
-            jvmArg=(self.JVMArgPlainTextEdit.toPlainText() if currentNewServerType == 2 else ""),
-        )
+                else configureServerVariables.memUnitList[
+                    self.extendedMemUnitComboBox.currentIndex()
+                ]
+            )
+
+        # 检查：如果从importer调用，直接使用configureServerVariables中的值
+        if isFromImporter:
+            check = ServerValidator().check(
+                v=configureServerVariables,
+                minMem=str(configureServerVariables.minMem),
+                maxMem=str(configureServerVariables.maxMem),
+                name=configureServerVariables.serverName,
+                jvmArg="",
+            )
+        else:
+            check = ServerValidator().check(
+                v=configureServerVariables,
+                minMem=(
+                    self.noobMinMemLineEdit.text()
+                    if currentNewServerType == 1
+                    else self.extendedMinMemLineEdit.text()
+                ),
+                maxMem=(
+                    self.noobMaxMemLineEdit.text()
+                    if currentNewServerType == 1
+                    else self.extendedMaxMemLineEdit.text()
+                ),
+                name=(
+                    self.noobServerNameLineEdit.text()
+                    if currentNewServerType == 1
+                    else self.extendedServerNameLineEdit.text()
+                ),
+                jvmArg=(
+                    self.JVMArgPlainTextEdit.toPlainText() if currentNewServerType == 2 else ""
+                ),
+            )
         # 如果出错
         if check[1] != 0:
             title = self.tr("创建服务器失败！存在 ") + str(check[1]) + self.tr(" 个问题。")
@@ -2418,9 +2371,11 @@ class ConfigurePage(QWidget):
             # Check for NeoForge first
             detectedServerType = None
             versionInfo = None
-            
+
             if (
-                t := NeoForgeInstaller.isPossibleNeoForgeInstaller(configureServerVariables.corePath)
+                t := NeoForgeInstaller.isPossibleNeoForgeInstaller(
+                    configureServerVariables.corePath
+                )
             ) is not None:
                 detectedServerType = "neoforge"
                 mcVersion, version = t
@@ -2432,7 +2387,7 @@ class ConfigurePage(QWidget):
                 detectedServerType = "forge"
                 mcVersion, version = t
                 versionInfo = (mcVersion, version, "Forge")
-            
+
             # Show confirmation dialog if installer detected
             if versionInfo is not None:
                 mcVersion, version, typeName = versionInfo
@@ -2463,9 +2418,9 @@ class ConfigurePage(QWidget):
                 mcVersion, forgeVersion = versionInfo
                 w = MessageBox(
                     self.tr("这是 Forge 安装器"),
-                    self.tr("检测到 Forge 版本：\nMinecraft: ") 
-                    + str(mcVersion) 
-                    + self.tr("\nForge: ") 
+                    self.tr("检测到 Forge 版本：\nMinecraft: ")
+                    + str(mcVersion)
+                    + self.tr("\nForge: ")
                     + forgeVersion
                     + self.tr("\n\n是否需要自动安装 Forge 服务端？"),
                     self,
@@ -2485,14 +2440,16 @@ class ConfigurePage(QWidget):
 
         elif serverType == "neoforge":
             # 尝试获取版本信息
-            versionInfo = NeoForgeInstaller.isPossibleNeoForgeInstaller(configureServerVariables.corePath)
+            versionInfo = NeoForgeInstaller.isPossibleNeoForgeInstaller(
+                configureServerVariables.corePath
+            )
             if versionInfo:
                 mcVersion, neoforgeVersion = versionInfo
                 w = MessageBox(
                     self.tr("这是 NeoForge 安装器"),
-                    self.tr("检测到 NeoForge 版本：\nMinecraft: ") 
-                    + str(mcVersion) 
-                    + self.tr("\nNeoForge: ") 
+                    self.tr("检测到 NeoForge 版本：\nMinecraft: ")
+                    + str(mcVersion)
+                    + self.tr("\nNeoForge: ")
                     + neoforgeVersion
                     + self.tr("\n\n是否需要自动安装 NeoForge 服务端？"),
                     self,
@@ -2548,8 +2505,9 @@ class ConfigurePage(QWidget):
 
                 # init installerLogViewer
                 self.installerLogViewer = ForgeInstallerProgressBox(
-                    self.neoforgeInstaller.installerLogOutput, self, 
-                    title=self.tr("NeoForge 安装器 (正在安装...)")
+                    self.neoforgeInstaller.installerLogOutput,
+                    self,
+                    title=self.tr("NeoForge 安装器 (正在安装...)"),
                 )
                 self.installerLogViewer.cancelButton.clicked.connect(
                     self.neoforgeInstaller.cancelInstall
@@ -2636,6 +2594,10 @@ class ConfigurePage(QWidget):
         configureServerVariables.serverType = ""
         configureServerVariables.extraData = {}
         
+        # 清理importer相关的解压文件和状态
+        if hasattr(self, 'importer_serverPath') and self.importer_serverPath:
+            self._importerCleanupServerPath()
+
         if not cfg.get(cfg.clearAllNewServerConfigInProgram):
             return
 
@@ -2718,9 +2680,7 @@ class ConfigurePage(QWidget):
             if arg == "" or arg == " ":
                 serverVariables.jvmArg.remove(arg)
 
-        extra_data = (
-            dict(serverVariables.extraData) if serverVariables.extraData else {}
-        )
+        extra_data = dict(serverVariables.extraData) if serverVariables.extraData else {}
 
         serverConfig = {
             "name": serverVariables.serverName,
@@ -2776,7 +2736,9 @@ class ConfigurePage(QWidget):
             exists_error_msg=exists_error_msg,
             parent=self,
         )
-        self.javaSaveThread.success.connect(lambda msg: self._onJavaSaveSuccess(msg, serverVariables, isEditing))
+        self.javaSaveThread.success.connect(
+            lambda msg: self._onJavaSaveSuccess(msg, serverVariables, isEditing)
+        )
         self.javaSaveThread.failed.connect(self._onJavaSaveFailed)
         self.javaSaveThread.finished.connect(self._cleanupJavaSaveThread)
         self.javaSaveThread.start()
@@ -2842,9 +2804,7 @@ class ConfigurePage(QWidget):
             )
             return
 
-        extra_data = (
-            dict(serverVariables.extraData) if serverVariables.extraData else {}
-        )
+        extra_data = dict(serverVariables.extraData) if serverVariables.extraData else {}
 
         serverConfig = {
             "name": serverVariables.serverName,
@@ -2868,7 +2828,7 @@ class ConfigurePage(QWidget):
             self.creatingBedrockStateToolTip.move(self.creatingBedrockStateToolTip.getSuitablePos())
             self.creatingBedrockStateToolTip.show()
 
-            if hasattr(self, 'bedrockSaveServerPrimaryPushBtn'):
+            if hasattr(self, "bedrockSaveServerPrimaryPushBtn"):
                 self.bedrockSaveServerPrimaryPushBtn.setEnabled(False)
 
         self.bedrockSaveThread = BedrockServerSaveThread(
@@ -2882,7 +2842,9 @@ class ConfigurePage(QWidget):
             exists_error_msg=exists_error_msg,
             parent=self,
         )
-        self.bedrockSaveThread.success.connect(lambda msg: self._onBedrockSaveSuccess(msg, serverVariables, isEditing))
+        self.bedrockSaveThread.success.connect(
+            lambda msg: self._onBedrockSaveSuccess(msg, serverVariables, isEditing)
+        )
         self.bedrockSaveThread.failed.connect(lambda msg: self._onBedrockSaveFailed(msg, isEditing))
         self.bedrockSaveThread.finished.connect(lambda: self._cleanupBedrockSaveThread(isEditing))
         self.bedrockSaveThread.start()
@@ -2890,7 +2852,11 @@ class ConfigurePage(QWidget):
     @pyqtSlot(str)
     def _onBedrockSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
         """基岩版服务器保存成功回调"""
-        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+        if (
+            not isEditing
+            and hasattr(self, "creatingBedrockStateToolTip")
+            and self.creatingBedrockStateToolTip
+        ):
             self.creatingBedrockStateToolTip.setContent(self.tr("创建成功！"))
             self.creatingBedrockStateToolTip.setState(True)
             self.creatingBedrockStateToolTip = None
@@ -2913,7 +2879,11 @@ class ConfigurePage(QWidget):
     @pyqtSlot(str)
     def _onBedrockSaveFailed(self, exit1Msg: str, isEditing=False):
         """基岩版服务器保存失败回调"""
-        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+        if (
+            not isEditing
+            and hasattr(self, "creatingBedrockStateToolTip")
+            and self.creatingBedrockStateToolTip
+        ):
             self.creatingBedrockStateToolTip.setContent(self.tr("创建失败！"))
             self.creatingBedrockStateToolTip.setState(False)
             self.creatingBedrockStateToolTip = None
@@ -2930,7 +2900,7 @@ class ConfigurePage(QWidget):
 
     def _cleanupBedrockSaveThread(self, isEditing=False):
         """清理基岩版保存线程"""
-        if not isEditing and hasattr(self, 'bedrockSaveServerPrimaryPushBtn'):
+        if not isEditing and hasattr(self, "bedrockSaveServerPrimaryPushBtn"):
             self.bedrockSaveServerPrimaryPushBtn.setEnabled(True)
         self.bedrockSaveThread = None
 
@@ -3039,3 +3009,472 @@ class ConfigurePage(QWidget):
         if hasattr(self, "neoforgeInstaller"):
             del self.neoforgeInstaller
         self._clearNewServerInputs()
+
+    # ==================== ModPack Importer Methods ====================
+
+    def _initModPackImporter(self):
+        """初始化ModPackImporter相关变量和UI"""
+        # Importer相关变量
+        self.importer_selectedZipFile: str = ""
+        self.importer_selectedCore: str = ""
+        self.importer_serverPath: str = ""
+        self.importer_jarFiles: List[str] = []
+        self.importer_needForgeInstall: bool = False
+        self.importer_forgeInstallerCore: Optional[str] = None
+        self.importer_extractThread: Optional[ExtractModpackThread] = None
+        self.importer_stateTooltip: Optional[StateToolTip] = None
+        self.importer_totalStep = 0
+
+        # 创建UI页面
+        self._initImporterUI()
+
+    def _initImporterUI(self):
+        """初始化Importer的UI步骤"""
+        # 创建ImportPageWidget
+        self.importer_pageWidget = ImportPageWidget(self.importNewServerStackWidget)
+        self.importNewServerStackWidget.addWidget(self.importer_pageWidget)
+
+        # Step 1: 选择整合包压缩文件
+        self.importer_totalStep += 1
+        self.importer_importWidget = ImportSingleWidget(
+            self.importer_totalStep, "选择整合包压缩文件 (.zip)", "选择文件"
+        )
+        if self.importer_totalStep > 1:
+            self.importer_importWidget.setEnabled(False)
+        self.importer_pageWidget.typeWidgetLayout.addWidget(self.importer_importWidget)
+
+        # Step 2: 配置服务器参数
+        self.importer_totalStep += 1
+        self.importer_confirmWidget = ConfirmArgumentsWidget(
+            self.importer_totalStep, "设置服务器参数"
+        )
+        if self.importer_totalStep > 1:
+            self.importer_confirmWidget.setEnabled(False)
+        self.importer_pageWidget.typeWidgetLayout.addWidget(self.importer_confirmWidget)
+
+        # Step 3: 保存配置
+        self.importer_totalStep += 1
+        self.importer_saveWidget = SaveWidget(self.importer_totalStep)
+        if self.importer_totalStep > 1:
+            self.importer_saveWidget.setEnabled(False)
+        self.importer_pageWidget.typeWidgetLayout.addWidget(self.importer_saveWidget)
+
+        # 连接信号槽
+        self._connectImporterSlots()
+
+        # 直接显示ModPackImporter页面
+        self.importNewServerStackWidget.setCurrentIndex(0)
+
+    def _connectImporterSlots(self):
+        """连接Importer的信号槽"""
+        # Step 1 完成后，解压并检测jar文件
+        self.importer_importWidget.fileImportedSignal.connect(self._importerOnZipFileSelected)
+
+        # 连接各步骤的完成信号
+        self.importer_importWidget.finishSignal.connect(self._importerOnImportWidgetFinished)
+        self.importer_confirmWidget.finishSignal.connect(self.importer_saveWidget.setEnabled)
+
+        # 连接Java相关按钮
+        self.importer_confirmWidget.selectJavaPrimaryPushBtn.clicked.connect(
+            self._importerAddJavaManually
+        )
+        self.importer_confirmWidget.autoDetectJavaBtn.clicked.connect(self._importerAutoDetectJava)
+        self.importer_confirmWidget.javaListBtn.clicked.connect(self._importerShowJavaList)
+
+        # 连接输入框的文本变化信号
+        self.importer_confirmWidget.javaTextEdit.textChanged.connect(
+            self._importerCheckConfirmWidgetCompletion
+        )
+        self.importer_confirmWidget.minMemLineEdit.textChanged.connect(
+            self._importerCheckConfirmWidgetCompletion
+        )
+        self.importer_confirmWidget.maxMemLineEdit.textChanged.connect(
+            self._importerCheckConfirmWidgetCompletion
+        )
+
+        # 连接保存按钮
+        self.importer_saveWidget.saveSaveServerBtn.clicked.connect(self._importerFinishSave)
+        self.javaVersionLabelItems.append(self.importer_confirmWidget.javaTextEdit)
+
+    def _importerShowJavaList(self):
+        """显示Java列表选择页面"""
+        self.noobJavaListPushBtn.click()
+
+    @pyqtSlot(str)
+    def _importerOnJavaSelected(self, java_path: str):
+        """当选择了Java后"""
+        self.importer_confirmWidget.javaTextEdit.setPlainText(java_path)
+        # 检查是否可以完成此步骤
+        self._importerCheckConfirmWidgetCompletion()
+
+    def _importerCheckConfirmWidgetCompletion(self):
+        """检查配置参数是否完成"""
+        # 检查Java路径是否已填写
+        java_text = self.importer_confirmWidget.javaTextEdit.toPlainText().strip()
+        # 检查内存是否已填写
+        min_mem = self.importer_confirmWidget.minMemLineEdit.text().strip()
+        max_mem = self.importer_confirmWidget.maxMemLineEdit.text().strip()
+
+        # 如果所有必要项都已填写，则标记为完成
+        if java_text and min_mem and max_mem:
+            try:
+                # 验证内存是数字且合理
+                min_mem_int = int(min_mem)
+                max_mem_int = int(max_mem)
+                # 检查内存值合理性：最小内存不为0，最大内存>=最小内存
+                if min_mem_int > 0 and max_mem_int >= min_mem_int:
+                    self.importer_confirmWidget.setFinished()
+            except ValueError:
+                pass
+
+    def _importerAddJavaManually(self):
+        """手动添加Java"""
+        selectedJavaPath = str(
+            QFileDialog.getOpenFileName(
+                self,
+                self.tr("选择 java.exe 程序"),
+                getcwd(),
+                self.tr("Java 主程序 (java.exe)"),
+            )[0]
+        )
+        if selectedJavaPath != "":
+            if v := javaDetector.getJavaVersion(selectedJavaPath):
+                currentJavaPaths = configureServerVariables.javaPath
+                if javaDetector.Java(selectedJavaPath, v) not in currentJavaPaths:
+                    currentJavaPaths.append(javaDetector.Java(selectedJavaPath, v))
+                    javaDetector.sortJavaList(currentJavaPaths)
+                    # 自动设置到javaTextEdit
+                    self.importer_confirmWidget.javaTextEdit.setPlainText(selectedJavaPath)
+                    InfoBar.success(
+                        title=self.tr("已添加"),
+                        content=self.tr("Java路径: ")
+                        + selectedJavaPath
+                        + self.tr("\n版本: ")
+                        + v
+                        + self.tr("\n但你还需要继续到 Java 列表中选取。"),
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=3000,
+                        parent=self,
+                    )
+                else:
+                    InfoBar.warning(
+                        title=self.tr("未添加"),
+                        content=self.tr(
+                            "此 Java 已被添加过，也有可能是自动查找 Java 时已经搜索到了。请检查 Java 列表。"  # noqa: E501
+                        ),
+                        orient=Qt.Horizontal,
+                        isClosable=True,
+                        position=InfoBarPosition.TOP,
+                        duration=4848,
+                        parent=self,
+                    )
+                javaDetector.saveJavaList(currentJavaPaths)
+            else:
+                InfoBar.error(
+                    title=self.tr("添加失败"),
+                    content=self.tr("此 Java 无效！"),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=3000,
+                    parent=self,
+                )
+        else:
+            InfoBar.warning(
+                title=self.tr("未添加"),
+                content=self.tr("你并没有选择 Java。"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+
+    def _importerAutoDetectJava(self):
+        """自动查找Java（直接调用共用方法）"""
+        self.autoDetectJava()
+
+    def _importerOnImportWidgetFinished(self, finished: bool):
+        """当导入Widget完成时，不自动启用下一步，等待解压完成"""
+        pass
+
+    @pyqtSlot(str)
+    def _importerOnZipFileSelected(self, zipFilePath: str):
+        """当用户选择了整合包文件后"""
+        try:
+            # 如果之前有解压的文件，先清理
+            if self.importer_serverPath:
+                self._importerCleanupServerPath()
+            
+            self.importer_selectedZipFile = zipFilePath
+            # 显示提示信息
+            msgBox = MessageBox(
+                self.tr("提示"),
+                self.tr(
+                    "请注意：\n"
+                    "1. 目前仅支持 .zip 格式的整合包文件\n"
+                    "2. 如果是模组整合包，请确保下载的是服务器专用包(ServerPack)\n"
+                    "3. 整合包将被解压到自动生成的服务器目录\n\n"
+                    "继续导入吗？"
+                ),
+                self,
+            )
+            if msgBox.exec():
+                # 用户点击确定，开始解压和检测
+                self._importerStartExtractModpack()
+            else:
+                # 用户取消，重置状态
+                self.importer_importWidget.setNotFinished()
+        except Exception as e:
+            MessageBox(
+                self.tr("错误"), self.tr("处理整合包时出错: {0}").format(str(e)), self
+            ).exec()
+            self.importer_importWidget.setNotFinished()
+
+    def _importerStartExtractModpack(self):
+        """开始解压整合包(异步)"""
+        # 生成服务器目录
+        self.importer_serverPath = self._importerGenerateServerPath()
+
+        # 显示状态提示
+        self.importer_stateTooltip = StateToolTip(
+            self.tr("解压整合包"), self.tr("正在解压整合包并检测核心文件..."), self
+        )
+        self.importer_stateTooltip.move(self.importer_stateTooltip.getSuitablePos())
+        self.importer_stateTooltip.show()
+
+        # 创建并启动后台线程
+        self.importer_extractThread = ExtractModpackThread(
+            self.importer_selectedZipFile, self.importer_serverPath
+        )
+        self.importer_extractThread.success.connect(self._importerOnExtractSuccess)
+        self.importer_extractThread.failed.connect(self._importerOnExtractFailed)
+        self.importer_extractThread.finished.connect(self._importerCleanupExtractThread)
+        self.importer_extractThread.start()
+
+    @pyqtSlot(str, list)
+    def _importerOnExtractSuccess(self, server_path: str, jar_files: list):
+        """解压成功后的处理"""
+        self.importer_jarFiles = jar_files
+
+        # 关闭状态提示
+        if self.importer_stateTooltip:
+            self.importer_stateTooltip.setContent(self.tr("解压完成 ✓"))
+            self.importer_stateTooltip.setState(True)
+            self.importer_stateTooltip = None
+
+        if len(self.importer_jarFiles) == 0:
+            MessageBox(
+                self.tr("提示"),
+                self.tr("未在整合包中找到核心文件(.jar)。\n\n")
+                + self.tr("整合包已解压到: ")
+                + self.importer_serverPath
+                + "\n\n"
+                + self.tr("请稍后手动下载核心文件或选择已有核心。\n")
+                + self.tr("核心版本需要与整合包对应的游戏版本一致。"),
+                self,
+            ).exec()
+            # 即使没有jar文件，也允许继续
+            self.importer_confirmWidget.setEnabled(True)
+
+        elif len(self.importer_jarFiles) == 1:
+            # 只有一个jar文件，自动选择
+            self.importer_selectedCore = self.importer_jarFiles[0]
+            MessageBox(
+                self.tr("检测到核心文件"),
+                self.tr(
+                    "在整合包中自动检测到核心文件:\n{0}\n\n将使用此文件作为服务器核心。"
+                ).format(self.importer_jarFiles[0]),
+                self,
+            ).exec()
+            self._importerCheckForgeInstaller()
+
+        else:
+            # 多个jar文件，选择第一个并提示
+            self.importer_selectedCore = self.importer_jarFiles[0]
+            jar_list = "\n".join([f"  • {jar}" for jar in self.importer_jarFiles])
+            MessageBox(
+                self.tr("检测到多个jar文件"),
+                self.tr("在整合包中检测到以下jar文件:\n\n{0}\n\n").format(jar_list)
+                + self.tr("将自动选择第一个文件 '{0}' 作为服务器核心。\n").format(
+                    self.importer_jarFiles[0]
+                )
+                + self.tr("如需更换，请在服务器目录中手动修改。"),
+                self,
+            ).exec()
+            self._importerCheckForgeInstaller()
+
+        # 启用配置参数阶段
+        self.importer_confirmWidget.setEnabled(True)
+
+    @pyqtSlot(str)
+    def _importerOnExtractFailed(self, error_msg: str):
+        """解压失败后的处理"""
+        # 关闭状态提示
+        if self.importer_stateTooltip:
+            self.importer_stateTooltip.setContent(self.tr("解压失败 ✗"))
+            self.importer_stateTooltip.setState(False)
+            self.importer_stateTooltip = None
+
+        MessageBox(
+            self.tr("错误"), self.tr("解压整合包时出错:\n{0}").format(error_msg), self
+        ).exec()
+        # 出错时清理已创建的目录
+        self._importerCleanupServerPath()
+        self.importer_importWidget.setNotFinished()
+
+    def _importerCleanupExtractThread(self):
+        """清理解压线程"""
+        if self.importer_extractThread:
+            self.importer_extractThread.deleteLater()
+            self.importer_extractThread = None
+
+    def _importerCleanupServerPath(self):
+        """清理解压的服务器目录"""
+        if self.importer_serverPath and os.path.exists(self.importer_serverPath):
+            try:
+                shutil.rmtree(self.importer_serverPath)
+                MCSL2Logger.info(f"Cleaned up importer server path: {self.importer_serverPath}")
+            except Exception as e:
+                MCSL2Logger.warning(f"Failed to cleanup importer server path: {e}")
+        # 重置相关变量
+        self.importer_serverPath = ""
+        self.importer_selectedCore = ""
+        self.importer_jarFiles = []
+        self.importer_needForgeInstall = False
+        self.importer_forgeInstallerCore = None
+
+    def _importerGenerateServerPath(self) -> str:
+        """生成服务器目录路径"""
+        base_path = "Servers\\Server"
+        counter = 1
+
+        # 检查Servers目录是否存在
+        if not os.path.exists("Servers"):
+            os.makedirs("Servers", exist_ok=True)
+
+        while True:
+            if counter == 1:
+                path = base_path
+            else:
+                path = f"{base_path}{counter}"
+
+            if not os.path.exists(path):
+                os.makedirs(path, exist_ok=True)
+                return path
+            elif len(os.listdir(path)) == 0:
+                return path
+            counter += 1
+
+    def _importerCheckForgeInstaller(self):
+        """检查是否为Forge/NeoForge安装器"""
+        core_path = os.path.join(self.importer_serverPath, self.importer_selectedCore)
+
+        # 检查NeoForge安装器(优先检查，因为NeoForge也可能被Forge检测识别)
+        neoforge_result = NeoForgeInstaller.isPossibleNeoForgeInstaller(core_path)
+        if neoforge_result:
+            msgBox = MessageBox(
+                self.tr("检测到NeoForge安装器"),
+                self.tr("您选择的服务端疑似是NeoForge安装器\n\n")
+                + self.tr("MC版本: ")
+                + str(neoforge_result[0])
+                + "\n"
+                + self.tr("NeoForge版本: ")
+                + str(neoforge_result[1])
+                + "\n\n"
+                + self.tr("是否展开安装？\n")
+                + self.tr("注意: 如果不展开安装，服务器可能无法正常启动！"),
+                self,
+            )
+            if msgBox.exec():
+                self.importer_needForgeInstall = True
+                self.importer_forgeInstallerCore = self.importer_selectedCore
+                # 设置serverType
+                configureServerVariables.serverType = "neoforge"
+                MessageBox(
+                    self.tr("提示"),
+                    self.tr("NeoForge自动安装将在您完成服务器配置后执行。\n请继续配置服务器参数。"),
+                    self,
+                ).exec()
+            # 无论用户是否选择安装，都启用下一步
+            self.importer_confirmWidget.setEnabled(True)
+            return
+
+        # 检查Forge安装器
+        forge_result = ForgeInstaller.isPossibleForgeInstaller(core_path)
+        if forge_result:
+            msgBox = MessageBox(
+                self.tr("检测到Forge安装器"),
+                self.tr("您选择的服务端疑似是Forge安装器\n\n")
+                + self.tr("MC版本: ")
+                + str(forge_result[0])
+                + "\n"
+                + self.tr("Forge版本: ")
+                + str(forge_result[1])
+                + "\n\n"
+                + self.tr("是否展开安装？\n")
+                + self.tr("注意: 如果不展开安装，服务器可能无法正常启动！"),
+                self,
+            )
+            if msgBox.exec():
+                self.importer_needForgeInstall = True
+                self.importer_forgeInstallerCore = self.importer_selectedCore
+                # 设置serverType
+                configureServerVariables.serverType = "forge"
+                MessageBox(
+                    self.tr("提示"),
+                    self.tr("Forge自动安装将在您完成服务器配置后执行。\n请继续配置服务器参数。"),
+                    self,
+                ).exec()
+
+        # 启用下一步
+        self.importer_confirmWidget.setEnabled(True)
+
+    def _importerFinishSave(self):
+        """完成importer的保存，将数据转换到configureServerVariables并调用共用逻辑"""
+        # 先检查服务器名称合法性
+        serverName = self.importer_saveWidget.saveServerNameLineEdit.text().strip()
+        nameCheck = ServerValidator().checkServerNameSet(serverName, configureServerVariables)
+        if nameCheck[1] != 0:  # 如果检查出错
+            InfoBar.error(
+                title=self.tr("保存失败"),
+                content=nameCheck[0],
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self,
+            )
+            return
+
+        # 将importer的数据转换到configureServerVariables
+        configureServerVariables.selectedJavaPath = (
+            self.importer_confirmWidget.javaTextEdit.toPlainText().strip()
+        )
+        configureServerVariables.minMem = self.importer_confirmWidget.minMemLineEdit.text().strip()
+        configureServerVariables.maxMem = self.importer_confirmWidget.maxMemLineEdit.text().strip()
+        configureServerVariables.memUnit = "M"  # importer默认使用M
+        configureServerVariables.serverName = serverName
+        configureServerVariables.corePath = (
+            osp.abspath(os.path.join(self.importer_serverPath, self.importer_selectedCore))
+            if self.importer_selectedCore
+            else ""
+        )
+        configureServerVariables.coreFileName = self.importer_selectedCore
+        configureServerVariables.jvmArg = (
+            self.importer_confirmWidget.jvmArgPlainTextEdit.toPlainText().strip().split(" ")
+        )  # noqa: E501
+        outputIndex = self.importer_confirmWidget.outputComboBox.currentIndex()
+        inputIndex = self.importer_confirmWidget.inputComboBox.currentIndex()
+        configureServerVariables.consoleOutputDeEncoding = (
+            configureServerVariables.consoleDeEncodingList[outputIndex + 1]
+        )
+        configureServerVariables.consoleInputDeEncoding = (
+            configureServerVariables.consoleDeEncodingList[inputIndex + 1]
+        )
+
+        # 调用共用的finishNewServer逻辑
+        # 模拟noob模式（currentNewServerType = 1）
+        self.finishNewServer()
