@@ -185,12 +185,12 @@ class DownloadUtils:
             return False
 
         # Try with mirror first if available
-        from .bmclapi import getLibraryUrl, _isUseBMCLAPI
+        from .bmclapi import getLibraryUrl, _isUseBMCLAPIForNeoForge
 
         # Collect unique URLs to try
         urls_to_try = []
 
-        if _isUseBMCLAPI():
+        if _isUseBMCLAPIForNeoForge():
             mirror_url = getLibraryUrl(original_url)
             # If mirror URL is different, try it first
             if mirror_url != original_url:
