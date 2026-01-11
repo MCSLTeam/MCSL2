@@ -103,9 +103,9 @@ copyright = "Copyright ©MCSLTeam. All rights reserved."
 
 # 依赖
 include-package = ["MCSL2Lib", "sqlite3"]
-follow-import-to = ["Adapters", "loguru", "requests", "croniter", "openai", "pytz"]
+follow-import-to = ["Adapters", "loguru", "requests", "croniter", "openai", "pytz", "pypdl"]
 nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief", "sqlite3.test"]
 
-enable-plugin = ["pyqt5", "multiprocessing"]
+enable-plugin = ["pyqt5"]
 windows-icon-from-ico = "MCSL2.ico"
 assume-yes-for-download = true
