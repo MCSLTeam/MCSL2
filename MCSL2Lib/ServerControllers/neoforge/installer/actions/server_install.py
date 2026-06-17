@@ -143,7 +143,7 @@ class ServerInstall(Action):
             # dl = vanilla.getDownload(side)
             # Try BMCLAPI first
             dl = bmclapi.getMinecraftDownload(self.profile.getMinecraft(), side)
-            
+
             # Fallback to official Mojang source if BMCLAPI is disabled or failed
             if dl is None:
                 from .json.util import Util
@@ -305,8 +305,15 @@ class ServerInstall(Action):
 
     def getLibraries(self) -> List[Library]:
         libraries = []
+        seen_paths = set()
         for lib in self.version.getLibraries():
-            libraries.append(lib)
+            path = lib.getName().getPath()
+            if path not in seen_paths:
+                seen_paths.add(path)
+                libraries.append(lib)
         for lib in self.processors.getLibraries():
-            libraries.append(lib)
+            path = lib.getName().getPath()
+            if path not in seen_paths:
+                seen_paths.add(path)
+                libraries.append(lib)
         return libraries
