@@ -54,7 +54,7 @@ jobs:
 
       - name: Build
         run: |
-          uv run deploy.py --disable-console
+          uv run deploy.py --windows-console-mode=disable
 
       - name: Optimize
         shell: pwsh

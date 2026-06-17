@@ -84,7 +84,7 @@ jobs:
 
       - name: Build with Nuitka
         shell: pwsh
-        run: uv run deploy.py --disable-console
+        run: uv run deploy.py --windows-console-mode=disable
 
       - name: Optimize package
         shell: pwsh
@@ -153,13 +153,16 @@ jobs:
         include:
           - architecture: x64
             runner: ubuntu-22.04
+            experimental: false
             skip_pyqt_qt5_wheel: false
             use_upx: true
           - architecture: arm64
             runner: ubuntu-22.04-arm
+            experimental: true
             skip_pyqt_qt5_wheel: true
             use_upx: false
     runs-on: ${{ matrix.runner }}
+    continue-on-error: ${{ matrix.experimental }}
     steps:
       - name: Install tools
         run: |
@@ -184,10 +187,22 @@ jobs:
         run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Sync dependencies
-        run: uv sync --no-dev --locked ${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}
+        run: |
+          sync_args="${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}"
+          if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
+            uv sync --no-dev --locked $sync_args &
+            sync_pid=$!
+            while kill -0 "$sync_pid" 2>/dev/null; do
+              echo "Still syncing dependencies for Linux arm64..."
+              sleep 60
+            done
+            wait "$sync_pid"
+          else
+            uv sync --no-dev --locked
+          fi
 
       - name: Build with Nuitka
-        run: uv run deploy.py --disable-console
+        run: uv run deploy.py
 
       - name: Optimize package
         run: |
@@ -249,12 +264,7 @@ jobs:
         run: uv sync --no-dev --locked
 
       - name: Build with Nuitka
-        run: |
-          uv run deploy.py \
-            --disable-console \
-            --macos-create-app-bundle \
-            --macos-app-mode=gui \
-            --macos-app-icon=MCSL2.icns
+        run: uv run deploy.py
 
       - name: Prepare app bundle
         run: |
@@ -330,14 +340,16 @@ jobs:
       - name: Create DMG
         if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
         run: |
+          app_path="$PWD/build/MCSL2.app"
           dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
-          background_path="macos-volume-bg.png"
+          background_path="$PWD/macos-volume-bg.png"
+          volume_icon_path="$PWD/macos-volume-icon.icns"
 
           if [ -f "$background_path" ]; then
             cat > "$RUNNER_TEMP/mcsl2-dmg.json" <<JSON
           {
             "title": "MCSL2",
-            "icon": "macos-volume-icon.icns",
+            "icon": "$volume_icon_path",
             "background": "$background_path",
             "window": {
               "size": {
@@ -350,7 +362,7 @@ jobs:
                 "x": 240,
                 "y": 145,
                 "type": "file",
-                "path": "build/MCSL2.app"
+                "path": "$app_path"
               },
               {
                 "x": 240,
@@ -363,7 +375,7 @@ jobs:
           JSON
             appdmg "$RUNNER_TEMP/mcsl2-dmg.json" "$dmg_path"
           else
-            create-dmg build/MCSL2.app build --overwrite --no-code-sign
+            create-dmg "$app_path" build --overwrite --no-code-sign
             generated_dmg="$(find build -maxdepth 1 -name '*.dmg' | head -n 1)"
             test -n "$generated_dmg"
             mv "$generated_dmg" "$dmg_path"
@@ -488,7 +500,6 @@ jobs:
             && cp MCSL2-Linux-x64/MCSL2Lib/verification.so Update/Linux-x64/MCSL2Lib/
           [ -f MCSL2-Linux-arm64/MCSL2Lib/verification.so ] \
             && cp MCSL2-Linux-arm64/MCSL2Lib/verification.so Update/Linux-arm64/MCSL2Lib/
-
           find Update -type d -empty -delete
           7z a -tzip -mx=9 "Update-${MCSL2_VERSION}.zip" "./Update/*"
 

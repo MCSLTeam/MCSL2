@@ -22,13 +22,16 @@ jobs:
         include:
           - architecture: x64
             runner: ubuntu-22.04
+            experimental: false
             skip_pyqt_qt5_wheel: false
             use_upx: true
           - architecture: arm64
             runner: ubuntu-22.04-arm
+            experimental: true
             skip_pyqt_qt5_wheel: true
             use_upx: false
     runs-on: ${{ matrix.runner }}
+    continue-on-error: ${{ matrix.experimental }}
     steps:
 
       - name: Install Tools
@@ -54,11 +57,23 @@ jobs:
         run: uv python install 3.8
 
       - name: Sync Dependencies
-        run: uv sync --no-dev --locked ${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}
+        run: |
+          sync_args="${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}"
+          if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
+            uv sync --no-dev --locked $sync_args &
+            sync_pid=$!
+            while kill -0 "$sync_pid" 2>/dev/null; do
+              echo "Still syncing dependencies for Linux arm64..."
+              sleep 60
+            done
+            wait "$sync_pid"
+          else
+            uv sync --no-dev --locked
+          fi
 
       - name: Build
         run: |
-          uv run deploy.py --disable-console
+          uv run deploy.py
 
       - name: Optimize
         run: |
