@@ -23,7 +23,6 @@ from pyqt5_concurrent.TaskExecutor import TaskExecutor  # type: ignore
 from PyQt5.QtCore import Qt, QRect, QSize, pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import (
-    QApplication,
     QSizePolicy,
     QFrame,
     QWidget,
@@ -47,13 +46,13 @@ from qfluentwidgets import (
     TitleLabel,
     TransparentToolButton,
     FluentIcon as FIF,
-    Dialog,
     MessageBox,
     InfoBar,
     InfoBarPosition,
     StateToolTip,
     isDarkTheme,
     FlowLayout,
+    HyperlinkButton,
 )
 
 from MCSL2Lib.ProgramControllers import javaDetector
@@ -148,11 +147,13 @@ class ServerManagerPage(QWidget):
 
         self.verticalLayout_2 = QVBoxLayout(self.serversPage)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
 
         self.serversSmoothScrollArea = MySmoothScrollArea(self.serversPage)
         self.serversSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.serversSmoothScrollArea.setFrameShadow(QFrame.Plain)
         self.serversSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.serversSmoothScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.serversSmoothScrollArea.setWidgetResizable(True)
         self.serversSmoothScrollArea.setObjectName("serversSmoothScrollArea")
 
@@ -162,6 +163,7 @@ class ServerManagerPage(QWidget):
 
         self.flowLayout = FlowLayout(self.serversScrollAreaWidgetContents)
         self.flowLayout.setContentsMargins(0, 0, 0, 0)
+        self.flowLayout.setSpacing(8)
         self.flowLayout.setObjectName("flowLayout")
 
         self.serversSmoothScrollArea.setWidget(self.serversScrollAreaWidgetContents)
@@ -674,7 +676,7 @@ class ServerManagerPage(QWidget):
             for i in range(len(globalConfig)):
                 # 获取服务器类型,默认为 java
                 serverType = globalConfig[i].get("server_type", "java")
-                
+
                 self.flowLayout.addWidget(
                     SingleServerManager(
                         mem=f"{globalConfig[i]['min_memory']}{globalConfig[i]['memory_unit']}~{globalConfig[i]['max_memory']}{globalConfig[i]['memory_unit']}",
@@ -807,17 +809,17 @@ class ServerManagerPage(QWidget):
         globalConfig: list = readGlobalServerConfig()
         self.stackedWidget.setCurrentIndex(1)
         self.serverIndex = index
-        
+
         # 获取服务器类型
         serverType = globalConfig[index].get("server_type", "java")
         isBedrockServer = (serverType == "bedrock")
-        
+
         # 自动填充旧配置。在下方初始化变量之前不应调用任何的editServerVariables的属性
         self.editServerSubtitleLabel.setText(
             self.tr("编辑服务器") + f"-{globalConfig[index]['name']}"
             + (self.tr(" [基岩版]") if isBedrockServer else "")
         )
-        
+
         # 根据服务器类型显示/隐藏控件
         if isBedrockServer:
             # 隐藏Java相关控件
@@ -835,7 +837,7 @@ class ServerManagerPage(QWidget):
             self.editSetJVMArgWidget.setVisible(True)
             self.editDownloadCorePrimaryPushBtn.setVisible(True)
             self.editManuallyAddCorePrimaryPushBtn.setVisible(True)
-            
+
             # 填充Java版配置
             self.editJavaTextEdit.setText(globalConfig[index]["java_path"])
             self.editMinMemLineEdit.setText(str(globalConfig[index]["min_memory"]))
@@ -848,7 +850,7 @@ class ServerManagerPage(QWidget):
                 totalJVMArg += f"{arg} "
             totalJVMArg = totalJVMArg.strip()
             self.JVMArgPlainTextEdit.setPlainText(totalJVMArg)
-        
+
         # 通用配置(Java版和基岩版都有)
         self.editOutputDeEncodingComboBox.setCurrentIndex(
             editServerVariables.consoleDeEncodingList.index(globalConfig[index]["output_decoding"])
@@ -910,7 +912,7 @@ class ServerManagerPage(QWidget):
             self.editMaxMemLineEdit.textChanged.connect(self.changeMaxMem)
             self.editMemUnitComboBox.currentIndexChanged.connect(self.changeMemUnit)
             self.JVMArgPlainTextEdit.textChanged.connect(self.changeJVMArg)
-        
+
         # 通用槽连接(Java版和基岩版都需要)
         self.editManuallyAddCorePrimaryPushBtn.clicked.connect(
             self.changeBedrockCore if isBedrockServer else self.changeCore
@@ -992,14 +994,14 @@ class ServerManagerPage(QWidget):
         """手动更换基岩版服务器核心"""
         import platform
         system = platform.system().lower()
-        
+
         if system == "windows":
             file_filter = self.tr(
                 "基岩版服务器 (*.zip *.exe);;压缩包 (*.zip);;可执行文件 (*.exe);;所有文件 (*)"
             )
         else:
             file_filter = self.tr("基岩版服务器 (*.zip *);;压缩包 (*.zip);;所有文件 (*)")
-        
+
         tmpCorePath = str(
             QFileDialog.getOpenFileName(
                 self,
@@ -1008,7 +1010,7 @@ class ServerManagerPage(QWidget):
                 file_filter,
             )[0]
         )
-        
+
         if tmpCorePath != "":
             editServerVariables.corePath = tmpCorePath
             editServerVariables.coreFileName = tmpCorePath.split("/")[-1]
@@ -1530,7 +1532,7 @@ class ServerManagerPage(QWidget):
 
     # ==================== Server Save Methods ====================
     # These methods are shared between configurePage and serverManagerPage
-    
+
     def saveServer(self, serverVariables, isEditing=False):
         """
         通用保存服务器方法
@@ -1601,7 +1603,8 @@ class ServerManagerPage(QWidget):
                 icon=FIF.INFO,
                 title=self.tr("功能提醒"),
                 content=self.tr(
-                    "您开启了「创建时自动同意服务器的Eula」功能。\n如需要查看 Minecraft Eula，请点击右边的按钮。"
+                    "您开启了「创建时自动同意服务器的Eula」功能。\n"
+                    "如需要查看 Minecraft Eula，请点击右边的按钮。"
                 ),
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -1622,7 +1625,7 @@ class ServerManagerPage(QWidget):
 
         # 创建并启动保存线程
         from MCSL2Lib.Widgets.serverManagerWidget import JavaServerSaveThread
-        
+
         self.javaSaveThread = JavaServerSaveThread(
             server_config=serverConfig,
             core_path=serverVariables.corePath,
@@ -1635,7 +1638,9 @@ class ServerManagerPage(QWidget):
             exists_error_msg=exists_error_msg,
             parent=self,
         )
-        self.javaSaveThread.success.connect(lambda msg: self._onJavaSaveSuccess(msg, serverVariables, isEditing))
+        self.javaSaveThread.success.connect(
+            lambda msg: self._onJavaSaveSuccess(msg, serverVariables, isEditing)
+        )
         self.javaSaveThread.failed.connect(self._onJavaSaveFailed)
         self.javaSaveThread.finished.connect(self._cleanupJavaSaveThread)
         self.javaSaveThread.start()
@@ -1737,7 +1742,7 @@ class ServerManagerPage(QWidget):
                 self.bedrockSaveServerPrimaryPushBtn.setEnabled(False)
 
         from MCSL2Lib.Widgets.serverManagerWidget import BedrockServerSaveThread
-        
+
         self.bedrockSaveThread = BedrockServerSaveThread(
             server_config=serverConfig,
             core_path=serverVariables.corePath,
@@ -1749,15 +1754,23 @@ class ServerManagerPage(QWidget):
             exists_error_msg=exists_error_msg,
             parent=self,
         )
-        self.bedrockSaveThread.success.connect(lambda msg: self._onBedrockSaveSuccess(msg, serverVariables, isEditing))
-        self.bedrockSaveThread.failed.connect(lambda msg: self._onBedrockSaveFailed(msg, isEditing))
+        self.bedrockSaveThread.success.connect(
+            lambda msg: self._onBedrockSaveSuccess(msg, serverVariables, isEditing)
+        )
+        self.bedrockSaveThread.failed.connect(
+            lambda msg: self._onBedrockSaveFailed(msg, isEditing)
+        )
         self.bedrockSaveThread.finished.connect(lambda: self._cleanupBedrockSaveThread(isEditing))
         self.bedrockSaveThread.start()
 
     @pyqtSlot(str)
     def _onBedrockSaveSuccess(self, exit0Msg: str, serverVariables=None, isEditing=False):
         """基岩版服务器保存成功回调"""
-        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+        if (
+            not isEditing
+            and hasattr(self, "creatingBedrockStateToolTip")
+            and self.creatingBedrockStateToolTip
+        ):
             self.creatingBedrockStateToolTip.setContent(self.tr("创建成功！"))
             self.creatingBedrockStateToolTip.setState(True)
             self.creatingBedrockStateToolTip = None
@@ -1780,7 +1793,11 @@ class ServerManagerPage(QWidget):
     @pyqtSlot(str)
     def _onBedrockSaveFailed(self, exit1Msg: str, isEditing=False):
         """基岩版服务器保存失败回调"""
-        if not isEditing and hasattr(self, "creatingBedrockStateToolTip") and self.creatingBedrockStateToolTip:
+        if (
+            not isEditing
+            and hasattr(self, "creatingBedrockStateToolTip")
+            and self.creatingBedrockStateToolTip
+        ):
             self.creatingBedrockStateToolTip.setContent(self.tr("创建失败！"))
             self.creatingBedrockStateToolTip.setState(False)
             self.creatingBedrockStateToolTip = None
@@ -1824,4 +1841,3 @@ class ServerManagerPage(QWidget):
                 writeFile(r"./MCSL2/MCSL2_ServerList.json", dumps(globalServerList, indent=4))
             except Exception as e:
                 MCSL2Logger.error(f"删除全局配置失败: {e}")
-

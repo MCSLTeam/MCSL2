@@ -53,7 +53,7 @@ class ConsoleCenterPage(QWidget):
         self.runningServersScrollArea.setFrameShape(QFrame.NoFrame)
         self.runningServersScrollArea.setFrameShadow(QFrame.Plain)
         self.runningServersScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.runningServersScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.runningServersScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.runningServersScrollArea.setWidgetResizable(True)
         self.runningServersScrollArea.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
 

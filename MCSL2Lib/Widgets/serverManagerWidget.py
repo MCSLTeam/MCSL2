@@ -21,7 +21,6 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QHBoxLayout,
-    QSpacerItem,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -34,6 +33,7 @@ from qfluentwidgets import (
     Action,
     FluentIcon as FIF,
 )
+from MCSL2Lib.Widgets.textLayout import reserveLabelVerticalSpace
 
 
 class SingleServerManager(SimpleCardWidget):
@@ -62,12 +62,16 @@ class SingleServerManager(SimpleCardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(500, 215))
+        self.setMinimumSize(QSize(260, 180))
+        self.setMaximumSize(QSize(16777215, 16777215))
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
+        self.gridLayout.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout.setHorizontalSpacing(8)
+        self.gridLayout.setVerticalSpacing(6)
         self.serverName = SubtitleLabel(self)
-        self.serverName.setAlignment(Qt.AlignBottom | Qt.AlignLeading | Qt.AlignLeft)
-        self.serverName.setFixedHeight(40)
+        self.serverName.setAlignment(Qt.AlignVCenter | Qt.AlignLeading | Qt.AlignLeft)
+        self.serverName.setMinimumHeight(34)
         self.serverName.setWordWrap(True)
         self.serverName.setObjectName("serverName")
         self.gridLayout.addWidget(self.serverName, 0, 1, 1, 1)
@@ -80,8 +84,9 @@ class SingleServerManager(SimpleCardWidget):
         self.btnWidget.setObjectName("btnWidget")
         self.horizontalLayout = QHBoxLayout(self.btnWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QSpacerItem(20, 30, QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self.horizontalLayout.addItem(spacerItem)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setSpacing(6)
+        self.horizontalLayout.addStretch(1)
         self.runBtn = PrimaryPushButton(self.btnWidget)
         self.runBtn.setObjectName("selectBtn")
         self.horizontalLayout.addWidget(self.runBtn)
@@ -95,10 +100,13 @@ class SingleServerManager(SimpleCardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.serverInfoWidget.sizePolicy().hasHeightForWidth())
         self.serverInfoWidget.setSizePolicy(sizePolicy)
-        self.serverInfoWidget.setMinimumSize(QSize(100, 70))
+        self.serverInfoWidget.setMinimumSize(QSize(100, 64))
         self.serverInfoWidget.setObjectName("serverInfoWidget")
         self.gridLayout_2 = QGridLayout(self.serverInfoWidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_2.setHorizontalSpacing(6)
+        self.gridLayout_2.setVerticalSpacing(2)
         self.coreFileNameTitle = StrongBodyLabel(self.serverInfoWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -152,23 +160,34 @@ class SingleServerManager(SimpleCardWidget):
         self.widget.setObjectName("widget")
         self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(0)
         self.Icon = PixmapLabel(self.widget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Icon.sizePolicy().hasHeightForWidth())
         self.Icon.setSizePolicy(sizePolicy)
-        self.Icon.setFixedSize(QSize(70, 70))
+        self.Icon.setFixedSize(QSize(56, 56))
         self.Icon.setObjectName("Icon")
-        self.verticalLayout.addWidget(self.Icon)
-        spacerItem = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem)
+        self.verticalLayout.addWidget(self.Icon, 0, Qt.AlignTop)
+        self.verticalLayout.addStretch(1)
         self.gridLayout.addWidget(self.widget, 0, 0, 3, 1)
 
         self.runBtn.setText(self.tr("启动"))
         self.coreFileNameTitle.setText(self.tr("核心: "))
         self.memTitle.setText(self.tr("内存设置: "))
         self.javaPathTitle.setText(self.tr("Java: "))
+        for label in (
+            self.serverName,
+            self.coreFileNameTitle,
+            self.memTitle,
+            self.mem,
+            self.coreFileName,
+            self.javaPathTitle,
+            self.javaPath,
+        ):
+            reserveLabelVerticalSpace(label)
 
         self.serverName.setWordWrap(True)
 
@@ -182,7 +201,7 @@ class SingleServerManager(SimpleCardWidget):
             self.coreFileName.setText(coreFileName)
             self.serverName.setText(" " + serverName)
             self.Icon.setPixmap(icon)
-            self.Icon.setFixedSize(QSize(70, 70))
+            self.Icon.setFixedSize(QSize(56, 56))
             self.runBtn.clicked.connect(btnSlot)
             self.runBtn.setObjectName(f"startServer!{i}")
             self.runBtn.setIcon(FIF.PLAY_SOLID)
@@ -192,7 +211,7 @@ class SingleServerManager(SimpleCardWidget):
             self.coreFileName.setText(coreFileName)
             self.serverName.setText(" " + serverName)
             self.Icon.setPixmap(icon)
-            self.Icon.setFixedSize(QSize(70, 70))
+            self.Icon.setFixedSize(QSize(56, 56))
             self.runBtn.clicked.connect(btnSlot)
             self.runBtn.setObjectName(f"startServer!{i}")
             self.runBtn.setIcon(FIF.PLAY_SOLID)

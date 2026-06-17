@@ -32,6 +32,7 @@ from qfluentwidgets import (
     TextEdit,
 )
 from MCSL2Lib.Resources.icons import *  # noqa: F401 F403
+from MCSL2Lib.Widgets.textLayout import reserveLabelVerticalSpace
 
 
 class SingleSelectJavaWidget(SimpleCardWidget):
@@ -45,7 +46,8 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(550, 150))
+        self.setMinimumSize(QSize(550, 150))
+        self.setMaximumSize(QSize(550, 16777215))
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
         self.javaVerWidget = QWidget(self)
@@ -126,6 +128,8 @@ class SingleSelectJavaWidget(SimpleCardWidget):
         self.finishSelectJavaBtn.setText(self.tr("选择"))
         self.javaVerTitle.setText(self.tr("版本: "))
         self.javaPathTitle.setText(self.tr("路径: "))
+        reserveLabelVerticalSpace(self.javaVerTitle)
+        reserveLabelVerticalSpace(self.javaPathTitle)
         self.javaPixmapLabel.setPixmap(QPixmap(":/built-InIcons/Java.svg"))
         self.javaPixmapLabel.setFixedSize(QSize(50, 50))
 

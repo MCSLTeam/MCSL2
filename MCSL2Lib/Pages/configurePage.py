@@ -16,14 +16,14 @@ Configure new server page.
 
 import os
 import shutil
-from json import loads, dumps
+from json import dumps, loads
 from os import getcwd, mkdir, remove, path as osp
 import platform
-from shutil import copy, rmtree
+from shutil import copy, copytree, rmtree
 from typing import List, Optional
 from zipfile import ZipFile
 
-from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, QThread, pyqtSignal, QObject
+from PyQt5.QtCore import Qt, QSize, QRect, pyqtSlot, QThread, pyqtSignal
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import (
     QGridLayout,
@@ -34,7 +34,6 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QFrame,
     QFileDialog,
-    QStackedWidget,
 )
 from qfluentwidgets import (
     ComboBox,
@@ -54,7 +53,7 @@ from qfluentwidgets import (
     HyperlinkButton,
     StateToolTip,
     HeaderCardWidget,
-    CardWidget,
+    FlowLayout,
 )
 
 from MCSL2Lib.ProgramControllers import javaDetector
@@ -71,12 +70,10 @@ from MCSL2Lib.Widgets.exceptionWidget import ExceptionWidget
 from MCSL2Lib.Widgets.importServerWidgets import (
     ImportPageWidget,
     ConfirmArgumentsWidget,
-    ImportFileFolderWidget,
     ImportSingleWidget,
-    MyListWidget,
-    MyTreeWidget,
     SaveWidget,
 )
+from MCSL2Lib.Widgets.textLayout import reserveLabelVerticalSpace
 from MCSL2Lib.singleton import Singleton
 from MCSL2Lib.utils import MCSL2Logger, readFile, writeFile
 from MCSL2Lib.variables import (
@@ -197,7 +194,7 @@ class JavaServerSaveThread(QThread):
             if folder_created:
                 try:
                     rmtree(f"./Servers/{server_name}")
-                except:
+                except Exception:
                     pass
             self.failed.emit(self.exit1_msg + f"\n{e}")
             return
@@ -220,12 +217,12 @@ class JavaServerSaveThread(QThread):
                             global_server_list["MCSLServerList"].pop(i)
                             break
                     writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(global_server_list, indent=4))
-                except:
+                except Exception:
                     pass
             if folder_created:
                 try:
                     rmtree(f"./Servers/{server_name}")
-                except:
+                except Exception:
                     pass
             self.failed.emit(self.exit1_msg + f"\n{e}")
             return
@@ -233,9 +230,6 @@ class JavaServerSaveThread(QThread):
         # 复制核心
         try:
             if self.extra_data.get("extracted_from_zip") and self.extra_data.get("temp_dir"):
-                from shutil import copytree, rmtree
-                import os
-
                 temp_dir = self.extra_data["temp_dir"]
                 target_dir = f"./Servers/{server_name}"
 
@@ -253,7 +247,7 @@ class JavaServerSaveThread(QThread):
 
                     if os.name == "posix":  # Linux/Mac
                         subprocess.run(["sync"], check=False, timeout=5)
-                except:
+                except Exception:
                     pass
 
                 rmtree(temp_dir, ignore_errors=True)
@@ -270,12 +264,12 @@ class JavaServerSaveThread(QThread):
                             global_server_list["MCSLServerList"].pop(i)
                             break
                     writeFile(r"MCSL2/MCSL2_ServerList.json", dumps(global_server_list, indent=4))
-                except:
+                except Exception:
                     pass
             if folder_created:
                 try:
                     rmtree(f"./Servers/{server_name}")
-                except:
+                except Exception:
                     pass
             self.failed.emit(self.exit1_msg + f"\n{e}")
             return
@@ -284,7 +278,7 @@ class JavaServerSaveThread(QThread):
         if self.auto_accept_eula:
             try:
                 _MinecraftEULA(server_name).acceptEula()
-            except Exception as e:
+            except Exception:
                 # Eula失败不影响服务器创建
                 pass
 
@@ -447,11 +441,16 @@ class ServerTypeHeaderCardWidget(HeaderCardWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QSize(240, 150))
+        self.setMaximumSize(QSize(16777215, 16777215))
         self.headerView.setFixedHeight(44)
 
         # 创建内容标签
         self.contentLabel = StrongBodyLabel(self)
         self.contentLabel.setWordWrap(True)
+        reserveLabelVerticalSpace(self.contentLabel)
         self.viewLayout.addWidget(self.contentLabel)
 
         # 添加选择按钮
@@ -508,6 +507,8 @@ class ImportServerCardWidget(ServerTypeHeaderCardWidget):
 class ConfigurePage(QWidget):
     """新建服务器页"""
 
+    NARROW_LAYOUT_WIDTH = 620
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.installerLogViewer = None
@@ -557,25 +558,26 @@ class ConfigurePage(QWidget):
         self.guideNewServerPage = QWidget()
         self.guideNewServerPage.setObjectName("guideNewServerPage")
 
-        self.guideNewServerGridLayout = QGridLayout(self.guideNewServerPage)
-        self.guideNewServerGridLayout.setObjectName("guideNewServerGridLayout")
-        self.guideNewServerGridLayout.setSpacing(15)
+        self.guideNewServerFlowLayout = FlowLayout(self.guideNewServerPage, needAni=False)
+        self.guideNewServerFlowLayout.setObjectName("guideNewServerFlowLayout")
+        self.guideNewServerFlowLayout.setContentsMargins(0, 0, 0, 0)
+        self.guideNewServerFlowLayout.setSpacing(15)
 
         self.noobNewServerWidget = NoobServerCardWidget(self.guideNewServerPage)
         self.noobNewServerWidget.setObjectName("noobNewServerWidget")
-        self.guideNewServerGridLayout.addWidget(self.noobNewServerWidget, 0, 0, 1, 1)
+        self.guideNewServerFlowLayout.addWidget(self.noobNewServerWidget)
 
         self.extendedNewServerWidget = ExtendedServerCardWidget(self.guideNewServerPage)
         self.extendedNewServerWidget.setObjectName("extendedNewServerWidget")
-        self.guideNewServerGridLayout.addWidget(self.extendedNewServerWidget, 0, 1, 1, 1)
+        self.guideNewServerFlowLayout.addWidget(self.extendedNewServerWidget)
 
         self.bedrockNewServerWidget = BedrockServerCardWidget(self.guideNewServerPage)
         self.bedrockNewServerWidget.setObjectName("bedrockNewServerWidget")
-        self.guideNewServerGridLayout.addWidget(self.bedrockNewServerWidget, 1, 0, 1, 1)
+        self.guideNewServerFlowLayout.addWidget(self.bedrockNewServerWidget)
 
         self.importNewServerWidget = ImportServerCardWidget(self.guideNewServerPage)
         self.importNewServerWidget.setObjectName("importNewServerWidget")
-        self.guideNewServerGridLayout.addWidget(self.importNewServerWidget, 1, 1, 1, 1)
+        self.guideNewServerFlowLayout.addWidget(self.importNewServerWidget)
 
         self.newServerStackedWidget.addWidget(self.guideNewServerPage)
         self.noobNewServerPage = QWidget()
@@ -2593,9 +2595,9 @@ class ConfigurePage(QWidget):
         # 这些是临时的安装状态，不应该保留到下一次创建服务器
         configureServerVariables.serverType = ""
         configureServerVariables.extraData = {}
-        
+
         # 清理importer相关的解压文件和状态
-        if hasattr(self, 'importer_serverPath') and self.importer_serverPath:
+        if hasattr(self, "importer_serverPath") and self.importer_serverPath:
             self._importerCleanupServerPath()
 
         if not cfg.get(cfg.clearAllNewServerConfigInProgram):
@@ -2704,7 +2706,8 @@ class ConfigurePage(QWidget):
                 icon=FIF.INFO,
                 title=self.tr("功能提醒"),
                 content=self.tr(
-                    "您开启了「创建时自动同意服务器的Eula」功能。\n如需要查看 Minecraft Eula，请点击右边的按钮。"
+                    "您开启了「创建时自动同意服务器的Eula」功能。\n"
+                    "如需要查看 Minecraft Eula，请点击右边的按钮。"
                 ),
                 orient=Qt.Horizontal,
                 isClosable=True,
@@ -3207,7 +3210,7 @@ class ConfigurePage(QWidget):
             # 如果之前有解压的文件，先清理
             if self.importer_serverPath:
                 self._importerCleanupServerPath()
-            
+
             self.importer_selectedZipFile = zipFilePath
             # 显示提示信息
             msgBox = MessageBox(

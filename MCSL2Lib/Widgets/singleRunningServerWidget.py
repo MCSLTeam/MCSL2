@@ -13,6 +13,7 @@
 from MCSL2Lib.ServerControllers.windowCreator import ServerWindow
 from qfluentwidgets import HeaderCardWidget, CommandBar, Action, FluentIcon as FIF
 from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtWidgets import QSizePolicy
 
 
 class RunningServerHeaderCardWidget(HeaderCardWidget):
@@ -20,7 +21,10 @@ class RunningServerHeaderCardWidget(HeaderCardWidget):
         super().__init__(parent)
         self.setTitle(serverName)
         self.headerView.setFixedHeight(44)
-        self.setFixedSize(QSize(245, 135))
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QSize(200, 135))
+        self.setMaximumSize(QSize(16777215, 135))
 
         self.name = serverName
         self.console = serverConsole
