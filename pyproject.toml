@@ -16,7 +16,7 @@ authors = [
 ]
 dependencies = [
     # "setuptools>=60",
-    "PyQt-Fluent-Widgets",
+    "PyQt-Fluent-Widgets==1.11.2",
     "psutil==7.2.1",
     "loguru==0.7.3",
     "openai==2.2.0",
