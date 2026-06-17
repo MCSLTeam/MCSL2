@@ -378,7 +378,7 @@ jobs:
             --password "$APPLE_APP_SPECIFIC_PASSWORD" \
             --wait
           xcrun stapler staple "$dmg_path"
-          spctl --assess --type open --verbose "$dmg_path"
+          spctl --assess --type open --context context:primary-signature --verbose "$dmg_path"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7.0.1
