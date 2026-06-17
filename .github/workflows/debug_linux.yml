@@ -25,10 +25,10 @@ jobs:
           sudo apt-get install libfuse2
  
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
           cache-dependency-glob: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Build
         run: |
-          uv run python -m lndl_nuitka . -y -- --disable-console
+          uv run deploy.py --disable-console
 
       - name: Optimize
         run: |
@@ -58,7 +58,7 @@ jobs:
           ../../upx -9 MCSL2.bin
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: MCSL2-Linux-x64
           path: |

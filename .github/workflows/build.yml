@@ -12,154 +12,298 @@
 ################################################################################
 name: Build and Release
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      build_target:
+        description: Build target
+        required: true
+        default: all
+        type: choice
+        options:
+          - windows
+          - macos
+          - linux
+          - all
+      debug_build:
+        description: Build artifacts only, without creating a release
+        required: true
+        default: true
+        type: boolean
+  release:
+    types: [published]
 
-permissions: write-all
+permissions:
+  contents: write
+
+env:
+  PYTHON_VERSION: "3.8"
 
 jobs:
   Windows:
-    runs-on: windows-latest
+    if: ${{ github.event_name == 'release' || github.event.inputs.build_target == 'windows' || github.event.inputs.build_target == 'all' }}
+    runs-on: windows-2022
     steps:
-
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v6.0.3
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
           cache-dependency-glob: |
             pyproject.toml
+            uv.lock
 
-      - name: Install Python 3.8
-        run: uv python install 3.8
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
-      - name: Sync Dependencies
+      - name: Sync dependencies
+        shell: pwsh
+        run: uv sync --no-dev --locked
+
+      - name: Build with Nuitka
+        shell: pwsh
+        run: uv run deploy.py --disable-console
+
+      - name: Optimize package
         shell: pwsh
         run: |
-          rm uv.lock
-          uv sync --no-dev
+          $dist = "build/MCSL2.dist"
+          $removePaths = @(
+            "zstandard",
+            "_asyncio.pyd",
+            "pyexpat.pyd",
+            "qt5qml.dll",
+            "qt5qmlmodels.dll",
+            "qt5quick.dll"
+          )
+          foreach ($path in $removePaths) {
+            Remove-Item -Force -Recurse "$dist/$path" -ErrorAction SilentlyContinue
+          }
 
-      - name: Build
-        run: |
-          uv run lndl_nuitka . -y -- --disable-console
+          $upxTargets = @(
+            "_ctypes.pyd",
+            "_decimal.pyd",
+            "_elementtree.pyd",
+            "_lzma.pyd",
+            "_overlapped.pyd",
+            "_socket.pyd",
+            "_ssl.pyd",
+            "_win32sysloader.pyd",
+            "libffi-7.dll",
+            "libcrypto-1_1.dll",
+            "libssl-1_1.dll",
+            "MCSL2.exe",
+            "python38.dll",
+            "pythoncom38.dll",
+            "pywintypes38.dll",
+            "qt5core.dll",
+            "qt5dbus.dll",
+            "qt5gui.dll",
+            "qt5multimedia.dll",
+            "qt5network.dll",
+            "qt5printsupport.dll",
+            "qt5svg.dll",
+            "qt5websockets.dll",
+            "qt5widgets.dll",
+            "qt5xml.dll",
+            "select.pyd",
+            "unicodedata.pyd",
+            "win32api.pyd",
+            "win32gui.pyd",
+            "win32print.pyd"
+          ) | ForEach-Object { "$dist/$_" } | Where-Object { Test-Path $_ }
 
-      - name: Optimize
-        shell: pwsh
-        run: |
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\pyexpat.pyd
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qml.dll
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5qmlmodels.dll
-          Remove-Item -Force -Recurse .\build\MCSL2.dist\qt5quick.dll
-          .\upx.exe -9 build/MCSL2.dist/_ctypes.pyd build/MCSL2.dist/_decimal.pyd build/MCSL2.dist/_elementtree.pyd build/MCSL2.dist/_lzma.pyd build/MCSL2.dist/_overlapped.pyd build/MCSL2.dist/_socket.pyd build/MCSL2.dist/_ssl.pyd build/MCSL2.dist/_win32sysloader.pyd build/MCSL2.dist/libffi-7.dll build/MCSL2.dist/libcrypto-1_1.dll build/MCSL2.dist/libssl-1_1.dll build/MCSL2.dist/MCSL2.exe build/MCSL2.dist/python38.dll build/MCSL2.dist/pythoncom38.dll build/MCSL2.dist/pywintypes38.dll build/MCSL2.dist/qt5core.dll build/MCSL2.dist/qt5dbus.dll build/MCSL2.dist/qt5gui.dll build/MCSL2.dist/qt5multimedia.dll build/MCSL2.dist/qt5network.dll build/MCSL2.dist/qt5printsupport.dll build/MCSL2.dist/qt5svg.dll build/MCSL2.dist/qt5websockets.dll build/MCSL2.dist/qt5widgets.dll build/MCSL2.dist/qt5xml.dll build/MCSL2.dist/select.pyd build/MCSL2.dist/unicodedata.pyd build/MCSL2.dist/win32api.pyd build/MCSL2.dist/win32gui.pyd build/MCSL2.dist/win32print.pyd
+          if ($upxTargets.Count -gt 0) {
+            .\upx.exe -9 $upxTargets
+          }
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: MCSL2-Windows-x64
-          path: |
-            build/MCSL2.dist/**/*
+          path: build/MCSL2.dist/**/*
 
   Linux:
-    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' || github.event.inputs.build_target == 'linux' || github.event.inputs.build_target == 'all' }}
+    runs-on: ubuntu-22.04
     steps:
-
-      - name: Install Tools
+      - name: Install tools
         run: |
-          sudo apt-get install libfuse2
- 
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+          sudo apt-get update
+          sudo apt-get install -y libfuse2 p7zip-full
+
+      - name: Checkout repo
+        uses: actions/checkout@v6.0.3
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
           cache-dependency-glob: |
             pyproject.toml
+            uv.lock
 
-      - name: Install Python 3.8
-        run: uv python install 3.8
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
-      - name: Sync Dependencies
-        shell: pwsh
+      - name: Sync dependencies
+        run: uv sync --no-dev --locked
+
+      - name: Build with Nuitka
+        run: uv run deploy.py --disable-console
+
+      - name: Optimize package
         run: |
-          rm uv.lock
-          uv sync --no-dev
+          dist="build/MCSL2.dist"
+          rm -rf \
+            "$dist/zstandard" \
+            "$dist/_asyncio"* \
+            "$dist/pyexpat"* \
+            "$dist/libQt5Quick.so.5" \
+            "$dist/libQt5Qml.so.5" \
+            "$dist/libQt5QmlModels.so.5"
 
-      - name: Build
-        run: |
-          uv run lndl_nuitka . -y -- --disable-console
+          chmod +x ./upx
+          if [ -f "$dist/MCSL2.bin" ]; then
+            ./upx -9 "$dist/MCSL2.bin"
+          fi
 
-      - name: Optimize
-        run: |
-          cd build
-          cd MCSL2.dist
-          sudo rm libQt5Quick.so.5
-          sudo rm libQt5Qml.so.5
-          sudo rm libQt5QmlModels.so.5
-          upx -9 MCSL2.bin
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: MCSL2-Linux-x64
-          path: |
-            build/MCSL2.dist/**/*
+          path: build/MCSL2.dist/**/*
+
+  macOS:
+    if: ${{ github.event_name == 'release' || github.event.inputs.build_target == 'macos' || github.event.inputs.build_target == 'all' }}
+    strategy:
+      matrix:
+        include:
+          - architecture: arm64
+            runner: macos-14
+          - architecture: x64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6.0.3
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Sync dependencies
+        run: uv sync --no-dev --locked
+
+      - name: Build with Nuitka
+        run: |
+          uv run deploy.py \
+            --disable-console \
+            --macos-create-app-bundle \
+            --macos-app-mode=gui \
+            --macos-app-icon=MCSL2.icns
+
+      - name: Prepare app bundle
+        run: |
+          app="build/MCSL2.app"
+          exe="$app/Contents/MacOS/MCSL2"
+          chmod +x "$exe"
+          rm -rf "build/MCSL2.build" "build/MCSL2.dist"
+          find "$app" -name "__pycache__" -type d -prune -exec rm -rf {} +
+          find "$app" -name "*.pyc" -delete
+          find "$app" -name ".DS_Store" -delete
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: MCSL2-macOS-${{ matrix.architecture }}
+          path: build/MCSL2.app
 
   Release:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     needs:
       - Windows
       - Linux
-
+      - macOS
+    if: >-
+      ${{
+        always()
+        && (github.event_name == 'release' || !inputs.debug_build)
+        && !contains(needs.*.result, 'failure')
+        && !contains(needs.*.result, 'cancelled')
+        && contains(needs.*.result, 'success')
+      }}
     steps:
-
-      - uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: 'Asia/Shanghai'
-
       - name: Install tools
-        run: sudo apt install p7zip-full
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v8.0.1
 
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
         with:
           path: repo
 
       - name: Set Environment Variable
         run: |
           cd repo
-          mcsl2_version=$(python -c "from MCSL2Lib import MCSL2VERSION; print(MCSL2VERSION)")
-          echo "MCSL2_VERSION=$mcsl2_version" >> $GITHUB_ENV
+          mcsl2_version=$(python3 -c "from MCSL2Lib import MCSL2VERSION; print(MCSL2VERSION)")
+          echo "MCSL2_VERSION=$mcsl2_version" >> "$GITHUB_ENV"
           cd ..
-      
-      - name: Compress
+
+      - name: Compress release artifacts
         run: |
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Windows-x64.zip" "./MCSL2-Windows-x64/*"
-          7z a -tzip "MCSL2-${{ env.MCSL2_VERSION }}-Linux-x64.zip" "./MCSL2-Linux-x64/*"
-          mkdir Update
-          cd Update
-          mkdir Linux-x64 Windows-x64
-          cd Linux-x64
-          mkdir MCSL2Lib
-          cd ..
-          cd Windows-x64
-          mkdir MCSL2Lib
-          cd ..
-          cp -r ../MCSL2-Linux-x64/MCSL2.bin Linux-x64/
-          cp -r ../MCSL2-Windows-x64/MCSL2.exe Windows-x64/
-          cp -r ../MCSL2-Linux-x64/MCSL2Lib/verification.so Linux-x64/MCSL2Lib/
-          cp -r ../MCSL2-Windows-x64/MCSL2Lib/verification.pyd Windows-x64/MCSL2Lib/
-          cd ..
-          7z a -tzip "Update-${{ env.MCSL2_VERSION }}.zip" "./Update/*"
+          shopt -s nullglob
+
+          for dir in MCSL2-Windows-x64 MCSL2-Linux-x64 MCSL2-macOS-arm64 MCSL2-macOS-x64; do
+            if [ -d "$dir" ]; then
+              7z a -tzip -mx=9 "MCSL2-${MCSL2_VERSION}-${dir#MCSL2-}.zip" "./$dir/*"
+            fi
+          done
+
+      - name: Create update package
+        run: |
+          mkdir -p Update/Windows-x64 Update/Linux-x64 Update/macOS-arm64 Update/macOS-x64
+
+          if [ -f MCSL2-Windows-x64/MCSL2.exe ]; then
+            cp MCSL2-Windows-x64/MCSL2.exe Update/Windows-x64/
+          fi
+          if [ -f MCSL2-Linux-x64/MCSL2.bin ]; then
+            cp MCSL2-Linux-x64/MCSL2.bin Update/Linux-x64/
+          fi
+          if [ -d MCSL2-macOS-arm64/MCSL2.app ]; then
+            cp -R MCSL2-macOS-arm64/MCSL2.app Update/macOS-arm64/
+          fi
+          if [ -d MCSL2-macOS-x64/MCSL2.app ]; then
+            cp -R MCSL2-macOS-x64/MCSL2.app Update/macOS-x64/
+          fi
+
+          for platform in Windows-x64 Linux-x64 macOS-arm64 macOS-x64; do
+            mkdir -p "Update/$platform/MCSL2Lib"
+          done
+
+          [ -f MCSL2-Windows-x64/MCSL2Lib/verification.pyd ] \
+            && cp MCSL2-Windows-x64/MCSL2Lib/verification.pyd Update/Windows-x64/MCSL2Lib/
+          [ -f MCSL2-Linux-x64/MCSL2Lib/verification.so ] \
+            && cp MCSL2-Linux-x64/MCSL2Lib/verification.so Update/Linux-x64/MCSL2Lib/
+
+          find Update -type d -empty -delete
+          7z a -tzip -mx=9 "Update-${MCSL2_VERSION}.zip" "./Update/*"
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3.0.0
         with:
           body_path: ./repo/ChangeLog.md
           prerelease: true
@@ -167,6 +311,5 @@ jobs:
           tag_name: v${{ env.MCSL2_VERSION }}
           files: |
             *.zip
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

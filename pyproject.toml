@@ -21,7 +21,6 @@ dependencies = [
     "loguru==0.7.3",
     "openai==2.2.0",
     "requests==2.32.4",
-    "lib-not-dr[nuitka]>=0.4",
     "nuitka==2.8.9",
     "pyqt5-concurrent==0.1.7",
     "pyqt5-qt5==5.15.2; sys_platform == 'win32'",
@@ -41,12 +40,11 @@ packages = []
 
 # 原 [tool.pdm.scripts] 段落删除，使用 uv 运行脚本：
 #   uv run MCSL2.py
-#   uv run -m lndl_nuitka . -y
+#   uv run deploy.py
 #   uv run generate_i18n.py
 
 [dependency-groups]
 dev = [
-    "tomli>=2.0.1",
     "ruff>=0.1.6",
     "pyqt5-stubs>=5.15.6.0",
 ]
@@ -72,40 +70,3 @@ ignore = ["I001"]
 force-single-line = true
 force-wrap-aliases = true
 combine-as-imports = true
-
-
-[tool.lndl.nuitka]
-script = "Tools/lndl-config.py"
-
-# 请使用 lndl_nuitka . -y 编译 (-y 为自动确认)
-[tool.lndl.nuitka.cli]
-main = "MCSL2.py"
-output-dir = "build"
-
-# 编译选项
-clang = true
-msvc = "latest"
-standalone = true
-lto = "yes"
-disable-console = false
-show-memory = false
-show-progress = false
-
-# 版本号 构建时通过 Tools/lndl-config.py 自动填充
-product-version = false
-file-version = false
-
-# 文件信息
-product-name = "MCSL 2"
-company-name = "MCSLTeam"
-file-description = "MCServerLauncher 2"
-copyright = "Copyright ©MCSLTeam. All rights reserved."
-
-# 依赖
-include-package = ["MCSL2Lib", "sqlite3"]
-follow-import-to = ["Adapters", "loguru", "requests", "croniter", "openai", "pytz", "pypdl"]
-nofollow-import-to = ["numpy", "scipy", "PIL", "colorthief", "sqlite3.test"]
-
-enable-plugin = ["pyqt5"]
-windows-icon-from-ico = "MCSL2.ico"
-assume-yes-for-download = true

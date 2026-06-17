@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: master # 注意修改为你的分支, 例如: master
 
       - name: Afdian action
-        uses: yiyungent/afdian-action@main
+        uses: yiyungent/afdian-action@v0.1.1
         with:
           # 在 Settings->Secrets 配置 AFDIAN_USERID, AFDIAN_TOKEN
           # 爱发电 user_id
@@ -51,7 +51,7 @@ jobs:
           git commit -m "Update | 爱发电赞助" -a
       
       - name: Push changes
-        uses: ad-m/github-push-action@master # https://github.com/ad-m/github-push-action
+        uses: ad-m/github-push-action@v1.3.0 # https://github.com/ad-m/github-push-action
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master # 注意修改为你的分支, 例如: master

@@ -1,0 +1,70 @@
+#     Copyright 2024, MCSL Team, mailto:services@mcsl.com.cn
+#
+#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
+#
+#     Licensed under the GNU General Public License, Version 3.0, with our
+#     additional agreements. (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
+#
+################################################################################
+name: macOS Debug Build
+
+on: workflow_dispatch
+
+env:
+  PYTHON_VERSION: "3.8"
+
+jobs:
+  macOS:
+    strategy:
+      matrix:
+        include:
+          - architecture: arm64
+            runner: macos-14
+          - architecture: x64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v6.0.3
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+
+      - name: Install Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Sync Dependencies
+        run: uv sync --no-dev --locked
+
+      - name: Build
+        run: |
+          uv run deploy.py \
+            --disable-console \
+            --macos-create-app-bundle \
+            --macos-app-mode=gui \
+            --macos-app-icon=MCSL2.icns
+
+      - name: Prepare app bundle
+        run: |
+          app="build/MCSL2.app"
+          exe="$app/Contents/MacOS/MCSL2"
+          chmod +x "$exe"
+          rm -rf "build/MCSL2.build" "build/MCSL2.dist"
+          find "$app" -name "__pycache__" -type d -prune -exec rm -rf {} +
+          find "$app" -name "*.pyc" -delete
+          find "$app" -name ".DS_Store" -delete
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: MCSL2-macOS-${{ matrix.architecture }}
+          path: build/MCSL2.app

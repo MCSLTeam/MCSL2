@@ -47,11 +47,9 @@ ___
 git clone https://github.com/MCSLTeam/MCSL2.git
 uv sync
 
-uv run python -m lndl_nuitka .
-或者
-uv run python -m lndl_nuitka . -y
-又或者通过 `-- --xxx` 添加 / 修改参数
-uv run python -m lndl_nuitka . -- --disable-console
+uv run deploy.py
+或者添加 Nuitka 参数
+uv run deploy.py --disable-console
 ```
 ## 相关链接
 

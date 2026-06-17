@@ -47,11 +47,9 @@ Please check [here](https://github.com/MCSLTeam/MCSL2/blob/master/pyproject.toml
 git clone https://github.com/MCSLTeam/MCSL2.git
 uv sync
 
-uv run python -m lndl_nuitka .
-Or
-uv run python -m lndl_nuitka . -y
-Alternatively, add/modify parameters with `-- --xxx`
-uv run python -m lndl_nuitka . -- --disable-console
+uv run deploy.py
+Or add Nuitka arguments
+uv run deploy.py --disable-console
 ```
 ## Relevant Links
 

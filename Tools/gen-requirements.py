@@ -15,12 +15,30 @@
 # 20231125
 # 为啥就把 requirements.txt 删掉了 (恼)
 
-import tomli
+import ast
 
-with open("pyproject.toml", "r", encoding="utf-8") as f:
-    pyproject = tomli.loads(f.read())
+
+def read_dependencies():
+    with open("pyproject.toml", "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    collecting = False
+    dependency_lines = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("dependencies = ["):
+            collecting = True
+            dependency_lines.append(stripped[len("dependencies = ") :])
+            continue
+        if collecting:
+            dependency_lines.append(line)
+            if stripped == "]":
+                break
+
+    return ast.literal_eval("".join(dependency_lines))
+
 
 with open("requirements.txt", "w", encoding="utf-8") as f:
-    for dependency in pyproject["project"]["dependencies"]:
+    for dependency in read_dependencies():
         print(dependency)
         f.write(dependency + "\n")

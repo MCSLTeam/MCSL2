@@ -15,7 +15,7 @@
 MCSL2 Program Library
 """
 
-VERSION = "2.3.0.0"
+VERSION = "2.3.1.0"
 MCSL2VERSION = VERSION
 BUILD_VERSION = "0.3.3.0"
-DEV_VERSION = "Stable Channel 26112"
+DEV_VERSION = "Stable Channel 26617"
