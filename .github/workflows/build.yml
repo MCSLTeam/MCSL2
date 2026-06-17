@@ -166,7 +166,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libfuse2 p7zip-full
           if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
-            sudo apt-get install -y libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5 libqt5printsupport5 libqt5svg5 libqt5widgets5 libqt5xml5 qtwayland5
+            sudo apt-get install -y libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5 libqt5printsupport5 libqt5svg5 libqt5widgets5 libqt5xml5 qtbase5-dev qtbase5-dev-tools qt5-qmake libqt5svg5-dev qtwayland5
           fi
 
       - name: Checkout repo
