@@ -1,34 +1,34 @@
-<!-- > [!IMPORTANT]  
-> 这是一个测试版，仅可在[QQ群 · MCSL2·官方交流群](https://v2.mcsl.com.cn/links/mcsl2-qq-group.html)中下载，并且需要申请内测权限。  
-> 您可前往[该页面](https://v2.mcsl.com.cn/join-preview.html)申请内测权限。   -->
 ### 新功能
 
-> 添加 macOS 发行版支持  
-> 支持搜索非 Windows 平台的 Java  
-> 启动时自动扫描不在全局配置中的服务器  
-> 接入 MCSL-Sync 核心镜像  
-> 移除了已不可用的 Akira Cloud 下载站  
-> 使用内建下载器，不需要再安装 aria2  
-> 添加基岩版服务器支持  
-> 添加雨云镜像站下载源支持  
-> 计划任务功能  
-> AI 报错分析功能  
-> 服务器随 MCSL2 自启功能  
-> MCSL2 开机自启功能  
-> 下载 Java 功能  
-> 文本编辑器语法高亮功能  
-> 添加 NeoForge 深度支持  
-> 服务器整合包导入功能
+> 添加 macOS 发行版构建支持，提供 app 与 dmg 安装包
+> 添加 macOS Developer ID 签名与公证流程，未配置 secrets 时会自动跳过
+> 添加 macOS DMG 自定义背景、卷宗图标和拖拽安装布局
+> 添加 Windows arm64 构建尝试
+> 新建服务器、管理服务器、监控页面适配窄窗口布局
+> 新建服务器类型卡片、管理服务器卡片、Java 选择卡片支持自适应排列
+
+### 改进
+
+> 使用 deploy.py 统一 Nuitka 打包流程
+> Nuitka 升级到 4.1.2
+> 更新 GitHub Actions 使用的 action 版本
+> macOS 打包使用 MCSL2.icns，并设置应用标识 cn.mcslteam.mcsl2
+> macOS 应用写入版本号，并禁止多实例启动
+> 构建时定期输出 Nuitka 状态，避免 GitHub Actions 因长时间无日志中断
+> 保留升级包生成、release 上传、环境变量写入和包体清理流程
+> 关于页面声明、按钮区域和多处卡片文本改为自适应高度，避免不同平台字体被裁切
+> 关于页面声明下方按钮改为 FlowLayout
+> 首页公告功能已移除
+> 移除 countUser、checkUpdate、generateUniqueCode 等启动联网功能
+> 固定 PyQt-Fluent-Widgets 依赖版本，减少打包环境差异
 
 ### 修复
 
-> 修复非 Windows 系统完全不可用的问题  
-> 修复 Forge 安装  
-> 修复在意外情况下无法连接网络的问题  
-> 修复新建服务器的弹窗超出屏幕的问题  
-> 修复由编辑服务器文件界面启动服务器崩溃的问题  
-> 修复本地报错分析工具复读的问题  
-> 修复 Windows 11 切换深浅色时服务器窗口可能渲染异常的问题  
+> 修复下载器进度可能一直停在 0% 的问题
+> 修复日志 critical 传入字符串时再次抛出异常的问题
+> 修复断网时启动流程可能被联网统计阻塞的问题
+> 修复 NeoForge 源码安装时 sponge-mixin 等库文件被重复占用的问题
+> 修复设置关于页、新建服务器卡片、Java 选择卡片和管理服务器卡片在部分字体下文字被 padding 裁切的问题
 
 ___
 

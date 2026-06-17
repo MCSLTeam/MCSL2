@@ -22,25 +22,14 @@ jobs:
         include:
           - architecture: x64
             runner: ubuntu-22.04
-            experimental: false
-            skip_pyqt_qt5_wheel: false
             use_upx: true
-          - architecture: arm64
-            runner: ubuntu-22.04-arm
-            experimental: true
-            skip_pyqt_qt5_wheel: true
-            use_upx: false
     runs-on: ${{ matrix.runner }}
-    continue-on-error: ${{ matrix.experimental }}
     steps:
 
       - name: Install Tools
         run: |
           sudo apt-get update
           sudo apt-get install -y libfuse2
-          if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
-            sudo apt-get install -y libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5 libqt5printsupport5 libqt5svg5 libqt5widgets5 libqt5xml5 qtbase5-dev qtbase5-dev-tools qt5-qmake libqt5svg5-dev qtwayland5
-          fi
  
       - name: Checkout Repo
         uses: actions/checkout@v6.0.3
@@ -57,19 +46,7 @@ jobs:
         run: uv python install 3.8
 
       - name: Sync Dependencies
-        run: |
-          sync_args="${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}"
-          if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
-            uv sync --no-dev --locked $sync_args &
-            sync_pid=$!
-            while kill -0 "$sync_pid" 2>/dev/null; do
-              echo "Still syncing dependencies for Linux arm64..."
-              sleep 60
-            done
-            wait "$sync_pid"
-          else
-            uv sync --no-dev --locked
-          fi
+        run: uv sync --no-dev --locked
 
       - name: Build
         run: |
