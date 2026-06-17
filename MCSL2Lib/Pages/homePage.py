@@ -14,58 +14,21 @@
 Home page.
 """
 
-from PyQt5.QtGui import QCursor
-from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QThread, pyqtSignal
+from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import (
     QGridLayout,
     QWidget,
-    QHBoxLayout,
     QSpacerItem,
     QSizePolicy,
-    QApplication,
 )
 from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
-    StrongBodyLabel,
     TitleLabel,
-    IndeterminateProgressRing,
     FluentIcon as FIF,
-    InfoBar,
-    InfoBarPosition,
-    ToolTip,
 )
 
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.verification import getAnnouncement
-
-
-class NoticeStrongBodyLabel(StrongBodyLabel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.installEventFilter(self)
-        self.tip = ToolTip("双击复制公告")
-
-    def eventFilter(self, a0: QObject, a1: QEvent) -> bool:
-        if a1.type() == QEvent.ToolTip:
-            self.tip.move(QCursor.pos())
-            self.tip.show()
-            return True
-        if a1.type() == QEvent.Leave:
-            self.tip.hide()
-            return True
-        return super().eventFilter(a0, a1)
-
-    def mouseDoubleClickEvent(self, event):  # noqa: mouseDoubleClickEvent
-        (QApplication.clipboard().setText(self.text().replace("公告: ", "")),)
-        InfoBar.success(
-            "提示",
-            "已复制公告",
-            duration=1200,
-            position=InfoBarPosition.TOP,
-            parent=self.window(),
-        )
-        return super().mouseDoubleClickEvent(event)
 
 
 @Singleton
@@ -99,35 +62,6 @@ class HomePage(QWidget):
         self.titleLabel.setObjectName("titleLabel")
 
         self.gridLayout_3.addWidget(self.titleLabel, 0, 0, 1, 1)
-        self.noticeWidget = QWidget(self.titleLimitWidget)
-        self.noticeWidget.setObjectName("noticeWidget")
-
-        self.horizontalLayout = QHBoxLayout(self.noticeWidget)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-
-        self.subTitleLabel = NoticeStrongBodyLabel(self.noticeWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.subTitleLabel.sizePolicy().hasHeightForWidth())
-        self.subTitleLabel.setSizePolicy(sizePolicy)
-        self.subTitleLabel.setObjectName("subTitleLabel")
-
-        self.horizontalLayout.addWidget(self.subTitleLabel)
-        self.IndeterminateProgressRing = IndeterminateProgressRing(self.noticeWidget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.IndeterminateProgressRing.sizePolicy().hasHeightForWidth()
-        )
-        self.IndeterminateProgressRing.setSizePolicy(sizePolicy)
-        self.IndeterminateProgressRing.setMinimumSize(QSize(20, 20))
-        self.IndeterminateProgressRing.setMaximumSize(QSize(20, 20))
-        self.IndeterminateProgressRing.setObjectName("IndeterminateProgressRing")
-
-        self.horizontalLayout.addWidget(self.IndeterminateProgressRing)
-        self.gridLayout_3.addWidget(self.noticeWidget, 1, 0, 1, 1)
         spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem, 0, 1, 2, 1)
         self.gridLayout.addWidget(self.titleLimitWidget, 1, 2, 1, 1)
@@ -184,32 +118,5 @@ class HomePage(QWidget):
         self.downloadBtn.setText(self.tr("下载"))
         self.selectServerBtn.setText(self.tr("选择服务器"))
         self.titleLabel.setText(self.tr("主页"))
-        self.subTitleLabel.setText(self.tr("获取公告中..."))
 
         self.setObjectName("homeInterface")
-
-        self.noticeThread = GetNoticeThread(self)
-        self.noticeThread.notice.connect(self.subTitleLabel.setText)
-        self.noticeThread.ringVisible.connect(self.IndeterminateProgressRing.setVisible)
-
-
-class GetNoticeThread(QThread):
-    """
-    获取公告的线程\n
-    使用多线程防止拖慢启动速度
-    """
-
-    notice = pyqtSignal(str)
-    ringVisible = pyqtSignal(bool)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName("GetNoticeThread")
-
-    def run(self):
-        try:
-            notice = self.tr("公告") + getAnnouncement()
-            self.notice.emit(notice)
-        except Exception as e:
-            self.notice.emit(self.tr(f"网络连接失败，无法获取公告。\n{e.args}"))
-        self.ringVisible.emit(False)

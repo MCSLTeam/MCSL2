@@ -1,4 +1,4 @@
-#     Copyright 2024, MCSL Team, mailto:lxhtt@vip.qq.com
+#     Copyright 2024, MCSL Team, mailto:services@mcsl.com.cn
 #
 #     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
 #
@@ -10,5 +10,12 @@
 #        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
 #
 ################################################################################
+"""
+Helpers for font-safe Qt text layout.
+"""
 
-"""Removed online verification, telemetry, and identity helpers."""
+
+def reserveLabelVerticalSpace(label, lines: int = 1, padding: int = 4):
+    """Reserve enough vertical space for labels with stylesheet padding."""
+    height = label.fontMetrics().lineSpacing() * max(1, lines) + padding * 2
+    label.setMinimumHeight(max(label.minimumHeight(), height))

@@ -135,9 +135,6 @@ class Config(QConfig):
     "QFluentWidgets", "ThemeMode", Theme.AUTO, OptionsValidator(Theme), EnumSerializer(Theme))
     themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#19e8a2')
     startOnStartup = ConfigItem("Software", "startOnStartup", False, BoolValidator())
-    # Update
-    checkUpdateOnStart = ConfigItem("Update", "checkUpdateOnStart", False, BoolValidator())
-
     # Download Advanced
     downloadThreads = RangeConfigItem(
         "Download",

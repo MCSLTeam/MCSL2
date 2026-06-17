@@ -15,7 +15,7 @@ The main window of MCSL2.
 """
 
 import sys
-from platform import platform, system
+from platform import system
 from platform import version as systemVersion
 from traceback import format_exception
 from types import TracebackType
@@ -28,7 +28,7 @@ from PyQt5.QtCore import (
     QEvent,
 )
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget
 from qfluentwidgets import (
     NavigationItemPosition,
     FluentIcon as FIF,
@@ -144,14 +144,11 @@ class Window(FluentWindow):  # type: ignore
 
         # for loader in loaders:
         #     loader.start()
-        self.homeInterface.noticeThread.start()
         # GlobalMCSL2Variables.isLoadFinished = False if not loaded.allPageLoaded() else True
 
         self.initNavigation()
         self.initQtSlot()
         self.initPluginSystem()
-        if cfg.get(cfg.checkUpdateOnStart):
-            self.settingsInterface.checkUpdate(parent=self)
         self.splashScreen.finish()
         # 自动启动服务器
         if cfg.get(cfg.autoRunLastServer):
@@ -311,6 +308,7 @@ class Window(FluentWindow):  # type: ignore
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
+        self.setMinimumSize(QSize(750, 520))
         self.resize(int(w // 1.5), int(h // 1.5))
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()

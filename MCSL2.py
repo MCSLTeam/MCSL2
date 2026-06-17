@@ -71,14 +71,6 @@ if __name__ == "__main__":
         deleteOldMCSL2()
         del deleteOldMCSL2
 
-    from MCSL2Lib.verification import countUserAPI
-    try:
-        countUserAPI()
-    except Exception as e:
-        MCSL2Logger.critical(f"Failed to count user: {e}")
-        pass
-    del countUserAPI
-
     # High DPI scaling
     MCSL2Application.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough

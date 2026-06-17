@@ -19,7 +19,7 @@ import json
 import platform
 from typing import Optional
 
-from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, pyqtSlot, QThread
+from PyQt5.QtCore import QSize, Qt, QRect, pyqtSignal, QThread
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -57,12 +57,12 @@ from qfluentwidgets import (
     EditableComboBox,
     LineEdit,
     PlainTextEdit,
+    FlowLayout,
     FluentIcon as FIF,
     setThemeColor,
     qconfig,
 )
 
-from MCSL2Lib import MCSL2VERSION
 from MCSL2Lib.ProgramControllers.promptController import (
     get_default_ai_analyze_prompt,
     get_ai_analyze_user_prompt,
@@ -71,17 +71,11 @@ from MCSL2Lib.ProgramControllers.promptController import (
 from MCSL2Lib.ProgramControllers.settingsController import cfg
 from MCSL2Lib.ProgramControllers.startupController import is_start_on_startup_enabled
 from MCSL2Lib.ProgramControllers.startupController import set_start_on_startup
-from MCSL2Lib.ProgramControllers.updateController import (
-    CheckUpdateThread,
-    MCSL2FileUpdater,
-    compareVersion,
-)
 from MCSL2Lib.ProgramControllers.logController import genSysReport
 from MCSL2Lib.singleton import Singleton
-from MCSL2Lib.variables import GlobalMCSL2Variables, SettingsVariables
+from MCSL2Lib.variables import SettingsVariables
 from MCSL2Lib.ProgramControllers.interfaceController import MySmoothScrollArea
-
-from MCSL2Lib.verification import generateUniqueCode
+from MCSL2Lib.Widgets.textLayout import reserveLabelVerticalSpace
 
 settingsVariables = SettingsVariables()
 
@@ -930,27 +924,6 @@ class SettingsPage(QWidget):
         self.programSettingsGroup.addSettingCard(self.startOnStartup)
         self.settingsLayout.addWidget(self.programSettingsGroup)
 
-        # Update
-        self.updateSettingsGroup = SettingCardGroup(self.tr("更新设置"), self.settingsWidget)
-        self.checkUpdateSetting = PrimaryPushSettingCard(
-            icon=FIF.SYNC,
-            text=self.tr("检查更新"),
-            title=self.tr("检查更新"),
-            content=self.tr("当前版本: ") + MCSL2VERSION,
-            parent=self.updateSettingsGroup,
-        )
-        self.checkUpdateOnStart = SwitchSettingCard(
-            icon=FIF.SPEED_MEDIUM,
-            title=self.tr("启动时自动检查更新"),
-            content=self.tr("可确保你的 MCSL2 最新。"),
-            configItem=cfg.checkUpdateOnStart,
-            parent=self.consoleSettingsGroup,
-        )
-        self.checkUpdateSetting.clicked.connect(lambda: self.checkUpdate(parent=self))
-        self.updateSettingsGroup.addSettingCard(self.checkUpdateSetting)
-        self.updateSettingsGroup.addSettingCard(self.checkUpdateOnStart)
-        self.settingsLayout.addWidget(self.updateSettingsGroup)
-
         # Other
         self.about = SimpleCardWidget(self.settingsScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -958,8 +931,8 @@ class SettingsPage(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.about.sizePolicy().hasHeightForWidth())
         self.about.setSizePolicy(sizePolicy)
-        self.about.setMinimumSize(QSize(630, 250))
-        self.about.setMaximumSize(QSize(16777215, 250))
+        self.about.setMinimumSize(QSize(320, 250))
+        self.about.setMaximumSize(QSize(16777215, 16777215))
         self.about.setObjectName("about")
 
         self.gridLayout_5 = QGridLayout(self.about)
@@ -977,11 +950,26 @@ class SettingsPage(QWidget):
 
         self.gridLayout = QGridLayout(self.aboutContentWidget)
         self.gridLayout.setObjectName("gridLayout")
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setVerticalSpacing(10)
+
+        self.aboutButtonsWidget = QWidget(self.aboutContentWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.aboutButtonsWidget.sizePolicy().hasHeightForWidth())
+        self.aboutButtonsWidget.setSizePolicy(sizePolicy)
+        self.aboutButtonsWidget.setObjectName("aboutButtonsWidget")
+
+        self.aboutButtonsLayout = FlowLayout(self.aboutButtonsWidget, needAni=False)
+        self.aboutButtonsLayout.setContentsMargins(0, 0, 0, 0)
+        self.aboutButtonsLayout.setSpacing(8)
+        self.aboutButtonsLayout.setObjectName("aboutButtonsLayout")
 
         self.openOfficialWeb = HyperlinkButton(
             "https://mcsl.com.cn",
             self.tr("打开官网"),
-            self.aboutContentWidget,
+            self.aboutButtonsWidget,
             FIF.HOME,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -991,11 +979,10 @@ class SettingsPage(QWidget):
         self.openOfficialWeb.setSizePolicy(sizePolicy)
         self.openOfficialWeb.setObjectName("openOfficialWeb")
 
-        self.gridLayout.addWidget(self.openOfficialWeb, 1, 1, 1, 1)
         self.openSourceCodeRepo = HyperlinkButton(
             "https://www.github.com/MCSLTeam/MCSL2",
             self.tr("打开源码仓库"),
-            self.aboutContentWidget,
+            self.aboutButtonsWidget,
             FIF.GITHUB,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -1005,15 +992,15 @@ class SettingsPage(QWidget):
         self.openSourceCodeRepo.setSizePolicy(sizePolicy)
         self.openSourceCodeRepo.setObjectName("openSourceCodeRepo")
 
-        self.gridLayout.addWidget(self.openSourceCodeRepo, 1, 2, 1, 1)
         self.aboutContent = BodyLabel(self.aboutContentWidget)
+        self.aboutContent.setWordWrap(True)
         self.aboutContent.setObjectName("aboutContent")
 
-        self.gridLayout.addWidget(self.aboutContent, 0, 0, 1, 7)
+        self.gridLayout.addWidget(self.aboutContent, 0, 0, 1, 1)
         self.joinQQGroup = HyperlinkButton(
             "https://jq.qq.com/?_wv=1027&k=x2ISlviQ",
             self.tr("加入官方QQ群"),
-            self.aboutContentWidget,
+            self.aboutButtonsWidget,
             FIF.HELP,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -1023,11 +1010,10 @@ class SettingsPage(QWidget):
         self.joinQQGroup.setSizePolicy(sizePolicy)
         self.joinQQGroup.setObjectName("joinQQGroup")
 
-        self.gridLayout.addWidget(self.joinQQGroup, 1, 0, 1, 1)
         self.generateSysReport = PrimaryPushButton(
             icon=FIF.DICTIONARY,
             text=self.tr("系统报告"),
-            parent=self.aboutContentWidget,
+            parent=self.aboutButtonsWidget,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1036,24 +1022,10 @@ class SettingsPage(QWidget):
         self.generateSysReport.setSizePolicy(sizePolicy)
         self.generateSysReport.setObjectName("generateSysReport")
 
-        self.gridLayout.addWidget(self.generateSysReport, 1, 5, 1, 1)
-        self.uniqueCodeBtn = PrimaryPushButton(
-            icon=FIF.PASTE, text=self.tr("复制识别码"), parent=self
-        )
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.uniqueCodeBtn.sizePolicy().hasHeightForWidth())
-        self.uniqueCodeBtn.setSizePolicy(sizePolicy)
-        self.uniqueCodeBtn.setObjectName("uniqueCodeBtn")
-
-        self.gridLayout.addWidget(self.uniqueCodeBtn, 1, 6, 1, 1)
-        spacerItem30 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem30, 1, 6, 1, 2)
         self.sponsorsBtn = HyperlinkButton(
             "https://github.com/MCSLTeam/MCSL2/blob/master/Sponsors.md",
             self.tr("赞助者列表"),
-            self.aboutContentWidget,
+            self.aboutButtonsWidget,
             FIF.PEOPLE,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -1066,7 +1038,7 @@ class SettingsPage(QWidget):
         self.donateBtn = HyperlinkButton(
             "https://afdian.com/a/lxhtt",
             self.tr("赞助此项目"),
-            self.aboutContentWidget,
+            self.aboutButtonsWidget,
             FIF.CAFE,
         )
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -1076,8 +1048,16 @@ class SettingsPage(QWidget):
         self.donateBtn.setSizePolicy(sizePolicy)
         self.donateBtn.setObjectName("donateBtn")
 
-        self.gridLayout.addWidget(self.sponsorsBtn, 1, 3, 1, 1)
-        self.gridLayout.addWidget(self.donateBtn, 1, 4, 1, 1)
+        for button in (
+            self.joinQQGroup,
+            self.openOfficialWeb,
+            self.openSourceCodeRepo,
+            self.sponsorsBtn,
+            self.donateBtn,
+            self.generateSysReport,
+        ):
+            self.aboutButtonsLayout.addWidget(button)
+        self.gridLayout.addWidget(self.aboutButtonsWidget, 1, 0, 1, 1)
         self.gridLayout_5.addWidget(self.aboutContentWidget, 2, 0, 1, 4)
         self.aboutIndicator = PrimaryPushButton(self.about)
         self.aboutIndicator.setFixedSize(QSize(3, 20))
@@ -1100,24 +1080,15 @@ class SettingsPage(QWidget):
         self.subTitleLabel.setText(self.tr("自定义你的 MCSL2。"))
         self.aboutContent.setText(
             self.tr(
-                "MCServerLauncher 2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与 “MCSL2” 有明显辨识度。\n“MCServerLauncher 2 软件” 已进行中华人民共和国计算机软件著作权登记，一切侵权行为将依法追究。\n计算机软件著作权登记号: 2024SR0343868\n\n© 2022 - 2024 MCSL开发组 保留所有权利。\n"  # noqa : E501
+                "MCServerLauncher 2 是一个开源非营利性项目，遵循 GNU General Public License 3.0 开源协议。\n任何人皆可使用 MCSL2 的源码进行再编译、修改以及发行，\n但必须在相关源代码中以及软件中给出声明，并且二次分发版本的项目名称应与 “MCSL2” 有明显辨识度。\n“MCServerLauncher 2 软件” 已进行中华人民共和国计算机软件著作权登记，一切侵权行为将依法追究。\n计算机软件著作权登记号: 2024SR0343868\n\n© 2022 - 2026 MCSL开发组 保留所有权利。\n"  # noqa : E501
             )
+        )
+        reserveLabelVerticalSpace(
+            self.aboutContent,
+            lines=self.aboutContent.text().count("\n") + 1,
         )
         self.aboutTitle.setText(self.tr("关于"))
         self.generateSysReport.clicked.connect(self.generateSystemReport)
-        self.uniqueCodeBtn.clicked.connect(self.copyUniqueCode)
-
-    def copyUniqueCode(self):
-        QApplication.clipboard().setText(generateUniqueCode())
-        InfoBar.success(
-            title=self.tr("已复制"),
-            content=self.tr("妥善保存，请勿泄露。"),
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP_RIGHT,
-            duration=3000,
-            parent=self,
-        )
 
     def _bind_start_on_startup(self):
         actual = is_start_on_startup_enabled()
@@ -1225,7 +1196,8 @@ class SettingsPage(QWidget):
 
     def showAiApiInfo(self):
         info_text = (
-            "目前AI需要有用户自行提供API秘钥，建议使用DeepSeek-Chat（DeepSeek V3.2）模型价格便宜，生成质量特别好。"
+            "目前AI需要有用户自行提供API秘钥，"
+            "建议使用DeepSeek-Chat（DeepSeek V3.2）模型价格便宜，生成质量特别好。"
             "目前能够完美适配的Kimi，DeepSeek，其他模型返回均有一定的结构问题"
         )
         w = MessageBox(self.tr("AI 分析器提示"), info_text, parent=self)
@@ -1257,86 +1229,6 @@ class SettingsPage(QWidget):
             duration=3000,
             parent=self,
         )
-
-    def checkUpdate(self, parent):
-        """
-        检查更新触发器\n
-        返回：\n
-        1.是否需要更新\n
-            1为需要\n
-            0为不需要\n
-            -1出错\n
-        2.新版更新链接\n
-        3.新版更新介绍\n
-        """
-        self.checkUpdateSetting.button.setEnabled(False)  # 防止爆炸
-        if parent != self:
-            title = self.tr("触发自定义设置-开始检查更新...")
-        else:
-            title = self.tr("开始检查更新...")
-        InfoBar.info(
-            title=title,
-            content="",
-            orient=Qt.Horizontal,
-            isClosable=True,
-            position=InfoBarPosition.TOP_RIGHT,
-            duration=3000,
-            parent=parent,
-        )
-        self.tmpParent = parent
-        self.thread_checkUpdate = CheckUpdateThread(self)
-        self.thread_checkUpdate.isUpdate.connect(self.showUpdateMsg)
-        self.thread_checkUpdate.start()
-
-    @pyqtSlot(dict)
-    def showUpdateMsg(self, latestVerInfo):
-        """如果需要更新，显示弹窗；不需要则弹出提示"""
-        if not len(latestVerInfo["latest"]):
-            InfoBar.error(
-                title=self.tr("检查更新失败"),
-                content=self.tr("尝试自己检查一下网络？"),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=2500,
-                parent=self.tmpParent,
-            )
-            self.checkUpdateSetting.button.setEnabled(True)
-            return
-        if compareVersion(latestVerInfo["latest"]):
-            title = self.tr("发现新版本: ") + latestVerInfo["latest"]
-            w = MessageBox(title, latestVerInfo["update-log"], parent=self.tmpParent)
-            w.contentLabel.setTextFormat(Qt.MarkdownText)
-            w.yesButton.setText(self.tr("更新"))
-            w.cancelButton.setText(self.tr("关闭"))
-            if not GlobalMCSL2Variables.devMode:
-                w.yesSignal.connect(lambda: self.window().switchTo(self))  # type: ignore
-                w.yesSignal.connect(MCSL2FileUpdater(self).downloadUpdate)
-            else:
-                w.yesSignal.connect(
-                    lambda: InfoBar.error(
-                        title=self.tr("不行"),
-                        content=self.tr("开发模式下更新会把 Python 删掉的"),
-                        orient=Qt.Horizontal,
-                        isClosable=True,
-                        position=InfoBarPosition.TOP_RIGHT,
-                        duration=2500,
-                        parent=self.tmpParent,
-                    )
-                )
-            w.exec()
-        else:
-            InfoBar.success(
-                title=self.tr("无需更新"),
-                content=self.tr("已是最新版本"),
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=2500,
-                parent=self.tmpParent,
-            )
-
-        self.checkUpdateSetting.button.setEnabled(True)
 
     def generateSystemReport(self):
         """创建系统报告"""
