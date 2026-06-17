@@ -42,15 +42,15 @@ def countUserAPI():
     )
 
 
-def checkPreviewPermission():
-    return (
-        MCSLNetworkSession()
-        .get(
-            f"https://api.mcsl.com.cn/checkPreviewAvailable?Identification={generateUniqueCode()}",
-            headers=MCSLNetworkSession.MCSLNetworkHeaders,
-        )
-        .json()["available"]
-    )
+# def checkPreviewPermission():
+#     return (
+#         MCSLNetworkSession()
+#         .get(
+#             f"https://api.mcsl.com.cn/checkPreviewAvailable?Identification={generateUniqueCode()}",
+#             headers=MCSLNetworkSession.MCSLNetworkHeaders,
+#         )
+#         .json()["available"]
+#     )
 
 
 # fmt: off
