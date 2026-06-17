@@ -138,7 +138,12 @@ class _MCSL2Logger:
             "line": frame.lineno,
             "function": frame.function,
         }
-        excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
+        excStr = ""
+        if exc is not None:
+            if isinstance(exc, BaseException):
+                excStr = "".join(format_exception(type(exc), exc, exc.__traceback__))
+            else:
+                excStr = str(exc)
         self.logger.critical(self._template(caller_info, f"{msg}\n{excStr}"))
 
 

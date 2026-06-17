@@ -58,15 +58,15 @@ def getReadableSpeed(speed_bytes_per_sec):
     if speed_bytes_per_sec < 1024:
         # 小于 1KB/s 时显示为 0KB/s
         return "0KB/s"
-    
+
     speed = speed_bytes_per_sec
     size_names = ["B/s", "KB/s", "MB/s", "GB/s"]
     i = 0
-    
+
     while speed >= 1024 and i < len(size_names) - 1:
         speed /= 1024.0
         i += 1
-    
+
     # 根据大小选择合适的小数位数
     if i == 0:  # B/s
         return f"{int(speed)}B/s"
@@ -250,8 +250,8 @@ class DownloadTask(QObject):
             return
 
         try:
-            # 获取当前进度
-            current = self.downloader.progress
+            # pypdl.progress is a percent. current_size is the downloaded byte count.
+            current = self.downloader.current_size
             total = self.downloader.size
             speed = self.downloader.speed
 
@@ -261,7 +261,7 @@ class DownloadTask(QObject):
             if total > 0:
                 # pypdl 的 speed 单位是 MB/s，需要转换为 B/s
                 speed_bytes = int(speed * 1024 * 1024) if speed else 0
-                
+
                 # 计算速度
                 progress_delta = current - self.last_progress
                 self.last_progress = current
@@ -398,7 +398,7 @@ class DownloadController:
 
             # 计算进度百分比和进度条值
             progress_percent = int((downloaded / total * 100)) if total > 0 else 0
-            
+
             # 构造 aria2 格式的信息，并添加额外的显示字段
             aria2_format = {
                 "gid": gid,
@@ -435,11 +435,11 @@ class DownloadController:
                 return
 
             total = task.downloader.size if task.downloader else 0
-            downloaded = task.downloader.progress if task.downloader else 0
+            downloaded = task.downloader.current_size if task.downloader else 0
 
             # 计算进度百分比
             progress_percent = int((downloaded / total * 100)) if total > 0 else 0
-            
+
             # 计算剩余时间
             eta_seconds = (total - downloaded) / speed if speed > 0 and total > downloaded else 0
 
