@@ -16,13 +16,28 @@ on: workflow_dispatch
 
 jobs:
   Linux:
-
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - architecture: x64
+            runner: ubuntu-22.04
+            skip_pyqt_qt5_wheel: false
+            use_upx: true
+          - architecture: arm64
+            runner: ubuntu-22.04-arm
+            skip_pyqt_qt5_wheel: true
+            use_upx: false
+    runs-on: ${{ matrix.runner }}
     steps:
 
       - name: Install Tools
         run: |
-          sudo apt-get install libfuse2
+          sudo apt-get update
+          sudo apt-get install -y libfuse2
+          if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
+            sudo apt-get install -y libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5 libqt5printsupport5 libqt5svg5 libqt5widgets5 libqt5xml5 qtwayland5
+          fi
  
       - name: Checkout Repo
         uses: actions/checkout@v6.0.3
@@ -33,15 +48,13 @@ jobs:
           enable-cache: true
           cache-dependency-glob: |
             pyproject.toml
+            uv.lock
 
-      - name: Install Python 3.8
+      - name: Install Python
         run: uv python install 3.8
 
       - name: Sync Dependencies
-        shell: pwsh
-        run: |
-          rm uv.lock
-          uv sync --no-dev
+        run: uv sync --no-dev --locked ${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}
 
       - name: Build
         run: |
@@ -49,17 +62,23 @@ jobs:
 
       - name: Optimize
         run: |
-          cd build
-          cd MCSL2.dist
-          ls
-          sudo rm libQt5Quick.so.5
-          sudo rm libQt5Qml.so.5
-          sudo rm libQt5QmlModels.so.5
-          ../../upx -9 MCSL2.bin
+          dist="build/MCSL2.dist"
+          rm -rf \
+            "$dist/zstandard" \
+            "$dist/_asyncio"* \
+            "$dist/pyexpat"* \
+            "$dist/libQt5Quick.so.5" \
+            "$dist/libQt5Qml.so.5" \
+            "$dist/libQt5QmlModels.so.5"
+
+          if [ "${{ matrix.use_upx }}" = "true" ] && [ -f "$dist/MCSL2.bin" ]; then
+            chmod +x ./upx
+            ./upx -9 "$dist/MCSL2.bin"
+          fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: MCSL2-Linux-x64
+          name: MCSL2-Linux-${{ matrix.architecture }}
           path: |
             build/MCSL2.dist/**/*

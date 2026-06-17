@@ -1,17 +1,3 @@
-#     Copyright 2026, MCSLTeam, mailto:services@mcsl.com.cn
-#
-#     Part of "MCSL2", a simple and multifunctional Minecraft server launcher.
-#
-#     Licensed under the GNU General Public License, Version 3.0, with our
-#     additional agreements. (the "License");
-#     you may not use this file except in compliance with the License.
-#     You may obtain a copy of the License at
-#
-#        https://github.com/MCSLTeam/MCSL2/raw/master/LICENSE
-#
-################################################################################
-"""Build MCSL2 with Nuitka."""
-
 import ast
 import subprocess
 import sys
@@ -78,6 +64,8 @@ def build_args(extra_args: List[str]) -> List[str]:
         args.append("--windows-icon-from-ico=MCSL2.ico")
     elif sys.platform.startswith("linux"):
         args.append("--linux-icon=MCSL2.ico")
+    elif sys.platform == "darwin":
+        args.append("--macos-signed-app-name=cn.mcslteam.mcsl2")
 
     args.extend(extra_args)
     args.append(str(MAIN_SCRIPT))

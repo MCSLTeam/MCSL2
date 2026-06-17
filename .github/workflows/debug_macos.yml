@@ -12,10 +12,25 @@
 ################################################################################
 name: macOS Debug Build
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      package_macos_dmg:
+        description: Package macOS builds as DMG artifacts
+        required: true
+        default: true
+        type: boolean
 
 env:
   PYTHON_VERSION: "3.8"
+  MACOS_CERTIFICATE_BASE64: ${{ secrets.MACOS_CERTIFICATE_BASE64 }}
+  MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+  MACOS_CODESIGN_IDENTITY: ${{ secrets.MACOS_CODESIGN_IDENTITY }}
+  MACOS_KEYCHAIN_PASSWORD: ${{ secrets.MACOS_KEYCHAIN_PASSWORD }}
+  APPLE_ID: ${{ secrets.APPLE_ID }}
+  APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+  PACKAGE_MACOS_DMG: ${{ inputs.package_macos_dmg }}
 
 jobs:
   macOS:
@@ -63,8 +78,135 @@ jobs:
           find "$app" -name "*.pyc" -delete
           find "$app" -name ".DS_Store" -delete
 
+      - name: Import Apple signing certificate
+        if: >-
+          ${{
+            env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+          }}
+        run: |
+          certificate_path="$RUNNER_TEMP/mcsl2-signing-certificate.p12"
+          keychain_path="$RUNNER_TEMP/mcsl2-signing.keychain-db"
+
+          echo "$MACOS_CERTIFICATE_BASE64" | base64 --decode > "$certificate_path"
+          security create-keychain -p "$MACOS_KEYCHAIN_PASSWORD" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$MACOS_KEYCHAIN_PASSWORD" "$keychain_path"
+          security import "$certificate_path" -P "$MACOS_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$keychain_path"
+          security list-keychains -d user -s "$keychain_path"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_KEYCHAIN_PASSWORD" "$keychain_path"
+
+      - name: Sign app bundle
+        if: >-
+          ${{
+            env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+          }}
+        run: |
+          app="build/MCSL2.app"
+          codesign --force --deep --timestamp --options runtime --sign "$MACOS_CODESIGN_IDENTITY" "$app"
+          codesign --verify --deep --strict --verbose=2 "$app"
+
+      - name: Notarize app bundle
+        if: >-
+          ${{
+            env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+            && env.APPLE_ID != ''
+            && env.APPLE_TEAM_ID != ''
+            && env.APPLE_APP_SPECIFIC_PASSWORD != ''
+          }}
+        run: |
+          app="build/MCSL2.app"
+          notarize_zip="$RUNNER_TEMP/MCSL2-${{ matrix.architecture }}-notarize.zip"
+
+          ditto -c -k --keepParent "$app" "$notarize_zip"
+          xcrun notarytool submit "$notarize_zip" \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+            --wait
+          xcrun stapler staple "$app"
+          spctl --assess --type execute --verbose "$app"
+
+      - name: Install DMG packaging tool
+        if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
+        run: npm install --global appdmg create-dmg
+
+      - name: Create DMG
+        if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
+        run: |
+          dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
+          background_path="macos-volume-bg.png"
+
+          if [ -f "$background_path" ]; then
+            cat > "$RUNNER_TEMP/mcsl2-dmg.json" <<JSON
+          {
+            "title": "MCSL2",
+            "icon": "macos-volume-icon.icns",
+            "background": "$background_path",
+            "window": {
+              "size": {
+                "width": 480,
+                "height": 540
+              }
+            },
+            "contents": [
+              {
+                "x": 240,
+                "y": 145,
+                "type": "file",
+                "path": "build/MCSL2.app"
+              },
+              {
+                "x": 240,
+                "y": 405,
+                "type": "link",
+                "path": "/Applications"
+              }
+            ]
+          }
+          JSON
+            appdmg "$RUNNER_TEMP/mcsl2-dmg.json" "$dmg_path"
+          else
+            create-dmg build/MCSL2.app build --overwrite --no-code-sign
+            generated_dmg="$(find build -maxdepth 1 -name '*.dmg' | head -n 1)"
+            test -n "$generated_dmg"
+            mv "$generated_dmg" "$dmg_path"
+          fi
+
+      - name: Notarize DMG
+        if: >-
+          ${{
+            env.PACKAGE_MACOS_DMG == 'true'
+            && env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+            && env.APPLE_ID != ''
+            && env.APPLE_TEAM_ID != ''
+            && env.APPLE_APP_SPECIFIC_PASSWORD != ''
+          }}
+        run: |
+          dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
+          xcrun notarytool submit "$dmg_path" \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+            --wait
+          xcrun stapler staple "$dmg_path"
+          spctl --assess --type open --verbose "$dmg_path"
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v7.0.1
         with:
           name: MCSL2-macOS-${{ matrix.architecture }}
-          path: build/MCSL2.app
+          path: |
+            build/MCSL2.app
+            build/MCSL2-macOS-${{ matrix.architecture }}.dmg

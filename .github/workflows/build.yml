@@ -30,6 +30,11 @@ on:
         required: true
         default: true
         type: boolean
+      package_macos_dmg:
+        description: Package macOS builds as DMG artifacts
+        required: true
+        default: true
+        type: boolean
   release:
     types: [published]
 
@@ -42,7 +47,22 @@ env:
 jobs:
   Windows:
     if: ${{ github.event_name == 'release' || github.event.inputs.build_target == 'windows' || github.event.inputs.build_target == 'all' }}
-    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - architecture: x64
+            runner: windows-2022
+            experimental: false
+            skip_arm64_missing_wheels: false
+            use_upx: true
+          - architecture: arm64
+            runner: windows-11-arm
+            experimental: true
+            skip_arm64_missing_wheels: true
+            use_upx: false
+    runs-on: ${{ matrix.runner }}
+    continue-on-error: ${{ matrix.experimental }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6.0.3
@@ -60,7 +80,7 @@ jobs:
 
       - name: Sync dependencies
         shell: pwsh
-        run: uv sync --no-dev --locked
+        run: uv sync --no-dev --locked ${{ matrix.skip_arm64_missing_wheels && '--no-install-package pyqt5-qt5 --no-install-package pywin32' || '' }}
 
       - name: Build with Nuitka
         shell: pwsh
@@ -115,24 +135,39 @@ jobs:
             "win32print.pyd"
           ) | ForEach-Object { "$dist/$_" } | Where-Object { Test-Path $_ }
 
-          if ($upxTargets.Count -gt 0) {
+          if ("${{ matrix.use_upx }}" -eq "true" -and $upxTargets.Count -gt 0) {
             .\upx.exe -9 $upxTargets
           }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: MCSL2-Windows-x64
+          name: MCSL2-Windows-${{ matrix.architecture }}
           path: build/MCSL2.dist/**/*
 
   Linux:
     if: ${{ github.event_name == 'release' || github.event.inputs.build_target == 'linux' || github.event.inputs.build_target == 'all' }}
-    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - architecture: x64
+            runner: ubuntu-22.04
+            skip_pyqt_qt5_wheel: false
+            use_upx: true
+          - architecture: arm64
+            runner: ubuntu-22.04-arm
+            skip_pyqt_qt5_wheel: true
+            use_upx: false
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Install tools
         run: |
           sudo apt-get update
           sudo apt-get install -y libfuse2 p7zip-full
+          if [ "${{ matrix.skip_pyqt_qt5_wheel }}" = "true" ]; then
+            sudo apt-get install -y libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5 libqt5printsupport5 libqt5svg5 libqt5widgets5 libqt5xml5 qtwayland5
+          fi
 
       - name: Checkout repo
         uses: actions/checkout@v6.0.3
@@ -149,7 +184,7 @@ jobs:
         run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Sync dependencies
-        run: uv sync --no-dev --locked
+        run: uv sync --no-dev --locked ${{ matrix.skip_pyqt_qt5_wheel && '--no-install-package pyqt5-qt5' || '' }}
 
       - name: Build with Nuitka
         run: uv run deploy.py --disable-console
@@ -165,19 +200,28 @@ jobs:
             "$dist/libQt5Qml.so.5" \
             "$dist/libQt5QmlModels.so.5"
 
-          chmod +x ./upx
-          if [ -f "$dist/MCSL2.bin" ]; then
+          if [ "${{ matrix.use_upx }}" = "true" ] && [ -f "$dist/MCSL2.bin" ]; then
+            chmod +x ./upx
             ./upx -9 "$dist/MCSL2.bin"
           fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: MCSL2-Linux-x64
+          name: MCSL2-Linux-${{ matrix.architecture }}
           path: build/MCSL2.dist/**/*
 
   macOS:
     if: ${{ github.event_name == 'release' || github.event.inputs.build_target == 'macos' || github.event.inputs.build_target == 'all' }}
+    env:
+      MACOS_CERTIFICATE_BASE64: ${{ secrets.MACOS_CERTIFICATE_BASE64 }}
+      MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+      MACOS_CODESIGN_IDENTITY: ${{ secrets.MACOS_CODESIGN_IDENTITY }}
+      MACOS_KEYCHAIN_PASSWORD: ${{ secrets.MACOS_KEYCHAIN_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      PACKAGE_MACOS_DMG: ${{ github.event_name == 'release' || inputs.package_macos_dmg }}
     strategy:
       matrix:
         include:
@@ -222,11 +266,139 @@ jobs:
           find "$app" -name "*.pyc" -delete
           find "$app" -name ".DS_Store" -delete
 
+      - name: Import Apple signing certificate
+        if: >-
+          ${{
+            env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+          }}
+        run: |
+          certificate_path="$RUNNER_TEMP/mcsl2-signing-certificate.p12"
+          keychain_path="$RUNNER_TEMP/mcsl2-signing.keychain-db"
+
+          echo "$MACOS_CERTIFICATE_BASE64" | base64 --decode > "$certificate_path"
+          security create-keychain -p "$MACOS_KEYCHAIN_PASSWORD" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$MACOS_KEYCHAIN_PASSWORD" "$keychain_path"
+          security import "$certificate_path" -P "$MACOS_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$keychain_path"
+          security list-keychains -d user -s "$keychain_path"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_KEYCHAIN_PASSWORD" "$keychain_path"
+
+      - name: Sign app bundle
+        if: >-
+          ${{
+            env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+          }}
+        run: |
+          app="build/MCSL2.app"
+          codesign --force --deep --timestamp --options runtime --sign "$MACOS_CODESIGN_IDENTITY" "$app"
+          codesign --verify --deep --strict --verbose=2 "$app"
+
+      - name: Notarize app bundle
+        if: >-
+          ${{
+            env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+            && env.APPLE_ID != ''
+            && env.APPLE_TEAM_ID != ''
+            && env.APPLE_APP_SPECIFIC_PASSWORD != ''
+          }}
+        run: |
+          app="build/MCSL2.app"
+          notarize_zip="$RUNNER_TEMP/MCSL2-${{ matrix.architecture }}-notarize.zip"
+
+          ditto -c -k --keepParent "$app" "$notarize_zip"
+          xcrun notarytool submit "$notarize_zip" \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+            --wait
+          xcrun stapler staple "$app"
+          spctl --assess --type execute --verbose "$app"
+
+      - name: Install DMG packaging tool
+        if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
+        run: npm install --global appdmg create-dmg
+
+      - name: Create DMG
+        if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
+        run: |
+          dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
+          background_path="macos-volume-bg.png"
+
+          if [ -f "$background_path" ]; then
+            cat > "$RUNNER_TEMP/mcsl2-dmg.json" <<JSON
+          {
+            "title": "MCSL2",
+            "icon": "macos-volume-icon.icns",
+            "background": "$background_path",
+            "window": {
+              "size": {
+                "width": 480,
+                "height": 540
+              }
+            },
+            "contents": [
+              {
+                "x": 240,
+                "y": 145,
+                "type": "file",
+                "path": "build/MCSL2.app"
+              },
+              {
+                "x": 240,
+                "y": 405,
+                "type": "link",
+                "path": "/Applications"
+              }
+            ]
+          }
+          JSON
+            appdmg "$RUNNER_TEMP/mcsl2-dmg.json" "$dmg_path"
+          else
+            create-dmg build/MCSL2.app build --overwrite --no-code-sign
+            generated_dmg="$(find build -maxdepth 1 -name '*.dmg' | head -n 1)"
+            test -n "$generated_dmg"
+            mv "$generated_dmg" "$dmg_path"
+          fi
+
+      - name: Notarize DMG
+        if: >-
+          ${{
+            env.PACKAGE_MACOS_DMG == 'true'
+            && env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+            && env.APPLE_ID != ''
+            && env.APPLE_TEAM_ID != ''
+            && env.APPLE_APP_SPECIFIC_PASSWORD != ''
+          }}
+        run: |
+          dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
+          xcrun notarytool submit "$dmg_path" \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+            --wait
+          xcrun stapler staple "$dmg_path"
+          spctl --assess --type open --verbose "$dmg_path"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v7.0.1
         with:
           name: MCSL2-macOS-${{ matrix.architecture }}
-          path: build/MCSL2.app
+          path: |
+            build/MCSL2.app
+            build/MCSL2-macOS-${{ matrix.architecture }}.dmg
+          if-no-files-found: error
 
   Release:
     runs-on: ubuntu-22.04
@@ -267,21 +439,35 @@ jobs:
         run: |
           shopt -s nullglob
 
-          for dir in MCSL2-Windows-x64 MCSL2-Linux-x64 MCSL2-macOS-arm64 MCSL2-macOS-x64; do
+          for dir in MCSL2-Windows-x64 MCSL2-Windows-arm64 MCSL2-Linux-x64 MCSL2-Linux-arm64; do
             if [ -d "$dir" ]; then
+              7z a -tzip -mx=9 "MCSL2-${MCSL2_VERSION}-${dir#MCSL2-}.zip" "./$dir/*"
+            fi
+          done
+
+          for dir in MCSL2-macOS-arm64 MCSL2-macOS-x64; do
+            if compgen -G "$dir/*.dmg" > /dev/null; then
+              cp "$dir"/*.dmg .
+            elif [ -d "$dir" ]; then
               7z a -tzip -mx=9 "MCSL2-${MCSL2_VERSION}-${dir#MCSL2-}.zip" "./$dir/*"
             fi
           done
 
       - name: Create update package
         run: |
-          mkdir -p Update/Windows-x64 Update/Linux-x64 Update/macOS-arm64 Update/macOS-x64
+          mkdir -p Update/Windows-x64 Update/Windows-arm64 Update/Linux-x64 Update/Linux-arm64 Update/macOS-arm64 Update/macOS-x64
 
           if [ -f MCSL2-Windows-x64/MCSL2.exe ]; then
             cp MCSL2-Windows-x64/MCSL2.exe Update/Windows-x64/
           fi
+          if [ -f MCSL2-Windows-arm64/MCSL2.exe ]; then
+            cp MCSL2-Windows-arm64/MCSL2.exe Update/Windows-arm64/
+          fi
           if [ -f MCSL2-Linux-x64/MCSL2.bin ]; then
             cp MCSL2-Linux-x64/MCSL2.bin Update/Linux-x64/
+          fi
+          if [ -f MCSL2-Linux-arm64/MCSL2.bin ]; then
+            cp MCSL2-Linux-arm64/MCSL2.bin Update/Linux-arm64/
           fi
           if [ -d MCSL2-macOS-arm64/MCSL2.app ]; then
             cp -R MCSL2-macOS-arm64/MCSL2.app Update/macOS-arm64/
@@ -290,14 +476,18 @@ jobs:
             cp -R MCSL2-macOS-x64/MCSL2.app Update/macOS-x64/
           fi
 
-          for platform in Windows-x64 Linux-x64 macOS-arm64 macOS-x64; do
+          for platform in Windows-x64 Windows-arm64 Linux-x64 Linux-arm64 macOS-arm64 macOS-x64; do
             mkdir -p "Update/$platform/MCSL2Lib"
           done
 
           [ -f MCSL2-Windows-x64/MCSL2Lib/verification.pyd ] \
             && cp MCSL2-Windows-x64/MCSL2Lib/verification.pyd Update/Windows-x64/MCSL2Lib/
+          [ -f MCSL2-Windows-arm64/MCSL2Lib/verification.pyd ] \
+            && cp MCSL2-Windows-arm64/MCSL2Lib/verification.pyd Update/Windows-arm64/MCSL2Lib/
           [ -f MCSL2-Linux-x64/MCSL2Lib/verification.so ] \
             && cp MCSL2-Linux-x64/MCSL2Lib/verification.so Update/Linux-x64/MCSL2Lib/
+          [ -f MCSL2-Linux-arm64/MCSL2Lib/verification.so ] \
+            && cp MCSL2-Linux-arm64/MCSL2Lib/verification.so Update/Linux-arm64/MCSL2Lib/
 
           find Update -type d -empty -delete
           7z a -tzip -mx=9 "Update-${MCSL2_VERSION}.zip" "./Update/*"
