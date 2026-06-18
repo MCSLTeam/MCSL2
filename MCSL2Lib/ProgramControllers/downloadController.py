@@ -114,6 +114,8 @@ class DownloadTask(QObject):
     speedChanged = pyqtSignal(int)  # 下载速度
     taskFinished = pyqtSignal()  # 下载完成
     gotWrong = pyqtSignal(str)  # 下载错误
+    _finishRequested = pyqtSignal()
+    _errorRequested = pyqtSignal(str)
 
     def __init__(
         self,
@@ -147,6 +149,8 @@ class DownloadTask(QObject):
         # 进度监控
         self.progress_timer = QTimer()
         self.progress_timer.timeout.connect(self._update_progress)
+        self._finishRequested.connect(self._on_download_finished)
+        self._errorRequested.connect(self.gotWrong.emit)
 
         self.last_progress = 0
         self.current_speed = 0
@@ -211,10 +215,10 @@ class DownloadTask(QObject):
                         block=True,  # 阻塞直到完成
                     )
                     # 下载完成
-                    QTimer.singleShot(0, self._on_download_finished)
+                    self._finishRequested.emit()
                 except Exception as e:
                     MCSL2Logger.error(f"下载失败: {e}")
-                    QTimer.singleShot(0, lambda error=e: self.gotWrong.emit(str(error)))
+                    self._errorRequested.emit(str(e))
 
             thread = threading.Thread(target=_download_thread, daemon=True)
             thread.start()
@@ -298,8 +302,27 @@ class DownloadTask(QObject):
         self.progress_timer.stop()
 
         MCSL2Logger.success(f"下载完成: {self.full_path}")
+        self._emit_final_progress()
         self.speedChanged.emit(0)
         self.taskFinished.emit()
+
+    def _emit_final_progress(self):
+        total = self.file_size if self.file_size and self.file_size > 0 else 0
+        if self.downloader:
+            total = self.downloader.size or total
+        if total <= 0 and self.full_path and self.full_path.exists():
+            total = self.full_path.stat().st_size
+
+        if total > 0:
+            self.workerInfoChanged.emit([
+                {
+                    "downloaded": total,
+                    "total": total,
+                    "speed": 0,
+                    "eta": 0,
+                    "eta_formatted": formatETA(0),
+                }
+            ])
 
     def _cleanup_files(self):
         """清理下载文件"""
