@@ -178,6 +178,20 @@ jobs:
             mv "$generated_dmg" "$dmg_path"
           fi
 
+      - name: Sign DMG
+        if: >-
+          ${{
+            env.PACKAGE_MACOS_DMG == 'true'
+            && env.MACOS_CERTIFICATE_BASE64 != ''
+            && env.MACOS_CERTIFICATE_PASSWORD != ''
+            && env.MACOS_CODESIGN_IDENTITY != ''
+            && env.MACOS_KEYCHAIN_PASSWORD != ''
+          }}
+        run: |
+          dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
+          codesign --force --timestamp --sign "$MACOS_CODESIGN_IDENTITY" "$dmg_path"
+          codesign --verify --verbose=2 "$dmg_path"
+
       - name: Notarize DMG
         if: >-
           ${{
