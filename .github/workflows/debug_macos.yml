@@ -12,14 +12,7 @@
 ################################################################################
 name: macOS Debug Build
 
-on:
-  workflow_dispatch:
-    inputs:
-      package_macos_dmg:
-        description: Package macOS builds as DMG artifacts
-        required: true
-        default: true
-        type: boolean
+on: workflow_dispatch
 
 env:
   PYTHON_VERSION: "3.8"
@@ -30,7 +23,6 @@ env:
   APPLE_ID: ${{ secrets.APPLE_ID }}
   APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-  PACKAGE_MACOS_DMG: ${{ inputs.package_macos_dmg }}
 
 jobs:
   macOS:
@@ -131,11 +123,9 @@ jobs:
           spctl --assess --type execute --verbose "$app"
 
       - name: Install DMG packaging tool
-        if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
         run: npm install --global appdmg create-dmg
 
       - name: Create DMG
-        if: ${{ env.PACKAGE_MACOS_DMG == 'true' }}
         run: |
           app_path="$PWD/build/MCSL2.app"
           dmg_path="build/MCSL2-macOS-${{ matrix.architecture }}.dmg"
@@ -181,8 +171,7 @@ jobs:
       - name: Sign DMG
         if: >-
           ${{
-            env.PACKAGE_MACOS_DMG == 'true'
-            && env.MACOS_CERTIFICATE_BASE64 != ''
+            env.MACOS_CERTIFICATE_BASE64 != ''
             && env.MACOS_CERTIFICATE_PASSWORD != ''
             && env.MACOS_CODESIGN_IDENTITY != ''
             && env.MACOS_KEYCHAIN_PASSWORD != ''
@@ -195,8 +184,7 @@ jobs:
       - name: Notarize DMG
         if: >-
           ${{
-            env.PACKAGE_MACOS_DMG == 'true'
-            && env.MACOS_CERTIFICATE_BASE64 != ''
+            env.MACOS_CERTIFICATE_BASE64 != ''
             && env.MACOS_CERTIFICATE_PASSWORD != ''
             && env.MACOS_CODESIGN_IDENTITY != ''
             && env.MACOS_KEYCHAIN_PASSWORD != ''
